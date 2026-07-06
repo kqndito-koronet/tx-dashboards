@@ -44,7 +44,7 @@ tr:hover{background:var(--surface);}
 <li><strong>The channel IS the product.</strong> eCom buyers order full cases (Boxes, ~$110/box at KBC). Offline buyers buy loose stems (Units, ~$2.93/stem). It's not the same buyer choosing a different channel — it's a different buying motion.</li>
 <li><strong>KBC eCommerce matched offline in Boxes volume</strong> — 52K boxes online vs 52K offline. For full cases, digital parity already exists. The gap = Units ($49M offline, $614K online).</li>
 <li><strong>Zeidler proves the "live cooler" model works.</strong> They sell Units online ($130K "Fresh Cut" + greens). Only one doing it among small wholesalers.</li>
-<li><strong>Buyer base is razor-thin:</strong> KBC has ~20 active named eCom buyers out of 1,382 offline buyers (1.4%). Bill Doran: ~2 real buyers. The opportunity = first-purchase activation at scale.</li>
+<li><strong>Buyer base is broader than ship_name suggested:</strong> KBC has ~1,500 eCom buyers by customer_name (~21% of 7,053 offline buyers). Bill Doran: ~200 external buyers (after filtering inter-branch transfers). The opportunity = first-purchase activation at scale.</li>
 <li><strong>Online buyers pay more:</strong> Bill Doran $/unit online = $3.37 vs $2.99 offline. Higher-value items go online first.</li>
 </ul>
 </div>
@@ -203,8 +203,8 @@ At KBC, prices are more similar (~$110 vs $116/box). The Unit prices are slightl
 <h2>Buyer Concentration: How Thin Is the eCommerce Base?</h2>
 <div class="hyp">Are many buyers using eCommerce, or is it a handful?</div>
 
-<div class="finding"><div class="tag r">Extremely thin. The growth opportunity = first-purchase activation.</div>
-KBC: ~20 named eCom buyers out of 1,382 offline (1.4%). Bill Doran: ~2 real buyers out of 321 offline. The "blank" ship_names (likely house/internal accounts) dominate GMV.</div>
+<div class="finding"><div class="tag r">KBC has ~1,500 real buyers. BDC has ~200 external. ship_name was misleading — customer_name is the correct metric.</div>
+KBC: ~1,500 eCom buyers (customer_name) out of 7,053 offline (~21%). ship_name (100) was an optional field, not a buyer count. Bill Doran: ~200 external buyers (after filtering inter-branch transfers) out of 6,000 offline (~3.3%).</div>
 
 <h2>KBC eCommerce Buyers (top named)</h2>
 <table>
@@ -222,23 +222,23 @@ KBC: ~20 named eCom buyers out of 1,382 offline (1.4%). Bill Doran: ~2 real buye
 <tr><td>The Petal</td><td class="n">$21K</td></tr>
 </tbody>
 </table>
-<div style="font-size:11px;color:var(--text3);margin-bottom:16px">~20 named buyers above $5K. The top 2 "blank" entries = 92% of eCom GMV. These are likely internal/house orders or default entries — needs CS investigation.</div>
+<div style="font-size:11px;color:var(--text3);margin-bottom:16px">ship_name is optional — customer_name shows 1,500 real buyers. Top buyers by customer_name: TOP THAT TABLE ($4.3M), BOLD AMERICAN EVENTS ($3.1M), FLOWERS BY DICK & SON ($2.8M). Real florists, not internal orders.</div>
 
 <h2>The math</h2>
 <table>
 <thead><tr><th></th><th class="n">KBC</th><th class="n">Bill Doran</th></tr></thead>
 <tbody>
-<tr><td>Offline buyers (ship names)</td><td class="n">1,382</td><td class="n">321</td></tr>
-<tr><td>eCom buyers (ship names)</td><td class="n">100</td><td class="n">15</td></tr>
-<tr><td>Online penetration</td><td class="n">7.2%</td><td class="n">4.7%</td></tr>
+<tr><td>Offline buyers (customer_name)</td><td class="n">7,053</td><td class="n">6,000</td></tr>
+<tr><td>eCom buyers (customer_name)</td><td class="n">~1,500</td><td class="n">~200 (external)</td></tr>
+<tr><td>Online penetration</td><td class="n">~21%</td><td class="n">~3.3%</td></tr>
 <tr><td>Avg eCom GMV per named buyer</td><td class="n">$5.1K</td><td class="n">—</td></tr>
-<tr><td>If penetration → 20%</td><td class="n g">~276 eCom buyers</td><td class="n g">~64 eCom buyers</td></tr>
-<tr><td>Incremental eCom GMV (at $5K avg)</td><td class="n g">+$900K</td><td class="n g">+$250K</td></tr>
+<tr><td>If penetration → 20%</td><td class="n g">~2,100 eCom buyers</td><td class="n g">~400 eCom buyers</td></tr>
+<tr><td>Incremental eCom GMV (at $5K avg)</td><td class="n g">+$3M</td><td class="n g">+$1M</td></tr>
 </tbody>
 </table>
 
 <div class="callout"><div class="clabel b">First-purchase activation is the play</div>
-Getting 176 more KBC buyers online (from 100 → 276, i.e. 20% penetration) adds ~$900K in eCom GMV. And that's just Boxes. If Units are listed, the upside is multiples of that. <strong>This is List A territory: identify offline-only buyers, contact them, activate their first online order.</strong></div>
+KBC already has ~1,500 eCom buyers (~21% penetration). Growing to ~2,100 (30% penetration) adds ~$3M in eCom GMV. And that's just Boxes. If Units are listed, the upside is multiples of that. <strong>This is List A territory: identify offline-only buyers, contact them, activate their first online order.</strong></div>
 </div>
 
 <!-- ZEIDLER -->
@@ -304,8 +304,8 @@ If Zeidler can sell $164K of Units online from scratch ($0 last year), KBC can l
 </div>
 
 <div class="source">
-SALES_SV · ks_flag=TRUE · sales&lt;$100K · H1 2026 · Buyer counts via COUNT(DISTINCT ship_name) — approximate<br>
-Trust: needs_validation · "Blank" ship_names need CS investigation · Zeidler operational model needs external research<br>
+SALES_SV · ks_flag=TRUE · sales&lt;$100K · H1 2026 · Buyer counts via COUNT(DISTINCT customer_name) — corrected from ship_name (optional field, 6% populated)<br>
+Trust: needs_validation · BDC counts exclude inter-branch transfers (BDC Houston, Everflora, etc.) · Zeidler operational model needs external research<br>
 Rose · 2026-07-06
 </div>
 
