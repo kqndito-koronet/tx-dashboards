@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L1 · Is the Ecosystem Growing?</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
+    --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
+    --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
+    --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb;
+    --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
+
+  .header { margin-bottom: 24px; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .purpose { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .verdict .headline { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .verdict .g { color: var(--green); } .verdict .r { color: var(--red); }
+  .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
+  .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
+  .kpi .val { font-size: 24px; font-weight: 700; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; font-weight: 600; }
+  .kpi .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .flat { color: var(--amber); }
+
+  .tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px 8px 0 0; padding: 4px 4px 0; }
+  .tab { padding: 8px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text2); border-radius: 6px 6px 0 0; background: transparent; border: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--bg); color: var(--text); font-weight: 600; }
+  .tab-body { border: 1px solid var(--border); border-radius: 0 0 10px 10px; padding: 24px; margin-bottom: 28px; }
+  .tab-content { display: none; } .tab-content.active { display: block; }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; }
+  .section-head .hint { font-size: 11px; color: var(--text3); }
+
+  .legend { display: flex; gap: 16px; margin-bottom: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  .toggles { display: flex; gap: 6px; margin-bottom: 14px; }
+  .toggle { padding: 5px 12px; border-radius: 16px; font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text2); user-select: none; }
+  .toggle.active { color: #fff; border-color: transparent; }
+  .toggle.active[data-ch="offline"] { background: var(--offline); }
+  .toggle.active[data-ch="ecom"] { background: var(--ecom); }
+  .toggle.active[data-ch="api"] { background: var(--api); }
+  .toggle.active[data-ch="k2k"] { background: var(--k2k); }
+
+  .combo-chart { height: 240px; display: flex; align-items: flex-end; padding: 36px 0 32px; }
+  .combo-month { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .combo-bars { display: flex; gap: 3px; align-items: flex-end; height: calc(100% - 20px); }
+  .combo-bar { width: 22px; border-radius: 3px 3px 0 0; cursor: pointer; position: relative; }
+  .combo-bar:hover { opacity: 0.7; }
+  .combo-bar.y25 { background: #d1d5db; }
+  .combo-bar.y26 { background: var(--blue); }
+  .combo-tip { display: none; position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 3px 8px; border-radius: 5px; font-size: 10px; white-space: nowrap; z-index: 20; }
+  .combo-bar:hover .combo-tip { display: block; }
+  .combo-label { font-size: 10px; color: var(--text3); margin-top: 6px; }
+  .combo-yoy { position: absolute; top: -6px; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: 3px; white-space: nowrap; transform: translateX(-50%); left: 50%; }
+  .combo-yoy.pos { background: var(--green-bg); color: var(--green); }
+  .combo-yoy.neg { background: var(--red-bg); color: var(--red); }
+  .combo-yoy.flat { background: var(--amber-bg); color: var(--amber); }
+
+  .stacked-area { height: 240px; display: flex; align-items: flex-end; padding: 0 0 32px; }
+  .stacked-month { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .stacked-cols { display: flex; gap: 3px; align-items: flex-end; height: calc(100% - 20px); }
+  .stacked-col { width: 22px; display: flex; flex-direction: column-reverse; border-radius: 3px 3px 0 0; overflow: hidden; }
+  .seg { position: relative; cursor: pointer; } .seg:hover { filter: brightness(0.85); }
+  .stip { display: none; position: absolute; top: -28px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 3px 8px; border-radius: 5px; font-size: 10px; white-space: nowrap; z-index: 20; }
+  .seg:hover .stip { display: block; }
+  .stacked-mlabel { font-size: 10px; color: var(--text3); margin-top: 6px; }
+  .stacked-sublabel { font-size: 9px; color: var(--text3); }
+
+  .wf-container { padding: 16px 0; }
+  .wf-chart { display: flex; align-items: flex-end; height: 280px; padding: 0 0 40px; gap: 2px; }
+  .wf-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; min-width: 70px; }
+  .wf-bar { width: 44px; border-radius: 3px; position: absolute; cursor: pointer; }
+  .wf-bar:hover { opacity: 0.75; }
+  .wf-bar.total { background: var(--blue); }
+  .wf-bar.up { background: var(--green); }
+  .wf-bar.down { background: var(--red); }
+  .wf-val { position: absolute; font-size: 11px; font-weight: 600; white-space: nowrap; transform: translateX(-50%); left: 50%; }
+  .wf-label { position: absolute; bottom: 0; font-size: 10px; color: var(--text2); text-align: center; width: 100%; }
+
+  .dtable { width: 100%; border-collapse: collapse; }
+  .dtable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+  .dtable th.num { text-align: right; }
+  .dtable td { padding: 8px 10px; font-size: 12px; border-bottom: 1px solid var(--surface2); font-variant-numeric: tabular-nums; }
+  .dtable td.num { text-align: right; }
+  .dtable tr:hover { background: var(--surface); }
+  .ch-dot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+
+  .trend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .trend-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .trend-block h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .trend-row { display: flex; align-items: center; margin-bottom: 5px; }
+  .trend-mo { width: 32px; font-size: 11px; color: var(--text3); }
+  .trend-bar-wrap { flex: 1; height: 20px; position: relative; }
+  .trend-bar { height: 20px; border-radius: 3px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 600; position: absolute; }
+  .trend-bar.pos { background: var(--green-bg); color: var(--green); left: 50%; }
+  .trend-bar.neg { background: var(--red-bg); color: var(--red); right: 50%; justify-content: flex-end; }
+  .trend-bar.flat { background: var(--amber-bg); color: var(--amber); left: 50%; }
+  .trend-center { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border); }
+
+  .next-link { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 20px; font-size: 13px; }
+  .next-link strong { color: var(--blue); }
+
+  .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Layer 1 · Is the Ecosystem Growing?</h1>
+  <div class="purpose">This dashboard answers ONE question: is the Komet platform GMV growing, and is the growth happening online or offline? It does NOT break down by industry or account — that's Layer 2.</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="g">Total GMV +3.1% H1</span> — <span class="r">but decelerating. May -5.7%, Jun -0.8%.</span></div>
+  <ul>
+    <li><strong>Offline (+2.4%):</strong> 82% of GMV, $0 fees. Growing but slowing — May/Jun negative.</li>
+    <li><strong>eCommerce (+1.3%):</strong> Flat. Not gaining share.</li>
+    <li><strong>API (-1.6%):</strong> Declining.</li>
+    <li><strong>K2K (+41.4%):</strong> The only channel growing meaningfully. Highest take-rate (1.84%).</li>
+    <li><strong>Fees +32%</strong> = take-rate expansion on a flat base. If GMV keeps slowing, fees will follow.</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="label">Total GMV H1</div><div class="val">$860M</div><div class="delta pos">+3.1%</div><div class="note">vs $834M H1'25</div></div>
+  <div class="kpi"><div class="label">Offline</div><div class="val">$705M</div><div class="delta pos">+2.4%</div><div class="note">82% · $0 fees</div></div>
+  <div class="kpi"><div class="label">eCommerce</div><div class="val">$67M</div><div class="delta flat">+1.3%</div><div class="note">7.8% of total</div></div>
+  <div class="kpi"><div class="label">API</div><div class="val">$55M</div><div class="delta neg">-1.6%</div><div class="note">6.4% of total</div></div>
+  <div class="kpi"><div class="label">K2K</div><div class="val">$32M</div><div class="delta pos">+41%</div><div class="note">3.7% · 1.84% take-rate</div></div>
+</div>
+
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="mainTab('wf')">Waterfall</div>
+  <div class="tab" onclick="mainTab('mo')">Monthly</div>
+  <div class="tab" onclick="mainTab('ch')">By Channel</div>
+  <div class="tab" onclick="mainTab('tr')">YoY Trend</div>
+</div>
+<div class="tab-body">
+
+<!-- WATERFALL -->
+<div id="tc-wf" class="tab-content active">
+  <div class="section-head"><h2>H1 GMV Change by Channel: +$26M</h2><div class="hint">How each channel contributed to the total change</div></div>
+  <div class="wf-container"><div class="wf-chart" id="wfChart"></div></div>
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Channel</th><th class="num">H1 2025</th><th class="num">H1 2026</th><th class="num">Δ</th><th class="num">YoY</th><th class="num">Fees H1'26</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Offline</td><td class="num">$688.9M</td><td class="num">$705.5M</td><td class="num pos">+$16.6M</td><td class="num pos">+2.4%</td><td class="num" style="color:var(--text3)">$0</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--k2k)"></span>K2K</td><td class="num">$22.6M</td><td class="num">$32.0M</td><td class="num pos">+$9.4M</td><td class="num pos">+41.4%</td><td class="num">$503K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--ecom)"></span>eCommerce</td><td class="num">$66.2M</td><td class="num">$67.1M</td><td class="num pos">+$0.9M</td><td class="num flat">+1.3%</td><td class="num">$555K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--api)"></span>API</td><td class="num">$55.9M</td><td class="num">$55.0M</td><td class="num neg">-$0.9M</td><td class="num neg">-1.6%</td><td class="num">$71K</td></tr>
+      <tr><td><span class="ch-dot" style="background:#9898b0"></span>FedEx</td><td class="num">$6.6K</td><td class="num">$5.9K</td><td class="num neg">-$0.7K</td><td class="num neg">-11%</td><td class="num">$5.9K</td></tr>
+      <tr><td><span class="ch-dot" style="background:#9898b0"></span>Gross Profit Share</td><td class="num">—</td><td class="num">$2.1K</td><td class="num pos">+$2.1K</td><td class="num">new</td><td class="num">$2.1K</td></tr>
+      <tr class="total-row"><td>Total</td><td class="num">$833.7M</td><td class="num">$859.5M</td><td class="num pos">+$25.8M</td><td class="num pos">+3.1%</td><td class="num">$1,138K</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MONTHLY -->
+<div id="tc-mo" class="tab-content">
+  <div class="section-head"><h2>Total GMV by Month — 2025 vs 2026</h2><div class="hint">YoY % above each pair</div></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#d1d5db"></div>2025</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>2026</div>
+  </div>
+  <div class="combo-chart" id="totalChart"></div>
+</div>
+
+<!-- BY CHANNEL -->
+<div id="tc-ch" class="tab-content">
+  <div class="section-head"><h2>GMV by Channel — Monthly</h2><div class="hint">Deselect Offline to zoom into online channels</div></div>
+  <div class="toggles">
+    <div class="toggle active" data-ch="offline" onclick="toggleCh(this)">Offline</div>
+    <div class="toggle active" data-ch="ecom" onclick="toggleCh(this)">eCommerce</div>
+    <div class="toggle active" data-ch="api" onclick="toggleCh(this)">API</div>
+    <div class="toggle active" data-ch="k2k" onclick="toggleCh(this)">K2K</div>
+  </div>
+  <div class="stacked-area" id="channelChart"></div>
+</div>
+
+<!-- YoY TREND -->
+<div id="tc-tr" class="tab-content">
+  <div class="section-head"><h2>YoY Growth by Month</h2><div class="hint">Center = 0%. Right = growth. Left = contraction.</div></div>
+  <div class="trend-grid" id="trendGrid"></div>
+</div>
+
+</div><!-- tab-body -->
+
+<div class="next-link">
+  <strong>→ Layer 2:</strong> Where does the growth come from? Which industries, which corridors, who's winning and losing?<br>
+  <span style="color:var(--text3)">See tx_L2_industry.html</span>
+</div>
+
+<div class="source">
+  SALES_SV · ks_flag=TRUE · sales&lt;$100K · shipping_date H1 2025 vs H1 2026<br>
+  Fees: CONSOLIDATED_TRANSACTION_FEES_SV · status='Billed' · transaction_date · Jan-May (Jun not yet billed)<br>
+  Trust: needs_validation · Axerrio ~$19.6K excluded<br>
+  Rose (Data Agent) · 2026-07-06
+</div>
+
+<script>
+const months=['Jan','Feb','Mar','Apr','May','Jun'];
+const gmv25=[112.3,165.6,109.1,159.7,177.7,109.3];
+const gmv26=[114.6,182.2,123.8,162.9,167.6,108.5];
+const ch={
+  offline:{c:'var(--offline)',l:'Offline',y25:[95.3,142.5,88.0,130.7,144.0,88.4],y26:[96.4,156.3,99.7,131.5,134.8,86.8]},
+  ecom:{c:'var(--ecom)',l:'eCommerce',y25:[7.7,10.7,9.6,13.6,15.6,9.1],y26:[7.5,10.7,10.0,13.8,15.2,9.8]},
+  api:{c:'var(--api)',l:'API',y25:[6.7,9.1,8.5,10.6,12.5,8.5],y26:[7.4,10.4,9.9,10.1,10.0,7.2]},
+  k2k:{c:'var(--k2k)',l:'K2K',y25:[2.5,3.4,3.0,4.8,5.5,3.4],y26:[3.3,4.8,4.2,7.4,7.6,4.7]}
+};
+const activeCh=new Set(['offline','ecom','api','k2k']);
+
+// WATERFALL
+function buildWF(){
+  const el=document.getElementById('wfChart'); el.innerHTML='';
+  const data=[
+    {label:'H1 2025',val:833.7,type:'total'},
+    {label:'Offline',val:16.6,type:'up'},
+    {label:'K2K',val:9.4,type:'up'},
+    {label:'eCom',val:0.9,type:'up'},
+    {label:'API',val:-0.9,type:'down'},
+    {label:'H1 2026',val:859.5,type:'total'}
+  ];
+  const maxV=870,minV=790,range=maxV-minV,chartH=220;
+  const scale=v=>(v-minV)/range*chartH;
+  let running=0;
+  data.forEach(d=>{
+    const wrap=document.createElement('div'); wrap.className='wf-bar-wrap';
+    if(d.type==='total'){
+      const h=scale(d.val);
+      wrap.innerHTML=`<div class="wf-bar total" style="height:${h}px;bottom:36px"></div><div class="wf-val" style="bottom:${h+40}px;color:var(--blue)">$${d.val.toFixed(0)}M</div><div class="wf-label">${d.label}</div>`;
+      running=d.val;
+    } else {
+      const prev=running; running+=d.val;
+      const bot=scale(Math.min(prev,running)), top=scale(Math.max(prev,running));
+      const h=Math.max(top-bot,3), cls=d.val>=0?'up':'down', clr=d.val>=0?'var(--green)':'var(--red)';
+      wrap.innerHTML=`<div class="wf-bar ${cls}" style="height:${h}px;bottom:${bot+36}px"></div><div class="wf-val" style="bottom:${bot+h+40}px;color:${clr}">${d.val>=0?'+':''}${d.val.toFixed(1)}M</div><div class="wf-label">${d.label}</div>`;
+    }
+    el.appendChild(wrap);
+  });
+}
+
+// MONTHLY
+function buildTotal(){
+  const el=document.getElementById('totalChart'); el.innerHTML='';
+  months.forEach((m,i)=>{
+    const yoy=((gmv26[i]-gmv25[i])/gmv25[i]*100).toFixed(1);
+    const cls=yoy>1?'pos':yoy<-1?'neg':'flat';
+    el.innerHTML+=`<div class="combo-month"><div class="combo-yoy ${cls}">${yoy>0?'+':''}${yoy}%</div><div class="combo-bars"><div class="combo-bar y25" style="height:${gmv25[i]/200*200}px"><div class="combo-tip">'25: $${gmv25[i].toFixed(1)}M</div></div><div class="combo-bar y26" style="height:${gmv26[i]/200*200}px"><div class="combo-tip">'26: $${gmv26[i].toFixed(1)}M</div></div></div><div class="combo-label">${m}</div></div>`;
+  });
+}
+
+// CHANNEL
+function buildChannel(){
+  const el=document.getElementById('channelChart'); el.innerHTML='';
+  let max=0;
+  months.forEach((_,i)=>{let t25=0,t26=0;for(const k of activeCh){t25+=ch[k].y25[i];t26+=ch[k].y26[i];}max=Math.max(max,t25,t26);});
+  max*=1.1;
+  const keys=['offline','ecom','api','k2k'].filter(k=>activeCh.has(k));
+  months.forEach((m,i)=>{
+    let html='<div class="stacked-month"><div class="stacked-cols">';
+    ['y25','y26'].forEach(yr=>{
+      html+='<div class="stacked-col">';
+      keys.forEach(k=>{
+        const v=ch[k][yr][i], h=v/max*200, op=yr==='y25'?'opacity:0.4;':'';
+        html+=`<div class="seg" style="height:${h}px;background:${ch[k].c};${op}"><div class="stip">${ch[k].l} ${yr==='y25'?"'25":"'26"}: $${v.toFixed(1)}M</div></div>`;
+      });
+      html+='</div>';
+    });
+    html+=`</div><div class="stacked-mlabel">${m}</div><div class="stacked-sublabel">'25 · '26</div></div>`;
+    el.innerHTML+=html;
+  });
+}
+function toggleCh(btn){const k=btn.dataset.ch;if(activeCh.has(k)){activeCh.delete(k);btn.classList.remove('active');}else{activeCh.add(k);btn.classList.add('active');}buildChannel();}
+
+// TRENDS
+function buildTrends(){
+  const el=document.getElementById('trendGrid'); el.innerHTML='';
+  [{t:'Total GMV',d25:gmv25,d26:gmv26},{t:'Offline',d25:ch.offline.y25,d26:ch.offline.y26},{t:'eCommerce',d25:ch.ecom.y25,d26:ch.ecom.y26},{t:'K2K',d25:ch.k2k.y25,d26:ch.k2k.y26}].forEach(s=>{
+    let html=`<div class="trend-block"><h3>${s.t}</h3>`;
+    months.forEach((m,i)=>{
+      const yoy=(s.d26[i]-s.d25[i])/s.d25[i]*100, cls=yoy>1?'pos':yoy<-1?'neg':'flat', w=Math.min(Math.abs(yoy)*7,180);
+      html+=`<div class="trend-row"><div class="trend-mo">${m}</div><div class="trend-bar-wrap"><div class="trend-center"></div><div class="trend-bar ${cls}" style="width:${w}px">${yoy>0?'+':''}${yoy.toFixed(1)}%</div></div></div>`;
+    });
+    html+='</div>'; el.innerHTML+=html;
+  });
+}
+
+function mainTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+buildWF(); buildTotal(); buildChannel(); buildTrends();
+</script>
+<div style="position:fixed;bottom:0;left:0;right:0;background:#f8f9fb;border-top:1px solid #e2e5ea;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;font-family:-apple-system,sans-serif;font-size:12px;color:#5a5a78;"><span>TX Chapter Dashboard · Updated 2026-07-06 · <a href="index.html" style="color:#2563eb;text-decoration:none;">← Hub</a></span><a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=feedback&title=[Feedback]+" target="_blank" style="padding:4px 12px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-weight:500;font-size:11px;">Feedback</a></div><div style="height:40px"></div></body>
+</html>
