@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>L4 · Buyer Profiles & Product Deep Dive</title>
+<style>
+:root{--bg:#fff;--surface:#f8f9fb;--border:#e2e5ea;--text:#1a1a2e;--text2:#5a5a78;--text3:#9898b0;--green:#059669;--red:#dc2626;--amber:#d97706;--blue:#2563eb;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:32px 40px;max-width:1320px;margin:0 auto;line-height:1.5;}
+.header{margin-bottom:24px;border-bottom:2px solid var(--text);padding-bottom:12px;}
+.header h1{font-size:26px;font-weight:700;}.header .purpose{font-size:13px;color:var(--text2);margin-top:4px;}
+.verdict{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+.verdict .headline{font-size:17px;font-weight:600;margin-bottom:8px;}
+.g{color:var(--green);}.r{color:var(--red);}.a{color:var(--amber);}.b{color:var(--blue);}
+.verdict ul{font-size:13px;color:var(--text2);padding-left:20px;}.verdict li{margin-bottom:4px;}.verdict strong{color:var(--text);}
+.tabs{display:flex;gap:2px;background:#f0f2f5;border-radius:8px 8px 0 0;padding:4px 4px 0;overflow-x:auto;}
+.tab{padding:8px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);border-radius:6px 6px 0 0;background:transparent;border:none;white-space:nowrap;}
+.tab:hover{color:var(--text);}.tab.active{background:var(--bg);color:var(--text);font-weight:600;}
+.tb{border:1px solid var(--border);border-radius:0 0 10px 10px;padding:24px;margin-bottom:28px;}
+.tc{display:none;}.tc.active{display:block;}
+h2{font-size:15px;font-weight:600;margin-bottom:6px;}
+.hyp{font-size:13px;color:var(--text2);margin-bottom:14px;font-style:italic;}
+.finding{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;}
+.finding strong{color:var(--text);}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:4px;}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);}
+th.n{text-align:right;}
+td{padding:7px 8px;font-size:11px;border-bottom:1px solid #f0f2f5;font-variant-numeric:tabular-nums;}
+td.n{text-align:right;}
+tr:hover{background:var(--surface);}
+.total-row{border-top:2px solid var(--border);font-weight:600;}
+.callout{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;}
+.clabel{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:3px;}
+.source{font-size:10px;color:var(--text3);margin-top:32px;padding-top:12px;border-top:1px solid var(--border);line-height:1.7;}
+</style></head><body>
+
+<div class="header">
+<h1>L4 · Buyer Profiles: Who Buys What, and Why Online ≠ Offline</h1>
+<div class="purpose">L3a showed the Big 3 are structurally different. This dashboard goes one level deeper: what do their buyers actually purchase, what format (Units vs Boxes), at what price, and where is the adoption gap?</div>
+</div>
+
+<div class="verdict">
+<div class="headline"><span class="r">eCommerce = Boxes (pre-order).</span> <span class="a">Offline = Units (loose stems).</span> <span class="g">They are different purchase motions.</span></div>
+<ul>
+<li><strong>The channel IS the product.</strong> eCom buyers order full cases (Boxes, ~$110/box at KBC). Offline buyers buy loose stems (Units, ~$2.93/stem). It's not the same buyer choosing a different channel — it's a different buying motion.</li>
+<li><strong>KBC eCommerce matched offline in Boxes volume</strong> — 52K boxes online vs 52K offline. For full cases, digital parity already exists. The gap = Units ($49M offline, $614K online).</li>
+<li><strong>Zeidler proves the "live cooler" model works.</strong> They sell Units online ($130K "Fresh Cut" + greens). Only one doing it among small wholesalers.</li>
+<li><strong>Buyer base is razor-thin:</strong> KBC has ~20 active named eCom buyers out of 1,382 offline buyers (1.4%). Bill Doran: ~2 real buyers. The opportunity = first-purchase activation at scale.</li>
+<li><strong>Online buyers pay more:</strong> Bill Doran $/unit online = $3.37 vs $2.99 offline. Higher-value items go online first.</li>
+</ul>
+</div>
+
+<div class="tabs" id="mt">
+<div class="tab active" onclick="st('motion')">The Two Motions</div>
+<div class="tab" onclick="st('kbc')">KBC Product Deep Dive</div>
+<div class="tab" onclick="st('bdc')">Bill Doran Product Deep Dive</div>
+<div class="tab" onclick="st('pricing')">Price & Unit Economics</div>
+<div class="tab" onclick="st('buyers')">Buyer Concentration</div>
+<div class="tab" onclick="st('zeidler')">Zeidler: The Exception</div>
+<div class="tab" onclick="st('playbook')">Replication Playbook</div>
+</div><div class="tb">
+
+<!-- THE TWO MOTIONS -->
+<div id="tc-motion" class="tc active">
+<h2>eCommerce and Offline Are Different Purchase Motions</h2>
+<div class="hyp">Why don't offline buyers just switch to online? Because they're buying different things.</div>
+
+<div class="finding"><div class="tag r">Critical insight: the "channel" IS the product</div>
+<strong>eCommerce = pre-order channel.</strong> Buyers order full cases (Boxes) from import/farm shipments. They know what they want, order in advance, receive packed product. This is a planning purchase.<br><br>
+<strong>Offline = walk-in/call-in channel.</strong> Buyers see loose stems (Units) in the cooler, pick what looks good, buy individual bunches. This is an impulse/availability purchase.<br><br>
+<strong>Implication:</strong> "Moving buyers from offline to online" doesn't mean the same buyer types the same order on a website. It means enabling the walk-in/call-in buyer to see and order loose inventory digitally. That requires listing Units (the live cooler) online — not just having the Box catalog on an eShop.
+</div>
+
+<h2>The proof: KBC</h2>
+<table>
+<thead><tr><th>Channel</th><th class="n">Boxes GMV</th><th class="n">Units GMV</th><th class="n">Units %</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td>Offline</td><td class="n">$5.99M</td><td class="n">$49.34M</td><td class="n r">89%</td><td style="font-size:10px">Cooler walk-ins buy loose stems</td></tr>
+<tr><td>eCommerce</td><td class="n g">$5.71M</td><td class="n">$614K</td><td class="n a">10%</td><td style="font-size:10px">Online buyers pre-order full cases</td></tr>
+<tr><td>API</td><td class="n">—</td><td class="n">$2.42M</td><td class="n">100%</td><td style="font-size:10px">System integration buys loose</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">Box parity already achieved</div>
+KBC sells 52K boxes offline and 52K boxes via eCommerce. <strong>For full cases, online has already matched offline.</strong> There's no more Box volume to capture — the growth is in Units. The $49M Units book is the prize.</div>
+</div>
+
+<!-- KBC DEEP DIVE -->
+<div id="tc-kbc" class="tc">
+<h2>KBC: What Sells Where?</h2>
+
+<h2>eCommerce = Boxes (top 10)</h2>
+<table>
+<thead><tr><th>Product</th><th>Format</th><th class="n">eCom GMV</th><th class="n">Offline GMV (same product)</th><th class="n">Online %</th></tr></thead>
+<tbody>
+<tr><td>Rose</td><td>Boxes</td><td class="n">$1,539K</td><td class="n">$1,979K (Boxes)</td><td class="n g">44%</td></tr>
+<tr><td>Hydrangea</td><td>Boxes</td><td class="n">$603K</td><td class="n">$490K</td><td class="n g">55%</td></tr>
+<tr><td>Misc Flowers</td><td>Boxes</td><td class="n">$352K</td><td class="n">$118K</td><td class="n g">75%</td></tr>
+<tr><td>Carnation</td><td>Boxes</td><td class="n">$277K</td><td class="n">$146K</td><td class="n g">65%</td></tr>
+<tr><td>Spray Rose</td><td>Boxes</td><td class="n">$217K</td><td class="n">$158K</td><td class="n g">58%</td></tr>
+<tr><td>Stocks</td><td>Boxes</td><td class="n">$216K</td><td class="n">$69K</td><td class="n g">76%</td></tr>
+<tr><td>Greens</td><td>Boxes</td><td class="n">$199K</td><td class="n">$150K</td><td class="n g">57%</td></tr>
+<tr><td>Delphinium</td><td>Boxes</td><td class="n">$198K</td><td class="n">$90K</td><td class="n g">69%</td></tr>
+<tr><td>Garden Roses</td><td>Boxes</td><td class="n">$193K</td><td class="n">$86K</td><td class="n g">69%</td></tr>
+<tr><td>Ranunculus</td><td>Boxes</td><td class="n">$192K</td><td class="n">$80K</td><td class="n g">71%</td></tr>
+</tbody>
+</table>
+<div style="font-size:11px;color:var(--text3);margin-bottom:16px">For Boxes, eCommerce already dominates most categories (55-76% online). The Box battle is won.</div>
+
+<h2>Offline = Units — the unlisted $49M (top 10)</h2>
+<table>
+<thead><tr><th>Product (Units only)</th><th class="n">Offline GMV</th><th class="n">eCom GMV</th><th class="n">Online %</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Rose</td><td class="n">$8,583K</td><td class="n r">$111K</td><td class="n r">1.3%</td><td style="font-size:10px;color:var(--red)">Not listed as Units online</td></tr>
+<tr><td>Bouquets & CB</td><td class="n">$3,184K</td><td class="n r">$4K</td><td class="n r">0.1%</td><td style="font-size:10px;color:var(--red)">Not listed</td></tr>
+<tr><td>Rose Bouquets</td><td class="n">$2,887K</td><td class="n r">$2K</td><td class="n r">0.1%</td><td style="font-size:10px;color:var(--red)">Not listed</td></tr>
+<tr><td>Misc Flowers</td><td class="n">$2,532K</td><td class="n a">$39K</td><td class="n a">1.5%</td><td style="font-size:10px">Minimal listing</td></tr>
+<tr><td>Carnation</td><td class="n">$1,973K</td><td class="n a">$30K</td><td class="n a">1.5%</td><td style="font-size:10px">Minimal listing</td></tr>
+<tr><td>Greens</td><td class="n">$1,906K</td><td class="n a">$30K</td><td class="n a">1.6%</td><td style="font-size:10px">Minimal listing</td></tr>
+<tr><td>Hydrangea</td><td class="n">$1,597K</td><td class="n a">$29K</td><td class="n a">1.8%</td><td style="font-size:10px">Minimal listing</td></tr>
+<tr><td>Spray Rose</td><td class="n">$1,411K</td><td class="n">$19K</td><td class="n r">1.3%</td><td style="font-size:10px">Not listed</td></tr>
+<tr><td>Spray Mums</td><td class="n">$1,197K</td><td class="n">$22K</td><td class="n r">1.8%</td><td style="font-size:10px">Minimal</td></tr>
+<tr><td>Tulip</td><td class="n">$1,332K</td><td class="n">$15K</td><td class="n r">1.1%</td><td style="font-size:10px">Minimal (but $475K via API!)</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel r">$49M × 1.3% = the gap</div>
+KBC sells $49M of Units offline with only 1.3% available online. Rose Units alone = $8.6M offline vs $111K online. The product is in the cooler. It's just not in the eShop. <strong>This is the bunch upload initiative.</strong></div>
+</div>
+
+<!-- BDC DEEP DIVE -->
+<div id="tc-bdc" class="tc">
+<h2>Bill Doran: What Sells Where?</h2>
+<div class="hyp">Bill Doran has no inventory format gap (50/50 online). But what are the untapped categories?</div>
+
+<h2>eCommerce vs Offline — Top Categories</h2>
+<table>
+<thead><tr><th>Product</th><th class="n">Offline GMV</th><th class="n">eCom GMV</th><th class="n">Online %</th></tr></thead>
+<tbody>
+<tr><td>Greens (Boxes+Units)</td><td class="n">$5,085K</td><td class="n g">$292K</td><td class="n">5.4%</td></tr>
+<tr><td>Rose (Units)</td><td class="n">$4,108K</td><td class="n">$152K</td><td class="n">3.6%</td></tr>
+<tr><td>Lisianthus (Boxes)</td><td class="n">—</td><td class="n g">$133K</td><td class="n">—</td></tr>
+<tr><td>Snaps (Boxes)</td><td class="n">—</td><td class="n g">$113K</td><td class="n">—</td></tr>
+<tr><td>BQ (Boxes)</td><td class="n">$3,275K</td><td class="n">$83K</td><td class="n">2.5%</td></tr>
+<tr><td>Carnation (Units)</td><td class="n">$2,120K</td><td class="n">$72K</td><td class="n">3.3%</td></tr>
+</tbody>
+</table>
+
+<h2>Untapped offline categories (zero/near-zero online)</h2>
+<table>
+<thead><tr><th>Category</th><th class="n">Offline GMV</th><th class="n">eCom GMV</th><th>Why offline?</th></tr></thead>
+<tbody>
+<tr><td>@ Plant</td><td class="n">$3,286K</td><td class="n r">$0</td><td style="font-size:10px">Plants = visual purchase, hard to sell from catalog</td></tr>
+<tr><td>Rose Globe / Rose Red (Boxes)</td><td class="n">$3,738K</td><td class="n r">$0</td><td style="font-size:10px">Specialty roses — could be listed</td></tr>
+<tr><td>Glass</td><td class="n r">$1,588K</td><td class="n r">$0</td><td style="font-size:10px">Hard goods — phone reorder habit</td></tr>
+<tr><td>CB Rose (Boxes)</td><td class="n">$1,569K</td><td class="n r">$0</td><td style="font-size:10px">Could be listed</td></tr>
+<tr><td>Foam</td><td class="n">$853K</td><td class="n r">$0</td><td style="font-size:10px">Hard goods — reorder habit</td></tr>
+<tr><td>@ Flowering Plants</td><td class="n">$750K</td><td class="n r">$0</td><td style="font-size:10px">Visual purchase</td></tr>
+<tr><td>Supplies</td><td class="n">$475K</td><td class="n r">$0</td><td style="font-size:10px">Hard goods</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel a">Bill Doran's untapped</div>
+<strong>$5.7M in Hard Goods</strong> (Glass, Foam, Supplies, etc.) is 100% offline. These are reorder items — same SKUs, predictable demand. Perfect for online automation but low priority vs flower revenue.<br>
+<strong>$4M+ in specialty roses</strong> (Globe, Red, CB) are offline-only Boxes — these COULD be listed on eShop immediately.<br>
+<strong>$3.3M in Plants</strong> — harder to sell online (visual/quality dependent), may stay offline.</div>
+</div>
+
+<!-- PRICING -->
+<div id="tc-pricing" class="tc">
+<h2>Price & Unit Economics: Online vs Offline</h2>
+<div class="hyp">Do online buyers pay more or less? What does that tell us?</div>
+
+<h2>KBC</h2>
+<table>
+<thead><tr><th>Channel</th><th>Format</th><th class="n">Total GMV</th><th class="n">Volume</th><th class="n">Avg Price</th></tr></thead>
+<tbody>
+<tr><td>eCommerce</td><td>Boxes</td><td class="n">$5.71M</td><td class="n">52K boxes</td><td class="n">$109.82/box</td></tr>
+<tr><td>Offline</td><td>Boxes</td><td class="n">$5.99M</td><td class="n">52K boxes</td><td class="n">$116.02/box</td></tr>
+<tr><td>eCommerce</td><td>Units</td><td class="n">$614K</td><td class="n">249K units</td><td class="n">$2.47/unit</td></tr>
+<tr><td>Offline</td><td>Units</td><td class="n">$49.34M</td><td class="n">16.87M units</td><td class="n">$2.93/unit</td></tr>
+<tr><td>API</td><td>Units</td><td class="n">$2.42M</td><td class="n">1.08M units</td><td class="n">$2.24/unit</td></tr>
+</tbody>
+</table>
+
+<h2>Bill Doran</h2>
+<table>
+<thead><tr><th>Channel</th><th>Format</th><th class="n">Total GMV</th><th class="n">Volume</th><th class="n">Avg Price</th></tr></thead>
+<tbody>
+<tr><td>eCommerce</td><td>Boxes</td><td class="n">$1.07M</td><td class="n">14K boxes</td><td class="n g">$75.11/box</td></tr>
+<tr><td>Offline</td><td>Boxes</td><td class="n">$22.81M</td><td class="n">375K boxes</td><td class="n">$60.84/box</td></tr>
+<tr><td>eCommerce</td><td>Units</td><td class="n">$1.07M</td><td class="n">316K units</td><td class="n g">$3.37/unit</td></tr>
+<tr><td>Offline</td><td>Units</td><td class="n">$30.79M</td><td class="n">10.29M units</td><td class="n">$2.99/unit</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel g">Online buyers pay more at Bill Doran</div>
+<strong>$/box online = $75 vs $61 offline (+23%).</strong> $/unit online = $3.37 vs $2.99 (+13%). Online buyers select higher-value product. This makes sense: florists who plan ahead and order online are likely buying premium product for events/weddings. Walk-in buyers grab whatever's in the cooler.<br><br>
+At KBC, prices are more similar (~$110 vs $116/box). The Unit prices are slightly lower online ($2.47 vs $2.93), possibly because the limited Units available online skew toward lower-cost items.</div>
+</div>
+
+<!-- BUYER CONCENTRATION -->
+<div id="tc-buyers" class="tc">
+<h2>Buyer Concentration: How Thin Is the eCommerce Base?</h2>
+<div class="hyp">Are many buyers using eCommerce, or is it a handful?</div>
+
+<div class="finding"><div class="tag r">Extremely thin. The growth opportunity = first-purchase activation.</div>
+KBC: ~20 named eCom buyers out of 1,382 offline (1.4%). Bill Doran: ~2 real buyers out of 321 offline. The "blank" ship_names (likely house/internal accounts) dominate GMV.</div>
+
+<h2>KBC eCommerce Buyers (top named)</h2>
+<table>
+<thead><tr><th>Buyer</th><th class="n">eCom GMV H1'26</th></tr></thead>
+<tbody>
+<tr><td style="color:var(--text3)">(blank — house/internal)</td><td class="n">$5,000K</td></tr>
+<tr><td style="color:var(--text3)">(blank — house/internal)</td><td class="n">$813K</td></tr>
+<tr><td>Carithers Flowers</td><td class="n g">$72K</td></tr>
+<tr><td>Village Green Flowers</td><td class="n">$39K</td></tr>
+<tr><td>Malana Sophia Floral</td><td class="n">$35K</td></tr>
+<tr><td>Fatima Bazzi</td><td class="n">$30K</td></tr>
+<tr><td>Tara Florist Twelve Oaks</td><td class="n">$30K</td></tr>
+<tr><td>Flower Alley</td><td class="n">$28K</td></tr>
+<tr><td>Haute Floral Boutique</td><td class="n">$21K</td></tr>
+<tr><td>The Petal</td><td class="n">$21K</td></tr>
+</tbody>
+</table>
+<div style="font-size:11px;color:var(--text3);margin-bottom:16px">~20 named buyers above $5K. The top 2 "blank" entries = 92% of eCom GMV. These are likely internal/house orders or default entries — needs CS investigation.</div>
+
+<h2>The math</h2>
+<table>
+<thead><tr><th></th><th class="n">KBC</th><th class="n">Bill Doran</th></tr></thead>
+<tbody>
+<tr><td>Offline buyers (ship names)</td><td class="n">1,382</td><td class="n">321</td></tr>
+<tr><td>eCom buyers (ship names)</td><td class="n">100</td><td class="n">15</td></tr>
+<tr><td>Online penetration</td><td class="n">7.2%</td><td class="n">4.7%</td></tr>
+<tr><td>Avg eCom GMV per named buyer</td><td class="n">$5.1K</td><td class="n">—</td></tr>
+<tr><td>If penetration → 20%</td><td class="n g">~276 eCom buyers</td><td class="n g">~64 eCom buyers</td></tr>
+<tr><td>Incremental eCom GMV (at $5K avg)</td><td class="n g">+$900K</td><td class="n g">+$250K</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">First-purchase activation is the play</div>
+Getting 176 more KBC buyers online (from 100 → 276, i.e. 20% penetration) adds ~$900K in eCom GMV. And that's just Boxes. If Units are listed, the upside is multiples of that. <strong>This is List A territory: identify offline-only buyers, contact them, activate their first online order.</strong></div>
+</div>
+
+<!-- ZEIDLER -->
+<div id="tc-zeidler" class="tc">
+<h2>Zeidler Floral: The "Live Cooler" Model</h2>
+<div class="hyp">Can a small wholesaler sell Units (loose stems) online? Zeidler proves yes.</div>
+
+<div class="finding"><div class="tag g">$164K eCommerce — 100% Units. The exception that proves the model.</div>
+Every other small wholesaler (Baisch, Sims, Pikes Peak) sells Boxes online. Zeidler sells <strong>only Units</strong>: Fresh Cut $130K, Greens $19K, Supplies $7K, Plants $5K. This is the live cooler model — what's in the shop is what's on the website.</div>
+
+<h2>Zeidler vs other small wholesaler eCom</h2>
+<table>
+<thead><tr><th>Company</th><th class="n">eCom H1'26</th><th>Format</th><th>Model</th></tr></thead>
+<tbody>
+<tr><td>Baisch & Skinner</td><td class="n">$437K</td><td>100% Boxes</td><td style="font-size:10px">Pre-order from import catalog</td></tr>
+<tr><td>Pikes Peak</td><td class="n">$177K</td><td>100% Boxes</td><td style="font-size:10px">Pre-order from import catalog</td></tr>
+<tr><td>Sims Flower</td><td class="n">$176K</td><td>100% Boxes</td><td style="font-size:10px">Pre-order from import catalog</td></tr>
+<tr><td class="g"><strong>Zeidler Floral</strong></td><td class="n g"><strong>$164K</strong></td><td><strong>100% Units</strong></td><td style="font-size:10px;color:var(--green)"><strong>Live cooler → eShop</strong></td></tr>
+<tr><td>Botanica Dallas</td><td class="n">$220K</td><td>Mixed</td><td style="font-size:10px">Mix of both</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel g">Zeidler = the playbook for KBC's $49M</div>
+If Zeidler can sell $164K of Units online from scratch ($0 last year), KBC can list their $49M Units book on eShop. The question is operational: how does Zeidler keep their eShop inventory synced with their cooler? <strong>This needs CS/product investigation — what tooling does Zeidler use?</strong></div>
+</div>
+
+<!-- PLAYBOOK -->
+<div id="tc-playbook" class="tc">
+<h2>Replication Playbook: What to Do Next</h2>
+
+<div class="finding"><div class="tag b">Four plays, ordered by impact</div></div>
+
+<div class="callout" style="border-left:3px solid var(--green)"><div class="clabel g">Play 1: Bunch Upload (KBC focus)</div>
+<strong>What:</strong> List Units/loose stems on KBC eShop. Start with top 5 categories: Rose ($8.6M), Bouquets ($3.2M), Rose Bouquets ($2.9M), Misc ($2.5M), Carnation ($2.0M).<br>
+<strong>Why:</strong> Box parity already achieved (52K boxes online = 52K offline). The growth is in Units. Even 5% Units penetration = $2.5M new online GMV.<br>
+<strong>How:</strong> Study Zeidler's model (live cooler → eShop sync). Investigate what tooling they use. Apply to KBC branches.<br>
+<strong>Who:</strong> Christine (Implementations) + KBC branch champions. Start with 1 branch.
+</div>
+
+<div class="callout" style="border-left:3px solid var(--blue)"><div class="clabel b">Play 2: First-Purchase Activation (KBC + BDC)</div>
+<strong>What:</strong> Get offline-only buyers to make their first eCommerce order.<br>
+<strong>Why:</strong> KBC has 1,282 offline-only buyers. Bill Doran has 306. Getting 10% of them online = 130+ new eCom buyers × $5K avg = $650K+ new eCom GMV.<br>
+<strong>How:</strong> Identify offline-only buyers → segment by purchase size/frequency → outreach with "your first order online" incentive.<br>
+<strong>Who:</strong> CS (connection funnel team) + wholesaler account manager.
+</div>
+
+<div class="callout" style="border-left:3px solid var(--amber)"><div class="clabel a">Play 3: Study Zeidler + BDC Unit Model</div>
+<strong>What:</strong> Understand how Zeidler sells Units online and how Bill Doran maintains 50/50 Boxes/Units online.<br>
+<strong>Why:</strong> These are the only two models that successfully sell loose stems digitally. Everyone else (Baisch, Sims, Pikes Peak) only sells Boxes online.<br>
+<strong>How:</strong> CS interview with Zeidler champion. Product review of their eShop setup. BDC account review with their account manager.<br>
+<strong>Who:</strong> Product + CS.
+</div>
+
+<div class="callout" style="border-left:3px solid var(--text3)"><div class="clabel" style="color:var(--text3)">Play 4: Bill Doran Box Catalog (Quick Win)</div>
+<strong>What:</strong> List BDC's $3.7M specialty roses (Globe, Red, CB Rose) on eShop.<br>
+<strong>Why:</strong> These are Boxes already — no operational change needed. Just list them. BDC's eCom buyers pay +23% premium on Boxes ($75 vs $61) — higher margin.<br>
+<strong>How:</strong> Add to eShop catalog. They're already packed, already have SKUs.<br>
+<strong>Who:</strong> Implementations + BDC account manager.
+</div>
+
+</div>
+
+</div>
+
+<div class="source">
+SALES_SV · ks_flag=TRUE · sales&lt;$100K · H1 2026 · Buyer counts via COUNT(DISTINCT ship_name) — approximate<br>
+Trust: needs_validation · "Blank" ship_names need CS investigation · Zeidler operational model needs external research<br>
+Rose · 2026-07-06
+</div>
+
+<script>
+function st(n){document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));document.getElementById('tc-'+n).classList.add('active');document.querySelectorAll('#mt .tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');}
+</script>
+</body></html>

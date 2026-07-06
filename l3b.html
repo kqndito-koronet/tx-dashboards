@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>L3b · Offline Wholesalers</title>
+<style>
+:root{--bg:#fff;--surface:#f8f9fb;--border:#e2e5ea;--text:#1a1a2e;--text2:#5a5a78;--text3:#9898b0;--green:#059669;--red:#dc2626;--amber:#d97706;--blue:#2563eb;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:32px 40px;max-width:1320px;margin:0 auto;line-height:1.5;}
+.header{margin-bottom:24px;border-bottom:2px solid var(--text);padding-bottom:12px;}
+.header h1{font-size:26px;font-weight:700;}.header .purpose{font-size:13px;color:var(--text2);margin-top:4px;}
+.verdict{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+.verdict .headline{font-size:17px;font-weight:600;margin-bottom:8px;}
+.g{color:var(--green);}.r{color:var(--red);}.a{color:var(--amber);}.b{color:var(--blue);}
+.verdict ul{font-size:13px;color:var(--text2);padding-left:20px;}.verdict li{margin-bottom:4px;}.verdict strong{color:var(--text);}
+.tabs{display:flex;gap:2px;background:#f0f2f5;border-radius:8px 8px 0 0;padding:4px 4px 0;overflow-x:auto;}
+.tab{padding:8px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);border-radius:6px 6px 0 0;background:transparent;border:none;white-space:nowrap;}
+.tab:hover{color:var(--text);}.tab.active{background:var(--bg);color:var(--text);font-weight:600;}
+.tb{border:1px solid var(--border);border-radius:0 0 10px 10px;padding:24px;margin-bottom:28px;}
+.tc{display:none;}.tc.active{display:block;}
+h2{font-size:15px;font-weight:600;margin-bottom:6px;}
+.hyp{font-size:13px;color:var(--text2);margin-bottom:14px;font-style:italic;}
+.finding{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;}
+.finding strong{color:var(--text);}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:4px;}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);}
+th.n{text-align:right;}
+td{padding:7px 8px;font-size:11px;border-bottom:1px solid #f0f2f5;font-variant-numeric:tabular-nums;}
+td.n{text-align:right;}
+tr:hover{background:var(--surface);}
+.total-row{border-top:2px solid var(--border);font-weight:600;}
+.callout{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;}
+.clabel{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:3px;}
+.source{font-size:10px;color:var(--text3);margin-top:32px;padding-top:12px;border-top:1px solid var(--border);line-height:1.7;}
+</style></head><body>
+
+<div class="header">
+<h1>L3b · The "Offline" Wholesalers — They're Not What You Think</h1>
+<div class="purpose">These wholesalers appear 99% offline on the sell-side. But most of them BUY via Procurement, have active K2K connections, and some are ramping fast. The gap is sell-side digital, not platform adoption.</div>
+</div>
+
+<div class="verdict">
+<div class="headline">"Offline" is a misnomer. They <span class="g">BUY digital</span> but <span class="r">SELL analog</span>.</div>
+<ul>
+<li><strong>Most buy via Procurement</strong> — H&T ($2.4M), Tropical Blooms ($2.4M), Arizona Family ($2.3M), DKAY ($469K) all buy digitally from importers.</li>
+<li><strong>Most have active K2K connections</strong> — Southern Floral 288, Cleveland P&F 271, Baisch 244, Dreisbach 189. Lanes are wired.</li>
+<li><strong>Gap = connection→selling GMV.</strong> DKAY: 62 connections, $469K procurement buying, $0 online selling. They KNOW the system. They just don't sell through it.</li>
+<li><strong>New ramps prove it works:</strong> Flora Fresh ($0→$5.5M), WE GOT FLOWERS ($0→$2.9M), Stemline ($0→$2.3M), Sims ($126K→$1.25M).</li>
+</ul>
+</div>
+
+<div class="tabs" id="mt">
+<div class="tab active" onclick="st('overview')">Overview</div>
+<div class="tab" onclick="st('connections')">Connections (Have, Don't Use)</div>
+<div class="tab" onclick="st('procurement')">Procurement (Buy, Don't Sell)</div>
+<div class="tab" onclick="st('ramps')">New Ramps</div>
+</div><div class="tb">
+
+<!-- OVERVIEW -->
+<div id="tc-overview" class="tc active">
+<h2>Offline Wholesalers: The Full Picture</h2>
+<div class="hyp">Who are they? What do they have? What's the gap?</div>
+
+<table>
+<thead><tr><th>Company</th><th>System</th><th class="n">Offline H1'26</th><th class="n">Online H1'26</th><th class="n">Proc Buy H1'26</th><th class="n">Active Conns</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td>Del Tropico</td><td style="font-size:9px">Core</td><td class="n">$6.33M</td><td class="n r">$0</td><td class="n">$2.17M</td><td class="n">—</td><td style="font-size:10px">Buys digital, sells analog</td></tr>
+<tr><td>Flora Fresh</td><td style="font-size:9px">Core+Proc FT+eShops</td><td class="n">$5.52M</td><td class="n a">$31K</td><td class="n g">$2.46M</td><td class="n">—</td><td style="font-size:10px">Has ALL tools, barely uses sell-side</td></tr>
+<tr><td>H&T Wholesale</td><td style="font-size:9px">Core+Proc+eShops</td><td class="n">$4.36M</td><td class="n a">$26K</td><td class="n">$2.41M</td><td class="n">96</td><td style="font-size:10px">Has ALL tools + connections</td></tr>
+<tr><td>Ninfa Flowers</td><td style="font-size:9px">Core</td><td class="n">$4.21M</td><td class="n r">$0</td><td class="n">$3.16M</td><td class="n">—</td><td style="font-size:10px">Heavy proc buyer, zero sell-side</td></tr>
+<tr><td>Tropical Blooms</td><td style="font-size:9px">Core+Proc FT</td><td class="n">$3.46M</td><td class="n r">$9K</td><td class="n">$2.35M</td><td class="n">—</td><td style="font-size:10px">Buys $2.4M, sells $9K online</td></tr>
+<tr><td>Metro Flower Mkt</td><td style="font-size:9px">Core</td><td class="n">$3.26M</td><td class="n r">$6K</td><td class="n">$1.14M</td><td class="n">—</td><td style="font-size:10px">Buys digital, sells analog</td></tr>
+<tr><td>Orlando Wholesale</td><td style="font-size:9px">Core+Proc FT</td><td class="n">$2.78M</td><td class="n r">$26K</td><td class="n">$1.55M</td><td class="n">—</td><td style="font-size:10px">Proc FT, minimal selling</td></tr>
+<tr><td>Southern Floral</td><td style="font-size:9px">Core+Proc</td><td class="n">$2.2M</td><td class="n a">$75K</td><td class="n g">$670K</td><td class="n g">288</td><td style="font-size:10px">288 connections! $75K eCom</td></tr>
+<tr><td>DKAY Wholesale</td><td style="font-size:9px">Core</td><td class="n">—</td><td class="n r">$0</td><td class="n a">$469K</td><td class="n">62</td><td style="font-size:10px">62 conns, buys $469K, sells $0</td></tr>
+<tr><td>Dreisbach</td><td style="font-size:9px">—</td><td class="n">—</td><td class="n a">$25K</td><td class="n">—</td><td class="n g">189</td><td style="font-size:10px">189 connections, $25K online</td></tr>
+<tr><td>Arizona Family</td><td style="font-size:9px">Core+Proc FT</td><td class="n">$1.81M</td><td class="n r">$0</td><td class="n">$2.34M</td><td class="n">113</td><td style="font-size:10px">113 conns, $2.3M buying, $0 selling</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">The pattern</div>
+These companies are NOT afraid of digital. They use Procurement to BUY. They have K2K connections. They just haven't turned on the sell-side. <strong>The ask for Implementations is specific: "you already buy online — now let's list your inventory so your florists can buy online too."</strong></div>
+</div>
+
+<!-- CONNECTIONS -->
+<div id="tc-connections" class="tc">
+<h2>K2K Connections: Lanes Wired, No Volume</h2>
+<div class="hyp">Do offline wholesalers have connections they don't use?</div>
+
+<div class="finding"><div class="tag r">Hundreds of connections, near-zero sell-side volume</div>
+Southern Floral has 288 active connections. Cleveland P&F has 271. Dreisbach has 189. Arizona Family has 113. Most have $0-$75K in online selling.</div>
+
+<table>
+<thead><tr><th>Company</th><th class="n">Active (Handshake)</th><th class="n">Active (Blitz)</th><th class="n">Suspended</th><th class="n">Online Sell GMV</th></tr></thead>
+<tbody>
+<tr><td>Southern Floral</td><td class="n">283</td><td class="n">5</td><td class="n">13</td><td class="n a">$75K</td></tr>
+<tr><td>Cleveland P&F</td><td class="n">271</td><td class="n">—</td><td class="n">16</td><td class="n g">$494K (eCom)</td></tr>
+<tr><td>Baisch & Skinner</td><td class="n">197</td><td class="n">47</td><td class="n">55</td><td class="n g">$437K (eCom)</td></tr>
+<tr><td>Dreisbach</td><td class="n">65</td><td class="n">124</td><td class="n">2</td><td class="n a">$25K</td></tr>
+<tr><td>Arizona Family</td><td class="n">81</td><td class="n">32</td><td class="n">5</td><td class="n r">$0</td></tr>
+<tr><td>H&T Wholesale</td><td class="n">65</td><td class="n">31</td><td class="n">9</td><td class="n a">$26K</td></tr>
+<tr><td>Flowers Direct</td><td class="n">84</td><td class="n">43</td><td class="n">4</td><td class="n">$201K</td></tr>
+<tr><td>Maple Grove</td><td class="n">82</td><td class="n">10</td><td class="n">6</td><td class="n">$202K</td></tr>
+<tr><td>DKAY Wholesale</td><td class="n">4</td><td class="n">58</td><td class="n">9</td><td class="n r">$0</td></tr>
+<tr><td>Pikes Peak</td><td class="n">68</td><td class="n">23</td><td class="n r">116</td><td class="n g">$177K</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel a">Handshake vs Blitz</div>
+<strong>Handshake connections convert better.</strong> Cleveland P&F (271 Handshake, $494K eCom) vs DKAY (58 Blitz, $0 selling). Handshake = user-created intent. Blitz = ops-pushed. The quality of the connection matters more than the quantity.<br><br>
+<strong>Pikes Peak</strong> has 116 suspended connections (more than active). Churn problem worth investigating.
+</div>
+</div>
+
+<!-- PROCUREMENT -->
+<div id="tc-procurement" class="tc">
+<h2>Procurement: They BUY Digital But Don't SELL Digital</h2>
+<div class="hyp">Which offline wholesalers actively buy through Procurement?</div>
+
+<table>
+<thead><tr><th>Company</th><th class="n">Proc H1'25</th><th class="n">Proc H1'26</th><th class="n">YoY</th><th class="n">Online Sell GMV</th></tr></thead>
+<tbody>
+<tr><td>FloraLink</td><td class="n">$3.42M</td><td class="n">$3.95M</td><td class="n g">+16%</td><td class="n g">$3.96M eCom</td></tr>
+<tr><td>Ninfa Flowers</td><td class="n">—</td><td class="n">$3.16M</td><td class="n">—</td><td class="n r">$0</td></tr>
+<tr><td>Flora Fresh</td><td class="n">$0</td><td class="n g">$2.46M</td><td class="n">NEW</td><td class="n a">$31K</td></tr>
+<tr><td>H&T Wholesale</td><td class="n">$2.62M</td><td class="n">$2.41M</td><td class="n">-8%</td><td class="n a">$26K</td></tr>
+<tr><td>Tropical Blooms</td><td class="n">$2.57M</td><td class="n">$2.35M</td><td class="n">-9%</td><td class="n r">$9K</td></tr>
+<tr><td>Arizona Family</td><td class="n">$2.55M</td><td class="n">$2.34M</td><td class="n">-8%</td><td class="n r">$0</td></tr>
+<tr><td>Del Tropico</td><td class="n">$47K</td><td class="n g">$2.17M</td><td class="n g">+4,517%</td><td class="n r">$0</td></tr>
+<tr><td>Orlando Wholesale</td><td class="n">$1.44M</td><td class="n">$1.55M</td><td class="n g">+8%</td><td class="n r">$26K</td></tr>
+<tr><td>DVFLORA SEWELL</td><td class="n">$563K</td><td class="n g">$1.42M</td><td class="n g">+152%</td><td class="n">—</td></tr>
+<tr><td>Sims Flower</td><td class="n">$109K</td><td class="n g">$1.13M</td><td class="n g">+937%</td><td class="n g">$176K eCom</td></tr>
+<tr><td>DKAY Wholesale</td><td class="n">$5K</td><td class="n a">$469K</td><td class="n g">+8,732%</td><td class="n r">$0</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel r">The irony</div>
+<strong>Arizona Family</strong> buys $2.34M via Procurement from importers but sells $0 online to its florists. They KNOW how to use digital tools for buying. The gap is 100% sell-side activation.<br><br>
+<strong>FloraLink is the proof of concept:</strong> $3.95M procurement buying AND $3.96M eCommerce selling. They do both. If Arizona Family, H&T, Tropical Blooms, and Ninfa did what FloraLink does, that's $10M+ in new online sell-side GMV.
+</div>
+</div>
+
+<!-- NEW RAMPS -->
+<div id="tc-ramps" class="tc">
+<h2>New Ramps: Proof That Adoption Works</h2>
+<div class="hyp">Are any offline wholesalers successfully going online?</div>
+
+<div class="finding"><div class="tag g">Yes — several went from $0 to millions in H1 2026</div>
+These are net-new platform adoptions, not migrations. They prove the model works when activated.</div>
+
+<table>
+<thead><tr><th>Company</th><th class="n">H1'25 Total</th><th class="n">H1'26 Total</th><th class="n">Δ</th><th>Story</th></tr></thead>
+<tbody>
+<tr><td class="g">Flora Fresh</td><td class="n">$0</td><td class="n g">$5.55M</td><td class="n g">+$5.55M</td><td style="font-size:10px">New: Core+Proc FT+eShops. Has all tools.</td></tr>
+<tr><td class="g">Del Tropico</td><td class="n">$76K</td><td class="n g">$6.33M</td><td class="n g">+$6.25M</td><td style="font-size:10px">Massive ramp. Core only (no Proc yet).</td></tr>
+<tr><td class="g">WE GOT FLOWERS</td><td class="n">$0</td><td class="n g">$2.93M</td><td class="n g">+$2.93M</td><td style="font-size:10px">New. Core+Proc. Fast adoption.</td></tr>
+<tr><td class="g">Stemline</td><td class="n">$0</td><td class="n g">$2.29M</td><td class="n g">+$2.29M</td><td style="font-size:10px">New. Core only.</td></tr>
+<tr><td class="g">JFS Wholesale</td><td class="n">$0</td><td class="n g">$1.89M</td><td class="n g">+$1.89M</td><td style="font-size:10px">New. Core only.</td></tr>
+<tr><td class="g">Sims Flower</td><td class="n">$126K</td><td class="n g">$1.25M</td><td class="n g">+$1.12M</td><td style="font-size:10px">10x growth. Core only + started eCom.</td></tr>
+<tr><td class="g">Zeidler Floral</td><td class="n">$0</td><td class="n g">$951K</td><td class="n g">+$951K</td><td style="font-size:10px">New. Core+Proc+eShops. Greenfield.</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel g">What the ramps tell us</div>
+1. <strong>Adoption works</strong> — companies CAN go from $0 to millions in 6 months.<br>
+2. <strong>No single system type required</strong> — some are Core only, some Core+Proc, some Core+Proc+eShops. The tooling matters less than the activation.<br>
+3. <strong>These are lead list targets THAT WORKED</strong> — study what triggered them. Was it a sales call? An implementation push? A champion inside? <strong>This is the playbook to replicate.</strong>
+</div>
+</div>
+
+</div>
+
+<div class="source">
+SALES_SV + K2K_CONNECTIONS_SV + PROCUREMENTS_SV · ks_flag=TRUE · sales&lt;$100K · H1 2025 vs H1 2026<br>
+Trust: needs_validation · Ninfa Flowers procurement H1'25 ($250M) is anomalous<br>
+Rose · 2026-07-06
+</div>
+
+<script>
+function st(n){document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));document.getElementById('tc-'+n).classList.add('active');document.querySelectorAll('#mt .tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');}
+</script>
+</body></html>

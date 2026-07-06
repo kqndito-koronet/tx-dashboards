@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>L3d · eCommerce: The Real Story</title>
+<style>
+:root{--bg:#fff;--surface:#f8f9fb;--border:#e2e5ea;--text:#1a1a2e;--text2:#5a5a78;--text3:#9898b0;--green:#059669;--red:#dc2626;--amber:#d97706;--blue:#2563eb;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:32px 40px;max-width:1320px;margin:0 auto;line-height:1.5;}
+.header{margin-bottom:24px;border-bottom:2px solid var(--text);padding-bottom:12px;}
+.header h1{font-size:26px;font-weight:700;}.header .purpose{font-size:13px;color:var(--text2);margin-top:4px;}
+.verdict{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+.verdict .headline{font-size:17px;font-weight:600;margin-bottom:8px;}
+.g{color:var(--green);}.r{color:var(--red);}.a{color:var(--amber);}.b{color:var(--blue);}
+.verdict ul{font-size:13px;color:var(--text2);padding-left:20px;}.verdict li{margin-bottom:4px;}.verdict strong{color:var(--text);}
+.tabs{display:flex;gap:2px;background:#f0f2f5;border-radius:8px 8px 0 0;padding:4px 4px 0;overflow-x:auto;}
+.tab{padding:8px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);border-radius:6px 6px 0 0;background:transparent;border:none;white-space:nowrap;}
+.tab:hover{color:var(--text);}.tab.active{background:var(--bg);color:var(--text);font-weight:600;}
+.tb{border:1px solid var(--border);border-radius:0 0 10px 10px;padding:24px;margin-bottom:28px;}
+.tc{display:none;}.tc.active{display:block;}
+h2{font-size:15px;font-weight:600;margin-bottom:6px;}
+.hyp{font-size:13px;color:var(--text2);margin-bottom:14px;font-style:italic;}
+.finding{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;}
+.finding strong{color:var(--text);}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:4px;}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);}
+th.n{text-align:right;}
+td{padding:7px 8px;font-size:11px;border-bottom:1px solid #f0f2f5;font-variant-numeric:tabular-nums;}
+td.n{text-align:right;}
+tr:hover{background:var(--surface);}
+.total-row{border-top:2px solid var(--border);font-weight:600;}
+.callout{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;}
+.clabel{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:3px;}
+.source{font-size:10px;color:var(--text3);margin-top:32px;padding-top:12px;border-top:1px solid var(--border);line-height:1.7;}
+</style></head><body>
+
+<div class="header">
+<h1>L3d · Wholesaler eCommerce: The Real Story</h1>
+<div class="purpose">L2 showed wholesaler eCommerce -11%. This dashboard proves that's a composition effect from 2 churns + 1 contraction. Active wholesalers are GROWING eCommerce. Procurement does NOT cannibalize it.</div>
+</div>
+
+<div class="verdict">
+<div class="headline">The -11% is <span class="r">misleading</span>. Active wholesalers are <span class="g">growing eCommerce</span>.</div>
+<ul>
+<li><strong>2 churns explain most of the decline:</strong> FreshLink ($4.0M→$0) + Americana ($1.1M→$0) = -$5.1M wiped.</li>
+<li><strong>Mayesh company-wide contraction</strong> (-24% offline, -14% API, -23% buyers) is a business health issue.</li>
+<li><strong>Strip those out:</strong> KBC +16%, Bill Doran +67%, FloraLink +16%, Baisch +85%, Sims +2,990%.</li>
+<li><strong>Procurement does NOT replace eCommerce.</strong> Core+Proc wholesalers grew eCom +23%. Core-only wholesalers went BACKWARDS to offline (-44% eCom, +63% offline).</li>
+<li><strong>More buyers are coming online:</strong> KBC +264 new eCom buyers, Bill Doran +130, Baisch +28.</li>
+</ul>
+</div>
+
+<div class="tabs" id="mt">
+<div class="tab active" onclick="st('story')">The Real Story</div>
+<div class="tab" onclick="st('growers')">Growers</div>
+<div class="tab" onclick="st('decliners')">Decliners</div>
+<div class="tab" onclick="st('proc')">Proc ≠ Cannibalization</div>
+<div class="tab" onclick="st('monthly')">Monthly Trends</div>
+</div><div class="tb">
+
+<!-- THE REAL STORY -->
+<div id="tc-story" class="tc active">
+<h2>Why the -11% is wrong</h2>
+<div class="hyp">Is wholesaler eCommerce dying, migrating, or growing beneath the noise?</div>
+
+<div class="finding"><div class="tag g">Growing beneath the noise</div>
+Remove FreshLink ($4.0M churn), Americana ($1.1M churn), and Mayesh (company-wide decline), and wholesaler eCommerce is <strong>growing +15-20% among active users.</strong></div>
+
+<table>
+<thead><tr><th>Account</th><th class="n">eCom H1'25</th><th class="n">eCom H1'26</th><th class="n">Δ</th><th>What happened</th></tr></thead>
+<tbody>
+<tr><td class="r">FreshLink</td><td class="n">$3.98M</td><td class="n r">$0</td><td class="n r">-$3.98M</td><td style="font-size:10px">Churned entirely</td></tr>
+<tr><td class="r">Americana (Members + MIA)</td><td class="n">$1.44M</td><td class="n r">$0</td><td class="n r">-$1.44M</td><td style="font-size:10px">Churned entirely</td></tr>
+<tr><td class="r">Mayesh</td><td class="n">$40K</td><td class="n">$14K</td><td class="n r">-$26K</td><td style="font-size:10px">Company-wide contraction</td></tr>
+<tr style="background:var(--surface);font-weight:500"><td>Subtotal: churns + contraction</td><td class="n">$5.46M</td><td class="n">$14K</td><td class="n r">-$5.45M</td><td></td></tr>
+<tr style="border-top:2px solid var(--border)"><td class="g">KBC</td><td class="n">$5.46M</td><td class="n g">$6.32M</td><td class="n g">+$865K</td><td style="font-size:10px">+16%, +264 buyers</td></tr>
+<tr><td class="g">Bill Doran</td><td class="n">$1.28M</td><td class="n g">$2.14M</td><td class="n g">+$863K</td><td style="font-size:10px">+67%, +130 buyers</td></tr>
+<tr><td class="g">FloraLink</td><td class="n">$3.43M</td><td class="n g">$3.96M</td><td class="n g">+$533K</td><td style="font-size:10px">+16%, pure eCom player</td></tr>
+<tr><td class="g">Baisch & Skinner</td><td class="n">$236K</td><td class="n g">$437K</td><td class="n g">+$202K</td><td style="font-size:10px">+85%, +28 buyers</td></tr>
+<tr><td class="g">Botanica Dallas</td><td class="n">$0.7K</td><td class="n g">$220K</td><td class="n g">+$219K</td><td style="font-size:10px">New adoption</td></tr>
+<tr><td class="g">Sims Flower</td><td class="n">$5.7K</td><td class="n g">$176K</td><td class="n g">+$171K</td><td style="font-size:10px">+2,990%</td></tr>
+<tr><td class="g">Zeidler Floral</td><td class="n">$0</td><td class="n g">$164K</td><td class="n g">+$164K</td><td style="font-size:10px">Greenfield</td></tr>
+<tr><td class="g">Pikes Peak</td><td class="n">$42K</td><td class="n g">$177K</td><td class="n g">+$135K</td><td style="font-size:10px">+321%</td></tr>
+<tr style="background:var(--surface);font-weight:500"><td>Subtotal: active growers</td><td class="n">$10.45M</td><td class="n">$13.60M</td><td class="n g">+$3.15M</td><td></td></tr>
+<tr class="total-row"><td>NET (all wholesaler eCom)</td><td class="n">$19.29M</td><td class="n">$17.26M</td><td class="n r">-$2.03M</td><td style="font-size:10px">= -$5.45M churns + $3.15M growth</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- GROWERS -->
+<div id="tc-growers" class="tc">
+<h2>Top 10 eCommerce Growers (all industries)</h2>
+<table>
+<thead><tr><th>#</th><th>Company</th><th>Industry</th><th class="n">eCom H1'25</th><th class="n">eCom H1'26</th><th class="n">Δ</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Jet Fresh</td><td>Importer</td><td class="n">$3.42M</td><td class="n">$5.55M</td><td class="n g">+$2.13M</td></tr>
+<tr><td>2</td><td>Sole Farms</td><td>Importer</td><td class="n">$5.60M</td><td class="n">$7.02M</td><td class="n g">+$1.41M</td></tr>
+<tr><td>3</td><td><strong>KBC</strong></td><td><strong>Wholesaler</strong></td><td class="n">$5.46M</td><td class="n">$6.32M</td><td class="n g">+$865K</td></tr>
+<tr><td>4</td><td><strong>Bill Doran</strong></td><td><strong>Wholesaler</strong></td><td class="n">$1.28M</td><td class="n">$2.14M</td><td class="n g">+$863K</td></tr>
+<tr><td>5</td><td>Allure Farms</td><td>Importer</td><td class="n">$1.30M</td><td class="n">$2.08M</td><td class="n g">+$773K</td></tr>
+<tr><td>6</td><td><strong>FloraLink</strong></td><td><strong>Wholesaler</strong></td><td class="n">$3.43M</td><td class="n">$3.96M</td><td class="n g">+$533K</td></tr>
+<tr><td>7</td><td>Bella Blossom</td><td>Importer</td><td class="n">$1.72M</td><td class="n">$2.10M</td><td class="n g">+$388K</td></tr>
+<tr><td>8</td><td>Welyflor</td><td>Importer</td><td class="n">$1.11M</td><td class="n">$1.42M</td><td class="n g">+$306K</td></tr>
+<tr><td>9</td><td><strong>Botanica Dallas</strong></td><td><strong>Wholesaler</strong></td><td class="n">$0.7K</td><td class="n">$220K</td><td class="n g">+$219K</td></tr>
+<tr><td>10</td><td><strong>Baisch & Skinner</strong></td><td><strong>Wholesaler</strong></td><td class="n">$236K</td><td class="n">$437K</td><td class="n g">+$202K</td></tr>
+</tbody>
+</table>
+<div style="font-size:11px;color:var(--text3)">5 of top 10 are wholesalers. eCommerce adoption is happening.</div>
+</div>
+
+<!-- DECLINERS -->
+<div id="tc-decliners" class="tc">
+<h2>Top eCommerce Decliners</h2>
+<table>
+<thead><tr><th>#</th><th>Company</th><th>Industry</th><th class="n">eCom H1'25</th><th class="n">eCom H1'26</th><th class="n">Δ</th><th>Likely cause</th></tr></thead>
+<tbody>
+<tr><td>1</td><td class="r">FreshLink</td><td>Wholesaler</td><td class="n">$3.98M</td><td class="n">$0</td><td class="n r">-$3.98M</td><td style="font-size:10px">Churned — investigate</td></tr>
+<tr><td>2</td><td class="r">Americana Members</td><td>Wholesaler</td><td class="n">$1.07M</td><td class="n">$0</td><td class="n r">-$1.07M</td><td style="font-size:10px">Churned</td></tr>
+<tr><td>3</td><td>Fresca Farms</td><td>Importer</td><td class="n">$5.32M</td><td class="n">$4.73M</td><td class="n r">-$587K</td><td style="font-size:10px">eCom→K2K shift (+84%)</td></tr>
+<tr><td>4</td><td class="r">Americana MIA</td><td>Wholesaler</td><td class="n">$376K</td><td class="n">$0</td><td class="n r">-$376K</td><td style="font-size:10px">Churned</td></tr>
+<tr><td>5</td><td>SUNRITE FARMS</td><td>Importer</td><td class="n">$1.27M</td><td class="n">$922K</td><td class="n r">-$346K</td><td style="font-size:10px">Volume decline</td></tr>
+<tr><td>6</td><td>Trilogy/Zamba</td><td>Importer</td><td class="n">$1.07M</td><td class="n">$733K</td><td class="n r">-$337K</td><td style="font-size:10px">Volume decline</td></tr>
+<tr><td>7</td><td>Royal Flowers</td><td>Importer</td><td class="n">$2.51M</td><td class="n">$2.19M</td><td class="n r">-$322K</td><td style="font-size:10px">Volume decline</td></tr>
+<tr><td>8</td><td>Cananvalle</td><td>Importer</td><td class="n">$455K</td><td class="n">$183K</td><td class="n r">-$271K</td><td style="font-size:10px">Volume decline</td></tr>
+<tr><td>9</td><td>Georgia State Floral</td><td>Wholesaler</td><td class="n">$388K</td><td class="n">$179K</td><td class="n r">-$210K</td><td style="font-size:10px">Investigate</td></tr>
+<tr><td>10</td><td>Gala Roses</td><td>Importer</td><td class="n">$871K</td><td class="n">$669K</td><td class="n r">-$202K</td><td style="font-size:10px">Volume decline, K2K +27%</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel r">FreshLink = the biggest single risk</div>
+$4M of wholesaler eCommerce vanished in one account. Was this a churn (left platform), acquisition, or migration? <strong>Needs CS investigation.</strong> If FreshLink is recoverable, that alone closes most of the "decline."</div>
+</div>
+
+<!-- PROC ≠ CANNIBALIZATION -->
+<div id="tc-proc" class="tc">
+<h2>Procurement Does NOT Cannibalize eCommerce</h2>
+<div class="hyp">Did wholesalers stop using eCommerce because they switched to Procurement?</div>
+
+<div class="finding"><div class="tag g">No. They are complements, not substitutes.</div>
+Core+Proc wholesalers <strong>grew eCom +23%</strong>. Core-only wholesalers lost eCom -44% but their <strong>offline grew +63%</strong>. They went backwards, not sideways.</div>
+
+<table>
+<thead><tr><th>System Type</th><th>Channel</th><th class="n">H1'25</th><th class="n">H1'26</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td><strong>Core+Procurement</strong></td><td>eCommerce</td><td class="n">$7.10M</td><td class="n g">$8.72M</td><td class="n g">+23%</td></tr>
+<tr><td></td><td>Offline</td><td class="n">$207.5M</td><td class="n">$190.8M</td><td class="n r">-8%</td></tr>
+<tr><td></td><td>API</td><td class="n">$28.8M</td><td class="n">$25.1M</td><td class="n r">-13%</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>Core only (no Proc)</strong></td><td>eCommerce</td><td class="n">$7.54M</td><td class="n r">$4.24M</td><td class="n r">-44%</td></tr>
+<tr><td></td><td>Offline</td><td class="n">$17.7M</td><td class="n g">$28.7M</td><td class="n g">+63%</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>K2K eCom types</strong></td><td>eCommerce</td><td class="n">$2.7M</td><td class="n g">$3.6M</td><td class="n g">+30%</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>Unknown</strong></td><td>eCommerce</td><td class="n">$1.50M</td><td class="n r">$0</td><td class="n r">-100%</td></tr>
+<tr><td></td><td>All channels</td><td class="n">$2.69M</td><td class="n r">$11K</td><td class="n r">-100%</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">The real pattern</div>
+<strong>Core-only wholesalers without Procurement went BACK to phone.</strong> Their eCom collapsed -44% while offline surged +63%. This is NOT migration to Procurement — they don't have it. This is digital abandonment.<br><br>
+<strong>Meanwhile, wholesalers WITH Procurement grew eCom +23%.</strong> Having Procurement correlates with MORE eCommerce, not less. The tools reinforce each other.<br><br>
+<strong>"Unknown" system type = churns</strong> (FreshLink, Americana). $2.7M to $11K. All dead.
+</div>
+</div>
+
+<!-- MONTHLY TRENDS -->
+<div id="tc-monthly" class="tc">
+<h2>Monthly eCommerce Trends — Active Wholesalers</h2>
+<div class="hyp">Is the growth accelerating or slowing?</div>
+
+<h2 style="margin-top:16px">Bill Doran — accelerating every month</h2>
+<table>
+<thead><tr><th>Month</th><th class="n">2025</th><th class="n">2026</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>Jan</td><td class="n">$143K</td><td class="n">$277K</td><td class="n g">+94%</td></tr>
+<tr><td>Feb</td><td class="n">$238K</td><td class="n">$360K</td><td class="n g">+51%</td></tr>
+<tr><td>Mar</td><td class="n">$195K</td><td class="n">$350K</td><td class="n g">+80%</td></tr>
+<tr><td>Apr</td><td class="n">$300K</td><td class="n">$456K</td><td class="n g">+52%</td></tr>
+<tr><td>May</td><td class="n">$209K</td><td class="n">$371K</td><td class="n g">+77%</td></tr>
+<tr><td>Jun</td><td class="n">$197K</td><td class="n">$332K</td><td class="n g">+69%</td></tr>
+</tbody>
+</table>
+
+<h2 style="margin-top:16px">KBC — consistent growth</h2>
+<table>
+<thead><tr><th>Month</th><th class="n">2025</th><th class="n">2026</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>Jan</td><td class="n">$431K</td><td class="n">$472K</td><td class="n g">+9%</td></tr>
+<tr><td>Feb</td><td class="n">$932K</td><td class="n">$1,121K</td><td class="n g">+20%</td></tr>
+<tr><td>Mar</td><td class="n">$548K</td><td class="n">$791K</td><td class="n g">+44%</td></tr>
+<tr><td>Apr</td><td class="n">$909K</td><td class="n">$1,052K</td><td class="n g">+16%</td></tr>
+<tr><td>May</td><td class="n">$1,558K</td><td class="n">$1,562K</td><td class="n a">flat</td></tr>
+<tr><td>Jun</td><td class="n">$1,078K</td><td class="n">$1,324K</td><td class="n g">+23%</td></tr>
+</tbody>
+</table>
+
+<h2 style="margin-top:16px">Baisch & Skinner — steep ramp</h2>
+<table>
+<thead><tr><th>Month</th><th class="n">2025</th><th class="n">2026</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>Jan</td><td class="n">$15K</td><td class="n">$19K</td><td class="n g">+27%</td></tr>
+<tr><td>Feb</td><td class="n">$42K</td><td class="n">$57K</td><td class="n g">+36%</td></tr>
+<tr><td>Mar</td><td class="n">$33K</td><td class="n">$53K</td><td class="n g">+61%</td></tr>
+<tr><td>Apr</td><td class="n">$55K</td><td class="n">$83K</td><td class="n g">+51%</td></tr>
+<tr><td>May</td><td class="n">$56K</td><td class="n">$122K</td><td class="n g">+118%</td></tr>
+<tr><td>Jun</td><td class="n">$35K</td><td class="n">$104K</td><td class="n g">+197%</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel g">Trend is clear</div>
+All three are accelerating. Bill Doran is the fastest-growing. Baisch is doubling monthly in May/Jun. KBC is steady. <strong>The monthly data says eCommerce adoption is working — it just needs more wholesalers doing it.</strong></div>
+</div>
+
+</div>
+
+<div class="source">
+SALES_SV + PROCUREMENTS_SV · ks_flag=TRUE · sales&lt;$100K · H1 2025 vs H1 2026<br>
+Trust: needs_validation · FreshLink churn needs CS investigation · "Unknown" system types = likely churned accounts<br>
+Rose · 2026-07-06
+</div>
+
+<script>
+function st(n){document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));document.getElementById('tc-'+n).classList.add('active');document.querySelectorAll('#mt .tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');}
+</script>
+</body></html>

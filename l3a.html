@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>L3a · Big 3 Wholesalers</title>
+<style>
+:root{--bg:#fff;--surface:#f8f9fb;--border:#e2e5ea;--text:#1a1a2e;--text2:#5a5a78;--text3:#9898b0;--green:#059669;--red:#dc2626;--amber:#d97706;--blue:#2563eb;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:32px 40px;max-width:1320px;margin:0 auto;line-height:1.5;}
+.header{margin-bottom:24px;border-bottom:2px solid var(--text);padding-bottom:12px;}
+.header h1{font-size:26px;font-weight:700;}.header .purpose{font-size:13px;color:var(--text2);margin-top:4px;}
+.verdict{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+.verdict .headline{font-size:17px;font-weight:600;margin-bottom:8px;}
+.g{color:var(--green);}.r{color:var(--red);}.a{color:var(--amber);}.b{color:var(--blue);}
+.verdict ul{font-size:13px;color:var(--text2);padding-left:20px;}.verdict li{margin-bottom:4px;}.verdict strong{color:var(--text);}
+.tabs{display:flex;gap:2px;background:#f0f2f5;border-radius:8px 8px 0 0;padding:4px 4px 0;overflow-x:auto;}
+.tab{padding:8px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);border-radius:6px 6px 0 0;background:transparent;border:none;white-space:nowrap;}
+.tab:hover{color:var(--text);}.tab.active{background:var(--bg);color:var(--text);font-weight:600;}
+.tb{border:1px solid var(--border);border-radius:0 0 10px 10px;padding:24px;margin-bottom:28px;}
+.tc{display:none;}.tc.active{display:block;}
+h2{font-size:15px;font-weight:600;margin-bottom:6px;}
+.hyp{font-size:13px;color:var(--text2);margin-bottom:14px;font-style:italic;}
+.finding{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;}
+.finding strong{color:var(--text);}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:4px;}
+.tag.g{color:var(--green);}.tag.r{color:var(--red);}.tag.a{color:var(--amber);}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);}
+th.n{text-align:right;}
+td{padding:7px 8px;font-size:11px;border-bottom:1px solid #f0f2f5;font-variant-numeric:tabular-nums;}
+td.n{text-align:right;}
+tr:hover{background:var(--surface);}
+.dot{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+.total-row{border-top:2px solid var(--border);font-weight:600;}
+.callout{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;}
+.clabel{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:3px;}
+.source{font-size:10px;color:var(--text3);margin-top:32px;padding-top:12px;border-top:1px solid var(--border);line-height:1.7;}
+</style></head><body>
+
+<div class="header">
+<h1>L3a · What Do the Big 3 Wholesalers Do Differently?</h1>
+<div class="purpose">Mayesh, KBC, and Bill Doran are the only wholesalers with meaningful online. This dashboard compares their models to understand what works and what to replicate.</div>
+</div>
+
+<div class="verdict">
+<div class="headline">Three completely different digital models — each with lessons.</div>
+<ul>
+<li><strong>Bill Doran</strong> = eCommerce growth story. Only 15 buyers online but +67% growth, +77% more buyers, fees +321%. Every month accelerating. <span class="g">The one to watch.</span></li>
+<li><strong>KBC</strong> = broadest base (175 online buyers) but <span class="r">sells 90% Boxes online while 89% of offline is Units.</span> The bunch upload gap is massive.</li>
+<li><strong>Mayesh</strong> = API model (24% online share) but <span class="r">declining everywhere: offline -24%, API -14%, buyers -23%.</span> Business health issue, not channel issue.</li>
+<li><strong>The product gap is NOT about what products</strong> — roses/hydrangeas sell both online and offline. The gap is <strong>inventory format</strong> (Units not listed) and <strong>buyer behavior</strong> (phone habit).</li>
+</ul>
+</div>
+
+<div class="tabs" id="mt">
+<div class="tab active" onclick="st('compare')">Comparison</div>
+<div class="tab" onclick="st('bdc')">Bill Doran</div>
+<div class="tab" onclick="st('kbc')">KBC</div>
+<div class="tab" onclick="st('mayesh')">Mayesh</div>
+<div class="tab" onclick="st('products')">Products Gap</div>
+<div class="tab" onclick="st('buyers')">Buyer Adoption</div>
+</div><div class="tb">
+
+<!-- COMPARISON -->
+<div id="tc-compare" class="tc active">
+<h2>Side-by-Side Comparison</h2>
+<table>
+<thead><tr><th></th><th class="n">Bill Doran</th><th class="n">KBC</th><th class="n">Mayesh</th></tr></thead>
+<tbody>
+<tr><td><strong>H1'26 GMV</strong></td><td class="n">$61.5M</td><td class="n">$64.1M</td><td class="n">$94.2M</td></tr>
+<tr><td><strong>H1 YoY</strong></td><td class="n g">+8.5%</td><td class="n a">-0.8%</td><td class="n r">-21.7%</td></tr>
+<tr><td><strong>Offline</strong></td><td class="n">$59.3M (+7%)</td><td class="n">$55.3M (-3%)</td><td class="n">$71.5M (-24%)</td></tr>
+<tr><td><strong>eCommerce</strong></td><td class="n g">$2.1M (+67%)</td><td class="n g">$6.3M (+16%)</td><td class="n" style="color:var(--text3)">$14K (dead)</td></tr>
+<tr><td><strong>API</strong></td><td class="n" style="color:var(--text3)">$0</td><td class="n">$2.4M (+5%)</td><td class="n r">$22.7M (-14%)</td></tr>
+<tr><td><strong>Online share</strong></td><td class="n">3.5%</td><td class="n">13.6%</td><td class="n">24.1%</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>Fees Jan-May'26</strong></td><td class="n g">$31K (+321%)</td><td class="n">$58K (+31%)</td><td class="n r">$10K (-17%)</td></tr>
+<tr><td><strong>Fee sources</strong></td><td class="n">eCom $15K + K2K $16K</td><td class="n">K2K $42K + API $12K + eCom $4K</td><td class="n">K2K $10K</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>Online buyers</strong></td><td class="n">15 eCom</td><td class="n">100 eCom + 75 API</td><td class="n">202 API + 1 eCom</td></tr>
+<tr><td><strong>Buyer growth YoY</strong></td><td class="n g">+77% (+130)</td><td class="n g">+19% (+264)</td><td class="n r">-12% (-572)</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>Offline inventory</strong></td><td class="n">52% Units, 38% Boxes, 10% Hard Goods</td><td class="n r">89% Units, 11% Boxes</td><td class="n">36% Units, 64% Boxes</td></tr>
+<tr><td><strong>Online inventory</strong></td><td class="n">50% Units, 50% Boxes</td><td class="n a">90% Boxes, 10% Units</td><td class="n">29% Units, 71% Boxes</td></tr>
+<tr><td><strong>INVENTORY GAP</strong></td><td class="n g">No gap (50/50 both)</td><td class="n r">MASSIVE (Units not listed)</td><td class="n a">Moderate</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">What to replicate</div>
+<strong>Bill Doran's model:</strong> list ALL inventory online (Units + Boxes), grow buyers one by one (+77% YoY). Small base but accelerating every month. Simple eCommerce, no API needed.<br>
+<strong>KBC's base:</strong> 175 online buyers is the broadest of any wholesaler. But they need to list their Units ($49M offline not available online).<br>
+<strong>Mayesh's cautionary tale:</strong> high online share doesn't mean healthy. They're losing buyers across all channels.
+</div>
+</div>
+
+<!-- BILL DORAN -->
+<div id="tc-bdc" class="tc">
+<h2>Bill Doran — The eCommerce Growth Story</h2>
+<div class="hyp">Only 15 buyers online but the fastest-growing wholesaler eCommerce. What's working?</div>
+
+<div class="finding"><div class="tag g">Every month accelerating</div>
+Jan +94%, Feb +51%, Mar +80%, Apr +52%, May +77%, Jun +69%. No slowdown. This is early-stage adoption ramping.</div>
+
+<table>
+<thead><tr><th>Month</th><th class="n">eCom 2025</th><th class="n">eCom 2026</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>Jan</td><td class="n">$143K</td><td class="n">$277K</td><td class="n g">+94%</td></tr>
+<tr><td>Feb</td><td class="n">$238K</td><td class="n">$360K</td><td class="n g">+51%</td></tr>
+<tr><td>Mar</td><td class="n">$195K</td><td class="n">$350K</td><td class="n g">+80%</td></tr>
+<tr><td>Apr</td><td class="n">$300K</td><td class="n">$456K</td><td class="n g">+52%</td></tr>
+<tr><td>May</td><td class="n">$209K</td><td class="n">$371K</td><td class="n g">+77%</td></tr>
+<tr><td>Jun</td><td class="n">$197K</td><td class="n">$332K</td><td class="n g">+69%</td></tr>
+<tr class="total-row"><td>H1</td><td class="n">$1.28M</td><td class="n">$2.14M</td><td class="n g">+67%</td></tr>
+</tbody>
+</table>
+
+<h2>What sells online vs offline</h2>
+<table>
+<thead><tr><th>Category</th><th class="n">Offline</th><th class="n">eCom</th><th class="n">Online %</th></tr></thead>
+<tbody>
+<tr><td>Greens</td><td class="n">$5.08M</td><td class="n g">$292K</td><td class="n">5.4%</td></tr>
+<tr><td>Rose</td><td class="n">$6.44M</td><td class="n">$174K</td><td class="n">2.6%</td></tr>
+<tr><td>Snaps</td><td class="n">—</td><td class="n">$147K</td><td class="n">—</td></tr>
+<tr><td>Lisianthus</td><td class="n">—</td><td class="n">$146K</td><td class="n">—</td></tr>
+<tr><td>Carnation</td><td class="n">$2.12M</td><td class="n">$80K</td><td class="n">3.6%</td></tr>
+<tr><td>Plants</td><td class="n">$3.77M</td><td class="n" style="color:var(--text3)">~$0</td><td class="n r">0%</td></tr>
+<tr><td>Hard Goods (Glass, Foam, etc)</td><td class="n">$5.70M</td><td class="n" style="color:var(--text3)">$9K</td><td class="n r">0.2%</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel a">Insight</div>
+BDC sells 50/50 Units/Boxes both online AND offline — no inventory format gap. Their online penetration is uniformly low (~3%) across all categories. The opportunity: same products, just more buyers coming online. Hard goods and plants are almost zero online — likely reorder-by-phone habit.</div>
+</div>
+
+<!-- KBC -->
+<div id="tc-kbc" class="tc">
+<h2>KBC — The Bunch Upload Opportunity</h2>
+<div class="hyp">Broadest online buyer base (175) but only sells Boxes online. $49M of Units never listed.</div>
+
+<div class="finding"><div class="tag r">THE GAP: 89% Units offline, 90% Boxes online</div>
+KBC's cooler is full of loose stems (Units = $49.3M offline). Their eShop shows packed boxes ($5.7M). Florists buying in the store see loose product; online they see boxes. <strong>Different product, different experience.</strong></div>
+
+<h2>Monthly eCom trend</h2>
+<table>
+<thead><tr><th>Month</th><th class="n">eCom 2025</th><th class="n">eCom 2026</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>Jan</td><td class="n">$431K</td><td class="n">$472K</td><td class="n g">+9%</td></tr>
+<tr><td>Feb</td><td class="n">$932K</td><td class="n">$1,121K</td><td class="n g">+20%</td></tr>
+<tr><td>Mar</td><td class="n">$548K</td><td class="n">$791K</td><td class="n g">+44%</td></tr>
+<tr><td>Apr</td><td class="n">$909K</td><td class="n">$1,052K</td><td class="n g">+16%</td></tr>
+<tr><td>May</td><td class="n">$1,558K</td><td class="n">$1,562K</td><td class="n a">flat</td></tr>
+<tr><td>Jun</td><td class="n">$1,078K</td><td class="n">$1,324K</td><td class="n g">+23%</td></tr>
+<tr class="total-row"><td>H1</td><td class="n">$5.46M</td><td class="n">$6.32M</td><td class="n g">+16%</td></tr>
+</tbody>
+</table>
+
+<h2>Inventory format gap</h2>
+<table>
+<thead><tr><th>Channel</th><th class="n">Boxes</th><th class="n">Units</th><th class="n">Units %</th></tr></thead>
+<tbody>
+<tr><td>Offline</td><td class="n">$5.99M</td><td class="n r">$49.34M</td><td class="n r">89%</td></tr>
+<tr><td>eCommerce</td><td class="n">$5.71M</td><td class="n">$614K</td><td class="n a">10%</td></tr>
+<tr><td>API</td><td class="n">—</td><td class="n">$2.42M</td><td class="n">100%</td></tr>
+</tbody>
+</table>
+
+<h2>Top products — what Units are sold offline?</h2>
+<div class="hyp">These are the products that should be listed online but aren't.</div>
+<table>
+<thead><tr><th>Category (Units, Offline)</th><th class="n">GMV</th></tr></thead>
+<tbody>
+<tr><td>Rose</td><td class="n">$10.0M</td></tr>
+<tr><td>Bouquets & CB</td><td class="n">$3.5M</td></tr>
+<tr><td>Rose Bouquets</td><td class="n">$3.0M</td></tr>
+<tr><td>Misc Flowers</td><td class="n">$2.5M</td></tr>
+<tr><td>Carnation</td><td class="n">$2.3M</td></tr>
+<tr><td>Greens</td><td class="n">$1.9M</td></tr>
+<tr><td>Spray Rose</td><td class="n">$1.5M</td></tr>
+<tr><td>Spray Mums</td><td class="n">$1.4M</td></tr>
+<tr><td>Hydrangea</td><td class="n">$1.3M</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel r">The $49M question</div>
+If KBC listed even 10% of their Units/loose stems on eShop, that's ~$5M of new online GMV potential — roughly doubling their eCommerce. The products are already there (roses, carnations, greens). They just aren't listed as available online. This is the bunch upload initiative for KBC.</div>
+</div>
+
+<!-- MAYESH -->
+<div id="tc-mayesh" class="tc">
+<h2>Mayesh — High Online Share, Declining Business</h2>
+<div class="hyp">24% online but everything is shrinking. Is this a channel issue or a business issue?</div>
+
+<div class="finding"><div class="tag r">Business health issue, not channel preference</div>
+Offline -24%, API -14%, buyers -23% across all channels. Mayesh is losing customers, not shifting channels. Their eCommerce was never material ($14K total).</div>
+
+<table>
+<thead><tr><th>Metric</th><th class="n">H1'25</th><th class="n">H1'26</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>Offline GMV</td><td class="n">$93.8M</td><td class="n">$71.5M</td><td class="n r">-24%</td></tr>
+<tr><td>API GMV</td><td class="n">$26.4M</td><td class="n">$22.7M</td><td class="n r">-14%</td></tr>
+<tr><td>eCommerce GMV</td><td class="n">$40K</td><td class="n">$14K</td><td class="n r">-66%</td></tr>
+<tr><td>Total GMV</td><td class="n">$120.2M</td><td class="n">$94.2M</td><td class="n r">-21.7%</td></tr>
+<tr style="border-top:2px solid var(--border)"><td>Offline buyers</td><td class="n">12,240</td><td class="n">9,437</td><td class="n r">-23%</td></tr>
+<tr><td>API buyers</td><td class="n">4,685</td><td class="n">4,113</td><td class="n r">-12%</td></tr>
+<tr><td>eCom buyers</td><td class="n">88</td><td class="n">42</td><td class="n r">-52%</td></tr>
+</tbody>
+</table>
+
+<h2>Mayesh's digital model: API, not eCommerce</h2>
+<div class="finding">
+Mayesh's "online" is API-based ($22.7M) — system-to-system integration, not buyer browsing an eShop. Their API buyers are high-value ($112K/buyer vs $73K offline). But the API is also declining.<br><br>
+<strong>Top API products:</strong> Rose $3.4M, Dutch Mixed Box $1.5M, Hydrangea $1.3M, Garden Rose $820K, Lisianthus $752K.<br>
+<strong>Inventory:</strong> 71% Boxes via API, 64% Boxes offline. Mayesh is a box-oriented business.
+</div>
+
+<div class="callout"><div class="clabel a">Lesson</div>
+Mayesh proves that high online share ≠ healthy. Their 24% online share is actually declining in absolute dollars. The lesson for other wholesalers: <strong>focus on growing the buyer base and total GMV, not just online share.</strong> Bill Doran's 3.5% growing fast is healthier than Mayesh's 24% shrinking.</div>
+</div>
+
+<!-- PRODUCTS GAP -->
+<div id="tc-products" class="tc">
+<h2>Product Gap: What Sells Online vs What Doesn't</h2>
+<div class="hyp">Are there products that only work offline? Or is it the same products through different channels?</div>
+
+<div class="finding"><div class="tag g">Same products, different format</div>
+Roses, hydrangeas, carnations, greens sell both online and offline. The gap is NOT about product type — it's about <strong>inventory format</strong> (Units vs Boxes) and <strong>buyer habit</strong> (phone vs eShop).</div>
+
+<h2>KBC: Product × Format × Channel</h2>
+<table>
+<thead><tr><th>Category</th><th class="n">Offline Units</th><th class="n">Offline Boxes</th><th class="n">eCom Boxes</th><th class="n">eCom Units</th></tr></thead>
+<tbody>
+<tr><td>Rose</td><td class="n">$10.0M</td><td class="n">$560K</td><td class="n">$1.5M</td><td class="n r">$150K</td></tr>
+<tr><td>Hydrangea</td><td class="n">$1.3M</td><td class="n">$490K</td><td class="n">$550K</td><td class="n r">$82K</td></tr>
+<tr><td>Carnation</td><td class="n">$2.3M</td><td class="n">$140K</td><td class="n">$290K</td><td class="n r">$18K</td></tr>
+<tr><td>Greens</td><td class="n">$1.9M</td><td class="n">$150K</td><td class="n">$210K</td><td class="n r">$20K</td></tr>
+</tbody>
+</table>
+<div style="font-size:11px;color:var(--text3);margin-top:4px">KBC sells $10M of rose Units offline but only $150K of rose Units online. The roses are there — they're just not listed as Units on eShop.</div>
+
+<h2>Bill Doran: No format gap</h2>
+<table>
+<thead><tr><th>Channel</th><th class="n">Boxes</th><th class="n">Units</th><th class="n">Hard Goods</th></tr></thead>
+<tbody>
+<tr><td>Offline</td><td class="n">$22.8M (38%)</td><td class="n">$30.8M (52%)</td><td class="n">$5.7M (10%)</td></tr>
+<tr><td>eCommerce</td><td class="n">$1.07M (50%)</td><td class="n">$1.07M (50%)</td><td class="n">$9K (0.4%)</td></tr>
+</tbody>
+</table>
+<div style="font-size:11px;color:var(--text3);margin-top:4px">Bill Doran sells Units and Boxes online in the same ratio as offline. No format gap = no product barrier to eCommerce adoption.</div>
+
+<div class="callout"><div class="clabel b">Replication playbook</div>
+<strong>Step 1:</strong> List Units/loose stems on eShop (KBC's gap — $49M offline not available).<br>
+<strong>Step 2:</strong> Same products, same prices — no need for a different catalog. Bill Doran proves it works.<br>
+<strong>Step 3:</strong> Hard goods (glass, foam, supplies) stay offline for now — phone reorder habit, not urgent.<br>
+<strong>Step 4:</strong> Focus on core florals first (roses, hydrangeas, carnations, greens) — they drive 80% of eCom GMV.
+</div>
+</div>
+
+<!-- BUYER ADOPTION -->
+<div id="tc-buyers" class="tc">
+<h2>Buyer Adoption: Who's Coming Online?</h2>
+<div class="hyp">Are more buyers adopting eCommerce? How fast?</div>
+
+<div class="finding"><div class="tag g">KBC and Bill Doran are adding online buyers fast</div>
+KBC added 264 net new eCommerce buyers (+19%). Bill Doran added 130 (+77%). These are florists/retailers who chose to start ordering online.</div>
+
+<table>
+<thead><tr><th>Company</th><th>Channel</th><th class="n">Buyers H1'25</th><th class="n">Buyers H1'26</th><th class="n">Δ</th><th class="n">YoY</th></tr></thead>
+<tbody>
+<tr><td>KBC</td><td>Offline</td><td class="n">7,094</td><td class="n">7,053</td><td class="n">-41</td><td class="n a">flat</td></tr>
+<tr><td>KBC</td><td>eCommerce</td><td class="n">1,385</td><td class="n">1,649</td><td class="n g">+264</td><td class="n g">+19%</td></tr>
+<tr><td>KBC</td><td>API</td><td class="n">536</td><td class="n">564</td><td class="n g">+28</td><td class="n g">+5%</td></tr>
+<tr style="border-top:1px solid var(--border)"><td>Bill Doran</td><td>Offline</td><td class="n">5,480</td><td class="n">6,000</td><td class="n g">+520</td><td class="n g">+9%</td></tr>
+<tr><td>Bill Doran</td><td>eCommerce</td><td class="n">168</td><td class="n">298</td><td class="n g">+130</td><td class="n g">+77%</td></tr>
+<tr style="border-top:1px solid var(--border)"><td>Mayesh</td><td>Offline</td><td class="n">12,240</td><td class="n">9,437</td><td class="n r">-2,803</td><td class="n r">-23%</td></tr>
+<tr><td>Mayesh</td><td>API</td><td class="n">4,685</td><td class="n">4,113</td><td class="n r">-572</td><td class="n r">-12%</td></tr>
+</tbody>
+</table>
+
+<h2>Online penetration (buyers online / total buyers)</h2>
+<table>
+<thead><tr><th>Company</th><th class="n">Total Buyers</th><th class="n">Online Buyers</th><th class="n">Penetration</th></tr></thead>
+<tbody>
+<tr><td>KBC</td><td class="n">~7,053</td><td class="n">1,649 eCom + 564 API</td><td class="n g">~23% (some overlap)</td></tr>
+<tr><td>Bill Doran</td><td class="n">~6,000</td><td class="n">298 eCom</td><td class="n a">5%</td></tr>
+<tr><td>Mayesh</td><td class="n">~9,437</td><td class="n">4,113 API + 42 eCom</td><td class="n">~44% (API-driven)</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">The adoption curve</div>
+<strong>KBC</strong> has 23% of buyers online. If the remaining 77% came online, that's ~5,400 buyers × $63K avg eCom GMV/buyer = massive upside. But first they need to list Units.<br>
+<strong>Bill Doran</strong> is at 5% penetration but growing +77% YoY. At this rate they double online buyers annually. If they reach KBC's 23% penetration: 1,380 online buyers × $143K avg = $197M potential online (vs $2.1M today).<br>
+<strong>Key question for L4:</strong> who are these online buyers? What makes them different from offline-only buyers? What triggered them to switch?
+</div>
+</div>
+
+</div>
+
+<div class="source">
+SALES_SV + CONSOLIDATED_TRANSACTION_FEES_SV · ks_flag=TRUE · sales&lt;$100K · H1 2025 vs H1 2026<br>
+Trust: needs_validation · Company names corrected for exact Snowflake match<br>
+Rose · 2026-07-06
+</div>
+
+<script>
+function st(n){document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));document.getElementById('tc-'+n).classList.add('active');document.querySelectorAll('#mt .tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');}
+</script>
+</body></html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L2 · Where Does It Grow?</title>
+<style>
+  :root {
+    --bg:#fff;--surface:#f8f9fb;--surface2:#f0f2f5;--border:#e2e5ea;
+    --text:#1a1a2e;--text2:#5a5a78;--text3:#9898b0;
+    --green:#059669;--green-bg:#ecfdf5;--red:#dc2626;--red-bg:#fef2f2;
+    --amber:#d97706;--amber-bg:#fffbeb;--blue:#2563eb;
+    --importer:#2563eb;--wholesaler:#dc2626;--grower:#d97706;
+    --offline:#6b7280;--ecom:#2563eb;--api:#7c3aed;--k2k:#059669;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:32px 40px;max-width:1280px;margin:0 auto;line-height:1.5;}
+  .header{margin-bottom:24px;border-bottom:2px solid var(--text);padding-bottom:12px;}
+  .header h1{font-size:26px;font-weight:700;}
+  .header .purpose{font-size:13px;color:var(--text2);margin-top:4px;}
+  .verdict{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+  .verdict .headline{font-size:17px;font-weight:600;margin-bottom:8px;}
+  .verdict .g{color:var(--green);}.verdict .r{color:var(--red);}
+  .verdict ul{font-size:13px;color:var(--text2);padding-left:20px;}
+  .verdict li{margin-bottom:4px;}.verdict strong{color:var(--text);}
+  .pos{color:var(--green);}.neg{color:var(--red);}.flat{color:var(--amber);}
+
+  .tabs{display:flex;gap:2px;background:var(--surface2);border-radius:8px 8px 0 0;padding:4px 4px 0;overflow-x:auto;}
+  .tab{padding:8px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);border-radius:6px 6px 0 0;background:transparent;border:none;white-space:nowrap;}
+  .tab:hover{color:var(--text);}.tab.active{background:var(--bg);color:var(--text);font-weight:600;}
+  .tab-body{border:1px solid var(--border);border-radius:0 0 10px 10px;padding:24px;margin-bottom:28px;}
+  .tab-content{display:none;}.tab-content.active{display:block;}
+
+  h2{font-size:15px;font-weight:600;margin-bottom:4px;}
+  .hyp{font-size:13px;color:var(--text2);margin-bottom:16px;font-style:italic;}
+  .finding{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;}
+  .finding strong{color:var(--text);}
+  .tag{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:4px;}
+  .tag.confirmed{color:var(--green);}.tag.gap{color:var(--red);}.tag.partial{color:var(--amber);}
+
+  .dtable{width:100%;border-collapse:collapse;margin-bottom:16px;}
+  .dtable th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);}
+  .dtable th.num{text-align:right;}
+  .dtable td{padding:7px 8px;font-size:11px;border-bottom:1px solid var(--surface2);font-variant-numeric:tabular-nums;}
+  .dtable td.num{text-align:right;}
+  .dtable tr:hover{background:var(--surface);}
+  .ch-dot{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+  .dtable .total-row{border-top:2px solid var(--border);font-weight:600;}
+  .dtable .subtotal-row{background:var(--surface);font-weight:500;}
+  .dtable .fee-sep{border-left:2px solid var(--border);}
+
+  .wf-wrap{margin-bottom:32px;overflow:visible;}
+  .wf-chart{display:flex;align-items:flex-end;height:300px;padding:60px 0 44px;gap:4px;position:relative;}
+  .wf-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative;min-width:65px;}
+  .wf-bar{width:40px;border-radius:3px;position:absolute;cursor:pointer;}
+  .wf-bar:hover{opacity:0.75;}
+  .wf-bar.total{background:var(--blue);}.wf-bar.up{background:var(--green);}.wf-bar.down{background:var(--red);}
+  .wf-val{position:absolute;font-size:10px;font-weight:600;white-space:nowrap;transform:translateX(-50%);left:50%;}
+  .wf-label{position:absolute;bottom:0;font-size:9px;color:var(--text2);text-align:center;width:100%;line-height:1.2;white-space:pre-line;}
+
+  .callout{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;}
+  .callout .clabel{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:3px;}
+
+  .corridor{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:16px;}
+  .corridor h3{font-size:14px;font-weight:600;margin-bottom:8px;}
+  .flow{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:12px;flex-wrap:wrap;}
+  .flow-box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-align:center;min-width:90px;}
+  .flow-box .flabel{font-size:9px;color:var(--text3);text-transform:uppercase;}
+  .flow-box .fval{font-size:15px;font-weight:700;}
+  .flow-arrow{font-size:16px;color:var(--text3);}
+
+  .source{font-size:10px;color:var(--text3);margin-top:32px;padding-top:12px;border-top:1px solid var(--border);line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Layer 2 · Where Does the Ecosystem Grow?</h1>
+  <div class="purpose">L1 showed +3.1% GMV with K2K as the only growing channel. This dashboard breaks down by industry and corridor: who drives growth, who declines, who buys, who sells, and where do fees come from.</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="g">Importers (+11%, +$52M)</span> mask <span class="r">Wholesaler decline (-2%, -$6M)</span> and <span class="r">Grower collapse (-41%, -$20M)</span>.</div>
+  <ul>
+    <li><strong>Importers grow across every channel</strong> and generate 78% of fees ($889K). They are both the volume engine and the fee engine.</li>
+    <li><strong>Wholesalers decline everywhere except K2K buy-side</strong> (+20%). Their fees ($211K) are 82% from BUYING via K2K, not from selling.</li>
+    <li><strong>K2K fees are double-charged:</strong> the importer pays to SELL ($326K), the wholesaler pays to BUY ($172K). Same transaction, two fee events. This is good — both sides of the corridor pay.</li>
+    <li><strong>Outside the Big 3 (Mayesh 24% online, KBC 14%, Bill Doran 3%), wholesalers are 99%+ offline.</strong></li>
+  </ul>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="mt('wf')">Waterfall</div>
+  <div class="tab" onclick="mt('matrix')">Industry × Channel</div>
+  <div class="tab" onclick="mt('corridor')">Supply Chain</div>
+  <div class="tab" onclick="mt('k2k')">K2K: Who Sells & Buys</div>
+  <div class="tab" onclick="mt('offline')">Offline Block</div>
+  <div class="tab" onclick="mt('ecom')">eCommerce: Who Sells?</div>
+</div>
+<div class="tab-body">
+
+<!-- ═══════ WATERFALL ═══════ -->
+<div id="tc-wf" class="tab-content active">
+
+  <h2>By Industry: Where did the +$26M come from?</h2>
+  <div class="hyp">Is ecosystem growth broad, or driven by one industry?</div>
+  <div class="finding"><div class="tag confirmed">Importers are the entire growth engine</div>Importers added +$52M. Wholesalers lost -$6M. Growers lost -$20M.</div>
+
+  <div class="wf-wrap"><div class="wf-chart" id="wfInd"></div></div>
+
+  <table class="dtable">
+    <thead><tr>
+      <th>Industry</th><th class="num">GMV H1'25</th><th class="num">GMV H1'26</th><th class="num">Δ</th><th class="num">YoY</th>
+      <th class="num fee-sep">Fees H1'25</th><th class="num">Fees H1'26</th><th class="num">Fee Δ</th><th class="num">Fee YoY</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--importer)"></span>Importer</td>
+        <td class="num">$480M</td><td class="num">$532M</td><td class="num pos">+$52M</td><td class="num pos">+11%</td>
+        <td class="num fee-sep">$772K</td><td class="num">$889K</td><td class="num pos">+$117K</td><td class="num pos">+15%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--wholesaler)"></span>Wholesaler</td>
+        <td class="num">$303M</td><td class="num">$297M</td><td class="num neg">-$6M</td><td class="num neg">-2%</td>
+        <td class="num fee-sep">$183K</td><td class="num">$211K</td><td class="num pos">+$28K</td><td class="num pos">+15%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--grower)"></span>Grower</td>
+        <td class="num">$49M</td><td class="num">$29M</td><td class="num neg">-$20M</td><td class="num neg">-41%</td>
+        <td class="num fee-sep">$15K</td><td class="num">$15K</td><td class="num">$0</td><td class="num flat">0%</td></tr>
+      <tr><td>Retailer</td>
+        <td class="num">$1.7M</td><td class="num">$1.7M</td><td class="num">$0</td><td class="num flat">0%</td>
+        <td class="num fee-sep">$0.1K</td><td class="num">$1.3K</td><td class="num pos">+$1.2K</td><td class="num">new</td></tr>
+      <tr class="total-row"><td>Ecosystem</td>
+        <td class="num">$834M</td><td class="num">$860M</td><td class="num pos">+$26M</td><td class="num pos">+3.1%</td>
+        <td class="num fee-sep">$970K</td><td class="num">$1,116K</td><td class="num pos">+$146K</td><td class="num pos">+15%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><div class="clabel" style="color:var(--amber)">Fee note</div>
+    H1'25 fees = Jan-Jun (6 months, fully billed). H1'26 fees = Jan-May only (Jun not yet billed). The YoY is conservative — 5 months of 2026 already close to 6 months of 2025.<br>
+    <strong>Wholesaler fees grew +15% despite GMV declining -2%.</strong> This is take-rate expansion, mostly from K2K buy-side fees.
+  </div>
+
+  <div style="height:32px"></div>
+  <h2>Same Change, Split by Industry × Channel</h2>
+  <div class="hyp">Within each industry, which channels grew?</div>
+
+  <div class="wf-wrap"><div class="wf-chart" id="wfFull" style="min-width:850px;height:320px"></div></div>
+
+  <table class="dtable">
+    <thead><tr><th>Industry</th><th>Channel</th><th class="num">GMV H1'25</th><th class="num">GMV H1'26</th><th class="num">Δ</th><th class="num">YoY</th><th class="num fee-sep">Fees H1'26</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--importer)"></span>Imp</td><td>Offline</td><td class="num">$389M</td><td class="num">$427M</td><td class="num pos">+$38M</td><td class="num pos">+10%</td><td class="num fee-sep" style="color:var(--text3)">$0</td></tr>
+      <tr><td></td><td>eCom</td><td class="num">$46M</td><td class="num">$49M</td><td class="num pos">+$3M</td><td class="num pos">+6%</td><td class="num fee-sep">$521K</td></tr>
+      <tr><td></td><td>K2K</td><td class="num">$17M</td><td class="num">$26M</td><td class="num pos">+$9M</td><td class="num pos">+49%</td><td class="num fee-sep">$326K</td></tr>
+      <tr><td></td><td>API</td><td class="num">$27M</td><td class="num">$30M</td><td class="num pos">+$3M</td><td class="num pos">+10%</td><td class="num fee-sep">$36K</td></tr>
+      <tr class="subtotal-row"><td></td><td><em>Imp Total</em></td><td class="num">$480M</td><td class="num">$532M</td><td class="num pos">+$52M</td><td class="num pos">+11%</td><td class="num fee-sep">$889K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--wholesaler)"></span>Wh</td><td>Offline</td><td class="num">$250M</td><td class="num">$249M</td><td class="num neg">-$1M</td><td class="num flat">-0.5%</td><td class="num fee-sep" style="color:var(--text3)">$0</td></tr>
+      <tr><td></td><td>eCom</td><td class="num">$19M</td><td class="num">$17M</td><td class="num neg">-$2M</td><td class="num neg">-11%</td><td class="num fee-sep">$25K</td></tr>
+      <tr><td></td><td>K2K <span style="font-size:9px;color:var(--text3)">(buy-side)</span></td><td class="num">$4M</td><td class="num">$5M</td><td class="num pos">+$1M</td><td class="num pos">+20%</td><td class="num fee-sep">$172K</td></tr>
+      <tr><td></td><td>API</td><td class="num">$29M</td><td class="num">$25M</td><td class="num neg">-$4M</td><td class="num neg">-13%</td><td class="num fee-sep">$12K</td></tr>
+      <tr class="subtotal-row"><td></td><td><em>Wh Total</em></td><td class="num">$303M</td><td class="num">$297M</td><td class="num neg">-$6M</td><td class="num neg">-2%</td><td class="num fee-sep">$211K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--grower)"></span>Grower</td><td>All</td><td class="num">$49M</td><td class="num">$29M</td><td class="num neg">-$20M</td><td class="num neg">-41%</td><td class="num fee-sep">$15K</td></tr>
+      <tr class="total-row"><td colspan="2">Ecosystem</td><td class="num">$834M</td><td class="num">$860M</td><td class="num pos">+$26M</td><td class="num pos">+3.1%</td><td class="num fee-sep">$1,116K</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><div class="clabel" style="color:var(--red)">Double-charge on K2K fees</div>
+    K2K fees are charged to <strong>both sides</strong> of the same transaction:<br>
+    • Importer pays $326K to SELL via K2K<br>
+    • Wholesaler pays $172K to BUY via K2K<br>
+    Same $32M in K2K GMV → ~$498K in total K2K fees (both sides combined). This means 82% of wholesaler fees come from BUYING, not selling. Wholesalers generate almost nothing from their own sales.
+  </div>
+</div>
+
+<!-- ═══════ MATRIX ═══════ -->
+<div id="tc-matrix" class="tab-content">
+  <h2>Full Industry × Channel Matrix</h2>
+  <div class="hyp">Complete picture: who sells what through which channel, and where do fees land?</div>
+
+  <table class="dtable">
+    <thead><tr><th>Industry</th><th>Channel</th><th class="num">GMV H1'25</th><th class="num">GMV H1'26</th><th class="num">Δ</th><th class="num">YoY</th><th class="num fee-sep">Fees H1'26</th><th class="num">Fee = what?</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--importer)"></span>Importer</td><td>Offline</td><td class="num">$389M</td><td class="num">$427M</td><td class="num pos">+$38M</td><td class="num pos">+10%</td><td class="num fee-sep" style="color:var(--text3)">$0</td><td style="font-size:10px;color:var(--text3)">No fee on offline</td></tr>
+      <tr><td></td><td>eCommerce</td><td class="num">$46M</td><td class="num">$49M</td><td class="num pos">+$3M</td><td class="num pos">+6%</td><td class="num fee-sep">$521K</td><td style="font-size:10px">Imp sells via eShop → buyer (likely Wh) browses</td></tr>
+      <tr><td></td><td>API</td><td class="num">$27M</td><td class="num">$30M</td><td class="num pos">+$3M</td><td class="num pos">+10%</td><td class="num fee-sep">$36K</td><td style="font-size:10px">System-to-system (ERP integration)</td></tr>
+      <tr><td></td><td>K2K</td><td class="num">$17M</td><td class="num">$26M</td><td class="num pos">+$9M</td><td class="num pos">+49%</td><td class="num fee-sep">$326K</td><td style="font-size:10px">Imp SELLS to Wh via K2K network</td></tr>
+      <tr class="subtotal-row"><td></td><td>Subtotal</td><td class="num">$480M</td><td class="num">$532M</td><td class="num pos">+$52M</td><td class="num pos">+11%</td><td class="num fee-sep">$889K</td><td style="font-size:10px;color:var(--green)">78% of all fees</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--wholesaler)"></span>Wholesaler</td><td>Offline</td><td class="num">$250M</td><td class="num">$249M</td><td class="num neg">-$1M</td><td class="num flat">-0.5%</td><td class="num fee-sep" style="color:var(--text3)">$0</td><td style="font-size:10px;color:var(--text3)">No fee on offline</td></tr>
+      <tr><td></td><td>eCommerce</td><td class="num">$19M</td><td class="num">$17M</td><td class="num neg">-$2M</td><td class="num neg">-11%</td><td class="num fee-sep">$25K</td><td style="font-size:10px">Wh sells via eShop → buyer is florist/retailer</td></tr>
+      <tr><td></td><td>API</td><td class="num">$29M</td><td class="num">$25M</td><td class="num neg">-$4M</td><td class="num neg">-13%</td><td class="num fee-sep">$12K</td><td style="font-size:10px">System integration (declining)</td></tr>
+      <tr><td></td><td>K2K</td><td class="num">$4M</td><td class="num">$5M</td><td class="num pos">+$1M</td><td class="num pos">+20%</td><td class="num fee-sep">$172K</td><td style="font-size:10px;color:var(--red)">⚡ Wh BUYS from Imp — double-charge</td></tr>
+      <tr class="subtotal-row"><td></td><td>Subtotal</td><td class="num">$303M</td><td class="num">$297M</td><td class="num neg">-$6M</td><td class="num neg">-2%</td><td class="num fee-sep">$211K</td><td style="font-size:10px">82% is K2K buy-side fees</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--grower)"></span>Grower</td><td>All</td><td class="num">$49M</td><td class="num">$29M</td><td class="num neg">-$20M</td><td class="num neg">-41%</td><td class="num fee-sep">$15K</td><td style="font-size:10px;color:var(--text3)">Tiny, mostly eCom</td></tr>
+      <tr class="total-row"><td colspan="2">Ecosystem</td><td class="num">$834M</td><td class="num">$860M</td><td class="num pos">+$26M</td><td class="num pos">+3.1%</td><td class="num fee-sep">$1,116K</td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════ SUPPLY CHAIN CORRIDOR ═══════ -->
+<div id="tc-corridor" class="tab-content">
+  <h2>The Supply Chain: Who Buys From Whom?</h2>
+  <div class="hyp">How does value flow through the ecosystem? Where are we strong, where is the gap?</div>
+
+  <div class="corridor">
+    <h3>The Full Chain</h3>
+    <div class="flow">
+      <div class="flow-box"><div class="flabel">Farms (LatAm)</div><div class="fval" style="font-size:13px;color:var(--text3)">Outside Komet</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--importer)"><div class="flabel">Importers SELL</div><div class="fval" style="color:var(--importer)">$532M</div><div style="font-size:10px" class="pos">+11% · 62% of GMV</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--wholesaler)"><div class="flabel">Wholesalers BUY then SELL</div><div class="fval" style="color:var(--wholesaler)">$297M</div><div style="font-size:10px" class="neg">-2% · 34% of GMV</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><div class="flabel">Retailers/Florists</div><div class="fval" style="font-size:13px;color:var(--text3)">Mostly offline</div></div>
+    </div>
+  </div>
+
+  <div class="corridor">
+    <h3>Link 1: Farm → Importer <span class="pos" style="font-size:12px">✓ Strong</span></h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Who buys:</strong> Importers buy $289M/H1 via Procurement from LatAm farms.</p>
+    <p style="font-size:13px;color:var(--text2)"><strong>Top farm sellers:</strong> Rosaprima ($25M), EQR/Equatoroses ($22M), Ecoflowers ($6M), Fleuro ($5M), Expoflora ($5M).</p>
+  </div>
+
+  <div class="corridor">
+    <h3>Link 2: Importer → Wholesaler <span class="pos" style="font-size:12px">✓ Working — fee engine</span></h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Who sells:</strong> Importers sell $26M via K2K (+49%) + $49M via eShop (+6%) + $30M via API (+10%) to wholesalers.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Who buys:</strong> Wholesalers buy $163M/H1 via Procurement. Top buyers use vendors like: Kennicott Central, BDC Mexico, Promoflor, Holex, EZ Flower, Queens Flower — all importers.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Fees (double-charged):</strong> Importer pays $326K (sell-side) + Wholesaler pays $172K (buy-side) = <strong>$498K from this link alone</strong> (44% of all fees).</p>
+    <p style="font-size:13px;color:var(--text2)"><strong>K2K connections:</strong> Importers have 9,729 active selling connections. 191 accounts trade K2K. Broad participation, concentrated dollars (top 30 = 81%).</p>
+  </div>
+
+  <div class="corridor" style="border-left:3px solid var(--red)">
+    <h3>Link 3: Wholesaler → Retailer/Florist <span class="neg" style="font-size:12px">✗ THE GAP</span></h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Who sells:</strong> Wholesalers sell $17M via eShop (-11%, declining) + $25M via API (-13%, declining). Only 3 wholesalers matter: KBC $6.3M, FloraLink $4.0M, Bill Doran $2.1M.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Who buys:</strong> Florists/retailers. We can't identify them by company (customer_id is local, doesn't map to company). This is a data gap.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:8px"><strong>Fees from wholesaler SELLING:</strong> Only <strong>$25K eCommerce + $12K API = $37K</strong>. Compare to $172K from wholesaler BUYING (K2K buy-side). Wholesalers generate 5x more fees by buying than by selling.</p>
+    <p style="font-size:13px;color:var(--text2)"><strong>Offline:</strong> $249M at $0 fees. This IS the 82% offline block. Almost all wholesaler→retailer trade is phone/walk-in.</p>
+  </div>
+
+  <div class="callout" style="border-left:3px solid var(--blue)"><div class="clabel" style="color:var(--blue)">The story</div>
+    We're good at Link 2 (importer→wholesaler): growing, fee-bearing, broad. The gap is Link 3 (wholesaler→retailer): declining, mostly offline, almost no fee revenue from selling. <strong>The play: help wholesalers digitalize their sales.</strong>
+  </div>
+</div>
+
+<!-- ═══════ K2K ═══════ -->
+<div id="tc-k2k" class="tab-content">
+  <h2>K2K: Who Sells and Who Buys?</h2>
+  <div class="hyp">Is K2K growth broad or fragile? And who is on each side of the transaction?</div>
+
+  <div class="finding"><div class="tag confirmed">Broad participation, concentrated dollars. Importers SELL, wholesalers BUY.</div>
+    <strong>191 accounts</strong> trade K2K. Growth is broad (most up 20-130% YoY). But top 30 = 81% of volume.<br>
+    <strong>Sell side:</strong> Top 24 of 30 are importers. First wholesaler at #25.<br>
+    <strong>Buy side:</strong> Wholesalers buy $163M/H1 via Procurement — they are the primary K2K buyers.
+  </div>
+
+  <table class="dtable">
+    <thead><tr><th>Breadth Metric</th><th class="num">Count</th><th class="num">% of 191</th></tr></thead>
+    <tbody>
+      <tr><td>Total K2K accounts (as seller)</td><td class="num">191</td><td class="num">100%</td></tr>
+      <tr><td>Accounts > $100K H1</td><td class="num">63</td><td class="num">33%</td></tr>
+      <tr><td>Accounts > $10K H1</td><td class="num">119</td><td class="num">62%</td></tr>
+      <tr><td>Accounts > $1K H1</td><td class="num">159</td><td class="num">83%</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top:20px">K2K Sell-Side: Top 15 Accounts</h2>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:8px">These companies SELL via K2K. Their buyers are mainly wholesalers purchasing through Procurement.</div>
+  <table class="dtable">
+    <thead><tr><th>#</th><th>Company (Seller)</th><th>Industry</th><th class="num">K2K H1'25</th><th class="num">K2K H1'26</th><th class="num">Δ</th><th class="num">YoY</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Sole Farms</td><td>Importer</td><td class="num">$2,180K</td><td class="num">$3,365K</td><td class="num pos">+$1,185K</td><td class="num pos">+54%</td></tr>
+      <tr><td>2</td><td>Jet Fresh</td><td>Importer</td><td class="num">$1,445K</td><td class="num">$2,216K</td><td class="num pos">+$771K</td><td class="num pos">+53%</td></tr>
+      <tr><td>3</td><td>Fresca Farms</td><td>Importer</td><td class="num">$1,071K</td><td class="num">$1,970K</td><td class="num pos">+$899K</td><td class="num pos">+84%</td></tr>
+      <tr><td>4</td><td>Royal Flowers</td><td>Importer</td><td class="num">$1,164K</td><td class="num">$1,385K</td><td class="num pos">+$221K</td><td class="num pos">+19%</td></tr>
+      <tr><td>5</td><td>Choice Farms</td><td>Importer</td><td class="num">$859K</td><td class="num">$1,361K</td><td class="num pos">+$502K</td><td class="num pos">+59%</td></tr>
+      <tr><td>6</td><td>Continental Flowers</td><td>Importer</td><td class="num">$971K</td><td class="num">$1,309K</td><td class="num pos">+$338K</td><td class="num pos">+35%</td></tr>
+      <tr><td>7</td><td>Welyflor/Profile</td><td>Importer</td><td class="num">$451K</td><td class="num">$1,040K</td><td class="num pos">+$589K</td><td class="num pos">+131%</td></tr>
+      <tr><td>8</td><td>Bella Blossom</td><td>Importer</td><td class="num">$583K</td><td class="num">$979K</td><td class="num pos">+$396K</td><td class="num pos">+68%</td></tr>
+      <tr><td>9</td><td>KBC Cooler</td><td>Importer</td><td class="num">$827K</td><td class="num">$972K</td><td class="num pos">+$145K</td><td class="num pos">+18%</td></tr>
+      <tr><td>10</td><td>Rosaprima</td><td>Importer</td><td class="num">$944K</td><td class="num">$887K</td><td class="num neg">-$57K</td><td class="num neg">-6%</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:10px;color:var(--text3);margin-top:6px">First wholesaler as K2K seller: #25 Palm Beach ($339K). All top 24 = importers.</div>
+
+  <div style="height:24px"></div>
+  <h2>K2K Buy-Side: Who Buys via Procurement?</h2>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:8px">We can't identify K2K buyers by company (customer_id doesn't map). But Procurement data shows who BUYS and from which vendors.</div>
+
+  <table class="dtable">
+    <thead><tr><th>Buyer Industry</th><th class="num">Procurement H1'26</th><th>Top Vendors They Buy From</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--importer)"></span>Importers (buy from farms)</td><td class="num">$289M</td><td style="font-size:11px">Rosaprima, EQR, Ecoflowers, Fleuro, Expoflora</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--wholesaler)"></span>Wholesalers (buy from importers)</td><td class="num">$163M</td><td style="font-size:11px">Kennicott Central, BDC Mexico, Promoflor, Holex, EZ Flower</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--grower)"></span>Growers</td><td class="num">$20M</td><td style="font-size:11px">Other growers, supplies</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><div class="clabel" style="color:var(--amber)">Data gap</div>
+    We know WHO SELLS K2K (from SALE_DETAILS.company_id → seller). We know WHO BUYS via Procurement (from PROCUREMENTS_SV). But we can't directly link a K2K sale to the buying company — customer_id is local, 0% maps to company_id. The Procurement data is our best proxy.
+  </div>
+</div>
+
+<!-- ═══════ OFFLINE BLOCK ═══════ -->
+<div id="tc-offline" class="tab-content">
+  <h2>The Offline Block: Who Is It?</h2>
+  <div class="hyp">$705M offline at $0 fees. Who are these wholesalers, how big are they, and are they moving to online?</div>
+
+  <div class="finding"><div class="tag gap">Outside the Big 3, wholesalers are 99%+ offline — and not moving</div>
+    Mayesh is the only wholesaler with meaningful online (24%). KBC is at 14%. Bill Doran is at 3%. Everyone else: zero. Many have Procurement Free Trial enabled — <strong>never used.</strong></div>
+
+  <table class="dtable">
+    <thead><tr><th>Wholesaler</th><th>System</th>
+      <th class="num">Offline H1'26</th><th class="num">Online H1'26</th><th class="num">Online %</th>
+      <th class="num fee-sep">Total H1'25</th><th class="num">Total H1'26</th><th class="num">YoY</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>Mayesh Wholesale</td><td style="font-size:10px">Core+Proc</td>
+        <td class="num">$71.5M</td><td class="num pos">$22.7M</td><td class="num pos">24%</td>
+        <td class="num fee-sep">$88.2M</td><td class="num">$94.2M</td><td class="num pos">+7%</td></tr>
+      <tr><td>Kennicott Brothers</td><td style="font-size:10px">Core+Proc</td>
+        <td class="num">$55.3M</td><td class="num flat">$8.7M</td><td class="num flat">14%</td>
+        <td class="num fee-sep">$62.7M</td><td class="num">$64.1M</td><td class="num pos">+2%</td></tr>
+      <tr><td>Bill Doran</td><td style="font-size:10px">Core+Proc</td>
+        <td class="num">$59.3M</td><td class="num neg">$2.1M</td><td class="num neg">3%</td>
+        <td class="num fee-sep">$54.4M</td><td class="num">$61.5M</td><td class="num pos">+13%</td></tr>
+      <tr style="border-top:1px solid var(--border)"><td colspan="2" style="color:var(--text2)"><em>Big 3 subtotal</em></td>
+        <td class="num">$186M</td><td class="num">$34M</td><td class="num">15%</td>
+        <td class="num fee-sep">$205M</td><td class="num">$220M</td><td class="num pos">+7%</td></tr>
+      <tr><td>Del Tropico</td><td style="font-size:10px">Core</td><td class="num">$6.3M</td><td class="num neg">$0</td><td class="num neg">0%</td><td class="num fee-sep">—</td><td class="num">$6.3M</td><td class="num">—</td></tr>
+      <tr><td>Flora Fresh</td><td style="font-size:10px">Core+Proc FT+E-Shops</td><td class="num">$5.5M</td><td class="num neg">$31K</td><td class="num neg">0.6%</td><td class="num fee-sep">—</td><td class="num">$5.6M</td><td class="num">—</td></tr>
+      <tr><td>H&T Wholesale</td><td style="font-size:10px">Core+Proc+E-Shops</td><td class="num">$4.4M</td><td class="num neg">$26K</td><td class="num neg">0.6%</td><td class="num fee-sep">—</td><td class="num">$4.4M</td><td class="num">—</td></tr>
+      <tr><td>Ninfa Flowers</td><td style="font-size:10px">Core</td><td class="num">$4.2M</td><td class="num neg">$0</td><td class="num neg">0%</td><td class="num fee-sep">—</td><td class="num">$4.2M</td><td class="num">—</td></tr>
+      <tr><td>Tropical Blooms</td><td style="font-size:10px">Core+Proc FT</td><td class="num">$3.5M</td><td class="num neg">$9K</td><td class="num neg">0%</td><td class="num fee-sep">—</td><td class="num">$3.5M</td><td class="num">—</td></tr>
+      <tr><td>Metro Flower</td><td style="font-size:10px">Core</td><td class="num">$3.3M</td><td class="num neg">$6K</td><td class="num neg">0%</td><td class="num fee-sep">—</td><td class="num">$3.3M</td><td class="num">—</td></tr>
+      <tr style="border-top:1px solid var(--border)"><td colspan="2" style="color:var(--text2)"><em>Rest (#4-20, ~15 companies)</em></td>
+        <td class="num">~$51M</td><td class="num neg">~$0</td><td class="num neg">~0%</td>
+        <td class="num fee-sep">—</td><td class="num">~$51M</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><div class="clabel" style="color:var(--red)">The opportunity</div>
+    $249M in wholesaler offline GMV generates $0 in fees. Flora Fresh has E-Shops AND Procurement — $31K online. H&T has E-Shops AND Procurement — $26K online. The features are there, the adoption isn't. This is the lead list for Implementations (List A: offline-only ready to go online).
+  </div>
+</div>
+
+<!-- ═══════ ECOMMERCE ═══════ -->
+<div id="tc-ecom" class="tab-content">
+  <h2>eCommerce: Who Sells Via eShop?</h2>
+  <div class="hyp">Is eCommerce wholesalers selling to florists, or importers selling to wholesalers?</div>
+
+  <div class="finding"><div class="tag confirmed">74% importer. Wholesaler eCom is declining.</div>
+    When an <strong>importer</strong> sells via eCommerce ($49M), the buyer is typically a <strong>wholesaler</strong> browsing their eShop.<br>
+    When a <strong>wholesaler</strong> sells via eCommerce ($17M), the buyer is a <strong>florist/retailer</strong> browsing their eShop.<br>
+    <strong>Importer eCom is growing (+6%). Wholesaler eCom is shrinking (-11%).</strong>
+  </div>
+
+  <table class="dtable">
+    <thead><tr><th>Seller Industry</th><th>Likely Buyer</th><th class="num">eCom H1'25</th><th class="num">eCom H1'26</th><th class="num">Δ</th><th class="num">YoY</th><th class="num">% of eCom</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--importer)"></span>Importer</td><td style="font-size:11px">Wholesalers</td><td class="num">$46.4M</td><td class="num">$49.1M</td><td class="num pos">+$2.7M</td><td class="num pos">+6%</td><td class="num">73%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--wholesaler)"></span>Wholesaler</td><td style="font-size:11px">Florists/Retailers</td><td class="num">$19.3M</td><td class="num">$17.3M</td><td class="num neg">-$2.0M</td><td class="num neg">-11%</td><td class="num">26%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--grower)"></span>Grower</td><td style="font-size:11px">Importers</td><td class="num">$0.5M</td><td class="num">$0.7M</td><td class="num pos">+$0.2M</td><td class="num pos">+28%</td><td class="num">1%</td></tr>
+      <tr class="total-row"><td colspan="2">Total eCom</td><td class="num">$66.2M</td><td class="num">$67.1M</td><td class="num pos">+$0.9M</td><td class="num flat">+1.3%</td><td class="num">100%</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top:24px">Top eShop Sellers</h2>
+  <table class="dtable">
+    <thead><tr><th>#</th><th>Company</th><th>Industry</th><th>Buyer = ?</th><th class="num">eCom H1'25</th><th class="num">eCom H1'26</th><th class="num">YoY</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Sole Farms</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$5,603K</td><td class="num">$7,016K</td><td class="num pos">+25%</td></tr>
+      <tr><td>2</td><td><strong>Kennicott Brothers</strong></td><td><strong>Wholesaler</strong></td><td style="font-size:10px">→ Florists</td><td class="num">$5,456K</td><td class="num">$6,321K</td><td class="num pos">+16%</td></tr>
+      <tr><td>3</td><td>Jet Fresh</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$3,420K</td><td class="num">$5,551K</td><td class="num pos">+62%</td></tr>
+      <tr><td>4</td><td>Fresca Farms</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$5,319K</td><td class="num">$4,732K</td><td class="num neg">-11%</td></tr>
+      <tr><td>5</td><td><strong>FloraLink</strong></td><td><strong>Wholesaler</strong></td><td style="font-size:10px">→ Florists</td><td class="num">$3,428K</td><td class="num">$3,961K</td><td class="num pos">+16%</td></tr>
+      <tr><td>6</td><td>Rosaprima</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$3,354K</td><td class="num">$3,296K</td><td class="num neg">-2%</td></tr>
+      <tr><td>7</td><td>Royal Flowers</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$2,514K</td><td class="num">$2,191K</td><td class="num neg">-13%</td></tr>
+      <tr><td>8</td><td>Continental Flowers</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$2,276K</td><td class="num">$2,191K</td><td class="num neg">-4%</td></tr>
+      <tr><td>9</td><td><strong>Bill Doran</strong></td><td><strong>Wholesaler</strong></td><td style="font-size:10px">→ Florists</td><td class="num">$1,282K</td><td class="num">$2,145K</td><td class="num pos">+67%</td></tr>
+      <tr><td>10</td><td>Bella Blossom</td><td>Importer</td><td style="font-size:10px">→ Wholesalers</td><td class="num">$1,716K</td><td class="num">$2,104K</td><td class="num pos">+23%</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:10px;color:var(--text3);margin-top:6px">Only 3 wholesalers in top 20. Wholesalers in <strong>bold</strong>. "Buyer = ?" is inferred from seller industry (not from data — buyer identity is a gap).</div>
+</div>
+
+</div><!-- tab-body -->
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;font-size:13px">
+  <strong style="color:var(--blue)">→ Layer 3:</strong> Account-level deep dives. Individual wholesalers, product mix, connection health, what they buy online vs offline.
+</div>
+
+<div class="source">
+  SALES_SV + CONSOLIDATED_TRANSACTION_FEES_SV + K2K_CONNECTIONS_SV + PROCUREMENTS_SV · ks_flag=TRUE · sales&lt;$100K<br>
+  Fee note: H1'25 = Jan-Jun (6mo billed). H1'26 = Jan-May (5mo, Jun not billed). YoY comparison is conservative.<br>
+  Trust: needs_validation · Buyer identity inferred for non-K2K (data gap: customer_id doesn't map to company)<br>
+  Rose · 2026-07-06
+</div>
+
+<script>
+function mt(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function buildWF(elId,data){
+  const el=document.getElementById(elId);el.innerHTML='';
+  const maxV=870,minV=780,range=maxV-minV,chartH=180;
+  const scale=v=>(v-minV)/range*chartH;
+  const base=44;
+  let running=0;
+  data.forEach(d=>{
+    const wrap=document.createElement('div');wrap.className='wf-bar-wrap';
+    if(d.type==='total'){
+      const h=scale(d.val);
+      wrap.innerHTML=`<div class="wf-bar total" style="height:${h}px;bottom:${base}px"></div><div class="wf-val" style="bottom:${h+base+6}px;color:var(--blue)">$${d.val.toFixed(0)}M</div><div class="wf-label">${d.label}</div>`;
+      running=d.val;
+    }else{
+      const prev=running;running+=d.val;
+      const bot=scale(Math.min(prev,running)),top=scale(Math.max(prev,running));
+      const h=Math.max(top-bot,4),cls=d.val>=0?'up':'down',clr=d.val>=0?'var(--green)':'var(--red)';
+      wrap.innerHTML=`<div class="wf-bar ${cls}" style="height:${h}px;bottom:${bot+base}px"></div><div class="wf-val" style="bottom:${bot+h+base+6}px;color:${clr}">${d.val>=0?'+':''}${d.val.toFixed(1)}M</div><div class="wf-label">${d.label}</div>`;
+    }
+    el.appendChild(wrap);
+  });
+}
+buildWF('wfInd',[
+  {label:'H1 2025',val:833.7,type:'total'},
+  {label:'Importers',val:52.1,type:'up'},
+  {label:'Wholesalers',val:-6.1,type:'down'},
+  {label:'Growers',val:-20.2,type:'down'},
+  {label:'H1 2026',val:859.5,type:'total'}
+]);
+buildWF('wfFull',[
+  {label:'H1 2025',val:833.7,type:'total'},
+  {label:'Imp\nOffline',val:38.0,type:'up'},
+  {label:'Imp\neCom',val:2.7,type:'up'},
+  {label:'Imp\nK2K',val:8.6,type:'up'},
+  {label:'Imp\nAPI',val:2.8,type:'up'},
+  {label:'Wh\nOffline',val:-1.3,type:'down'},
+  {label:'Wh\neCom',val:-2.0,type:'down'},
+  {label:'Wh\nK2K',val:0.9,type:'up'},
+  {label:'Wh\nAPI',val:-3.7,type:'down'},
+  {label:'Grower\nAll',val:-20.2,type:'down'},
+  {label:'H1 2026',val:859.5,type:'total'}
+]);
+</script>
+</body>
+</html>

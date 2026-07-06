@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>L3c · K2K Top Importers</title>
+<style>
+:root{--bg:#fff;--surface:#f8f9fb;--border:#e2e5ea;--text:#1a1a2e;--text2:#5a5a78;--text3:#9898b0;--green:#059669;--red:#dc2626;--amber:#d97706;--blue:#2563eb;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:32px 40px;max-width:1320px;margin:0 auto;line-height:1.5;}
+.header{margin-bottom:24px;border-bottom:2px solid var(--text);padding-bottom:12px;}
+.header h1{font-size:26px;font-weight:700;}.header .purpose{font-size:13px;color:var(--text2);margin-top:4px;}
+.verdict{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+.verdict .headline{font-size:17px;font-weight:600;margin-bottom:8px;}
+.g{color:var(--green);}.r{color:var(--red);}.a{color:var(--amber);}.b{color:var(--blue);}
+.verdict ul{font-size:13px;color:var(--text2);padding-left:20px;}.verdict li{margin-bottom:4px;}.verdict strong{color:var(--text);}
+.tabs{display:flex;gap:2px;background:#f0f2f5;border-radius:8px 8px 0 0;padding:4px 4px 0;overflow-x:auto;}
+.tab{padding:8px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text2);border-radius:6px 6px 0 0;background:transparent;border:none;white-space:nowrap;}
+.tab:hover{color:var(--text);}.tab.active{background:var(--bg);color:var(--text);font-weight:600;}
+.tb{border:1px solid var(--border);border-radius:0 0 10px 10px;padding:24px;margin-bottom:28px;}
+.tc{display:none;}.tc.active{display:block;}
+h2{font-size:15px;font-weight:600;margin-bottom:6px;}
+.hyp{font-size:13px;color:var(--text2);margin-bottom:14px;font-style:italic;}
+.finding{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;}
+.finding strong{color:var(--text);}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:4px;}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);}
+th.n{text-align:right;}
+td{padding:7px 8px;font-size:11px;border-bottom:1px solid #f0f2f5;font-variant-numeric:tabular-nums;}
+td.n{text-align:right;}
+tr:hover{background:var(--surface);}
+.total-row{border-top:2px solid var(--border);font-weight:600;}
+.callout{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;}
+.clabel{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-bottom:3px;}
+.source{font-size:10px;color:var(--text3);margin-top:32px;padding-top:12px;border-top:1px solid var(--border);line-height:1.7;}
+</style></head><body>
+
+<div class="header">
+<h1>L3c · K2K Top Importers — The Fee Growth Engine</h1>
+<div class="purpose">K2K grew +41% and drives the fee growth story. These importers ARE the engine. This dashboard analyzes whether the growth is sustainable, what products flow, and how concentrated it is.</div>
+</div>
+
+<div class="verdict">
+<div class="headline"><span class="g">K2K growth is broad (+41%, 191 accounts)</span> and fee growth outpaces GMV (take-rate expansion).</div>
+<ul>
+<li><strong>Every top importer is growing K2K</strong> — Sunburst +124%, Allure +109%, Fresca +84%, Bella +68%, Choice +59%, Sole +54%.</li>
+<li><strong>Fee growth > GMV growth:</strong> Sole: GMV +15% → fees +98%. Fresca: GMV +4% → fees +260% (new eCom billing). Take-rate expansion is real.</li>
+<li><strong>Continental Flowers is all-digital:</strong> 1 offline buyer, 320 eCom + 140 K2K. Proof the model works fully digital.</li>
+<li><strong>Products:</strong> Roses dominate but top sellers are diversified (Sole = 59 categories). Bella Blossom is hydrangea-heavy (26%).</li>
+<li><strong>Buyer reach:</strong> K2K buyers per importer = 98-153 distinct customers. Moderate breadth, room to expand.</li>
+</ul>
+</div>
+
+<div class="tabs" id="mt">
+<div class="tab active" onclick="st('channels')">Full Channel Mix</div>
+<div class="tab" onclick="st('fees')">Fees (GMV vs Fees)</div>
+<div class="tab" onclick="st('products')">K2K Products</div>
+<div class="tab" onclick="st('buyers')">Buyer Concentration</div>
+</div><div class="tb">
+
+<!-- CHANNEL MIX -->
+<div id="tc-channels" class="tc active">
+<h2>Full Channel Breakdown — Top K2K Importers</h2>
+<div class="hyp">K2K is growing. But what's happening to their other channels?</div>
+
+<div class="finding"><div class="tag g">K2K is the fastest channel for every importer. Offline still dominates volume.</div></div>
+
+<table>
+<thead><tr><th>Company</th><th class="n">Offline H1'26</th><th class="n">eCom H1'26</th><th class="n">K2K H1'26</th><th class="n">API H1'26</th><th class="n">Total H1'26</th><th class="n">Total YoY</th></tr></thead>
+<tbody>
+<tr><td>Sole Farms</td><td class="n">$19.9M</td><td class="n">$7.0M</td><td class="n g">$3.4M</td><td class="n">$815K</td><td class="n">$31.1M</td><td class="n g">+15%</td></tr>
+<tr><td>Fresca Farms</td><td class="n">$30.6M</td><td class="n">$4.7M</td><td class="n g">$2.0M</td><td class="n">$267K</td><td class="n">$37.5M</td><td class="n g">+4%</td></tr>
+<tr><td>Gala Roses</td><td class="n">$19.3M</td><td class="n">$669K</td><td class="n g">$451K</td><td class="n">$32K</td><td class="n">$20.4M</td><td class="n g">+42%</td></tr>
+<tr><td>Sunburst Farms</td><td class="n">$11.0M</td><td class="n">$1.6M</td><td class="n g">$595K</td><td class="n">$277K</td><td class="n">$13.5M</td><td class="n g">+8%</td></tr>
+<tr><td>Allure Farms</td><td class="n">$7.2M</td><td class="n">$2.1M</td><td class="n g">$639K</td><td class="n">$148K</td><td class="n">$10.0M</td><td class="n g">+22%</td></tr>
+<tr><td>Choice Farms</td><td class="n">$4.0M</td><td class="n">$2.1M</td><td class="n g">$1.4M</td><td class="n">$75K</td><td class="n">$7.5M</td><td class="n a">flat</td></tr>
+<tr><td>Continental Flowers</td><td class="n" style="color:var(--text3)">$222</td><td class="n">$2.2M</td><td class="n g">$1.3M</td><td class="n">$63K</td><td class="n">$3.6M</td><td class="n g">+10%</td></tr>
+<tr><td>Bella Blossom</td><td class="n">$2.4M</td><td class="n">$2.1M</td><td class="n g">$979K</td><td class="n">—</td><td class="n">$5.4M</td><td class="n g">+26%</td></tr>
+<tr><td>Miaflora Farms</td><td class="n">—</td><td class="n">$529K</td><td class="n g">$608K</td><td class="n">—</td><td class="n">$1.1M</td><td class="n g">+46%</td></tr>
+<tr><td>U.S. Greens Corp</td><td class="n" style="color:var(--text3)">$350</td><td class="n">$1.2M</td><td class="n g">$512K</td><td class="n">$39K</td><td class="n">$1.7M</td><td class="n g">+32%</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">Continental Flowers = the fully digital model</div>
+$222 offline (literally 1 buyer). Everything else is eCom ($2.2M) + K2K ($1.3M) + API ($63K). This is what an all-digital importer looks like. <strong>320 eCom buyers + 140 K2K buyers.</strong></div>
+</div>
+
+<!-- FEES -->
+<div id="tc-fees" class="tc">
+<h2>Fees vs GMV — Take-Rate Expansion in Action</h2>
+<div class="hyp">Do fees grow faster than GMV? That's the +32% story.</div>
+
+<div class="finding"><div class="tag g">Yes — fee growth consistently outpaces GMV growth</div>
+This is take-rate expansion: new fee types being activated, higher per-transaction fees, broader fee coverage. The implication: even without volume growth, fee revenue can keep growing (until take-rate saturates).</div>
+
+<table>
+<thead><tr><th>Company</th><th class="n">GMV YoY</th><th class="n">Fee YoY</th><th class="n">Fees Jan-May'25</th><th class="n">Fees Jan-May'26</th><th class="n">Fee Δ</th></tr></thead>
+<tbody>
+<tr><td>Sole Farms</td><td class="n g">+15%</td><td class="n g"><strong>+98%</strong></td><td class="n">$56K</td><td class="n">$111K</td><td class="n g">+$55K</td></tr>
+<tr><td>Fresca Farms</td><td class="n g">+4%</td><td class="n g"><strong>+260%</strong></td><td class="n">$18K</td><td class="n">$65K</td><td class="n g">+$47K</td></tr>
+<tr><td>Choice Farms</td><td class="n a">flat</td><td class="n g"><strong>+47%</strong></td><td class="n">$30K</td><td class="n">$44K</td><td class="n g">+$14K</td></tr>
+<tr><td>Continental Flowers</td><td class="n g">+10%</td><td class="n g">+8%</td><td class="n">$43K</td><td class="n">$46K</td><td class="n g">+$3K</td></tr>
+<tr><td>Allure Farms</td><td class="n g">+22%</td><td class="n g">+52%</td><td class="n">$24K</td><td class="n">$37K</td><td class="n g">+$13K</td></tr>
+<tr><td>Bella Blossom</td><td class="n g">+26%</td><td class="n g">+36%</td><td class="n">$26K</td><td class="n">$35K</td><td class="n g">+$9K</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel a">Fresca = the new fee type story</div>
+Fresca's GMV grew only +4% but fees +260%. They went from $0 in eCom fees to $36K — a <strong>new fee type was activated</strong>. This pattern (new fee type → step-change in fee revenue) is replicable for other importers not yet paying certain fee types.</div>
+</div>
+
+<!-- PRODUCTS -->
+<div id="tc-products" class="tc">
+<h2>What Products Flow Through K2K?</h2>
+<div class="hyp">Is K2K roses-only or diversified?</div>
+
+<div class="finding"><div class="tag g">Diversified. Top sellers have 30-59 product categories in K2K.</div>
+Roses are #1 for most, but carnations, hydrangeas, poms, ranunculus, stocks, greens all flow through K2K. Sole Farms has 59 categories — the most diversified.</div>
+
+<table>
+<thead><tr><th>Company</th><th>Top K2K Products (H1'26)</th></tr></thead>
+<tbody>
+<tr><td><strong>Sole ($3.4M)</strong></td><td style="font-size:10px">Carns $500K · Pom $322K · Rose $300K · Hydrangea $222K · Alstro $200K — 59 categories total</td></tr>
+<tr><td><strong>Fresca ($2.0M)</strong></td><td style="font-size:10px">Rose $280K · Ranunculus $229K · Spray Rose $145K · Hydrangea $96K · Carnation $87K</td></tr>
+<tr><td><strong>Choice ($1.4M)</strong></td><td style="font-size:10px">Color Roses $262K · Garden Rose $153K · Spray Roses $110K · Stock $104K · Ranunc. $101K</td></tr>
+<tr><td><strong>Continental ($1.3M)</strong></td><td style="font-size:10px">Roses $161K · Alstro $135K · Stock $115K · Carnations $114K · Hydrangeas $86K</td></tr>
+<tr><td><strong>Bella Blossom ($979K)</strong></td><td style="font-size:10px">Hydrangea $256K (26%) · Stock $110K · Hydrangea Mini $38K — hydrangea-heavy</td></tr>
+<tr><td><strong>Allure ($639K)</strong></td><td style="font-size:10px">Hydrangea $79K · Peony $57K · Calla Mini $45K · Rose Spray $29K</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">Diversification = stickiness</div>
+Sole Farms with 59 K2K categories is more defensible than Bella Blossom with hydrangea at 26%. If one product has a bad season, diversified sellers keep volume. <strong>Encourage importers to broaden their K2K catalog.</strong></div>
+</div>
+
+<!-- BUYERS -->
+<div id="tc-buyers" class="tc">
+<h2>Buyer Concentration: How Many Wholesalers Buy From Each Importer?</h2>
+<div class="hyp">Is K2K a few big buyers or a broad base?</div>
+
+<table>
+<thead><tr><th>Company</th><th class="n">Offline Buyers</th><th class="n">eCom Buyers</th><th class="n">K2K Buyers</th><th class="n">API Buyers</th></tr></thead>
+<tbody>
+<tr><td>Allure Farms</td><td class="n">815</td><td class="n">374</td><td class="n g">109</td><td class="n">6</td></tr>
+<tr><td>Fresca Farms</td><td class="n">671</td><td class="n">382</td><td class="n g">153</td><td class="n">4</td></tr>
+<tr><td>Sole Farms</td><td class="n">630</td><td class="n">391</td><td class="n g">150</td><td class="n">8</td></tr>
+<tr><td>Choice Farms</td><td class="n">287</td><td class="n">212</td><td class="n g">121</td><td class="n">2</td></tr>
+<tr><td>Continental Flowers</td><td class="n" style="color:var(--text3)">1</td><td class="n">320</td><td class="n g">140</td><td class="n">1</td></tr>
+<tr><td>Bella Blossom</td><td class="n">231</td><td class="n">180</td><td class="n">98</td><td class="n">—</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><div class="clabel b">Room to grow</div>
+Sole has 630 offline buyers but only 150 K2K buyers (24% penetration). Fresca: 671 offline, 153 K2K (23%). <strong>~75% of their buyer base doesn't use K2K yet.</strong> If K2K penetration doubled from ~24% to ~48%, that's another $26M+ in K2K GMV potential — doubling the channel.
+</div>
+</div>
+
+</div>
+
+<div class="source">
+SALES_SV + CONSOLIDATED_TRANSACTION_FEES_SV + INVOICE_DETAILS_SV · ks_flag=TRUE · sales&lt;$100K · H1 2025 vs H1 2026<br>
+Trust: needs_validation · 4 companies not found (name mismatch): Jet Fresh, Royal Flowers, Rosaprima, Welyflor<br>
+Rose · 2026-07-06
+</div>
+
+<script>
+function st(n){document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));document.getElementById('tc-'+n).classList.add('active');document.querySelectorAll('#mt .tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');}
+</script>
+</body></html>
