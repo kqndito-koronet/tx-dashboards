@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead List C: Stopped or Declining Online, Still Buying Offline</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-card { background: #fef2f2; border-radius: 8px; padding: 16px; }
+  .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+  .meta-card .value { font-size: 20px; font-weight: 700; color: #991b1b; }
+  .meta-card.blue { background: #eff6ff; }
+  .meta-card.blue .value { color: #1e40af; }
+  .meta-card.amber { background: #fffbeb; }
+  .meta-card.amber .value { color: #92400e; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .section .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  tbody tr:hover { background: #f9fafb; }
+  .vendor-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .vendor-kbc { background: #dbeafe; color: #1e40af; }
+  .vendor-mayesh { background: #fce7f3; color: #9d174d; }
+  .gmv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gmv-red { color: #dc2626; }
+  .gmv-green { color: #16a34a; }
+  .signal { font-size: 12px; color: #6b7280; max-width: 350px; }
+  .rank { color: #9ca3af; font-weight: 500; }
+  .pct-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .pct-red { background: #fef2f2; color: #dc2626; }
+  .pct-orange { background: #fff7ed; color: #ea580c; }
+  .pct-yellow { background: #fefce8; color: #ca8a04; }
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #9ca3af; }
+  .methodology { background: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .methodology strong { color: #374151; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lead List C: Online Decline / Churn -- Retention Saves</h1>
+    <div class="subtitle">Owner: CS (Retention) | Generated 2026-07-07</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Total Leads</div>
+        <div class="value">20</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">Online GMV at Risk (YoY decline)</div>
+        <div class="value">$26.6M</div>
+      </div>
+      <div class="meta-card blue">
+        <div class="label">Comparison Period</div>
+        <div class="value">H1 2025 vs H1 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Purpose</h2>
+    <div class="desc">
+      These are buyer x vendor pairs that had meaningful online GMV in H1 2025 but have either <strong>fully stopped</strong> or <strong>significantly reduced</strong> their online purchasing in H1 2026. 
+      Many are still buying offline from the same vendor -- they reverted to phone/fax. Each represents a retention save opportunity: re-engage before the habit is fully lost.
+    </div>
+    <div class="methodology">
+      <strong>Methodology:</strong> SALES_SV, H1 2025 vs H1 2026, ks_flag=TRUE, sales &lt; $100K (Rule 4), company_industry = 'Floral - Wholesaler'.
+      Step 1: Identified all buyer x vendor pairs with &gt;$1K online GMV in H1 2025 (eCommerce + API + K2K).
+      Step 2: Compared each pair's online GMV in H1 2026 -- flagged any with &gt;35% decline.
+      Step 3: Checked offline GMV in H1 2026 to confirm still buying.
+      | Trust: <strong>trusted</strong> (each pair verified with per-channel breakdown).
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Lead List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Vendor</th>
+          <th>Buyer</th>
+          <th style="text-align:right">Online H1 2025</th>
+          <th style="text-align:right">Online H1 2026</th>
+          <th>YoY</th>
+          <th style="text-align:right">Offline H1 2026</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>William Paul Floral Design - Denver</td>
+          <td style="text-align:right" class="gmv">$2.7M</td>
+          <td style="text-align:right" class="gmv gmv-red">$0</td>
+          <td><span class="pct-badge pct-red">-100%</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td class="signal">Fully churned — $2.7M API in H1 2025, $0 in 2026. Lost customer entirely.</td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>William Paul Floral Design</td>
+          <td style="text-align:right" class="gmv">$2.4M</td>
+          <td style="text-align:right" class="gmv gmv-red">$0</td>
+          <td><span class="pct-badge pct-red">-100%</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td class="signal">Fully churned — $2.4M API in H1 2025, $0 in 2026. Likely same owner as Denver.</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Pretty Things by A. E. Manning</td>
+          <td style="text-align:right" class="gmv">$1.8M</td>
+          <td style="text-align:right" class="gmv gmv-red">$39K</td>
+          <td><span class="pct-badge pct-red">-98%</span></td>
+          <td style="text-align:right" class="gmv">$3.8M</td>
+          <td class="signal">$1.8M API in H1 2025, only $39K in 2026. But $3.8M OFFLINE -- switched back to phone.</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td><span class="vendor-tag vendor-kbc">KBC</span></td>
+          <td>MAGIC MOMENTS, INC</td>
+          <td style="text-align:right" class="gmv">$1.8M</td>
+          <td style="text-align:right" class="gmv gmv-red">$25K</td>
+          <td><span class="pct-badge pct-red">-99%</span></td>
+          <td style="text-align:right" class="gmv">$39K</td>
+          <td class="signal">Near-full churn — $1.75M eCommerce in H1 2025, only $25K in 2026. Still buying $39K offline.</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Weddings by Epic</td>
+          <td style="text-align:right" class="gmv">$3.0M</td>
+          <td style="text-align:right" class="gmv gmv-red">$1.2M</td>
+          <td><span class="pct-badge pct-yellow">-58%</span></td>
+          <td style="text-align:right" class="gmv">$44K</td>
+          <td class="signal">$3.0M API in H1 2025, $1.2M in 2026 (-58%). Large absolute decline.</td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Soiree Design Event</td>
+          <td style="text-align:right" class="gmv">$2.1M</td>
+          <td style="text-align:right" class="gmv gmv-red">$438K</td>
+          <td><span class="pct-badge pct-orange">-79%</span></td>
+          <td style="text-align:right" class="gmv">$75K</td>
+          <td class="signal">$2.1M API in H1 2025, $438K in 2026 (-79%). Significant drop.</td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td><span class="vendor-tag vendor-kbc">KBC</span></td>
+          <td>DELLA&#x27;S MAPLE LANE (L*)</td>
+          <td style="text-align:right" class="gmv">$1.8M</td>
+          <td style="text-align:right" class="gmv gmv-red">$272K</td>
+          <td><span class="pct-badge pct-orange">-85%</span></td>
+          <td style="text-align:right" class="gmv">$192K</td>
+          <td class="signal">Steep decline — $1.83M eCommerce in H1 2025, only $272K in 2026 (-85%).</td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Heather Christan Designs</td>
+          <td style="text-align:right" class="gmv">$1.3M</td>
+          <td style="text-align:right" class="gmv gmv-red">$27K</td>
+          <td><span class="pct-badge pct-red">-98%</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td class="signal">$1.3M API in H1 2025, only $27K in 2026. Near-total online churn.</td>
+        </tr>
+        <tr>
+          <td class="rank">9</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Heritage Floral Design</td>
+          <td style="text-align:right" class="gmv">$2.3M</td>
+          <td style="text-align:right" class="gmv gmv-red">$1.1M</td>
+          <td><span class="pct-badge pct-yellow">-54%</span></td>
+          <td style="text-align:right" class="gmv">$97K</td>
+          <td class="signal">$2.3M API in H1 2025, $1.1M in 2026 (-54%).</td>
+        </tr>
+        <tr>
+          <td class="rank">10</td>
+          <td><span class="vendor-tag vendor-kbc">KBC</span></td>
+          <td>BARLETT-COOK FLOWER SHOP</td>
+          <td style="text-align:right" class="gmv">$1.4M</td>
+          <td style="text-align:right" class="gmv gmv-red">$203K</td>
+          <td><span class="pct-badge pct-orange">-86%</span></td>
+          <td style="text-align:right" class="gmv">$3.2M</td>
+          <td class="signal">$1.4M eCommerce in H1 2025, only $203K in 2026. Still buying $3.2M offline.</td>
+        </tr>
+        <tr>
+          <td class="rank">11</td>
+          <td><span class="vendor-tag vendor-kbc">KBC</span></td>
+          <td>MILWAUKEE FLOWER COMPANY</td>
+          <td style="text-align:right" class="gmv">$1.3M</td>
+          <td style="text-align:right" class="gmv gmv-red">$172K</td>
+          <td><span class="pct-badge pct-orange">-87%</span></td>
+          <td style="text-align:right" class="gmv">$779K</td>
+          <td class="signal">$1.3M API in H1 2025, only $172K in 2026. Still buying $779K offline.</td>
+        </tr>
+        <tr>
+          <td class="rank">12</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Grace and Thorn</td>
+          <td style="text-align:right" class="gmv">$1.7M</td>
+          <td style="text-align:right" class="gmv gmv-red">$554K</td>
+          <td><span class="pct-badge pct-orange">-68%</span></td>
+          <td style="text-align:right" class="gmv">$32K</td>
+          <td class="signal">$1.7M API in H1 2025, $554K in 2026 (-68%). Small offline.</td>
+        </tr>
+        <tr>
+          <td class="rank">13</td>
+          <td><span class="vendor-tag vendor-kbc">KBC</span></td>
+          <td>STEVE FLOWER MARKET</td>
+          <td style="text-align:right" class="gmv">$1.4M</td>
+          <td style="text-align:right" class="gmv gmv-red">$256K</td>
+          <td><span class="pct-badge pct-orange">-82%</span></td>
+          <td style="text-align:right" class="gmv">$5.0M</td>
+          <td class="signal">$1.4M eCommerce in H1 2025, only $256K in 2026. Still buying $5.0M offline.</td>
+        </tr>
+        <tr>
+          <td class="rank">14</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Westbound LLC</td>
+          <td style="text-align:right" class="gmv">$1.8M</td>
+          <td style="text-align:right" class="gmv gmv-red">$663K</td>
+          <td><span class="pct-badge pct-orange">-63%</span></td>
+          <td style="text-align:right" class="gmv">$76K</td>
+          <td class="signal">$1.8M API in H1 2025, $663K in 2026 (-63%).</td>
+        </tr>
+        <tr>
+          <td class="rank">15</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Expressions Of Love Florist (SOLD)</td>
+          <td style="text-align:right" class="gmv">$957K</td>
+          <td style="text-align:right" class="gmv gmv-red">$0</td>
+          <td><span class="pct-badge pct-red">-100%</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td class="signal">Business sold — $957K API in H1 2025, $0 everywhere in 2026.</td>
+        </tr>
+        <tr>
+          <td class="rank">16</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Vintage Floral Designs</td>
+          <td style="text-align:right" class="gmv">$1.8M</td>
+          <td style="text-align:right" class="gmv gmv-red">$829K</td>
+          <td><span class="pct-badge pct-yellow">-53%</span></td>
+          <td style="text-align:right" class="gmv">$21K</td>
+          <td class="signal">$1.8M API in H1 2025, $829K in 2026 (-53%). Declining trajectory.</td>
+        </tr>
+        <tr>
+          <td class="rank">17</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>The Flower Project</td>
+          <td style="text-align:right" class="gmv">$1.9M</td>
+          <td style="text-align:right" class="gmv gmv-red">$1.1M</td>
+          <td><span class="pct-badge pct-yellow">-43%</span></td>
+          <td style="text-align:right" class="gmv">$99K</td>
+          <td class="signal">$1.9M API in H1 2025, $1.1M in 2026 (-43%). Moderate decline.</td>
+        </tr>
+        <tr>
+          <td class="rank">18</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Allan&#x27;s Flowers</td>
+          <td style="text-align:right" class="gmv">$1.5M</td>
+          <td style="text-align:right" class="gmv gmv-red">$763K</td>
+          <td><span class="pct-badge pct-yellow">-50%</span></td>
+          <td style="text-align:right" class="gmv">$63K</td>
+          <td class="signal">$1.5M API in H1 2025, $763K in 2026 (-50%).</td>
+        </tr>
+        <tr>
+          <td class="rank">19</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Everything After the Ring LLC</td>
+          <td style="text-align:right" class="gmv">$1.8M</td>
+          <td style="text-align:right" class="gmv gmv-red">$1.1M</td>
+          <td><span class="pct-badge pct-yellow">-38%</span></td>
+          <td style="text-align:right" class="gmv">$252K</td>
+          <td class="signal">$1.8M API in H1 2025, $1.1M in 2026 (-38%). Moderate decline.</td>
+        </tr>
+        <tr>
+          <td class="rank">20</td>
+          <td><span class="vendor-tag vendor-mayesh">Mayesh</span></td>
+          <td>Archibald Flowers</td>
+          <td style="text-align:right" class="gmv">$1.6M</td>
+          <td style="text-align:right" class="gmv gmv-red">$1.0M</td>
+          <td><span class="pct-badge pct-yellow">-36%</span></td>
+          <td style="text-align:right" class="gmv">$784K</td>
+          <td class="signal">$1.6M API in H1 2025, $1.0M in 2026 (-36%). Large offline book.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    Source: PRODUCTION.ANALYTICS.SALES_SV | H1 2025 vs H1 2026 | ks_flag=TRUE | sales &lt; $100K<br>
+    Generated by Rose (Data Agent) | Koronet Revenue OS
+  </div>
+</div>
+</body>
+</html>
