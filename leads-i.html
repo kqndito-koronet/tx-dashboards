@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead List I: Low Ratio + Procurement Intent</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-card { background: #fef2f2; border-radius: 8px; padding: 16px; }
+  .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+  .meta-card .value { font-size: 20px; font-weight: 700; color: #991b1b; }
+  .meta-card.blue { background: #eff6ff; }
+  .meta-card.blue .value { color: #1e40af; }
+  .meta-card.green { background: #f0fdf4; }
+  .meta-card.green .value { color: #166534; }
+  .meta-card.purple { background: #f5f3ff; }
+  .meta-card.purple .value { color: #6d28d9; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .section h3 { font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 8px; color: #374151; }
+  .section .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  tbody tr:hover { background: #f9fafb; }
+  .gmv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rank { color: #9ca3af; font-weight: 500; }
+  .pct { font-weight: 700; }
+  .pct-red { color: #dc2626; }
+  .pct-green { color: #16a34a; }
+  .ratio-bar { display: inline-block; height: 8px; border-radius: 4px; }
+  .bar-buy { background: #3b82f6; }
+  .bar-sell { background: #ef4444; }
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #9ca3af; }
+  .methodology { background: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .methodology strong { color: #374151; }
+  .enablement { background: #eff6ff; border-radius: 8px; padding: 20px; margin-top: 12px; }
+  .enablement h3 { color: #1e40af; margin-top: 0; }
+  .enablement ul, .enablement ol { margin-left: 20px; margin-bottom: 12px; }
+  .enablement li { font-size: 13px; color: #374151; line-height: 1.8; }
+  .enablement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+  .enablement-card { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb; }
+  .enablement-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 8px; }
+  .objection { background: #fff7ed; border-left: 3px solid #f59e0b; padding: 12px 16px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+  .objection .q { font-weight: 600; font-size: 13px; color: #92400e; margin-bottom: 4px; }
+  .objection .a { font-size: 13px; color: #374151; line-height: 1.5; }
+  .insight-box { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .insight-box h4 { color: #1e40af; font-size: 13px; margin-bottom: 8px; }
+  .insight-box p { font-size: 13px; color: #374151; line-height: 1.6; }
+  .priority-high { background: #fef2f2; border-left: 3px solid #dc2626; padding: 4px 8px; border-radius: 0 4px 4px 0; font-size: 11px; font-weight: 600; color: #991b1b; }
+  .priority-med { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 4px 8px; border-radius: 0 4px 4px 0; font-size: 11px; font-weight: 600; color: #92400e; }
+  @media (max-width: 768px) { .enablement-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lead List I: Low Online Ratio + Procurement Intent</h1>
+    <div class="subtitle">Owner: CS + Implementations | Generated 2026-07-06 by Minerva | Hypothesis: H3 (Digitalize) + H1 (Connections)</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Qualified Wholesalers</div>
+        <div class="value">22</div>
+      </div>
+      <div class="meta-card blue">
+        <div class="label">Total Offline Sell-Side GMV</div>
+        <div class="value">$103.4M</div>
+      </div>
+      <div class="meta-card purple">
+        <div class="label">Total Procurement Buy-Side</div>
+        <div class="value">$129.4M</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">Online Sell Ratio</div>
+        <div class="value">< 5%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section">
+    <h2>Purpose</h2>
+    <div class="desc">
+      These are wholesalers with a <strong>paradox</strong>: they BUY digitally (via Procurement) but SELL analog (< 5% online sales). They've already adopted digital tools on the supply side -- they browse vendor catalogs, place orders electronically, manage purchase orders in Komet. But when it comes to SELLING to their own florists, they're 95%+ phone/fax/walk-in. The ask is specific and grounded: <strong>"You already buy online. Your florists would love to buy from you online too. Let's set up the sell side."</strong> This is the lowest-resistance digitalization opportunity because the habit of digital commerce already exists -- just on the wrong side of the transaction.
+    </div>
+    <div class="methodology">
+      <strong>Methodology:</strong> SALE_DETAILS + PROCUREMENT_DETAILS, H1 2026, ks_flag=TRUE, sales &lt; $100K (Rule 4), company_industry = 'Floral - Wholesaler'.
+      Sell-side: SALE_DETAILS, online = eCommerce + API + K2K (Rule 6).
+      Buy-side: PROCUREMENT_DETAILS, SUM(total_price).
+      Criteria: offline sell-side GMV > $500K AND sell-side online ratio < 5% AND procurement activity > $0.
+      | Trust: <strong>trusted</strong>
+    </div>
+  </div>
+
+  <!-- KEY INSIGHT -->
+  <div class="section">
+    <h2>The Core Insight</h2>
+    <div class="insight-box">
+      <h4>"Offline" is a misnomer -- these wholesalers are already digital buyers</h4>
+      <p>These 22 wholesalers manage $129.4M in Procurement purchases digitally through Komet. They browse vendor catalogs. They compare prices. They place orders electronically. They track purchase orders. They're NOT technology-averse. The gap is that nobody has helped them apply the SAME tools to their sell-side. The conversation is not "adopt technology" -- it's "flip the direction: if your vendors' catalog helped YOU buy better, your catalog can help your FLORISTS buy better."</p>
+    </div>
+    <div class="insight-box">
+      <h4>Ecosystem data confirms: Procurement + Core users GROW online sales</h4>
+      <p>From the ecosystem analysis (L3d): wholesalers with Core+Procurement grew eCommerce +23%. Core-only wholesalers went BACKWARDS (-44% eCom, +63% offline). Having Procurement doesn't cannibalize eCommerce -- it builds digital muscle that transfers to the sell-side. These 22 accounts have that muscle. They just need the nudge.</p>
+    </div>
+  </div>
+
+  <!-- ENABLEMENT -->
+  <div class="section">
+    <h2>Enablement Kit</h2>
+
+    <div class="enablement">
+      <h3>WHY These Accounts (Strategic Logic)</h3>
+      <ul>
+        <li><strong>H1 - Connections:</strong> These wholesalers have procurement connections already active. The infrastructure exists on the buy-side. Extending to sell-side connections (K2K, eShop) is incremental, not greenfield.</li>
+        <li><strong>H3 - Digitalize:</strong> The barrier is NOT technology adoption -- they already use Komet for procurement. The barrier is awareness (didn't know eShop exists), desire (don't see sell-side value), or ability (eShop is empty / not configured).</li>
+        <li><strong>Fee impact:</strong> $103.4M offline at $0 fees. Even 5% conversion = $5.2M new online GMV. These accounts already generate K2K buy-side fees through procurement -- adding sell-side online creates the double-charge opportunity.</li>
+      </ul>
+    </div>
+
+    <div class="enablement-grid">
+      <div class="enablement-card">
+        <h4>What to Ask (Discovery Script -- 5 questions)</h4>
+        <ol style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li>"You use Procurement to order from your vendors digitally -- that saves you time and gives you visibility into what's available. Have you thought about giving your florists the same experience?"</li>
+          <li>"How do your florists currently see what you have in stock? Is it a phone call, a text, a printed list, or do they walk in?"</li>
+          <li>"When you look at your vendor's catalog in Procurement, what's the one thing that makes it useful? Availability? Pricing? Photos? If we could give that same thing to your florists about YOUR inventory, would that be valuable?"</li>
+          <li>"Do you have an eShop set up in Komet? (If yes: is it populated? If no: did you know it's included in your subscription?)"</li>
+          <li>"If we helped you list your top 10 products on your eShop this week, and sent the link to 5 of your florists, what do you think would happen? Would they try it?"</li>
+        </ol>
+      </div>
+      <div class="enablement-card">
+        <h4>Expected Result Per Call</h4>
+        <ul style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li><strong>Best case:</strong> Wholesaler agrees to eShop pilot. Christine schedules implementation. Target: eShop live with 10+ products in 2 weeks.</li>
+          <li><strong>Good case:</strong> Wholesaler says "I didn't know I had an eShop." CS sends eShop link, schedules follow-up demo.</li>
+          <li><strong>Discovery case:</strong> Learn the specific barrier. Is it "my florists won't use it"? "My inventory changes too fast"? "I don't have the time"? Log for pattern analysis.</li>
+          <li><strong>Metric:</strong> 5 wholesalers agree to eShop pilot in 30 days. 2 go live within 60 days.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Expected Objections</h3>
+
+    <div class="objection">
+      <div class="q">1. "I use Procurement to buy, but selling online is different -- my florists like calling"</div>
+      <div class="a"><strong>Response:</strong> Some of your florists will keep calling -- that's fine. But remember when you started using Procurement? You probably still called some vendors too. Over time, the digital channel grew because it was easier. Same thing will happen with your florists. Start small: list your top 10 items, send the link to 5 florists, see what happens.</div>
+    </div>
+    <div class="objection">
+      <div class="q">2. "My inventory changes constantly -- I can't keep an online catalog current"</div>
+      <div class="a"><strong>Response:</strong> Do your vendors keep THEIR catalog current in Procurement? Yes -- because they know if their catalog is stale, you'll buy from someone else. Same logic: if your eShop shows what's fresh today, your florists will check it every morning instead of calling. And Komet auto-depletes as you sell, so it stays current.</div>
+    </div>
+    <div class="objection">
+      <div class="q">3. "I don't have the staff to manage another system"</div>
+      <div class="a"><strong>Response:</strong> It's the same Komet you already use for Procurement and invoicing. One person, 15 minutes, morning routine: enter what's in the cooler, publish. Orders come through the same system you already use. Zero new software, zero new logins. The accounts in this list with Procurement already proved they can manage Komet -- this is one more tab, not one more system.</div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Who to Assign</h3>
+    <div class="enablement" style="background: #f0fdf4;">
+      <ul>
+        <li><strong>CS (Cata/Christian/Sebastian):</strong> Start with the top 8 by offline GMV. 2 calls per rep per week. Use the procurement-mirror script above. Log learnings.</li>
+        <li><strong>Christine (Implementations):</strong> For every "yes," check eShop status. If not configured, prioritize implementation. Target: eShop live within 2 weeks of agreement.</li>
+        <li><strong>Fede (Network):</strong> For wholesalers that agree to eShop, coordinate K2K connections with their existing procurement vendors -- "if you're buying from [importer X] via Procurement, your florists can now buy from you via eShop."</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LEAD LIST TABLE -->
+  <div class="section">
+    <h2>Lead List -- 22 Wholesalers, Sorted by Offline Sell-Side GMV</h2>
+    <div class="desc">All have Procurement (buy digitally) but sell < 5% online. The "Procurement GMV" column shows HOW MUCH they already do digitally on the buy-side -- proof of digital capability.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Wholesaler</th>
+          <th style="text-align:right">Online Sell GMV</th>
+          <th style="text-align:right">Offline Sell GMV</th>
+          <th style="text-align:right">Online Sell %</th>
+          <th style="text-align:right">Procurement (Buy) GMV</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td><strong>Bill Doran Company</strong></td>
+          <td style="text-align:right" class="gmv">$2,144,942</td>
+          <td style="text-align:right" class="gmv">$59,306,670</td>
+          <td style="text-align:right" class="pct pct-red">3.5%</td>
+          <td style="text-align:right" class="gmv">$77,538,757</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td><strong>Del Tropico / Ameriblooms</strong></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$6,324,706</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$4,647,185</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td><strong>Flora Fresh Inc</strong></td>
+          <td style="text-align:right" class="gmv">$31,078</td>
+          <td style="text-align:right" class="gmv">$5,524,682</td>
+          <td style="text-align:right" class="pct pct-red">0.6%</td>
+          <td style="text-align:right" class="gmv">$6,225,183</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td><strong>H&T Wholesale Flowers</strong></td>
+          <td style="text-align:right" class="gmv">$25,552</td>
+          <td style="text-align:right" class="gmv">$4,357,895</td>
+          <td style="text-align:right" class="pct pct-red">0.6%</td>
+          <td style="text-align:right" class="gmv">$4,563,947</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td>Ninfa Flowers</td>
+          <td style="text-align:right" class="gmv">$109</td>
+          <td style="text-align:right" class="gmv">$4,212,241</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$3,714,736</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td>Tropical Blooms Inc.</td>
+          <td style="text-align:right" class="gmv">$9,196</td>
+          <td style="text-align:right" class="gmv">$3,460,903</td>
+          <td style="text-align:right" class="pct pct-red">0.3%</td>
+          <td style="text-align:right" class="gmv">$3,686,748</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td>Metro Flower Market LLC</td>
+          <td style="text-align:right" class="gmv">$5,617</td>
+          <td style="text-align:right" class="gmv">$3,255,050</td>
+          <td style="text-align:right" class="pct pct-red">0.2%</td>
+          <td style="text-align:right" class="gmv">$3,417,373</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td>Stemline Wholesale</td>
+          <td style="text-align:right" class="gmv">$27,715</td>
+          <td style="text-align:right" class="gmv">$2,285,283</td>
+          <td style="text-align:right" class="pct pct-red">1.2%</td>
+          <td style="text-align:right" class="gmv">$2,918,124</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">9</td>
+          <td>WE GOT FLOWERS</td>
+          <td style="text-align:right" class="gmv">$491</td>
+          <td style="text-align:right" class="gmv">$2,927,201</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$2,555,218</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">10</td>
+          <td>Orlando Wholesale Florist</td>
+          <td style="text-align:right" class="gmv">$25,674</td>
+          <td style="text-align:right" class="gmv">$2,775,560</td>
+          <td style="text-align:right" class="pct pct-red">0.9%</td>
+          <td style="text-align:right" class="gmv">$3,235,562</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">11</td>
+          <td>JFS Wholesale Floral</td>
+          <td style="text-align:right" class="gmv">$144</td>
+          <td style="text-align:right" class="gmv">$1,891,200</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$2,714,504</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">12</td>
+          <td>Bill Doran Company (2)</td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$2,429,519</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$2,211,781</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">13</td>
+          <td>Arizona Family Florist</td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,806,117</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$3,639,000</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">14</td>
+          <td>White Rose Flowers & Supplies</td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,907,706</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$1,538,607</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">15</td>
+          <td>AMORES FLORES INC</td>
+          <td style="text-align:right" class="gmv">$951</td>
+          <td style="text-align:right" class="gmv">$1,779,686</td>
+          <td style="text-align:right" class="pct pct-red">0.1%</td>
+          <td style="text-align:right" class="gmv">$1,406,632</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">16</td>
+          <td>Apex Floral Distributors</td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,742,429</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$3,962,721</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">17</td>
+          <td>National Floral Supply</td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,675,109</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$36,197</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">18</td>
+          <td>SOS Floral</td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$2,316,162</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$531,918</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">19</td>
+          <td>NY Floral Supply</td>
+          <td style="text-align:right" class="gmv">$17,066</td>
+          <td style="text-align:right" class="gmv">$1,283,635</td>
+          <td style="text-align:right" class="pct pct-red">1.3%</td>
+          <td style="text-align:right" class="gmv">$466,191</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">20</td>
+          <td>Vosz Floral LLC</td>
+          <td style="text-align:right" class="gmv">$12,279</td>
+          <td style="text-align:right" class="gmv">$990,975</td>
+          <td style="text-align:right" class="pct pct-red">1.2%</td>
+          <td style="text-align:right" class="gmv">$814,313</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">21</td>
+          <td>CD Wholesale</td>
+          <td style="text-align:right" class="gmv">$181</td>
+          <td style="text-align:right" class="gmv">$902,621</td>
+          <td style="text-align:right" class="pct pct-red">0.0%</td>
+          <td style="text-align:right" class="gmv">$1,003,051</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">22</td>
+          <td>Riverside Wholesale Florists KY</td>
+          <td style="text-align:right" class="gmv">$627</td>
+          <td style="text-align:right" class="gmv">$712,408</td>
+          <td style="text-align:right" class="pct pct-red">0.1%</td>
+          <td style="text-align:right" class="gmv">$189,254</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CROSS-LIST OVERLAPS -->
+  <div class="section">
+    <h2>Cross-List Overlaps</h2>
+    <div class="desc" style="line-height: 1.8;">
+      <strong>List F overlap (Bunch Upload Gaps):</strong> 15 of these 22 wholesalers also appear in List F. They have significant Units offline AND procurement intent. The pitch combines: "You buy digitally. Your biggest product category (bunches) isn't listed online. Let's fix both."<br><br>
+      <strong>List A overlap (Offline-Only):</strong> Arizona Family Florist, Del Tropico, White Rose, and others from List A also appear here. They're offline-only on the sell-side but active digital buyers. The procurement angle strengthens the List A outreach.<br><br>
+      <strong>List B overlap (Untransacted Connections):</strong> Several of these wholesalers have active K2K connections that never transacted (from List B). The full picture for these accounts: they have the connections, they buy digitally, but they sell analog. Triple signal = triple urgency.
+    </div>
+  </div>
+
+  <div class="footer">
+    Minerva / Koronet Revenue OS | Data: SALE_DETAILS + PROCUREMENT_DETAILS, H1 2026 | Trust: trusted | Rules: ks_flag, sales&lt;100K, online=eCom+API+K2K
+  </div>
+</div>
+</body>
+</html>

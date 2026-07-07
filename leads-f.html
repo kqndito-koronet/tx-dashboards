@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead List F: Bunch Upload Gaps</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-card { background: #fef2f2; border-radius: 8px; padding: 16px; }
+  .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+  .meta-card .value { font-size: 20px; font-weight: 700; color: #991b1b; }
+  .meta-card.blue { background: #eff6ff; }
+  .meta-card.blue .value { color: #1e40af; }
+  .meta-card.green { background: #f0fdf4; }
+  .meta-card.green .value { color: #166534; }
+  .meta-card.amber { background: #fffbeb; }
+  .meta-card.amber .value { color: #92400e; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .section h3 { font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 8px; color: #374151; }
+  .section .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  tbody tr:hover { background: #f9fafb; }
+  .gmv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rank { color: #9ca3af; font-weight: 500; }
+  .pct { font-weight: 700; }
+  .pct-red { color: #dc2626; }
+  .pct-green { color: #16a34a; }
+  .pct-amber { color: #f59e0b; }
+  .tier-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tier-critical { background: #fef2f2; color: #991b1b; }
+  .tier-gap { background: #fff7ed; color: #9a3412; }
+  .tier-benchmark { background: #f0fdf4; color: #166534; }
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #9ca3af; }
+  .methodology { background: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .methodology strong { color: #374151; }
+  .enablement { background: #eff6ff; border-radius: 8px; padding: 20px; margin-top: 12px; }
+  .enablement h3 { color: #1e40af; margin-top: 0; }
+  .enablement ul, .enablement ol { margin-left: 20px; margin-bottom: 12px; }
+  .enablement li { font-size: 13px; color: #374151; line-height: 1.8; }
+  .enablement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+  .enablement-card { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb; }
+  .enablement-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 8px; }
+  .objection { background: #fff7ed; border-left: 3px solid #f59e0b; padding: 12px 16px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+  .objection .q { font-weight: 600; font-size: 13px; color: #92400e; margin-bottom: 4px; }
+  .objection .a { font-size: 13px; color: #374151; line-height: 1.5; }
+  .benchmark-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .benchmark-box h4 { color: #166534; font-size: 13px; margin-bottom: 8px; }
+  .benchmark-box p { font-size: 13px; color: #374151; line-height: 1.6; }
+  @media (max-width: 768px) { .enablement-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lead List F: Bunch Upload Gaps</h1>
+    <div class="subtitle">Owner: CS + Growth | Generated 2026-07-06 by Minerva | Hypothesis: H2 (Supply -- match offline supply online)</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Wholesalers with Units > $100K</div>
+        <div class="value">28</div>
+      </div>
+      <div class="meta-card blue">
+        <div class="label">Total Units Offline (H1 2026)</div>
+        <div class="value">$106.8M</div>
+      </div>
+      <div class="meta-card amber">
+        <div class="label">Units Online (same companies)</div>
+        <div class="value">$11.2M</div>
+      </div>
+      <div class="meta-card green">
+        <div class="label">Benchmark: Best-in-class online %</div>
+        <div class="value">35.4% (Maple Grove)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section">
+    <h2>Purpose</h2>
+    <div class="desc">
+      Units (loose bunches/stems from the cooler) are the dominant inventory format for wholesalers selling to florists. Yet most wholesalers list <strong>zero or near-zero Units online</strong>. This list identifies every wholesaler with meaningful Units sales and shows the gap between their offline Units volume and what they've listed online. The benchmarks at the top (Maple Grove at 35%, Mayesh at 21%, Zeidler at 17%) prove that listing Units online IS operationally feasible. The question is: why aren't the others doing it?
+    </div>
+    <div class="methodology">
+      <strong>Methodology:</strong> SALE_DETAILS, H1 2026, ks_flag=TRUE, sales &lt; $100K (Rule 4), company_industry = 'Floral - Wholesaler', inventory_division = 'Units'.
+      Online = eCommerce + API + K2K (Rule 6). Offline = sales_channel = 'Offline'.
+      Filtered to companies with total Units GMV > $100K.
+      | Trust: <strong>trusted</strong> (all figures from SALE_DETAILS, standard filters applied).
+    </div>
+  </div>
+
+  <!-- BENCHMARKS -->
+  <div class="section">
+    <h2>Benchmarks -- Proof that Units CAN Sell Online</h2>
+    <div class="benchmark-box">
+      <h4>Maple Grove Floral -- 35.4% Units Online ($190K of $537K)</h4>
+      <p>Sells Units through eCommerce to 55 buyers. This is a mid-size wholesaler proving the "live cooler" model works. 111 product categories online. Study their workflow.</p>
+    </div>
+    <div class="benchmark-box">
+      <h4>Mayesh Wholesale Florist -- 20.6% Units Online ($6.6M of $32.3M)</h4>
+      <p>The largest proof point. Sells Units online via API channel to 3,193 buyers. This is a scaled model -- API (their own website) handles most of it, not Komet eCommerce. The question: can other wholesalers replicate this with eShop instead of their own website?</p>
+    </div>
+    <div class="benchmark-box">
+      <h4>Zeidler Floral -- 17.2% Units Online ($164K of $951K)</h4>
+      <p>100% of Zeidler's online sales are Units. No Boxes at all. They sell loose stems via eCommerce to 35 buyers. This is the purest "live cooler to eShop" model. CS interview needed to understand their workflow.</p>
+    </div>
+  </div>
+
+  <!-- ENABLEMENT -->
+  <div class="section">
+    <h2>Enablement Kit</h2>
+
+    <div class="enablement">
+      <h3>WHY These Accounts (Strategic Logic)</h3>
+      <ul>
+        <li><strong>H2 - Supply:</strong> 82% of GMV is offline at $0 fees. Most offline GMV is Units (bunches/stems). If Units aren't listed online, buyers CAN'T order digitally even if they want to. The supply gap is THE blocker for H3 (digitalize sales).</li>
+        <li><strong>The math:</strong> $106.8M in Units sold offline across these 28 wholesalers. Even getting 5% of that online = $5.3M new online GMV. At blended K2K/eCom fee rates, that's $40-80K in new fees.</li>
+        <li><strong>Prerequisite for H4 (acquisition):</strong> Don't drive traffic to an empty eShop. Listing Units = making the eShop worth visiting.</li>
+      </ul>
+    </div>
+
+    <div class="enablement-grid">
+      <div class="enablement-card">
+        <h4>What to Ask (Discovery Script -- 5 questions)</h4>
+        <ol style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li>"You sell $X in loose bunches/stems every month by phone. How do your florists know what's available in your cooler right now?"</li>
+          <li>"Do you have a way to track on-hand cooler inventory digitally today, or is it whiteboard/memory? How many SKUs are typically in the cooler at any time?"</li>
+          <li>"If a florist could see your live cooler inventory on their phone and order for pickup or delivery, would that bring you new buyers or just move existing phone calls online?"</li>
+          <li>"Zeidler Floral lists 14 product categories of loose stems online and sells to 35 buyers through eShop. What would it take for you to list even your top 5 products?"</li>
+          <li>"What's the #1 reason you haven't listed bunches/stems online yet? Is it that you didn't know you could, or that the process seems too hard, or that you don't think your florists would use it?"</li>
+        </ol>
+      </div>
+      <div class="enablement-card">
+        <h4>Expected Result Per Call</h4>
+        <ul style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li><strong>Best case:</strong> Wholesaler agrees to pilot listing top 5 products; Implementations schedules setup call within 2 weeks</li>
+          <li><strong>Good case:</strong> Wholesaler identifies the operational blocker (no digital inventory tracking, staff training needed). CS logs it for Christine.</li>
+          <li><strong>Discovery case:</strong> Learn whether the barrier is technical (can't do it), motivational (don't see value), or awareness (didn't know it was possible)</li>
+          <li><strong>Metric:</strong> 3 wholesalers commit to bunch upload pilot in 30 days</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Expected Objections</h3>
+
+    <div class="objection">
+      <div class="q">1. "My cooler inventory changes every hour -- I can't keep an online listing current"</div>
+      <div class="a"><strong>Response:</strong> You don't need real-time. List what you receive in the morning, mark it as available, and it auto-depletes as orders come in. Maple Grove does this with 111 categories. We can start with just your top 5 products that are always in stock. If it sells out, the listing goes away automatically.</div>
+    </div>
+    <div class="objection">
+      <div class="q">2. "My florists like calling -- they want to hear what's fresh today"</div>
+      <div class="a"><strong>Response:</strong> The florists who call you today will probably keep calling. The opportunity is the florists who DON'T call -- the ones 2 hours away who can't visit your cooler. And the ones who order at 10pm when you're closed. Online listings don't replace the phone; they extend your hours and your reach.</div>
+    </div>
+    <div class="objection">
+      <div class="q">3. "I don't have the staff to manage another system"</div>
+      <div class="a"><strong>Response:</strong> One person, 15 minutes in the morning. Enter what you received, set the price, hit publish. That's it. Orders come in automatically. You're already entering this into Komet for invoicing -- we're just making it visible to buyers before they call. Zero new system, same Komet you already use.</div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Who to Assign</h3>
+    <div class="enablement" style="background: #f0fdf4;">
+      <ul>
+        <li><strong>CS (Cata/Christian):</strong> Discovery calls on the top 10 wholesalers by Units offline GMV. Objective: understand the barrier (technical vs motivational vs awareness).</li>
+        <li><strong>Christine (Implementations):</strong> For any wholesaler that agrees to pilot, schedule implementation of Unit listing. Start with KBC (largest at $49.3M offline) and one mid-size wholesaler.</li>
+        <li><strong>Growth (Facu):</strong> Use Zeidler and Maple Grove as case studies. Study their operational model -- what makes it work for them? Can we package it as a "playbook" for others?</li>
+        <li><strong>Product (Adrian):</strong> If the barrier is "can't keep listings current," that's a product feature request backed by data: "21 wholesalers with $106.8M offline Units can't list because [specific UX gap]."</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LEAD LIST TABLE -->
+  <div class="section">
+    <h2>Lead List -- All Wholesalers with Units > $100K (H1 2026)</h2>
+    <div class="desc">Sorted by Units online % ascending (worst gap first). Benchmarks at bottom for reference.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Wholesaler</th>
+          <th>Tier</th>
+          <th style="text-align:right">Units Online</th>
+          <th style="text-align:right">Units Offline</th>
+          <th style="text-align:right">Units Total</th>
+          <th style="text-align:right">Online %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td>WE GOT FLOWERS</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$2,869,866</td>
+          <td style="text-align:right" class="gmv">$2,869,866</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td>Del Tropico / Ameriblooms</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$2,036,748</td>
+          <td style="text-align:right" class="gmv">$2,036,748</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td>Bill Doran Company (2)</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$2,197,965</td>
+          <td style="text-align:right" class="gmv">$2,197,965</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td>National Floral Supply</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,675,109</td>
+          <td style="text-align:right" class="gmv">$1,675,109</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td>White Rose Flowers & Supplies</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,466,653</td>
+          <td style="text-align:right" class="gmv">$1,466,653</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td>Arizona Family Florist</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,181,816</td>
+          <td style="text-align:right" class="gmv">$1,181,816</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td>Charleston Wholesale Florist</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$1,102,515</td>
+          <td style="text-align:right" class="gmv">$1,102,515</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td>CD Wholesale</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$853,466</td>
+          <td style="text-align:right" class="gmv">$853,466</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">9</td>
+          <td>AMORES FLORES INC</td>
+          <td><span class="tier-tag tier-critical">Near-zero</span></td>
+          <td style="text-align:right" class="gmv">$31</td>
+          <td style="text-align:right" class="gmv">$840,291</td>
+          <td style="text-align:right" class="gmv">$840,322</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">10</td>
+          <td>Stemline Wholesale</td>
+          <td><span class="tier-tag tier-critical">Near-zero</span></td>
+          <td style="text-align:right" class="gmv">$72</td>
+          <td style="text-align:right" class="gmv">$2,249,559</td>
+          <td style="text-align:right" class="gmv">$2,249,631</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">11</td>
+          <td>Apex Floral Distributors</td>
+          <td><span class="tier-tag tier-critical">Zero</span></td>
+          <td style="text-align:right" class="gmv">$0</td>
+          <td style="text-align:right" class="gmv">$398,828</td>
+          <td style="text-align:right" class="gmv">$398,828</td>
+          <td style="text-align:right" class="pct pct-red">0.00%</td>
+        </tr>
+        <tr>
+          <td class="rank">12</td>
+          <td>Penelope's Petals, LLC</td>
+          <td><span class="tier-tag tier-critical">Near-zero</span></td>
+          <td style="text-align:right" class="gmv">$815</td>
+          <td style="text-align:right" class="gmv">$339,452</td>
+          <td style="text-align:right" class="gmv">$340,267</td>
+          <td style="text-align:right" class="pct pct-red">0.24%</td>
+        </tr>
+        <tr>
+          <td class="rank">13</td>
+          <td>JFS Wholesale Floral</td>
+          <td><span class="tier-tag tier-critical">Near-zero</span></td>
+          <td style="text-align:right" class="gmv">$144</td>
+          <td style="text-align:right" class="gmv">$1,721,907</td>
+          <td style="text-align:right" class="gmv">$1,722,051</td>
+          <td style="text-align:right" class="pct pct-red">0.01%</td>
+        </tr>
+        <tr>
+          <td class="rank">14</td>
+          <td>Riverside Wholesale Florists KY</td>
+          <td><span class="tier-tag tier-critical">Near-zero</span></td>
+          <td style="text-align:right" class="gmv">$386</td>
+          <td style="text-align:right" class="gmv">$660,892</td>
+          <td style="text-align:right" class="gmv">$661,278</td>
+          <td style="text-align:right" class="pct pct-red">0.06%</td>
+        </tr>
+        <tr>
+          <td class="rank">15</td>
+          <td>Metro Flower Market LLC</td>
+          <td><span class="tier-tag tier-gap">Low</span></td>
+          <td style="text-align:right" class="gmv">$5,475</td>
+          <td style="text-align:right" class="gmv">$3,243,556</td>
+          <td style="text-align:right" class="gmv">$3,249,031</td>
+          <td style="text-align:right" class="pct pct-red">0.17%</td>
+        </tr>
+        <tr>
+          <td class="rank">16</td>
+          <td>H&T Wholesale Flowers</td>
+          <td><span class="tier-tag tier-gap">Low</span></td>
+          <td style="text-align:right" class="gmv">$8,954</td>
+          <td style="text-align:right" class="gmv">$3,731,590</td>
+          <td style="text-align:right" class="gmv">$3,740,544</td>
+          <td style="text-align:right" class="pct pct-red">0.24%</td>
+        </tr>
+        <tr>
+          <td class="rank">17</td>
+          <td>Flora Fresh Inc</td>
+          <td><span class="tier-tag tier-gap">Low</span></td>
+          <td style="text-align:right" class="gmv">$20,964</td>
+          <td style="text-align:right" class="gmv">$4,915,507</td>
+          <td style="text-align:right" class="gmv">$4,936,471</td>
+          <td style="text-align:right" class="pct pct-red">0.42%</td>
+        </tr>
+        <tr>
+          <td class="rank">18</td>
+          <td>Orlando Wholesale Florist</td>
+          <td><span class="tier-tag tier-gap">Low</span></td>
+          <td style="text-align:right" class="gmv">$20,882</td>
+          <td style="text-align:right" class="gmv">$2,509,481</td>
+          <td style="text-align:right" class="gmv">$2,530,362</td>
+          <td style="text-align:right" class="pct pct-red">0.83%</td>
+        </tr>
+        <tr>
+          <td class="rank">19</td>
+          <td>Vosz Floral LLC</td>
+          <td><span class="tier-tag tier-gap">Low</span></td>
+          <td style="text-align:right" class="gmv">$10,041</td>
+          <td style="text-align:right" class="gmv">$621,478</td>
+          <td style="text-align:right" class="gmv">$631,519</td>
+          <td style="text-align:right" class="pct pct-amber">1.59%</td>
+        </tr>
+        <tr>
+          <td class="rank">20</td>
+          <td>NY Floral Supply</td>
+          <td><span class="tier-tag tier-gap">Low</span></td>
+          <td style="text-align:right" class="gmv">$15,953</td>
+          <td style="text-align:right" class="gmv">$772,996</td>
+          <td style="text-align:right" class="gmv">$788,949</td>
+          <td style="text-align:right" class="pct pct-amber">2.02%</td>
+        </tr>
+        <tr style="background: #f0fdf4;">
+          <td class="rank">21</td>
+          <td>Bill Doran Company</td>
+          <td><span class="tier-tag tier-gap">Emerging</span></td>
+          <td style="text-align:right" class="gmv">$1,066,237</td>
+          <td style="text-align:right" class="gmv">$30,793,360</td>
+          <td style="text-align:right" class="gmv">$31,859,597</td>
+          <td style="text-align:right" class="pct pct-amber">3.35%</td>
+        </tr>
+        <tr style="background: #f0fdf4;">
+          <td class="rank">22</td>
+          <td>Kennicott Brothers Company</td>
+          <td><span class="tier-tag tier-gap">Emerging</span></td>
+          <td style="text-align:right" class="gmv">$3,031,522</td>
+          <td style="text-align:right" class="gmv">$49,327,142</td>
+          <td style="text-align:right" class="gmv">$52,358,665</td>
+          <td style="text-align:right" class="pct pct-amber">5.79%</td>
+        </tr>
+        <tr style="background: #f0fdf4;">
+          <td class="rank">23</td>
+          <td>Floristcentric, LLC</td>
+          <td><span class="tier-tag tier-gap">Emerging</span></td>
+          <td style="text-align:right" class="gmv">$55,061</td>
+          <td style="text-align:right" class="gmv">$792,390</td>
+          <td style="text-align:right" class="gmv">$847,450</td>
+          <td style="text-align:right" class="pct pct-amber">6.50%</td>
+        </tr>
+        <tr style="background: #ecfdf5;">
+          <td class="rank">--</td>
+          <td><strong>Zeidler Floral</strong></td>
+          <td><span class="tier-tag tier-benchmark">Benchmark</span></td>
+          <td style="text-align:right" class="gmv">$163,709</td>
+          <td style="text-align:right" class="gmv">$786,869</td>
+          <td style="text-align:right" class="gmv">$950,578</td>
+          <td style="text-align:right" class="pct pct-green">17.22%</td>
+        </tr>
+        <tr style="background: #ecfdf5;">
+          <td class="rank">--</td>
+          <td><strong>Mayesh Wholesale Florist</strong></td>
+          <td><span class="tier-tag tier-benchmark">Benchmark</span></td>
+          <td style="text-align:right" class="gmv">$6,649,386</td>
+          <td style="text-align:right" class="gmv">$25,635,645</td>
+          <td style="text-align:right" class="gmv">$32,285,031</td>
+          <td style="text-align:right" class="pct pct-green">20.60%</td>
+        </tr>
+        <tr style="background: #ecfdf5;">
+          <td class="rank">--</td>
+          <td><strong>Maple Grove Floral</strong></td>
+          <td><span class="tier-tag tier-benchmark">Benchmark</span></td>
+          <td style="text-align:right" class="gmv">$190,186</td>
+          <td style="text-align:right" class="gmv">$346,634</td>
+          <td style="text-align:right" class="gmv">$536,820</td>
+          <td style="text-align:right" class="pct pct-green">35.43%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    Minerva / Koronet Revenue OS | Data: SALE_DETAILS, H1 2026, inventory_division='Units' | Trust: trusted | Rules: ks_flag, sales&lt;100K, online=eCom+API+K2K
+  </div>
+</div>
+</body>
+</html>

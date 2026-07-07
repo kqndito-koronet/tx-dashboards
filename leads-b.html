@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead List B: Connections Wired but Untransacted</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-card { background: #fef2f2; border-radius: 8px; padding: 16px; }
+  .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+  .meta-card .value { font-size: 20px; font-weight: 700; color: #991b1b; }
+  .meta-card.blue { background: #eff6ff; }
+  .meta-card.blue .value { color: #1e40af; }
+  .meta-card.green { background: #f0fdf4; }
+  .meta-card.green .value { color: #166534; }
+  .meta-card.amber { background: #fffbeb; }
+  .meta-card.amber .value { color: #92400e; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .section h3 { font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 8px; color: #374151; }
+  .section .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  tbody tr:hover { background: #f9fafb; }
+  .vendor-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .vendor-importer { background: #fce7f3; color: #9d174d; }
+  .vendor-wholesaler { background: #dbeafe; color: #1e40af; }
+  .vendor-grower { background: #d1fae5; color: #065f46; }
+  .conn-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 500; }
+  .conn-blitz { background: #fee2e2; color: #991b1b; }
+  .conn-handshake { background: #dbeafe; color: #1e40af; }
+  .gmv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rank { color: #9ca3af; font-weight: 500; }
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #9ca3af; }
+  .methodology { background: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .methodology strong { color: #374151; }
+  .enablement { background: #eff6ff; border-radius: 8px; padding: 20px; margin-top: 12px; }
+  .enablement h3 { color: #1e40af; margin-top: 0; }
+  .enablement ul { margin-left: 20px; margin-bottom: 12px; }
+  .enablement li { font-size: 13px; color: #374151; line-height: 1.8; }
+  .enablement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+  .enablement-card { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb; }
+  .enablement-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 8px; }
+  .objection { background: #fff7ed; border-left: 3px solid #f59e0b; padding: 12px 16px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+  .objection .q { font-weight: 600; font-size: 13px; color: #92400e; margin-bottom: 4px; }
+  .objection .a { font-size: 13px; color: #374151; line-height: 1.5; }
+  .priority-high { background: #fef2f2; border-left: 3px solid #dc2626; padding: 4px 8px; border-radius: 0 4px 4px 0; font-size: 11px; font-weight: 600; color: #991b1b; }
+  .priority-med { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 4px 8px; border-radius: 0 4px 4px 0; font-size: 11px; font-weight: 600; color: #92400e; }
+  @media (max-width: 768px) { .enablement-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lead List B: Connections Wired but Untransacted</h1>
+    <div class="subtitle">Owner: Daniela / Cata (Connection Funnel) | Generated 2026-07-06 by Minerva | Initiative: P6 Connection-to-Transaction Funnel</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Total Untransacted Pairs</div>
+        <div class="value">238</div>
+      </div>
+      <div class="meta-card blue">
+        <div class="label">Offline GMV (H1 2026)</div>
+        <div class="value">$17.2M</div>
+      </div>
+      <div class="meta-card amber">
+        <div class="label">Online GMV (same pairs)</div>
+        <div class="value">$0</div>
+      </div>
+      <div class="meta-card green">
+        <div class="label">Pairs > $50K Offline</div>
+        <div class="value">25</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section">
+    <h2>Purpose</h2>
+    <div class="desc">
+      These are vendor-buyer pairs where an <strong>Active K2K connection exists</strong> (the infrastructure is wired), but the buyer has <strong>$0 in online sales</strong> (eCommerce, API, K2K) from that vendor in H1 2026 -- despite having meaningful <strong>offline GMV</strong> (phone/fax/walk-in). The connection was set up but never activated for transactions. Each pair represents a pure activation opportunity: the plumbing is there, the buyer is buying, they just haven't been moved to the digital lane.
+    </div>
+    <div class="methodology">
+      <strong>Methodology:</strong> K2K_CONNECTIONS (Active, ks_flag=TRUE) cross-referenced with SALE_DETAILS H1 2026.
+      Step 1: Grouped active K2K connections by vendor-buyer pair.
+      Step 2: Matched against online sales (eCommerce + API + K2K channels) -- required $0 online GMV.
+      Step 3: Matched against offline sales (Offline channel) -- required > $0 offline GMV.
+      Step 4: Enriched with vendor industry from COMPANIES.
+      <strong>Data rules applied:</strong> ks_flag=TRUE, sales < $100K (Rule 4), Rule 6 (online = eCom + API + K2K).
+      | Trust: <strong>trusted</strong> (each pair verified with zero-online check + positive-offline check).
+    </div>
+  </div>
+
+  <!-- ENABLEMENT: WHY THESE ACCOUNTS -->
+  <div class="section">
+    <h2>Enablement Kit</h2>
+
+    <div class="enablement">
+      <h3>WHY These Accounts (Strategic Logic)</h3>
+      <ul>
+        <li><strong>H1 - Connections:</strong> We have 20,916 active K2K connections but only 34% ever transacted online. These 238 pairs are the most direct evidence: someone wired the connection, but nobody turned on the tap. The buyer is ALREADY purchasing from this vendor -- offline. The barrier is NOT the relationship.</li>
+        <li><strong>Lowest friction activation:</strong> No new connection needed, no new vendor onboarding, no buyer acquisition. The setup work is done. This is a "flip the switch" opportunity.</li>
+        <li><strong>Fee impact:</strong> Every dollar that moves from offline ($0 fee) to K2K online generates double-charged fees (sell-side + buy-side). The top 25 pairs alone represent $13.8M in offline GMV.</li>
+        <li><strong>Connection Funnel health:</strong> Understanding WHY these wired connections never transacted is the #1 diagnostic insight for the entire Connection Funnel initiative (P6).</li>
+      </ul>
+    </div>
+
+    <div class="enablement-grid">
+      <div class="enablement-card">
+        <h4>What to Ask (Discovery Script -- 5 questions)</h4>
+        <ol style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li>"We see you have a K2K connection with [vendor] set up. Do you know it's there? Have you ever tried placing an order through Komet from them?"</li>
+          <li>"You're buying $X/month from [vendor] by phone/fax. What's your current ordering workflow -- who places the order, how often, and what triggers it?"</li>
+          <li>"If you could see [vendor]'s available inventory in Komet and order directly, would that save time in your current process?"</li>
+          <li>"What would need to be true for you to place your next [vendor] order through Komet instead of by phone? Is it a product visibility issue, a pricing issue, or a habit issue?"</li>
+          <li>"If we helped you place your first order through the K2K connection this week, would you be willing to try it? What product would you start with?"</li>
+        </ol>
+      </div>
+      <div class="enablement-card">
+        <h4>Expected Result Per Call</h4>
+        <ul style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li><strong>Best case:</strong> First K2K order placed during the call (pilot product identified, order submitted)</li>
+          <li><strong>Good case:</strong> Buyer agrees to try K2K for their next weekly order; follow-up scheduled within 7 days</li>
+          <li><strong>Discovery case:</strong> Learn the specific blocker (awareness? catalog gap? pricing? UX?) and classify it</li>
+          <li><strong>Metric:</strong> 10% activation in 30 days = 24 pairs placing first K2K orders</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Expected Objections</h3>
+
+    <div class="objection">
+      <div class="q">1. "I didn't know that connection existed / I don't know what K2K is"</div>
+      <div class="a"><strong>Response:</strong> Most connections were set up via Blitz (mass connection). This means your vendor opted in, but nobody showed you how to use it. Let me walk you through it -- you'll be able to see their available inventory and order in 2 clicks. The buyer never asked for this; they need awareness first, not a pitch.</div>
+    </div>
+    <div class="objection">
+      <div class="q">2. "I already order from them by phone -- it works fine, why change?"</div>
+      <div class="a"><strong>Response:</strong> Phone works, but you can only order what's on your usual list. K2K lets you browse everything they have -- you might find a variety or deal you'd miss on the phone. Plus, your order history is logged automatically. We're not replacing the phone; we're giving you a window into their full inventory.</div>
+    </div>
+    <div class="objection">
+      <div class="q">3. "Their catalog online is empty / doesn't have what I need"</div>
+      <div class="a"><strong>Response:</strong> That's exactly the feedback we need. We'll flag this to the vendor -- if their buyers can't see inventory online, they're losing potential orders. Can you tell me the top 3 products you buy from them? We'll check if they're listed and escalate if not. (This feeds back into H2 -- supply gap.)</div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Who to Assign</h3>
+    <div class="enablement" style="background: #f0fdf4;">
+      <ul>
+        <li><strong>Daniela / Cata:</strong> Own the connection funnel initiative. Assign top 10 pairs (by offline GMV) for Week 1 outreach. Max 5 per rep per week.</li>
+        <li><strong>CS rep (Christian/Sebastian):</strong> Execute discovery calls. Use the script above. Log learnings in post-call capture template.</li>
+        <li><strong>Fede (Network):</strong> Flag pairs where the vendor side needs catalog help. Fede's EH initiative should track which vendors respond to catalog improvement requests.</li>
+        <li><strong>Escalation to Christine (Implementations):</strong> If the blocker is "vendor's catalog is empty," Christine should prioritize that vendor's catalog setup.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LEAD LIST TABLE -->
+  <div class="section">
+    <h2>Lead List -- Top 50 by Offline GMV</h2>
+    <div class="desc">Sorted by offline GMV descending. All have Active K2K connections and $0 online sales in H1 2026. Vendor industry shows whether the vendor is an importer, wholesaler, or grower.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Vendor (Seller)</th>
+          <th>Type</th>
+          <th>Buyer</th>
+          <th>Source</th>
+          <th style="text-align:right">Offline GMV (H1 2026)</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td>Kennicott Brothers Company</td>
+          <td><span class="vendor-tag vendor-wholesaler">Wholesaler</span></td>
+          <td>ASHLAND ADDISON FLORIST</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$9,557,584</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td>Floral Chain Direct</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>BAY STATE FARM DIRECT - WILMINGTON</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$999,360</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td>Continental Floral LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Fleurametz USA LLC - Los Angeles</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$979,936</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td>Continental Floral LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Mahoney's Garden Center</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$702,535</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td>Continental Floral LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Ramirez Whlse Flwrs</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$593,043</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td>Continental Floral LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Oberer's Flowers</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$453,137</td>
+          <td><span class="priority-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td>Continental Floral LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Maumee Valley North Wholesaler</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$288,748</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td>Kennicott Brothers Company</td>
+          <td><span class="vendor-tag vendor-wholesaler">Wholesaler</span></td>
+          <td>ABSOLUTELY BEAUTIFUL</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$226,892</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">9</td>
+          <td>KBC Cooler Account</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>SCHMIDT & KLAUS, INC</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$197,082</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">10</td>
+          <td>EQR USA</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>KBC DIRECT / KENNICOTT BROTHERS</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$194,715</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">11</td>
+          <td>Sunburst Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>SOUTHWEST (SCOTTS) WHOLESALE</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$149,335</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">12</td>
+          <td>KBC Cooler Account</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>MCNAMARA LLC</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$125,786</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">13</td>
+          <td>FloraCo, Inc</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Krueger Rothschild</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$117,892</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">14</td>
+          <td>Nazcaflor USA, Inc</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>GASSAFY WHOLESALE FLORIST INC</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$95,137</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">15</td>
+          <td>EQR USA</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>FLORA FRESH INC</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$92,924</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">16</td>
+          <td>EQR USA</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>VOGUE WHOLESALE</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$80,435</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">17</td>
+          <td>Bloomistics</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Southern Floral Co.</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$77,884</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">18</td>
+          <td>Direct Farms, LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Lihmil Wholesale Flowers</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$75,663</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">19</td>
+          <td>FloraCo, Inc</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Delaware Valley Wholesale</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$73,773</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">20</td>
+          <td>Royal Flowers Inc., Domestic</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>CENTRAL MISSISSIPPI WHLS FLORI</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$60,057</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">21</td>
+          <td>Galleria Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>CASCADE WHOLESALE-WEST</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$56,711</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">22</td>
+          <td>Choice Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>WFS Mountain</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$55,748</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">23</td>
+          <td>Andean Fresh LLC</td>
+          <td><span class="vendor-tag vendor-grower">Grower</span></td>
+          <td>CAROLINA FLORIST SUPPLY</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$55,207</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">24</td>
+          <td>FloraCo, Inc</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Fall River Florist Supply</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$55,163</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">25</td>
+          <td>The Flower Co, LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Fleurigros Inc.</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$51,258</td>
+          <td><span class="priority-med">MED</span></td>
+        </tr>
+        <tr>
+          <td class="rank">26</td>
+          <td>Legacy Flowers</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>VOGUE WHOLESALE</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$49,705</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">27</td>
+          <td>Naranjo Farms LLC</td>
+          <td><span class="vendor-tag vendor-grower">Grower</span></td>
+          <td>Fujihara Wholesale Flowers</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$49,036</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">28</td>
+          <td>AmeriLink Floratrader</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Krueger Wholesale Florist</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$44,304</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">29</td>
+          <td>Direct Farms, LLC</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>United Wholesale Flowers</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$43,977</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">30</td>
+          <td>Greens and Flowers Connection</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Lihmil Wholesale Kernersville</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$43,617</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">31</td>
+          <td>Andean Fresh LLC</td>
+          <td><span class="vendor-tag vendor-grower">Grower</span></td>
+          <td>AMAZING FLORAL WHOLESALE LTD</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$43,381</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">32</td>
+          <td>Fresca Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>ROSE RUNNERS LLC</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$42,148</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">33</td>
+          <td>Galleria Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>SOONER WHOLESALE</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$38,896</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">34</td>
+          <td>Fresca Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>VOGUE WHOLESALE</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$37,035</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">35</td>
+          <td>Galleria Farms</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>MELLANO & COMPANY</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$36,744</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">36</td>
+          <td>Andean Fresh LLC</td>
+          <td><span class="vendor-tag vendor-grower">Grower</span></td>
+          <td>Flowers of Nashville</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$33,146</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">37</td>
+          <td>Servicios Chilfresh Ltda.</td>
+          <td><span class="vendor-tag vendor-grower">Grower</span></td>
+          <td>Torchio Nursery Co Inc</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$33,073</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">38</td>
+          <td>Gala Roses</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Fuji Wholesale Flowers</td>
+          <td><span class="conn-tag conn-blitz">Blitz</span></td>
+          <td style="text-align:right" class="gmv">$32,155</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">39</td>
+          <td>Bloomistics</td>
+          <td><span class="vendor-tag vendor-importer">Importer</span></td>
+          <td>Bill Doran Des Moines</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$31,952</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="rank">40</td>
+          <td>Salter's Evergreen Supply</td>
+          <td><span class="vendor-tag vendor-grower">Grower</span></td>
+          <td>Mellano and Co - Los Angeles</td>
+          <td><span class="conn-tag conn-handshake">Handshake</span></td>
+          <td style="text-align:right" class="gmv">$31,360</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- KEY PATTERNS -->
+  <div class="section">
+    <h2>Key Patterns in This List</h2>
+    <div class="desc" style="line-height: 1.8;">
+      <strong>1. Continental Floral dominance:</strong> 6 of top 50 pairs involve Continental Floral LLC as vendor. They have many Blitz connections that never activated. Suggests a systemic vendor-side issue -- Continental may not have their catalog online, or their buyers don't know the K2K connection exists.<br><br>
+      <strong>2. Blitz = awareness gap:</strong> ~85% of untransacted connections came from Blitz (mass connection). The buyer likely never asked for the connection and may not know it exists. Contrast with Handshake connections, which were explicitly requested and still didn't transact -- those suggest a different blocker (catalog/pricing/UX).<br><br>
+      <strong>3. Importer-to-Wholesaler corridor:</strong> The vast majority of these pairs are importers selling to wholesalers (Importer vendor, Wholesaler buyer). This is the K2K corridor that's already working well at scale -- these are just the pairs that didn't activate within it.<br><br>
+      <strong>4. KBC anomaly:</strong> Kennicott (#1 at $9.6M) is a wholesaler-to-florist pair (Ashland Addison). This is the H2/H3 corridor gap -- different play than importer-to-wholesaler. Requires eShop/bunch listing, not just K2K activation.
+    </div>
+  </div>
+
+  <div class="footer">
+    Minerva / Koronet Revenue OS | Data: SALE_DETAILS + K2K_CONNECTIONS, H1 2026 | Trust: trusted | Rules: ks_flag, sales&lt;100K, online=eCom+API+K2K
+  </div>
+</div>
+</body>
+</html>
