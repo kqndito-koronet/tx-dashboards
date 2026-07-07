@@ -84,7 +84,7 @@
   <ul>
     <li><strong>Importers grow across every channel</strong> and generate 78% of fees ($889K). They are both the volume engine and the fee engine.</li>
     <li><strong>Wholesalers decline everywhere except K2K buy-side</strong> (+20%). Their fees ($211K) are 82% from BUYING via K2K, not from selling.</li>
-    <li><strong>K2K fees are double-charged:</strong> the importer pays to SELL ($326K), the wholesaler pays to BUY ($172K). Same transaction, two fee events. This is good — both sides of the corridor pay.</li>
+    <li><strong>K2K fees are double-charged:</strong> the importer pays to SELL ($326K), the wholesaler pays to BUY ($172K). Same transaction, two fee events. This is good — both sides of the corridor pay. Note: KBC pays 0.75% (discounted), not 1.5%. Fee potential must use actual SFDC rates per account.</li>
     <li><strong>Outside the Big 3 (Mayesh 24% online, KBC 14%, Bill Doran 3%), wholesalers are 99%+ offline.</strong></li>
   </ul>
 </div>
@@ -391,7 +391,8 @@
   SALES_SV + CONSOLIDATED_TRANSACTION_FEES_SV + K2K_CONNECTIONS_SV + PROCUREMENTS_SV · ks_flag=TRUE · sales&lt;$100K<br>
   Fee note: H1'25 = Jan-Jun (6mo billed). H1'26 = Jan-May (5mo, Jun not billed). YoY comparison is conservative.<br>
   Axerrio ~$19.6K NOT included in fee totals (Rule 10). Trust: needs_validation · Buyer identity inferred for non-K2K (data gap: customer_id doesn't map to company)<br>
-  Rose · 2026-07-06
+  K2K fee leakage risk: orders can lose K2K tag when edited (Sofia Pardo, Apr 2026). Impact unknown — needs engineering audit trail. Not estimated.<br>
+  Rose · 2026-07-07
 </div>
 
 <script>
@@ -443,5 +444,6 @@ buildWF('wfFull',[
   {label:'H1 2026',val:859.5,type:'total'}
 ]);
 </script>
-<div style="position:fixed;bottom:0;left:0;right:0;background:#f8f9fb;border-top:1px solid #e2e5ea;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;font-family:-apple-system,sans-serif;font-size:12px;color:#5a5a78;"><span>TX Chapter Dashboard · Updated 2026-07-06 · <a href="index.html" style="color:#2563eb;text-decoration:none;">← Hub</a></span><a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=feedback&title=[Feedback]+" target="_blank" style="padding:4px 12px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-weight:500;font-size:11px;">Feedback</a></div><div style="height:40px"></div></body>
+<div style="position:fixed;bottom:0;left:0;right:0;background:#f8f9fb;border-top:1px solid #e2e5ea;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;font-family:-apple-system,sans-serif;font-size:12px;color:#5a5a78;"><span>TX Chapter Dashboard · Updated 2026-07-07 · <a href="index.html" style="color:#2563eb;text-decoration:none;">← Hub</a></span><a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=feedback&title=[Feedback]+" target="_blank" style="padding:4px 12px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-weight:500;font-size:11px;">Feedback</a></div><div style="height:40px"></div>
+</body>
 </html>

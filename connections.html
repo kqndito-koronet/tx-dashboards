@@ -98,7 +98,7 @@
 
 <div class="header">
   <h1>H1 Connections Dashboard</h1>
-  <div class="sub">TX Chapter &middot; Data as of 2026-07-06 &middot; Source: Snowflake K2K_CONNECTIONS + SALE_DETAILS (ks_flag=TRUE) &middot; Online = eCommerce + API + Procurement</div>
+  <div class="sub">TX Chapter &middot; Data as of 2026-07-07 &middot; Source: Snowflake K2K_CONNECTIONS + SALE_DETAILS (ks_flag=TRUE) &middot; Online = eCommerce + API + Procurement</div>
 </div>
 
 <div class="verdict">
@@ -613,7 +613,7 @@
   Date ranges: K2K connections all-time (AUDIT_CREATION_DATE); Sales all-time for lifetime metrics, L60D/L30D/6mo for current state<br>
   Online definition: SALES_CHANNEL IN ('eCommerce', 'Procurement', 'API')<br>
   Filters: SALES > 0 AND SALES < 100000 (Rule 4: trim corrupt lines); ks_flag = TRUE (Rule 1)<br>
-  Built by Rose (Data Agent) on 2026-07-06. Trust level: FACT on counts/GMV from Snowflake. INTERPRETATION on funnel categorization and hypotheses.
+  Built by Rose (Data Agent) on 2026-07-07. Trust level: FACT on counts/GMV from Snowflake. INTERPRETATION on funnel categorization and hypotheses.
   <br><br>
   <strong>Known gaps:</strong> (1) Axerrio revenue not in Snowflake (+$19.6K). (2) CUSTOMER_ID is vendor-specific -- cross-vendor buyer matching not available natively.
   (3) Easy Handshake callback list (Fede's 14) cannot be identified from Snowflake alone. (4) Named targets (Hire's Best, Mideast, The Flowerman) show minimal data in SALE_DETAILS -- may be tracked under different entity names or COMPANY_IDs.
@@ -628,5 +628,6 @@ function showTab(n) {
 }
 </script>
 
-<div style="position:fixed;bottom:0;left:0;right:0;background:#f8f9fb;border-top:1px solid #e2e5ea;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;font-family:-apple-system,sans-serif;font-size:12px;color:#5a5a78;"><span>TX Chapter Dashboard · Updated 2026-07-06 · <a href="index.html" style="color:#2563eb;text-decoration:none;">← Hub</a></span><a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=feedback&title=[Feedback]+" target="_blank" style="padding:4px 12px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-weight:500;font-size:11px;">Feedback</a></div><div style="height:40px"></div></body>
+<div style="position:fixed;bottom:0;left:0;right:0;background:#f8f9fb;border-top:1px solid #e2e5ea;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;font-family:-apple-system,sans-serif;font-size:12px;color:#5a5a78;"><span>TX Chapter Dashboard · Updated 2026-07-07 · <a href="index.html" style="color:#2563eb;text-decoration:none;">← Hub</a></span><a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=feedback&title=[Feedback]+" target="_blank" style="padding:4px 12px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-weight:500;font-size:11px;">Feedback</a></div><div style="height:40px"></div>
+</body>
 </html>
