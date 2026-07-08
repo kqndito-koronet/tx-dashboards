@@ -133,7 +133,7 @@
     <li><strong>eCommerce (+1.3%):</strong> Flat. Not gaining share.</li>
     <li><strong>API (-1.6%):</strong> Declining.</li>
     <li><strong>K2K (+41.4%):</strong> The only channel growing meaningfully. Highest take-rate (1.84%).</li>
-    <li><strong>Fees +32%</strong> = take-rate expansion on a flat base. If GMV keeps slowing, fees will follow.</li>
+    <li><strong>Fees +33% H1</strong> = take-rate expansion on a flat base. If GMV keeps slowing, fees will follow.</li>
   </ul>
 </div>
 
@@ -161,12 +161,12 @@
     <thead><tr><th>Channel</th><th class="num">H1 2025</th><th class="num">H1 2026</th><th class="num">Δ</th><th class="num">YoY</th><th class="num">Fees H1'26</th></tr></thead>
     <tbody>
       <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Offline</td><td class="num">$688.9M</td><td class="num">$705.5M</td><td class="num pos">+$16.6M</td><td class="num pos">+2.4%</td><td class="num" style="color:var(--text3)">$0</td></tr>
-      <tr><td><span class="ch-dot" style="background:var(--k2k)"></span>K2K</td><td class="num">$22.6M</td><td class="num">$32.0M</td><td class="num pos">+$9.4M</td><td class="num pos">+41.4%</td><td class="num">$503K</td></tr>
-      <tr><td><span class="ch-dot" style="background:var(--ecom)"></span>eCommerce</td><td class="num">$66.2M</td><td class="num">$67.1M</td><td class="num pos">+$0.9M</td><td class="num flat">+1.3%</td><td class="num">$555K</td></tr>
-      <tr><td><span class="ch-dot" style="background:var(--api)"></span>API</td><td class="num">$55.9M</td><td class="num">$55.0M</td><td class="num neg">-$0.9M</td><td class="num neg">-1.6%</td><td class="num">$71K</td></tr>
-      <tr><td><span class="ch-dot" style="background:#9898b0"></span>FedEx</td><td class="num">$6.6K</td><td class="num">$5.9K</td><td class="num neg">-$0.7K</td><td class="num neg">-11%</td><td class="num">$5.9K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--k2k)"></span>K2K</td><td class="num">$22.6M</td><td class="num">$32.0M</td><td class="num pos">+$9.4M</td><td class="num pos">+41.4%</td><td class="num">$589K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--ecom)"></span>eCommerce</td><td class="num">$66.2M</td><td class="num">$67.1M</td><td class="num pos">+$0.9M</td><td class="num flat">+1.3%</td><td class="num">$646K</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--api)"></span>API</td><td class="num">$55.9M</td><td class="num">$55.0M</td><td class="num neg">-$0.9M</td><td class="num neg">-1.6%</td><td class="num">$83K</td></tr>
+      <tr><td><span class="ch-dot" style="background:#9898b0"></span>FedEx</td><td class="num">$6.6K</td><td class="num">$5.9K</td><td class="num neg">-$0.7K</td><td class="num neg">-11%</td><td class="num">$7.0K</td></tr>
       <tr><td><span class="ch-dot" style="background:#9898b0"></span>Gross Profit Share</td><td class="num">—</td><td class="num">$2.1K</td><td class="num pos">+$2.1K</td><td class="num">new</td><td class="num">$2.1K</td></tr>
-      <tr class="total-row"><td>Total</td><td class="num">$833.7M</td><td class="num">$859.5M</td><td class="num pos">+$25.8M</td><td class="num pos">+3.1%</td><td class="num">$1,138K</td></tr>
+      <tr class="total-row"><td>Total</td><td class="num">$833.7M</td><td class="num">$859.5M</td><td class="num pos">+$25.8M</td><td class="num pos">+3.1%</td><td class="num">$1,327K</td></tr>
     </tbody>
   </table>
 </div>
@@ -208,10 +208,10 @@
 
 <div class="source">
   SALES_SV · ks_flag=TRUE · sales&lt;$100K · shipping_date H1 2025 vs H1 2026<br>
-  Fees: CONSOLIDATED_TRANSACTION_FEES_SV · status='Billed' · transaction_date · Jan-May (Jun not yet billed)<br>
+  Fees: CONSOLIDATED_TRANSACTION_FEES_SV · status='Billed' · transaction_date · Jan-Jun (H1 complete, Jun fully billed as of Jun 30)<br>
   Trust: needs_validation · Axerrio ~$19.6K excluded<br>
   K2K fee leakage risk: orders can lose K2K tag when edited (Sofia Pardo, Apr 2026). Impact unknown — needs engineering audit trail. Not estimated.<br>
-  Rose (Data Agent) · 2026-07-07
+  Rose (Data Agent) · 2026-07-08
 </div>
 
 <script>
@@ -311,6 +311,5 @@ function mainTab(name){
 
 buildWF(); buildTotal(); buildChannel(); buildTrends();
 </script>
-<div style="position:fixed;bottom:0;left:0;right:0;background:#f8f9fb;border-top:1px solid #e2e5ea;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;font-family:-apple-system,sans-serif;font-size:12px;color:#5a5a78;"><span>TX Chapter Dashboard · Updated 2026-07-07 · <a href="index.html" style="color:#2563eb;text-decoration:none;">← Hub</a></span><a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=feedback&title=[Feedback]+" target="_blank" style="padding:4px 12px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-weight:500;font-size:11px;">Feedback</a></div><div style="height:40px"></div>
 </body>
 </html>
