@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flywheel · The Koronet Flywheel: Layer by Layer</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
+    --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
+    --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
+    --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb;
+    --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
+    --spins: #059669; --jams: #dc2626;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
+
+  .back-link { font-size: 12px; color: var(--blue); text-decoration: none; display: inline-block; margin-bottom: 16px; }
+  .back-link:hover { text-decoration: underline; }
+
+  .header { margin-bottom: 24px; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .purpose { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .verdict .headline { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .verdict .g { color: var(--green); } .verdict .r { color: var(--red); } .verdict .a { color: var(--amber); }
+  .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
+  .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
+  .kpi .val { font-size: 24px; font-weight: 700; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; font-weight: 600; }
+  .kpi .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .flat { color: var(--amber); }
+
+  .tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px 8px 0 0; padding: 4px 4px 0; }
+  .tab { padding: 8px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text2); border-radius: 6px 6px 0 0; background: transparent; border: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--bg); color: var(--text); font-weight: 600; }
+  .tab-body { border: 1px solid var(--border); border-radius: 0 0 10px 10px; padding: 24px; margin-bottom: 28px; }
+  .tab-content { display: none; } .tab-content.active { display: block; }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; }
+  .section-head .hint { font-size: 11px; color: var(--text3); }
+
+  .dtable { width: 100%; border-collapse: collapse; }
+  .dtable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+  .dtable th.num { text-align: right; }
+  .dtable td { padding: 8px 10px; font-size: 12px; border-bottom: 1px solid var(--surface2); font-variant-numeric: tabular-nums; }
+  .dtable td.num { text-align: right; }
+  .dtable tr:hover { background: var(--surface); }
+  .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+  .ch-dot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+  .status-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+  .status-tag.spins { background: var(--green-bg); color: var(--green); }
+  .status-tag.jams { background: var(--red-bg); color: var(--red); }
+  .status-tag.contract { background: var(--amber-bg); color: var(--amber); }
+  .status-tag.included { background: var(--surface2); color: var(--text3); }
+
+  .sequence-section { margin-top: 8px; }
+  .sequence-row { display: grid; grid-template-columns: 80px 1fr; gap: 16px; margin-bottom: 20px; }
+  .seq-label { font-size: 14px; font-weight: 700; padding-top: 2px; }
+  .seq-label.buy { color: var(--blue); }
+  .seq-label.list { color: var(--amber); }
+  .seq-label.sell { color: var(--green); }
+  .seq-body { font-size: 13px; color: var(--text2); }
+  .seq-body strong { color: var(--text); }
+  .seq-arrow { font-size: 20px; color: var(--text3); text-align: center; margin: -8px 0 -4px 36px; }
+
+  .jam-block { background: var(--red-bg); border: 1px solid #fecaca; border-radius: 8px; padding: 16px 20px; margin-top: 8px; }
+  .jam-block h3 { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 10px; }
+  .jam-item { display: flex; gap: 10px; margin-bottom: 8px; font-size: 12px; color: var(--text2); }
+  .jam-num { font-size: 16px; font-weight: 700; color: var(--red); width: 20px; flex-shrink: 0; }
+  .jam-item strong { color: var(--text); }
+
+  .so-block { background: var(--amber-bg); border: 1px solid #fde68a; border-radius: 8px; padding: 16px 20px; }
+  .so-block h3 { font-size: 13px; font-weight: 600; color: var(--amber); margin-bottom: 8px; }
+  .so-block p { font-size: 12px; color: var(--text2); }
+  .so-block strong { color: var(--text); }
+
+  /* Flywheel visual */
+  .flywheel-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
+  .fw-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .fw-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .fw-card .fw-stat { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .fw-card .fw-detail { font-size: 11px; color: var(--text3); }
+
+  /* Bar chart for layers */
+  .layer-bar-container { margin-top: 12px; }
+  .layer-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .layer-bar-name { width: 160px; font-size: 11px; color: var(--text2); text-align: right; flex-shrink: 0; }
+  .layer-bar-track { flex: 1; height: 24px; background: var(--surface2); border-radius: 4px; position: relative; overflow: hidden; }
+  .layer-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; }
+  .layer-bar-fill.offline { background: var(--offline); }
+  .layer-bar-fill.online { background: var(--ecom); }
+  .layer-bar-online { height: 100%; border-radius: 0 4px 4px 0; position: absolute; top: 0; display: flex; align-items: center; padding: 0 8px; }
+  .layer-bar-val { font-size: 10px; font-weight: 600; color: #fff; white-space: nowrap; }
+  .layer-bar-pct { width: 50px; font-size: 11px; font-weight: 600; text-align: right; flex-shrink: 0; }
+
+  .next-link { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 20px; font-size: 13px; }
+  .next-link strong { color: var(--blue); }
+
+  .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Dashboard Hub</a>
+
+<div class="header">
+  <h1>The Koronet Flywheel: Layer by Layer</h1>
+  <div class="purpose">How GMV flows through the ecosystem layer by layer. Where it spins (online, generating fees) and where it jams (offline, at $0). H1 2026.</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="g">The flywheel spins at Importer &rarr; Wholesaler</span> — <span class="r">and jams at Wholesaler &rarr; Retailer.</span></div>
+  <ul>
+    <li><strong>77% of fees</strong> come from one layer: Importer &rarr; Wholesaler ($1,034K). This is where the platform creates value.</li>
+    <li><strong>Wholesaler &rarr; Retailer is stuck:</strong> $73.8M GMV but only 4.7% eCom ($3.4M). Catalog gaps, offline Standing Orders, and holiday trust reversion keep it offline.</li>
+    <li><strong>BUY &rarr; LIST &rarr; SELL sequence breaks at LIST:</strong> Wholesalers buy $17.7M digitally (Procurement) but only list 16.4% of products online. Unlisted = unsellable.</li>
+    <li><strong>Standing Orders = $168.9M</strong> ($142.5M offline at $0 fees). No digital SO product exists. This is the single largest blocked pool.</li>
+    <li><strong>Concentration risk:</strong> Remove Mayesh + KBC and only $16.2M of digital volume remains across wholesalers.</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="label">Total Ecosystem GMV</div><div class="val">$432M</div><div class="note">All layers H1 (ks_flag, &lt;$100K)</div></div>
+  <div class="kpi"><div class="label">Online GMV</div><div class="val">$69M</div><div class="note">eCom + API + K2K combined</div></div>
+  <div class="kpi"><div class="label">Total Fees</div><div class="val">$1,089K</div><div class="note">77% from Imp &rarr; Whl layer</div></div>
+  <div class="kpi"><div class="label">Spins Layer</div><div class="val" style="color:var(--green)">24.8%</div><div class="note">Imp &rarr; Whl online rate</div></div>
+  <div class="kpi"><div class="label">Jams Layer</div><div class="val" style="color:var(--red)">4.7%</div><div class="note">Whl &rarr; Ret eCom rate</div></div>
+</div>
+
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="mainTab('layers')">Layer Table</div>
+  <div class="tab" onclick="mainTab('visual')">Visual Breakdown</div>
+  <div class="tab" onclick="mainTab('sequence')">BUY &rarr; LIST &rarr; SELL</div>
+  <div class="tab" onclick="mainTab('jams')">Why It Jams</div>
+  <div class="tab" onclick="mainTab('so')">Standing Orders</div>
+</div>
+<div class="tab-body">
+
+<!-- LAYER TABLE -->
+<div id="tc-layers" class="tab-content active">
+  <div class="section-head"><h2>Ecosystem Layers: GMV, Online %, and Fees</h2><div class="hint">H1 2026 &middot; ks_flag=TRUE &middot; sales&lt;$100K</div></div>
+  <table class="dtable">
+    <thead><tr><th>Layer</th><th class="num">GMV</th><th class="num">Online GMV</th><th class="num">Online %</th><th class="num">Fees</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Grower &rarr; Importer</td>
+        <td class="num">$9.5M</td>
+        <td class="num">$0.9M</td>
+        <td class="num">9.1%</td>
+        <td class="num">$18K</td>
+        <td><span class="status-tag included">Low volume</span></td>
+      </tr>
+      <tr style="background:var(--green-bg)">
+        <td><span class="ch-dot" style="background:var(--green)"></span><strong>Importer &rarr; Wholesaler</strong></td>
+        <td class="num"><strong>$186.6M</strong></td>
+        <td class="num"><strong>$46.2M</strong></td>
+        <td class="num pos"><strong>24.8%</strong></td>
+        <td class="num pos"><strong>$1,034K</strong></td>
+        <td><span class="status-tag spins">SPINS &middot; 77% of fees</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--api)"></span>Importer &rarr; Retailer</td>
+        <td class="num">$61.2M</td>
+        <td class="num">$8.0M</td>
+        <td class="num">13.0%</td>
+        <td class="num" style="color:var(--text3)">incl. above</td>
+        <td><span class="status-tag included">Included in Imp fees</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--amber)"></span>Importer &rarr; Mass Market</td>
+        <td class="num">$83.8M</td>
+        <td class="num">$0.3M</td>
+        <td class="num neg">0.3%</td>
+        <td class="num" style="color:var(--text3)">$0</td>
+        <td><span class="status-tag contract">Contract/EDI</span></td>
+      </tr>
+      <tr style="background:var(--red-bg)">
+        <td><span class="ch-dot" style="background:var(--red)"></span><strong>Wholesaler &rarr; Retailer</strong></td>
+        <td class="num"><strong>$73.8M</strong></td>
+        <td class="num"><strong>$3.4M eCom + $9.7M API</strong></td>
+        <td class="num neg"><strong>4.7% eCom / 17.8% total</strong></td>
+        <td class="num neg"><strong>$37K</strong></td>
+        <td><span class="status-tag jams">JAMS</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Wholesaler &rarr; Mass Market</td>
+        <td class="num">$10.4M</td>
+        <td class="num">$0.1M</td>
+        <td class="num neg">0.7%</td>
+        <td class="num" style="color:var(--text3)">$0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Wholesaler &rarr; Wholesaler</td>
+        <td class="num">$6.4M</td>
+        <td class="num">$0.7M</td>
+        <td class="num">10.4%</td>
+        <td class="num" style="color:var(--text3)">incl.</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Visual bar chart -->
+  <div class="layer-bar-container" style="margin-top:24px">
+    <div class="section-head"><h2>Online Share by Layer</h2><div class="hint">Gray = offline &middot; Blue = online</div></div>
+    <div id="layerBars"></div>
+  </div>
+</div>
+
+<!-- VISUAL BREAKDOWN -->
+<div id="tc-visual" class="tab-content">
+  <div class="section-head"><h2>Where Value Concentrates</h2><div class="hint">Two sides of the flywheel</div></div>
+  <div class="flywheel-visual">
+    <div class="fw-card" style="border-left: 4px solid var(--green);">
+      <h3 style="color:var(--green)">The Engine: Importer &rarr; Wholesaler</h3>
+      <div class="fw-stat" style="color:var(--green)">$186.6M</div>
+      <div class="fw-detail">$46.2M online (24.8%) &middot; $1,034K in fees</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text2)">
+        This layer alone generates <strong>77% of all TX fees</strong>. It has the highest online adoption because importers + Komet push digital procurement. K2K connections drive the flow.
+      </div>
+    </div>
+    <div class="fw-card" style="border-left: 4px solid var(--red);">
+      <h3 style="color:var(--red)">The Bottleneck: Wholesaler &rarr; Retailer</h3>
+      <div class="fw-stat" style="color:var(--red)">$73.8M</div>
+      <div class="fw-detail">$3.4M eCom (4.7%) &middot; $37K in fees</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text2)">
+        Largest fee-gap layer. Wholesalers sell via phone/email/habits. Products not listed, SOs not digital, buyers revert offline for holidays. <strong>$37K on $73.8M = 0.05% take-rate.</strong>
+      </div>
+    </div>
+  </div>
+  <div class="flywheel-visual" style="margin-top:16px">
+    <div class="fw-card">
+      <h3>Mass Market: The Walled Garden</h3>
+      <div class="fw-stat" style="color:var(--amber)">$94.2M</div>
+      <div class="fw-detail">Imp &rarr; MM ($83.8M) + Whl &rarr; MM ($10.4M)</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text2)">
+        Contract/EDI flow. 0.3% online. <strong>$0 fees.</strong> Not a digital play in the current product.
+      </div>
+    </div>
+    <div class="fw-card">
+      <h3>Grower &rarr; Importer: The Start</h3>
+      <div class="fw-stat" style="color:var(--text3)">$9.5M</div>
+      <div class="fw-detail">$0.9M online (9.1%) &middot; $18K fees</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text2)">
+        Small layer. Growers are supply-side. Low digital adoption.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUY LIST SELL SEQUENCE -->
+<div id="tc-sequence" class="tab-content">
+  <div class="section-head"><h2>BUY &rarr; LIST &rarr; SELL: The Wholesaler Conversion Funnel</h2><div class="hint">The flywheel breaks at LIST</div></div>
+  <div class="sequence-section">
+    <div class="sequence-row">
+      <div class="seq-label buy">BUY</div>
+      <div class="seq-body">
+        Wholesalers buy <strong>$17.7M digitally</strong> via Procurement (K2K).<br>
+        KBC: <strong>$7.8M</strong> &middot; BDC: <strong>$3.8M</strong> &middot; Others: $6.1M<br>
+        <span style="font-size:11px; color:var(--text3)">This is the input — product enters the wholesaler's system digitally.</span>
+      </div>
+    </div>
+    <div class="seq-arrow">&darr;</div>
+    <div class="sequence-row">
+      <div class="seq-label list" style="color:var(--red)">LIST</div>
+      <div class="seq-body">
+        BDC has <strong>22,102 products</strong> but only <strong>16.4% listed online</strong>.<br>
+        <span style="color:var(--red); font-weight:600">If it's not listed, it can't be sold online. This is where the funnel breaks.</span><br>
+        <span style="font-size:11px; color:var(--text3)">Catalog coverage predicts adoption. Self-fulfilling prophecy: "nothing to buy online" because nothing is listed.</span>
+      </div>
+    </div>
+    <div class="seq-arrow">&darr;</div>
+    <div class="sequence-row">
+      <div class="seq-label sell">SELL</div>
+      <div class="seq-body">
+        Only <strong>$3.4M eCom</strong> in Wholesaler &rarr; Retailer (4.7%).<br>
+        $9.7M API (auto-orders, not buyer-initiated) brings total digital to 17.8%.<br>
+        <span style="font-size:11px; color:var(--text3)">Even the sell side that goes online is mostly API (machine-to-machine), not eCommerce (buyer-initiated).</span>
+      </div>
+    </div>
+  </div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin-top:16px; font-size:12px; color:var(--text2);">
+    <strong style="color:var(--text)">Implication:</strong> Fix the LIST step to unlock the SELL step. The product already enters digitally (BUY works). But if wholesalers don't list their catalog online, retailers have nothing to buy. Catalog coverage initiatives (Initiative 2) attack this directly.
+  </div>
+</div>
+
+<!-- WHY IT JAMS -->
+<div id="tc-jams" class="tab-content">
+  <div class="section-head"><h2>Why It Jams at Wholesaler &rarr; Retailer</h2><div class="hint">Four structural barriers keeping $73.8M offline</div></div>
+  <div class="jam-block">
+    <h3>Structural Barriers</h3>
+    <div class="jam-item">
+      <div class="jam-num">1</div>
+      <div><strong>CATALOG: Products not listed online.</strong> Self-fulfilling prophecy confirmed. BDC has 22,102 products, only 16.4% online. If it's not listed, it can't be sold. This is the root cause.</div>
+    </div>
+    <div class="jam-item">
+      <div class="jam-num">2</div>
+      <div><strong>STANDING ORDERS: $39.3M wholesaler SOs offline.</strong> No digital alternative. Retailers place recurring orders by phone/fax. No product exists to convert these to online. (Total SOs across all layers: $142.5M offline.)</div>
+    </div>
+    <div class="jam-item">
+      <div class="jam-num">3</div>
+      <div><strong>TRUST: Holidays hurt online %.</strong> When stakes are high (Valentine's, Mother's Day), buyers revert to offline. They don't trust the platform for critical orders. Online % drops precisely when volume peaks.</div>
+    </div>
+    <div class="jam-item">
+      <div class="jam-num">4</div>
+      <div><strong>CONCENTRATION: Remove Mayesh + KBC = $16.2M digital total.</strong> The digital wholesaler base is thin. Two accounts drive the majority. If either stops, the layer collapses.</div>
+    </div>
+  </div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin-top:16px; font-size:12px; color:var(--text2);">
+    <strong style="color:var(--text)">Order of attack:</strong> (1) Fix catalog coverage to unlock potential &rarr; (2) build digital SO product to capture recurring volume &rarr; (3) earn trust through holiday reliability &rarr; (4) expand beyond Mayesh/KBC to diversify.
+  </div>
+</div>
+
+<!-- STANDING ORDERS -->
+<div id="tc-so" class="tab-content">
+  <div class="section-head"><h2>Standing Orders: The Hidden $169M</h2><div class="hint">Recurring orders that bypass the platform</div></div>
+  <div class="so-block">
+    <h3>Standing Order Summary &middot; H1 2026</h3>
+    <p style="margin-bottom:10px">
+      <strong style="font-size:20px">$168.9M</strong> total Standing Order volume
+    </p>
+    <table class="dtable" style="margin-top:12px">
+      <thead><tr><th>Segment</th><th class="num">Volume</th><th class="num">Fees</th><th>Channel</th></tr></thead>
+      <tbody>
+        <tr><td>Offline SOs</td><td class="num neg"><strong>$142.5M</strong></td><td class="num" style="color:var(--text3)">$0</td><td><span class="status-tag jams">Offline &middot; $0 fees</span></td></tr>
+        <tr><td>API SOs</td><td class="num">$26.2M</td><td class="num">incl. in API fees</td><td><span class="status-tag contract">API / automated</span></td></tr>
+        <tr><td>eCom SOs</td><td class="num">$0.2M</td><td class="num">incl. in eCom fees</td><td><span class="status-tag spins">Online</span></td></tr>
+        <tr class="total-row"><td>Total</td><td class="num">$168.9M</td><td class="num">~$0 incremental</td><td></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:14px; font-size:12px; color:var(--text2);">
+      <strong style="color:var(--red)">$142.5M offline at $0 fees.</strong> These are recurring purchase commitments placed by phone, email, or habit. No digital Standing Order product exists to capture them online. At 0.87% blended rate, this pool = <strong>$1.24M/year</strong> blocked.
+    </p>
+    <p style="margin-top:8px; font-size:12px; color:var(--text2);">
+      <strong>Wholesaler SOs specifically:</strong> $39.3M offline. These sit at the Wholesaler &rarr; Retailer layer — the bottleneck.
+    </p>
+  </div>
+</div>
+
+</div><!-- tab-body -->
+
+<div class="next-link">
+  <strong>&rarr; Fee Impact:</strong> What's on the table if we fix the flywheel? Top-down fee opportunity analysis, by segment and account.<br>
+  <a href="fee-impact.html" style="color:var(--blue); font-size:12px; text-decoration:none;">See fee-impact.html &rarr;</a>
+</div>
+
+<div class="source">
+  SALES_SV &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; shipping_date H1 2026<br>
+  Layer classification: seller_industry / buyer_industry from SALE_DETAILS joined with COMPANIES<br>
+  Standing Orders: ORDER_TYPE='Standing Order' in SALE_DETAILS<br>
+  Fees: CONSOLIDATED_TRANSACTION_FEES_SV &middot; status='Billed' &middot; transaction_date H1 2026<br>
+  Catalog data: PRODUCTS_SV &middot; company_id filter for BDC &middot; status='Active'<br>
+  Online = SALES_CHANNEL in ('eCommerce','Procurement','API') &middot; Offline = SALES_CHANNEL='Offline'<br>
+  Trust: needs_validation &middot; Product listings and catalog coverage approximate<br>
+  Rose (Data Agent) &middot; 2026-07-08
+</div>
+
+<script>
+function mainTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Build layer bars
+function buildLayerBars(){
+  const el=document.getElementById('layerBars');
+  const layers=[
+    {name:'Imp \u2192 Wholesaler', gmv:186.6, online:46.2, pct:'24.8%', color:'var(--green)'},
+    {name:'Imp \u2192 Retailer', gmv:61.2, online:8.0, pct:'13.0%', color:'var(--api)'},
+    {name:'Whl \u2192 Whl', gmv:6.4, online:0.7, pct:'10.4%', color:'var(--text3)'},
+    {name:'Grower \u2192 Imp', gmv:9.5, online:0.9, pct:'9.1%', color:'var(--text3)'},
+    {name:'Whl \u2192 Retailer (eCom)', gmv:73.8, online:3.4, pct:'4.7%', color:'var(--red)'},
+    {name:'Whl \u2192 Mass Market', gmv:10.4, online:0.1, pct:'0.7%', color:'var(--red)'},
+    {name:'Imp \u2192 Mass Market', gmv:83.8, online:0.3, pct:'0.3%', color:'var(--red)'},
+  ];
+  const maxGMV=186.6;
+  layers.forEach(l=>{
+    const totalW=(l.gmv/maxGMV)*100;
+    const onlineW=(l.online/l.gmv)*100;
+    const offlineW=100-onlineW;
+    el.innerHTML+=`<div class="layer-bar-row">
+      <div class="layer-bar-name">${l.name}</div>
+      <div class="layer-bar-track" style="width:${totalW}%">
+        <div class="layer-bar-fill offline" style="width:${offlineW}%"></div>
+        <div class="layer-bar-online" style="left:${offlineW}%;width:${onlineW}%;background:${l.color}">
+          <span class="layer-bar-val">${l.online>1?'$'+l.online.toFixed(1)+'M':''}</span>
+        </div>
+      </div>
+      <div class="layer-bar-pct" style="color:${l.color}">${l.pct}</div>
+    </div>`;
+  });
+}
+
+buildLayerBars();
+</script>
+</body>
+</html>

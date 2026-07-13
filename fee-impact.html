@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fee Impact · What's on the Table</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
+    --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
+    --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
+    --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb; --blue-bg: #eff6ff;
+    --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
+    --now: #059669; --blocked: #d97706; --longterm: #6b7280;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
+
+  .back-link { font-size: 12px; color: var(--blue); text-decoration: none; display: inline-block; margin-bottom: 16px; }
+  .back-link:hover { text-decoration: underline; }
+
+  .header { margin-bottom: 24px; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .purpose { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .verdict .headline { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .verdict .g { color: var(--green); } .verdict .r { color: var(--red); } .verdict .a { color: var(--amber); }
+  .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
+  .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
+  .kpi .val { font-size: 24px; font-weight: 700; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; font-weight: 600; }
+  .kpi .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .flat { color: var(--amber); }
+
+  .tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px 8px 0 0; padding: 4px 4px 0; }
+  .tab { padding: 8px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text2); border-radius: 6px 6px 0 0; background: transparent; border: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--bg); color: var(--text); font-weight: 600; }
+  .tab-body { border: 1px solid var(--border); border-radius: 0 0 10px 10px; padding: 24px; margin-bottom: 28px; }
+  .tab-content { display: none; } .tab-content.active { display: block; }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; }
+  .section-head .hint { font-size: 11px; color: var(--text3); }
+
+  .dtable { width: 100%; border-collapse: collapse; }
+  .dtable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+  .dtable th.num { text-align: right; }
+  .dtable td { padding: 8px 10px; font-size: 12px; border-bottom: 1px solid var(--surface2); font-variant-numeric: tabular-nums; }
+  .dtable td.num { text-align: right; }
+  .dtable tr:hover { background: var(--surface); }
+  .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+  .ch-dot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+  /* Waterfall styles */
+  .wf-container { padding: 16px 0; }
+  .wf-chart { display: flex; align-items: flex-end; height: 320px; padding: 0 0 40px; gap: 2px; }
+  .wf-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; min-width: 80px; }
+  .wf-bar { width: 52px; border-radius: 3px; position: absolute; cursor: pointer; }
+  .wf-bar:hover { opacity: 0.75; }
+  .wf-bar.total { background: var(--blue); }
+  .wf-bar.now { background: var(--green); }
+  .wf-bar.blocked { background: var(--amber); }
+  .wf-bar.longterm { background: var(--offline); }
+  .wf-bar.current { background: var(--blue); }
+  .wf-val { position: absolute; font-size: 11px; font-weight: 600; white-space: nowrap; transform: translateX(-50%); left: 50%; }
+  .wf-label { position: absolute; bottom: 0; font-size: 10px; color: var(--text2); text-align: center; width: 100%; line-height: 1.3; }
+  .wf-sublabel { position: absolute; bottom: -14px; font-size: 9px; color: var(--text3); text-align: center; width: 100%; }
+
+  /* Segment cards */
+  .seg-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .seg-card { border-radius: 8px; padding: 16px; border: 1px solid var(--border); }
+  .seg-card.now-card { background: var(--green-bg); border-color: #a7f3d0; }
+  .seg-card.blocked-card { background: var(--amber-bg); border-color: #fde68a; }
+  .seg-card.longterm-card { background: var(--surface); border-color: var(--border); }
+  .seg-card .seg-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .seg-card.now-card .seg-title { color: var(--green); }
+  .seg-card.blocked-card .seg-title { color: var(--amber); }
+  .seg-card.longterm-card .seg-title { color: var(--offline); }
+  .seg-card .seg-val { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+  .seg-card .seg-gmv { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
+  .seg-card .seg-detail { font-size: 12px; color: var(--text2); }
+  .seg-card .seg-detail strong { color: var(--text); }
+
+  /* Initiative badges */
+  .init-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; font-size: 9px; font-weight: 700; text-align: center; line-height: 18px; margin-right: 2px; }
+  .init-1 { background: #dbeafe; color: #1d4ed8; }
+  .init-2 { background: #fce7f3; color: #be185d; }
+  .init-3 { background: #d1fae5; color: #065f46; }
+  .init-4 { background: #fef3c7; color: #92400e; }
+  .init-5 { background: #e0e7ff; color: #3730a3; }
+
+  .pct-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+  .pct-seg { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: #fff; }
+  .pct-seg.current { background: var(--blue); }
+  .pct-seg.now { background: var(--green); }
+  .pct-seg.blocked { background: var(--amber); }
+  .pct-seg.longterm { background: var(--offline); }
+
+  .pct-legend { display: flex; gap: 16px; margin-bottom: 16px; }
+  .pct-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+  .pct-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  .rule-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 16px; font-size: 12px; color: var(--text2); }
+  .rule-box strong { color: var(--text); }
+
+  .next-link { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 20px; font-size: 13px; }
+  .next-link strong { color: var(--blue); }
+
+  .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Dashboard Hub</a>
+
+<div class="header">
+  <h1>Fee Impact: What's on the Table</h1>
+  <div class="purpose">Top-down fee opportunity analysis. Start from the theoretical maximum, break down by actionability, then by account. H1 2026 annualized.</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="g">$6.1M/yr if everything online</span> &mdash; <span class="a">$516K is actionable NOW</span> &mdash; <span class="r">$1.24M blocked by missing product.</span></div>
+  <ul>
+    <li><strong>Current fees: $2.67M/year</strong> (annualized from H1 $1.33M). This is the baseline.</li>
+    <li><strong>NOW segment: $516K/year</strong> from pairs that already transact online AND offline. Convert the offline side. No new connections needed.</li>
+    <li><strong>BLOCKED: $1.24M/year</strong> locked behind offline Standing Orders. No digital SO product exists. This is a product gap, not a GTM gap.</li>
+    <li><strong>LONG TERM: $4.4M/year</strong> from Mass Market ($820K, contract/EDI) + remaining offline pairs ($3.6M). Needs ecosystem-level change.</li>
+    <li><strong>Unit economics:</strong> Each 1 percentage point shifted online = ~<strong>$75K/year</strong> in incremental fees.</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="label">Current Fees (Ann.)</div><div class="val">$2.67M</div><div class="note">H1 $1.33M &times; 2</div></div>
+  <div class="kpi"><div class="label">Theoretical Max</div><div class="val">$6.1M</div><div class="note">$705M offline &times; 0.87%</div></div>
+  <div class="kpi"><div class="label">Gap</div><div class="val" style="color:var(--red)">$3.4M</div><div class="note">Max minus current</div></div>
+  <div class="kpi"><div class="label">Actionable NOW</div><div class="val" style="color:var(--green)">$516K</div><div class="note">P3 offline + P1 stopped</div></div>
+  <div class="kpi"><div class="label">1pp Shift =</div><div class="val">$75K</div><div class="note">Per year, at blended rate</div></div>
+</div>
+
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="mainTab('topdown')">Top-Down</div>
+  <div class="tab" onclick="mainTab('segments')">Segments</div>
+  <div class="tab" onclick="mainTab('accounts')">By Account</div>
+  <div class="tab" onclick="mainTab('waterfall')">Waterfall</div>
+</div>
+<div class="tab-body">
+
+<!-- TOP-DOWN -->
+<div id="tc-topdown" class="tab-content active">
+  <div class="section-head"><h2>Fee Opportunity: From Total to Actionable</h2><div class="hint">$705M offline &times; 0.87% blended take-rate = $6.1M theoretical</div></div>
+
+  <!-- Percentage bar -->
+  <div style="margin-bottom:20px">
+    <div class="pct-bar">
+      <div class="pct-seg current" style="width:43.8%">Current $2.67M</div>
+      <div class="pct-seg now" style="width:8.5%">NOW</div>
+      <div class="pct-seg blocked" style="width:20.3%">Blocked</div>
+      <div class="pct-seg longterm" style="width:27.4%">Long Term</div>
+    </div>
+    <div class="pct-legend">
+      <div class="pct-legend-item"><div class="pct-legend-dot" style="background:var(--blue)"></div>Current: $2.67M/yr</div>
+      <div class="pct-legend-item"><div class="pct-legend-dot" style="background:var(--green)"></div>NOW: $516K/yr</div>
+      <div class="pct-legend-item"><div class="pct-legend-dot" style="background:var(--amber)"></div>Blocked: $1.24M/yr</div>
+      <div class="pct-legend-item"><div class="pct-legend-dot" style="background:var(--offline)"></div>Long Term: $4.4M/yr</div>
+    </div>
+  </div>
+
+  <table class="dtable">
+    <thead><tr><th>Segment</th><th class="num">Offline GMV</th><th class="num">Blended Rate</th><th class="num">Fee Opportunity (Ann.)</th><th>Actionability</th></tr></thead>
+    <tbody>
+      <tr style="background:var(--green-bg)"><td><span class="ch-dot" style="background:var(--green)"></span><strong>P3 Offline (online+offline pairs)</strong></td><td class="num">$47.2M</td><td class="num">0.87%</td><td class="num pos"><strong>$411K/yr</strong></td><td><span style="color:var(--green); font-weight:600; font-size:11px">NOW &mdash; No new connections needed</span></td></tr>
+      <tr style="background:var(--green-bg)"><td><span class="ch-dot" style="background:var(--green)"></span><strong>P1 (stopped online, kept offline)</strong></td><td class="num">$12.1M</td><td class="num">0.87%</td><td class="num pos"><strong>$105K/yr</strong></td><td><span style="color:var(--green); font-weight:600; font-size:11px">NOW &mdash; Re-activate existing</span></td></tr>
+      <tr class="total-row" style="background:var(--green-bg)"><td>Subtotal NOW</td><td class="num">$59.3M</td><td class="num">0.87%</td><td class="num pos"><strong>$516K/yr</strong></td><td></td></tr>
+      <tr><td colspan="5" style="height:8px; border:none"></td></tr>
+      <tr style="background:var(--amber-bg)"><td><span class="ch-dot" style="background:var(--amber)"></span><strong>Standing Orders offline</strong></td><td class="num">$142.5M</td><td class="num">0.87%</td><td class="num flat"><strong>$1.24M/yr</strong></td><td><span style="color:var(--amber); font-weight:600; font-size:11px">BLOCKED &mdash; No online SO product</span></td></tr>
+      <tr><td colspan="5" style="height:8px; border:none"></td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Mass Market</td><td class="num">$94.2M</td><td class="num">0.87%</td><td class="num">$820K/yr</td><td><span style="color:var(--offline); font-weight:600; font-size:11px">LONG TERM &mdash; Contract/EDI</span></td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Remaining offline</td><td class="num">$409M</td><td class="num">0.87%</td><td class="num">$3.6M/yr</td><td><span style="color:var(--offline); font-weight:600; font-size:11px">LONG TERM &mdash; Ecosystem growth</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule-box" style="margin-top:20px">
+    <strong>How to read this:</strong> The $6.1M is a theoretical ceiling, not a target. The NOW segment ($516K) is where GTM effort should focus: these are buyer-seller pairs that already have an online connection but still do some volume offline. Converting their offline transactions requires no new connections, just activation. The BLOCKED segment needs a product (digital Standing Orders) before any GTM can work.
+  </div>
+</div>
+
+<!-- SEGMENTS -->
+<div id="tc-segments" class="tab-content">
+  <div class="section-head"><h2>Three Horizons: NOW / BLOCKED / LONG TERM</h2><div class="hint">Different strategies for different pools</div></div>
+
+  <div class="seg-grid">
+    <div class="seg-card now-card">
+      <div class="seg-title">NOW &mdash; Actionable</div>
+      <div class="seg-val" style="color:var(--green)">$516K/yr</div>
+      <div class="seg-gmv">$59.3M offline GMV at 0.87%</div>
+      <div class="seg-detail">
+        <strong>P3 Offline: $411K/yr</strong><br>
+        Pairs that transact BOTH online AND offline. The connection exists. Convert the offline side to online.<br><br>
+        <strong>P1 Stopped: $105K/yr</strong><br>
+        Pairs that USED to transact online but stopped, while keeping offline volume. Re-activate the digital channel.<br><br>
+        <strong>GTM play:</strong> Account-by-account activation. No product build needed. This is pure sales + CS execution.
+      </div>
+    </div>
+    <div class="seg-card blocked-card">
+      <div class="seg-title">BLOCKED &mdash; Needs Product</div>
+      <div class="seg-val" style="color:var(--amber)">$1.24M/yr</div>
+      <div class="seg-gmv">$142.5M offline SO volume at 0.87%</div>
+      <div class="seg-detail">
+        <strong>Standing Orders: $142.5M offline</strong><br>
+        Recurring orders placed by phone/fax/habit. No digital Standing Order product exists on the platform.<br><br>
+        <strong>Why it's blocked:</strong> Even if a buyer WANTS to order digitally, there's no way to convert a recurring order to online. This is infrastructure, not GTM.<br><br>
+        <strong>Unlock:</strong> Build digital SO product &rarr; then GTM can convert.
+      </div>
+    </div>
+    <div class="seg-card longterm-card">
+      <div class="seg-title">LONG TERM &mdash; Ecosystem</div>
+      <div class="seg-val" style="color:var(--offline)">$4.4M/yr</div>
+      <div class="seg-gmv">$503M offline GMV at 0.87%</div>
+      <div class="seg-detail">
+        <strong>Mass Market: $820K/yr</strong><br>
+        $94.2M via contract/EDI. Different commercial model. Not a digital marketplace play.<br><br>
+        <strong>Remaining offline: $3.6M/yr</strong><br>
+        $409M in pairs with no online connection at all. Needs new connections, new accounts, ecosystem expansion.<br><br>
+        <strong>Timeline:</strong> 12-24+ months. Requires strategic account acquisition and product evolution.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <strong>Priority logic:</strong> NOW first (highest ROI, lowest lift). Then unblock Standing Orders (highest absolute value, needs product investment). Long Term is the background motion of ecosystem growth — it compounds over time but can't be force-accelerated.
+  </div>
+</div>
+
+<!-- BY ACCOUNT -->
+<div id="tc-accounts" class="tab-content">
+  <div class="section-head"><h2>Top 10 Accounts by Fee Opportunity</h2><div class="hint">10% capture assumption &middot; Sorted by annual opportunity</div></div>
+
+  <div style="margin-bottom:16px; font-size:12px; color:var(--text2)">
+    <strong>Methodology:</strong> Offline GMV &times; Fee Rate &times; 10% realistic capture = annual fee opportunity. Initiatives:
+    <span class="init-badge init-1">1</span> P3 conversion
+    <span class="init-badge init-2">2</span> Catalog coverage
+    <span class="init-badge init-3">3</span> K2K activation
+    <span class="init-badge init-4">4</span> SO digitization
+    <span class="init-badge init-5">5</span> EH callback
+  </div>
+
+  <table class="dtable">
+    <thead><tr><th>Account</th><th class="num">Offline GMV</th><th class="num">Fee Rate</th><th class="num">Opp. (10% Capture)</th><th>Initiatives</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--blue)"></span><strong>Mayesh</strong></td>
+        <td class="num">$71.4M</td>
+        <td class="num">1.5%</td>
+        <td class="num pos"><strong>$107K</strong></td>
+        <td><span class="init-badge init-3">3</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--blue)"></span><strong>Bill Doran</strong></td>
+        <td class="num">$59.3M</td>
+        <td class="num">1.5%</td>
+        <td class="num pos"><strong>$89K</strong></td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-2">2</span><span class="init-badge init-3">3</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--green)"></span><strong>KBC</strong></td>
+        <td class="num">$55.3M</td>
+        <td class="num">0.75%</td>
+        <td class="num pos"><strong>$41K</strong></td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-3">3</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Del Tropico</td>
+        <td class="num">$6.3M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$9.5K</td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Flora Fresh</td>
+        <td class="num">$5.5M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$8.3K</td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>H&amp;T Wholesale</td>
+        <td class="num">$4.4M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$6.5K</td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Ninfa</td>
+        <td class="num">$4.2M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$6.3K</td>
+        <td><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Tropical Blooms</td>
+        <td class="num">$3.5M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$5.2K</td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Metro Flower</td>
+        <td class="num">$3.3M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$4.9K</td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>WE GOT FLOWERS</td>
+        <td class="num">$2.9M</td>
+        <td class="num">1.5%</td>
+        <td class="num">$4.4K</td>
+        <td><span class="init-badge init-1">1</span><span class="init-badge init-4">4</span><span class="init-badge init-5">5</span></td>
+      </tr>
+      <tr class="total-row">
+        <td>Top 10 Total</td>
+        <td class="num">$216.1M</td>
+        <td class="num"></td>
+        <td class="num pos"><strong>$282K</strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="rule-box" style="margin-top:16px">
+    <strong>Note on 10% capture:</strong> This assumes converting 10% of each account's offline volume to online within 12 months. Actual capture depends on account readiness, catalog coverage, and team capacity. Bill Doran touches all 5 initiatives because it has the broadest digital surface area. Ninfa only touches Initiative 5 (EH callback) because it has minimal digital infrastructure today.
+  </div>
+</div>
+
+<!-- WATERFALL -->
+<div id="tc-waterfall" class="tab-content">
+  <div class="section-head"><h2>Fee Waterfall: Current &rarr; Theoretical Maximum</h2><div class="hint">How fees build from current to max</div></div>
+  <div class="wf-container"><div class="wf-chart" id="wfChart"></div></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Component</th><th class="num">Fee Value (Ann.)</th><th class="num">Cumulative</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--blue)"></span>Current Fees</td><td class="num"><strong>$2,670K</strong></td><td class="num">$2,670K</td><td>Baseline</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--green)"></span>P3 Offline Conversion</td><td class="num pos">+$411K</td><td class="num">$3,081K</td><td style="color:var(--green); font-weight:600">NOW</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--green)"></span>P1 Re-activation</td><td class="num pos">+$105K</td><td class="num">$3,186K</td><td style="color:var(--green); font-weight:600">NOW</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--amber)"></span>Standing Orders</td><td class="num flat">+$1,240K</td><td class="num">$4,426K</td><td style="color:var(--amber); font-weight:600">BLOCKED</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Mass Market</td><td class="num">+$820K</td><td class="num">$5,246K</td><td style="color:var(--offline)">LONG TERM</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Remaining Offline</td><td class="num">+$3,560K</td><td class="num">$8,806K</td><td style="color:var(--offline)">LONG TERM</td></tr>
+      <tr class="total-row"><td>Theoretical Maximum</td><td class="num" style="color:var(--blue)"><strong>$6,100K</strong></td><td class="num" style="color:var(--text3)">current + gap</td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- tab-body -->
+
+<div class="next-link">
+  <strong>&rarr; Flywheel:</strong> See how GMV flows through the ecosystem layer by layer — where it spins and where it jams.<br>
+  <a href="flywheel.html" style="color:var(--blue); font-size:12px; text-decoration:none;">See flywheel.html &rarr;</a>
+</div>
+
+<div class="source">
+  SALES_SV &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; shipping_date H1 2026<br>
+  Offline GMV: SALES_CHANNEL='Offline' &middot; $705M total offline H1<br>
+  Fee rates: SFDC actual rates per account (KBC 0.75%, most wholesalers 1.5%) &middot; Blended 0.87% across portfolio<br>
+  P3/P1 buckets: Connection model (6,608 pairs) &middot; P3 = online+offline coexist &middot; P1 = stopped online, kept offline<br>
+  Standing Orders: ORDER_TYPE='Standing Order' &middot; SALES_CHANNEL breakdown<br>
+  10% capture assumption for account table &middot; Theoretical max assumes 100% online conversion at blended rate<br>
+  Trust: needs_validation &middot; Axerrio excluded &middot; Rate anomalies flagged but not corrected<br>
+  Rose (Data Agent) &middot; 2026-07-08
+</div>
+
+<script>
+function mainTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Build waterfall
+function buildWF(){
+  const el=document.getElementById('wfChart'); el.innerHTML='';
+  const data=[
+    {label:'Current\nFees',val:2670,type:'current',color:'var(--blue)'},
+    {label:'P3\nOffline',val:411,type:'now',color:'var(--green)'},
+    {label:'P1\nRe-activate',val:105,type:'now',color:'var(--green)'},
+    {label:'Standing\nOrders',val:1240,type:'blocked',color:'var(--amber)'},
+    {label:'Mass\nMarket',val:820,type:'longterm',color:'var(--offline)'},
+    {label:'Remaining\nOffline',val:3560,type:'longterm',color:'var(--offline)'},
+    {label:'Theoretical\nMax',val:6100,type:'total',color:'var(--blue)'}
+  ];
+
+  const maxV=6500, minV=0, range=maxV-minV, chartH=260;
+  const scale=v=>(v-minV)/range*chartH;
+  let running=0;
+
+  data.forEach(d=>{
+    const wrap=document.createElement('div'); wrap.className='wf-bar-wrap';
+    if(d.type==='current'){
+      const h=scale(d.val);
+      wrap.innerHTML=`<div class="wf-bar" style="height:${h}px;bottom:36px;background:${d.color}"></div><div class="wf-val" style="bottom:${h+40}px;color:${d.color}">$${(d.val/1000).toFixed(1)}M</div><div class="wf-label">${d.label.replace('\n','<br>')}</div>`;
+      running=d.val;
+    } else if(d.type==='total'){
+      const h=scale(d.val);
+      wrap.innerHTML=`<div class="wf-bar" style="height:${h}px;bottom:36px;background:${d.color}"></div><div class="wf-val" style="bottom:${h+40}px;color:${d.color}">$${(d.val/1000).toFixed(1)}M</div><div class="wf-label">${d.label.replace('\n','<br>')}</div>`;
+    } else {
+      const prev=running; running+=d.val;
+      const bot=scale(prev), top=scale(running);
+      const h=Math.max(top-bot,3);
+      const label=d.val>=1000?'$'+(d.val/1000).toFixed(1)+'M':'$'+d.val+'K';
+      wrap.innerHTML=`<div class="wf-bar" style="height:${h}px;bottom:${bot+36}px;background:${d.color}"></div><div class="wf-val" style="bottom:${bot+h+40}px;color:${d.color}">+${label}</div><div class="wf-label">${d.label.replace('\n','<br>')}</div>`;
+    }
+    el.appendChild(wrap);
+  });
+}
+
+buildWF();
+</script>
+</body>
+</html>

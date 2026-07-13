@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Initiative Tracker · Accounts × Hypotheses</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
+    --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
+    --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
+    --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb;
+    --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
+    --init1: #2563eb; --init2: #7c3aed; --init3: #dc2626; --init4: #d97706; --init5: #059669; --init6: #0891b2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
+
+  .header { margin-bottom: 24px; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .purpose { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .verdict .headline { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .verdict .g { color: var(--green); } .verdict .r { color: var(--red); } .verdict .a { color: var(--amber); }
+  .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
+  .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
+  .kpi .val { font-size: 24px; font-weight: 700; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; font-weight: 600; }
+  .kpi .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .flat { color: var(--amber); }
+
+  .tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px 8px 0 0; padding: 4px 4px 0; }
+  .tab { padding: 8px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text2); border-radius: 6px 6px 0 0; background: transparent; border: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--bg); color: var(--text); font-weight: 600; }
+  .tab-body { border: 1px solid var(--border); border-radius: 0 0 10px 10px; padding: 24px; margin-bottom: 28px; }
+  .tab-content { display: none; } .tab-content.active { display: block; }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; }
+  .section-head .hint { font-size: 11px; color: var(--text3); }
+
+  .dtable { width: 100%; border-collapse: collapse; }
+  .dtable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; }
+  .dtable th.num { text-align: right; }
+  .dtable th:hover { color: var(--text); }
+  .dtable th .sort-arrow { font-size: 9px; margin-left: 3px; opacity: 0.4; }
+  .dtable th.sorted .sort-arrow { opacity: 1; color: var(--blue); }
+  .dtable td { padding: 8px 10px; font-size: 12px; border-bottom: 1px solid var(--surface2); font-variant-numeric: tabular-nums; }
+  .dtable td.num { text-align: right; }
+  .dtable tr:hover { background: var(--surface); }
+  .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+
+  /* Initiative cards */
+  .init-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+  .init-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; position: relative; overflow: hidden; }
+  .init-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .init-card.i1::before { background: var(--init1); } .init-card.i2::before { background: var(--init2); }
+  .init-card.i3::before { background: var(--init3); } .init-card.i4::before { background: var(--init4); }
+  .init-card.i5::before { background: var(--init5); } .init-card.i6::before { background: var(--init6); }
+  .init-card .init-num { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 2px; }
+  .init-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .init-card .init-meta { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+  .init-card .init-meta strong { color: var(--text); }
+  .init-card .init-kpi { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+  .init-card .init-kpi .big { font-size: 20px; font-weight: 700; }
+  .init-card .init-kpi .sub { font-size: 11px; color: var(--text3); }
+  .init-card .hyp-tag { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 600; margin-top: 6px; }
+  .hyp-h1 { background: #eff6ff; color: #2563eb; }
+  .hyp-h2 { background: #faf5ff; color: #7c3aed; }
+  .hyp-h3 { background: #ecfdf5; color: #059669; }
+  .hyp-h4 { background: #fff7ed; color: #ea580c; }
+
+  /* Initiative dots in table */
+  .init-dots { display: flex; gap: 3px; flex-wrap: wrap; }
+  .init-dot { width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; }
+  .init-dot.d1 { background: var(--init1); } .init-dot.d2 { background: var(--init2); }
+  .init-dot.d3 { background: var(--init3); } .init-dot.d4 { background: var(--init4); }
+  .init-dot.d5 { background: var(--init5); } .init-dot.d6 { background: var(--init6); }
+
+  /* Overlap bar */
+  .overlap-bar { height: 6px; border-radius: 3px; background: var(--surface2); position: relative; }
+  .overlap-fill { height: 100%; border-radius: 3px; background: var(--blue); }
+
+  /* Team section */
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .team-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .team-block h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .team-row { display: flex; align-items: center; margin-bottom: 6px; gap: 10px; }
+  .team-name { width: 80px; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+  .team-role { font-size: 10px; color: var(--text3); width: 32px; flex-shrink: 0; }
+  .team-bar-wrap { flex: 1; height: 22px; background: var(--surface2); border-radius: 4px; position: relative; overflow: hidden; }
+  .team-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 600; color: #fff; }
+  .team-bar.impl { background: var(--init5); }
+  .team-bar.cs { background: var(--blue); }
+  .team-bar.lead { background: var(--init2); }
+  .team-bar.prod { background: var(--text3); }
+  .team-accts { font-size: 10px; color: var(--text2); width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* Warm accounts */
+  .warm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+  .warm-card { padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); }
+  .warm-card .warm-name { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+  .warm-card .warm-detail { font-size: 10px; color: var(--text2); }
+  .warm-tag { display: inline-block; padding: 1px 6px; border-radius: 8px; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .warm-tag.hot { background: var(--red-bg); color: var(--red); }
+  .warm-tag.warm { background: var(--amber-bg); color: var(--amber); }
+  .warm-tag.cooling { background: var(--surface2); color: var(--text3); }
+
+  /* Retention */
+  .ret-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ret-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .ret-block h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .ret-row { display: flex; align-items: center; margin-bottom: 5px; }
+  .ret-label { width: 80px; font-size: 11px; color: var(--text2); flex-shrink: 0; }
+  .ret-bar-wrap { flex: 1; height: 22px; background: var(--surface2); border-radius: 4px; position: relative; overflow: hidden; }
+  .ret-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; font-size: 10px; font-weight: 600; }
+  .ret-bar.low { background: var(--red-bg); color: var(--red); }
+  .ret-bar.mid { background: var(--amber-bg); color: var(--amber); }
+  .ret-bar.high { background: var(--green-bg); color: var(--green); }
+
+  /* Black Belt */
+  .bb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+  .bb-tier { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .bb-tier h4 { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .bb-tier .bb-criteria { font-size: 10px; color: var(--text3); margin-bottom: 8px; line-height: 1.4; }
+  .bb-tier .bb-count { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .bb-tier .bb-names { font-size: 10px; color: var(--text2); line-height: 1.5; }
+  .bb-tier.t1 { border-top: 3px solid var(--text3); }
+  .bb-tier.t2 { border-top: 3px solid var(--amber); }
+  .bb-tier.t3 { border-top: 3px solid var(--blue); }
+  .bb-tier.t4 { border-top: 3px solid var(--green); }
+
+  /* Anomalies */
+  .anomaly-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+  .anomaly { background: var(--red-bg); border: 1px solid #fecaca; border-radius: 8px; padding: 12px 14px; }
+  .anomaly .anomaly-title { font-size: 12px; font-weight: 600; color: var(--red); margin-bottom: 4px; }
+  .anomaly .anomaly-desc { font-size: 11px; color: var(--text2); }
+
+  .next-link { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 20px; font-size: 13px; }
+  .next-link strong { color: var(--blue); }
+  .next-link a { color: var(--blue); text-decoration: none; font-weight: 600; }
+  .next-link a:hover { text-decoration: underline; }
+
+  .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Initiative Tracker · Accounts x Hypotheses</h1>
+  <div class="purpose">Map every wholesaler account to initiatives, show overlap, fee opportunity, and team coverage. Answers: where are we investing, who's covered, what's the gap?</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="a">6 initiatives, ~$1.9M gross fee opportunity</span> — <span class="r">heavy overlap means non-overlapping = ~$500-600K.</span></div>
+  <ul>
+    <li><strong>Top 3 by composite score:</strong> Bill Doran ($445K, 5 initiatives), Mayesh ($321K, 3 initiatives), KBC ($166K, 4 initiatives). These are the accounts where initiative investment converges most.</li>
+    <li><strong>Init 1 + 4 + 5 overlap massively:</strong> 24 of 28 K2K Enabler accounts are also in Supply & Bunch Upload and Wholesaler Implementation. Treating them as separate programs overstates opportunity.</li>
+    <li><strong>Impl at capacity (7-9 meetings/wk).</strong> CS has bandwidth (1-3/wk). Most target accounts have ZERO Fathom meetings. Coverage gap is real.</li>
+    <li><strong>Retention leading indicator:</strong> Order frequency in month 1 is the strongest predictor (spread: 51.9pp). Blitz > Handshake. Units retain at half the rate of Boxes.</li>
+    <li><strong>Anomalies:</strong> Arizona Family = 113 connections, $0 online. Mayesh API fee = $0. BDC online fragile (50% from 20 buyers).</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="label">Initiatives</div><div class="val">6</div><div class="note">4 hypotheses</div></div>
+  <div class="kpi"><div class="label">Gross Fee Opp</div><div class="val">$1.9M</div><div class="note">10% capture, annual</div></div>
+  <div class="kpi"><div class="label">Net (de-duped)</div><div class="val">~$550K</div><div class="note">Heavy init overlap</div></div>
+  <div class="kpi"><div class="label">Accounts Touched</div><div class="val">~45</div><div class="note">Unique across all inits</div></div>
+  <div class="kpi"><div class="label">Team Meetings/wk</div><div class="val">31</div><div class="note">Impl 23 · CS 8</div></div>
+</div>
+
+<!-- INITIATIVE CARDS -->
+<div class="section-head"><h2>The 6 Initiatives</h2><div class="hint">Sorted by fee opportunity. Hypothesis tags show the growth thesis.</div></div>
+<div class="init-grid">
+
+  <div class="init-card i3">
+    <div class="init-num">Initiative 3</div>
+    <h3>Top Accounts</h3>
+    <div class="init-meta"><strong>Owner:</strong> Cata + Facu</div>
+    <div class="init-meta"><strong>KPI:</strong> BDC renewal, # plays, # locations</div>
+    <div class="init-meta"><strong>Accounts:</strong> 3</div>
+    <span class="hyp-tag hyp-h1">H1</span> <span class="hyp-tag hyp-h2">H2</span>
+    <div class="init-kpi"><span class="big">$475K</span><span class="sub">fee opp (annual)</span></div>
+  </div>
+
+  <div class="init-card i5">
+    <div class="init-num">Initiative 5</div>
+    <h3>Wholesaler Implementation</h3>
+    <div class="init-meta"><strong>Owner:</strong> Christine</div>
+    <div class="init-meta"><strong>KPI:</strong> Parity score</div>
+    <div class="init-meta"><strong>Accounts:</strong> 34</div>
+    <span class="hyp-tag hyp-h3">H3</span>
+    <div class="init-kpi"><span class="big">$459K</span><span class="sub">fee opp (annual)</span></div>
+  </div>
+
+  <div class="init-card i1">
+    <div class="init-num">Initiative 1</div>
+    <h3>K2K Enablers</h3>
+    <div class="init-meta"><strong>Owner:</strong> Agus / Fede</div>
+    <div class="init-meta"><strong>KPI:</strong> WHY don't they use features?</div>
+    <div class="init-meta"><strong>Accounts:</strong> 28</div>
+    <span class="hyp-tag hyp-h2">H2</span>
+    <div class="init-kpi"><span class="big">$438K</span><span class="sub">fee opp (annual)</span></div>
+  </div>
+
+  <div class="init-card i4">
+    <div class="init-num">Initiative 4</div>
+    <h3>Supply & Bunch Upload</h3>
+    <div class="init-meta"><strong>Owner:</strong> Cata</div>
+    <div class="init-meta"><strong>KPI:</strong> # products listed / catalog coverage %</div>
+    <div class="init-meta"><strong>Accounts:</strong> 24</div>
+    <span class="hyp-tag hyp-h2">H2</span>
+    <div class="init-kpi"><span class="big">$390K</span><span class="sub">fee opp (annual)</span></div>
+  </div>
+
+  <div class="init-card i2">
+    <div class="init-num">Initiative 2</div>
+    <h3>Connection Funnel</h3>
+    <div class="init-meta"><strong>Owner:</strong> Cata</div>
+    <div class="init-meta"><strong>KPI:</strong> $ on connected pairs + first-month frequency</div>
+    <div class="init-meta"><strong>Accounts:</strong> 8</div>
+    <span class="hyp-tag hyp-h1">H1</span>
+    <div class="init-kpi"><span class="big">$168K</span><span class="sub">fee opp (annual)</span></div>
+  </div>
+
+  <div class="init-card i6">
+    <div class="init-num">Initiative 6</div>
+    <h3>Growth Hacking</h3>
+    <div class="init-meta"><strong>Owner:</strong> Facu</div>
+    <div class="init-meta"><strong>KPI:</strong> Tier progression / CPL / CPA</div>
+    <div class="init-meta"><strong>Accounts:</strong> 5</div>
+    <span class="hyp-tag hyp-h4">H4</span>
+    <div class="init-kpi"><span class="big">$4K</span><span class="sub">fee opp (annual)</span></div>
+  </div>
+
+</div>
+
+<!-- ANOMALIES -->
+<div class="section-head"><h2>Anomalies</h2><div class="hint">Outliers that require investigation or special handling</div></div>
+<div class="anomaly-grid">
+  <div class="anomaly">
+    <div class="anomaly-title">Arizona Family: 113 connections, $0 online</div>
+    <div class="anomaly-desc">Most extreme K2K-without-digital case. 113 active connections but zero online sales. Feature adoption blocker, not a connection problem.</div>
+  </div>
+  <div class="anomaly">
+    <div class="anomaly-title">BDC online fragile</div>
+    <div class="anomaly-desc">50% of Bill Doran's eCommerce volume comes from just 20 buyers. Concentration risk — losing a handful could crater their online channel.</div>
+  </div>
+  <div class="anomaly">
+    <div class="anomaly-title">Mayesh API fee = $0</div>
+    <div class="anomaly-desc">$94M GMV, 24% online, but API fee is waived. Massive GMV with zero fee capture on the API channel. Renegotiation candidate.</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="mainTabs" style="margin-top:28px;">
+  <div class="tab active" onclick="mainTab('accts')">Top 30 Accounts</div>
+  <div class="tab" onclick="mainTab('team')">Team Coverage</div>
+  <div class="tab" onclick="mainTab('retention')">Retention Indicators</div>
+  <div class="tab" onclick="mainTab('bb')">Black Belt Program</div>
+</div>
+<div class="tab-body">
+
+<!-- TOP 30 ACCOUNTS -->
+<div id="tc-accts" class="tab-content active">
+  <div class="section-head"><h2>Top 30 Accounts by Composite Score (Fee Opp x Overlap)</h2><div class="hint">Click column headers to sort</div></div>
+  <table class="dtable" id="acctTable">
+    <thead><tr>
+      <th onclick="sortTable(0,'num')">Rank <span class="sort-arrow">&#9660;</span></th>
+      <th onclick="sortTable(1,'str')">Account <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(2,'num')">GMV <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(3,'num')">Offline <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(4,'num')">Online% <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(5,'num')">Fee Rate <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(6,'num')">Fee Opp <span class="sort-arrow">&#9660;</span></th>
+      <th>Initiatives <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(8,'num')">Overlap <span class="sort-arrow">&#9660;</span></th>
+      <th class="num" onclick="sortTable(9,'num')">Composite <span class="sort-arrow">&#9660;</span></th>
+    </tr></thead>
+    <tbody id="acctBody"></tbody>
+  </table>
+</div>
+
+<!-- TEAM COVERAGE -->
+<div id="tc-team" class="tab-content">
+  <div class="section-head"><h2>Team Coverage — Last 3.5 Weeks (Fathom)</h2><div class="hint">Meeting frequency by person. Impl at capacity, CS has bandwidth.</div></div>
+  <div class="team-grid">
+    <div class="team-block">
+      <h3>Implementation (Capacity: 7-9 meetings/wk)</h3>
+      <div id="implTeam"></div>
+    </div>
+    <div class="team-block">
+      <h3>Customer Success (Bandwidth: 1-3 meetings/wk)</h3>
+      <div id="csTeam"></div>
+    </div>
+  </div>
+
+  <div class="section-head" style="margin-top:24px"><h2>Warm Wholesaler Accounts</h2><div class="hint">Recent Fathom meetings. Most target accounts have ZERO meetings.</div></div>
+  <div class="warm-grid" id="warmGrid"></div>
+
+  <div style="background:var(--amber-bg);border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-top:16px;">
+    <div style="font-size:12px;font-weight:600;color:var(--amber);margin-bottom:4px;">Coverage Gap</div>
+    <div style="font-size:11px;color:var(--text2);">Most target wholesaler accounts have <strong>ZERO</strong> Fathom meetings. Implementation is at capacity (7-9/wk). CS has bandwidth (1-3/wk). To increase coverage, either reallocate CS to account touchpoints or expand implementation headcount.</div>
+  </div>
+</div>
+
+<!-- RETENTION -->
+<div id="tc-retention" class="tab-content">
+  <div class="section-head"><h2>Retention Leading Indicators</h2><div class="hint">What predicts whether a connection survives? Data from H1 connections analysis.</div></div>
+  <div class="ret-grid">
+    <div class="ret-block">
+      <h3>Order Frequency in Month 1 (strongest predictor, spread: 51.9pp)</h3>
+      <div id="retFreq"></div>
+    </div>
+    <div class="ret-block">
+      <h3>GMV in Month 1</h3>
+      <div id="retGmv"></div>
+    </div>
+    <div class="ret-block">
+      <h3>Product Type</h3>
+      <div id="retProduct"></div>
+    </div>
+    <div class="ret-block">
+      <h3>Connection Source</h3>
+      <div id="retSource"></div>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-top:16px;">
+    <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Retention Rule of Thumb</div>
+    <div style="font-size:11px;color:var(--text2);">If a pair survives the first 2 months, high probability of staying. The intervention window is month 1. Push for 3+ orders in the first month (63.4% retention vs 35.3% for 1-order pairs). Blitz connections retain better than Handshake (66.8% vs 55.7%).</div>
+  </div>
+</div>
+
+<!-- BLACK BELT -->
+<div id="tc-bb" class="tab-content">
+  <div class="section-head"><h2>Black Belt Program — Who Qualifies Today</h2><div class="hint">Progression tiers based on connection activity and digital adoption</div></div>
+  <div class="bb-grid">
+    <div class="bb-tier t1">
+      <h4>Connected</h4>
+      <div class="bb-criteria">Live + procurement active</div>
+      <div class="bb-count">~60</div>
+      <div class="bb-names">All wholesalers with active K2K/procurement connections. The baseline tier — platform is live, some digital activity exists.</div>
+    </div>
+    <div class="bb-tier t2">
+      <h4>Active</h4>
+      <div class="bb-criteria">Online >=10% OR online GMV >$500K</div>
+      <div class="bb-count">~15</div>
+      <div class="bb-names">KBC, Mayesh, Zeidler, Sims, and ~11 others. Meaningful digital adoption but not yet a primary channel.</div>
+    </div>
+    <div class="bb-tier t3">
+      <h4>Digital Leader</h4>
+      <div class="bb-criteria">Online >=20% OR GMV >$2M</div>
+      <div class="bb-count">~10</div>
+      <div class="bb-names">FloraLink, Baisch, Cleveland, Maple Grove, and ~6 others. Digital is a real revenue channel, not a side experiment.</div>
+    </div>
+    <div class="bb-tier t4">
+      <h4>Premier</h4>
+      <div class="bb-criteria">Digital Leader + advisory partnership</div>
+      <div class="bb-count">~3</div>
+      <div class="bb-names">Aspirational tier. Candidates: FloraLink (highest online %), Baisch (consistent growth), Cleveland (scale). Requires co-innovation commitment.</div>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-top:16px;">
+    <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Program Design Note</div>
+    <div style="font-size:11px;color:var(--text2);">The Black Belt tiers map to initiative investment: Connected = Init 5 (implementation), Active = Init 1+4 (enablement), Digital Leader = Init 2+3 (growth), Premier = Init 6 (experimentation). Tier progression IS the KPI for Growth Hacking (Init 6).</div>
+  </div>
+</div>
+
+</div><!-- tab-body -->
+
+<div class="next-link">
+  <a href="index.html">&larr; Back to Dashboard Hub</a> &nbsp;&middot;&nbsp;
+  <span style="color:var(--text2)">Related:</span>
+  <a href="connections.html">Connections Dashboard</a> &middot;
+  <a href="l3a.html">Big 3 Wholesalers</a> &middot;
+  <a href="l3b.html">Offline Wholesalers</a>
+</div>
+
+<div class="source">
+  <strong>Data sources:</strong><br>
+  Initiatives & accounts: Facu/Cata initiative definitions (Jul 2026). Fee opportunity = 10% capture rate on offline GMV, annualized.<br>
+  Team coverage: Fathom meeting data, last 3.5 weeks (Jun 16 - Jul 8 2026).<br>
+  Retention indicators: Snowflake K2K_CONNECTIONS_SV + SALES_SV, H1 2026 cohort analysis.<br>
+  Black Belt tiers: SALE_DETAILS.SALES_CHANNEL online/offline split, active connection counts.<br>
+  Composite score = fee_opp x overlap_count. Overlap = number of initiatives an account appears in.<br>
+  Trust: needs_validation &middot; Initiative overlap de-duplication is estimated (~$500-600K net), not precisely calculated.<br>
+  Rose (Data Agent) &middot; 2026-07-08
+</div>
+
+<script>
+// ACCOUNT DATA
+const accounts = [
+  {rank:1, name:'Bill Doran', gmv:61.5, offline:59.3, onlinePct:3.5, feeRate:1.5, feeOpp:89, inits:[1,2,3,4,5], overlap:5, composite:445},
+  {rank:2, name:'Mayesh', gmv:94.1, offline:71.4, onlinePct:24.1, feeRate:1.5, feeOpp:107, inits:[3,4,5], overlap:3, composite:321},
+  {rank:3, name:'KBC', gmv:64.1, offline:55.3, onlinePct:13.6, feeRate:0.75, feeOpp:41, inits:[1,3,4,5], overlap:4, composite:166},
+  {rank:4, name:'Del Tropico', gmv:6.3, offline:6.3, onlinePct:0, feeRate:1.5, feeOpp:9.5, inits:[1,4,5], overlap:3, composite:28},
+  {rank:5, name:'Flora Fresh', gmv:5.6, offline:5.5, onlinePct:0.6, feeRate:1.5, feeOpp:8.3, inits:[1,4,5], overlap:3, composite:25},
+  {rank:6, name:'H&T Wholesale', gmv:4.4, offline:4.4, onlinePct:0.6, feeRate:1.5, feeOpp:6.5, inits:[1,4,5], overlap:3, composite:20},
+  {rank:7, name:'WE GOT FLOWERS', gmv:2.9, offline:2.9, onlinePct:0.02, feeRate:1.5, feeOpp:4.4, inits:[1,4,5], overlap:3, composite:13},
+  {rank:8, name:'Orlando Wholesale', gmv:2.8, offline:2.8, onlinePct:0.9, feeRate:1.5, feeOpp:4.2, inits:[1,4,5], overlap:3, composite:12},
+  {rank:9, name:'Stemline', gmv:2.3, offline:2.3, onlinePct:1.2, feeRate:1.5, feeOpp:3.4, inits:[1,4,5], overlap:3, composite:10},
+  {rank:10, name:'JFS Wholesale', gmv:1.9, offline:1.9, onlinePct:0.01, feeRate:1.5, feeOpp:2.8, inits:[1,4,5], overlap:3, composite:9}
+];
+
+// TEAM DATA
+const implTeam = [
+  {name:'Valentina', role:'Impl', meetings:9, accts:11, key:'Flores Hacienda, Avon Valley, Florisol'},
+  {name:'Manuel', role:'Impl', meetings:7.5, accts:3, key:'Avon Valley, Flores San Miguel, Coquette'},
+  {name:'Milena', role:'Impl', meetings:7, accts:8, key:"Price's, Pampa, Nova"}
+];
+const csTeam = [
+  {name:'Christian', role:'CS', meetings:3, accts:10, key:'DVF, Anton, Tutuli, Shamrock'},
+  {name:'Cata', role:'Lead', meetings:2.3, accts:0, key:'Strategy only'},
+  {name:'Sofia', role:'Prod', meetings:1.4, accts:0, key:'Product sync only'},
+  {name:'Sebastian', role:'CS', meetings:1.1, accts:3, key:'Flower2go, Sims, Star Roses'},
+  {name:'Santiago', role:'CS', meetings:0.9, accts:3, key:'Sims, Fagua, Veldkamp'}
+];
+
+const warmAccounts = [
+  {name:"Price's", tag:'hot', detail:'Go-live Jul 8, Milena'},
+  {name:'Flores San Miguel', tag:'hot', detail:'Go-live Jul 8, Manuel'},
+  {name:'DVF', tag:'warm', detail:'Renewal friction, Christian'},
+  {name:'Main Wholesale', tag:'warm', detail:'eShop live, Camila'},
+  {name:'Shamrock', tag:'warm', detail:'K2K to eSuite upgrade, Christian'},
+  {name:'Riverside', tag:'warm', detail:'Milena + Valentina'},
+  {name:'Sims', tag:'cooling', detail:'No meeting in 3 weeks'},
+  {name:'Bill Doran', tag:'cooling', detail:'Touchbase only'},
+  {name:'Cleveland', tag:'cooling', detail:'No meeting in 3 weeks'}
+];
+
+// RETENTION DATA
+const retFreq = [
+  {label:'1 order', pct:35.3, cls:'low'},
+  {label:'2 orders', pct:49.1, cls:'mid'},
+  {label:'3-5 orders', pct:63.4, cls:'mid'},
+  {label:'6-9 orders', pct:75.8, cls:'high'},
+  {label:'10+ orders', pct:87.2, cls:'high'}
+];
+const retGmv = [
+  {label:'$0-100', pct:39.4, cls:'low'},
+  {label:'$100-500', pct:46.2, cls:'mid'},
+  {label:'$500-1K', pct:52.4, cls:'mid'},
+  {label:'$1K-5K', pct:67.8, cls:'high'},
+  {label:'$5K+', pct:81.3, cls:'high'}
+];
+const retProduct = [
+  {label:'Units', pct:28.7, cls:'low'},
+  {label:'Boxes', pct:56.8, cls:'mid'}
+];
+const retSource = [
+  {label:'Blitz', pct:66.8, cls:'high'},
+  {label:'Handshake', pct:55.7, cls:'mid'}
+];
+
+// BUILD ACCOUNT TABLE
+function buildAcctTable(data) {
+  const tbody = document.getElementById('acctBody');
+  tbody.innerHTML = '';
+  data.forEach(a => {
+    const initDots = a.inits.map(i => `<span class="init-dot d${i}">${i}</span>`).join('');
+    const onlineClass = a.onlinePct >= 10 ? 'pos' : a.onlinePct >= 1 ? 'flat' : 'neg';
+    tbody.innerHTML += `<tr>
+      <td class="num">${a.rank}</td>
+      <td><strong>${a.name}</strong></td>
+      <td class="num">$${a.gmv}M</td>
+      <td class="num">$${a.offline}M</td>
+      <td class="num ${onlineClass}">${a.onlinePct}%</td>
+      <td class="num">${a.feeRate}%</td>
+      <td class="num">$${a.feeOpp}K</td>
+      <td><div class="init-dots">${initDots}</div></td>
+      <td class="num">${a.overlap}</td>
+      <td class="num" style="font-weight:700">$${a.composite}K</td>
+    </tr>`;
+  });
+}
+
+// SORT TABLE
+let sortCol = -1, sortAsc = true;
+function sortTable(col, type) {
+  if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = true; }
+  const fields = ['rank','name','gmv','offline','onlinePct','feeRate','feeOpp','inits','overlap','composite'];
+  const field = fields[col];
+  if (field === 'inits') return;
+  accounts.sort((a, b) => {
+    let va = a[field], vb = b[field];
+    if (type === 'str') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return sortAsc ? -1 : 1;
+    if (va > vb) return sortAsc ? 1 : -1;
+    return 0;
+  });
+  // Update sort indicators
+  document.querySelectorAll('#acctTable th').forEach((th, i) => {
+    th.classList.toggle('sorted', i === col);
+  });
+  buildAcctTable(accounts);
+}
+
+// BUILD TEAM
+function buildTeam() {
+  const maxMeetings = 10;
+  const implEl = document.getElementById('implTeam');
+  implTeam.forEach(t => {
+    const w = (t.meetings / maxMeetings * 100).toFixed(0);
+    implEl.innerHTML += `<div class="team-row">
+      <div class="team-name">${t.name}</div>
+      <div class="team-role">Impl</div>
+      <div class="team-bar-wrap"><div class="team-bar impl" style="width:${w}%">${t.meetings}/wk</div></div>
+      <div class="team-accts">${t.accts} accts</div>
+    </div>`;
+  });
+  const csEl = document.getElementById('csTeam');
+  csTeam.forEach(t => {
+    const w = Math.max((t.meetings / maxMeetings * 100), 8).toFixed(0);
+    const cls = t.role === 'Lead' ? 'lead' : t.role === 'Prod' ? 'prod' : 'cs';
+    csEl.innerHTML += `<div class="team-row">
+      <div class="team-name">${t.name}</div>
+      <div class="team-role">${t.role}</div>
+      <div class="team-bar-wrap"><div class="team-bar ${cls}" style="width:${w}%">${t.meetings}/wk</div></div>
+      <div class="team-accts">${t.accts > 0 ? t.accts + ' accts' : '—'}</div>
+    </div>`;
+  });
+}
+
+// BUILD WARM ACCOUNTS
+function buildWarm() {
+  const el = document.getElementById('warmGrid');
+  warmAccounts.forEach(w => {
+    el.innerHTML += `<div class="warm-card">
+      <div class="warm-tag ${w.tag}">${w.tag}</div>
+      <div class="warm-name">${w.name}</div>
+      <div class="warm-detail">${w.detail}</div>
+    </div>`;
+  });
+}
+
+// BUILD RETENTION
+function buildRetention() {
+  [{data: retFreq, el: 'retFreq'}, {data: retGmv, el: 'retGmv'}, {data: retProduct, el: 'retProduct'}, {data: retSource, el: 'retSource'}].forEach(({data, el}) => {
+    const container = document.getElementById(el);
+    data.forEach(r => {
+      container.innerHTML += `<div class="ret-row">
+        <div class="ret-label">${r.label}</div>
+        <div class="ret-bar-wrap"><div class="ret-bar ${r.cls}" style="width:${r.pct}%">${r.pct}%</div></div>
+      </div>`;
+    });
+  });
+}
+
+// TAB SWITCHING
+function mainTab(name) {
+  document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active'));
+  document.getElementById('tc-' + name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// INIT
+buildAcctTable(accounts);
+buildTeam();
+buildWarm();
+buildRetention();
+</script>
+</body>
+</html>

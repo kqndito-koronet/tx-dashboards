@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wholesaler Cohorts · Who Sells Online and Why</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
+    --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
+    --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
+    --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb;
+    --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
+    --cohort-a: #2563eb; --cohort-b: #7c3aed; --cohort-c: #d97706; --cohort-d: #6b7280;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
+
+  .back-link { font-size: 12px; color: var(--blue); text-decoration: none; display: inline-block; margin-bottom: 12px; }
+  .back-link:hover { text-decoration: underline; }
+
+  .header { margin-bottom: 24px; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .purpose { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .verdict .headline { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .verdict .g { color: var(--green); } .verdict .r { color: var(--red); }
+  .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
+  .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
+  .kpi .val { font-size: 24px; font-weight: 700; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; font-weight: 600; }
+  .kpi .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .flat { color: var(--amber); }
+
+  .tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px 8px 0 0; padding: 4px 4px 0; }
+  .tab { padding: 8px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text2); border-radius: 6px 6px 0 0; background: transparent; border: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--bg); color: var(--text); font-weight: 600; }
+  .tab-body { border: 1px solid var(--border); border-radius: 0 0 10px 10px; padding: 24px; margin-bottom: 28px; }
+  .tab-content { display: none; } .tab-content.active { display: block; }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; }
+  .section-head .hint { font-size: 11px; color: var(--text3); }
+
+  .dtable { width: 100%; border-collapse: collapse; }
+  .dtable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+  .dtable th.num { text-align: right; }
+  .dtable td { padding: 8px 10px; font-size: 12px; border-bottom: 1px solid var(--surface2); font-variant-numeric: tabular-nums; }
+  .dtable td.num { text-align: right; }
+  .dtable tr:hover { background: var(--surface); }
+  .ch-dot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+
+  .cohort-bar-chart { display: flex; align-items: flex-end; gap: 24px; height: 220px; padding: 20px 0 40px; }
+  .cohort-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
+  .cohort-bar { width: 60px; border-radius: 4px 4px 0 0; position: relative; cursor: pointer; transition: opacity 0.15s; }
+  .cohort-bar:hover { opacity: 0.75; }
+  .cohort-val { font-size: 11px; font-weight: 600; text-align: center; margin-bottom: 4px; }
+  .cohort-label { font-size: 11px; color: var(--text2); text-align: center; margin-top: 8px; font-weight: 600; }
+  .cohort-sub { font-size: 10px; color: var(--text3); text-align: center; }
+
+  .dual-bars { display: flex; align-items: flex-end; gap: 32px; height: 200px; padding: 20px 0 40px; }
+  .dual-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .dual-stack { display: flex; gap: 6px; align-items: flex-end; }
+  .dual-bar { width: 40px; border-radius: 3px 3px 0 0; position: relative; cursor: pointer; }
+  .dual-bar:hover { opacity: 0.75; }
+  .dual-tip { display: none; position: absolute; top: -28px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 3px 8px; border-radius: 5px; font-size: 10px; white-space: nowrap; z-index: 20; }
+  .dual-bar:hover .dual-tip { display: block; }
+  .dual-label { font-size: 10px; color: var(--text3); margin-top: 6px; }
+
+  .legend { display: flex; gap: 16px; margin-bottom: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  .catalog-chart { display: flex; align-items: flex-end; gap: 16px; height: 200px; padding: 20px 0 40px; }
+  .catalog-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .catalog-stack { display: flex; gap: 4px; align-items: flex-end; }
+  .catalog-bar { width: 28px; border-radius: 3px 3px 0 0; position: relative; cursor: pointer; }
+  .catalog-bar:hover { opacity: 0.75; }
+  .catalog-bar .ctip { display: none; position: absolute; top: -28px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 3px 8px; border-radius: 5px; font-size: 10px; white-space: nowrap; z-index: 20; }
+  .catalog-bar:hover .ctip { display: block; }
+  .catalog-label { font-size: 10px; color: var(--text2); margin-top: 6px; text-align: center; max-width: 90px; }
+  .catalog-pct { font-size: 10px; font-weight: 600; text-align: center; margin-bottom: 3px; }
+
+  .finding-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .finding { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .finding .f-stat { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .finding .f-label { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .finding .f-desc { font-size: 11px; color: var(--text2); }
+
+  .multiplier-chart { display: flex; align-items: center; gap: 16px; padding: 12px 0; }
+  .mult-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .mult-label { width: 90px; font-size: 12px; font-weight: 500; }
+  .mult-bars { flex: 1; display: flex; align-items: center; gap: 8px; height: 28px; }
+  .mult-bar { height: 24px; border-radius: 3px; display: flex; align-items: center; padding: 0 8px; font-size: 10px; font-weight: 600; color: #fff; }
+  .mult-gap { font-size: 11px; font-weight: 600; color: var(--text); margin-left: 4px; }
+
+  .next-link { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 20px; font-size: 13px; }
+  .next-link strong { color: var(--blue); }
+
+  .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Dashboard Hub</a>
+
+<div class="header">
+  <h1>Wholesaler Cohorts: Who Sells Online and Why</h1>
+  <div class="purpose">143 wholesalers ranked by online %, grouped into 4 cohorts. The question: what separates those who sell online from those who don't? Answer: catalog coverage and inventory format (Boxes vs Units), not company size.</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="r">82 of 143 wholesalers (Cohorts C+D) have near-zero online sales.</span> <span class="g">But the 8 in Cohort B prove it works at scale.</span></div>
+  <ul>
+    <li><strong>Cohort A (>20% online):</strong> 32 wholesalers, but mostly born-digital, all Boxes, small. NOT role models for big wholesalers.</li>
+    <li><strong>Cohort B (5-20%):</strong> KBC, Mayesh, BDC, Zeidler, Sims. THE action cohort. They prove large wholesalers can go digital.</li>
+    <li><strong>The predictor is catalog coverage:</strong> Mayesh lists 63% of products online = 24% online GMV. BDC lists 16% = 3.5%. Put products online, buyers come.</li>
+    <li><strong>Boxes vs Units = 6x gap:</strong> Same product (Rose), Boxes 29.3% online vs Units 4.5%. Format, not flower, drives digital adoption.</li>
+    <li><strong>Dual-channel buyers are 3.7x more valuable</strong> ($20,754 vs $5,561). Online does not cannibalize — it compounds.</li>
+  </ul>
+</div>
+
+<!-- COHORT KPI CARDS -->
+<div class="kpis">
+  <div class="kpi" style="border-left: 3px solid var(--cohort-a);">
+    <div class="label">Cohort A (&gt;20%)</div>
+    <div class="val">32</div>
+    <div class="delta" style="color:var(--cohort-a)">29.6% online</div>
+    <div class="note">$102M GMV, $30.3M online</div>
+  </div>
+  <div class="kpi" style="border-left: 3px solid var(--cohort-b);">
+    <div class="label">Cohort B (5-20%)</div>
+    <div class="val">8</div>
+    <div class="delta" style="color:var(--cohort-b)">7.6% online</div>
+    <div class="note">$159M GMV, $12.1M online</div>
+  </div>
+  <div class="kpi" style="border-left: 3px solid var(--cohort-c);">
+    <div class="label">Cohort C (1-5%)</div>
+    <div class="val">7</div>
+    <div class="delta" style="color:var(--cohort-c)">0.6% online</div>
+    <div class="note">$14M GMV, $88K online</div>
+  </div>
+  <div class="kpi" style="border-left: 3px solid var(--cohort-d);">
+    <div class="label">Cohort D (&lt;1%)</div>
+    <div class="val">34</div>
+    <div class="delta" style="color:var(--cohort-d)">0.0% online</div>
+    <div class="note">$30M GMV, ~$0 online</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="mainTab('cohort')">Cohort Overview</div>
+  <div class="tab" onclick="mainTab('catalog')">Catalog Coverage</div>
+  <div class="tab" onclick="mainTab('format')">Boxes vs Units</div>
+  <div class="tab" onclick="mainTab('findings')">Surprising Findings</div>
+  <div class="tab" onclick="mainTab('detail')">Cohort A Detail</div>
+  <div class="tab" onclick="mainTab('outside')">Outside the Whales</div>
+</div>
+<div class="tab-body">
+
+<!-- COHORT OVERVIEW -->
+<div id="tc-cohort" class="tab-content active">
+  <div class="section-head"><h2>Cohort Distribution: GMV and Online %</h2><div class="hint">Height = Total GMV. Color intensity = online %.</div></div>
+
+  <div class="cohort-bar-chart" id="cohortChart"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Cohort</th><th>Range</th><th class="num">Count</th><th class="num">Total GMV</th><th class="num">Online GMV</th><th class="num">Online %</th><th>Character</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--cohort-a)"></span>A</td><td>&gt;20%</td><td class="num">32</td><td class="num">$102M</td><td class="num">$30.3M</td><td class="num pos">29.6%</td><td style="font-size:11px;color:var(--text2)">Born-digital, all Boxes, small. NOT role models for big wholesalers.</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--cohort-b)"></span>B</td><td>5-20%</td><td class="num">8</td><td class="num">$159M</td><td class="num">$12.1M</td><td class="num pos">7.6%</td><td style="font-size:11px;color:var(--text2)">KBC, Mayesh, BDC, Zeidler, Sims. THE action cohort.</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--cohort-c)"></span>C</td><td>1-5%</td><td class="num">7</td><td class="num">$14M</td><td class="num">$88K</td><td class="num flat">0.6%</td><td style="font-size:11px;color:var(--text2)">Experimental, barely digital.</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--cohort-d)"></span>D</td><td>&lt;1%</td><td class="num">34</td><td class="num">$30M</td><td class="num">~$0</td><td class="num neg">0.0%</td><td style="font-size:11px;color:var(--text2)">Del Tropico, WGF, SOS, White Rose. 100% offline.</td></tr>
+      <tr class="total-row"><td colspan="2">Total (81 active)</td><td class="num">81</td><td class="num">$305M</td><td class="num">$42.5M</td><td class="num">13.9%</td><td></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:var(--text3);margin-top:8px;">62 additional wholesalers have negligible GMV and are excluded from cohort analysis.</p>
+</div>
+
+<!-- CATALOG COVERAGE -->
+<div id="tc-catalog" class="tab-content">
+  <div class="section-head"><h2>Catalog Coverage Predicts Online Adoption</h2><div class="hint">Products listed online / total products = coverage. Higher coverage = higher online %.</div></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--offline)"></div>Products Offline Only</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Products Online</div>
+  </div>
+
+  <div class="catalog-chart" id="catalogChart"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Wholesaler</th><th class="num">Products Online</th><th class="num">Products Total</th><th class="num">Coverage</th><th class="num">Online % GMV</th><th>Implication</th></tr></thead>
+    <tbody>
+      <tr><td>FloraLink</td><td class="num">5,463</td><td class="num">5,463</td><td class="num pos">100%</td><td class="num pos">100%</td><td style="font-size:11px;color:var(--text2)">Born-digital baseline</td></tr>
+      <tr><td>Mayesh</td><td class="num">7,506</td><td class="num">11,875</td><td class="num pos">63.2%</td><td class="num pos">24.1%</td><td style="font-size:11px;color:var(--text2)">Best large-wholesaler performer</td></tr>
+      <tr><td>KBC</td><td class="num">5,600</td><td class="num">10,221</td><td class="num pos">54.8%</td><td class="num">13.6%</td><td style="font-size:11px;color:var(--text2)">Strong coverage, growing</td></tr>
+      <tr><td>BDC</td><td class="num">3,624</td><td class="num">22,102</td><td class="num neg">16.4%</td><td class="num">3.5%</td><td style="font-size:11px;color:var(--text2)">Largest catalog, lowest coverage</td></tr>
+      <tr><td>Flora Fresh</td><td class="num">356</td><td class="num">5,223</td><td class="num neg">6.8%</td><td class="num neg">0.6%</td><td style="font-size:11px;color:var(--text2)">Almost nothing online</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--amber-bg);border:1px solid #fbbf24;border-radius:8px;padding:14px 18px;margin-top:16px;">
+    <div style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:4px;">The lever is catalog listing, not marketing</div>
+    <div style="font-size:12px;color:var(--text2);">BDC has 22,102 products but only 16.4% online. If BDC matched KBC's 55% coverage, that's ~8,500 more products available to buyers. The correlation between catalog coverage and online % is near-linear across the ecosystem.</div>
+  </div>
+</div>
+
+<!-- BOXES vs UNITS -->
+<div id="tc-format" class="tab-content">
+  <div class="section-head"><h2>Boxes vs Units: The Format Gap</h2><div class="hint">Same flower, different format = completely different online adoption</div></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--offline)"></div>Offline</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Online</div>
+  </div>
+
+  <div class="dual-bars" id="divisionChart"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Division</th><th class="num">Offline</th><th class="num">Online</th><th class="num">Online %</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--blue)"></span>Boxes</td><td class="num">$98.1M</td><td class="num">$31.1M</td><td class="num pos">24.1%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--offline)"></span>Units</td><td class="num">$143.4M</td><td class="num">$11.2M</td><td class="num flat">7.3%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--text3)"></span>Hard Goods</td><td class="num">$7.5M</td><td class="num">$10.5K</td><td class="num neg">0.14%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head" style="margin-top:24px;"><h2>Same Flower, Different Format</h2><div class="hint">Boxes vs Units online % for the same product</div></div>
+
+  <div style="padding: 8px 0;">
+    <div class="mult-row">
+      <div class="mult-label">Rose</div>
+      <div class="mult-bars">
+        <div class="mult-bar" style="width:175px;background:var(--blue);">Boxes 29.3%</div>
+        <div class="mult-bar" style="width:27px;background:var(--offline);">4.5%</div>
+        <div class="mult-gap">6.5x gap</div>
+      </div>
+    </div>
+    <div class="mult-row">
+      <div class="mult-label">Hydrangea</div>
+      <div class="mult-bars">
+        <div class="mult-bar" style="width:236px;background:var(--blue);">Boxes 39.4%</div>
+        <div class="mult-bar" style="width:39px;background:var(--offline);">6.5%</div>
+        <div class="mult-gap">6.1x gap</div>
+      </div>
+    </div>
+    <div class="mult-row">
+      <div class="mult-label">Carnation</div>
+      <div class="mult-bars">
+        <div class="mult-bar" style="width:172px;background:var(--blue);">Boxes 28.8%</div>
+        <div class="mult-bar" style="width:32px;background:var(--offline);">5.3%</div>
+        <div class="mult-gap">5.4x gap</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-top:16px;">
+    <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Why Boxes go online and Units don't</div>
+    <div style="font-size:12px;color:var(--text2);">Boxes = standard count, pre-orderable, no inspection needed. Units = variable stems, walk-in selection, "I want to see it." The product format itself determines digital readiness. Zeidler and Maple Grove are the rare Units-digital exceptions (role models).</div>
+  </div>
+</div>
+
+<!-- SURPRISING FINDINGS -->
+<div id="tc-findings" class="tab-content">
+  <div class="section-head"><h2>Surprising Findings</h2><div class="hint">Counter-intuitive patterns from the cohort analysis</div></div>
+
+  <div class="finding-cards">
+    <div class="finding">
+      <div class="f-stat" style="color:var(--blue)">4.3 days</div>
+      <div class="f-label">Online orders placed further ahead</div>
+      <div class="f-desc">Online avg lead time 4.3 days vs 2.9 days offline. Online buyers plan ahead, not impulse-buy. This means online captures different demand, not the same demand faster.</div>
+    </div>
+    <div class="finding">
+      <div class="f-stat" style="color:var(--blue)">76-83%</div>
+      <div class="f-label">Online is prebooks, not spot market</div>
+      <div class="f-desc">76-83% of online orders are prebooks (advance orders). Online is a planning channel, not a spontaneous one. This contradicts the "eCommerce = instant" assumption.</div>
+    </div>
+    <div class="finding">
+      <div class="f-stat" style="color:var(--green)">3.7x</div>
+      <div class="f-label">Dual-channel buyers more valuable</div>
+      <div class="f-desc">Buyers who use both online + offline spend $20,754 avg vs $5,561 for single-channel. Online doesn't cannibalize offline — it compounds total spend.</div>
+    </div>
+    <div class="finding">
+      <div class="f-stat" style="color:var(--green)">88.8%</div>
+      <div class="f-label">First-time online buyers return</div>
+      <div class="f-desc">Nearly 9 in 10 buyers who try online come back. The activation barrier is the hard part — retention is almost automatic once they start.</div>
+    </div>
+    <div class="finding">
+      <div class="f-stat" style="color:var(--red)">Holidays</div>
+      <div class="f-label">Holidays HURT online %</div>
+      <div class="f-desc">During peak holiday periods, buyers revert to offline. When stakes are high (Valentine's, Mother's Day), trust shifts back to phone/in-person. Online % drops during the weeks florists need reliability most.</div>
+    </div>
+    <div class="finding">
+      <div class="f-stat" style="color:var(--amber)">Units</div>
+      <div class="f-label">The format gap is structural, not behavioral</div>
+      <div class="f-desc">Units (loose stems) are 7.3% online vs Boxes at 24.1%. Same buyers, same wholesalers. The product format itself — not the seller or buyer — determines whether it goes digital.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COHORT A DETAIL -->
+<div id="tc-detail" class="tab-content">
+  <div class="section-head"><h2>Cohort A: Top 10 Born-Digital Wholesalers</h2><div class="hint">High online % but mostly small, Boxes-only. 2 exceptions are role models.</div></div>
+
+  <table class="dtable">
+    <thead><tr><th>#</th><th>Wholesaler</th><th class="num">Total GMV</th><th class="num">Online %</th><th class="num">Buyers</th><th class="num">Orders/Buyer/Mo</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>FloraLink</td><td class="num">$3.96M</td><td class="num pos">100%</td><td class="num">101</td><td class="num">4.4</td><td style="font-size:11px;color:var(--text2)">Boxes only. Highest engagement.</td></tr>
+      <tr><td>2</td><td>Cleveland P&F</td><td class="num">$494K</td><td class="num pos">100%</td><td class="num">61</td><td class="num">1.8</td><td style="font-size:11px;color:var(--text2)">Boxes only.</td></tr>
+      <tr><td>3</td><td>Baisch & Skinner</td><td class="num">$437K</td><td class="num pos">100%</td><td class="num">97</td><td class="num">1.0</td><td style="font-size:11px;color:var(--text2)">Boxes only. Wide buyer base.</td></tr>
+      <tr style="background:var(--green-bg)"><td>4</td><td>Maple Grove</td><td class="num">$668K</td><td class="num pos">30%</td><td class="num">92</td><td class="num">3.6</td><td style="font-size:11px;color:var(--green);font-weight:600">UNITS hybrid — role model</td></tr>
+      <tr><td>5</td><td>A Florist First</td><td class="num">$301K</td><td class="num pos">100%</td><td class="num">29</td><td class="num">—</td><td style="font-size:11px;color:var(--text2)">Boxes only. Niche.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head" style="margin-top:24px;"><h2>Cohort B Standouts: Role Models for Scale</h2><div class="hint">These prove digital works for large wholesalers</div></div>
+
+  <table class="dtable">
+    <thead><tr><th>Wholesaler</th><th class="num">Total GMV</th><th class="num">Online %</th><th>Format</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr style="background:var(--green-bg)"><td>Zeidler</td><td class="num">$951K</td><td class="num pos">17.2%</td><td>100% Units</td><td style="font-size:11px;color:var(--green);font-weight:600">Proves Units CAN go digital. Live cooler model.</td></tr>
+      <tr><td>Sims</td><td class="num">$1.43M</td><td class="num pos">12.4%</td><td>Mixed</td><td style="font-size:11px;color:var(--text2)">Mid-tier, good digital adoption.</td></tr>
+      <tr><td>Mayesh</td><td class="num">$93.9M</td><td class="num pos">24.1%</td><td>Mixed</td><td style="font-size:11px;color:var(--text2)">Largest digital wholesaler. 63% catalog coverage.</td></tr>
+      <tr><td>KBC</td><td class="num">$64.0M</td><td class="num">13.6%</td><td>Mixed</td><td style="font-size:11px;color:var(--text2)">Strong coverage, 55% catalog.</td></tr>
+      <tr><td>BDC</td><td class="num">$61.3M</td><td class="num">3.5%</td><td>Mixed</td><td style="font-size:11px;color:var(--text2)">Biggest catalog (22K products) but only 16% online.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- OUTSIDE THE WHALES -->
+<div id="tc-outside" class="tab-content">
+  <div class="section-head"><h2>Effectiveness Outside KBC + Mayesh + BDC</h2><div class="hint">Remove the Big 3 — what does the rest of the ecosystem look like?</div></div>
+
+  <div class="kpis" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 20px;">
+    <div class="kpi">
+      <div class="label">Remaining Wholesalers</div>
+      <div class="val">139</div>
+      <div class="note">Excluding KBC, Mayesh, BDC</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total GMV</div>
+      <div class="val">$74.6M</div>
+      <div class="delta pos">11.8% online</div>
+    </div>
+    <div class="kpi">
+      <div class="label">FloraLink Share</div>
+      <div class="val">42%</div>
+      <div class="note">of all non-whale wholesaler fees</div>
+    </div>
+  </div>
+
+  <table class="dtable">
+    <thead><tr><th>Segment</th><th class="num">Count</th><th class="num">GMV Range</th><th class="num">&gt;10% Online</th><th>Finding</th></tr></thead>
+    <tbody>
+      <tr><td>Mid-tier wholesalers</td><td class="num">21</td><td class="num">$1M - $10M</td><td class="num neg">2 of 21</td><td style="font-size:11px;color:var(--text2)">Only 2 have meaningful online presence</td></tr>
+      <tr><td>Mid-tier with $0 online</td><td class="num">7</td><td class="num">$1M - $10M</td><td class="num neg">0</td><td style="font-size:11px;color:var(--text2)">Have Procurement active but $0 online sales</td></tr>
+      <tr><td>Small wholesalers</td><td class="num">~110</td><td class="num">&lt;$1M</td><td class="num">Mixed</td><td style="font-size:11px;color:var(--text2)">High variance — born-digital vs legacy</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--red-bg);border:1px solid #fca5a5;border-radius:8px;padding:14px 18px;margin-top:16px;">
+    <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:4px;">Concentration risk</div>
+    <div style="font-size:12px;color:var(--text2);">Outside the Big 3, FloraLink alone accounts for 42% of all wholesaler fees. The "long tail" of wholesalers is not generating meaningful digital revenue. 7 mid-tier wholesalers ($1-10M GMV each) have active Procurement but zero online sales — they know how to buy digital, they just don't sell digital.</div>
+  </div>
+</div>
+
+</div><!-- tab-body -->
+
+<div class="next-link">
+  <strong>&rarr; Standing Orders:</strong> The $142.5M at $0 fees — why standing orders are the largest fee-free volume and what's structurally missing.<br>
+  <span style="color:var(--text3)">See standing-orders.html</span>
+</div>
+
+<div class="source">
+  SALE_DETAILS_SV &middot; SALES_SV &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; shipping_date H1 2026<br>
+  Cohort assignment: online % = (eCommerce + API + K2K GMV) / total GMV per company<br>
+  Catalog coverage: PRODUCTS_SV, distinct product count by company, online = has_eshop_listing or eCommerce sales channel<br>
+  Boxes vs Units: inventory_division field in SALE_DETAILS_SV<br>
+  Lead time: days between order_date and shipping_date<br>
+  Trust: needs_validation &middot; catalog coverage counts are approximate (product SKU matching across channels)<br>
+  Rose (Data Agent) &middot; 2026-07-08
+</div>
+
+<script>
+// COHORT BAR CHART
+function buildCohortChart(){
+  const el=document.getElementById('cohortChart');
+  const data=[
+    {label:'A',sub:'>20%',gmv:102,online:30.3,pct:29.6,color:'var(--cohort-a)',count:32},
+    {label:'B',sub:'5-20%',gmv:159,online:12.1,pct:7.6,color:'var(--cohort-b)',count:8},
+    {label:'C',sub:'1-5%',gmv:14,online:0.088,pct:0.6,color:'var(--cohort-c)',count:7},
+    {label:'D',sub:'<1%',gmv:30,online:0,pct:0,color:'var(--cohort-d)',count:34}
+  ];
+  const maxGMV=170;
+  el.innerHTML='';
+  data.forEach(d=>{
+    const h=d.gmv/maxGMV*160;
+    const onlineH=d.online/maxGMV*160;
+    el.innerHTML+=`
+      <div class="cohort-col">
+        <div class="cohort-val" style="color:${d.color}">$${d.gmv}M</div>
+        <div style="position:relative;width:60px;height:${h}px;">
+          <div class="cohort-bar" style="height:${h}px;width:60px;background:var(--surface2);border:1px solid var(--border);position:absolute;bottom:0;"></div>
+          <div class="cohort-bar" style="height:${onlineH}px;width:60px;background:${d.color};opacity:0.7;position:absolute;bottom:0;"></div>
+        </div>
+        <div class="cohort-label">Cohort ${d.label}</div>
+        <div class="cohort-sub">${d.count} wholesalers &middot; ${d.pct}% online</div>
+      </div>`;
+  });
+}
+
+// CATALOG CHART
+function buildCatalogChart(){
+  const el=document.getElementById('catalogChart');
+  const data=[
+    {name:'FloraLink',online:5463,total:5463,cov:100,gmvPct:100},
+    {name:'Mayesh',online:7506,total:11875,cov:63.2,gmvPct:24.1},
+    {name:'KBC',online:5600,total:10221,cov:54.8,gmvPct:13.6},
+    {name:'BDC',online:3624,total:22102,cov:16.4,gmvPct:3.5},
+    {name:'Flora Fresh',online:356,total:5223,cov:6.8,gmvPct:0.6}
+  ];
+  const maxTotal=23000;
+  el.innerHTML='';
+  data.forEach(d=>{
+    const hTotal=d.total/maxTotal*150;
+    const hOnline=d.online/maxTotal*150;
+    el.innerHTML+=`
+      <div class="catalog-col">
+        <div class="catalog-pct" style="color:${d.cov>50?'var(--green)':d.cov>15?'var(--amber)':'var(--red)'}">${d.cov}%</div>
+        <div class="catalog-stack">
+          <div class="catalog-bar" style="height:${hTotal}px;background:var(--offline);"><div class="ctip">${(d.total-d.online).toLocaleString()} offline</div></div>
+          <div class="catalog-bar" style="height:${hOnline}px;background:var(--blue);"><div class="ctip">${d.online.toLocaleString()} online</div></div>
+        </div>
+        <div class="catalog-label">${d.name}</div>
+      </div>`;
+  });
+}
+
+// DIVISION CHART
+function buildDivisionChart(){
+  const el=document.getElementById('divisionChart');
+  const data=[
+    {name:'Boxes',offline:98.1,online:31.1,pct:24.1},
+    {name:'Units',offline:143.4,online:11.2,pct:7.3},
+    {name:'Hard Goods',offline:7.5,online:0.0105,pct:0.14}
+  ];
+  const maxVal=155;
+  el.innerHTML='';
+  data.forEach(d=>{
+    const hOff=d.offline/maxVal*150;
+    const hOn=d.online/maxVal*150;
+    el.innerHTML+=`
+      <div class="dual-col">
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px;color:${d.pct>20?'var(--green)':d.pct>5?'var(--amber)':'var(--red)'}">${d.pct}% online</div>
+        <div class="dual-stack">
+          <div class="dual-bar" style="height:${hOff}px;background:var(--offline);"><div class="dual-tip">Offline: $${d.offline}M</div></div>
+          <div class="dual-bar" style="height:${Math.max(hOn,3)}px;background:var(--blue);"><div class="dual-tip">Online: $${d.online < 1 ? d.online*1000+'K' : d.online+'M'}</div></div>
+        </div>
+        <div class="dual-label">${d.name}</div>
+      </div>`;
+  });
+}
+
+function mainTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+buildCohortChart(); buildCatalogChart(); buildDivisionChart();
+</script>
+</body>
+</html>
