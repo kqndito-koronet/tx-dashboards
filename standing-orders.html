@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standing Orders · The $142.5M at $0 Fees</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
+    --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
+    --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
+    --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb;
+    --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
+    --so-offline: #dc2626; --so-api: #7c3aed; --so-ecom: #2563eb; --so-k2k: #059669;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
+
+  .back-link { font-size: 12px; color: var(--blue); text-decoration: none; display: inline-block; margin-bottom: 12px; }
+  .back-link:hover { text-decoration: underline; }
+
+  .header { margin-bottom: 24px; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .purpose { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .verdict .headline { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .verdict .g { color: var(--green); } .verdict .r { color: var(--red); }
+  .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
+  .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .hero { display: flex; align-items: center; gap: 32px; background: var(--red-bg); border: 1px solid #fca5a5; border-radius: 10px; padding: 24px 32px; margin-bottom: 24px; }
+  .hero-num { font-size: 48px; font-weight: 800; color: var(--red); letter-spacing: -2px; }
+  .hero-detail { flex: 1; }
+  .hero-detail .hero-label { font-size: 16px; font-weight: 600; color: var(--red); margin-bottom: 4px; }
+  .hero-detail .hero-desc { font-size: 13px; color: var(--text2); }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
+  .kpi .val { font-size: 24px; font-weight: 700; }
+  .kpi .delta { font-size: 12px; margin-top: 2px; font-weight: 600; }
+  .kpi .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .pos { color: var(--green); } .neg { color: var(--red); } .flat { color: var(--amber); }
+
+  .tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px 8px 0 0; padding: 4px 4px 0; }
+  .tab { padding: 8px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text2); border-radius: 6px 6px 0 0; background: transparent; border: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--bg); color: var(--text); font-weight: 600; }
+  .tab-body { border: 1px solid var(--border); border-radius: 0 0 10px 10px; padding: 24px; margin-bottom: 28px; }
+  .tab-content { display: none; } .tab-content.active { display: block; }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; }
+  .section-head .hint { font-size: 11px; color: var(--text3); }
+
+  .dtable { width: 100%; border-collapse: collapse; }
+  .dtable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+  .dtable th.num { text-align: right; }
+  .dtable td { padding: 8px 10px; font-size: 12px; border-bottom: 1px solid var(--surface2); font-variant-numeric: tabular-nums; }
+  .dtable td.num { text-align: right; }
+  .dtable tr:hover { background: var(--surface); }
+  .ch-dot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+
+  .legend { display: flex; gap: 16px; margin-bottom: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  .channel-bars { display: flex; align-items: flex-end; gap: 32px; height: 220px; padding: 20px 0 40px; }
+  .channel-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .channel-bar { width: 50px; border-radius: 4px 4px 0 0; position: relative; cursor: pointer; transition: opacity 0.15s; }
+  .channel-bar:hover { opacity: 0.75; }
+  .channel-val { font-size: 11px; font-weight: 600; text-align: center; margin-bottom: 4px; }
+  .channel-label { font-size: 11px; color: var(--text2); text-align: center; margin-top: 8px; font-weight: 500; }
+  .channel-sub { font-size: 10px; color: var(--text3); text-align: center; }
+
+  .coexist-chart { display: flex; gap: 16px; padding: 16px 0; }
+  .coex-col { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .coex-name { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .coex-bar-wrap { margin-bottom: 6px; }
+  .coex-bar-label { font-size: 10px; color: var(--text3); margin-bottom: 2px; }
+  .coex-bar-track { height: 20px; background: var(--surface2); border-radius: 3px; overflow: hidden; position: relative; }
+  .coex-bar-fill { height: 100%; border-radius: 3px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 600; color: #fff; }
+  .coex-pattern { font-size: 11px; color: var(--text2); margin-top: 8px; font-style: italic; }
+
+  .p1-callout { background: var(--amber-bg); border: 1px solid #fbbf24; border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+  .p1-callout .p1-head { font-size: 15px; font-weight: 600; color: var(--amber); margin-bottom: 8px; }
+  .p1-callout .p1-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .p1-callout .p1-body strong { color: var(--text); }
+
+  .gap-callout { background: var(--red-bg); border: 1px solid #fca5a5; border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+  .gap-callout .gap-head { font-size: 15px; font-weight: 600; color: var(--red); margin-bottom: 8px; }
+  .gap-callout .gap-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .gap-callout .gap-body strong { color: var(--text); }
+
+  .industry-bars { display: flex; align-items: flex-end; gap: 32px; height: 200px; padding: 20px 0 40px; }
+  .industry-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .industry-bar { width: 60px; border-radius: 4px 4px 0 0; position: relative; cursor: pointer; }
+  .industry-bar:hover { opacity: 0.75; }
+  .industry-val { font-size: 11px; font-weight: 600; text-align: center; margin-bottom: 4px; }
+  .industry-label { font-size: 11px; color: var(--text2); text-align: center; margin-top: 8px; }
+  .industry-sub { font-size: 10px; color: var(--text3); text-align: center; }
+
+  .offline-comp { display: flex; align-items: flex-end; gap: 8px; height: 180px; padding: 16px 0 40px; }
+  .oc-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .oc-bar { width: 50px; border-radius: 4px 4px 0 0; cursor: pointer; }
+  .oc-bar:hover { opacity: 0.75; }
+  .oc-val { font-size: 10px; font-weight: 600; text-align: center; margin-bottom: 3px; }
+  .oc-label { font-size: 10px; color: var(--text2); text-align: center; margin-top: 6px; max-width: 80px; }
+
+  .next-link { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 20px; font-size: 13px; }
+  .next-link strong { color: var(--blue); }
+
+  .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Dashboard Hub</a>
+
+<div class="header">
+  <h1>Standing Orders: The $142.5M at $0 Fees</h1>
+  <div class="purpose">Standing orders are the single largest fee-free volume concentration on the platform. $168.9M in total SO GMV, 84.4% of it offline and generating zero fees. There is no online standing order product.</div>
+</div>
+
+<div class="verdict">
+  <div class="headline"><span class="r">$142.5M in standing orders generates $0 in transaction fees.</span> <span class="g">But SOs and online CAN coexist (Mayesh, Sole Farms prove it).</span></div>
+  <ul>
+    <li><strong>Standing orders = 19.7% of all ecosystem GMV.</strong> One in five dollars flows through recurring offline orders.</li>
+    <li><strong>84.4% of SO GMV is offline</strong> — no digital channel, no fees. API captures 15.5% ($26.2M), everything else is negligible.</li>
+    <li><strong>Importers dominate:</strong> 76% of SO GMV comes from importers (Rosaprima, EQR, Fresca Farms, etc.).</li>
+    <li><strong>P1 connection migration:</strong> 270 of 686 P1 pairs (40%) moved from online to standing orders — $724K online became $10.9M offline.</li>
+    <li><strong>Product gap:</strong> There is NO online standing order product. This is structural — not a sales problem.</li>
+  </ul>
+</div>
+
+<!-- HERO STAT -->
+<div class="hero">
+  <div class="hero-num">$142.5M</div>
+  <div class="hero-detail">
+    <div class="hero-label">Offline standing orders generating $0 fees</div>
+    <div class="hero-desc">84.4% of all standing order GMV flows through offline channels. This is the single largest untapped fee opportunity on the platform, but it requires a product — not a sales push.</div>
+  </div>
+</div>
+
+<!-- KPI CARDS -->
+<div class="kpis">
+  <div class="kpi">
+    <div class="label">Total SO GMV</div>
+    <div class="val">$168.9M</div>
+    <div class="note">19.7% of all ecosystem GMV</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Offline SOs</div>
+    <div class="val neg">$142.5M</div>
+    <div class="delta neg">84.4% &middot; $0 fees</div>
+  </div>
+  <div class="kpi">
+    <div class="label">API SOs</div>
+    <div class="val">$26.2M</div>
+    <div class="delta pos">15.5% &middot; has fees</div>
+  </div>
+  <div class="kpi">
+    <div class="label">eCom + K2K SOs</div>
+    <div class="val" style="color:var(--text3)">$153K</div>
+    <div class="note">~0% &middot; negligible</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="mainTab('channel')">Channel Breakdown</div>
+  <div class="tab" onclick="mainTab('top')">Top Accounts</div>
+  <div class="tab" onclick="mainTab('coexist')">Coexistence</div>
+  <div class="tab" onclick="mainTab('p1')">P1 Connection</div>
+  <div class="tab" onclick="mainTab('composition')">Offline Composition</div>
+</div>
+<div class="tab-body">
+
+<!-- CHANNEL BREAKDOWN -->
+<div id="tc-channel" class="tab-content active">
+  <div class="section-head"><h2>Standing Order GMV by Sales Channel</h2><div class="hint">Height = GMV. Color = channel. Almost everything is offline.</div></div>
+
+  <div class="channel-bars" id="channelChart"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Channel</th><th class="num">SO GMV</th><th class="num">% of Total SOs</th><th class="num">Fees</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--so-offline)"></span>Offline</td><td class="num">$142.5M</td><td class="num">84.4%</td><td class="num neg">$0</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--so-api)"></span>API</td><td class="num">$26.2M</td><td class="num">15.5%</td><td class="num pos">Yes</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--so-ecom)"></span>eCommerce</td><td class="num">$119K</td><td class="num">~0%</td><td class="num" style="color:var(--text3)">Negligible</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--so-k2k)"></span>K2K</td><td class="num">$34K</td><td class="num">~0%</td><td class="num" style="color:var(--text3)">Negligible</td></tr>
+      <tr class="total-row"><td>Total</td><td class="num">$168.9M</td><td class="num">100%</td><td class="num"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head" style="margin-top:24px;"><h2>Standing Orders by Seller Industry</h2><div class="hint">Who is generating the SO volume?</div></div>
+
+  <div class="industry-bars" id="industryChart"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Industry</th><th class="num">SO GMV</th><th class="num">% of Total</th></tr></thead>
+    <tbody>
+      <tr><td>Importers</td><td class="num">$128.3M</td><td class="num">76.0%</td></tr>
+      <tr><td>Wholesalers</td><td class="num">$39.3M</td><td class="num">23.3%</td></tr>
+      <tr><td>Growers</td><td class="num">$6.4M</td><td class="num">3.8%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- TOP ACCOUNTS -->
+<div id="tc-top" class="tab-content">
+  <div class="section-head"><h2>Top 20 Companies by Standing Order GMV</h2><div class="hint">These 20 accounts represent the majority of all SO volume</div></div>
+
+  <table class="dtable">
+    <thead><tr><th>#</th><th>Company</th><th class="num">SO GMV</th><th>Industry</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Rosaprima</strong></td><td class="num">$26.2M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)">Largest single SO account</td></tr>
+      <tr><td>2</td><td><strong>Mayesh</strong></td><td class="num">$16.6M</td><td>Wholesaler</td><td style="font-size:11px;color:var(--text2)">Also $22.7M online (coexistence)</td></tr>
+      <tr><td>3</td><td>EQR</td><td class="num">$7.6M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)"></td></tr>
+      <tr><td>4</td><td>KBC</td><td class="num">$6.7M</td><td>Wholesaler</td><td style="font-size:11px;color:var(--text2)">Also $8.7M online</td></tr>
+      <tr><td>5</td><td>Fresca Farms</td><td class="num">$6.6M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)"></td></tr>
+      <tr><td>6</td><td>Bill Doran</td><td class="num">$6.5M</td><td>Wholesaler</td><td style="font-size:11px;color:var(--text2)">SO dominant, online small ($2.1M)</td></tr>
+      <tr><td>7</td><td>Sole Farms</td><td class="num">$5.8M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)">Online exceeds SO ($11.0M)</td></tr>
+      <tr><td>8</td><td>Gala Roses</td><td class="num">$4.5M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)"></td></tr>
+      <tr><td>9</td><td>Sunburst</td><td class="num">$3.7M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)"></td></tr>
+      <tr><td>10</td><td>Royal Flowers Domestic</td><td class="num">$3.7M</td><td>Importer</td><td style="font-size:11px;color:var(--text2)"></td></tr>
+      <tr style="border-top:1px dashed var(--border)"><td>11</td><td>—</td><td class="num" colspan="3" style="color:var(--text3);font-style:italic">Remaining positions available in deep-dive query</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- COEXISTENCE -->
+<div id="tc-coexist" class="tab-content">
+  <div class="section-head"><h2>Coexistence: SOs and Online CAN Live Together</h2><div class="hint">Standing orders don't preclude online sales. These 4 prove it.</div></div>
+
+  <div class="coexist-chart" id="coexistChart"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Company</th><th class="num">SO GMV</th><th class="num">Non-SO Online</th><th class="num">Non-SO Offline</th><th>Pattern</th></tr></thead>
+    <tbody>
+      <tr><td>Mayesh</td><td class="num">$16.6M</td><td class="num pos">$22.7M</td><td class="num">$54.8M</td><td style="font-size:11px;color:var(--text2)">SO + heavy online</td></tr>
+      <tr><td>KBC</td><td class="num">$6.7M</td><td class="num pos">$8.7M</td><td class="num">$48.6M</td><td style="font-size:11px;color:var(--text2)">SO + moderate online</td></tr>
+      <tr><td>Bill Doran</td><td class="num">$6.5M</td><td class="num">$2.1M</td><td class="num">$52.8M</td><td style="font-size:11px;color:var(--text2)">SO dominant, online small</td></tr>
+      <tr><td>Sole Farms</td><td class="num">$5.8M</td><td class="num pos">$11.0M</td><td class="num">$14.3M</td><td style="font-size:11px;color:var(--green);font-weight:600">Online exceeds SO</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--green-bg);border:1px solid #6ee7b7;border-radius:8px;padding:14px 18px;margin-top:16px;">
+    <div style="font-size:13px;font-weight:600;color:var(--green);margin-bottom:4px;">Sole Farms is the proof point</div>
+    <div style="font-size:12px;color:var(--text2);">Sole Farms has $5.8M in standing orders AND $11.0M in non-SO online sales. Online exceeds SO. This proves that an online SO product wouldn't just digitize existing volume — it would coexist with (and amplify) other online channels.</div>
+  </div>
+</div>
+
+<!-- P1 CONNECTION -->
+<div id="tc-p1" class="tab-content">
+  <div class="section-head"><h2>P1 Connections: Online to Standing Order Migration</h2><div class="hint">P1 = highest-value connection pairs. 40% have standing orders.</div></div>
+
+  <div class="kpis" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 20px;">
+    <div class="kpi">
+      <div class="label">P1 Pairs with SOs</div>
+      <div class="val">270</div>
+      <div class="note">of 686 total P1 pairs (40%)</div>
+    </div>
+    <div class="kpi">
+      <div class="label">SO GMV from P1</div>
+      <div class="val">$10.9M</div>
+      <div class="note">90% of all P1 value</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Prior Online GMV</div>
+      <div class="val neg">$724K</div>
+      <div class="note">Before moving to SOs</div>
+    </div>
+  </div>
+
+  <div class="p1-callout">
+    <div class="p1-head">The migration pattern</div>
+    <div class="p1-body">
+      These 270 P1 pairs <strong>tried online first</strong> (total prior online GMV: $724K), then moved their recurring volume to standing orders. The result: <strong>$10.9M now flows offline, recurring, and fee-free</strong>.<br><br>
+      This is not abandonment — it's optimization. Buyers found their preferred products and suppliers online, then locked in recurring orders through standing orders because <strong>there is no online SO product</strong>. They didn't leave digital because they disliked it. They left because the platform has no way to keep recurring orders online.
+    </div>
+  </div>
+
+  <div class="gap-callout">
+    <div class="gap-head">Product Gap: No Online Standing Order</div>
+    <div class="gap-body">
+      <strong>$142.5M is structurally locked offline.</strong> There is no mechanism on the platform to place, manage, or fulfill standing orders through a digital channel. This is not a sales enablement problem or an adoption problem — it is a <strong>product gap</strong>.<br><br>
+      An online SO product would:<br>
+      &bull; Capture fees on $142.5M of currently free volume<br>
+      &bull; Prevent P1 online-to-offline migration<br>
+      &bull; Coexist with existing channels (Sole Farms proves this)<br>
+      &bull; Reduce manual order entry for sellers<br><br>
+      This is the single largest fee-free volume concentration in the platform.
+    </div>
+  </div>
+</div>
+
+<!-- OFFLINE COMPOSITION -->
+<div id="tc-composition" class="tab-content">
+  <div class="section-head"><h2>Offline Order Type Composition</h2><div class="hint">How offline GMV breaks down by order type — standing orders are 15.7%</div></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Open Market (Spot)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--api)"></div>Prebook</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Standing Order</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--text3)"></div>Hard Goods/N/A</div>
+  </div>
+
+  <div class="offline-comp" id="offlineComp"></div>
+
+  <table class="dtable" style="margin-top:16px">
+    <thead><tr><th>Order Type</th><th class="num">Offline GMV</th><th class="num">% of Offline</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ch-dot" style="background:var(--blue)"></span>Open Market (Spot)</td><td class="num">$106.0M</td><td class="num">42.6%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--api)"></span>Prebook</td><td class="num">$95.9M</td><td class="num">38.5%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--red)"></span>Standing Order</td><td class="num">$39.1M</td><td class="num neg">15.7%</td></tr>
+      <tr><td><span class="ch-dot" style="background:var(--text3)"></span>Hard Goods / N/A</td><td class="num">$7.5M</td><td class="num">3.0%</td></tr>
+      <tr class="total-row"><td>Total Offline</td><td class="num">$248.5M</td><td class="num">100%</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-top:16px;">
+    <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Note: $39.1M vs $142.5M</div>
+    <div style="font-size:12px;color:var(--text2);">The $39.1M is the <strong>wholesaler-side</strong> offline standing orders (seller_industry = wholesaler). The $142.5M headline includes all seller industries (importers, wholesalers, growers). Importers contribute $128.3M of SO volume — they are the dominant SO sellers.</div>
+  </div>
+</div>
+
+</div><!-- tab-body -->
+
+<div class="next-link">
+  <strong>&rarr; Wholesaler Cohorts:</strong> Who sells online and why? 143 wholesalers ranked by online %, grouped into 4 cohorts. Catalog coverage is the predictor.<br>
+  <span style="color:var(--text3)">See cohorts.html</span>
+</div>
+
+<div class="source">
+  SALE_DETAILS_SV &middot; SALES_SV &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; shipping_date H1 2026<br>
+  Standing orders: order_type = 'Standing Order' in SALE_DETAILS_SV<br>
+  Sales channel: SALES_CHANNEL field (Offline / eCommerce / Procurement / API)<br>
+  P1 connections: CONNECTION_PAIRS model (P1-P4 buckets by total GMV) cross-referenced with SO flag<br>
+  Seller industry: seller_industry field in SALES_SV<br>
+  Trust: needs_validation &middot; SO identification relies on order_type field accuracy &middot; some SOs may be tagged as Open Market<br>
+  Rose (Data Agent) &middot; 2026-07-08
+</div>
+
+<script>
+// CHANNEL BREAKDOWN CHART
+function buildChannelChart(){
+  const el=document.getElementById('channelChart');
+  const data=[
+    {name:'Offline',gmv:142.5,pct:84.4,color:'var(--so-offline)'},
+    {name:'API',gmv:26.2,pct:15.5,color:'var(--so-api)'},
+    {name:'eCommerce',gmv:0.119,pct:0.07,color:'var(--so-ecom)'},
+    {name:'K2K',gmv:0.034,pct:0.02,color:'var(--so-k2k)'}
+  ];
+  const maxGMV=150;
+  el.innerHTML='';
+  data.forEach(d=>{
+    const h=Math.max(d.gmv/maxGMV*170,4);
+    const label=d.gmv>=1?'$'+d.gmv.toFixed(1)+'M':'$'+Math.round(d.gmv*1000)+'K';
+    el.innerHTML+=`
+      <div class="channel-col">
+        <div class="channel-val" style="color:${d.color}">${label}</div>
+        <div class="channel-bar" style="height:${h}px;background:${d.color};width:50px;"></div>
+        <div class="channel-label">${d.name}</div>
+        <div class="channel-sub">${d.pct}%</div>
+      </div>`;
+  });
+}
+
+// INDUSTRY CHART
+function buildIndustryChart(){
+  const el=document.getElementById('industryChart');
+  const data=[
+    {name:'Importers',gmv:128.3,pct:76.0,color:'var(--amber)'},
+    {name:'Wholesalers',gmv:39.3,pct:23.3,color:'var(--blue)'},
+    {name:'Growers',gmv:6.4,pct:3.8,color:'var(--green)'}
+  ];
+  const maxGMV=135;
+  el.innerHTML='';
+  data.forEach(d=>{
+    const h=d.gmv/maxGMV*150;
+    el.innerHTML+=`
+      <div class="industry-col">
+        <div class="industry-val" style="color:${d.color}">$${d.gmv}M</div>
+        <div class="industry-bar" style="height:${h}px;background:${d.color};width:60px;"></div>
+        <div class="industry-label">${d.name}</div>
+        <div class="industry-sub">${d.pct}%</div>
+      </div>`;
+  });
+}
+
+// COEXISTENCE CHART
+function buildCoexistChart(){
+  const el=document.getElementById('coexistChart');
+  const data=[
+    {name:'Mayesh',so:16.6,online:22.7,offline:54.8,pattern:'SO + heavy online'},
+    {name:'KBC',so:6.7,online:8.7,offline:48.6,pattern:'SO + moderate online'},
+    {name:'Bill Doran',so:6.5,online:2.1,offline:52.8,pattern:'SO dominant'},
+    {name:'Sole Farms',so:5.8,online:11.0,offline:14.3,pattern:'Online exceeds SO'}
+  ];
+  el.innerHTML='';
+  data.forEach(d=>{
+    const total=d.so+d.online+d.offline;
+    const wSO=d.so/total*100;
+    const wOnline=d.online/total*100;
+    const wOffline=d.offline/total*100;
+    el.innerHTML+=`
+      <div class="coex-col">
+        <div class="coex-name">${d.name}</div>
+        <div class="coex-bar-wrap">
+          <div class="coex-bar-label">Standing Order: $${d.so}M</div>
+          <div class="coex-bar-track"><div class="coex-bar-fill" style="width:${wSO}%;background:var(--red);">$${d.so}M</div></div>
+        </div>
+        <div class="coex-bar-wrap">
+          <div class="coex-bar-label">Non-SO Online: $${d.online}M</div>
+          <div class="coex-bar-track"><div class="coex-bar-fill" style="width:${wOnline}%;background:var(--green);">$${d.online}M</div></div>
+        </div>
+        <div class="coex-bar-wrap">
+          <div class="coex-bar-label">Non-SO Offline: $${d.offline}M</div>
+          <div class="coex-bar-track"><div class="coex-bar-fill" style="width:${wOffline}%;background:var(--offline);">$${d.offline}M</div></div>
+        </div>
+        <div class="coex-pattern">${d.pattern}</div>
+      </div>`;
+  });
+}
+
+// OFFLINE COMPOSITION CHART
+function buildOfflineComp(){
+  const el=document.getElementById('offlineComp');
+  const data=[
+    {name:'Open Market\n(Spot)',gmv:106.0,pct:42.6,color:'var(--blue)'},
+    {name:'Prebook',gmv:95.9,pct:38.5,color:'var(--api)'},
+    {name:'Standing\nOrder',gmv:39.1,pct:15.7,color:'var(--red)'},
+    {name:'Hard Goods\n/ N/A',gmv:7.5,pct:3.0,color:'var(--text3)'}
+  ];
+  const maxGMV=115;
+  el.innerHTML='';
+  data.forEach(d=>{
+    const h=Math.max(d.gmv/maxGMV*130,4);
+    el.innerHTML+=`
+      <div class="oc-col">
+        <div class="oc-val" style="color:${d.color}">$${d.gmv}M (${d.pct}%)</div>
+        <div class="oc-bar" style="height:${h}px;background:${d.color};width:50px;"></div>
+        <div class="oc-label">${d.name.replace('\n','<br>')}</div>
+      </div>`;
+  });
+}
+
+function mainTab(name){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+buildChannelChart(); buildIndustryChart(); buildCoexistChart(); buildOfflineComp();
+</script>
+</body>
+</html>
