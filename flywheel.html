@@ -11,7 +11,7 @@
     --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
     --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb;
     --offline: #6b7280; --ecom: #2563eb; --api: #7c3aed; --k2k: #059669;
-    --spins: #059669; --jams: #dc2626;
+    --spins: #059669; --jams: #dc2626; --internal: #8b5cf6;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1280px; margin: 0 auto; line-height: 1.5; }
@@ -28,6 +28,13 @@
   .verdict .g { color: var(--green); } .verdict .r { color: var(--red); } .verdict .a { color: var(--amber); }
   .verdict ul { font-size: 13px; color: var(--text2); padding-left: 20px; }
   .verdict li { margin-bottom: 4px; } .verdict strong { color: var(--text); }
+
+  .classification-block { background: var(--green-bg); border: 1px solid #a7f3d0; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; }
+  .classification-block h3 { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 8px; }
+  .classification-block .stat-row { display: flex; gap: 32px; margin-bottom: 8px; }
+  .classification-block .stat { font-size: 13px; color: var(--text2); }
+  .classification-block .stat strong { color: var(--text); font-size: 18px; }
+  .classification-block .methods { font-size: 11px; color: var(--text3); margin-top: 8px; padding-top: 8px; border-top: 1px solid #a7f3d0; }
 
   .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
   .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
@@ -55,6 +62,7 @@
   .dtable td.num { text-align: right; }
   .dtable tr:hover { background: var(--surface); }
   .dtable .total-row { border-top: 2px solid var(--border); font-weight: 600; }
+  .dtable .subtotal-row { border-top: 1px solid var(--border); font-weight: 500; font-style: italic; color: var(--text2); }
   .ch-dot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
 
   .status-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
@@ -62,6 +70,8 @@
   .status-tag.jams { background: var(--red-bg); color: var(--red); }
   .status-tag.contract { background: var(--amber-bg); color: var(--amber); }
   .status-tag.included { background: var(--surface2); color: var(--text3); }
+  .status-tag.internal { background: #f5f3ff; color: #7c3aed; }
+  .status-tag.new-data { background: #dbeafe; color: #2563eb; }
 
   .sequence-section { margin-top: 8px; }
   .sequence-row { display: grid; grid-template-columns: 80px 1fr; gap: 16px; margin-bottom: 20px; }
@@ -84,14 +94,12 @@
   .so-block p { font-size: 12px; color: var(--text2); }
   .so-block strong { color: var(--text); }
 
-  /* Flywheel visual */
   .flywheel-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
   .fw-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
   .fw-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
   .fw-card .fw-stat { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
   .fw-card .fw-detail { font-size: 11px; color: var(--text3); }
 
-  /* Bar chart for layers */
   .layer-bar-container { margin-top: 12px; }
   .layer-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
   .layer-bar-name { width: 160px; font-size: 11px; color: var(--text2); text-align: right; flex-shrink: 0; }
@@ -107,6 +115,12 @@
   .next-link strong { color: var(--blue); }
 
   .source { font-size: 10px; color: var(--text3); margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.7; }
+
+  .method-table { margin-top: 16px; }
+  .method-table td { padding: 6px 10px; font-size: 11px; }
+  .method-table .method-name { font-weight: 600; color: var(--text); }
+  .method-table .method-desc { color: var(--text2); }
+  .method-table .method-val { text-align: right; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -115,31 +129,52 @@
 
 <div class="header">
   <h1>The Koronet Flywheel: Layer by Layer</h1>
-  <div class="purpose">How GMV flows through the ecosystem layer by layer. Where it spins (online, generating fees) and where it jams (offline, at $0). H1 2026.</div>
+  <div class="purpose">How GMV flows through the ecosystem layer by layer. Where it spins (online, generating fees) and where it jams (offline, at $0). H1 2026. Full $859M classified.</div>
+</div>
+
+<div class="classification-block">
+  <h3>Classification Complete: 46.6% gap resolved</h3>
+  <div class="stat-row">
+    <div class="stat">Previously classified: <strong>$432M</strong> (50.3%)</div>
+    <div class="stat">Newly classified: <strong>$416M</strong> (48.4%)</div>
+    <div class="stat">Truly unresolvable: <strong>$11.2M</strong> (1.3%)</div>
+  </div>
+  <div class="stat-row">
+    <div class="stat">Total ecosystem: <strong>$859M</strong> (100%)</div>
+  </div>
+  <div class="methods">
+    <strong>4 classification approaches applied:</strong>
+    (1) customer_type normalization: 193 distinct values mapped to 7 buyer types.
+    (2) KBC tier decode: A/B/D/G = volume tiers, not types. Name-matched 6,835 customers; remainder defaulted to Retailer (KBC = wholesaler selling to florists).
+    (3) Rosaprima/Royal geo-code decode: USA/Europe/CIS/etc = destination market. Name-matched 885 buyers; remainder defaulted to Wholesaler (Rosaprima = grower selling to importers/wholesalers).
+    (4) Blank customer_type: name-matched by industry keywords + defaulted by seller type (wholesalers sell to retailers, importers sell to wholesalers).
+  </div>
 </div>
 
 <div class="verdict">
-  <div class="headline"><span class="g">The flywheel spins at Importer &rarr; Wholesaler</span> — <span class="r">and jams at Wholesaler &rarr; Retailer.</span></div>
+  <div class="headline"><span class="g">The flywheel spins at Importer &rarr; Wholesaler</span> &mdash; <span class="r">and jams at Wholesaler &rarr; Retailer.</span></div>
   <ul>
     <li><strong>77% of fees</strong> come from one layer: Importer &rarr; Wholesaler ($1,034K). This is where the platform creates value.</li>
-    <li><strong>Wholesaler &rarr; Retailer is stuck:</strong> $73.8M GMV but only 4.7% eCom ($3.4M). Catalog gaps, offline Standing Orders, and holiday trust reversion keep it offline.</li>
-    <li><strong>BUY &rarr; LIST &rarr; SELL sequence breaks at LIST:</strong> Wholesalers buy $17.7M digitally (Procurement) but only list 16.4% of products online. Unlisted = unsellable.</li>
-    <li><strong>Standing Orders = $168.9M</strong> ($142.5M offline at $0 fees). No digital SO product exists. This is the single largest blocked pool.</li>
-    <li><strong>Concentration risk:</strong> Remove Mayesh + KBC and only $16.2M of digital volume remains across wholesalers.</li>
+    <li><strong>Wholesaler &rarr; Retailer is 3x bigger than we thought:</strong> $213.9M GMV (was $73.8M before classifying KBC/Mayesh tier codes). Only 15.9% online. The bottleneck is MASSIVE.</li>
+    <li><strong>Imp &rarr; Retailer is $111.9M</strong> (was $61.2M). Importers sell directly to retailers &mdash; this is a parallel channel where the wholesaler is bypassed.</li>
+    <li><strong>Mass Market = $118.4M at $0 fees.</strong> Contract/EDI flow. 0.3% online. Not a digital play today.</li>
+    <li><strong>Internal transfers = $57M</strong> (6.6%). Wholesaler inter-branch + importer intercompany. Excluded from commercial layer totals.</li>
+    <li><strong>Standing Orders = $168.9M</strong> ($142.5M offline at $0 fees). No digital SO product exists. Single largest blocked pool.</li>
   </ul>
 </div>
 
 <div class="kpis">
-  <div class="kpi"><div class="label">Total Ecosystem GMV</div><div class="val">$432M</div><div class="note">All layers H1 (ks_flag, &lt;$100K)</div></div>
-  <div class="kpi"><div class="label">Online GMV</div><div class="val">$69M</div><div class="note">eCom + API + K2K combined</div></div>
-  <div class="kpi"><div class="label">Total Fees</div><div class="val">$1,089K</div><div class="note">77% from Imp &rarr; Whl layer</div></div>
-  <div class="kpi"><div class="label">Spins Layer</div><div class="val" style="color:var(--green)">24.8%</div><div class="note">Imp &rarr; Whl online rate</div></div>
-  <div class="kpi"><div class="label">Jams Layer</div><div class="val" style="color:var(--red)">4.7%</div><div class="note">Whl &rarr; Ret eCom rate</div></div>
+  <div class="kpi"><div class="label">Total Ecosystem GMV</div><div class="val">$859M</div><div class="note">All layers H1 (ks_flag, &lt;$100K)</div></div>
+  <div class="kpi"><div class="label">Commercial GMV</div><div class="val">$791M</div><div class="note">Excl. $57M internal + $11M other</div></div>
+  <div class="kpi"><div class="label">Total Fees</div><div class="val">$1,339K</div><div class="note">77% from Imp &rarr; Whl layer</div></div>
+  <div class="kpi"><div class="label">Spins Layer</div><div class="val" style="color:var(--green)">21.5%</div><div class="note">Imp &rarr; Whl online rate</div></div>
+  <div class="kpi"><div class="label">Jams Layer</div><div class="val" style="color:var(--red)">15.9%</div><div class="note">Whl &rarr; Ret online rate</div></div>
 </div>
 
 <div class="tabs" id="mainTabs">
   <div class="tab active" onclick="mainTab('layers')">Layer Table</div>
   <div class="tab" onclick="mainTab('visual')">Visual Breakdown</div>
+  <div class="tab" onclick="mainTab('classify')">Classification Method</div>
   <div class="tab" onclick="mainTab('sequence')">BUY &rarr; LIST &rarr; SELL</div>
   <div class="tab" onclick="mainTab('jams')">Why It Jams</div>
   <div class="tab" onclick="mainTab('so')">Standing Orders</div>
@@ -148,64 +183,152 @@
 
 <!-- LAYER TABLE -->
 <div id="tc-layers" class="tab-content active">
-  <div class="section-head"><h2>Ecosystem Layers: GMV, Online %, and Fees</h2><div class="hint">H1 2026 &middot; ks_flag=TRUE &middot; sales&lt;$100K</div></div>
+  <div class="section-head"><h2>Ecosystem Layers: GMV, Online %, and Fees</h2><div class="hint">H1 2026 &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; FULL CLASSIFICATION</div></div>
   <table class="dtable">
     <thead><tr><th>Layer</th><th class="num">GMV</th><th class="num">Online GMV</th><th class="num">Online %</th><th class="num">Fees</th><th>Status</th></tr></thead>
     <tbody>
-      <tr>
-        <td><span class="ch-dot" style="background:var(--text3)"></span>Grower &rarr; Importer</td>
-        <td class="num">$9.5M</td>
-        <td class="num">$0.9M</td>
-        <td class="num">9.1%</td>
-        <td class="num">$18K</td>
-        <td><span class="status-tag included">Low volume</span></td>
-      </tr>
       <tr style="background:var(--green-bg)">
         <td><span class="ch-dot" style="background:var(--green)"></span><strong>Importer &rarr; Wholesaler</strong></td>
-        <td class="num"><strong>$186.6M</strong></td>
-        <td class="num"><strong>$46.2M</strong></td>
-        <td class="num pos"><strong>24.8%</strong></td>
+        <td class="num"><strong>$270.9M</strong></td>
+        <td class="num"><strong>$58.3M</strong></td>
+        <td class="num pos"><strong>21.5%</strong></td>
         <td class="num pos"><strong>$1,034K</strong></td>
         <td><span class="status-tag spins">SPINS &middot; 77% of fees</span></td>
       </tr>
+      <tr style="background:var(--red-bg)">
+        <td><span class="ch-dot" style="background:var(--red)"></span><strong>Wholesaler &rarr; Retailer</strong></td>
+        <td class="num"><strong>$213.9M</strong></td>
+        <td class="num"><strong>$34.0M</strong></td>
+        <td class="num neg"><strong>15.9%</strong></td>
+        <td class="num neg"><strong>$249K</strong></td>
+        <td><span class="status-tag jams">JAMS &middot; biggest bottleneck</span></td>
+      </tr>
       <tr>
         <td><span class="ch-dot" style="background:var(--api)"></span>Importer &rarr; Retailer</td>
-        <td class="num">$61.2M</td>
-        <td class="num">$8.0M</td>
-        <td class="num">13.0%</td>
-        <td class="num" style="color:var(--text3)">incl. above</td>
-        <td><span class="status-tag included">Included in Imp fees</span></td>
+        <td class="num">$111.9M</td>
+        <td class="num">$18.5M</td>
+        <td class="num">16.5%</td>
+        <td class="num" style="color:var(--text3)">incl. in Imp fees</td>
+        <td><span class="status-tag included">Skip-level &middot; direct to florist</span></td>
       </tr>
       <tr>
         <td><span class="ch-dot" style="background:var(--amber)"></span>Importer &rarr; Mass Market</td>
-        <td class="num">$83.8M</td>
-        <td class="num">$0.3M</td>
-        <td class="num neg">0.3%</td>
+        <td class="num">$100.5M</td>
+        <td class="num">$0.2M</td>
+        <td class="num neg">0.2%</td>
         <td class="num" style="color:var(--text3)">$0</td>
         <td><span class="status-tag contract">Contract/EDI</span></td>
       </tr>
-      <tr style="background:var(--red-bg)">
-        <td><span class="ch-dot" style="background:var(--red)"></span><strong>Wholesaler &rarr; Retailer</strong></td>
-        <td class="num"><strong>$73.8M</strong></td>
-        <td class="num"><strong>$3.4M eCom + $9.7M API</strong></td>
-        <td class="num neg"><strong>4.7% eCom / 17.8% total</strong></td>
-        <td class="num neg"><strong>$37K</strong></td>
-        <td><span class="status-tag jams">JAMS</span></td>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--internal)"></span>Wholesaler &rarr; Internal</td>
+        <td class="num" style="color:var(--text3)">$48.0M</td>
+        <td class="num" style="color:var(--text3)">$7.1M</td>
+        <td class="num" style="color:var(--text3)">14.8%</td>
+        <td class="num" style="color:var(--text3)">&mdash;</td>
+        <td><span class="status-tag internal">Internal transfers</span></td>
       </tr>
       <tr>
-        <td><span class="ch-dot" style="background:var(--text3)"></span>Wholesaler &rarr; Mass Market</td>
-        <td class="num">$10.4M</td>
+        <td><span class="ch-dot" style="background:var(--amber)"></span>Wholesaler &rarr; Mass Market</td>
+        <td class="num">$17.9M</td>
         <td class="num">$0.1M</td>
         <td class="num neg">0.7%</td>
         <td class="num" style="color:var(--text3)">$0</td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="ch-dot" style="background:var(--text3)"></span>Wholesaler &rarr; Wholesaler</td>
-        <td class="num">$6.4M</td>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Grower &rarr; Wholesaler</td>
+        <td class="num">$12.2M</td>
         <td class="num">$0.7M</td>
-        <td class="num">10.4%</td>
+        <td class="num">5.6%</td>
+        <td class="num">$18K</td>
+        <td><span class="status-tag included">Supply chain start</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Wholesaler &rarr; Wholesaler</td>
+        <td class="num">$9.6M</td>
+        <td class="num">$0.7M</td>
+        <td class="num">7.5%</td>
         <td class="num" style="color:var(--text3)">incl.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Importer &rarr; Importer</td>
+        <td class="num">$9.2M</td>
+        <td class="num">$0.2M</td>
+        <td class="num">2.4%</td>
+        <td class="num" style="color:var(--text3)">incl.</td>
+        <td><span class="status-tag included">Re-export / redistribution</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--internal)"></span>Importer &rarr; Internal</td>
+        <td class="num" style="color:var(--text3)">$8.9M</td>
+        <td class="num" style="color:var(--text3)">$0.0M</td>
+        <td class="num" style="color:var(--text3)">0.0%</td>
+        <td class="num" style="color:var(--text3)">&mdash;</td>
+        <td><span class="status-tag internal">CFG intercompany</span></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Imp &rarr; Bouquet Maker</td>
+        <td class="num">$6.6M</td>
+        <td class="num">$0.2M</td>
+        <td class="num">2.7%</td>
+        <td class="num" style="color:var(--text3)">incl.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Imp &rarr; Grower (return/exchange)</td>
+        <td class="num">$5.8M</td>
+        <td class="num">$0.0M</td>
+        <td class="num neg">0.0%</td>
+        <td class="num" style="color:var(--text3)">&mdash;</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Grower &rarr; Retailer</td>
+        <td class="num">$5.2M</td>
+        <td class="num">$0.1M</td>
+        <td class="num">1.1%</td>
+        <td class="num" style="color:var(--text3)">incl.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Grower &rarr; Importer</td>
+        <td class="num">$3.5M</td>
+        <td class="num">$0.0M</td>
+        <td class="num">1.2%</td>
+        <td class="num" style="color:var(--text3)">incl.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Grower &rarr; Mass Market</td>
+        <td class="num">$3.5M</td>
+        <td class="num">$0.0M</td>
+        <td class="num neg">0.0%</td>
+        <td class="num" style="color:var(--text3)">$0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="ch-dot" style="background:var(--text3)"></span>Other layers</td>
+        <td class="num" style="color:var(--text3)">$22.3M</td>
+        <td class="num" style="color:var(--text3)">$2.3M</td>
+        <td class="num" style="color:var(--text3)">10.3%</td>
+        <td class="num" style="color:var(--text3)">$38K</td>
+        <td><span class="status-tag included">eCom buyers, brokers, other</span></td>
+      </tr>
+      <tr class="total-row">
+        <td>TOTAL ECOSYSTEM</td>
+        <td class="num">$859.2M</td>
+        <td class="num">$122.3M</td>
+        <td class="num">14.2%</td>
+        <td class="num">$1,339K</td>
+        <td></td>
+      </tr>
+      <tr class="subtotal-row">
+        <td>Commercial only (excl. Internal)</td>
+        <td class="num">$802.3M</td>
+        <td class="num">$115.2M</td>
+        <td class="num">14.4%</td>
+        <td class="num">$1,339K</td>
         <td></td>
       </tr>
     </tbody>
@@ -220,42 +343,119 @@
 
 <!-- VISUAL BREAKDOWN -->
 <div id="tc-visual" class="tab-content">
-  <div class="section-head"><h2>Where Value Concentrates</h2><div class="hint">Two sides of the flywheel</div></div>
+  <div class="section-head"><h2>Where Value Concentrates</h2><div class="hint">Full $859M classified</div></div>
   <div class="flywheel-visual">
     <div class="fw-card" style="border-left: 4px solid var(--green);">
       <h3 style="color:var(--green)">The Engine: Importer &rarr; Wholesaler</h3>
-      <div class="fw-stat" style="color:var(--green)">$186.6M</div>
-      <div class="fw-detail">$46.2M online (24.8%) &middot; $1,034K in fees</div>
+      <div class="fw-stat" style="color:var(--green)">$270.9M</div>
+      <div class="fw-detail">$58.3M online (21.5%) &middot; $1,034K in fees &middot; 31.5% of ecosystem</div>
       <div style="margin-top:12px; font-size:12px; color:var(--text2)">
-        This layer alone generates <strong>77% of all TX fees</strong>. It has the highest online adoption because importers + Komet push digital procurement. K2K connections drive the flow.
+        This layer alone generates <strong>77% of all TX fees</strong>. It has the highest online adoption because importers + Komet push digital procurement. K2K connections drive the flow. Includes Rosaprima's $56.6M (previously coded by geography, now classified as wholesaler buyers).
       </div>
     </div>
     <div class="fw-card" style="border-left: 4px solid var(--red);">
       <h3 style="color:var(--red)">The Bottleneck: Wholesaler &rarr; Retailer</h3>
-      <div class="fw-stat" style="color:var(--red)">$73.8M</div>
-      <div class="fw-detail">$3.4M eCom (4.7%) &middot; $37K in fees</div>
+      <div class="fw-stat" style="color:var(--red)">$213.9M</div>
+      <div class="fw-detail">$34.0M online (15.9%) &middot; $249K in fees &middot; 24.9% of ecosystem</div>
       <div style="margin-top:12px; font-size:12px; color:var(--text2)">
-        Largest fee-gap layer. Wholesalers sell via phone/email/habits. Products not listed, SOs not digital, buyers revert offline for holidays. <strong>$37K on $73.8M = 0.05% take-rate.</strong>
+        <strong>3x bigger than previously shown ($73.8M).</strong> KBC's $63M in tier-coded sales (A/B/D/G) + Mayesh's operational codes were hiding here. This is the #1 fee-growth opportunity. <strong>$249K on $213.9M = 0.12% take-rate.</strong>
       </div>
     </div>
   </div>
   <div class="flywheel-visual" style="margin-top:16px">
+    <div class="fw-card" style="border-left: 4px solid var(--api);">
+      <h3 style="color:var(--api)">Skip-Level: Importer &rarr; Retailer</h3>
+      <div class="fw-stat" style="color:var(--api)">$111.9M</div>
+      <div class="fw-detail">$18.5M online (16.5%) &middot; 13.0% of ecosystem</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text2)">
+        Importers selling directly to florists, bypassing wholesalers. <strong>Nearly doubled from $61.2M</strong> after classifying blank buyer types. Higher online rate than Whl &rarr; Ret (importers push digital harder).
+      </div>
+    </div>
     <div class="fw-card">
       <h3>Mass Market: The Walled Garden</h3>
-      <div class="fw-stat" style="color:var(--amber)">$94.2M</div>
-      <div class="fw-detail">Imp &rarr; MM ($83.8M) + Whl &rarr; MM ($10.4M)</div>
+      <div class="fw-stat" style="color:var(--amber)">$118.4M</div>
+      <div class="fw-detail">Imp &rarr; MM ($100.5M) + Whl &rarr; MM ($17.9M) &middot; 13.8% of ecosystem</div>
       <div style="margin-top:12px; font-size:12px; color:var(--text2)">
-        Contract/EDI flow. 0.3% online. <strong>$0 fees.</strong> Not a digital play in the current product.
+        Contract/EDI flow. 0.3% online. <strong>$0 fees.</strong> Includes KBC grocery accounts (Tony's Finer Foods, Caputo's, Sendik's, etc.) now properly classified from tier codes.
+      </div>
+    </div>
+  </div>
+  <div class="flywheel-visual" style="margin-top:16px">
+    <div class="fw-card" style="border-left: 4px solid var(--internal);">
+      <h3 style="color:var(--internal)">Internal Transfers</h3>
+      <div class="fw-stat" style="color:var(--internal)">$56.9M</div>
+      <div class="fw-detail">Whl internal ($48.0M) + Imp intercompany ($8.9M)</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text2)">
+        Inter-branch, intercompany, CFG premade, Fresca non-sale. <strong>Not commercial volume &mdash; excluded from flywheel analysis.</strong> $7.1M of this flows through online channels (internal procurement between branches).
       </div>
     </div>
     <div class="fw-card">
-      <h3>Grower &rarr; Importer: The Start</h3>
-      <div class="fw-stat" style="color:var(--text3)">$9.5M</div>
-      <div class="fw-detail">$0.9M online (9.1%) &middot; $18K fees</div>
+      <h3>Supply Chain: Grower Layers</h3>
+      <div class="fw-stat" style="color:var(--text3)">$29.2M</div>
+      <div class="fw-detail">Grw &rarr; Whl ($12.2M) + Grw &rarr; Ret ($5.2M) + Grw &rarr; Imp ($3.5M) + Grw &rarr; MM ($3.5M)</div>
       <div style="margin-top:12px; font-size:12px; color:var(--text2)">
-        Small layer. Growers are supply-side. Low digital adoption.
+        Small layer. Growers are supply-side. Low digital adoption (5.6% best case). $18K fees from direct grower sales.
       </div>
     </div>
+  </div>
+</div>
+
+<!-- CLASSIFICATION METHOD -->
+<div id="tc-classify" class="tab-content">
+  <div class="section-head"><h2>How We Classified $428M of Unclassified GMV</h2><div class="hint">4 approaches &middot; 193 distinct customer_type values &middot; 6,835+ buyer names matched</div></div>
+
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:16px">
+    <h3 style="font-size:13px; margin-bottom:12px">The Problem</h3>
+    <p style="font-size:12px; color:var(--text2)">
+      SALE_DETAILS.customer_type is freetext. 193 distinct values including blank, tier codes (A/B/D/G), geography (USA/Europe/CIS), operational codes (Shipping/NB/XS), and hundreds of variants of the same concept ("Retailer"/"Retail"/"RETAILER"/"RET"/"Retail Florist"/"Retailer - Business"/etc).
+    </p>
+  </div>
+
+  <table class="dtable method-table">
+    <thead><tr><th>Approach</th><th>What it classified</th><th class="num">GMV resolved</th><th class="num">Confidence</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="method-name">1. customer_type normalization</td>
+        <td class="method-desc">193 distinct values mapped to 7 buyer types. "Retailer"/"Retail"/"RETAILER"/"RET" all &rarr; Retailer. "16. Supermarket WF" &rarr; Mass Market. "Bouquet Maker" &rarr; Bouquet Maker. etc.</td>
+        <td class="num method-val" style="color:var(--green)">$580M</td>
+        <td class="num" style="color:var(--green)">HIGH</td>
+      </tr>
+      <tr>
+        <td class="method-name">2. KBC tier-code decode</td>
+        <td class="method-desc">A/B/D/G = KBC volume tiers (ALL from Kennicott). Name-matched grocery chains (Tony's, Caputo's, Sendik's) &rarr; Mass Market. Wholesaler names &rarr; Wholesaler. Remainder &rarr; Retailer (KBC's business is selling to florists).</td>
+        <td class="num method-val" style="color:var(--green)">$63.0M</td>
+        <td class="num" style="color:var(--green)">HIGH</td>
+      </tr>
+      <tr>
+        <td class="method-name">3. Rosaprima/Royal geo decode</td>
+        <td class="method-desc">USA/Europe/CIS/ROW/Canada/Asia/Australia = Rosaprima + Royal Flowers destination-market codes. Name-matched known florists &rarr; Retailer. Remainder &rarr; Wholesaler (Rosaprima sells to importers/wholesalers, not end retailers).</td>
+        <td class="num method-val" style="color:var(--blue)">$56.6M</td>
+        <td class="num" style="color:var(--blue)">MEDIUM-HIGH</td>
+      </tr>
+      <tr>
+        <td class="method-name">4. Blank customer_type: name + seller default</td>
+        <td class="method-desc">Matched customer_name ILIKE patterns for grocery/wholesale/florist/event/import keywords. Unmatched defaulted by seller type: Wholesaler sellers &rarr; Retailer buyers. Importer sellers &rarr; Wholesaler buyers. Grower sellers &rarr; Importer buyers.</td>
+        <td class="num method-val" style="color:var(--blue)">$148.3M</td>
+        <td class="num" style="color:var(--amber)">MEDIUM</td>
+      </tr>
+      <tr class="total-row">
+        <td>Unresolvable remainder</td>
+        <td class="method-desc">Other/miscellaneous codes, unique operational types (eCom buyers, brokers, cooler rental, liquidation)</td>
+        <td class="num method-val" style="color:var(--text3)">$11.2M</td>
+        <td class="num" style="color:var(--text3)">N/A (1.3%)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin-top:16px">
+    <h3 style="font-size:13px; margin-bottom:8px">Key Discoveries</h3>
+    <ul style="font-size:12px; color:var(--text2); padding-left:18px">
+      <li><strong>KBC tier codes (A/B/D/G) = $63M from one company.</strong> These are volume tiers, not buyer types. Tier A includes Tony's Finer Foods (grocery) AND Flowers4Dreams (florist) AND Kehoe Designs (event). Had to name-match each customer individually.</li>
+      <li><strong>Rosaprima's $56.6M uses geography as customer_type.</strong> "USA" doesn't mean the buyer is in the US market layer &mdash; it means Rosaprima ships roses there. The buyers are overwhelmingly wholesalers (Delaware Valley, Kennicott, Len Busch) and importers.</li>
+      <li><strong>"Internal" = $57M hiding in the ecosystem.</strong> Wholesaler inter-branch transfers ($48M) + importer intercompany (CFG, Fresca non-sale, $8.9M). This was inflating commercial GMV in the old table.</li>
+      <li><strong>Wholesaler &rarr; Retailer nearly tripled</strong> ($73.8M &rarr; $213.9M) because KBC tier codes, Mayesh op codes (Shipping/NB/XS/MC/HC/NP), and blank customer_type all resolved to retailers.</li>
+      <li><strong>The "default by seller type" assumption (Approach 4) accounts for ~$70M.</strong> This is the least certain bucket. A wholesaler's customer with blank type is PROBABLY a retailer, but could be another wholesaler or mass market. Conservative confidence: MEDIUM.</li>
+    </ul>
   </div>
 </div>
 
@@ -268,7 +468,7 @@
       <div class="seq-body">
         Wholesalers buy <strong>$17.7M digitally</strong> via Procurement (K2K).<br>
         KBC: <strong>$7.8M</strong> &middot; BDC: <strong>$3.8M</strong> &middot; Others: $6.1M<br>
-        <span style="font-size:11px; color:var(--text3)">This is the input — product enters the wholesaler's system digitally.</span>
+        <span style="font-size:11px; color:var(--text3)">This is the input &mdash; product enters the wholesaler's system digitally.</span>
       </div>
     </div>
     <div class="seq-arrow">&darr;</div>
@@ -284,20 +484,19 @@
     <div class="sequence-row">
       <div class="seq-label sell">SELL</div>
       <div class="seq-body">
-        Only <strong>$3.4M eCom</strong> in Wholesaler &rarr; Retailer (4.7%).<br>
-        $9.7M API (auto-orders, not buyer-initiated) brings total digital to 17.8%.<br>
-        <span style="font-size:11px; color:var(--text3)">Even the sell side that goes online is mostly API (machine-to-machine), not eCommerce (buyer-initiated).</span>
+        <strong>$34.0M online</strong> in Wholesaler &rarr; Retailer (15.9%).<br>
+        <span style="font-size:11px; color:var(--text3)">Mix of eCom (buyer-initiated) and API (auto-orders). The $213.9M addressable market means 84% is still offline.</span>
       </div>
     </div>
   </div>
   <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin-top:16px; font-size:12px; color:var(--text2);">
-    <strong style="color:var(--text)">Implication:</strong> Fix the LIST step to unlock the SELL step. The product already enters digitally (BUY works). But if wholesalers don't list their catalog online, retailers have nothing to buy. Catalog coverage initiatives (Initiative 2) attack this directly.
+    <strong style="color:var(--text)">Updated with full classification:</strong> The Whl &rarr; Ret addressable market is $213.9M, not $73.8M. That means the offline pool is <strong>$179.9M at $0 fees</strong> &mdash; 2.4x larger than previously thought. At the Imp &rarr; Whl take-rate (0.38%), digitizing this layer = <strong>$683K/year in fees</strong>.
   </div>
 </div>
 
 <!-- WHY IT JAMS -->
 <div id="tc-jams" class="tab-content">
-  <div class="section-head"><h2>Why It Jams at Wholesaler &rarr; Retailer</h2><div class="hint">Four structural barriers keeping $73.8M offline</div></div>
+  <div class="section-head"><h2>Why It Jams at Wholesaler &rarr; Retailer</h2><div class="hint">Four structural barriers keeping $213.9M mostly offline</div></div>
   <div class="jam-block">
     <h3>Structural Barriers</h3>
     <div class="jam-item">
@@ -314,7 +513,7 @@
     </div>
     <div class="jam-item">
       <div class="jam-num">4</div>
-      <div><strong>CONCENTRATION: Remove Mayesh + KBC = $16.2M digital total.</strong> The digital wholesaler base is thin. Two accounts drive the majority. If either stops, the layer collapses.</div>
+      <div><strong>CONCENTRATION: Remove Mayesh + KBC = thin digital base.</strong> The digital wholesaler base is thin. Two accounts drive the majority. If either stops, the layer collapses.</div>
     </div>
   </div>
   <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin-top:16px; font-size:12px; color:var(--text2);">
@@ -343,7 +542,7 @@
       <strong style="color:var(--red)">$142.5M offline at $0 fees.</strong> These are recurring purchase commitments placed by phone, email, or habit. No digital Standing Order product exists to capture them online. At 0.87% blended rate, this pool = <strong>$1.24M/year</strong> blocked.
     </p>
     <p style="margin-top:8px; font-size:12px; color:var(--text2);">
-      <strong>Wholesaler SOs specifically:</strong> $39.3M offline. These sit at the Wholesaler &rarr; Retailer layer — the bottleneck.
+      <strong>Wholesaler SOs specifically:</strong> $39.3M offline. These sit at the Wholesaler &rarr; Retailer layer &mdash; the bottleneck.
     </p>
   </div>
 </div>
@@ -356,14 +555,16 @@
 </div>
 
 <div class="source">
-  SALES_SV &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; shipping_date H1 2026<br>
-  Layer classification: seller_industry / buyer_industry from SALE_DETAILS joined with COMPANIES<br>
+  SALES_SV &middot; ks_flag=TRUE &middot; sales&lt;$100K &middot; shipping_date H1 2026 &middot; DISTINCT sale_item_id (Rule 5 fan-out fix)<br>
+  Layer classification: 4-approach buyer classification on customer_type + customer_name + company_industry<br>
+  Approach 1: customer_type normalization (193 values &rarr; 7 types) &middot; Approach 2: KBC tier-code name matching (A/B/D/G &rarr; retail/mass market/wholesale)<br>
+  Approach 3: Rosaprima/Royal geo-code decode (USA/Europe/CIS &rarr; wholesaler/importer) &middot; Approach 4: blank customer_type default by seller industry + name matching<br>
   Standing Orders: ORDER_TYPE='Standing Order' in SALE_DETAILS<br>
-  Fees: CONSOLIDATED_TRANSACTION_FEES_SV &middot; status='Billed' &middot; transaction_date H1 2026<br>
-  Catalog data: PRODUCTS_SV &middot; company_id filter for BDC &middot; status='Active'<br>
+  Fees: CONSOLIDATED_TRANSACTION_FEES_SV &middot; transaction_date H1 2026 &middot; Billed + Projected<br>
   Online = SALES_CHANNEL in ('eCommerce','Procurement','API') &middot; Offline = SALES_CHANNEL='Offline'<br>
-  Trust: needs_validation &middot; Product listings and catalog coverage approximate<br>
-  Rose (Data Agent) &middot; 2026-07-08
+  Unresolvable: 1.3% ($11.2M) &mdash; miscellaneous operational types, brokers, eCom-typed buyers, liquidation<br>
+  Trust: NEEDS_VALIDATION &middot; Default-by-seller assumption (Approach 4, ~$70M) is MEDIUM confidence<br>
+  Rose (Data Agent) &middot; 2026-07-08 &middot; Updated classification 2026-07-08
 </div>
 
 <script>
@@ -374,19 +575,20 @@ function mainTab(name){
   event.target.classList.add('active');
 }
 
-// Build layer bars
 function buildLayerBars(){
   const el=document.getElementById('layerBars');
   const layers=[
-    {name:'Imp \u2192 Wholesaler', gmv:186.6, online:46.2, pct:'24.8%', color:'var(--green)'},
-    {name:'Imp \u2192 Retailer', gmv:61.2, online:8.0, pct:'13.0%', color:'var(--api)'},
-    {name:'Whl \u2192 Whl', gmv:6.4, online:0.7, pct:'10.4%', color:'var(--text3)'},
-    {name:'Grower \u2192 Imp', gmv:9.5, online:0.9, pct:'9.1%', color:'var(--text3)'},
-    {name:'Whl \u2192 Retailer (eCom)', gmv:73.8, online:3.4, pct:'4.7%', color:'var(--red)'},
-    {name:'Whl \u2192 Mass Market', gmv:10.4, online:0.1, pct:'0.7%', color:'var(--red)'},
-    {name:'Imp \u2192 Mass Market', gmv:83.8, online:0.3, pct:'0.3%', color:'var(--red)'},
+    {name:'Imp \u2192 Wholesaler', gmv:270.9, online:58.3, pct:'21.5%', color:'var(--green)'},
+    {name:'Whl \u2192 Retailer', gmv:213.9, online:34.0, pct:'15.9%', color:'var(--red)'},
+    {name:'Imp \u2192 Retailer', gmv:111.9, online:18.5, pct:'16.5%', color:'var(--api)'},
+    {name:'Whl \u2192 Whl', gmv:9.6, online:0.7, pct:'7.5%', color:'var(--text3)'},
+    {name:'Grower \u2192 Whl', gmv:12.2, online:0.7, pct:'5.6%', color:'var(--text3)'},
+    {name:'Imp \u2192 Imp', gmv:9.2, online:0.2, pct:'2.4%', color:'var(--text3)'},
+    {name:'Grower \u2192 Ret', gmv:5.2, online:0.1, pct:'1.1%', color:'var(--text3)'},
+    {name:'Whl \u2192 Mass Market', gmv:17.9, online:0.1, pct:'0.7%', color:'var(--red)'},
+    {name:'Imp \u2192 Mass Market', gmv:100.5, online:0.2, pct:'0.2%', color:'var(--red)'},
   ];
-  const maxGMV=186.6;
+  const maxGMV=270.9;
   layers.forEach(l=>{
     const totalW=(l.gmv/maxGMV)*100;
     const onlineW=(l.online/l.gmv)*100;
