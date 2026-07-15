@@ -136,6 +136,7 @@
       <div class="rule dangerRule"><strong>Agents support.</strong><p>Agents propose rows, check evidence, route feedback, and flag anything that is not approved or sourced.</p></div>
     </div>
     <div class="quickLinks">
+      <a href="/tx-dashboards/tx-strategy-v2/tx-agent-handoffs.html">Open TX agent handoffs</a>
       <a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Open generated compliance audit</a>
       <a href="/tx-dashboards/tx-strategy-v2/launch-readiness.html">Open launch readiness</a>
       <a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Open readiness matrix</a>
@@ -150,7 +151,7 @@
           <tr><td>Canonical</td><td>Canonical before agent memory. Conflicting memory is not used silently.</td><td>Codex + Nahua</td><td><span class="trust approval">Preflight required</span></td></tr>
           <tr><td>Value prop</td><td>No talk track, objection response, play, or stakeholder note ships without value-prop dependency.</td><td>Lautaro + Facu gate</td><td><span class="trust approval">Dependency required</span></td></tr>
           <tr><td>Evidence</td><td>Every number needs source, date basis, freshness, and trust label.</td><td>Rose</td><td><span class="trust directional">Trust labeled</span></td></tr>
-          <tr><td>Execution</td><td>Every Friday row needs account, owner, action, result/learning, blocker, next date.</td><td>Mercury + Pablito</td><td><span class="trust verified">Action linked</span></td></tr>
+          <tr><td>Execution</td><td>Every Friday row needs account, owner, action, result/learning, blocker, next date.</td><td>Mercurio + Pablito</td><td><span class="trust verified">Action linked</span></td></tr>
           <tr><td>Comms</td><td>Socrates communicates approved strategy. It does not invent data or final P0 accounts.</td><td>Socrates</td><td><span class="trust approval">Approved framing</span></td></tr>
         </tbody>
       </table>
@@ -206,7 +207,7 @@
         <tbody>
           <tr><td>Feedback packet</td><td>Account/initiative, what happened, result, blocker/learning, need from Facu/system.</td><td>Pablito</td><td>Route to owner + due date.</td></tr>
           <tr><td>Call packet</td><td>Source, read-safe text, signal type, account, initiative, value-prop link, confidence, approval state.</td><td>Pablito + call worker</td><td>Tasks, account signals, objections, data gaps.</td></tr>
-          <tr><td>Account action</td><td>Account, hypothesis, workflow, owner, what to say, expected result, expected learning.</td><td>Mercury</td><td>Friday queue + account plan.</td></tr>
+          <tr><td>Account action</td><td>Account, hypothesis, workflow, owner, what to say, expected result, expected learning.</td><td>Mercurio</td><td>Friday queue + account plan.</td></tr>
           <tr><td>Dashboard claim</td><td>Claim, source, date basis, trust label, decision supported, stale date.</td><td>Rose</td><td>Hub current read + evidence link.</td></tr>
           <tr><td>Value-prop change</td><td>Current claim, new learning, source, confidence, before/after, owner approval.</td><td>Lautaro / Mercurio proposal</td><td>Value prop update or rejected claim.</td></tr>
         </tbody>
@@ -273,7 +274,7 @@
       </div>
       <div class="rule">
         <strong>Routing</strong>
-        <p>Pricing objection -> value prop. Number wrong -> Rose. Owner ask -> Pablito. Account play -> Mercury. Narrative confusion -> Socrates. Workflow drift -> Nahua/Codex.</p>
+        <p>Pricing objection -> value prop. Number wrong -> Rose. Owner ask -> Pablito. Account play -> Mercurio. Narrative confusion -> Socrates. Workflow drift -> Nahua/Codex.</p>
       </div>
     </div>
     <div class="quickLinks">
@@ -290,10 +291,10 @@
   <section id="agents">
     <p class="eyebrow">Agent operating model</p>
     <h2>Agents earn autonomy by proposing through the right workflow.</h2>
-    <p class="sub">For TX, Mercury and Socrates are defined in <code>Koronet_OS/agents</code> and in the TX strategy canon. Do not substitute them with the separate <code>Claude_MA_v8</code> RACI lanes; use v8 only when deliberately routing into that infrastructure.</p>
+    <p class="sub">For TX, Mercurio and Socrates are defined in <code>Koronet_OS/agents</code> and in the TX strategy canon. Do not substitute them with a separate agent group or auxiliary infrastructure. Current handoffs are in <code>/Users/facu/Koronet_OS/handoffs</code>.</p>
     <div class="ownerGrid">
       <article class="card"><small>Facu</small><strong>Decides</strong><p>Hypotheses, initiatives, strategic claims, cross-account asks.</p></article>
-      <article class="card"><small>Mercury</small><strong>Executes</strong><p>Proposes plays, executes approved account work, measures outcomes.</p></article>
+      <article class="card"><small>Mercurio</small><strong>Executes</strong><p>Proposes plays, executes approved account work, measures outcomes.</p></article>
       <article class="card"><small>Socrates</small><strong>Communicates</strong><p>Makes approved strategy simple, true, convincing.</p></article>
       <article class="card"><small>Rose</small><strong>Backs data</strong><p>Dashboards, freshness, trust labels, gaps.</p></article>
       <article class="card"><small>Pablito</small><strong>Tracks</strong><p>Follow-ups, overdue, feedback, commitments, owner asks.</p></article>
@@ -301,6 +302,7 @@
     </div>
     <div class="quickLinks">
       <a href="/tx-dashboards/tx-strategy-v2/routines.html">Open routines and workflow enforcement</a>
+      <a href="/tx-dashboards/tx-strategy-v2/tx-agent-handoffs.html">Open TX agent handoffs</a>
       <a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">Open agent routine runbook</a>
       <a href="/tx-dashboards/tx-strategy-v2/agent-lane-queues.html">Open generated agent queues</a>
     </div>
@@ -314,9 +316,9 @@
         <thead><tr><th>Priority</th><th>Deliverable</th><th>Why it matters</th><th>Owner</th><th>Status</th></tr></thead>
         <tbody>
           <tr><td>P0</td><td>TX Execution Ledger file/table</td><td>Central object connecting feedback, calls, plays, reports, approvals.</td><td>Codex + Pablito</td><td>Seed visible</td></tr>
-          <tr><td>P0</td><td>SELL Commercial Readiness queue</td><td>Weakest artifact; implementation needs real account readiness list.</td><td>Christine + Pablito + Mercury</td><td>Seeded, needs validation</td></tr>
-          <tr><td>P0</td><td>Friday execution prefill</td><td>Minimize stakeholder work and force execution conversation.</td><td>Socrates + Mercury + Rose</td><td>Page added</td></tr>
-          <tr><td>P1</td><td>Account plans</td><td>Bill Doran, Kennicott, Dreisbach need one full-stack plan.</td><td>Mercury + Facu</td><td>Draft needed</td></tr>
+          <tr><td>P0</td><td>SELL Commercial Readiness queue</td><td>Weakest artifact; implementation needs real account readiness list.</td><td>Christine + Pablito + Mercurio</td><td>Seeded, needs validation</td></tr>
+          <tr><td>P0</td><td>Friday execution prefill</td><td>Minimize stakeholder work and force execution conversation.</td><td>Socrates + Mercurio + Rose</td><td>Page added</td></tr>
+          <tr><td>P1</td><td>Account plans</td><td>Bill Doran, Kennicott, Dreisbach need one full-stack plan.</td><td>Mercurio + Facu</td><td>Draft needed</td></tr>
           <tr><td>P1</td><td>Workflow compliance dashboard</td><td>Recover from 7% adoption to 80%+.</td><td>Nahua + Codex</td><td>Spec exists</td></tr>
           <tr><td>P1</td><td>Call ingestion packets</td><td>Turn calls into read-safe tasks, objections, learnings, data gaps.</td><td>Pablito + call worker</td><td>Spec visible</td></tr>
           <tr><td>P1</td><td>Dashboard gap queue</td><td>Make Rose data work precise and trust-labeled.</td><td>Rose + Codex</td><td>Page added</td></tr>
