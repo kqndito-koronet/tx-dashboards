@@ -14,6 +14,7 @@
     .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px}.card strong{display:block;font-size:28px}.card p{margin:6px 0 0;color:#667085}
     .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1050px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.toolbar button{border:1px solid #d9e0ea;border-radius:7px;background:#fff;color:#101828;font-weight:900;min-height:36px;padding:0 11px;cursor:pointer}.toolbar button.active{background:#101828;color:#fff;border-color:#101828}.note{padding:12px 14px;border:1px solid #d9e0ea;border-radius:8px;background:#f8fafc;color:#475467;font-size:14px}
     .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
@@ -24,8 +25,29 @@
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Workflow Compliance</h1>
     <p class="sub">Workflow adoption was audited at 7%. V2 must make off-workflow work visible until routed, patched, or explicitly parked. Nahua verdict: blocked for live operating status until gates pass; allowed as draft operating prototype.</p>
-    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Review readiness</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a></div>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Review readiness</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/data/tx_workflow_compliance_audit.csv">Download generated audit</a></div>
   </header>
+
+  <section>
+    <p class="eyebrow">Generated audit</p>
+    <h2>What breaks execution right now</h2>
+    <p class="sub">This table is regenerated from the active ledger, candidate validation, Friday/Monday queues, agent queues, and Friday readback. Fix upstream rows; do not manually patch this table.</p>
+    <div id="auditSummary" class="grid"></div>
+    <div class="toolbar">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="P0">P0</button>
+      <button data-filter="P1">P1</button>
+      <button data-filter="Needs fix">Needs fix</button>
+      <button data-filter="Needs owner validation">Owner validation</button>
+      <button data-filter="Awaiting explicit approval">Awaiting approval</button>
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Status</th><th>Gate</th><th>Owner lane</th><th>Initiative</th><th>Account</th><th>Issue</th><th>Required fix</th><th>Due</th><th>Source</th></tr></thead>
+        <tbody id="auditRows"><tr><td colspan="10">Loading generated audit...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
 
   <section>
     <p class="eyebrow">Current compliance target</p>
@@ -166,5 +188,98 @@
     </div>
   </section>
 </main>
+<script>
+const csvUrl = "/tx-dashboards/tx-strategy-v2/data/tx_workflow_compliance_audit.csv";
+let auditRows = [];
+let activeFilter = "all";
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [], cell = "", inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i], next = text[i + 1];
+    if (ch === '"' && inQuotes && next === '"') { cell += '"'; i++; continue; }
+    if (ch === '"') { inQuotes = !inQuotes; continue; }
+    if (ch === "," && !inQuotes) { row.push(cell); cell = ""; continue; }
+    if ((ch === "\n" || ch === "\r") && !inQuotes) {
+      if (ch === "\r" && next === "\n") i++;
+      row.push(cell);
+      if (row.some(v => v.length)) rows.push(row);
+      row = []; cell = "";
+      continue;
+    }
+    cell += ch;
+  }
+  if (cell.length || row.length) { row.push(cell); rows.push(row); }
+  const headers = rows.shift() || [];
+  return rows.map(values => Object.fromEntries(headers.map((h, i) => [h, values[i] || ""])));
+}
+
+function esc(value) {
+  return String(value || "").replace(/[&<>"']/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[ch]));
+}
+
+function tagClass(severity, status) {
+  if (severity === "P0") return "tag bad";
+  if (severity === "OK") return "tag ok";
+  if ((status || "").toLowerCase().includes("approval")) return "tag wait";
+  return "tag wait";
+}
+
+function renderSummary(rows) {
+  const p0 = rows.filter(r => r.severity === "P0").length;
+  const p1 = rows.filter(r => r.severity === "P1").length;
+  const owners = new Set(rows.map(r => r.owner_lane).filter(Boolean)).size;
+  document.getElementById("auditSummary").innerHTML = `
+    <article class="card"><strong>${p0}</strong><p>P0 blockers that can create bad stakeholder execution.</p></article>
+    <article class="card"><strong>${p1}</strong><p>P1 gaps that need cleanup before the next review loop.</p></article>
+    <article class="card"><strong>${owners}</strong><p>Owner lanes with at least one generated compliance item.</p></article>
+  `;
+}
+
+function renderRows() {
+  const rows = activeFilter === "all" ? auditRows : auditRows.filter(row => Object.values(row).some(v => String(v).includes(activeFilter)));
+  const body = document.getElementById("auditRows");
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="10">No rows for this filter.</td></tr>';
+    return;
+  }
+  body.innerHTML = rows.map(row => `
+    <tr>
+      <td><span class="${tagClass(row.severity, row.status)}">${esc(row.severity)}</span></td>
+      <td>${esc(row.status)}</td>
+      <td>${esc(row.gate)}</td>
+      <td>${esc(row.owner_lane)}</td>
+      <td>${esc(row.initiative)}</td>
+      <td>${esc(row.account)}</td>
+      <td>${esc(row.issue)}</td>
+      <td>${esc(row.required_fix)}</td>
+      <td>${esc(row.due_date)}</td>
+      <td>${esc(row.source_file)} ${esc(row.source_id)}</td>
+    </tr>
+  `).join("");
+}
+
+document.querySelectorAll(".toolbar button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".toolbar button").forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+    activeFilter = button.dataset.filter;
+    renderRows();
+  });
+});
+
+fetch(csvUrl, { cache: "no-store" })
+  .then(response => response.ok ? response.text() : Promise.reject(new Error(response.statusText)))
+  .then(text => {
+    auditRows = parseCSV(text);
+    renderSummary(auditRows);
+    renderRows();
+  })
+  .catch(error => {
+    document.getElementById("auditSummary").innerHTML = '<article class="card"><strong>!</strong><p>Generated audit failed to load.</p></article>';
+    document.getElementById("auditRows").innerHTML = `<tr><td colspan="10">Could not load ${esc(csvUrl)}: ${esc(error.message)}</td></tr>`;
+  });
+</script>
 </body>
 </html>

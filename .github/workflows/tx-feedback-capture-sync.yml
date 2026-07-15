@@ -39,15 +39,16 @@ jobs:
           python3 scripts/tx_generate_friday_readback.py
           python3 scripts/tx_generate_monday_prefill.py
           python3 scripts/tx_generate_agent_lane_queues.py
+          python3 scripts/tx_generate_workflow_compliance_audit.py
 
       - name: Commit capture export if changed
         run: |
-          if git diff --quiet -- tx-strategy-v2/data/tx_github_issue_capture.json tx-strategy-v2/data/tx_issue_ledger_candidates.csv tx-strategy-v2/data/tx_ledger_candidate_validation.csv tx-strategy-v2/data/tx_active_ledger.csv tx-strategy-v2/data/tx_ledger_promotion_log.csv tx-strategy-v2/data/tx_friday_readback_completed.csv tx-strategy-v2/data/tx_friday_readback_apply_log.csv tx-strategy-v2/data/tx_friday_generated_queue.csv tx-strategy-v2/data/tx_monday_generated_queue.csv tx-strategy-v2/data/tx_friday_readback_seed.csv tx-strategy-v2/data/tx_monday_leadership_prefill.csv tx-strategy-v2/data/tx_agent_lane_queues.csv; then
+          if git diff --quiet -- tx-strategy-v2/data/tx_github_issue_capture.json tx-strategy-v2/data/tx_issue_ledger_candidates.csv tx-strategy-v2/data/tx_ledger_candidate_validation.csv tx-strategy-v2/data/tx_active_ledger.csv tx-strategy-v2/data/tx_ledger_promotion_log.csv tx-strategy-v2/data/tx_friday_readback_completed.csv tx-strategy-v2/data/tx_friday_readback_apply_log.csv tx-strategy-v2/data/tx_friday_generated_queue.csv tx-strategy-v2/data/tx_monday_generated_queue.csv tx-strategy-v2/data/tx_friday_readback_seed.csv tx-strategy-v2/data/tx_monday_leadership_prefill.csv tx-strategy-v2/data/tx_agent_lane_queues.csv tx-strategy-v2/data/tx_workflow_compliance_audit.csv; then
             echo "No TX feedback issue changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tx-strategy-v2/data/tx_github_issue_capture.json tx-strategy-v2/data/tx_issue_ledger_candidates.csv tx-strategy-v2/data/tx_ledger_candidate_validation.csv tx-strategy-v2/data/tx_active_ledger.csv tx-strategy-v2/data/tx_ledger_promotion_log.csv tx-strategy-v2/data/tx_friday_readback_completed.csv tx-strategy-v2/data/tx_friday_readback_apply_log.csv tx-strategy-v2/data/tx_friday_generated_queue.csv tx-strategy-v2/data/tx_monday_generated_queue.csv tx-strategy-v2/data/tx_friday_readback_seed.csv tx-strategy-v2/data/tx_monday_leadership_prefill.csv tx-strategy-v2/data/tx_agent_lane_queues.csv
+          git add tx-strategy-v2/data/tx_github_issue_capture.json tx-strategy-v2/data/tx_issue_ledger_candidates.csv tx-strategy-v2/data/tx_ledger_candidate_validation.csv tx-strategy-v2/data/tx_active_ledger.csv tx-strategy-v2/data/tx_ledger_promotion_log.csv tx-strategy-v2/data/tx_friday_readback_completed.csv tx-strategy-v2/data/tx_friday_readback_apply_log.csv tx-strategy-v2/data/tx_friday_generated_queue.csv tx-strategy-v2/data/tx_monday_generated_queue.csv tx-strategy-v2/data/tx_friday_readback_seed.csv tx-strategy-v2/data/tx_monday_leadership_prefill.csv tx-strategy-v2/data/tx_agent_lane_queues.csv tx-strategy-v2/data/tx_workflow_compliance_audit.csv
           git commit -m "Sync TX feedback issue capture"
           git push
