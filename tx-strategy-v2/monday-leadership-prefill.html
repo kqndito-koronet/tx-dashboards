@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monday Leadership Prefill — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1500px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:20px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow:auto;max-height:760px;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1500px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:10px;text-align:left;vertical-align:top;font-size:13px}th{position:sticky;top:0;background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    input{width:min(520px,100%);min-height:42px;border:1px solid #d9e0ea;border-radius:8px;padding:0 12px;font:inherit}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}.count{color:#667085;font-weight:800}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1500px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Monday Leadership Prefill</h1>
+    <p class="sub">Generated leadership queue from the active ledger and Friday readback seed. Monday should focus on strategic decisions, data proof, system risks, and carryover that cannot be solved inside Friday execution.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a>
+      <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_monday_leadership_prefill.csv">Download CSV</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Monday scope</p>
+    <h2>What belongs here</h2>
+    <div class="grid">
+      <article class="card"><strong>Strategic accounts</strong><p>Cross-lane decisions for Bill Doran, Kennicott, Dreisbach, and other full-stack account plans.</p></article>
+      <article class="card"><strong>Data proof</strong><p>Rose-backed claims, OKR pacing, GMV/digital GMV, top accounts, and caveats before stronger rollout.</p></article>
+      <article class="card"><strong>System risks</strong><p>Canonical conflicts, workflow drift, stale memory, unapproved claims, or broken promotion gates.</p></article>
+      <article class="card"><strong>Friday carryover</strong><p>Commitments or blockers from Friday that need leadership visibility, re-route, or escalation.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Generated prefill</p>
+    <h2>Leadership queue</h2>
+    <div class="toolbar">
+      <input id="filter" type="search" placeholder="Filter Monday items..." />
+      <span class="count" id="count">Loading...</span>
+    </div>
+    <div class="tableWrap" style="margin-top:14px">
+      <table id="mondayTable"></table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Usage rule</p>
+    <h2>Monday is not a second Friday</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>If the item is...</th><th>Route</th><th>Monday question</th></tr></thead>
+        <tbody>
+          <tr><td>Owner update only</td><td>Friday / async</td><td>Do not spend leadership time unless blocked.</td></tr>
+          <tr><td>Strategic account ambiguity</td><td>Monday</td><td>What is the one next account decision or conversation?</td></tr>
+          <tr><td>Data claim without source/date/trust</td><td>Rose proof queue</td><td>Can this claim travel, or must it stay directional?</td></tr>
+          <tr><td>Product enabler idea</td><td>Monday only if account-backed</td><td>Which blocker, which accounts, pilot KPI, and go/no-go?</td></tr>
+          <tr><td>Canonical/system risk</td><td>Nahua/Codex</td><td>What must be patched so agents stop repeating the error?</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+const csvUrl = "/tx-dashboards/tx-strategy-v2/data/tx_monday_leadership_prefill.csv";
+function parseCsv(text){
+  const rows=[]; let row=[], cell="", inQuotes=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i], n=text[i+1];
+    if(c === '"' && inQuotes && n === '"'){ cell += '"'; i++; continue; }
+    if(c === '"'){ inQuotes = !inQuotes; continue; }
+    if(c === "," && !inQuotes){ row.push(cell); cell=""; continue; }
+    if((c === "\n" || c === "\r") && !inQuotes){
+      if(c === "\r" && n === "\n") i++;
+      row.push(cell); cell="";
+      if(row.some(v => v.length)) rows.push(row);
+      row=[]; continue;
+    }
+    cell += c;
+  }
+  if(cell.length || row.length){ row.push(cell); rows.push(row); }
+  return rows;
+}
+function esc(value){return String(value || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(headers, rows){
+  document.getElementById("mondayTable").innerHTML = "<thead><tr>" + headers.map(h => `<th>${esc(h)}</th>`).join("") + "</tr></thead><tbody>" +
+    rows.map(row => "<tr>" + headers.map((_, i) => `<td>${esc(row[i])}</td>`).join("") + "</tr>").join("") + "</tbody>";
+  document.getElementById("count").textContent = `${rows.length} rows`;
+}
+fetch(csvUrl).then(r => r.text()).then(text => {
+  const parsed=parseCsv(text); const headers=parsed.shift() || []; const data=parsed;
+  render(headers, data);
+  document.getElementById("filter").addEventListener("input", e => {
+    const q=e.target.value.toLowerCase().trim();
+    render(headers, q ? data.filter(row => row.join(" ").toLowerCase().includes(q)) : data);
+  });
+}).catch(() => { document.getElementById("count").textContent = "CSV not loaded"; });
+</script>
+</body>
+</html>
