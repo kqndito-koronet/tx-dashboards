@@ -37,7 +37,7 @@ def lane(row):
     if "rose" in lower:
         return "Rose"
     if "mercury" in lower or "mercurio" in lower:
-        return "Mercury"
+        return "Mercurio"
     if "socrates" in lower:
         return "Socrates"
     if "pablito" in lower:
@@ -56,7 +56,7 @@ def acceptance(row):
     artifact = (row.get("downstream_artifact") or "").lower()
     if lane(row) == "Rose":
         return "Source/date/trust label present; claim can be shown as verified, directional, or not-board-ready."
-    if lane(row) == "Mercury":
+    if lane(row) == "Mercurio":
         return "Account action includes target, value prop, expected result, expected learning, owner, and due date."
     if lane(row) == "Socrates":
         return "Message uses approved framing, no unsupported claims, and links back to source rows."

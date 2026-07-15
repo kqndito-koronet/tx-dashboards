@@ -60,7 +60,7 @@ def route_owner(row):
     if "buy" in initiative or "list" in initiative:
         return "Cata / CS"
     if "grow" in initiative:
-        return "Facu / Mercury"
+        return "Facu / Mercurio"
     return "Pablito triage"
 
 

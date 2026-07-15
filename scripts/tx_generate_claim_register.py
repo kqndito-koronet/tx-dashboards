@@ -143,7 +143,7 @@ CLAIMS = [
         "caveat": "CS/Implementation owners must validate account facts, priority, and next action.",
         "decision_supported": "Avoids forcing Cata/Christine into bad or unapproved account asks.",
         "required_action": "Use lead filters/signals for review; promote only after owner acceptance.",
-        "owner_lane": "Mercury + Pablito",
+        "owner_lane": "Mercurio + Pablito",
         "stale_date": "2026-07-17",
         "board_ready": "No",
         "status": "Needs owner validation",
