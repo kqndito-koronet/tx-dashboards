@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TX Fee OKR Diagnostic — July 2026 MTD</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-raised: #1c2129;
+    --border: #30363d;
+    --border-subtle: #21262d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --green: #3fb950;
+    --green-bg: rgba(63,185,80,0.10);
+    --green-border: rgba(63,185,80,0.3);
+    --amber: #d29922;
+    --amber-bg: rgba(210,153,34,0.10);
+    --amber-border: rgba(210,153,34,0.3);
+    --red: #f85149;
+    --red-bg: rgba(248,81,73,0.10);
+    --red-border: rgba(248,81,73,0.3);
+    --blue: #58a6ff;
+    --blue-bg: rgba(88,166,255,0.08);
+    --purple: #bc8cff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+
+  /* ─── AMBER HEADLINE BANNER ─── */
+  .headline-banner {
+    background: linear-gradient(135deg, rgba(210,153,34,0.18) 0%, rgba(210,153,34,0.08) 100%);
+    border: 1px solid var(--amber-border);
+    border-left: 4px solid var(--amber);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .headline-banner .status-label {
+    display: inline-block;
+    background: var(--amber);
+    color: #000;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .headline-banner .headline-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.55;
+  }
+  .headline-banner .headline-sub {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ─── SECTION TITLES ─── */
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .section {
+    margin-bottom: 32px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .card-body {
+    padding: 16px 20px;
+  }
+
+  /* ─── TABLES ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--surface-raised);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  thead th.num { text-align: right; }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+  tbody td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12.5px;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody tr.totals-row {
+    background: var(--surface-raised);
+    font-weight: 600;
+  }
+  tbody tr.totals-row td { border-top: 1px solid var(--border); }
+  tbody tr.sub-total td {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  /* ─── STATUS PILLS ─── */
+  .pill {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .pill-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .pill-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+  .pill-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .pill-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+  .pill-new { background: rgba(188,140,255,0.10); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+
+  /* ─── DRIVER TAGS ─── */
+  .driver { font-size: 11.5px; font-weight: 600; }
+  .driver-volume { color: var(--green); }
+  .driver-rate { color: var(--red); }
+  .driver-both { color: var(--amber); }
+  .driver-organic { color: var(--text-secondary); }
+  .driver-flat { color: var(--text-muted); }
+  .driver-new { color: var(--purple); }
+
+  /* ─── DIAGNOSIS BOXES ─── */
+  .diagnosis-box {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .diagnosis-box strong { color: var(--text-primary); }
+  .diagnosis-box.red-border { border-left-color: var(--red); }
+  .diagnosis-box.green-border { border-left-color: var(--green); }
+  .diagnosis-box.blue-border { border-left-color: var(--blue); }
+
+  /* ─── HIGHLIGHT BOX ─── */
+  .highlight-box {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* ─── MINI CARDS (GPS, Axerrio) ─── */
+  .mini-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .mini-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .mini-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+  .mini-card p, .mini-card li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .mini-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .mini-card ul li {
+    padding: 3px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mini-card ul li:last-child { border-bottom: none; }
+  .mini-card .big-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+  .mini-card .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── DAILY SPARKLINE ─── */
+  .sparkline-container {
+    padding: 16px 20px;
+  }
+  .sparkline-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 80px;
+    margin-bottom: 6px;
+  }
+  .spark-bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    min-width: 0;
+    position: relative;
+    transition: opacity 0.15s;
+  }
+  .spark-bar:hover { opacity: 0.8; }
+  .spark-bar .spark-tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  .spark-bar:hover .spark-tooltip { display: block; }
+  .spark-labels {
+    display: flex;
+    gap: 4px;
+  }
+  .spark-labels span {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  /* ─── DEEP DIVES LIST ─── */
+  .deep-dive-item {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .deep-dive-item:last-child { border-bottom: none; }
+  .deep-dive-item .dd-num {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    background: var(--blue-bg);
+    color: var(--blue);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .deep-dive-item .dd-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+  .deep-dive-item .dd-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    padding-left: 30px;
+    line-height: 1.55;
+  }
+
+  /* ─── GAPS BOX ─── */
+  .gaps-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .gaps-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .gaps-box li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .gaps-box li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .footer strong { color: var(--text-secondary); }
+
+  /* ─── WEEKLY TREND HIGHLIGHT ─── */
+  .weekly-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .weekly-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .weekly-card-header {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  .conclusion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 12px 14px 40px; }
+    .mini-cards { grid-template-columns: 1fr; }
+    .weekly-grid { grid-template-columns: 1fr; }
+    .conclusion-grid { grid-template-columns: 1fr; }
+    table { font-size: 11.5px; }
+    thead th, tbody td { padding: 7px 8px; }
+    .headline-banner .headline-text { font-size: 15px; }
+  }
+
+  /* ─── PRINT ─── */
+  @media print {
+    body { background: #fff; color: #111; }
+    .card, .mini-card, .gaps-box { border-color: #ddd; background: #f9f9f9; }
+    .headline-banner { background: #fff8e6; border-color: #d29922; }
+    thead th { background: #f0f0f0; color: #333; }
+    tbody td { color: #222; }
+    .diagnosis-box { background: #f5f5f5; }
+    .spark-bar .spark-tooltip { display: none !important; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 1: HEADLINE DIAGNOSIS                             ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="headline-banner">
+  <div class="headline-text" style="font-size:20px; font-weight:700;">FEES +55.7% YoY — ON PACE for Q3 (+54.5% required)</div>
+  <div style="font-size:14px; color:var(--text-primary); margin-top:8px; line-height:1.6;">Decomposition: Volume growth = +46% | Rate catches = +9pp uplift | New fee types (GPS) = +1pp</div>
+  <div style="font-size:12px; color:var(--text-muted); margin-top:6px; line-height:1.5;">Basis: Jul 1-13 2026 vs Jul 1-13 2025, same-day normalized. Snowflake CONSOLIDATED_TRANSACTION_FEES, transaction_date. Excludes Axerrio.</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 2: JULY-TO-DATE SCORECARD                         ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 2</div>
+  <div class="section-title">July-to-Date Scorecard</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th class="num">Jul '25 (1-13)</th>
+          <th class="num">Jul '26 (1-13)</th>
+          <th class="num">YoY %</th>
+          <th class="num">Required Q3 YoY</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total GMV</td>
+          <td class="num">$33.75M</td>
+          <td class="num">$36.30M</td>
+          <td class="num" style="color:var(--green)">+7.5%</td>
+          <td class="num" style="color:var(--text-muted)">--</td>
+          <td><span class="pill pill-green">OK</span></td>
+        </tr>
+        <tr>
+          <td>Online GMV (eCom + API)</td>
+          <td class="num">$5.12M</td>
+          <td class="num">$5.76M</td>
+          <td class="num" style="color:var(--amber)">+12.6%</td>
+          <td class="num" style="color:var(--text-muted)">--</td>
+          <td><span class="pill pill-amber">MODERATE</span></td>
+        </tr>
+        <tr>
+          <td><strong>TX Fees (Snowflake)</strong></td>
+          <td class="num"><strong>$40,316</strong></td>
+          <td class="num"><strong>$62,787</strong></td>
+          <td class="num" style="color:var(--green)"><strong>+55.7%</strong></td>
+          <td class="num"><strong>+54.5%</strong></td>
+          <td><span class="pill pill-green">ON PACE</span></td>
+        </tr>
+        <tr>
+          <td>TX Fees (+ Axerrio est.)</td>
+          <td class="num">~$44,500</td>
+          <td class="num">~$67,000</td>
+          <td class="num" style="color:var(--red)">~+50.6%</td>
+          <td class="num">+54.5%</td>
+          <td><span class="pill pill-red">BELOW PACE</span></td>
+        </tr>
+        <tr>
+          <td>Take Rate (Fee / Online GMV)</td>
+          <td class="num">0.79%</td>
+          <td class="num">1.09%</td>
+          <td class="num" style="color:var(--green)">+38.0%</td>
+          <td class="num" style="color:var(--text-muted)">--</td>
+          <td><span class="pill pill-blue">EXPANDING</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding: 10px 20px 14px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); line-height: 1.6;">
+      <strong style="color:var(--text-secondary)">Axerrio estimate:</strong> H1 avg = &euro;8,450/mo = ~$9,700/mo. Jul 1-13 &asymp; 36.6% of month = ~$3,550 for 2026, ~$3,200 for 2025.<br>
+      <strong style="color:var(--text-secondary)">Projected full July:</strong> $62,787 / 36.6% = ~$171,600 (Snowflake) + ~$9,700 Axerrio = <strong style="color:var(--text-primary)">~$181,300</strong><br>
+      Jul 2025 full: $110,294 + ~$8,600 Axerrio = ~$118,900 &rarr; Projected July YoY: <strong style="color:var(--amber)">+52.5% combined (BELOW +54.5%)</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 3: WEEKLY TREND (THE KEY DIAGNOSTIC)              ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 3 — THE KEY DIAGNOSTIC</div>
+  <div class="section-title">Weekly Trend: W1 vs W2</div>
+
+  <div class="weekly-grid">
+
+    <!-- GMV -->
+    <div class="weekly-card">
+      <div class="weekly-card-header">GMV</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th class="num">2025</th>
+            <th class="num">2026</th>
+            <th class="num">YoY</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W1 <span style="font-size:10px;color:var(--text-muted)">(Jul 1-6)</span></td>
+            <td class="num">$12.9M</td>
+            <td class="num">$15.9M</td>
+            <td class="num" style="color:var(--green)">+23.2%</td>
+          </tr>
+          <tr>
+            <td>W2 <span style="font-size:10px;color:var(--text-muted)">(Jul 7-13)</span></td>
+            <td class="num">$20.8M</td>
+            <td class="num">$20.4M</td>
+            <td class="num" style="color:var(--red)">-2.1%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Online GMV -->
+    <div class="weekly-card">
+      <div class="weekly-card-header">Online GMV</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th class="num">2025</th>
+            <th class="num">2026</th>
+            <th class="num">YoY</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W1 <span style="font-size:10px;color:var(--text-muted)">(Jul 1-6)</span></td>
+            <td class="num">$1.93M</td>
+            <td class="num">$2.48M</td>
+            <td class="num" style="color:var(--green)">+28.4%</td>
+          </tr>
+          <tr>
+            <td>W2 <span style="font-size:10px;color:var(--text-muted)">(Jul 7-13)</span></td>
+            <td class="num">$3.19M</td>
+            <td class="num">$3.28M</td>
+            <td class="num" style="color:var(--amber)">+3.0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Fees -->
+    <div class="weekly-card">
+      <div class="weekly-card-header">TX Fees</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th class="num">2025</th>
+            <th class="num">2026</th>
+            <th class="num">YoY</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W1 <span style="font-size:10px;color:var(--text-muted)">(Jul 1-6)</span></td>
+            <td class="num">$15,130</td>
+            <td class="num">$26,850</td>
+            <td class="num" style="color:var(--green)">+77.5%</td>
+          </tr>
+          <tr>
+            <td>W2 <span style="font-size:10px;color:var(--text-muted)">(Jul 7-13)</span></td>
+            <td class="num">$25,186</td>
+            <td class="num">$35,937</td>
+            <td class="num" style="color:var(--red)">+42.7%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="diagnosis-box">
+    <strong>W1 included the July 4th holiday (Saturday) which killed Jul 4 ($458K GMV) and dampened Jul 5 (Sunday).</strong> Despite this, W1 fees were strong (+77.5% YoY) driven by the Monday catch-up. W2 had a full business week and still came in at +42.7% YoY. <strong style="color:var(--amber)">The deceleration is REAL but partially explained by W1 being boosted by holiday catch-up volume compressed into Monday Jul 6.</strong>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 4: TOP 15 ACCOUNTS — Volume vs Rate               ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 4</div>
+  <div class="section-title">Top 15 Accounts -- Volume vs Rate Analysis</div>
+  <div class="card">
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Account</th>
+          <th class="num">Fees '25</th>
+          <th class="num">Fees '26</th>
+          <th class="num">Fee YoY</th>
+          <th class="num">Online GMV '25</th>
+          <th class="num">Online GMV '26</th>
+          <th class="num">GMV YoY</th>
+          <th class="num">Rate '25</th>
+          <th class="num">Rate '26</th>
+          <th>Driver</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>KBC</strong></td>
+          <td class="num">$3,372</td>
+          <td class="num">$5,010</td>
+          <td class="num" style="color:var(--green)">+48.6%</td>
+          <td class="num">$326K</td>
+          <td class="num">$487K</td>
+          <td class="num" style="color:var(--green)">+49.3%</td>
+          <td class="num">1.03%</td>
+          <td class="num">1.03%</td>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">rate unchanged</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Sole Farms</strong></td>
+          <td class="num">$2,452</td>
+          <td class="num">$4,928</td>
+          <td class="num" style="color:var(--green)">+100.9%</td>
+          <td class="num">$221K</td>
+          <td class="num">$282K</td>
+          <td class="num" style="color:var(--green)">+27.9%</td>
+          <td class="num">1.11%</td>
+          <td class="num">1.75%</td>
+          <td><span class="driver driver-both">RATE</span><br><span style="font-size:10px;color:var(--text-muted)">rate +58%, vol +28%</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Jet Fresh</strong></td>
+          <td class="num">$2,940</td>
+          <td class="num">$4,690</td>
+          <td class="num" style="color:var(--green)">+59.6%</td>
+          <td class="num">$185K</td>
+          <td class="num">$311K</td>
+          <td class="num" style="color:var(--green)">+68.3%</td>
+          <td class="num">1.59%</td>
+          <td class="num">1.51%</td>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">rate stable</span></td>
+        </tr>
+        <tr style="background: var(--red-bg);">
+          <td>4</td>
+          <td><strong>Fresca</strong></td>
+          <td class="num">$919</td>
+          <td class="num">$3,515</td>
+          <td class="num" style="color:var(--red)">+282.5%</td>
+          <td class="num">$195K</td>
+          <td class="num">$206K</td>
+          <td class="num" style="color:var(--amber)">+5.8%</td>
+          <td class="num">0.47%</td>
+          <td class="num">1.71%</td>
+          <td><span class="driver driver-rate">RATE CATCH</span><br><span style="font-size:10px;color:var(--text-muted)">rate 3.6x, vol flat</span></td>
+        </tr>
+        <tr style="background: var(--red-bg);">
+          <td>5</td>
+          <td><strong>Rosaprima</strong></td>
+          <td class="num">$616</td>
+          <td class="num">$3,301</td>
+          <td class="num" style="color:var(--red)">+435.9%</td>
+          <td class="num">$1.70M</td>
+          <td class="num">$2.04M</td>
+          <td class="num" style="color:var(--green)">+20.6%</td>
+          <td class="num">0.04%</td>
+          <td class="num">0.16%</td>
+          <td><span class="driver driver-rate">RATE CATCH</span><br><span style="font-size:10px;color:var(--text-muted)">rate 4x, still only 0.16%</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Continental Flowers</td>
+          <td class="num">$2,041</td>
+          <td class="num">$2,939</td>
+          <td class="num" style="color:var(--green)">+44.0%</td>
+          <td class="num">$91K</td>
+          <td class="num">$126K</td>
+          <td class="num" style="color:var(--green)">+38.4%</td>
+          <td class="num">2.23%</td>
+          <td class="num">2.32%</td>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">rate stable</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><strong>BDC</strong></td>
+          <td class="num">$563</td>
+          <td class="num">$2,476</td>
+          <td class="num" style="color:var(--green)">+339.8%</td>
+          <td class="num">$57K</td>
+          <td class="num">$107K</td>
+          <td class="num" style="color:var(--green)">+88.6%</td>
+          <td class="num">0.99%</td>
+          <td class="num">2.31%</td>
+          <td><span class="driver driver-both">BOTH</span><br><span style="font-size:10px;color:var(--text-muted)">vol 2x + rate 2x</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Choice</td>
+          <td class="num">$1,964</td>
+          <td class="num">$2,448</td>
+          <td class="num" style="color:var(--amber)">+24.6%</td>
+          <td class="num">$91K</td>
+          <td class="num">$102K</td>
+          <td class="num" style="color:var(--amber)">+13.0%</td>
+          <td class="num">2.17%</td>
+          <td class="num">2.39%</td>
+          <td><span class="driver driver-both">MIX</span><br><span style="font-size:10px;color:var(--text-muted)">rate up slightly</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>FloraLink</td>
+          <td class="num">$1,508</td>
+          <td class="num">$2,105</td>
+          <td class="num" style="color:var(--green)">+39.5%</td>
+          <td class="num">$106K</td>
+          <td class="num">$151K</td>
+          <td class="num" style="color:var(--green)">+42.1%</td>
+          <td class="num">1.42%</td>
+          <td class="num">1.39%</td>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">rate stable</span></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><strong>Details Direct</strong></td>
+          <td class="num">$0</td>
+          <td class="num">$2,040</td>
+          <td class="num" style="color:var(--purple)">NEW</td>
+          <td class="num" style="color:var(--text-muted)">&mdash;</td>
+          <td class="num">$8.8K</td>
+          <td class="num" style="color:var(--purple)">NEW</td>
+          <td class="num" style="color:var(--text-muted)">&mdash;</td>
+          <td class="num">23.2%</td>
+          <td><span class="driver driver-new">NEW</span><br><span style="font-size:10px;color:var(--text-muted)">GPS + K2K</span></td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Bella Blossom</td>
+          <td class="num">$1,249</td>
+          <td class="num">$1,854</td>
+          <td class="num" style="color:var(--green)">+48.4%</td>
+          <td class="num">$65K</td>
+          <td class="num">$94K</td>
+          <td class="num" style="color:var(--green)">+44.4%</td>
+          <td class="num">1.92%</td>
+          <td class="num">1.97%</td>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">rate stable</span></td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Royal Flowers</td>
+          <td class="num">$1,457</td>
+          <td class="num">$1,563</td>
+          <td class="num" style="color:var(--text-muted)">+7.3%</td>
+          <td class="num">$65K</td>
+          <td class="num">$64K</td>
+          <td class="num" style="color:var(--red)">-1.2%</td>
+          <td class="num">2.26%</td>
+          <td class="num">2.45%</td>
+          <td><span class="driver driver-both">RATE</span><br><span style="font-size:10px;color:var(--text-muted)">GMV flat</span></td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Sunburst</td>
+          <td class="num">$963</td>
+          <td class="num">$1,283</td>
+          <td class="num" style="color:var(--green)">+33.2%</td>
+          <td class="num">$54K</td>
+          <td class="num">$70K</td>
+          <td class="num" style="color:var(--green)">+29.0%</td>
+          <td class="num">1.77%</td>
+          <td class="num">1.83%</td>
+          <td><span class="driver driver-volume">VOLUME</span></td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Allure</td>
+          <td class="num">$999</td>
+          <td class="num">$1,270</td>
+          <td class="num" style="color:var(--amber)">+27.1%</td>
+          <td class="num">$52K</td>
+          <td class="num">$72K</td>
+          <td class="num" style="color:var(--green)">+38.8%</td>
+          <td class="num">1.93%</td>
+          <td class="num">1.76%</td>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">rate actually down</span></td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Gala Roses</td>
+          <td class="num">$1,136</td>
+          <td class="num">$1,253</td>
+          <td class="num" style="color:var(--text-muted)">+10.3%</td>
+          <td class="num">$57K</td>
+          <td class="num">$45K</td>
+          <td class="num" style="color:var(--red)">-20.8%</td>
+          <td class="num">1.98%</td>
+          <td class="num">2.76%</td>
+          <td><span class="driver driver-both">RATE</span><br><span style="font-size:10px;color:var(--text-muted)">GMV -21%, rate masks it</span></td>
+        </tr>
+        <tr class="sub-total">
+          <td></td>
+          <td>Top 15</td>
+          <td class="num">$22,179</td>
+          <td class="num">$40,674</td>
+          <td class="num" style="color:var(--green)">+83.4%</td>
+          <td class="num" colspan="5"></td>
+        </tr>
+        <tr class="sub-total">
+          <td></td>
+          <td>Everyone else</td>
+          <td class="num">$18,137</td>
+          <td class="num">$22,113</td>
+          <td class="num" style="color:var(--amber)">+21.9%</td>
+          <td class="num" colspan="5"></td>
+        </tr>
+        <tr class="totals-row">
+          <td></td>
+          <td><strong>TOTAL</strong></td>
+          <td class="num"><strong>$40,316</strong></td>
+          <td class="num"><strong>$62,787</strong></td>
+          <td class="num" style="color:var(--green)"><strong>+55.7%</strong></td>
+          <td class="num" colspan="5"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- DRIVER DECOMPOSITION SUMMARY -->
+  <div class="card" style="margin-top: 16px;">
+    <div style="padding: 16px 20px 8px;">
+      <div style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin-bottom: 12px;">Fee Growth Decomposition (Jul 1-13)</div>
+    </div>
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Driver Type</th>
+          <th>Accounts</th>
+          <th class="num">Fee $ 2026</th>
+          <th class="num">Weighted YoY</th>
+          <th>Sustainable?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="driver driver-volume">VOLUME</span><br><span style="font-size:10px;color:var(--text-muted)">GMV grew, rate stable</span></td>
+          <td style="font-size:12px;">KBC, Jet Fresh, Continental, FloraLink, Bella Blossom, Sunburst, Allure</td>
+          <td class="num">$19.1K</td>
+          <td class="num" style="color:var(--green)">+46%</td>
+          <td><span class="pill pill-green">YES &mdash; organic</span></td>
+        </tr>
+        <tr style="background: var(--red-bg);">
+          <td><span class="driver driver-rate">RATE CATCH</span><br><span style="font-size:10px;color:var(--text-muted)">rate changed, GMV flat</span></td>
+          <td style="font-size:12px;">Fresca, Rosaprima</td>
+          <td class="num">$6.8K</td>
+          <td class="num" style="color:var(--red)">+340%</td>
+          <td><span class="pill pill-red">RISKY &mdash; permanent?</span></td>
+        </tr>
+        <tr>
+          <td><span class="driver driver-both">BOTH</span><br><span style="font-size:10px;color:var(--text-muted)">volume + rate</span></td>
+          <td style="font-size:12px;">Sole, BDC, Choice</td>
+          <td class="num">$9.9K</td>
+          <td class="num" style="color:var(--amber)">+124%</td>
+          <td><span class="pill pill-amber">MIXED</span></td>
+        </tr>
+        <tr>
+          <td><span class="driver driver-both">RATE ONLY</span><br><span style="font-size:10px;color:var(--text-muted)">GMV declining, rate masks</span></td>
+          <td style="font-size:12px;">Royal, Gala</td>
+          <td class="num">$2.8K</td>
+          <td class="num" style="color:var(--amber)">+9%</td>
+          <td><span class="pill pill-amber">FRAGILE</span></td>
+        </tr>
+        <tr>
+          <td><span class="driver driver-new">NEW ACCOUNT</span></td>
+          <td style="font-size:12px;">Details Direct</td>
+          <td class="num">$2.0K</td>
+          <td class="num" style="color:var(--text-muted)">&mdash;</td>
+          <td><span class="pill pill-new">TBD</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="diagnosis-box red-border" style="margin: 14px 16px 16px;">
+      <strong>FRAGILITY TEST:</strong> Without rate catches (Fresca + Rosaprima) = <strong>+44.1% YoY</strong>. Without all rate-dependent = <strong>+42.0%</strong>. Volume-only growth = <strong style="color:var(--green)">~+46%</strong>. Need rate catches to be <strong>PERMANENT</strong> to hit +54.5%.
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 4b: RATE CATCH EXPIRY CALENDAR                    ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 4b</div>
+  <div class="section-title">Rate Catch Expiry Calendar — When does the YoY uplift disappear?</div>
+  <div class="diagnosis-box" style="margin-top:0; margin-bottom:16px;">
+    Rate increases create YoY uplift, but only until the anniversary of the increase. After that, the comp base includes the new rate and the uplift vanishes — unless volume also grew.
+  </div>
+
+  <!-- TIMELINE TABLE -->
+  <div class="card">
+    <div style="padding: 14px 20px 6px;">
+      <div style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin-bottom: 8px;">Rate Catch Expiry Timeline</div>
+    </div>
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th class="num">Rate Before</th>
+          <th class="num">Rate After</th>
+          <th>When Rate Changed</th>
+          <th>YoY Uplift Expires</th>
+          <th class="num">Months Left</th>
+          <th>Q3 Impact</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: var(--red-bg);">
+          <td><strong>Gala Roses</strong></td>
+          <td class="num">0.78%</td>
+          <td class="num">1.93%</td>
+          <td><strong>May 2025</strong></td>
+          <td><strong style="color:var(--red)">May 2026 — EXPIRED</strong></td>
+          <td class="num" style="color:var(--red)">0</td>
+          <td><span class="pill pill-red">None — already in comp</span></td>
+          <td style="font-size:12px;color:var(--text-secondary)">Explains weak +10.3% Jul MTD</td>
+        </tr>
+        <tr style="background: var(--amber-bg);">
+          <td><strong>BDC</strong></td>
+          <td class="num">0.70%</td>
+          <td class="num">1.00&rarr;2.31%</td>
+          <td><strong>May 2025</strong> <span style="font-size:10px;color:var(--text-muted)">(first jump, gradual climb)</span></td>
+          <td><strong style="color:var(--amber)">Partially expired</strong></td>
+          <td class="num" style="color:var(--amber)">Shrinking</td>
+          <td><span class="pill pill-amber">Declining</span></td>
+          <td style="font-size:12px;color:var(--text-secondary)">Jul-Sep 2025 comps already elevated (0.95-1.84%). Rate still climbing but comp base catching up</td>
+        </tr>
+        <tr style="background: var(--green-bg);">
+          <td><strong>Sole Farms</strong></td>
+          <td class="num">1.05%</td>
+          <td class="num">1.68%</td>
+          <td><strong>Nov 2025</strong></td>
+          <td><strong>Nov 2026</strong></td>
+          <td class="num" style="color:var(--green)">4 months</td>
+          <td><span class="pill pill-green">FULL Q3 BENEFIT</span></td>
+          <td style="font-size:12px;color:var(--text-secondary)">Q3 safe</td>
+        </tr>
+        <tr style="background: var(--green-bg);">
+          <td><strong>Fresca Farms</strong></td>
+          <td class="num">0.56%</td>
+          <td class="num">1.49%</td>
+          <td><strong>Nov 2025</strong></td>
+          <td><strong>Nov 2026</strong></td>
+          <td class="num" style="color:var(--green)">4 months</td>
+          <td><span class="pill pill-green">FULL Q3 BENEFIT</span></td>
+          <td style="font-size:12px;color:var(--text-secondary)">Q3 safe</td>
+        </tr>
+        <tr style="background: var(--green-bg);">
+          <td><strong>Rosaprima</strong></td>
+          <td class="num">0.05%</td>
+          <td class="num">0.18%</td>
+          <td><strong>Mar 2026</strong></td>
+          <td><strong>Mar 2027</strong></td>
+          <td class="num" style="color:var(--green)">8 months</td>
+          <td><span class="pill pill-green">FULL Q3 BENEFIT</span></td>
+          <td style="font-size:12px;color:var(--text-secondary)">Still only 0.08-0.22% on $5M/mo — massive room for MORE catch-up</td>
+        </tr>
+        <tr>
+          <td>Royal Flowers</td>
+          <td class="num">~2.15%</td>
+          <td class="num">~2.40%</td>
+          <td style="color:var(--text-muted)">No discrete jump — gradual drift</td>
+          <td style="color:var(--text-muted)">N/A</td>
+          <td class="num" style="color:var(--text-muted)">N/A</td>
+          <td><span style="font-size:11px;color:var(--text-muted)">Minimal</span></td>
+          <td style="font-size:12px;color:var(--text-muted)">Not a rate catch, just slow drift</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- VISUAL TIMELINE BAR -->
+  <div class="card" style="margin-top: 16px;">
+    <div style="padding: 16px 20px 8px;">
+      <div style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin-bottom: 4px;">Visual Timeline — Rate Catch Windows</div>
+      <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;">Jan 2025 &mdash; Dec 2026 &nbsp;|&nbsp; <span style="color:var(--green);">&#9632;</span> Uplift Active &nbsp; <span style="color:var(--amber);">&#9632;</span> Partially Expired &nbsp; <span style="color:var(--red);">&#9632;</span> Expired</div>
+    </div>
+    <div style="padding: 0 20px 20px;">
+      <!-- Timeline header (months) -->
+      <div style="display:flex; margin-bottom:4px; font-size:9px; color:var(--text-muted); letter-spacing:0.04em;">
+        <div style="width:90px; flex-shrink:0;"></div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); text-align:center;">
+          <div>J</div><div>F</div><div>M</div><div>A</div><div>M</div><div>J</div><div>J</div><div>A</div><div>S</div><div>O</div><div>N</div><div>D</div>
+          <div>J</div><div>F</div><div>M</div><div>A</div><div>M</div><div>J</div><div style="font-weight:700;color:var(--amber)">J</div><div>A</div><div>S</div><div>O</div><div>N</div><div>D</div>
+        </div>
+      </div>
+      <!-- Year labels -->
+      <div style="display:flex; margin-bottom:8px; font-size:9px; color:var(--text-muted);">
+        <div style="width:90px; flex-shrink:0;"></div>
+        <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; text-align:center;">
+          <div style="border-bottom:1px solid var(--border-subtle);padding-bottom:2px;">2025</div>
+          <div style="border-bottom:1px solid var(--border-subtle);padding-bottom:2px;">2026</div>
+        </div>
+      </div>
+
+      <!-- Gala: May 2025 (month 5) to May 2026 (month 17) = green, then red -->
+      <div style="display:flex; align-items:center; margin-bottom:6px;">
+        <div style="width:90px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--text-primary);">Gala</div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); gap:1px; height:20px;">
+          <div></div><div></div><div></div><div></div>
+          <div style="background:var(--green); border-radius:3px 0 0 3px; grid-column:5/18; position:relative;">
+            <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#000;white-space:nowrap;">May '25 — May '26</span>
+          </div>
+          <div style="background:var(--red); border-radius:0 3px 3px 0; grid-column:18/25; position:relative;">
+            <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#000;white-space:nowrap;">EXPIRED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BDC: May 2025 (month 5) onward, amber gradient -->
+      <div style="display:flex; align-items:center; margin-bottom:6px;">
+        <div style="width:90px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--text-primary);">BDC</div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); gap:1px; height:20px;">
+          <div></div><div></div><div></div><div></div>
+          <div style="background:linear-gradient(to right, var(--green), var(--amber), var(--red)); border-radius:3px; grid-column:5/25; position:relative;">
+            <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#000;white-space:nowrap;">Partially expired — shrinking</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sole: Nov 2025 (month 11) to Nov 2026 (month 23) -->
+      <div style="display:flex; align-items:center; margin-bottom:6px;">
+        <div style="width:90px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--text-primary);">Sole</div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); gap:1px; height:20px;">
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          <div style="background:var(--green); border-radius:3px; grid-column:11/23; position:relative;">
+            <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#000;white-space:nowrap;">Nov '25 — Nov '26 (4 mo left)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fresca: Nov 2025 (month 11) to Nov 2026 (month 23) -->
+      <div style="display:flex; align-items:center; margin-bottom:6px;">
+        <div style="width:90px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--text-primary);">Fresca</div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); gap:1px; height:20px;">
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          <div style="background:var(--green); border-radius:3px; grid-column:11/23; position:relative;">
+            <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#000;white-space:nowrap;">Nov '25 — Nov '26 (4 mo left)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rosaprima: Mar 2026 (month 15) to Mar 2027 (beyond chart, so to end) -->
+      <div style="display:flex; align-items:center; margin-bottom:2px;">
+        <div style="width:90px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--text-primary);">Rosaprima</div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); gap:1px; height:20px;">
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          <div style="background:var(--green); border-radius:3px; grid-column:15/25; position:relative;">
+            <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#000;white-space:nowrap;">Mar '26 — Mar '27 (8 mo left) &rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Now marker -->
+      <div style="display:flex; align-items:center; margin-top:4px;">
+        <div style="width:90px; flex-shrink:0;"></div>
+        <div style="flex:1; display:grid; grid-template-columns:repeat(24,1fr); gap:1px; height:16px;">
+          <div style="grid-column:19; border-left:2px dashed var(--amber); position:relative;">
+            <span style="position:absolute; top:-2px; left:4px; font-size:9px; font-weight:700; color:var(--amber); white-space:nowrap;">NOW (Jul '26)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 IMPACT SUMMARY BOX -->
+  <div class="highlight-box" style="margin-top: 16px; background: linear-gradient(135deg, rgba(210,153,34,0.15) 0%, rgba(248,81,73,0.08) 100%); border-color: var(--amber-border);">
+    <div style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px;">Q3 2026 (Jul-Sep) RATE CATCH STATUS</div>
+    <div style="font-size: 13px; line-height: 1.75; color: var(--text-secondary);">
+      <div style="margin-bottom: 6px;">
+        <span class="pill pill-green" style="margin-right:6px;">SAFE</span>
+        <strong style="color:var(--text-primary)">Sole + Fresca:</strong> Uplift holds through Nov 2026. Combined ~$5.3K/month in rate-driven fees.
+      </div>
+      <div style="margin-bottom: 6px;">
+        <span class="pill pill-amber" style="margin-right:6px;">SHRINKING</span>
+        <strong style="color:var(--text-primary)">BDC:</strong> Jul-Sep 2025 comps already had elevated rates (0.95-1.84%). The +340% Jul MTD YoY won't sustain.
+      </div>
+      <div style="margin-bottom: 6px;">
+        <span class="pill pill-green" style="margin-right:6px;">SAFE + EXPANDABLE</span>
+        <strong style="color:var(--text-primary)">Rosaprima:</strong> Current rate (0.08-0.22%) is still tiny on $5M/mo. If renegotiated to 0.5% = <strong style="color:var(--green)">+$25K/month</strong>.
+      </div>
+      <div style="margin-bottom: 10px;">
+        <span class="pill pill-red" style="margin-right:6px;">EXPIRED</span>
+        <strong style="color:var(--text-primary)">Gala:</strong> Already comping against new rate. +10.3% is the new normal.
+      </div>
+      <div style="padding-top:10px; border-top:1px solid var(--border-subtle); font-size:13.5px; font-weight:600; color:var(--text-primary);">
+        NET: The rate catches that matter for Q3 (Sole + Fresca) hold. The risk is Q4 2026 when they expire. Rosaprima is the upside lever.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  CONCLUSION: What is Safe, What is At Risk, What Needs Action ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-title" style="font-size:18px;">CONCLUSION: What is Safe, What is At Risk, What Needs Action</div>
+
+  <div class="conclusion-grid">
+
+    <!-- Card 1: SAFE THROUGH Q3 -->
+    <div style="background:var(--surface); border:2px solid var(--green-border); border-radius:8px; padding:18px 18px 16px;">
+      <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--green); margin-bottom:12px;">SAFE THROUGH Q3</div>
+      <ul style="list-style:none; padding:0; font-size:13px; color:var(--text-secondary); line-height:1.65;">
+        <li style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">Volume-driven growth (+46% YoY) = organic, sustainable</strong><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">KBC, Jet Fresh, Continental, FloraLink, Bella Blossom, Sunburst, Allure</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">$19.1K in fees, would deliver +46% alone</span>
+        </li>
+        <li style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">Rate catches on Sole + Fresca = hold through Nov 2026</strong><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">$5.3K/month in rate-driven uplift</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Both changed Nov 2025 &rarr; YoY comp doesn't expire until Nov 2026</span>
+        </li>
+        <li style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">All 3 core channels (K2K, eCom, API) accelerating vs Q2</strong>
+        </li>
+        <li style="font-size:11.5px; color:var(--text-muted); font-style:italic;">
+          Assumption: no accounts churn or significantly reduce volume in Q3
+        </li>
+      </ul>
+    </div>
+
+    <!-- Card 2: Q4 2026 RISK -->
+    <div style="background:var(--surface); border:2px solid var(--amber-border); border-radius:8px; padding:18px 18px 16px;">
+      <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--amber); margin-bottom:12px;">Q4 2026 RISK</div>
+      <ul style="list-style:none; padding:0; font-size:13px; color:var(--text-secondary); line-height:1.65;">
+        <li style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">Sole + Fresca rate catches expire Nov 2026</strong><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Without them, YoY drops from ~+55% to ~+44%</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Need volume to fill the gap by then, or new rate catches</span>
+        </li>
+        <li style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">BDC rate uplift already shrinking</strong><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Jul-Sep 2025 comps were 0.95-1.84% vs current 2.0-2.6%</span>
+        </li>
+        <li style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">Gala Roses uplift already expired (May 2025 rate change &rarr; May 2026 comp flat)</strong><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Gala's GMV is declining -21% &mdash; real erosion, not just comp math</span>
+        </li>
+        <li style="font-size:11.5px; color:var(--text-muted); font-style:italic;">
+          Assumption: no new rate renegotiations in Q4
+        </li>
+      </ul>
+    </div>
+
+    <!-- Card 3: REQUIRES ACTION NOW -->
+    <div style="background:var(--surface); border:2px solid var(--red-border); border-radius:8px; padding:18px 18px 16px;">
+      <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--red); margin-bottom:12px;">REQUIRES ACTION NOW</div>
+      <ul style="list-style:none; padding:0; font-size:13px; color:var(--text-secondary); line-height:1.65;">
+        <li style="margin-bottom:14px;">
+          <strong style="color:var(--text-primary);">1. Validate Rosaprima rate permanence</strong> <span style="font-size:11px; color:var(--text-muted);">(Facu/Sofia)</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Rate went from 0.05% to 0.18% in Mar 2026, now back to 0.08% in Jul</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">On $5M/month in API+eCom GMV, even 0.5% = $25K/month = $75K/quarter</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Is the Mar-May bump a billing error? A test? Permanent?</span><br>
+          <span style="font-size:12px; color:var(--amber); padding-left:8px;">This is the single largest known fee lever</span>
+        </li>
+        <li style="margin-bottom:14px;">
+          <strong style="color:var(--text-primary);">2. Close Mayesh API renegotiation</strong> <span style="font-size:11px; color:var(--text-muted);">(Chris/Mauro)</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">$674K API GMV in 13 days at $0 fees = ~$16M/yr untaxed</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">At 0.5% = $80K/yr. At 1.5% = $240K/yr</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Q3 desk work &mdash; no behavior change needed, only contract</span>
+        </li>
+        <li>
+          <strong style="color:var(--text-primary);">3. Diagnose Gala Roses GMV decline</strong> <span style="font-size:11px; color:var(--text-muted);">(Cata/Mercurio)</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Online GMV dropped -21% YoY (Jul 1-13: $57K&rarr;$45K)</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">Rate increase masked it in H1 but the comp is now flat</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">If GMV continues declining, this account flips from fee contributor to fee erosion</span><br>
+          <span style="font-size:12px; color:var(--text-muted); padding-left:8px;">What changed? Fewer buyers? Fewer products? Lost to competitor?</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ASSUMPTIONS BOX -->
+  <div style="background:var(--surface-raised); border:1px solid var(--border); border-radius:6px; padding:16px 20px; font-size:12px; color:var(--text-muted); line-height:1.75;">
+    <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:8px;">ASSUMPTIONS &amp; DATE BASIS</div>
+    <ul style="list-style:none; padding:0; margin:0;">
+      <li style="padding:2px 0;">All fee data: CONSOLIDATED_TRANSACTION_FEES, transaction_date basis (Rule 2)</li>
+      <li style="padding:2px 0;">All GMV data: SALE_DETAILS, shipping_date, ks_flag=TRUE, sales&lt;100K (Rules 1, 4, 8)</li>
+      <li style="padding:2px 0;">Comparison: Jul 1-13 2026 vs Jul 1-13 2025 (same-day normalization, 13 business days each)</li>
+      <li style="padding:2px 0;">Full-month projection: uses 2025 Jul completion ratio (first 13d = 36.6% of full month)</li>
+      <li style="padding:2px 0;">Axerrio: excluded from all Snowflake numbers. Estimated separately at ~$9.7K/month from Europe TX Fees Control Sheet</li>
+      <li style="padding:2px 0;">Rate catch timing: inferred from monthly take rate changes, NOT from contract records (would need SFDC rate change history to confirm exact dates)</li>
+      <li style="padding:2px 0;">'Volume growth' = accounts where fee YoY &asymp; online GMV YoY (rate stable). 'Rate catch' = accounts where fee YoY &gt;&gt; GMV YoY (rate changed)</li>
+      <li style="padding:2px 0;">Dump accounts (Rule 12) not applicable to fee data directly, but may affect GMV baselines</li>
+      <li style="padding:2px 0;">K2K fees = sell-side only (Dave Sack correction Jul 13). Wholesalers pay when they SELL, not when they buy.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 5: FEE CATEGORY DRIVERS                           ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 5</div>
+  <div class="section-title">Fee Category Drivers</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th class="num">Jul MTD '26</th>
+          <th class="num">Jul MTD '25</th>
+          <th class="num">Jul YoY</th>
+          <th class="num">Q2 '26</th>
+          <th class="num">Q2 '25</th>
+          <th class="num">Q2 YoY</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>K2K</strong></td>
+          <td class="num">$28,645</td>
+          <td class="num">$19,133</td>
+          <td class="num" style="color:var(--green)">+49.7%</td>
+          <td class="num">$357,578</td>
+          <td class="num">$250,871</td>
+          <td class="num" style="color:var(--green)">+42.6%</td>
+          <td><span class="pill pill-green">ACCELERATING</span></td>
+        </tr>
+        <tr>
+          <td><strong>eCommerce</strong></td>
+          <td class="num">$28,153</td>
+          <td class="num">$18,556</td>
+          <td class="num" style="color:var(--green)">+51.7%</td>
+          <td class="num">$382,720</td>
+          <td class="num">$277,757</td>
+          <td class="num" style="color:var(--green)">+37.8%</td>
+          <td><span class="pill pill-green">ACCELERATING</span></td>
+        </tr>
+        <tr>
+          <td><strong>API</strong></td>
+          <td class="num">$4,075</td>
+          <td class="num">$2,360</td>
+          <td class="num" style="color:var(--green)">+72.7%</td>
+          <td class="num">$47,967</td>
+          <td class="num">$39,930</td>
+          <td class="num" style="color:var(--green)">+20.1%</td>
+          <td><span class="pill pill-green">ACCELERATING ++</span></td>
+        </tr>
+        <tr>
+          <td><strong>GPS</strong></td>
+          <td class="num">$1,913</td>
+          <td class="num">$0</td>
+          <td class="num" style="color:var(--purple)">NEW</td>
+          <td class="num">$3,738</td>
+          <td class="num">$0</td>
+          <td class="num" style="color:var(--purple)">NEW</td>
+          <td><span class="pill pill-new">Details Direct freight</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-muted)">FedEx</td>
+          <td class="num" style="color:var(--text-muted)">$0</td>
+          <td class="num" style="color:var(--text-muted)">$268</td>
+          <td class="num" style="color:var(--text-muted)">--</td>
+          <td class="num" style="color:var(--text-muted)">$3,820</td>
+          <td class="num" style="color:var(--text-muted)">$4,305</td>
+          <td class="num" style="color:var(--red)">-11.3%</td>
+          <td><span style="font-size:11px;color:var(--text-muted)">Winding down</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="diagnosis-box green-border">
+    <strong>Positive signal:</strong> All three core channels (K2K, eCommerce, API) are accelerating in July vs Q2. API shows the sharpest jump (+20% &rarr; +73%). This is structural, not noise -- even with the W2 deceleration.
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 6: DAILY FEE PATTERN                              ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 6</div>
+  <div class="section-title">Daily Diagnostic Table (Jul 1-13, 2026)</div>
+  <div class="card">
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>DOW</th>
+          <th class="num">Total GMV</th>
+          <th class="num">Online GMV</th>
+          <th class="num">Fees</th>
+          <th class="num">Take Rate</th>
+          <th>Pattern</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jul 1</td>
+          <td>Wed</td>
+          <td class="num">$2.52M</td>
+          <td class="num">$375K</td>
+          <td class="num">$4,126</td>
+          <td class="num">1.10%</td>
+          <td><span style="font-size:11.5px;color:var(--text-secondary)">Normal</span></td>
+        </tr>
+        <tr>
+          <td>Jul 2</td>
+          <td>Thu</td>
+          <td class="num">$3.35M</td>
+          <td class="num">$551K</td>
+          <td class="num">$6,551</td>
+          <td class="num">1.19%</td>
+          <td><span class="pill pill-green" style="font-size:10px;">Strong</span></td>
+        </tr>
+        <tr>
+          <td>Jul 3</td>
+          <td>Fri</td>
+          <td class="num">$3.22M</td>
+          <td class="num">$542K</td>
+          <td class="num">$5,855</td>
+          <td class="num">1.08%</td>
+          <td><span style="font-size:11.5px;color:var(--text-secondary)">Normal</span></td>
+        </tr>
+        <tr style="background:var(--red-bg);">
+          <td><strong>Jul 4</strong></td>
+          <td><strong>SAT</strong></td>
+          <td class="num"><strong>$458K</strong></td>
+          <td class="num"><strong>$50K</strong></td>
+          <td class="num"><strong>$135</strong></td>
+          <td class="num"><strong>0.27%</strong></td>
+          <td><span class="pill pill-red" style="font-size:10px;">Holiday</span></td>
+        </tr>
+        <tr style="background:rgba(255,255,255,0.02);">
+          <td>Jul 5</td>
+          <td>Sun</td>
+          <td class="num">$1.31M</td>
+          <td class="num">$167K</td>
+          <td class="num">$1,646</td>
+          <td class="num">0.98%</td>
+          <td><span style="font-size:11.5px;color:var(--text-muted)">Weekend</span></td>
+        </tr>
+        <tr style="background:var(--amber-bg);">
+          <td><strong>Jul 6</strong></td>
+          <td><strong>MON</strong></td>
+          <td class="num"><strong>$5.06M</strong></td>
+          <td class="num"><strong>$791K</strong></td>
+          <td class="num"><strong>$8,537</strong></td>
+          <td class="num"><strong>1.08%</strong></td>
+          <td><span class="pill pill-amber" style="font-size:10px;">Monday peak + holiday catch-up</span></td>
+        </tr>
+        <tr>
+          <td>Jul 7</td>
+          <td>Tue</td>
+          <td class="num">$2.62M</td>
+          <td class="num">$349K</td>
+          <td class="num">$3,774</td>
+          <td class="num">1.08%</td>
+          <td><span style="font-size:11.5px;color:var(--text-secondary)">Normal</span></td>
+        </tr>
+        <tr>
+          <td>Jul 8</td>
+          <td>Wed</td>
+          <td class="num">$2.79M</td>
+          <td class="num">$430K</td>
+          <td class="num">$5,193</td>
+          <td class="num">1.21%</td>
+          <td><span style="font-size:11.5px;color:var(--text-secondary)">Normal</span></td>
+        </tr>
+        <tr>
+          <td>Jul 9</td>
+          <td>Thu</td>
+          <td class="num">$3.45M</td>
+          <td class="num">$584K</td>
+          <td class="num">$6,518</td>
+          <td class="num">1.12%</td>
+          <td><span class="pill pill-green" style="font-size:10px;">Strong</span></td>
+        </tr>
+        <tr>
+          <td>Jul 10</td>
+          <td>Fri</td>
+          <td class="num">$4.01M</td>
+          <td class="num">$648K</td>
+          <td class="num">$7,289</td>
+          <td class="num">1.13%</td>
+          <td><span class="pill pill-green" style="font-size:10px;">Strong</span></td>
+        </tr>
+        <tr style="background:rgba(255,255,255,0.02);">
+          <td><strong>Jul 11</strong></td>
+          <td><strong>SAT</strong></td>
+          <td class="num"><strong>$1.11M</strong></td>
+          <td class="num"><strong>$162K</strong></td>
+          <td class="num"><strong>$1,961</strong></td>
+          <td class="num"><strong>1.21%</strong></td>
+          <td><span style="font-size:11.5px;color:var(--text-muted)">Weekend</span></td>
+        </tr>
+        <tr style="background:rgba(255,255,255,0.02);">
+          <td>Jul 12</td>
+          <td>Sun</td>
+          <td class="num">$1.34M</td>
+          <td class="num">$216K</td>
+          <td class="num">$2,056</td>
+          <td class="num">0.95%</td>
+          <td><span style="font-size:11.5px;color:var(--text-muted)">Weekend</span></td>
+        </tr>
+        <tr style="background:var(--amber-bg);">
+          <td><strong>Jul 13</strong></td>
+          <td><strong>MON</strong></td>
+          <td class="num"><strong>$5.07M</strong></td>
+          <td class="num"><strong>$894K</strong></td>
+          <td class="num"><strong>$9,146</strong></td>
+          <td class="num"><strong>1.02%</strong></td>
+          <td><span class="pill pill-amber" style="font-size:10px;">Monday peak (normal)</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="diagnosis-box">
+    <strong>MONDAY PATTERN:</strong> Jul 6 and Jul 13 are both Mondays -- the peak shipping day in the floral industry. Jul 6 was extra strong as the first business day after the July 4th holiday weekend (3-day backlog). Jul 13 is a normal Monday pattern. Take rate is stable (0.95%-1.21%) across all business days -- no single-day rate anomalies. Jul 4 (Saturday holiday) and weekends (Jul 5, 11, 12) are naturally low. This is standard floral industry cadence.
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTIONS 7 & 8: GPS + AXERRIO (mini cards)               ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="mini-cards">
+
+    <!-- GPS -->
+    <div class="mini-card">
+      <h4>Section 7 -- GPS Deep Dive</h4>
+      <p style="margin-bottom:8px;color:var(--text-muted);font-size:11.5px;">GPS = Gross Profit Share = FedEx freight reconciliation profit</p>
+      <ul>
+        <li><strong style="color:var(--text-primary)">Details Direct</strong> <span style="float:right;font-family:monospace;color:var(--text-primary)">$3,815</span><br><span style="font-size:11px;color:var(--text-muted)">Jun 5 - Jul 13, ~$1.9K/month</span></li>
+        <li><strong style="color:var(--text-primary)">Details Core</strong> <span style="float:right;font-family:monospace;color:var(--text-primary)">$1,208</span><br><span style="font-size:11px;color:var(--text-muted)">Apr - May</span></li>
+        <li><strong style="color:var(--text-primary)">Floropolis</strong> <span style="float:right;font-family:monospace;color:var(--text-primary)">$1,131</span><br><span style="font-size:11px;color:var(--text-muted)">Dec 2025 - Jun 2026</span></li>
+      </ul>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border-subtle);">
+        <span class="label">Lifetime Total</span><br>
+        <span class="big-num">$6,154</span>
+        <span style="font-size:12px;color:var(--green);margin-left:8px;">Growing. Recurring monthly.</span>
+      </div>
+    </div>
+
+    <!-- Axerrio -->
+    <div class="mini-card">
+      <h4>Section 8 -- Axerrio (Europe)</h4>
+      <p style="margin-bottom:8px;color:var(--text-muted);font-size:11.5px;">From Europe TX Fees Control Sheet (Google Sheets)</p>
+      <ul>
+        <li>H1 2026: <strong style="color:var(--text-primary)">&euro;46,790 (~$53,600)</strong></li>
+        <li>Monthly avg: <strong style="color:var(--text-primary)">~&euro;8,450 (~$9,700)</strong></li>
+        <li>Jul estimate: <strong style="color:var(--text-primary)">~$9,700</strong> (per-user model, stable)</li>
+        <li>15 customers, mix of 1.5% TX and per-user models</li>
+        <li style="color:var(--amber);">Jul data NOT yet in sheet (pending Dan update)</li>
+      </ul>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border-subtle);font-size:11.5px;color:var(--text-muted);">
+        Source: <span style="word-break:break-all;">docs.google.com/spreadsheets/d/1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 7b: API MONETIZATION UPSIDE                       ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 7b</div>
+  <div class="section-title">API Monetization -- Known Upside (desk work, pending renegotiation)</div>
+  <div class="card">
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th class="num">API GMV (13d)</th>
+          <th class="num">Current Fees</th>
+          <th class="num">Current Rate</th>
+          <th class="num">At 0.75%</th>
+          <th class="num">At 1.5%</th>
+          <th class="num">Annual Upside</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: var(--amber-bg);">
+          <td><strong>Mayesh</strong></td>
+          <td class="num"><strong>$674K</strong></td>
+          <td class="num" style="color:var(--red)">$0</td>
+          <td class="num" style="color:var(--red)">0%</td>
+          <td class="num">$5.1K</td>
+          <td class="num">$10.1K</td>
+          <td class="num" style="color:var(--green)"><strong>$120-241K/yr</strong></td>
+        </tr>
+        <tr style="background: var(--amber-bg);">
+          <td><strong>Rosaprima</strong></td>
+          <td class="num"><strong>$1.85M</strong></td>
+          <td class="num" style="color:var(--red)">$80</td>
+          <td class="num" style="color:var(--red)">0.004%</td>
+          <td class="num">$13.9K</td>
+          <td class="num">$27.8K</td>
+          <td class="num" style="color:var(--green)"><strong>$330-665K/yr</strong></td>
+        </tr>
+        <tr>
+          <td>Galleria</td>
+          <td class="num">$5K</td>
+          <td class="num" style="color:var(--red)">$0</td>
+          <td class="num" style="color:var(--red)">0%</td>
+          <td class="num">$38</td>
+          <td class="num">$76</td>
+          <td class="num">$0.9-1.8K/yr</td>
+        </tr>
+        <tr>
+          <td>KBC</td>
+          <td class="num">$141K</td>
+          <td class="num">$1,012</td>
+          <td class="num">0.72%</td>
+          <td class="num" style="color:var(--text-muted)">&mdash;</td>
+          <td class="num">$2,111</td>
+          <td class="num">+$26K/yr <span style="font-size:10px;color:var(--text-muted)">(if to 1.5%)</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="diagnosis-box blue-border" style="margin: 14px 16px 16px;">
+      <strong>This is Q3 'desk work'</strong> &mdash; requires contract renegotiation, not behavior change. Chris + Mauro driving. If Mayesh API closes in Aug at even 0.5% = <strong style="color:var(--green)">+$80K annualized</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 9: Q3 PROJECTION                                  ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 9</div>
+  <div class="section-title">Q3 Projection (Same-Day Normalized)</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th class="num">2025 Actual</th>
+          <th class="num">2026 Projected</th>
+          <th class="num">YoY %</th>
+          <th>Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>July</strong></td>
+          <td class="num">$110,294</td>
+          <td class="num">~$171,600 + $9.7K Axerrio = <strong style="color:var(--text-primary)">$181K</strong></td>
+          <td class="num" style="color:var(--amber)">+52%</td>
+          <td>Same-day ratio</td>
+        </tr>
+        <tr>
+          <td><strong>August</strong></td>
+          <td class="num">$138,824</td>
+          <td class="num">Need <strong style="color:var(--text-primary)">$214K</strong> (+54.5%)</td>
+          <td class="num">+54.5%</td>
+          <td>Required</td>
+        </tr>
+        <tr>
+          <td><strong>September</strong></td>
+          <td class="num">$184,508</td>
+          <td class="num">Need <strong style="color:var(--text-primary)">$285K</strong> (+54.5%)</td>
+          <td class="num">+54.5%</td>
+          <td>Required</td>
+        </tr>
+        <tr class="totals-row">
+          <td><strong>Q3</strong></td>
+          <td class="num"><strong>$433,626</strong></td>
+          <td class="num"><strong>Need $670K</strong></td>
+          <td class="num"><strong>+54.5%</strong></td>
+          <td><strong>Target</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="diagnosis-box">
+    If Jul lands at projected $181K: Aug + Sep need <strong>$489K combined</strong>. Achievable if: <strong>(1)</strong> rate catches are permanent, <strong>(2)</strong> Sep wedding season delivers the J-curve Dan described.
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 10: NEXT 3 DEEP DIVES                             ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 10</div>
+  <div class="section-title">Next 3 Deep Dives</div>
+  <div class="card">
+    <div class="deep-dive-item">
+      <span class="dd-num">1</span>
+      <span class="dd-title">Validate Rosaprima rate: is the Mar-May bump permanent or a billing anomaly?</span>
+      <div class="dd-body">
+        Check SFDC rate history. Rate went 0.05% &rarr; 0.18% (Mar) &rarr; 0.08% (Jul). On $5M/mo GMV, even 0.5% = $25K/month. This is the single largest known fee lever.
+      </div>
+    </div>
+    <div class="deep-dive-item">
+      <span class="dd-num">2</span>
+      <span class="dd-title">Mayesh API renegotiation status: Chris has the action item. What's the timeline?</span>
+      <div class="dd-body">
+        $674K API GMV in 13 days at $0 fees = ~$16M/yr untaxed. At 0.5% = $80K/yr. At 1.5% = $240K/yr. Pure desk work &mdash; no behavior change needed, only contract.
+      </div>
+    </div>
+    <div class="deep-dive-item">
+      <span class="dd-num">3</span>
+      <span class="dd-title">Gala Roses GMV decline: -21% online YoY. What's causing it?</span>
+      <div class="dd-body">
+        Online GMV dropped from $57K to $45K (Jul 1-13). Rate increase masked it in H1 but the comp is now flat. If GMV continues declining, this account flips from fee contributor to fee erosion.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SECTION 11: HONEST GAPS                                   ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="section">
+  <div class="section-num">Section 11</div>
+  <div class="section-title">What This Dashboard Doesn't Show</div>
+  <div class="gaps-box">
+    <ul>
+      <li>Axerrio July fees (not yet updated in sheet -- pending Dan)</li>
+      <li>Whether rate increases are contractual vs retroactive catch-ups</li>
+      <li>Expected/projected fees (EXPECTED_TX_FEES may have July data)</li>
+      <li>Procurement-side GMV (not included in online GMV -- separate channel)</li>
+      <li>Daily GMV breakdown by account (have totals but not per-account)</li>
+      <li>API contract terms per account (needed to validate rate catch permanence)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  FOOTER                                                     ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="footer">
+  <strong>Source:</strong> CONSOLIDATED_TRANSACTION_FEES + SALE_DETAILS (Snowflake PRODUCTION.ANALYTICS)<br>
+  <strong>Filters:</strong> ks_flag=TRUE, sales&lt;100K, transaction_date basis (Rule 2)<br>
+  <strong>Comparison:</strong> Jul 1-13 2026 vs Jul 1-13 2025 (same-day normalized)<br>
+  <strong>Axerrio:</strong> Europe TX Fees Control Sheet (Google Sheets, H1 actual + Jul estimate)<br>
+  <strong>Dashboard built:</strong> Jul 14, 2026 &nbsp;|&nbsp; Framework v5 &nbsp;|&nbsp; Rose (data)
+</div>
+
+</div><!-- /.container -->
+</body>
+</html>
