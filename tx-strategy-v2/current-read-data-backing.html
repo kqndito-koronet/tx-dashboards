@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Current Read & Data Backing — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1420px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card small{display:block;color:#667085;font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.06em}.card strong{display:block;margin:5px 0;font-size:24px;line-height:1.1}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1180px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Current Read & Data Backing</h1>
+    <p class="sub">This is the compact data spine for the strategy. It separates useful operating reads from board-ready claims. Rose still needs to refresh/reconcile before we treat this as final.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a><a href="/tx-dashboards/reports/where_are_we.html">Where are we</a><a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Executive read</p>
+    <h2>Near-term monetization can work, but durability still depends on digitalizing more GMV.</h2>
+    <div class="grid">
+      <article class="card"><small>Q3 target</small><strong>$670K</strong><p>Requires +54.5% YoY vs Q3 2025. Source: OKR diagnostic.</p></article>
+      <article class="card"><small>July projection</small><strong>~$181K</strong><p>Includes ~$9.7K Axerrio estimate; same-day normalized. Directional.</p></article>
+      <article class="card"><small>Aug + Sep need</small><strong>$489K</strong><p>If July lands at projected level. Depends on rate catches + seasonality.</p></article>
+      <article class="card"><small>Core risk</small><strong>Durability</strong><p>Rate catches and desk work help Q3, but do not prove repeat digital behavior.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What we can say now</p>
+    <h2>Stakeholder-safe claims with caveats</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>Trust</th><th>Caveat</th><th>Decision supported</th></tr></thead>
+        <tbody>
+          <tr><td>Q3 requires acceleration: $670K / +54.5% YoY.</td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic, Q3 projection</a></td><td><span class="tag ok">Source-backed</span></td><td>Target basis comes from current OKR diagnostic; official reconciliation still useful.</td><td>Explains urgency without making Friday finance-only.</td></tr>
+          <tr><td>July is directionally pacing well but still needs caveats.</td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic, Jul 1-13</a></td><td><span class="tag warn">Directional</span></td><td>Jul 1-13 same-day normalized; Axerrio excluded from Snowflake and estimated separately.</td><td>Use as positive signal, not proof problem is solved.</td></tr>
+          <tr><td>All three core channels accelerated in July vs Q2.</td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic channel section</a></td><td><span class="tag warn">Directional</span></td><td>Needs Rose refresh and same-day/date-basis confirmation.</td><td>Supports focus on BUY/LIST/SELL/GROW rather than panic.</td></tr>
+          <tr><td>Rate catches help Q3 but create Q4 risk.</td><td><a href="/tx-dashboards/okr-diagnostic.html">Rate catch expiry calendar</a></td><td><span class="tag warn">Inferred</span></td><td>Timing inferred from monthly take-rate changes, not contract history.</td><td>Explains why durable GMV/digital GMV matters even if Q3 lands.</td></tr>
+          <tr><td>K2K fees are sell-side only.</td><td><a href="/tx-dashboards/okr-diagnostic.html">Assumptions box / Dave correction</a></td><td><span class="tag ok">Correction noted</span></td><td>Needs canonical propagation so old double-charge framing disappears.</td><td>Prevents wrong BUY narrative.</td></tr>
+          <tr><td>Offline GMV pool is real but not board-ready.</td><td><a href="/tx-dashboards/reports/where_are_we.html">Where Are We</a></td><td><span class="tag bad">Not board-ready</span></td><td>Offline definition/capping/dirty rows caveat. Use as directional opportunity only.</td><td>Supports LIST/SELL discovery without overstating TAM.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What this means for the strategy</p>
+    <h2>Message to keep consistent</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Strategic point</th><th>Data support</th><th>Operating implication</th></tr></thead>
+        <tbody>
+          <tr><td>Short term: capture fair share where we can.</td><td>Rate catches, API/pricing/deal desk opportunities, top-account concentration.</td><td>Leadership/Monday lane: monetization, pricing, API, strategic accounts.</td></tr>
+          <tr><td>Medium/long term: grow and digitalize more GMV.</td><td>Durability risk from rate catches and concentration; offline/digital mix caveats.</td><td>Friday lane: learn what it takes to move BUY/LIST/SELL/GROW online.</td></tr>
+          <tr><td>Do not confuse product delivery with adoption.</td><td>SELL readiness and LIST supply gaps are not fully measured yet.</td><td>Owners validate accounts, blockers, next actions, and what would it take.</td></tr>
+          <tr><td>Do not overstate current dashboards.</td><td>Several claims are directional, inferred, or need owner validation.</td><td>Use trust labels and Rose gap queue before sending stronger claims.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Rose next pack</p>
+    <h2>What still needs to become verified</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Output</th><th>Why needed</th><th>Minimum fields</th><th>Target surface</th></tr></thead>
+        <tbody>
+          <tr><td>Executive OKR strip</td><td>One agreed read for target / actual / projection.</td><td>Target, actual, July MTD, projected Q3, YoY, Axerrio in/out, source date, trust label.</td><td>Cockpit + morning review.</td></tr>
+          <tr><td>Driver decomposition</td><td>Separate volume from rate catch/mix/desk work.</td><td>Driver, amount, permanence, account/category, implication.</td><td>Current read + Monday.</td></tr>
+          <tr><td>Top account concentration</td><td>Know where action matters.</td><td>Account, fee, GMV, online GMV, category, rate, owner, action implication.</td><td>Strategic accounts + Friday.</td></tr>
+          <tr><td>BUY/LIST/SELL/GROW evidence table</td><td>Connect strategy to initiative KPIs.</td><td>Motion, metric, current value, data gap, decision supported.</td><td>Friday worksheet.</td></tr>
+          <tr><td>Claim register</td><td>Prevent unsupported claims from becoming narrative.</td><td>Claim, source, date basis, caveat, trust label, stale date.</td><td>Dashboard registry.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
