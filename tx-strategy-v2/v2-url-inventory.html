@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>V2 URL Inventory — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1320px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:940px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1050px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>V2 URL Inventory</h1>
+    <p class="sub">Manual QA checklist for the V2 operating surface. Every page should have a purpose, an owner lane, and a status label.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Inventory</p>
+    <h2>Pages to verify after each publish</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Page</th><th>Purpose</th><th>Owner lane</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/">Cockpit</a></td><td>Entry point, strategy frame, navigation.</td><td>Codex</td><td><span class="tag ok">Published</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a></td><td>Owner validation worksheet.</td><td>Pablito + Socrates</td><td><span class="tag wait">Needs owner input</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY page</a></td><td>Connection-to-repeat operating brief.</td><td>Cata / CS</td><td><span class="tag wait">Needs validation</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST page</a></td><td>Supply readiness operating brief.</td><td>Cata / CS + Rose</td><td><span class="tag wait">Needs Rose baseline</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL queue</a></td><td>Commercial readiness PMT queue.</td><td>Christine + Pablito</td><td><span class="tag wait">Seeded</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW operator</a></td><td>Black Belt account/cohort/play table.</td><td>Facu + Mercury</td><td><span class="tag wait">Needs approval</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic accounts</a></td><td>Bill Doran / Kennicott / Dreisbach plans.</td><td>Cata + Facu</td><td><span class="tag wait">Needs account facts</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger views</a></td><td>Filtered operating queues.</td><td>Pablito + Codex</td><td><span class="tag ok">Published</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/ledger-source.html">Ledger source</a></td><td>CSV-backed source table.</td><td>Pablito + Codex</td><td><span class="tag ok">Published seed</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a></td><td>Data backing requests and trust labels.</td><td>Rose</td><td><span class="tag wait">Requested</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Dashboard registry</a></td><td>Linked/evidence/quarantine report map.</td><td>Rose + Codex</td><td><span class="tag ok">Published</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/value-prop-gate.html">Value prop gate</a></td><td>Talk-track proof and approval gate.</td><td>Lautaro + Facu</td><td><span class="tag wait">Gate only</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback/calls</a></td><td>Feedback format and read-safe call packet.</td><td>Pablito</td><td><span class="tag ok">Spec published</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a></td><td>Monday/Thursday/Friday/readback cadence.</td><td>Pablito + Nahua</td><td><span class="tag ok">Published</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance</a></td><td>Workflow gates and publish blockers.</td><td>Nahua + Codex</td><td><span class="tag ok">Published</span></td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a></td><td>Draft note and owner link map.</td><td>Socrates + Facu</td><td><span class="tag wait">Review before send</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
