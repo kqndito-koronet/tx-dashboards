@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LIST Supply Readiness — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1460px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1280px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">LIST / Online Supply Readiness</p>
+    <h1>Make the wholesaler's real sellable supply visible online.</h1>
+    <p class="sub">LIST owns the question: does online supply represent what the wholesaler actually sells, at the formats and time horizons buyers need, with enough confidence to transact?</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a><a href="/tx-dashboards/lead-lists/lead_list_F_bunch_upload_gaps.html">Lead F</a><a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Scope</p>
+    <h2>Not just bunch uploads. Supply readiness is six dimensions.</h2>
+    <div class="grid">
+      <article class="card"><strong>Format</strong><p>Boxes, bunches, units, stems: what buyers actually want to buy.</p></article>
+      <article class="card"><strong>Variety</strong><p>Does online reflect what the wholesaler actually sells offline?</p></article>
+      <article class="card"><strong>Time depth</strong><p>Today, tomorrow, this week, next month, in-transit, and future availability.</p></article>
+      <article class="card"><strong>Freshness</strong><p>Upload/update consistency so supply does not decay.</p></article>
+      <article class="card"><strong>Fulfillment confidence</strong><p>Inventory accuracy, substitutions, cutoffs, delivery constraints.</p></article>
+      <article class="card"><strong>Buyer base readiness</strong><p>Enough online buyers or reachable clients to make supply useful.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Lead logic</p>
+    <h2>Prioritize readiness and learning, not only offline GMV</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Segment</th><th>What we do</th><th>Signals</th><th>Why it matters</th><th>Trust</th></tr></thead>
+        <tbody>
+          <tr><td>Already selling online</td><td>Improve gaps and learn what works.</td><td>Online sales %, active online clients, repeat orders, formats sold online.</td><td>Lower activation risk and strongest learning source.</td><td><span class="tag wait">Needs Rose baseline</span></td></tr>
+          <tr><td>Good supply, incomplete online representation</td><td>Run supply readiness discovery and pilot.</td><td>Offline product depth, varieties, in-transit/future availability, current uploads.</td><td>Likely best LIST execution candidates.</td><td><span class="tag wait">Needs Rose baseline</span></td></tr>
+          <tr><td>New eShop/eSuite, last 1-3 months</td><td>Support early habits before bad habits form.</td><td>Recent activation, implementation stage, owner willingness.</td><td>Timing is useful, but secondary to supply quality.</td><td><span class="tag warn">Secondary signal</span></td></tr>
+          <tr><td>API sellers with strong online behavior</td><td>Learn demand patterns; do not copy workflow blindly.</td><td>Formats/categories/time windows buyers purchase online.</td><td>Useful for what buyers want, less useful for eShop operations.</td><td><span class="tag warn">Learning only</span></td></tr>
+          <tr><td>Multi-location whales</td><td>Flag, study by location, avoid default P0 execution here.</td><td>Branch concentration, local workflow, supply team, online/offline mix.</td><td>High potential but high complexity; needs strategic account path.</td><td><span class="tag bad">Do not rank by total GMV alone</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Discovery questions</p>
+    <h2>What Cata / CS should learn before proposing a pilot</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Area</th><th>Question</th><th>What the answer routes to</th></tr></thead>
+        <tbody>
+          <tr><td>Offline vs online supply</td><td>Which top products/varieties sell offline but are missing or weak online?</td><td>Supply gap pilot or Rose data pull.</td></tr>
+          <tr><td>Format</td><td>Do buyers need boxes, bunches, units, stems, or mixed formats?</td><td>Format upload/workflow requirement.</td></tr>
+          <tr><td>Time depth</td><td>What can be confidently exposed tomorrow, this week, in transit, or farther out?</td><td>Future availability / in-transit workflow.</td></tr>
+          <tr><td>Freshness</td><td>Who owns updates and how often can supply be maintained?</td><td>Operational readiness or Implementation support.</td></tr>
+          <tr><td>Fulfillment</td><td>What happens when listed supply is unavailable or needs substitution?</td><td>Product/process blocker taxonomy.</td></tr>
+          <tr><td>Buyer base</td><td>Which buyers would actually use this supply if it were credible online?</td><td>BUY/GROW handoff.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday fields</p>
+    <h2>What must be reported</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Accounts reviewed</td><td>How many candidate accounts were inspected or discussed.</td><td>5 reviewed, 2 potential pilots.</td></tr>
+          <tr><td>Supply gap type</td><td>Format, variety, time depth, freshness, fulfillment, buyer base.</td><td>Good varieties offline; weak future availability online.</td></tr>
+          <tr><td>Pilot candidate</td><td>Account, reason, expected action, owner.</td><td>Account X to upload top bunches for next-week availability.</td></tr>
+          <tr><td>What would it take?</td><td>Customer condition to maintain credible online supply.</td><td>Export/import workflow and weekly owner cadence.</td></tr>
+          <tr><td>Handoff</td><td>BUY, SELL, GROW, Product, Rose, or Implementation.</td><td>Product blocker for future availability; Rose to quantify supply gap.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

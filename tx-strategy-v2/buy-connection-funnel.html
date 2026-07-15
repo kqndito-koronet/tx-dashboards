@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BUY Connection Funnel — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1420px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1200px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">BUY / Connections</p>
+    <h1>Turn connections into repeat transactions.</h1>
+    <p class="sub">BUY owns the question: after a buyer and supplier are connected, what makes the relationship actually transact, repeat, and create trust online?</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a><a href="/tx-dashboards/lead-lists/lead_list_B_untransacted_connections.html">Lead B</a><a href="/tx-dashboards/tx-strategy-v2/value-prop-gate.html">Value-prop gate</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">What this is</p>
+    <h2>Not “create connections.” Make connections useful enough to repeat.</h2>
+    <div class="grid">
+      <article class="card"><strong>Customer value</strong><p>Help buyers source better, find the right supplier, and make repeat procurement easier.</p></article>
+      <article class="card"><strong>Koronet learning</strong><p>Learn why connected pairs do or do not buy again: supply, price, trust, habit, ops, terms, or timing.</p></article>
+      <article class="card"><strong>Friday output</strong><p>Pairs worked, first/second/third order movement, blocker type, next action, owner, due date.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Lead logic</p>
+    <h2>More intent first; recency matters inside each bucket</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Priority</th><th>Lead type</th><th>Why it matters</th><th>Recency trigger</th><th>Discovery question</th><th>Trust</th></tr></thead>
+        <tbody>
+          <tr><td>P0</td><td>Connected + first order, no repeat</td><td>The pair already proved some intent; the highest-value question is why it did not repeat.</td><td>Immediately after first order or expected reorder window.</td><td>What would make you buy from this supplier again online?</td><td><span class="tag wait">Needs CS validation</span></td></tr>
+          <tr><td>P0</td><td>Accepted connection, no transaction</td><td>Intent exists but the buying motion broke before first order.</td><td>Just after connection accepted.</td><td>What did you expect to find or buy, and what stopped you?</td><td><span class="tag wait">Needs CS validation</span></td></tr>
+          <tr><td>P1</td><td>Buyer searched/clicked but did not transact</td><td>Strong behavioral intent if detectable.</td><td>Same week as search/click.</td><td>What were you looking for and why was the result not good enough?</td><td><span class="tag warn">Depends instrumentation</span></td></tr>
+          <tr><td>P1</td><td>Buyer buys both online and offline</td><td>Useful to understand leakage and which patterns are realistic to digitize.</td><td>Recent online/offline mix shift.</td><td>Which orders are easier online and which still need call/text/negotiation?</td><td><span class="tag warn">Needs data match</span></td></tr>
+          <tr><td>P2</td><td>Offline-only high volume buyer</td><td>Large potential, but likely harder unless there is a specific intent signal.</td><td>Only with active relationship or known need.</td><td>What would have to be true for this buying routine to move online?</td><td><span class="tag bad">Harder / do not start here by default</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday fields</p>
+    <h2>What Cata / CS should validate</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Definition</th><th>Example answer</th></tr></thead>
+        <tbody>
+          <tr><td>Pairs worked / total list</td><td>How many prioritized pairs were actually touched.</td><td>8 / 25 P0 pairs.</td></tr>
+          <tr><td>Movement</td><td>First order, second/third order, repeat commitment, or no movement.</td><td>2 first orders, 1 repeat, 3 blocked.</td></tr>
+          <tr><td>Blocker type</td><td>Supply, price, trust, habit, terms, timing, ops, tool, unknown.</td><td>Supply mismatch and terms negotiation.</td></tr>
+          <tr><td>What would it take?</td><td>The condition the buyer/supplier says would make online buying realistic.</td><td>More reliable bunch availability and comparable pricing.</td></tr>
+          <tr><td>Next action</td><td>Owner, action, date.</td><td>CS to schedule buyer discovery by Tuesday.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
