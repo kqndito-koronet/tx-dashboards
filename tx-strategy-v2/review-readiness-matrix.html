@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Review Readiness Matrix — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1380px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:28px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1180px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    .note{border-left:5px solid #2457c5;border-radius:9px;background:#f0f6ff;padding:16px}.note strong{display:block;margin-bottom:5px}.note p{margin:0;color:#344054}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Review Readiness Matrix</h1>
+    <p class="sub">Use this as the morning audit. It separates what is ready to show, what is useful but validation-dependent, and what is still only a workflow stub.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Facu morning review</a>
+      <a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URL inventory</a>
+      <a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Workflow compliance</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Executive verdict</p>
+    <h2>V2 is review-ready, not operating-ready.</h2>
+    <div class="grid">
+      <article class="card"><strong>Preserved</strong><p>V1 backup is tagged, branched, and documented.</p></article>
+      <article class="card"><strong>Published</strong><p>V2 hub, initiative pages, ledger seed, routines, and review path are online.</p></article>
+      <article class="card"><strong>Partial</strong><p>Data, leads, and account plans are useful but require owner/Rose validation.</p></article>
+      <article class="card"><strong>Not live</strong><p>Call ingestion, feedback logging, and recurring agent workflows are specified, not fully automated.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Requirement audit</p>
+    <h2>What the system now covers</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Requirement</th><th>Status</th><th>Evidence</th><th>What it enables</th><th>Remaining proof needed</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Keep current V1 as backup.</td>
+            <td><span class="tag ok">Covered</span></td>
+            <td>Backup tag <code>tx-strategy-v1-backup-2026-07-14</code>, backup branch <code>backup/tx-strategy-v1-2026-07-14</code>, pointer file in ops.</td>
+            <td>Work can continue on V2 without risking the current package.</td>
+            <td>None for backup. Keep V1 read-only unless Facu explicitly asks.</td>
+          </tr>
+          <tr>
+            <td>User-friendly GitHub hub online.</td>
+            <td><span class="tag ok">Covered</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/">Cockpit</a>, <a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URL inventory</a>, initiative pages, dashboard registry.</td>
+            <td>Stakeholders can start from one place and drill into what they need.</td>
+            <td>Final visual polish and any slide-level refinements after Facu review.</td>
+          </tr>
+          <tr>
+            <td>Simple strategy message.</td>
+            <td><span class="tag wait">Review-ready</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/">Cockpit current read</a>, <a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">send packet</a>, <a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">data backing</a>.</td>
+            <td>Explains GMV -> Digital GMV -> Monetize and Friday BUY/LIST/SELL/GROW learning engine.</td>
+            <td>Facu voice approval before sending. Keep stakeholder version short.</td>
+          </tr>
+          <tr>
+            <td>Friday operating package.</td>
+            <td><span class="tag ok">Covered</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday worksheet</a> with owner edit queue, status rows, discussion queue, and commitment readback.</td>
+            <td>Turns Friday into execution, learnings, blockers, asks, and next-week expectations.</td>
+            <td>Owners must fill actual results and validate missing fields by Thursday EOD.</td>
+          </tr>
+          <tr>
+            <td>Six initiatives connected to strategy.</td>
+            <td><span class="tag wait">Useful but validation-dependent</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a>, <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a>, <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL</a>, <a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW</a>, <a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic accounts</a>, Future Enablers in cockpit/Friday.</td>
+            <td>Each initiative has a scope, KPI/leading indicator frame, owner lane, enablement path, and review surface.</td>
+            <td>Owner validation of lead logic, first target accounts, and the actual ask per account.</td>
+          </tr>
+          <tr>
+            <td>Lead lists and suggested accounts.</td>
+            <td><span class="tag warn">Partial</span></td>
+            <td>Lead list links inside BUY/LIST pages; SELL queue seed; GROW operator candidates; strategic accounts page.</td>
+            <td>Gives stakeholders a starting point without pretending the list is final.</td>
+            <td>Rose baseline for LIST/Black Belt signals; CS/Implementation validation; account-owner acceptance.</td>
+          </tr>
+          <tr>
+            <td>Data-backed OKR and pacing story.</td>
+            <td><span class="tag warn">Partial</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Current read backing</a>, <a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a>, <a href="/tx-dashboards/reports/where_are_we.html">where are we</a>.</td>
+            <td>Shows what is verified, directional, caveated, or not board-ready.</td>
+            <td>Rose backing pack with freshness, reconciled definitions, top 15, channel/category cuts, and claim register.</td>
+          </tr>
+          <tr>
+            <td>Feedback and call ingestion.</td>
+            <td><span class="tag warn">Specified, not automated</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback ingestion</a>, <a href="/tx-dashboards/tx-strategy-v2/data/tx_feedback_log_template.csv">feedback CSV</a>, <a href="/tx-dashboards/tx-strategy-v2/data/tx_call_packet_template.csv">call packet CSV</a>.</td>
+            <td>Defines the fields needed to turn stakeholder updates and calls into tasks, objections, learnings, and account signals.</td>
+            <td>Actual ingestion from GitHub/Slack/Fathom into the ledger; read-safe review gate.</td>
+          </tr>
+          <tr>
+            <td>Execution ledger / source of truth.</td>
+            <td><span class="tag warn">Seed published</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger views</a>, <a href="/tx-dashboards/tx-strategy-v2/ledger-source.html">CSV source</a>, published seed CSV.</td>
+            <td>Creates the object model for account actions, owner asks, feedback, calls, evidence, and approval status.</td>
+            <td>Move from static seed to recurring update loop with owner edits and audit trail.</td>
+          </tr>
+          <tr>
+            <td>Agent coordination and routines.</td>
+            <td><span class="tag ok">Runbook covered</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">Agent runbook</a>, <a href="/tx-dashboards/tx-strategy-v2/routines.html">routines</a>, <a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">workflow compliance</a>.</td>
+            <td>Defines what Rose, Mercury, Socrates, Pablito, Nahua, Lautaro, and Codex should do and how output gets reviewed.</td>
+            <td>Run recurring jobs against live inputs; log outputs into ledger; enforce no-workflow/no-active-status rule.</td>
+          </tr>
+          <tr>
+            <td>Workflow compliance and error control.</td>
+            <td><span class="tag wait">Visible gate</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance page</a> with publish blockers, current output gate, and recovery checklist.</td>
+            <td>Makes drift, stale claims, missing provenance, and wrong confidence visible.</td>
+            <td>Nahua weekly audit with applied fixes or explicit park decisions.</td>
+          </tr>
+          <tr>
+            <td>Morning review path.</td>
+            <td><span class="tag ok">Covered</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Facu morning review</a>.</td>
+            <td>Lets Facu review the package in 20 minutes and decide approve/change/park.</td>
+            <td>Facu review and feedback.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Do not overclaim</p>
+    <h2>What should not be said yet</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Do not claim</th><th>Use this instead</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>V2 is the live operating system.</td><td>V2 is a draft operating package ready for review and owner validation.</td><td>Feedback/call ingestion and ledger updates are still mostly templates and static pages.</td></tr>
+          <tr><td>Lead lists are final.</td><td>Lead lists are suggested starting points with validation required from CS/Implementation owners.</td><td>Owner context and Rose baselines are still missing for several lists.</td></tr>
+          <tr><td>Rose numbers are board-ready.</td><td>Rose numbers are trust-labeled; some are verified, some directional, some not board-ready.</td><td>Offline GMV, Axerrio, rate-catch timing, and current-period projections need caveats.</td></tr>
+          <tr><td>Future Digital Enablers are product asks.</td><td>Enablers are blockers tied to accounts, pilots, KPIs, and go/no-go decisions.</td><td>Prevents product work from becoming abstract roadmap pressure.</td></tr>
+          <tr><td>Stakeholders must rebuild the package.</td><td>Stakeholders validate status, accounts, blockers, learnings, and asks.</td><td>The system should reduce reporting effort, not add deck work.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Next proof queue</p>
+    <h2>What must happen next to move from review-ready to operating-ready</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Priority</th><th>Proof needed</th><th>Owner lane</th><th>Acceptance criteria</th></tr></thead>
+        <tbody>
+          <tr><td>P0</td><td>Rose data backing pack</td><td>Rose</td><td>Current read claims reconciled with freshness, source, date basis, top accounts, channel/category cuts, and trust labels.</td></tr>
+          <tr><td>P0</td><td>Owner validation for Friday rows</td><td>Cata, Christine, Facu, Maga</td><td>Each row has deliverables, learnings, asks, next-week expectations, and owner/date.</td></tr>
+          <tr><td>P0</td><td>Lead list validation</td><td>CS / Implementation owners + Mercury</td><td>Each suggested lead has why selected, signal, action, expected result, expected learning, and validation state.</td></tr>
+          <tr><td>P1</td><td>Account action plans for strategic accounts</td><td>Mercury + Facu/Cata</td><td>Bill Doran, Kennicott, Dreisbach each have one full-stack next conversation and cross-initiative plan.</td></tr>
+          <tr><td>P1</td><td>Feedback/call ingestion first run</td><td>Pablito + call worker</td><td>At least five call or stakeholder updates converted into ledger rows with review-safe source and route.</td></tr>
+          <tr><td>P1</td><td>Workflow audit first run</td><td>Nahua + Codex</td><td>Current artifacts marked workflow-backed, missing, patched, or parked. No hidden provenance.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Bottom line</p>
+    <div class="note">
+      <strong>Recommendation for tomorrow morning</strong>
+      <p>Use V2 as the review package. Share only after Facu approves the voice and owner asks. Keep the label: draft operating package. Push owners to validate rows and accounts, while Rose/Mercury/Pablito/Nahua turn the static pieces into recurring workflows.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>
