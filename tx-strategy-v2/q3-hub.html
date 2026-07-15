@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Q3 TX Hub — Mini V3</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#111827;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--navy:#172033;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1320px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:24px;margin-bottom:16px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:16px;background:transparent;border:none;box-shadow:none;padding:0}
+    .hero>div{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:28px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1{font-size:clamp(38px,5vw,64px);line-height:.97;margin:0 0 12px;max-width:900px}
+    h2{font-size:clamp(25px,3vw,34px);line-height:1.1;margin:0 0 8px}
+    h3{font-size:18px;margin:0 0 8px}
+    p{margin-top:0}.sub{color:var(--muted);font-size:17px;max-width:930px}.small{color:var(--muted);font-size:14px}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#101828;padding:0 13px;font-size:14px;text-decoration:none}.primary{background:var(--blue)!important;border-color:var(--blue)!important;color:#fff!important}
+    .model{display:grid;gap:8px}.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.row4 span{border-radius:7px;background:var(--navy);color:#fff;font-weight:950;text-align:center;padding:14px 6px}.row4 small{display:block;margin-top:3px;color:#dbe4ff;font-size:11px;font-weight:800}
+    .band{border-radius:7px;padding:12px 14px;font-weight:900}.band.gold{background:#fff4e5;color:#7c3e00}.band.purple{background:#f4f0ff;color:#4c1d95}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px}.card strong{display:block;margin-bottom:6px;font-size:20px;line-height:1.15}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .accent{border-left:5px solid var(--blue)}.green{border-left-color:var(--green)}.goldLine{border-left-color:var(--gold)}.redLine{border-left-color:var(--red)}.purpleLine{border-left-color:var(--purple)}.navyLine{border-left-color:var(--navy)}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;min-width:1050px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+    @media(max-width:900px){main{width:min(100% - 24px,1320px)}.hero,.grid2,.grid3,.grid4,.row4{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Q3 TX Hub · Mini V3</p>
+      <h1>Help the team execute, learn, and make good work visible.</h1>
+      <p class="sub">
+        This hub is not the whole operating system. It is the simple Friday-facing layer:
+        where we are, what each owner is trying to move, what we want them to do,
+        and how the system helps them with accounts, context, talking points, and learning capture.
+      </p>
+      <div class="links">
+        <a class="primary" href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Open Friday prefill</a>
+        <a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Review suggested leads</a>
+        <a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a>
+        <a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data backing</a>
+      </div>
+    </div>
+    <div class="model">
+      <div class="row4">
+        <span>BUY<small>repeat transactions</small></span>
+        <span>LIST<small>real supply online</small></span>
+        <span>READY<small>commercial usage</small></span>
+        <span>GROW<small>scale what works</small></span>
+      </div>
+      <div class="band gold">Strategic Accounts: one client, one plan across product usage, BUY, LIST, readiness, and growth.</div>
+      <div class="band purple">Enablers: products/features help only when tied to a blocker, account, pilot, KPI, and learning loop.</div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What this is for</p>
+    <h2>Use the hub to ask for execution and learning without making owners rebuild the story.</h2>
+    <div class="grid3">
+      <article class="card accent"><small>Visibility</small><strong>Make good execution visible</strong><p>Show who is working the right accounts, testing the right plays, and bringing useful learnings back.</p></article>
+      <article class="card green"><small>Expectations</small><strong>Ask for specific work</strong><p>Each owner should know which accounts/lists matter, what action we want, and what result or learning would count.</p></article>
+      <article class="card goldLine"><small>Help</small><strong>Reduce stakeholder lift</strong><p>The system should prefill evidence, context, calls, SFDC activity, product usage, suggested next actions, and talking points.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Current read</p>
+    <h2>Short term, monetize what exists. Q3, learn what it takes to digitalize more of the market.</h2>
+    <div class="grid4">
+      <article class="card"><small>Today</small><strong>We can still take quick wins</strong><p>Top accounts, API, pricing, billing integrity, and better online buying can move near-term revenue.</p></article>
+      <article class="card"><small>But</small><strong>That is not durable enough</strong><p>GMV is not growing enough yet. Fee growth eventually needs more GMV and more digital GMV.</p></article>
+      <article class="card"><small>Friday</small><strong>The work is execution + learning</strong><p>Run plays with what exists, learn what blocks digital buying/listing/selling, and escalate only what needs product or leadership.</p></article>
+      <article class="card"><small>Rule</small><strong>Product scales what works</strong><p>Do not build every idea first. Test plays, measure them, then use product to scale the patterns that prove real.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Owner-facing ask</p>
+    <h2>Talk in their language: account, ask, help.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Owner lane</th><th>What counts</th><th>What we ask them to do</th><th>How the system helps</th><th>Friday output</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Cata / CS</strong><br>BUY</td>
+            <td>Connected buyer-supplier pairs turn into first, second, and repeat transactions.</td>
+            <td>Work the highest-intent pairs, classify why they did or did not repeat, and bring “what would it take”.</td>
+            <td>Suggested cohorts, account history, SFDC/Fathom activity, current movement, missing contacts, talking points.</td>
+            <td>Results, deliverables, learnings, blockers, next pairs/accounts.</td>
+          </tr>
+          <tr>
+            <td><strong>Cata / CS</strong><br>LIST</td>
+            <td>Wholesaler online supply reflects what they actually sell, in the formats/time horizons buyers need.</td>
+            <td>Validate supply gaps and identify what the account would need to list better supply.</td>
+            <td>Supply maturity view, product usage, eShop/eSuite/API signals, best-in-class benchmarks, seller scorecard.</td>
+            <td>First accounts to study/pilot, supply blockers, owner correction, required support.</td>
+          </tr>
+          <tr>
+            <td><strong>Christine / Implementation</strong><br>Commercial Readiness</td>
+            <td>Wholesaler implementations become real product usage: buy, list, and be ready to sell.</td>
+            <td>Identify accounts where setup can become usage and where TX can help make the product valuable faster.</td>
+            <td>PMT queue, expected usage by product, feature adoption, buy/list gaps, suggested first usage path.</td>
+            <td>Accounts needing TX help, expected first motion, blocker, next action.</td>
+          </tr>
+          <tr>
+            <td><strong>Facu</strong><br>GROW / Black Belt</td>
+            <td>Accounts with readiness get a sharper sales motion and repeat online transaction growth.</td>
+            <td>Pick the first measured play, prove what works, and make the learnings reusable.</td>
+            <td>Account plays, cohort strategy, customer/supply analysis, competitor research, call learnings, campaign options.</td>
+            <td>Candidate, play, metric, expected learning, next customer conversation.</td>
+          </tr>
+          <tr>
+            <td><strong>Cata + Facu</strong><br>Strategic Accounts</td>
+            <td>Bill Doran, Kennicott, and Dreisbach get one client plan, not fragmented asks.</td>
+            <td>Align the next account conversation around product usage, BUY, LIST, readiness, and growth.</td>
+            <td>Account plan, current facts, open blockers, stakeholders, next conversation prep.</td>
+            <td>Current status, next conversation, decision/help needed.</td>
+          </tr>
+          <tr>
+            <td><strong>Maga / Product</strong><br>Enablers</td>
+            <td>Product work supports a proven blocker or pilot, not a broad roadmap debate.</td>
+            <td>Show delivered/testing/WIP enablers only when tied to initiative blockers and field feedback.</td>
+            <td>Blocker taxonomy, usage evidence, pilot KPI, account examples, feedback from calls.</td>
+            <td>Which blockers need product attention, which remain parked for Monday/leadership.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday table</p>
+    <h2>Owners fill the simple row. The backend does the hard work.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Initiative</th><th>Results</th><th>Deliverables</th><th>Learnings</th><th>Blockers</th><th>Next actions</th><th>Help needed</th></tr></thead>
+        <tbody>
+          <tr><td>BUY</td><td><span class="tag wait">Prefill + owner correction</span></td><td>Accounts worked / total list</td><td>Why pairs repeat or do not</td><td>Grouped and evidenced</td><td>Next pairs + owner/date</td><td>Data, talk track, escalation</td></tr>
+          <tr><td>LIST</td><td><span class="tag wait">Prefill + owner correction</span></td><td>Accounts analyzed/piloted</td><td>What makes supply hard/easy</td><td>Format, variety, time depth, product usage</td><td>Next account + supply ask</td><td>Rose baseline, product usage, benchmarks</td></tr>
+          <tr><td>Commercial Readiness</td><td><span class="tag wait">Prefill + owner correction</span></td><td>PMTs reviewed / accounts supported</td><td>What creates real usage</td><td>Product usage, buy/list gaps, customer workflow</td><td>Next account + usage motion</td><td>TX support, value prop, data</td></tr>
+          <tr><td>GROW</td><td><span class="tag wait">Facu-owned</span></td><td>Plays prepared/tested</td><td>What would make sales motion digital</td><td>Readiness, retention, buyer habit, supply</td><td>Next play + metric</td><td>Research, campaign options, customer prep</td></tr>
+          <tr><td>Strategic Accounts</td><td><span class="tag wait">Facu + Cata</span></td><td>Account plan updated</td><td>What account needs next</td><td>Enterprise blockers</td><td>Next conversation</td><td>Leadership/account support</td></tr>
+          <tr><td>Enablers</td><td><span class="tag warn">Summary only</span></td><td>Delivered/testing/WIP tied to blockers</td><td>What field feedback says</td><td>Product/adoption blockers</td><td>Pilot or park</td><td>Monday/leadership if needed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What goes below, not in the top hub</p>
+    <h2>Keep the complexity available, but behind the simple operating layer.</h2>
+    <div class="grid3">
+      <article class="card">
+        <small>Reference</small>
+        <strong>For evidence and deep dives</strong>
+        <p>Executive read, OKR diagnostic, dashboards, data backing, value prop, Black Belt deep dive, supply maturity model.</p>
+        <div class="links"><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data backing</a><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">Black Belt</a><a href="/tx-dashboards/value-prop.html">Value prop</a></div>
+      </article>
+      <article class="card">
+        <small>Control</small>
+        <strong>For Facu and agents</strong>
+        <p>Workflow registry, feedback ingestion, claim register, issue ledger, generated queues, automation gaps, call routing.</p>
+        <div class="links"><a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Workflows</a><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback</a><a href="/tx-dashboards/tx-strategy-v2/claim-register.html">Claims</a></div>
+      </article>
+      <article class="card">
+        <small>Owner tools</small>
+        <strong>For low-lift reporting</strong>
+        <p>Suggested leads, Friday prefill, weekly action queue, owner validation, account plans, call packets.</p>
+        <div class="links"><a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Leads</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Plans</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Not necessary for this mini hub</p>
+    <h2>What I would do next, but would not put in front of everyone yet.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Later work</th><th>Why it matters</th><th>Why not now</th><th>Where it should live</th></tr></thead>
+        <tbody>
+          <tr><td>Full audience hubs</td><td>CS, Implementation, Leadership, Revenue, and Facu need different views.</td><td>First we need the Q3 Friday layer to be clear.</td><td>Separate Start pages under V3.</td></tr>
+          <tr><td>Supply maturity dashboard</td><td>LIST needs real metrics: format, variety, time depth, product usage, demand alignment.</td><td>Needs Rose/data validation before being treated as truth.</td><td>Reference + LIST page.</td></tr>
+          <tr><td>Automated Fathom/SFDC prefill</td><td>Owners should not manually reconstruct calls and activity.</td><td>Need data definitions and read-safe routing gates first.</td><td>Control panel + Friday prefill backend.</td></tr>
+          <tr><td>One Client, One Plan dashboard</td><td>Strategic accounts need all motions in one account plan.</td><td>Should start with Bill Doran, Kennicott, Dreisbach only.</td><td>Strategic Accounts page.</td></tr>
+          <tr><td>Agent operating model cleanup</td><td>Needed for scale and recurring routines.</td><td>Do not automate unstable business logic.</td><td>Facu Control Panel.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
