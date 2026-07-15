@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TX Enablement V2 — Operating Cockpit</title>
+  <style>
+    :root {
+      --bg:#f5f7fb; --panel:#fff; --ink:#101828; --muted:#667085; --line:#d9e0ea;
+      --blue:#2457c5; --green:#12805c; --gold:#b26a00; --red:#b42318;
+      --purple:#6941c6; --navy:#172033; --cyan:#067a91; --shadow:0 14px 34px rgba(16,24,40,.07);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1420px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(430px,.95fr);gap:18px;margin-bottom:16px}
+    section,.heroCard,nav{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+    .heroCard{padding:34px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}
+    h1{max-width:850px;margin-bottom:12px;font-size:clamp(40px,5vw,66px);line-height:.95}
+    h2{margin-bottom:8px;font-size:clamp(25px,3vw,36px);line-height:1.1}
+    h3{margin-bottom:8px;font-size:18px}
+    .heroCopy{max-width:820px;color:var(--muted);font-size:18px;line-height:1.55}
+    .actions,.quickLinks,.sourceLinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .actions a,.quickLinks a,.sourceLinks a,.button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;border:1px solid var(--line);border-radius:7px;padding:0 14px;background:#fff;color:var(--ink);font-weight:900;text-decoration:none}
+    .primary{border-color:var(--blue)!important;background:var(--blue)!important;color:#fff!important}
+    .warning{border-color:#fedf89;background:#fffbeb;color:#92400e}
+    .model{display:grid;gap:10px}
+    .modelRow,.modelSub{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+    .modelRow span{padding:18px 8px;border-radius:7px;background:var(--navy);color:#fff;font-size:21px;font-weight:950;text-align:center}
+    .modelSub span{min-height:46px;padding:10px 8px;border:1px solid var(--line);border-radius:7px;background:#f9fafb;color:var(--muted);font-size:12px;font-weight:900;text-align:center}
+    .band{padding:13px 14px;border-radius:7px;font-weight:900}
+    .band.enabler{background:#f4f0ff;color:#4c1d95}
+    .band.strategic{background:#fff4e5;color:#7c3e00}
+    nav{position:sticky;top:10px;z-index:4;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:10px}
+    nav a{border-radius:7px;padding:9px 12px;background:#f8fafc;color:#344054;font-size:13px;text-decoration:none}
+    section{margin-bottom:16px;padding:24px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px}
+    .card small,.metric small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .card strong,.metric strong{display:block;margin-bottom:6px;font-size:19px;line-height:1.15}
+    .metric strong{font-size:28px}
+    .card p,.metric p{margin-bottom:0;color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;color:#fff;font-size:11px;font-weight:950;letter-spacing:.04em;text-transform:uppercase}
+    .blue{background:var(--blue)} .green{background:var(--green)} .gold{background:var(--gold)} .red{background:var(--red)} .purple{background:var(--purple)} .navy{background:var(--navy)} .cyan{background:var(--cyan)}
+    .trust{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}
+    .verified{background:#ecfdf3;color:#067647;border-color:#abefc6}.directional{background:#fffaeb;color:#b54708;border-color:#fedf89}.blocked{background:#fef3f2;color:#b42318;border-color:#fecdca}.approval{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}
+    table{width:100%;min-width:1080px;border-collapse:collapse}
+    th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}
+    th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    tr:last-child td{border-bottom:none}
+    .readStrip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .metric{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px}
+    .rule{border-left:5px solid var(--blue);border-radius:9px;background:#f0f6ff;padding:16px}
+    .dangerRule{border-left-color:var(--red);background:#fff5f5}
+    .ownerGrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+    .ownerGrid .card{padding:13px}
+    .ownerGrid strong{font-size:15px}
+    .subtle{color:var(--muted)}
+    @media(max-width:980px){.hero,.grid2,.grid3,.grid4,.readStrip,.ownerGrid{grid-template-columns:1fr}.modelRow,.modelSub{grid-template-columns:repeat(2,minmax(0,1fr))}main{width:min(100% - 24px,1420px)}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="heroCard">
+      <p class="eyebrow">Transactions Enablement V2</p>
+      <h1>Move more real floral trade online.</h1>
+      <p class="heroCopy">
+        This is the visible control surface for TX execution. It connects strategy, pacing, initiatives, accounts,
+        value prop, dashboards, feedback, calls, and agent routines into one operating system.
+      </p>
+      <div class="actions">
+        <a class="primary" href="#friday">Start with Friday queue</a>
+        <a href="#initiatives">Review initiatives</a>
+        <a href="#ledger">Open execution ledger</a>
+        <a href="/tx-dashboards/tx-strategy-v1/index.html">Backup V1</a>
+      </div>
+    </div>
+    <div class="heroCard model">
+      <div class="modelRow"><span>BUY</span><span>LIST</span><span>SELL</span><span>GROW</span></div>
+      <div class="modelSub"><span>Connections repeat</span><span>Supply is real</span><span>Implementation creates usage</span><span>Black Belt scales what works</span></div>
+      <div class="band strategic">Strategic Accounts cut across all four motions.</div>
+      <div class="band enabler">Future Digital Enablers unlock blockers only when tied to pilot, KPI, and decision.</div>
+    </div>
+  </section>
+
+  <nav>
+    <a href="#read">Current Read</a>
+    <a href="#system">System Rules</a>
+    <a href="#friday">Friday Queue</a>
+    <a href="#initiatives">Initiatives</a>
+    <a href="#ledger">Ledger</a>
+    <a href="#accounts">Accounts</a>
+    <a href="#reports">Reports</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#agents">Agents</a>
+    <a href="#next">Next Build</a>
+  </nav>
+
+  <section id="read">
+    <p class="eyebrow">Current read</p>
+    <h2>We can hit near-term monetization and still not prove durable TX growth.</h2>
+    <p class="subtle">
+      July pacing is directionally strong, but durability is not proven. Rate catches, top-account concentration,
+      API/pricing work, and Axerrio can make Q3 look healthy while the harder operating question remains:
+      what does it take to make more BUY, LIST, SELL, and GROW activity happen online?
+    </p>
+    <div class="readStrip">
+      <article class="metric"><small>Short term</small><strong>Capture fair share</strong><p>Top accounts, API, pricing, deal desk, billing integrity.</p></article>
+      <article class="metric"><small>Long term</small><strong>Grow + digitalize</strong><p>More GMV by layer, more digital GMV, less leakage to calls/texts/manual workflows.</p></article>
+      <article class="metric"><small>Friday job</small><strong>Execution + learning</strong><p>Which accounts did we touch, what happened, what changed next week?</p></article>
+      <article class="metric"><small>Trust rule</small><strong>No hidden confidence</strong><p>Verified, directional, needs owner validation, not board-ready, or blocked.</p></article>
+    </div>
+    <div class="quickLinks">
+      <a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a>
+      <a href="/tx-dashboards/reports/where_are_we.html">Where are we</a>
+      <a href="/tx-dashboards/reports/ecosystem_map.html">Ecosystem map</a>
+      <a href="/tx-dashboards/value-prop.html">Value prop system</a>
+    </div>
+  </section>
+
+  <section id="system">
+    <p class="eyebrow">How this system works</p>
+    <h2>V2 makes drift visible instead of letting it become strategy.</h2>
+    <div class="grid3">
+      <div class="rule"><strong>Facu decides.</strong><p>Hypotheses, initiatives, strategic account prioritization, stakeholder-facing narrative, and cross-initiative account asks.</p></div>
+      <div class="rule"><strong>Agents propose through workflows.</strong><p>Mercury, Rose, Socrates, Pablito, Nahua, and Codex must declare workflow, owner, evidence, and approval state.</p></div>
+      <div class="rule dangerRule"><strong>No workflow, no active status.</strong><p>A play, dashboard, claim, or account ask without workflow provenance is labeled missing, parked, or quarantined.</p></div>
+    </div>
+    <div class="tableWrap" style="margin-top:16px">
+      <table>
+        <thead><tr><th>Gate</th><th>Rule</th><th>Owner</th><th>Visible status</th></tr></thead>
+        <tbody>
+          <tr><td>Canonical</td><td>Canonical before agent memory. Conflicting memory is not used silently.</td><td>Codex + Nahua</td><td><span class="trust approval">Preflight required</span></td></tr>
+          <tr><td>Value prop</td><td>No talk track, objection response, play, or stakeholder note ships without value-prop dependency.</td><td>Lautaro + Facu gate</td><td><span class="trust approval">Dependency required</span></td></tr>
+          <tr><td>Evidence</td><td>Every number needs source, date basis, freshness, and trust label.</td><td>Rose</td><td><span class="trust directional">Trust labeled</span></td></tr>
+          <tr><td>Execution</td><td>Every Friday row needs account, owner, action, result/learning, blocker, next date.</td><td>Mercury + Pablito</td><td><span class="trust verified">Action linked</span></td></tr>
+          <tr><td>Comms</td><td>Socrates communicates approved strategy. It does not invent data or final P0 accounts.</td><td>Socrates</td><td><span class="trust approval">Approved framing</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="friday">
+    <p class="eyebrow">Friday execution queue</p>
+    <h2>Owners should update what happened, not reconstruct context.</h2>
+    <p class="subtle">This queue is a V2 skeleton. Mercury/Pablito/Rose should prefill it before Thursday EOD.</p>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Initiative</th><th>Hypothesis</th><th>Account / pair</th><th>Play status</th><th>Value prop pitch</th><th>What we said / asked</th><th>Result</th><th>Learning</th><th>Metric</th><th>Workflow</th><th>Next decision</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="pill green">BUY</span></td><td>Connected pairs can become repeat transactions if blocker is found quickly.</td><td>Lead B queue, owner validation pending</td><td><span class="trust approval">Needs owner validation</span></td><td>Source smarter / repeat procurement</td><td>Ask why first/second/third order did or did not happen.</td><td>Owner to update</td><td>Classify blocker: awareness, catalog, price, habit, ops.</td><td>Pairs worked, 2nd/3rd orders</td><td>initiative_report + post_call_capture</td><td>Approve first weekly queue.</td></tr>
+          <tr><td><span class="pill blue">LIST</span></td><td>Buyers cannot buy online what the wholesaler does not list credibly.</td><td>Lead F + supply readiness candidates</td><td><span class="trust directional">Directional</span></td><td>Sell more with real online supply</td><td>Ask what prevents top unit/bunch products from being online and maintained.</td><td>Owner to update</td><td>Technical, staffing, value, freshness, fulfillment blocker.</td><td>Supply dimensions, upload pilots</td><td>initiative_execution_build</td><td>Pick first pilot account.</td></tr>
+          <tr><td><span class="pill gold">SELL</span></td><td>Implementation must create real BUY/LIST/SELL usage, not only setup.</td><td>PMT queue missing in hub</td><td><span class="trust blocked">Weakest artifact</span></td><td>Get more value from Koronet</td><td>Define first usage path: what they buy, list, sell, and how we measure it.</td><td>Needs Christine/Pablito</td><td>Readiness gaps before go-live.</td><td>First/second/third transaction</td><td>stakeholder_enablement</td><td>Build PMT readiness queue.</td></tr>
+          <tr><td><span class="pill navy">GROW</span></td><td>Black Belt amplifies accounts ready enough and diagnoses those that are not.</td><td>Zeidler / Maple Grove / approved candidates pending</td><td><span class="trust approval">Needs Facu approval</span></td><td>Measured growth partnership</td><td>Pick cohort, play, message, channel, measurement window.</td><td>Owner to update</td><td>What would it take to repeat online behavior?</td><td>Visits, first/repeat orders, leakage</td><td>play_design + value_prop_update</td><td>Approve operator view.</td></tr>
+          <tr><td><span class="pill red">Strategic</span></td><td>Top accounts need one full-stack plan, not fragmented asks.</td><td>Bill Doran / Kennicott / Dreisbach</td><td><span class="trust approval">Plan needed</span></td><td>Account-specific</td><td>Align BUY/LIST/SELL/GROW actions before external asks.</td><td>Facu/Cata update</td><td>Where is the single next conversation?</td><td>Account plan with next action</td><td>account_plan + friday_pack</td><td>Draft account plans.</td></tr>
+          <tr><td><span class="pill purple">Enablers</span></td><td>Product enablers matter only when tied to proven blockers.</td><td>Standing Orders / API / Grower Portal / parity</td><td><span class="trust directional">Parking lot</span></td><td>Unblock digital workflows</td><td>Define blocker, affected accounts, pilot population, KPI, go/no-go.</td><td>Maga update</td><td>Which blocker repeats enough to deserve build?</td><td>Pilot KPI + decision</td><td>live_dashboard_build + product_blocker</td><td>Route to Monday, not Friday debate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="initiatives">
+    <p class="eyebrow">Initiative pages</p>
+    <h2>Each initiative should be a one-page operating brief plus optional deep dive.</h2>
+    <div class="grid3">
+      <article class="card"><small>BUY</small><strong>Turn connections into repeat transactions.</strong><p>Needs approved weekly queue, blocker taxonomy, and 2nd/3rd order tracking.</p><div class="sourceLinks"><a href="#friday">Queue</a><a href="/tx-dashboards/lead-lists/lead_list_B_untransacted_connections.html">Lead B</a></div></article>
+      <article class="card"><small>LIST</small><strong>Make real sellable supply visible online.</strong><p>Needs supply dimensions, top products to upload, current catalog state, pilot criteria.</p><div class="sourceLinks"><a href="/tx-dashboards/lead-lists/lead_list_F_bunch_upload_gaps.html">Lead F</a><a href="/tx-dashboards/reports/category_price.html">Category/price</a></div></article>
+      <article class="card"><small>SELL</small><strong>Make implementation commercially ready.</strong><p>Needs PMT queue, readiness checklist, first usage path, talk track, milestone.</p><div class="sourceLinks"><a href="#next">Build needed</a></div></article>
+      <article class="card"><small>GROW</small><strong>Diagnose, refine, amplify repeat online behavior.</strong><p>Needs operator table: account, cohort, play, message, metric, expected learning.</p><div class="sourceLinks"><a href="/tx-dashboards/black-belt.html">One-pager</a><a href="/tx-dashboards/black-belt-deep-dive.html">Deep dive</a></div></article>
+      <article class="card"><small>Strategic</small><strong>One full-stack plan per strategic account.</strong><p>Bill Doran, Kennicott, Dreisbach need BUY/LIST/SELL/GROW actions and one next conversation.</p><div class="sourceLinks"><a href="#accounts">Account plans</a></div></article>
+      <article class="card"><small>Enablers</small><strong>Blocker to pilot to KPI.</strong><p>Future product topics should enter Friday only when linked to blocker and affected accounts.</p><div class="sourceLinks"><a href="#reports">Dashboard registry</a></div></article>
+    </div>
+  </section>
+
+  <section id="ledger">
+    <p class="eyebrow">TX Execution Ledger</p>
+    <h2>The ledger is the router: no signal disappears and no account ask ships without context.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Object</th><th>Required fields</th><th>Owner</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>Feedback packet</td><td>Account/initiative, what happened, result, blocker/learning, need from Facu/system.</td><td>Pablito</td><td>Route to owner + due date.</td></tr>
+          <tr><td>Call packet</td><td>Source, read-safe text, signal type, account, initiative, value-prop link, confidence, approval state.</td><td>Pablito + call worker</td><td>Tasks, account signals, objections, data gaps.</td></tr>
+          <tr><td>Account action</td><td>Account, hypothesis, workflow, owner, what to say, expected result, expected learning.</td><td>Mercury</td><td>Friday queue + account plan.</td></tr>
+          <tr><td>Dashboard claim</td><td>Claim, source, date basis, trust label, decision supported, stale date.</td><td>Rose</td><td>Hub current read + evidence link.</td></tr>
+          <tr><td>Value-prop change</td><td>Current claim, new learning, source, confidence, before/after, owner approval.</td><td>Lautaro / Mercurio proposal</td><td>Value prop update or rejected claim.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="quickLinks">
+      <a href="#feedback">30-second feedback format</a>
+      <a href="#agents">Agent RACI</a>
+      <a href="/tx-dashboards/reports/active_tracker.html">Active tracker</a>
+      <a href="/tx-dashboards/reports/hypothesis_registry.html">Hypothesis registry</a>
+    </div>
+  </section>
+
+  <section id="accounts">
+    <p class="eyebrow">Strategic account plans</p>
+    <h2>One client, one plan, not five disconnected asks.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Account</th><th>Why strategic</th><th>BUY</th><th>LIST</th><th>SELL</th><th>GROW</th><th>Next decision</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Bill Doran</td><td>Chris/Cata strategic account; major TX leverage.</td><td>Map repeat procurement angle.</td><td>Verify supply/listing gaps by branch/category.</td><td>Align current implementation/commercial usage.</td><td>Potential full-stack plan once readiness is clear.</td><td>Cata + Facu align next conversation.</td><td><span class="trust approval">Plan draft needed</span></td></tr>
+          <tr><td>Kennicott</td><td>Strategic W->R growth/account plan candidate.</td><td>Understand current buying routes.</td><td>Supply quality and competitiveness assessment.</td><td>Commercial usage/readiness unknown.</td><td>Black Belt or strategic play if readiness exists.</td><td>Facu fills current status.</td><td><span class="trust directional">Needs update</span></td></tr>
+          <tr><td>Dreisbach</td><td>Active strategic work with overdue dependencies.</td><td>Vendor/procurement value opportunity.</td><td>Supply and catalog opportunity by location.</td><td>Implementation alignment overdue.</td><td>Potential measured growth test after readiness.</td><td>Resolve overdue blockers and owner asks.</td><td><span class="trust blocked">Overdue blockers</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="reports">
+    <p class="eyebrow">Dashboard registry</p>
+    <h2>Reports are evidence. They must support a decision or be quarantined.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Report</th><th>Decision supported</th><th>Lane</th><th>Trust label</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/tx-dashboards/okr-diagnostic.html">OKR Diagnostic</a></td><td>Are we pacing, and what risks are hidden?</td><td>Executive / Monday</td><td><span class="trust directional">Axerrio caveat</span></td><td>Linked</td></tr>
+          <tr><td><a href="/tx-dashboards/reports/tx_fee_pacing.html">TX Fee Pacing</a></td><td>Which accounts/fee types drive YoY?</td><td>Reporting</td><td><span class="trust verified">Snowflake spine</span></td><td>Linked</td></tr>
+          <tr><td><a href="/tx-dashboards/reports/ecosystem_map.html">Ecosystem Map</a></td><td>Where is visible vs monetized commerce?</td><td>Structural</td><td><span class="trust directional">Offline definition caveat</span></td><td>Linked</td></tr>
+          <tr><td><a href="/tx-dashboards/reports/client_selection.html">Client Selection</a></td><td>Which accounts should we inspect or work?</td><td>Leads</td><td><span class="trust approval">Owner validation needed</span></td><td>Linked</td></tr>
+          <tr><td><a href="/tx-dashboards/reports/account_360.html">Account 360</a></td><td>What is true for one account?</td><td>Account plans</td><td><span class="trust directional">Depends account data</span></td><td>Linked</td></tr>
+          <tr><td>Legacy L1-L4 pages</td><td>Background only unless tied to current decision.</td><td>Research</td><td><span class="trust blocked">Quarantine candidate</span></td><td>Demote</td></tr>
+          <tr><td>cohorts / flywheel / standing-orders</td><td>Useful ideas, not first-view operating pages.</td><td>Research</td><td><span class="trust blocked">Quarantine candidate</span></td><td>Demote</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="feedback">
+    <p class="eyebrow">Feedback loop</p>
+    <h2>Stakeholders should spend 30 seconds. The system does the routing.</h2>
+    <div class="grid2">
+      <div class="rule">
+        <strong>Feedback format</strong>
+        <p><code>Account / initiative:</code><br><code>What happened:</code><br><code>Result:</code><br><code>Blocker or learning:</code><br><code>Need from Facu/system:</code></p>
+      </div>
+      <div class="rule">
+        <strong>Routing</strong>
+        <p>Pricing objection -> value prop. Number wrong -> Rose. Owner ask -> Pablito. Account play -> Mercury. Narrative confusion -> Socrates. Workflow drift -> Nahua/Codex.</p>
+      </div>
+    </div>
+    <div class="quickLinks">
+      <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?labels=tx-strategy,feedback" target="_blank" rel="noreferrer">Open GitHub feedback issue</a>
+      <a href="#ledger">See ledger routing</a>
+    </div>
+  </section>
+
+  <section id="agents">
+    <p class="eyebrow">Agent operating model</p>
+    <h2>Agents earn autonomy by proposing through the right workflow.</h2>
+    <div class="ownerGrid">
+      <article class="card"><small>Facu</small><strong>Decides</strong><p>Hypotheses, initiatives, strategic claims, cross-account asks.</p></article>
+      <article class="card"><small>Mercury</small><strong>Executes</strong><p>Proposes plays, executes approved account work, measures outcomes.</p></article>
+      <article class="card"><small>Socrates</small><strong>Communicates</strong><p>Makes approved strategy simple, true, convincing.</p></article>
+      <article class="card"><small>Rose</small><strong>Backs data</strong><p>Dashboards, freshness, trust labels, gaps.</p></article>
+      <article class="card"><small>Pablito</small><strong>Tracks</strong><p>Follow-ups, overdue, feedback, commitments, owner asks.</p></article>
+      <article class="card"><small>Nahua</small><strong>Checks</strong><p>Workflow compliance, stale memory, canonical drift.</p></article>
+    </div>
+  </section>
+
+  <section id="next">
+    <p class="eyebrow">Next build queue</p>
+    <h2>What V2 still needs before it becomes the operating system.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Priority</th><th>Deliverable</th><th>Why it matters</th><th>Owner</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>P0</td><td>TX Execution Ledger file/table</td><td>Central object connecting feedback, calls, plays, reports, approvals.</td><td>Codex + Pablito</td><td>Build next</td></tr>
+          <tr><td>P0</td><td>SELL Commercial Readiness queue</td><td>Weakest artifact; implementation needs real account readiness list.</td><td>Christine + Pablito + Mercury</td><td>Missing</td></tr>
+          <tr><td>P0</td><td>Friday execution prefill</td><td>Minimize stakeholder work and force execution conversation.</td><td>Socrates + Mercury + Rose</td><td>Skeleton</td></tr>
+          <tr><td>P1</td><td>Account plans</td><td>Bill Doran, Kennicott, Dreisbach need one full-stack plan.</td><td>Mercury + Facu</td><td>Draft needed</td></tr>
+          <tr><td>P1</td><td>Workflow compliance dashboard</td><td>Recover from 7% adoption to 80%+.</td><td>Nahua + Codex</td><td>Spec exists</td></tr>
+          <tr><td>P1</td><td>Call ingestion packets</td><td>Turn calls into read-safe tasks, objections, learnings, data gaps.</td><td>Pablito + call worker</td><td>Spec next</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
