@@ -114,6 +114,24 @@
       color: var(--muted);
       font-size: 13px;
     }
+    .linkBar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .linkBar a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 7px;
+      padding: 0 14px;
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      font-weight: 900;
+    }
     @media (max-width: 860px) {
       main { width: min(100% - 24px, 1180px); }
       header { padding: 24px; }
@@ -131,6 +149,11 @@
         what they buy, when they buy, why they still call or text, and what would make
         online selling realistic enough to repeat and scale.
       </p>
+      <div class="linkBar">
+        <a href="/tx-dashboards/black-belt-deep-dive.html">Open full Black Belt v3 deep dive</a>
+        <a href="#candidate-logic">Candidate logic</a>
+        <a href="#lautaro-angle">Lautaro / value prop angle</a>
+      </div>
     </header>
 
     <section>
@@ -242,6 +265,26 @@
     </section>
 
     <section>
+      <p class="eyebrow">Deep dive backing</p>
+      <h2>The long version stays as the source for the full program design.</h2>
+      <div class="grid">
+        <article>
+          <span class="cardLabel">Use the one-pager for</span>
+          <p>Fast alignment: what Black Belt is, who it is for, how we decide readiness, and how it connects to GROW.</p>
+        </article>
+        <article>
+          <span class="cardLabel">Use the deep dive for</span>
+          <p>Program design, ecosystem metrics, cohort plays, scorecards, weekly operating model, and Lautaro-facing messaging.</p>
+        </article>
+        <article>
+          <span class="cardLabel">Current gap</span>
+          <p>Rose still needs to turn readiness signals into a live candidate workflow, not a static list.</p>
+        </article>
+      </div>
+      <p class="source"><a href="/tx-dashboards/black-belt-deep-dive.html">Open full Black Belt v3 deep dive</a></p>
+    </section>
+
+    <section id="candidate-logic">
       <p class="eyebrow">Candidate logic</p>
       <h2>Candidate lists are directional until Facu and the stakeholder approve them.</h2>
       <div class="tableWrap">
@@ -258,7 +301,7 @@
       <p class="source">Source: Rose/Mercurio candidate run on 2026-07-14. No account above is approved for execution just because it appears here.</p>
     </section>
 
-    <section>
+    <section id="lautaro-angle">
       <p class="eyebrow">Lautaro angle</p>
       <h2>How this should help messaging and value prop work.</h2>
       <div class="callout">
@@ -277,6 +320,7 @@
     <section>
       <p class="eyebrow">Sources</p>
       <ul>
+        <li><a href="/tx-dashboards/black-belt-deep-dive.html">Full Black Belt v3 deep dive</a></li>
         <li><code>ops/reconciliations/growth_black_belt_excalidraw_extract_2026-07-13.md</code></li>
         <li><code>ops/workflows/black_belt_best_in_class_framework.md</code></li>
         <li><code>ops/black_belt_best_in_class_candidate_run_2026-07-14.md</code></li>

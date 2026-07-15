@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Belt Program v3 — Koronet TX Chapter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --blue: #1a56db;
+    --blue-light: #e8eefb;
+    --blue-dark: #0f3594;
+    --green: #0d9f6e;
+    --green-light: #e6f7f0;
+    --amber: #c27803;
+    --amber-light: #fef3c7;
+    --red: #c81e1e;
+    --red-light: #fde8e8;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --teal: #0891b2;
+    --teal-light: #e0f7fa;
+    --rose: #e11d48;
+    --rose-light: #ffe4e6;
+    --indigo: #4f46e5;
+    --indigo-light: #e0e7ff;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --emerald: #059669;
+    --emerald-light: #d1fae5;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--gray-800);
+    background: #fff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 3px solid var(--purple);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+  .header-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--purple);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--gray-900);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .header h1 span {
+    color: var(--purple);
+  }
+  .header .subtitle {
+    font-size: 18px;
+    color: var(--gray-500);
+    font-weight: 400;
+    max-width: 800px;
+  }
+  .header .subtitle strong { color: var(--gray-700); }
+  .header .meta {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--gray-400);
+  }
+
+  /* SECTION */
+  section {
+    margin-bottom: 56px;
+  }
+  section h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--gray-200);
+  }
+  section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+  section h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+  p {
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: var(--gray-700);
+  }
+  .lead {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--gray-600);
+    max-width: 800px;
+  }
+
+  /* BIG NUMBER */
+  .big-number {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--purple);
+    line-height: 1;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .big-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .stat-row-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .stat-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .big-number { font-size: 32px; }
+  .stat-card .big-label { font-size: 12px; }
+
+  /* STAGE CARDS (compact) */
+  .stage-compact {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage-compact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px;
+    height: 100%;
+  }
+  .stage-buy::before { background: var(--blue); }
+  .stage-list::before { background: var(--green); }
+  .stage-sell::before { background: var(--purple); }
+
+  .stage-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .stage-buy .stage-badge { background: var(--blue-light); color: var(--blue); }
+  .stage-list .stage-badge { background: var(--green-light); color: var(--green); }
+  .stage-sell .stage-badge { background: var(--purple-light); color: var(--purple); }
+
+  .stage-compact h3 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .compact-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 12px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  ul li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gray-300);
+  }
+
+  .metric-row {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .metric-row .metric-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-400);
+    min-width: 130px;
+  }
+  .metric-row .metric-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gray-800);
+  }
+
+  .proof {
+    border-left: 3px solid var(--blue-light);
+    padding: 12px 16px;
+    margin-top: 16px;
+    background: var(--gray-50);
+    border-radius: 0 8px 8px 0;
+  }
+  .proof .proof-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--blue);
+    margin-bottom: 4px;
+  }
+  .proof p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+
+  /* SEQUENCE ARROWS */
+  .sequence-arrow {
+    text-align: center;
+    font-size: 24px;
+    color: var(--gray-300);
+    margin: 6px 0;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+  thead th {
+    background: var(--gray-800);
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 16px;
+    text-align: left;
+  }
+  tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--gray-50); }
+
+  .tier-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .tier-enrolled { background: var(--gray-100); color: var(--gray-600); }
+  .tier-buying { background: var(--blue-light); color: var(--blue); }
+  .tier-live { background: var(--green-light); color: var(--green); }
+  .tier-growth { background: var(--purple-light); color: var(--purple); }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--blue-light);
+    border: 1px solid #bfcfee;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+  .callout h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+    margin-top: 0;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--blue-dark);
+  }
+
+  .callout-warn {
+    background: var(--amber-light);
+    border-color: #f59e0b;
+  }
+  .callout-warn h4 { color: var(--amber); }
+  .callout-warn p { color: #92400e; }
+
+  /* ASK SECTION */
+  .ask-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .ask-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+  .ask-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 8px;
+    margin-top: 0;
+  }
+  .ask-card p {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin: 0;
+  }
+
+  /* SEPARATOR */
+  .section-sep {
+    height: 1px;
+    background: linear-gradient(to right, var(--purple), var(--gray-200));
+    margin: 48px 0;
+    border: none;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 2px solid var(--gray-200);
+    padding-top: 24px;
+    margin-top: 56px;
+    font-size: 12px;
+    color: var(--gray-400);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ====================================================================
+     STAGE 3 / FULL PARTNERSHIP - HERO STYLES
+     ==================================================================== */
+
+  .hero-section {
+    background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #e0e7ff 100%);
+    border: 2px solid var(--purple);
+    border-radius: 16px;
+    padding: 40px 36px;
+    margin: 32px 0;
+  }
+  .hero-section h2 {
+    font-size: 30px;
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+    margin-bottom: 12px;
+  }
+  .hero-section .hero-subtitle {
+    font-size: 18px;
+    color: var(--gray-600);
+    margin-bottom: 32px;
+    max-width: 800px;
+  }
+  .hero-section .hero-subtitle strong {
+    color: var(--purple);
+  }
+
+  /* SERVICE PILLAR CARDS */
+  .pillar-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .pillar-market::before { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+  .pillar-supply::before { background: linear-gradient(90deg, var(--green), var(--emerald)); }
+  .pillar-grow::before { background: linear-gradient(90deg, var(--purple), var(--indigo)); }
+
+  .pillar-card h3 {
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  .pillar-card .pillar-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 20px;
+  }
+  .pillar-card .pillar-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .pillar-item {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .pillar-item h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 6px;
+  }
+  .pillar-item p {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* COHORT CARDS - each with its own color */
+  .cohort-section {
+    margin-top: 36px;
+  }
+  .cohort-section > h3 {
+    font-size: 22px;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+  }
+
+  .cohort-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 0;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+  .cohort-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .cohort-number {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    min-width: 48px;
+  }
+  .cohort-title-block h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 2px 0;
+  }
+  .cohort-title-block .cohort-who {
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+  }
+  .cohort-body {
+    padding: 0 28px 24px;
+  }
+  .cohort-body .goal-bar {
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .cohort-grid-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .cohort-detail-box {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .cohort-detail-box h5 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+  .cohort-detail-box ul li {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .cohort-measures {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .measure-chip {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: var(--gray-100);
+    color: var(--gray-600);
+    border: 1px solid var(--gray-200);
+  }
+
+  /* Cohort 1 colors - Blue */
+  .cohort-1 .cohort-header { background: var(--blue-light); }
+  .cohort-1 .cohort-number { color: var(--blue); }
+  .cohort-1 .cohort-title-block h4 { color: var(--blue-dark); }
+  .cohort-1 .cohort-title-block .cohort-who { color: var(--blue); }
+  .cohort-1 .goal-bar { background: var(--blue-light); color: var(--blue-dark); }
+  .cohort-1 .cohort-detail-box h5 { color: var(--blue); }
+
+  /* Cohort 2 colors - Amber/Orange */
+  .cohort-2 .cohort-header { background: var(--amber-light); }
+  .cohort-2 .cohort-number { color: var(--amber); }
+  .cohort-2 .cohort-title-block h4 { color: #92400e; }
+  .cohort-2 .cohort-title-block .cohort-who { color: var(--amber); }
+  .cohort-2 .goal-bar { background: var(--amber-light); color: #92400e; }
+  .cohort-2 .cohort-detail-box h5 { color: var(--amber); }
+
+  /* Cohort 3 colors - Teal */
+  .cohort-3 .cohort-header { background: var(--teal-light); }
+  .cohort-3 .cohort-number { color: var(--teal); }
+  .cohort-3 .cohort-title-block h4 { color: #164e63; }
+  .cohort-3 .cohort-title-block .cohort-who { color: var(--teal); }
+  .cohort-3 .goal-bar { background: var(--teal-light); color: #164e63; }
+  .cohort-3 .cohort-detail-box h5 { color: var(--teal); }
+
+  /* Cohort 4 colors - Rose */
+  .cohort-4 .cohort-header { background: var(--rose-light); }
+  .cohort-4 .cohort-number { color: var(--rose); }
+  .cohort-4 .cohort-title-block h4 { color: #881337; }
+  .cohort-4 .cohort-title-block .cohort-who { color: var(--rose); }
+  .cohort-4 .goal-bar { background: var(--rose-light); color: #881337; }
+  .cohort-4 .cohort-detail-box h5 { color: var(--rose); }
+
+  /* Cohort 5 colors - Emerald/Green */
+  .cohort-5 .cohort-header { background: var(--emerald-light); }
+  .cohort-5 .cohort-number { color: var(--emerald); }
+  .cohort-5 .cohort-title-block h4 { color: #064e3b; }
+  .cohort-5 .cohort-title-block .cohort-who { color: var(--emerald); }
+  .cohort-5 .goal-bar { background: var(--emerald-light); color: #064e3b; }
+  .cohort-5 .cohort-detail-box h5 { color: var(--emerald); }
+
+  /* FUNNEL VISUALIZATION */
+  .funnel-visual {
+    margin: 32px 0;
+  }
+  .funnel-visual h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .funnel-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .funnel-col {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px;
+    overflow: hidden;
+  }
+  .funnel-col h4 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 0;
+  }
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    transition: background 0.15s;
+  }
+  .funnel-step:hover { background: #fff; }
+  .funnel-step .step-num {
+    font-size: 14px;
+    font-weight: 800;
+    min-width: 22px;
+  }
+  .funnel-step .step-label {
+    font-weight: 600;
+    font-size: 13px;
+    flex: 1;
+  }
+  .funnel-step .step-note {
+    font-size: 11px;
+    color: var(--gray-400);
+    text-align: right;
+    max-width: 180px;
+  }
+  .funnel-col.acq .funnel-step .step-num { color: var(--purple); }
+  .funnel-col.inv .funnel-step .step-num { color: var(--green); }
+
+  .funnel-arrow {
+    text-align: center;
+    font-size: 14px;
+    color: var(--gray-300);
+    line-height: 1;
+    padding: 1px 0;
+  }
+
+  /* WEEKLY SCORECARD */
+  .scorecard-wrapper {
+    background: #fff;
+    border: 2px solid var(--purple);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .scorecard-header {
+    background: var(--purple);
+    color: #fff;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .scorecard-wrapper table {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+  .scorecard-wrapper thead th {
+    background: var(--purple-light);
+    color: var(--purple);
+    font-size: 11px;
+    padding: 12px 14px;
+  }
+  .scorecard-wrapper tbody td {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .scorecard-wrapper tbody tr:nth-child(even) {
+    background: var(--gray-50);
+  }
+  .scorecard-category {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--purple);
+    padding: 8px 14px !important;
+    background: var(--purple-light) !important;
+    border-bottom: 1px solid #c4b5fd !important;
+  }
+  .trend-up { color: var(--green); font-weight: 600; }
+  .trend-down { color: var(--red); font-weight: 600; }
+  .trend-flat { color: var(--gray-400); font-weight: 600; }
+  .target-val { color: var(--purple); font-weight: 600; }
+
+  /* PRINCIPLES LIST */
+  .principles-list {
+    background: var(--purple-light);
+    border: 1px solid #c4b5fd;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .principles-list h3 {
+    color: var(--purple);
+    margin-top: 0;
+  }
+  .principles-list ul li::before {
+    background: var(--purple);
+  }
+
+  /* AVAILABILITY TIMELINE */
+  .timeline-bar {
+    display: flex;
+    gap: 0;
+    margin: 16px 0 24px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+  .timeline-segment {
+    flex: 1;
+    padding: 14px 12px;
+    text-align: center;
+    border-right: 1px solid var(--gray-200);
+    position: relative;
+  }
+  .timeline-segment:last-child { border-right: none; }
+  .timeline-segment .tl-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .timeline-segment .tl-desc {
+    font-size: 11px;
+    color: var(--gray-500);
+    display: block;
+    line-height: 1.3;
+  }
+  .tl-now { background: #dcfce7; }
+  .tl-now .tl-label { color: var(--green); }
+  .tl-7d { background: #d1fae5; }
+  .tl-7d .tl-label { color: var(--emerald); }
+  .tl-14d { background: var(--teal-light); }
+  .tl-14d .tl-label { color: var(--teal); }
+  .tl-30d { background: var(--blue-light); }
+  .tl-30d .tl-label { color: var(--blue); }
+  .tl-90d { background: var(--purple-light); }
+  .tl-90d .tl-label { color: var(--purple); }
+
+  /* MINI TABLE */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 8px 0 0 0;
+    border: none;
+  }
+  .mini-table th {
+    background: transparent;
+    color: var(--gray-500);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .mini-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+  }
+  .mini-table tr:last-child td { border-bottom: none; }
+
+  /* SCORECARD EXAMPLE */
+  .scorecard-example {
+    background: var(--green-light);
+    border: 1px solid #6ee7b7;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .scorecard-example h4 {
+    color: var(--green);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  /* VALUE PROPOSITION BOX */
+  .value-prop-box {
+    background: linear-gradient(135deg, var(--purple-light) 0%, #f5f3ff 100%);
+    border: 2px solid var(--purple);
+    border-radius: 14px;
+    padding: 32px;
+    margin: 28px 0;
+    text-align: center;
+  }
+  .value-prop-box h3 {
+    color: var(--purple);
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+  .value-prop-box p {
+    font-size: 16px;
+    color: var(--gray-600);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .value-prop-box p strong { color: var(--gray-800); }
+
+  /* JFS HIGHLIGHT */
+  .jfs-highlight {
+    background: linear-gradient(135deg, var(--amber-light) 0%, #fff7ed 100%);
+    border: 2px solid var(--amber);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+  .jfs-highlight h4 {
+    color: var(--amber);
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+  .jfs-highlight ul li::before {
+    background: var(--amber);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ================================================================ -->
+  <!-- HEADER -->
+  <!-- ================================================================ -->
+  <div class="header">
+    <div class="header-label">Koronet TX Chapter</div>
+    <h1>Black Belt: <span>The Full Partnership</span></h1>
+    <div class="subtitle">
+      Black Belt is not about buying or listing &mdash; the Transactions chapter already helps every wholesaler do that.
+      <strong>Black Belt IS the full partnership</strong>: we understand your market, optimize your supply,
+      grow your customers cohort by cohort, measure everything weekly, and <strong>sell together</strong>.
+      You bring the commitment. We bring the machine.
+    </div>
+    <div class="meta">v3 &mdash; For Chris review &mdash; July 2026</div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- S1: WHAT IS IT (compact) -->
+  <!-- ================================================================ -->
+  <section>
+    <h2>1. What Is the Black Belt Program?</h2>
+    <p class="lead">
+      An <strong>exclusive growth partnership</strong> for wholesalers who are ready to go all-in on digital.
+      We invest <strong>data, analysis, campaigns, and advisory</strong> in the ones leaning in &mdash;
+      because without great supply and the willingness to sell digitally,
+      it is far less likely their florists will convert online.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">90+</span>
+        <span class="big-label">Wholesalers in Ecosystem</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">83.9%</span>
+        <span class="big-label">$249M of $297M wholesaler GMV is offline at $0 fees</span>
+        <span style="display:block;font-size:10px;color:var(--gray-400);margin-top:4px;">Source: SALES_SV, 274 wholesalers, H1 2026</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">7</span>
+        <span class="big-label">Ready for the full partnership</span>
+      </div>
+      <div class="stat-card" title="114 wholesalers have futureSalesEnabled but 48 have ecommerceDaysInAdvance=0">
+        <span class="big-number" style="font-size:28px;">&lt;10</span>
+        <span class="big-label">Publish inventory &gt;7 days out</span>
+        <span style="display:block;font-size:10px;color:var(--gray-400);margin-top:4px;">114 have futureSalesEnabled; 48 have ecommerceDaysInAdvance=0</span>
+      </div>
+    </div>
+
+    <!-- Second row of ecosystem metrics -->
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">9.6%</span>
+        <span class="big-label">Only $16.5M of $172.5M wholesaler purchasing flows through digital Procurement</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">17 of 274</span>
+        <span class="big-label">Wholesalers sell Units (bunches) online. 58 sell only Boxes.</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">$8.8M</span>
+        <span class="big-label">28,389 standing orders across 58 wholesalers. 100% offline, $0 fees.</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-number" style="font-size:28px;">$249K</span>
+        <span class="big-label">Total wholesaler fees H1 2026. 80.8% K2K, 12.5% eCom, 6.4% API. ALL sell-side.</span>
+        <span style="display:block;font-size:10px;color:var(--gray-400);margin-top:4px;">Fees are 100% sell-side. Wholesalers pay $0 to buy digitally. Fee only when they SELL. Confirmed by Dave Sack (CFO).</span>
+      </div>
+    </div>
+
+    <h3>What the Program Delivers</h3>
+    <p>For wholesalers who earn the full partnership, we become their growth team. Concretely:</p>
+    <ul>
+      <li><strong>We become your growth team</strong> &mdash; named advisor, weekly cadence, dedicated analysis</li>
+      <li><strong>TAM analysis of your market</strong> &mdash; every florist in your geography, sized and mapped</li>
+      <li><strong>Competitive intelligence</strong> vs your local competitors and Mayesh &mdash; product depth, pricing, UX</li>
+      <li><strong>Customer cohort playbooks</strong> &mdash; who buys, who stopped, who should be buying, with a plan for each</li>
+      <li><strong>AI-powered marketing campaigns</strong> via Customer.io &mdash; personalized emails, restock alerts, reactivation sequences</li>
+      <li><strong>Supply optimization</strong> &mdash; exclusive products, vendor breadth, procurement coaching, catalog health monitoring</li>
+      <li><strong>Weekly measurement and optimization</strong> &mdash; scorecard, benchmarks, what to fix next</li>
+      <li><strong>Exclusive: only for wholesalers investing in digital supply</strong> &mdash; this is not available to everyone. It is earned.</li>
+    </ul>
+
+    <div class="callout">
+      <h4>This is not a discount program. It is not a participation trophy.</h4>
+      <p>
+        We bring real resources &mdash; data analysis, competitive benchmarks, marketing campaigns,
+        named advisory &mdash; to accounts that <strong>are doing the work</strong>.
+        They earn the level by their behavior. We earn their commitment by delivering real value.
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-sep">
+
+  <!-- ================================================================ -->
+  <!-- S2: THE SEQUENCE (compact) -->
+  <!-- ================================================================ -->
+  <section>
+    <h2>2. The Sequence: Buy &rarr; List &rarr; Sell Together</h2>
+    <p>
+      Each stage builds on the one before it. Stages 1 and 2 are <strong>prerequisites</strong> &mdash;
+      the Transactions chapter already helps every wholesaler with buying and listing.
+      <strong>Stage 3 is the program itself.</strong>
+    </p>
+
+    <!-- STAGE 1: BUY BETTER -->
+    <div class="stage-compact stage-buy">
+      <span class="stage-badge">Stage 1 &mdash; Prerequisite</span>
+      <h3>Buy Better</h3>
+      <p style="margin-bottom:16px;">
+        Help the wholesaler <strong>compete on supply</strong> &mdash; against Mayesh,
+        against local competitors, against the perception that nobody online has what florists need.
+        <strong>Three pillars:</strong>
+      </p>
+
+      <h4>1. Quality &amp; Reliability</h4>
+      <ul>
+        <li><strong>All varieties available</strong>, not just this week's rotation</li>
+        <li><strong>Longer-term inventory planning</strong> &mdash; 7, 14, 30, 90 days out</li>
+        <li><strong>Reliable vendors</strong> who deliver consistently</li>
+      </ul>
+
+      <h4>2. Exclusive Products &amp; Brands</h4>
+      <ul>
+        <li><strong>Differentiated supply</strong> that competitors don't carry</li>
+        <li><strong>Direct farm access</strong> for unique varieties</li>
+        <li><strong>Seasonal exclusives</strong> and limited runs</li>
+      </ul>
+
+      <h4>3. Better Prices &amp; Terms</h4>
+      <ul>
+        <li><strong>Competitive procurement costs</strong></li>
+        <li><strong>Volume advantages</strong> through K2K network</li>
+        <li><strong>Better terms</strong> (credit, delivery windows)</li>
+      </ul>
+
+      <h4>What We Actually Do</h4>
+      <ul>
+        <li><strong>Understand what buyers want:</strong> listen to their buyers' needs, suggest what they need based on data, adapt our approach. K2K connections and exclusive products are OUTPUTS of this effort, not inputs.</li>
+        <li><strong>Top procurement users:</strong> study who buys the most digitally and WHY, then replicate those patterns across accounts</li>
+        <li><strong>Procurement adoption:</strong> target &gt;30% OR understand what it takes to get there &mdash; not a fixed gate, but a signal we track</li>
+        <li><strong>Understand why online goes offline:</strong> discover with real leads WHY digital procurement drops to phone/email. Flag it clearly. Build a method to reduce the leak from root causes.</li>
+        <li><strong>Help maintain supply online:</strong> not just buy better but ensure what they buy STAYS available digitally</li>
+      </ul>
+
+      <div class="metric-row">
+        <span class="metric-label">Leading indicators</span>
+        <span class="metric-value"><strong>Procurement adoption %</strong> &mdash; target &gt;30%. <strong>Vendor breadth</strong> &mdash; 5+ active K2K vendors is a signal of health, not a gate.</span>
+      </div>
+
+      <div class="callout" style="margin-top: 16px;">
+        <h4>The true prerequisite for Stage 3</h4>
+        <p>
+          Having enough good inventory available to put online. Stage 1 and Stage 2 work <strong>simultaneously</strong> &mdash;
+          you buy better AND you list it. One without the other doesn't work.
+        </p>
+      </div>
+
+      <div class="proof">
+        <div class="proof-label">Who has done this</div>
+        <p>
+          <strong>Price's Floral</strong> &mdash; 97% Procurement, 35+ K2K connections, buying digitally within 1 hour of activation.
+          <strong>Shamrock</strong> &mdash; 59% Procurement capture, EH self-serve converted 2 of 3 connections.
+        </p>
+      </div>
+    </div>
+
+    <div class="sequence-arrow">&darr;</div>
+
+    <!-- STAGE 2: LIST INVENTORY -->
+    <div class="stage-compact stage-list">
+      <span class="stage-badge">Stage 2 &mdash; Prerequisite</span>
+      <h3>List Inventory Online</h3>
+      <p style="margin-bottom:16px;">
+        The fundamental job: <strong>help them list what they buy</strong> &mdash; all varieties,
+        long-term not just short-term, with competitive pricing. The objective is to make them
+        <strong>competitive with local wholesalers AND Mayesh</strong>.
+      </p>
+
+      <h4>Products Available Beyond This Week</h4>
+      <p>We benchmark your inventory depth against Mayesh and your closest local competitor. The gap between what you have online and what they have is your vulnerability.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>What's Available</th>
+            <th>Mayesh</th>
+            <th>Best Local Competitor</th>
+            <th>Our Client Today</th>
+            <th>Our Client Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>This week (on-hand)</strong></td>
+            <td>Full catalog</td>
+            <td>Full cooler</td>
+            <td>?</td>
+            <td>Match offline</td>
+          </tr>
+          <tr>
+            <td><strong>7 days out</strong></td>
+            <td>Future sales</td>
+            <td>Some pre-orders</td>
+            <td>?</td>
+            <td>50%+ of catalog</td>
+          </tr>
+          <tr>
+            <td><strong>14 days out</strong></td>
+            <td>Pre-book available</td>
+            <td>Limited</td>
+            <td>?</td>
+            <td>Key varieties</td>
+          </tr>
+          <tr>
+            <td><strong>30 days out</strong></td>
+            <td>Holiday pre-book</td>
+            <td>Holiday only</td>
+            <td>?</td>
+            <td>Seasonal planning</td>
+          </tr>
+          <tr>
+            <td><strong>90 days out</strong></td>
+            <td>Contract pricing</td>
+            <td>Not available</td>
+            <td>Not available</td>
+            <td>Events/weddings</td>
+          </tr>
+          <tr>
+            <td><strong>What they sell OFFLINE</strong></td>
+            <td>N/A</td>
+            <td>Full walk-in cooler</td>
+            <td>Full walk-in cooler</td>
+            <td>Match online</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Weekly Variance: What It Means and What We Do</h4>
+      <p>
+        Weekly variance = how much your online product count changes week to week. If you have 200 products Monday
+        and 90 Friday, your customers learn the eShop is unreliable and stop checking.
+      </p>
+      <p><strong>What we do about it:</strong></p>
+      <ul>
+        <li><strong>Track your product count every week</strong> &mdash; automated monitoring, no guessing</li>
+        <li><strong>Alert you when it drops below your baseline</strong> &mdash; before customers notice</li>
+        <li><strong>Diagnose the cause:</strong> upload schedule? Staff availability? System issue? Vendor delivery gap?</li>
+        <li><strong>Set a minimum product count target with you</strong> &mdash; agreed-upon floor that never breaks</li>
+        <li><strong>Benchmark:</strong> BDC runs 3% variance (rock solid). Zeidler ran 55% (trust problem). Target: &lt;15%.</li>
+      </ul>
+
+      <h4>Full Catalog Online</h4>
+      <ul>
+        <li><strong>Everything they sell offline should be visible online</strong> &mdash; bunches, boxes, open market, hard goods if applicable</li>
+        <li><strong>Price parity:</strong> online prices must match or beat offline and competitor pricing</li>
+        <li><strong>Photos on high-movers</strong> &mdash; Mayesh benchmark: 95%+ have images</li>
+        <li><strong>Catalog coverage &gt;80%</strong> of offline products as target</li>
+      </ul>
+
+      <div class="callout-warn callout" style="margin-top: 20px;">
+        <h4>What makes this hard (and what we're learning)</h4>
+        <p style="margin-bottom: 12px;">
+          <strong>Bunches require daily upload</strong> &mdash; boxes flow from procurement, bunches need manual or scanner input.
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>It's easier to sell boxes</strong> &mdash; pre-ordered, one format, automated. Bunches are the 93% gap.
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>The leakage is easy</strong> &mdash; a florist texts "got any roses?" and the rep says "yeah come grab them." No eShop needed. We compete against free, frictionless offline.
+        </p>
+        <p>
+          <strong>Photos take effort</strong> &mdash; Mayesh has 95%+ photos. Most wholesalers have less than 20%.
+          We don't pretend this is easy. We help you close these gaps one at a time, measuring what works.
+        </p>
+      </div>
+
+      <div class="metric-row">
+        <span class="metric-label">Leading indicators</span>
+        <span class="metric-value"><strong>Products online / offline ratio</strong>; weekly product count <strong>variance &lt;15%</strong>; <strong>% products available &gt;7 days</strong></span>
+      </div>
+
+      <div class="proof">
+        <div class="proof-label">Who has done this</div>
+        <p>
+          <strong>Bill Doran</strong> &mdash; 3,624 products online at 3.0% weekly variance (most consistent in network), 50/50 Units/Boxes, +67% eCom YoY.
+          <strong>Zeidler</strong> &mdash; 342 products, 100% of eCom = bunches (live cooler model), 17.2% digital ratio.
+        </p>
+      </div>
+    </div>
+
+    <div class="sequence-arrow">&darr;</div>
+
+    <!-- STAGE 3: SELL TOGETHER (teaser) -->
+    <div class="stage-compact stage-sell" style="border-color: var(--purple); border-width: 2px;">
+      <span class="stage-badge" style="background: var(--purple); color: #fff; font-size: 12px; padding: 5px 16px;">Stage 3 &mdash; The Full Partnership</span>
+      <h3 style="color: var(--purple); font-size: 22px;">Sell Together &mdash; THIS IS Black Belt</h3>
+      <p>
+        Once the store has inventory and supply, <strong>we become your growth team</strong>.
+        We understand your market, grow your customers cohort by cohort,
+        run campaigns, measure everything, and optimize weekly. This is 90% of what the program delivers.
+        <strong>Everything below is the full detail.</strong>
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-sep">
+
+  <!-- ================================================================ -->
+  <!-- S3: THE FULL PARTNERSHIP (HERO SECTION - 60% of the document) -->
+  <!-- ================================================================ -->
+  <div class="hero-section">
+    <h2>3. The Full Partnership: What You Get</h2>
+    <p class="hero-subtitle">
+      This is <strong>Black Belt</strong>. Not a promise. Not a roadmap.
+      This is the concrete, week-by-week partnership we deliver to every Growth Partner.
+      <strong>Three pillars, five customer cohorts, two funnels, one weekly scorecard.</strong>
+    </p>
+
+    <!-- ============================= -->
+    <!-- 3A: WHAT WE DO FOR YOU -->
+    <!-- ============================= -->
+
+    <div class="value-prop-box">
+      <h3>What does a Growth Partner actually get?</h3>
+      <p>
+        A <strong>dedicated growth team</strong> that understands your market, optimizes your supply,
+        and grows your customers &mdash; each one, by name, with a plan.
+        <strong>Not theory. Not consulting. Execution, measured weekly.</strong>
+      </p>
+    </div>
+
+    <!-- PILLAR 1: UNDERSTAND YOUR MARKET -->
+    <div class="pillar-card pillar-market">
+      <h3>Understand Your Market</h3>
+      <p class="pillar-desc">Before we sell anything, we learn everything about your market. This is the foundation of every play we run.</p>
+      <div class="pillar-items">
+        <div class="pillar-item">
+          <h5>Full TAM Analysis</h5>
+          <p>How many florists in your service radius? Who are they? What do they buy? From whom? What categories dominate? What is underserved? We size your total addressable market down to the zip code.</p>
+        </div>
+        <div class="pillar-item">
+          <h5>Competitive Intelligence</h5>
+          <p>Who are your local competitors? What do they offer online? Where do you win (location, relationships, product)? Where do you lose (catalog depth, pricing, UX)? How does Mayesh position in your territory?</p>
+        </div>
+        <div class="pillar-item">
+          <h5>Customer Intelligence: Top Buyers</h5>
+          <p>Your top 20 buyers by name: what they order, when, how much, which products, how frequently. We know which ones are growing and which are slipping before you do.</p>
+        </div>
+        <div class="pillar-item">
+          <h5>Customer Intelligence: Churned + Prospects</h5>
+          <p>Who stopped buying from you and when? What was the last order? Why did they leave? And: who should be buying from you but is not? We identify them by name.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 2: OPTIMIZE YOUR SUPPLY -->
+    <div class="pillar-card pillar-supply">
+      <h3>Optimize Your Supply</h3>
+      <p class="pillar-desc">The best catalog in your market, available further into the future than any competitor. This is how you win.</p>
+
+      <h4 style="margin-top: 12px; font-size: 14px; color: var(--green);">Inventory Availability by Time Horizon</h4>
+      <div class="timeline-bar">
+        <div class="timeline-segment tl-now">
+          <span class="tl-label">This Week</span>
+          <span class="tl-desc">On-hand, live cooler</span>
+        </div>
+        <div class="timeline-segment tl-7d">
+          <span class="tl-label">7 Days</span>
+          <span class="tl-desc">In-transit, confirmed POs</span>
+        </div>
+        <div class="timeline-segment tl-14d">
+          <span class="tl-label">14 Days</span>
+          <span class="tl-desc">Future sales, standing orders</span>
+        </div>
+        <div class="timeline-segment tl-30d">
+          <span class="tl-label">30 Days</span>
+          <span class="tl-desc">Pre-book, seasonal planning</span>
+        </div>
+        <div class="timeline-segment tl-90d">
+          <span class="tl-label">90 Days</span>
+          <span class="tl-desc">Holiday, event pre-orders</span>
+        </div>
+      </div>
+
+      <div class="pillar-items">
+        <div class="pillar-item">
+          <h5>Gap Analysis</h5>
+          <p>What do your florists want vs. what you have online? We match demand signals to your catalog and find the holes &mdash; the products they search for that you do not list, the categories your competitors have that you do not.</p>
+        </div>
+        <div class="pillar-item">
+          <h5>Competitive Pricing Check</h5>
+          <p>Are your prices competitive with Mayesh and local competitors? We run weekly audits on your top-moving products. Online price cannot be a barrier &mdash; if it is, we find it and fix it with you.</p>
+        </div>
+        <div class="pillar-item">
+          <h5>Exclusive Product Sourcing</h5>
+          <p>Unique brands and varieties that differentiate you. Direct farm access, seasonal exclusives, limited-run products that a florist cannot get at Mayesh or the competitor down the street.</p>
+        </div>
+        <div class="pillar-item">
+          <h5>Catalog Health Monitoring</h5>
+          <p>Weekly product count, variance tracking, photo coverage, advance inventory depth. We score your catalog every week and tell you exactly what to fix next. Benchmark: BDC runs 3% variance. Mayesh runs 95%+ photos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3: GROW YOUR CUSTOMERS -->
+    <div class="pillar-card pillar-grow">
+      <h3>Grow Your Customers &mdash; Cohort by Cohort</h3>
+      <p class="pillar-desc">
+        Not one plan for all customers. <strong>Five cohorts, each with its own playbook.</strong>
+        For each one we define: who they are, what we do, which channels, what message, and what we measure.
+      </p>
+    </div>
+
+    <!-- ============================= -->
+    <!-- 3B: COHORT DEEP DIVES -->
+    <!-- ============================= -->
+    <div class="cohort-section">
+      <h3>Five Customer Cohorts, Five Playbooks</h3>
+
+      <!-- COHORT 1: ACTIVE DIGITAL BUYERS -->
+      <div class="cohort-card cohort-1">
+        <div class="cohort-header">
+          <span class="cohort-number">C1</span>
+          <div class="cohort-title-block">
+            <h4>Active Digital Buyers</h4>
+            <p class="cohort-who">Already buying online. Your best customers in the digital channel.</p>
+          </div>
+        </div>
+        <div class="cohort-body">
+          <div class="goal-bar">
+            GOAL: More frequency, larger baskets, better experience &mdash; make the digital channel irresistible.
+          </div>
+          <div class="cohort-grid-inner">
+            <div class="cohort-detail-box">
+              <h5>What We Do</h5>
+              <ul>
+                <li><strong>Reorder prediction:</strong> notify them when their usual products are available &mdash; before they have to search for them</li>
+                <li><strong>Cross-sell engine:</strong> "customers who bought X also bought Y" &mdash; data-driven product recommendations</li>
+                <li><strong>Specials and promotions:</strong> featured products, time-limited offers on slow-movers or new arrivals</li>
+                <li><strong>Ease of use:</strong> save favorites, 1-click reorder, order templates for weekly staples</li>
+              </ul>
+            </div>
+            <div class="cohort-detail-box">
+              <h5>Channels and Tactics</h5>
+              <ul>
+                <li><strong>Customer.io personalized email:</strong> "Your usual roses are in stock this week" with direct link to cart</li>
+                <li><strong>eShop push notifications:</strong> availability alerts on favorited products</li>
+                <li><strong>SMS for time-sensitive:</strong> flash sales, limited-quantity specials, holiday pre-orders</li>
+                <li><strong>In-platform:</strong> personalized homepage, "for you" section based on purchase history</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cohort-measures">
+            <span class="measure-chip">Frequency (orders/month)</span>
+            <span class="measure-chip">AOV ($ per order)</span>
+            <span class="measure-chip">Basket size (items per order)</span>
+            <span class="measure-chip">Retention rate (90d)</span>
+            <span class="measure-chip">Reorder rate</span>
+          </div>
+
+          <div style="background: var(--blue-light); border-radius: 8px; padding: 14px 18px; margin-top: 16px;">
+            <h5 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--blue); margin-bottom: 8px;">Example in Practice</h5>
+            <p style="font-size: 13px; color: var(--gray-700); margin: 0; line-height: 1.6;">
+              <strong>Zeidler has 22 active online buyers.</strong> We identify the top 10 by frequency.
+              Sarah at Main Street Flowers orders roses every Tuesday and lilies every Friday.
+              On Monday at 6am, she gets an email: "Your Ecuadorian Red Roses are in stock &mdash; 24 stems, $32/bunch.
+              Re-order now." She clicks, adds her usual lilies (cross-sell: "your Friday lilies are also ready"),
+              and checks out in 90 seconds. Her AOV goes from $64 to $98. Multiply by 22 buyers.
+              That is the engine.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COHORT 2: DORMANT DIGITAL -->
+      <div class="cohort-card cohort-2">
+        <div class="cohort-header">
+          <span class="cohort-number">C2</span>
+          <div class="cohort-title-block">
+            <h4>Dormant Digital</h4>
+            <p class="cohort-who">Were buying online, then stopped. The critical question: WHY?</p>
+          </div>
+        </div>
+        <div class="cohort-body">
+          <div class="goal-bar">
+            GOAL: Understand why they stopped. Reactivate the valuable ones with a reason to come back.
+          </div>
+          <div class="cohort-grid-inner">
+            <div class="cohort-detail-box">
+              <h5>What We Do</h5>
+              <ul>
+                <li><strong>Identify:</strong> who stopped, when, what they used to buy, how much they were worth</li>
+                <li><strong>Diagnose:</strong> was it a catalog gap? Price? Delivery issue? Bad experience? Or did they just forget?</li>
+                <li><strong>Reactivate:</strong> personalized "we miss you" with their specific favorite products + a reason to come back (new arrivals, improved pricing, new features)</li>
+                <li><strong>Win-back offer:</strong> if appropriate &mdash; time-limited, specific to what they bought (not a generic discount)</li>
+              </ul>
+            </div>
+            <div class="cohort-detail-box">
+              <h5>Channels and Tactics</h5>
+              <ul>
+                <li><strong>Email campaign (Customer.io):</strong> 3-touch sequence &mdash; "We noticed you have not ordered in X weeks" &rarr; "Here is what is new" &rarr; "Come back with [offer]"</li>
+                <li><strong>Sales rep follow-up call:</strong> personal touch for high-value dormants ($5K+/month historical)</li>
+                <li><strong>Root cause survey:</strong> short, specific &mdash; "What would make you order online again?"</li>
+                <li><strong>Fix-then-reach:</strong> if the diagnosis is catalog or price, fix it FIRST, then reach out</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cohort-measures">
+            <span class="measure-chip">Reactivation rate (%)</span>
+            <span class="measure-chip">Time to reactivation (days)</span>
+            <span class="measure-chip">Post-reactivation retention (60d)</span>
+            <span class="measure-chip">Root cause distribution</span>
+          </div>
+
+          <div style="background: var(--amber-light); border-radius: 8px; padding: 14px 18px; margin-top: 16px;">
+            <h5 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber); margin-bottom: 8px;">Example in Practice</h5>
+            <p style="font-size: 13px; color: var(--gray-700); margin: 0; line-height: 1.6;">
+              <strong>Zeidler has 20+ dormant digital accounts worth $99K+ in offline GMV.</strong>
+              We pull the list by name. "Petal Perfect" last ordered online 4 months ago &mdash; $2,400/month historically.
+              The diagnosis: they stopped when lily prices went up 18% online vs. phone pricing.
+              We fix the price parity. Then: "Hi Maria, we noticed we had not seen you online in a while.
+              Your Oriental Lilies are back at $28/bunch &mdash; same as phone pricing.
+              Plus 6 new varieties this week." Maria logs in, sees her favorites are saved, reorders.
+              $2,400/month recovered. Repeat 19 more times.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COHORT 3: DORMANT ACCOUNTS -->
+      <div class="cohort-card cohort-3">
+        <div class="cohort-header">
+          <span class="cohort-number">C3</span>
+          <div class="cohort-title-block">
+            <h4>Dormant Accounts</h4>
+            <p class="cohort-who">Have an account, never logged in. Many are active OFFLINE buyers &mdash; this is gold.</p>
+          </div>
+        </div>
+        <div class="cohort-body">
+          <div class="goal-bar">
+            GOAL: Get them to try online for the first time. Show them THEIR products, not a generic catalog.
+          </div>
+          <div class="cohort-grid-inner">
+            <div class="cohort-detail-box">
+              <h5>What We Do</h5>
+              <ul>
+                <li><strong>Identify the gold:</strong> which dormant accounts are active OFFLINE buyers? Cross-reference account list with offline sales data &mdash; rank by revenue</li>
+                <li><strong>Personalized outreach:</strong> "Hey, you already buy from us every week. Did you know you can see our full inventory online and reorder in 30 seconds?"</li>
+                <li><strong>Guided walkthrough:</strong> show them THEIR usual products on the eShop &mdash; not a generic demo, their actual items</li>
+                <li><strong>First-order incentive:</strong> free delivery on first online order, or rep-assisted first order (the rep enters it WITH them)</li>
+              </ul>
+            </div>
+            <div class="cohort-detail-box">
+              <h5>Channels and Tactics</h5>
+              <ul>
+                <li><strong>Sales rep personal call:</strong> "I set up your account &mdash; your usual order is already saved. Want me to walk you through it?"</li>
+                <li><strong>Email follow-up:</strong> account login link + "here is what is available for you this week"</li>
+                <li><strong>Customer.io onboarding sequence:</strong> Day 1 welcome &rarr; Day 3 "here is how to search" &rarr; Day 7 "your products this week"</li>
+                <li><strong>Rep handoff to digital:</strong> rep places the first order WITH the customer, then transitions to self-service</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cohort-measures">
+            <span class="measure-chip">Activation rate (% who log in)</span>
+            <span class="measure-chip">First-order rate (% who buy)</span>
+            <span class="measure-chip">Time to first order (days)</span>
+            <span class="measure-chip">Offline GMV of activated accounts</span>
+          </div>
+
+          <div style="background: var(--teal-light); border-radius: 8px; padding: 14px 18px; margin-top: 16px;">
+            <h5 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--teal); margin-bottom: 8px;">Example in Practice</h5>
+            <p style="font-size: 13px; color: var(--gray-700); margin: 0; line-height: 1.6;">
+              <strong>Account "Blooms by Design" registered 6 months ago, never logged in, but buys $4,800/month offline.</strong>
+              The sales rep calls: "Hey Dave, I set up your account with all the stuff you usually order &mdash; your roses, your chrysanthemums, your greenery.
+              Want me to walk you through it on the phone right now? Takes 5 minutes."
+              Dave logs in. Sees his usual 14 products already saved. Places his Friday order online for the first time.
+              Gets a confirmation email showing his order history. Next Tuesday: "Your Ecuadorian stems arrived &mdash; ready for pickup."
+              Dave is now a hybrid buyer. $4,800/month that was invisible is now trackable, analyzable, and growable.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COHORT 4: OFFLINE BUYERS -->
+      <div class="cohort-card cohort-4">
+        <div class="cohort-header">
+          <span class="cohort-number">C4</span>
+          <div class="cohort-title-block">
+            <h4>Offline Buyers</h4>
+            <p class="cohort-who">Buy by phone or walk-in. No account. Often the highest-value customers.</p>
+          </div>
+        </div>
+        <div class="cohort-body">
+          <div class="goal-bar">
+            GOAL: Create account, show the value of digital, convert to at least hybrid (orders online + phone).
+          </div>
+          <div class="cohort-grid-inner">
+            <div class="cohort-detail-box">
+              <h5>What We Do</h5>
+              <ul>
+                <li><strong>Rep enablement:</strong> the rep enters their next order THROUGH the platform &mdash; the customer does not change behavior, but the system captures the order</li>
+                <li><strong>Account creation on their behalf:</strong> customer sees order confirmation email + "you now have an account"</li>
+                <li><strong>Show order history:</strong> "Here is everything you have bought this quarter. Here is what is available this week."</li>
+                <li><strong>Gradual migration:</strong> rep uses the platform as CRM. Customer gets used to seeing digital inventory and order confirmations. The transition happens naturally.</li>
+              </ul>
+            </div>
+            <div class="cohort-detail-box">
+              <h5>Channels and Tactics</h5>
+              <ul>
+                <li><strong>Sales rep (primary):</strong> every phone order goes through the platform. The rep IS the channel.</li>
+                <li><strong>Platform-generated emails (secondary):</strong> order confirmations, "what is new this week", specials</li>
+                <li><strong>Hybrid nudge:</strong> after 3+ rep-entered orders: "Next time, you can reorder in 30 seconds from your phone"</li>
+                <li><strong>The convenience pitch:</strong> not "go digital" but "see your order history, track delivery, reorder faster"</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cohort-measures">
+            <span class="measure-chip">Account creation rate</span>
+            <span class="measure-chip">First self-service order</span>
+            <span class="measure-chip">Hybrid conversion (% ordering both ways)</span>
+            <span class="measure-chip">Time from account creation to self-service</span>
+          </div>
+
+          <div style="background: var(--rose-light); border-radius: 8px; padding: 14px 18px; margin-top: 16px;">
+            <h5 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--rose); margin-bottom: 8px;">Example in Practice</h5>
+            <p style="font-size: 13px; color: var(--gray-700); margin: 0; line-height: 1.6;">
+              <strong>Wholesaler has 120 offline-only buyers doing $3.2M/year by phone and walk-in.</strong>
+              The rep starts entering orders through the platform for the top 30 accounts.
+              Each customer gets an order confirmation email: "Here is your order from today. Your account is set up.
+              See what else is available this week." After 3 orders, the system sends:
+              "Next time, you can reorder your usual stems in 30 seconds from your phone."
+              Target: 15% of the top 30 place at least one self-service order within 60 days.
+              That is 4-5 buyers doing $400K+ who now show up in the digital funnel. From invisible to visible.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COHORT 5: TAM / NEW CUSTOMERS -->
+      <div class="cohort-card cohort-5">
+        <div class="cohort-header">
+          <span class="cohort-number">C5</span>
+          <div class="cohort-title-block">
+            <h4>TAM &mdash; New Customers</h4>
+            <p class="cohort-who">Florists in the service radius who have never bought from this wholesaler. Net-new revenue.</p>
+          </div>
+        </div>
+        <div class="cohort-body">
+          <div class="goal-bar">
+            GOAL: Acquire, convert, retain. Full marketing funnel from zero to loyal buyer.
+          </div>
+          <div class="cohort-grid-inner">
+            <div class="cohort-detail-box">
+              <h5>What We Do</h5>
+              <ul>
+                <li><strong>Market mapping:</strong> identify every florist in the service radius who does NOT buy from this wholesaler &mdash; by name, location, size estimate</li>
+                <li><strong>Key selling point:</strong> why should they choose this wholesaler? Location advantage? Variety? Price? Brands? Same-day delivery? Personal service?</li>
+                <li><strong>Targeted outreach:</strong> campaigns based on what we know they need (event florists get event products; everyday shops get staples + convenience)</li>
+                <li><strong>Landing page:</strong> optimized for conversion &mdash; shows best inventory, easy to register, easy to order</li>
+              </ul>
+            </div>
+            <div class="cohort-detail-box">
+              <h5>Channels and Tactics</h5>
+              <ul>
+                <li><strong>Google Local Ads:</strong> "wholesale flowers near [city]" &mdash; targeted to zip codes in service area</li>
+                <li><strong>Social media:</strong> Instagram/Facebook targeting florists + event planners in the geography</li>
+                <li><strong>Endemic (FSN):</strong> advertising through floral industry networks and publications</li>
+                <li><strong>Koronet marketplace:</strong> surfacing this wholesaler's inventory to florists already on the Komet network</li>
+                <li><strong>Email outreach:</strong> purchased or partnered lists for florists in the region</li>
+                <li><strong>Referral program:</strong> existing happy customers bring in their peers</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cohort-measures">
+            <span class="measure-chip">Impressions</span>
+            <span class="measure-chip">CTR / Engagement</span>
+            <span class="measure-chip">Traffic to eShop</span>
+            <span class="measure-chip">New registrations</span>
+            <span class="measure-chip">First order conversion</span>
+            <span class="measure-chip">Repeat order rate</span>
+            <span class="measure-chip">Retention (90d)</span>
+          </div>
+
+          <div style="background: var(--emerald-light); border-radius: 8px; padding: 14px 18px; margin-top: 16px;">
+            <h5 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--emerald); margin-bottom: 8px;">Example in Practice</h5>
+            <p style="font-size: 13px; color: var(--gray-700); margin: 0; line-height: 1.6;">
+              <strong>JFS Wholesale serves an isolated Florida geography. TAM analysis shows 85 florists in the service radius,
+              JFS sells to 32.</strong> That leaves 53 florists buying from someone else or from Mayesh online.
+              We map the 53: 18 are event/wedding florists (need premium stems, advance ordering).
+              JFS has the product but nobody knows it. Google Local ad: "Premium wholesale flowers, same-day delivery in [area]."
+              Landing page shows the top 20 products with photos, prices, and a "register for free" button.
+              Target: 10 registrations in 60 days, 4 first orders, 2 repeat buyers.
+              Each new repeat buyer at $800/month = $19.2K/year in net-new revenue for the wholesaler.
+              Multiply by 2 = $38.4K. That is the acquisition engine proving itself.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COHORT SUMMARY TABLE -->
+    <div style="background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px; margin-top: 28px;">
+      <h4 style="margin-top: 0; font-size: 16px; color: var(--gray-900); margin-bottom: 16px;">Cohort Playbook Summary</h4>
+      <table style="margin: 0;">
+        <thead>
+          <tr>
+            <th>Cohort</th>
+            <th>Primary Channel</th>
+            <th>Key Message</th>
+            <th>Primary Metric</th>
+            <th>Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color: var(--blue);">C1: Active Digital</strong></td>
+            <td>Customer.io email + eShop</td>
+            <td>"Your products are ready"</td>
+            <td>Frequency + AOV</td>
+            <td>+1 order/month, +15% AOV</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--amber);">C2: Dormant Digital</strong></td>
+            <td>Email sequence + rep call</td>
+            <td>"We fixed what made you leave"</td>
+            <td>Reactivation rate</td>
+            <td>25% reactivated in 60d</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--teal);">C3: Dormant Account</strong></td>
+            <td>Rep call + onboarding email</td>
+            <td>"Your products are already saved"</td>
+            <td>First-order rate</td>
+            <td>30% first order in 30d</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--rose);">C4: Offline Buyer</strong></td>
+            <td>Sales rep (primary)</td>
+            <td>"See your orders + reorder faster"</td>
+            <td>Hybrid conversion</td>
+            <td>15% self-service in 60d</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--emerald);">C5: TAM / New</strong></td>
+            <td>Ads + email + referral</td>
+            <td>"Why buy from us vs. [competitor]"</td>
+            <td>Registration + first order</td>
+            <td>10 registrations, 4 orders/60d</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================= -->
+    <!-- 3C: THE FULL FUNNEL -->
+    <!-- ============================= -->
+    <div class="funnel-visual">
+      <h3>The Full Funnel: Where We Win and Where We Lose</h3>
+      <p style="margin-bottom: 20px;">
+        Two funnels, measured per wholesaler, per cohort, every week.
+        At every step: <strong>what is the current number, what is the target, and what moves it.</strong>
+      </p>
+
+      <div class="funnel-wrapper">
+        <!-- MARKETING & ACQUISITION FUNNEL -->
+        <div class="funnel-col acq">
+          <h4 style="color: var(--purple);">Marketing &amp; Acquisition Funnel</h4>
+          <div class="funnel">
+            <div class="funnel-step">
+              <span class="step-num">1</span>
+              <span class="step-label">Campaigns launched</span>
+              <span class="step-note">by channel</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">2</span>
+              <span class="step-label">Impressions / Reach</span>
+              <span class="step-note">email, ads, social, rep</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">3</span>
+              <span class="step-label">CTR / Engagement</span>
+              <span class="step-note">interest signal</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">4</span>
+              <span class="step-label">Traffic to eShop</span>
+              <span class="step-note">unique visitors/week</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">5</span>
+              <span class="step-label">Registrations / Logins</span>
+              <span class="step-note">by cohort</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">6</span>
+              <span class="step-label">Browse behavior</span>
+              <span class="step-note">pages, time on site</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">7</span>
+              <span class="step-label">Add to cart</span>
+              <span class="step-note">intent signal</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">8</span>
+              <span class="step-label">Conversion (first order)</span>
+              <span class="step-note">target &gt;5%</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">9</span>
+              <span class="step-label">Frequency (orders/mo)</span>
+              <span class="step-note">growing</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">10</span>
+              <span class="step-label">AOV ($/order)</span>
+              <span class="step-note">stable+</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step" style="border-color: var(--purple);">
+              <span class="step-num">11</span>
+              <span class="step-label"><strong>Retention (90d)</strong></span>
+              <span class="step-note">the real metric</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- INVENTORY HEALTH FUNNEL -->
+        <div class="funnel-col inv">
+          <h4 style="color: var(--green);">Inventory Health Funnel</h4>
+          <div class="funnel">
+            <div class="funnel-step">
+              <span class="step-num">1</span>
+              <span class="step-label">Products sourced</span>
+              <span class="step-note">total procurement</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">2</span>
+              <span class="step-label">Products digitized</span>
+              <span class="step-note">in Komet system</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">3</span>
+              <span class="step-label">Products published online</span>
+              <span class="step-note">on eShop/eSuite</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">4</span>
+              <span class="step-label">With photos &amp; descriptions</span>
+              <span class="step-note">quality catalog</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">5</span>
+              <span class="step-label">Available THIS WEEK</span>
+              <span class="step-note">on-hand, live cooler</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">6</span>
+              <span class="step-label">Available in 7 DAYS</span>
+              <span class="step-note">in-transit, POs</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">7</span>
+              <span class="step-label">Available in 14 DAYS</span>
+              <span class="step-note">standing orders</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">8</span>
+              <span class="step-label">Available in 30 DAYS</span>
+              <span class="step-note">pre-book, seasonal</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">9</span>
+              <span class="step-label">Available in 90 DAYS</span>
+              <span class="step-note">holiday, event</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step">
+              <span class="step-num">10</span>
+              <span class="step-label">Products that SELL online</span>
+              <span class="step-note">at least 1 order</span>
+            </div>
+            <div class="funnel-arrow">&darr;</div>
+            <div class="funnel-step" style="border-color: var(--green);">
+              <span class="step-num">11</span>
+              <span class="step-label"><strong>Products that RE-SELL</strong></span>
+              <span class="step-note">validated demand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout" style="background: #f5f3ff; border-color: #c4b5fd; margin-top: 24px;">
+        <h4 style="color: var(--purple);">At every step, three questions</h4>
+        <p style="color: var(--gray-700);">
+          <strong>1. What is the current number?</strong> (from data, not from guesses.)
+          <strong>2. What is the target?</strong> (from network benchmarks and account-specific goals.)
+          <strong>3. What moves it?</strong> (specific tactic, owner, timeline.)
+          If we cannot answer all three, we are not ready to run the play.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================= -->
+    <!-- 3D: WEEKLY SCORECARD -->
+    <!-- ============================= -->
+    <div class="scorecard-wrapper">
+      <div class="scorecard-header">
+        Weekly Growth Partner Scorecard &mdash; Per Account, Every Week
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30%;">Metric</th>
+            <th style="width: 14%;">This Week</th>
+            <th style="width: 14%;">Last Week</th>
+            <th style="width: 14%;">Trend</th>
+            <th style="width: 14%;">Target</th>
+            <th style="width: 14%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- INVENTORY HEALTH -->
+          <tr><td colspan="6" class="scorecard-category">Inventory Health</td></tr>
+          <tr>
+            <td><strong>Products online</strong></td>
+            <td>342</td>
+            <td>328</td>
+            <td class="trend-up">+4.3%</td>
+            <td class="target-val">&gt;80% of offline</td>
+            <td><span class="tier-badge tier-enrolled">Below</span></td>
+          </tr>
+          <tr>
+            <td><strong>Products available &gt;7 days</strong></td>
+            <td>41</td>
+            <td>38</td>
+            <td class="trend-up">+7.9%</td>
+            <td class="target-val">&gt;50% of catalog</td>
+            <td><span class="tier-badge tier-enrolled">Below</span></td>
+          </tr>
+          <tr>
+            <td><strong>Weekly product variance</strong></td>
+            <td>22%</td>
+            <td>28%</td>
+            <td class="trend-up">Improving</td>
+            <td class="target-val">&lt;15%</td>
+            <td><span class="tier-badge tier-buying">Getting There</span></td>
+          </tr>
+          <tr>
+            <td><strong>Photo coverage (top 50 products)</strong></td>
+            <td>64%</td>
+            <td>62%</td>
+            <td class="trend-up">+2pp</td>
+            <td class="target-val">&gt;90%</td>
+            <td><span class="tier-badge tier-enrolled">Below</span></td>
+          </tr>
+
+          <!-- CUSTOMER GROWTH -->
+          <tr><td colspan="6" class="scorecard-category">Customer Growth</td></tr>
+          <tr>
+            <td><strong>Active digital buyers</strong></td>
+            <td>22</td>
+            <td>21</td>
+            <td class="trend-up">+1</td>
+            <td class="target-val">+2/month</td>
+            <td><span class="tier-badge tier-live">On Track</span></td>
+          </tr>
+          <tr>
+            <td><strong>Dormant reactivated (this month)</strong></td>
+            <td>0</td>
+            <td>0</td>
+            <td class="trend-flat">&mdash;</td>
+            <td class="target-val">1/month</td>
+            <td><span class="tier-badge tier-enrolled">Not Started</span></td>
+          </tr>
+          <tr>
+            <td><strong>New registrations (this month)</strong></td>
+            <td>1</td>
+            <td>0</td>
+            <td class="trend-up">+1</td>
+            <td class="target-val">3/month</td>
+            <td><span class="tier-badge tier-enrolled">Below</span></td>
+          </tr>
+          <tr>
+            <td><strong>Conversion rate (visitor &rarr; buyer)</strong></td>
+            <td>3.1%</td>
+            <td>2.8%</td>
+            <td class="trend-up">+0.3pp</td>
+            <td class="target-val">&gt;5%</td>
+            <td><span class="tier-badge tier-buying">Getting There</span></td>
+          </tr>
+
+          <!-- ORDER PERFORMANCE -->
+          <tr><td colspan="6" class="scorecard-category">Order Performance</td></tr>
+          <tr>
+            <td><strong>Orders this week</strong></td>
+            <td>47</td>
+            <td>42</td>
+            <td class="trend-up">+11.9%</td>
+            <td class="target-val">Growing</td>
+            <td><span class="tier-badge tier-live">On Track</span></td>
+          </tr>
+          <tr>
+            <td><strong>AOV ($)</strong></td>
+            <td>$218</td>
+            <td>$205</td>
+            <td class="trend-up">+6.3%</td>
+            <td class="target-val">Stable+</td>
+            <td><span class="tier-badge tier-live">On Track</span></td>
+          </tr>
+          <tr>
+            <td><strong>Retention (90d rolling)</strong></td>
+            <td>68%</td>
+            <td>66%</td>
+            <td class="trend-up">+2pp</td>
+            <td class="target-val">&gt;75%</td>
+            <td><span class="tier-badge tier-buying">Getting There</span></td>
+          </tr>
+
+          <!-- MARKETING ACTIVITY -->
+          <tr><td colspan="6" class="scorecard-category">Marketing Activity</td></tr>
+          <tr>
+            <td><strong>Campaigns sent</strong></td>
+            <td>2</td>
+            <td>1</td>
+            <td class="trend-up">+1</td>
+            <td class="target-val">2/week</td>
+            <td><span class="tier-badge tier-live">On Track</span></td>
+          </tr>
+          <tr>
+            <td><strong>Total impressions</strong></td>
+            <td>1,240</td>
+            <td>890</td>
+            <td class="trend-up">+39%</td>
+            <td class="target-val">Tracking</td>
+            <td><span class="tier-badge tier-buying">Baseline</span></td>
+          </tr>
+          <tr>
+            <td><strong>Traffic to eShop</strong></td>
+            <td>156</td>
+            <td>132</td>
+            <td class="trend-up">+18%</td>
+            <td class="target-val">Tracking</td>
+            <td><span class="tier-badge tier-buying">Baseline</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size: 13px; color: var(--gray-500); margin-top: -16px;">
+      <em>Example data shown above for illustration. Real scorecards are populated from Snowflake + campaign tools weekly.</em>
+    </p>
+
+    <!-- ============================= -->
+    <!-- 3E: WHAT THE WHOLESALER DOES -->
+    <!-- ============================= -->
+    <h3 style="margin-top: 36px; font-size: 20px;">What Does the Wholesaler Commit To?</h3>
+    <p>This is a partnership, not a service contract. The wholesaler earns our investment by doing the work.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+      <div style="background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px;">
+        <h4 style="margin-top: 0; color: var(--purple); font-size: 14px;">Supply Commitment</h4>
+        <ul>
+          <li>Maintain <strong>&gt;80% catalog coverage</strong> online</li>
+          <li>Keep <strong>weekly variance &lt;15%</strong></li>
+          <li>Publish inventory <strong>&gt;7 days out</strong></li>
+          <li>Maintain <strong>competitive pricing parity</strong></li>
+          <li>Upload <strong>photos on top 50 products</strong></li>
+        </ul>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px;">
+        <h4 style="margin-top: 0; color: var(--purple); font-size: 14px;">Engagement Commitment</h4>
+        <ul>
+          <li>Designate a <strong>champion</strong> with weekly availability</li>
+          <li>Participate in <strong>weekly scorecard review</strong></li>
+          <li>Execute on <strong>campaign recommendations</strong></li>
+          <li>Share <strong>customer feedback and market intelligence</strong></li>
+          <li>Use the platform as <strong>CRM for rep-entered orders</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============================= -->
+    <!-- 3F: FEE APPROACH -->
+    <!-- ============================= -->
+    <h3 style="margin-top: 36px; font-size: 20px;">Fee Approach at Growth Partner Level</h3>
+    <div class="callout-warn callout">
+      <h4>These are tests, not policy</h4>
+      <p>
+        Fee incentives are <strong>hypotheses to test</strong>, not committed discounts.
+        We test at 1 account, measure whether the behavior changes, and scale only what works.
+        <strong>Nothing is committed until validated.</strong>
+      </p>
+    </div>
+    <ul>
+      <li><strong>Hypothesis:</strong> temporary fee relief while they make eShop their CRM could accelerate adoption dramatically</li>
+      <li><strong>Test logic:</strong> $0 fees for 3 months IF they upload bunches, buy &gt;10% through Procurement, update weekly best sellers</li>
+      <li><strong>The math (illustrative):</strong> 3 months $0 on $5K/quarter = $5K cost. If 10% Procurement adoption on $2M offline = $30K new fee base. The behavior pays for the discount many times over.</li>
+      <li><strong>Kill criteria:</strong> if catalog metrics and customer metrics do not improve within 60 days, the test ends</li>
+      <li><strong>Test at 1 account first.</strong> JFS Wholesale is the candidate.</li>
+    </ul>
+
+  </div>
+  <!-- End of hero section -->
+
+  <hr class="section-sep">
+
+  <!-- ================================================================ -->
+  <!-- S4: ACCOUNTS -->
+  <!-- ================================================================ -->
+  <section>
+    <h2>4. Accounts: Who, Where, What Is Next</h2>
+    <p>
+      Every account from our registry. <strong>Clear next steps. Clear owners.</strong>
+    </p>
+
+    <!-- JFS HIGHLIGHT -->
+    <div class="jfs-highlight">
+      <h4>JFS Wholesale &mdash; Wave 1 Sandbox Candidate</h4>
+      <ul>
+        <li><strong>$1.89M GMV</strong>, 0.008% online, $0 fees &mdash; massive upside</li>
+        <li><strong>Concrete use case:</strong> digitalize weekly specials list (100% manual email/print today) &mdash; a tangible first win</li>
+        <li><strong>Isolated geography</strong> = less competition, easier to test, cleaner signal</li>
+        <li><strong>Valentina as implementation champion</strong> &mdash; wants to pilot the full methodology</li>
+        <li><strong>Facu committed:</strong> supply review, customer review (existing/churned/potential), traffic tactics</li>
+        <li><strong>Meeting late July</strong> &mdash; prep deliverables needed before: market analysis, customer segmentation, competitive landscape</li>
+      </ul>
+    </div>
+
+    <!-- Active Wave 1 -->
+    <h3>Wave 1 &mdash; Active Play Design or Testing</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Tier</th>
+          <th>Key Facts</th>
+          <th>What Is Next</th>
+          <th>Who</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>JFS Wholesale</strong><br><span style="font-size:12px;color:var(--gray-400);">Florida</span></td>
+          <td><span class="tier-badge tier-enrolled">Enrolled</span> &rarr; <span class="tier-badge tier-growth">Growth</span></td>
+          <td>
+            <ul>
+              <li><strong>$1.89M GMV</strong>, 0.008% online</li>
+              <li><strong>Valentina's sandbox</strong> &mdash; full methodology pilot</li>
+              <li><strong>Weekly specials</strong> = first digitalization target</li>
+              <li><strong>Isolated geography</strong> = clean test environment</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Supply review</strong> for Valentina</li>
+              <li><strong>Customer review:</strong> existing, churned, potential</li>
+              <li><strong>Traffic tactics</strong> for weekly specials</li>
+              <li><strong>Competitor analysis</strong> (local market)</li>
+              <li><strong>Full TAM sizing</strong> of service area</li>
+            </ul>
+          </td>
+          <td>Mateo M. (internal)<br>Valentina (impl lead)</td>
+        </tr>
+        <tr>
+          <td><strong>Zeidler Floral</strong><br><span style="font-size:12px;color:var(--gray-400);">Evansville, IN</span></td>
+          <td><span class="tier-badge tier-live">Inv. Live</span></td>
+          <td>
+            <ul>
+              <li><strong>17.2% digital</strong> (best among small wholesalers)</li>
+              <li><strong>100% of eCom = bunches</strong> (live cooler)</li>
+              <li><strong>342 products</strong>, 22 active buyers</li>
+              <li><strong>20+ dormant accounts</strong> = $99K+ offline GMV</li>
+              <li><strong>55% catalog variance</strong> (needs fixing)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Activate 20 dormant accounts</strong> by name/GMV</li>
+              <li><strong>Fix catalog consistency</strong> (55% &rarr; &lt;15%)</li>
+              <li><strong>Competitive intel:</strong> Evansville market map</li>
+            </ul>
+          </td>
+          <td>Sebastian R. (internal)<br>Amanda/Ken (client)</td>
+        </tr>
+        <tr>
+          <td><strong>Dreisbach</strong><br><span style="font-size:12px;color:var(--gray-400);">WV + Louisville</span></td>
+          <td><span class="tier-badge tier-enrolled">Enrolled</span> &rarr; <span class="tier-badge tier-buying">Buying</span></td>
+          <td>
+            <ul>
+              <li><strong>Champion: Angela Stalter</strong></li>
+              <li><strong>Best SEO</strong> among wholesalers (1,669 keywords)</li>
+              <li><strong>FedEx box play</strong> designed</li>
+              <li><strong>$10M/yr total</strong> (estimated, 99.7% offline)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Deliver vendor recs</strong> to Angela</li>
+              <li><strong>WV client analysis</strong></li>
+              <li><strong>CalFlowers FedEx activation</strong></li>
+              <li><strong>Convert 44% Standalone</strong> to Procurement</li>
+            </ul>
+          </td>
+          <td>Christian M. (internal)<br>Angela S. (client)</td>
+        </tr>
+        <tr>
+          <td><strong>Price's Floral</strong><br><span style="font-size:12px;color:var(--gray-400);">Virginia</span></td>
+          <td><span class="tier-badge tier-buying">Buying</span></td>
+          <td>
+            <ul>
+              <li><strong>97% Procurement</strong> = best among new accounts</li>
+              <li><strong>Champion: Jacob Ortenzio</strong></li>
+              <li><strong>35+ K2K connections</strong>, go-live Jul 15</li>
+              <li><strong>$2M+</strong> real business (estimated)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Monitor go-live Jul 15</strong></li>
+              <li><strong>Ensure inventory flows</strong> to eShop</li>
+              <li><strong>Do NOT repeat</strong> empty eShop launch</li>
+              <li><strong>Set up catalog monitoring</strong></li>
+            </ul>
+          </td>
+          <td>Mateo M. (internal)<br>Jacob O. (client)</td>
+        </tr>
+        <tr>
+          <td><strong>A Florist First</strong><br><span style="font-size:12px;color:var(--gray-400);">Jacksonville, FL</span></td>
+          <td><span class="tier-badge tier-buying">Buying</span> &rarr; <span class="tier-badge tier-live">Inv. Live</span></td>
+          <td>
+            <ul>
+              <li><strong>100% digital already</strong></li>
+              <li><strong>eSuite upgrade</strong> this week</li>
+              <li><strong>$1.1M hard goods opportunity</strong></li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Support eSuite upgrade</strong></li>
+              <li><strong>Monitor go-live</strong></li>
+              <li><strong>Hard goods catalog</strong> post-upgrade</li>
+            </ul>
+          </td>
+          <td>Laura V. (internal)</td>
+        </tr>
+        <tr>
+          <td><strong>Shamrock</strong><br><span style="font-size:12px;color:var(--gray-400);">Memphis, TN</span></td>
+          <td><span class="tier-badge tier-buying">Buying</span></td>
+          <td>
+            <ul>
+              <li><strong>59% Procurement</strong>, 100% digital</li>
+              <li><strong>12.5x growth</strong></li>
+              <li><strong>STUDY account</strong> for EH playbook</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Extract EH playbook</strong></li>
+              <li><strong>Deep dive on customer base</strong></li>
+              <li><strong>Protect renewal</strong> (Aug pricing)</li>
+              <li><strong>Identify champion</strong></li>
+            </ul>
+          </td>
+          <td>Denisse P. (internal)</td>
+        </tr>
+        <tr>
+          <td><strong>KBC Pittsburgh</strong><br><span style="font-size:12px;color:var(--gray-400);">National (Pittsburgh focus)</span></td>
+          <td><span class="tier-badge tier-enrolled">Enrolled</span></td>
+          <td>
+            <ul>
+              <li><strong>$64.4M total GMV</strong>, 1.2% Units online</li>
+              <li><strong>Biggest format gap</strong> in network</li>
+              <li><strong>450+ K2K connections</strong></li>
+              <li><strong>No branch champion</strong> [GAP]</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Identify Pittsburgh branch champion</strong></li>
+              <li><strong>Branch-level deep dive</strong></li>
+              <li><strong>Bunch upload pilot</strong></li>
+              <li><strong>Compare to BDC</strong></li>
+            </ul>
+          </td>
+          <td>Catalina R. (internal)<br>TBD (client champion)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Active but earlier stage -->
+    <h3>Active &mdash; Earlier Stage or Blocked</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Status</th>
+          <th>Key Facts</th>
+          <th>What Is Next</th>
+          <th>Who</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>We Got Flowers</strong><br><span style="font-size:12px;color:var(--gray-400);">Arizona</span></td>
+          <td>Impl blocked</td>
+          <td>
+            <ul>
+              <li><strong>$2.93M GMV</strong>, 0.02% digital</li>
+              <li><strong>Procurement blocked</strong> by surcharge/pricing</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Answer Craig's bundle pricing challenge</strong></li>
+              <li><strong>Fix Procurement blockers</strong></li>
+            </ul>
+          </td>
+          <td>Santiago B.</td>
+        </tr>
+        <tr>
+          <td><strong>Veldkamp's</strong><br><span style="font-size:12px;color:var(--gray-400);">Lakewood, CO</span></td>
+          <td>Greenfield</td>
+          <td>
+            <ul>
+              <li><strong>Retail-to-wholesale</strong> ($10M retail)</li>
+              <li><strong>Champion: Lindsey Helme</strong> (79 logins/30d)</li>
+              <li><strong>eSuite closing Jul 15</strong></li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>Support eSuite close</strong></li>
+              <li><strong>Address fear objection</strong></li>
+              <li><strong>Procurement gap analysis</strong></li>
+            </ul>
+          </td>
+          <td>Santiago B.</td>
+        </tr>
+        <tr>
+          <td><strong>Flora Fresh</strong><br><span style="font-size:12px;color:var(--gray-400);">Sacramento, CA</span></td>
+          <td>Scale, no digital</td>
+          <td>
+            <ul>
+              <li><strong>$5.56M GMV</strong>, 0.6% online</li>
+              <li><strong>$2.5M Standalone</strong> = biggest L1 target</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li><strong>AON-1 + AON-2 mandatory</strong></li>
+              <li><strong>Check digital sales progress</strong></li>
+            </ul>
+          </td>
+          <td>Catalina R.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Monitored -->
+    <h3>Monitored &mdash; Watching, Not Designing Plays</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Status</th>
+          <th>Key Fact</th>
+          <th>What Is Next</th>
+          <th>Who</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bill Doran Co.</strong></td>
+          <td>ON HOLD (renewal)</td>
+          <td><strong>$61.5M GMV</strong>, +67% eCom YoY, cracked Units online (50/50). Study for playbook extraction.</td>
+          <td><strong>Extract BDC Units playbook</strong> for replication. Monitor renewal.</td>
+          <td>Catalina R.</td>
+        </tr>
+        <tr>
+          <td><strong>Main Wholesale</strong></td>
+          <td>Validate usage</td>
+          <td><strong>$344 total</strong> &mdash; pre-live or running outside Komet.</td>
+          <td><strong>Felipe: are they buying/selling online?</strong></td>
+          <td>Felipe M.</td>
+        </tr>
+        <tr>
+          <td><strong>Riverside KY</strong></td>
+          <td>Deprioritized</td>
+          <td><strong>0% digital at 90 days.</strong> 4 blockers.</td>
+          <td><strong>Monitor.</strong> If blockers resolved, reassess.</td>
+          <td>Sebastian R.</td>
+        </tr>
+        <tr>
+          <td><strong>Fuji Wholesale</strong></td>
+          <td>Trial check</td>
+          <td><strong>$0 volume.</strong> 18 K2K but no activity.</td>
+          <td><strong>Check trial conversion status.</strong></td>
+          <td>Denisse P.</td>
+        </tr>
+        <tr>
+          <td><strong>Nova Packaging</strong></td>
+          <td>Monitor</td>
+          <td><strong>Supplies vertical</strong>, not floral. 3.2% eCom.</td>
+          <td><strong>Monitor only.</strong> Milena owns.</td>
+          <td>Juan Diego T.</td>
+        </tr>
+        <tr>
+          <td><strong>Creations From Heaven</strong></td>
+          <td>Early impl</td>
+          <td><strong>$0 volume.</strong> GPM pricing, very early.</td>
+          <td><strong>Validate before designing plays.</strong></td>
+          <td>Felipe M.</td>
+        </tr>
+        <tr>
+          <td><strong>Avon Valley</strong></td>
+          <td>Parked (Canada)</td>
+          <td><strong>1 K2K connection</strong>, no procurement. Multiple blockers.</td>
+          <td><strong>Low priority.</strong></td>
+          <td>Support</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Prospects / Benchmarks -->
+    <h3>Prospects &amp; Benchmarks</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Type</th>
+          <th>Why We Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Baisch &amp; Skinner</strong></td>
+          <td>Prospect</td>
+          <td><strong>100% digital</strong>, 244 K2K, +85.5% YoY. Should be active.</td>
+        </tr>
+        <tr>
+          <td><strong>FloraLink</strong></td>
+          <td>Benchmark</td>
+          <td><strong>#1 eCom penetration</strong>, 5,463 products. What "fully digital" looks like.</td>
+        </tr>
+        <tr>
+          <td><strong>Sims Flower Dist.</strong></td>
+          <td>Prospect</td>
+          <td><strong>+2,990% eCom growth.</strong> What triggered it? Replicable?</td>
+        </tr>
+        <tr>
+          <td><strong>Maple Grove Floral</strong></td>
+          <td>Benchmark</td>
+          <td><strong>30.2% online</strong>, 94.2% Units. Second-best "live cooler" model.</td>
+        </tr>
+        <tr>
+          <td><strong>Cleveland Plant &amp; Flower</strong></td>
+          <td>Prospect</td>
+          <td><strong>100% digital</strong>, 2,372 products. Might benefit from coaching.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="section-sep">
+
+  <!-- ================================================================ -->
+  <!-- S5: OPERATING PRINCIPLES (compact) -->
+  <!-- ================================================================ -->
+  <section>
+    <h2>5. Operating Principles</h2>
+    <div class="principles-list">
+      <h3>How We Operate</h3>
+      <ul>
+        <li>
+          <strong>We triple down when supply + willingness exist</strong> &mdash;
+          because that is when success probability is highest.
+          Acquisition support is exclusive: only for the best.
+        </li>
+        <li>
+          <strong>Discovery before pitch, always.</strong>
+          Every account gets a supply analysis and demand analysis before we propose plays.
+          We show them their own data, not generic decks.
+        </li>
+        <li>
+          <strong>Fee incentives are earned through measurable behavior</strong> &mdash;
+          not negotiated as a sales concession.
+          The program is about growth, not cost reduction.
+        </li>
+        <li>
+          <strong>Always measuring, always learning.</strong>
+          Every play has a hypothesis, a success metric, and kill criteria.
+          We scale what works across accounts. We log what does not.
+        </li>
+        <li>
+          <strong>The sequence has dependencies but we study acceleration.</strong>
+          If an account can move faster, we learn why and replicate.
+        </li>
+        <li>
+          <strong>On whales, we DO run growth plays</strong> &mdash;
+          but always measuring. Where do we lose? Optimize. Where do we win? Double down.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="section-sep">
+
+  <!-- ================================================================ -->
+  <!-- S6: WEEKLY OPERATING MODEL (compact) -->
+  <!-- ================================================================ -->
+  <section>
+    <h2>6. Weekly Operating Model: The Friday Cadence</h2>
+    <p>
+      The Black Belt Program runs every week. Each initiative owner presents.
+      We pre-fill slides with data. The loop closes or it dies.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:120px;">When</th>
+          <th>What Happens</th>
+          <th>Who</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Wednesday</strong></td>
+          <td><strong>Pre-fill each initiative owner's slide</strong> with data: account metrics, funnel position, week-over-week changes.</td>
+          <td>TX Chapter (data)</td>
+        </tr>
+        <tr>
+          <td><strong>Thursday</strong></td>
+          <td><strong>Initiative owners update their slide</strong> (24h before): what they did, what they learned, what changed.</td>
+          <td>CS / Impl owners</td>
+        </tr>
+        <tr>
+          <td><strong>Friday</strong></td>
+          <td><strong>1 mandatory slide per initiative.</strong> 5-7 min each. "Which accounts did you speak with? What did you learn?"</td>
+          <td>Full chapter</td>
+        </tr>
+        <tr>
+          <td><strong>Friday +1hr</strong></td>
+          <td><strong>Capture learnings.</strong> Update account registry. Feed insights into play design.</td>
+          <td>TX Chapter</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <h4>Learning, not reporting</h4>
+      <p>
+        The Friday meeting is where knowledge compounds. We ask: <strong>what did you learn that you did not know before?
+        Did it change the play?</strong> When they talk to a dormant florist, we want to know:
+        did they know the eShop existed? Was price the barrier? Was it product availability?
+        That learning feeds back into every cohort playbook.
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-sep">
+
+  <!-- ================================================================ -->
+  <!-- S7: WHAT WE NEED -->
+  <!-- ================================================================ -->
+  <section>
+    <h2>7. What We Need (from Everyone)</h2>
+    <div class="ask-grid">
+      <div class="ask-card">
+        <h4>Validate the tier structure</h4>
+        <p>
+          Does <strong>Enrolled &rarr; Inventory Live &rarr; Growth Partner</strong> make sense?
+          Are the criteria right?
+        </p>
+      </div>
+      <div class="ask-card">
+        <h4>Which accounts for first wave?</h4>
+        <p>
+          Do the 7 Wave 1 accounts look right? Is JFS the right sandbox?
+          <strong>Who is missing?</strong>
+        </p>
+      </div>
+      <div class="ask-card">
+        <h4>Resource commitment</h4>
+        <p>
+          How much CS time can we dedicate? The program requires <strong>weekly touches per active account</strong>.
+        </p>
+      </div>
+      <div class="ask-card">
+        <h4>Fee incentive testing approach</h4>
+        <p>
+          Which behaviors do we want to test incentivizing? At which accounts? For how long?
+        </p>
+      </div>
+      <div class="ask-card">
+        <h4>Lautaro's role</h4>
+        <p>
+          Value prop design, product pitches, competitive positioning? His input could define how we frame
+          the program externally.
+        </p>
+      </div>
+      <div class="ask-card">
+        <h4>Whale track approach</h4>
+        <p>
+          KBC and BDC are <strong>89.5% of tracked GMV</strong>. They need a separate cadence.
+          Who owns the relationship at scale?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Black Belt Program v3 &mdash; TX Chapter &mdash; Koronet Revenue OS</span>
+    <span>Prepared by Mercurio &mdash; July 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
