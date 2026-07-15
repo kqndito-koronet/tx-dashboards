@@ -28,6 +28,8 @@
     .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;min-width:1120px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:11px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
     .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.spec{background:#f4f0ff;color:#5925dc;border-color:#d9d6fe}
     .stack{display:grid;gap:10px}
+    .command{border:2px solid #2457c5}
+    .tightList{margin:8px 0 0;padding-left:18px;color:#344054}.tightList li{margin:4px 0}
     @media(max-width:980px){main{width:min(100% - 24px,1480px)}.hero,.grid2,.grid3,.grid4,.row4{grid-template-columns:1fr}table{min-width:960px}}
   </style>
 </head>
@@ -36,11 +38,11 @@
   <section class="hero">
     <div>
       <p class="eyebrow">Q3 TX Hub - operating read</p>
-      <h1>Show what is moving. Show what is missing.</h1>
+      <h1>Q3 is about execution, usage, and learning.</h1>
       <p class="sub">
-        This hub is not the full strategy and not the backend operating system.
-        It is the Friday execution layer: pacing, OKRs, account actions, learnings,
-        blockers, and the exact gaps owners or agents must fill.
+        We are not asking owners for more reporting. We are giving them the account facts,
+        the customer questions, and the help menu so Friday can focus on what moved,
+        what blocked usage, and what we do next.
       </p>
       <div class="links">
         <a class="primary" href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
@@ -59,6 +61,43 @@
         <article class="card metric danger"><small>Top 15 concentration</small><strong>64.8%</strong><p>$40.7K of $62.8K Jul 1-13 fees.</p></article>
       </div>
       <div class="band gold">Near term can be on pace. Durable growth still needs more GMV and more digital GMV.</div>
+    </div>
+  </section>
+
+  <section class="command">
+    <p class="eyebrow">This week operating board</p>
+    <h2>Start here: accounts, usage, blockers, next action.</h2>
+    <div class="grid3">
+      <article class="card blueLine">
+        <small>Cata / CS</small>
+        <strong>Target accounts with buy/list calls in the next 2 weeks</strong>
+        <p>Bring the target list and the accounts touched in the last 30 days. We prefill digital buying, connections, repeat, online sales, and supply signals.</p>
+        <ul class="tightList">
+          <li>Are digital purchases increasing?</li>
+          <li>Are active connections transacting repeatedly?</li>
+          <li>Is online supply similar to offline supply?</li>
+        </ul>
+      </article>
+      <article class="card warnLine">
+        <small>Christine / Implementation</small>
+        <strong>Wholesaler accounts moving toward commercial readiness</strong>
+        <p>Show which implementation accounts are buying digitally, publishing useful supply, and moving toward first online sales inside the 30-day OKR window.</p>
+        <ul class="tightList">
+          <li>>=20 procurement purchases within 30 days?</li>
+          <li>>=5 online sales within 30 days?</li>
+          <li>>3 buying/selling transactions within 30 days?</li>
+        </ul>
+      </article>
+      <article class="card purpleLine">
+        <small>Facu / GROW</small>
+        <strong>Accounts mature enough to earn Black Belt help</strong>
+        <p>Growth is the incentive for accounts that use products, buy digitally, list useful supply, and have enough buyer signal to test a repeatable sales motion.</p>
+        <ul class="tightList">
+          <li>Candidate approved or still diagnosis?</li>
+          <li>Which cohort/message/channel is being tested?</li>
+          <li>What metric proves the play is worth scaling?</li>
+        </ul>
+      </article>
     </div>
   </section>
 
@@ -99,15 +138,34 @@
   </section>
 
   <section>
-    <p class="eyebrow">What we need to drive</p>
-    <h2>Metrics first, initiatives second.</h2>
+    <p class="eyebrow">Leading indicators we can actually manage</p>
+    <h2>Numbers first. If the number is missing, the retrieval path is the work.</h2>
     <div class="grid4">
-      <article class="card blueLine"><small>BUY</small><strong>Repeat transactions</strong><p>Active connections, first orders, second/third orders, procurement purchases, blocker classification.</p></article>
-      <article class="card okLine"><small>LIST</small><strong>Real supply online</strong><p>Formats, varieties, bunches, in-transit, time depth, online-vs-offline coverage.</p></article>
-      <article class="card warnLine"><small>Commercial Readiness</small><strong>Ready to buy, list, and sell</strong><p>Wholesalers buy digitally, publish useful supply online, and become ready to generate online sales within the 30-day OKR window.</p></article>
-      <article class="card purpleLine"><small>GROW / Black Belt</small><strong>More accounts ready to scale</strong><p>Success is having more mature accounts enter the program with enough supply, usage, and buyer signals to grow repeat online sales.</p></article>
+      <article class="card blueLine"><small>BUY</small><strong>7,094 active connections ever transacted</strong><p>From 20,904 active connections. Friday work: which pairs get to first, second, third transaction?</p></article>
+      <article class="card okLine"><small>LIST</small><strong>82 / 143 wholesalers near-zero online sales</strong><p>Friday work: which sellers have enough supply to fix now, and which need product/setup/data first?</p></article>
+      <article class="card warnLine"><small>Commercial Readiness</small><strong>80 / 80 / 70 OKR reads missing</strong><p>Friday work: Christine account scorecard vs 30-day procurement purchases, online sales, and Core transactions.</p></article>
+      <article class="card purpleLine"><small>GROW / Black Belt</small><strong>Candidate list needs approval</strong><p>Friday work: approve one measured play, or send account back to buy/list/readiness diagnosis.</p></article>
     </div>
     <div class="band blue" style="margin-top:12px">Strategic Accounts apply all of the above as one client plan. Enablers only matter when tied to blocker, account, pilot, KPI, and learning loop.</div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Weekly account scorecard</p>
+    <h2>This is the row we need per account, prefilled as much as possible.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>What the system should prefill</th><th>What the owner validates or adds</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Account / pair</strong></td><td>Account, buyer-supplier pair, initiative, product ownership, account owner.</td><td>Wrong owner, missing stakeholder, duplicated account, or should be excluded.</td><td>One client, one plan. Avoid fragmented asks.</td></tr>
+          <tr><td><strong>Last 30 days touched?</strong></td><td>Salesforce activity, Fathom calls, Slack-known activity when available.</td><td>Missing calls, informal contact, or context not in system.</td><td>Friday should show work done and blanks.</td></tr>
+          <tr><td><strong>BUY status</strong></td><td>Connections, accepted connections, first transaction, repeat, procurement purchases.</td><td>What they want to buy, why they do not buy, and next buying action.</td><td>Wholesalers feel value faster when they buy better online.</td></tr>
+          <tr><td><strong>LIST status</strong></td><td>Products/features, online GMV, offline GMV, formats, bunches, future availability, varieties, online-vs-offline supply.</td><td>Operational constraint, willingness, and what would it take to publish useful supply.</td><td>They cannot sell online what they do not list online.</td></tr>
+          <tr><td><strong>Commercial readiness</strong></td><td>30-day OKR status, product usage, first buy/list/sell path, online sales.</td><td>What blocks real usage after implementation and what help would make the account ready.</td><td>Implementation value is measured by usage, not just setup.</td></tr>
+          <tr><td><strong>GROW readiness</strong></td><td>Online buyers, repeat buyers, frequency, AOV, traffic/conversion when available.</td><td>Ready for Black Belt, needs diagnosis, or should be parked.</td><td>Growth help goes to accounts mature enough to benefit from it.</td></tr>
+          <tr><td><strong>Blocker / what would it take</strong></td><td>Known objections and call-derived learnings.</td><td>Customer's actual condition to move forward, owner, date.</td><td>This is what turns reporting into action.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section>

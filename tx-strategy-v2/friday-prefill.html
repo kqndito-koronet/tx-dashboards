@@ -12,7 +12,7 @@
     h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
     .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
     .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}.command{border:2px solid #2457c5}.tightList{margin:8px 0 0;padding-left:18px;color:#344054}.tightList li{margin:4px 0}
     .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1300px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
     .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
     @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1420px)}}
@@ -23,7 +23,7 @@
   <header>
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Friday Prefill</h1>
-    <p class="sub">Friday should start from a prefilled execution view. Stakeholders confirm, correct, and add learnings. They should not spend Friday reconstructing account context.</p>
+    <p class="sub">Friday should start from account rows we already prepared. Owners confirm, correct, and add the customer learning the system cannot know.</p>
     <div class="links">
       <a class="primary" href="/tx-dashboards/tx-strategy-v2/q3-hub.html">Back to Q3 Hub</a>
       <a href="/tx-dashboards/tx-strategy-v2/">Full cockpit</a>
@@ -36,6 +36,40 @@
       <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL queue</a>
     </div>
   </header>
+
+  <section class="command">
+    <p class="eyebrow">Friday starts here</p>
+    <h2>Every owner answers the same operating question.</h2>
+    <div class="grid">
+      <article class="card">
+        <strong>Cata / CS</strong>
+        <p>Which target accounts were worked, which buy/list conversations are scheduled, and what did we learn about repeat digital transactions?</p>
+        <ul class="tightList">
+          <li>Digital purchases and connections moving?</li>
+          <li>First/repeat transactions moving?</li>
+          <li>Supply listed enough to sell online?</li>
+        </ul>
+      </article>
+      <article class="card">
+        <strong>Christine / Implementation</strong>
+        <p>Which wholesaler implementations are becoming commercially ready: buying digitally, listing useful supply, and reaching online sales?</p>
+        <ul class="tightList">
+          <li>Procurement purchases within 30 days?</li>
+          <li>Online sales within 30 days?</li>
+          <li>Buying/selling transactions within 30 days?</li>
+        </ul>
+      </article>
+      <article class="card">
+        <strong>Facu / GROW</strong>
+        <p>Which account is ready for Black Belt, which needs more diagnosis, and what measured play should run next?</p>
+        <ul class="tightList">
+          <li>Buyer cohort, message, channel.</li>
+          <li>Expected metric and learning.</li>
+          <li>Scale only after the motion works.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
 
   <section>
     <p class="eyebrow">What owners fill by Thursday EOD</p>
@@ -92,6 +126,30 @@
           <tr><td>Learning / blocker</td><td>What changed our understanding or what blocked progress.</td><td>Issue is price trust, not buyer awareness.</td></tr>
           <tr><td>Next action + owner/date</td><td>Smallest next action, responsible person, and date.</td><td>Cata to confirm next order path by Friday EOD.</td></tr>
           <tr><td>Need from Facu/system</td><td>Decision, data, product, value prop, escalation, or workflow help.</td><td>Need Rose to validate account supply gap.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Account row format</p>
+    <h2>One row per account or buyer-supplier pair. No narrative required.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Account / pair</th><th>Lane</th><th>Result</th><th>Deliverable</th><th>BUY status</th><th>LIST status</th><th>Commercial readiness</th><th>Learning / blocker</th><th>Next action</th><th>Help needed</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag wait">Prefill</span> Account name or buyer-supplier pair</td>
+            <td>BUY / LIST / Commercial Readiness / GROW / Strategic</td>
+            <td>Transactions, fees, first order, repeat, online sale, commitment, or no movement.</td>
+            <td>Call, account analyzed, feature enabled, supply uploaded, campaign/play tested, follow-up completed.</td>
+            <td>Connections, digital purchases, first/repeat transaction, what they want to buy, why not online.</td>
+            <td>Formats, bunches, varieties, future availability, in-transit, online supply vs offline business.</td>
+            <td>Product usage, 30-day OKR status, first buy/list/sell path, ready for sales motion or not.</td>
+            <td>Customer objection, root cause, what would it take, or unknown because call/data missing.</td>
+            <td>Smallest next step, owner, date.</td>
+            <td>Data, talking points, objection help, product blocker, stakeholder escalation, or growth support.</td>
+          </tr>
         </tbody>
       </table>
     </div>
