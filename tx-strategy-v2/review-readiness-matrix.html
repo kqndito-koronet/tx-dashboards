@@ -40,7 +40,7 @@
       <article class="card"><strong>Preserved</strong><p>V1 backup is tagged, branched, and documented.</p></article>
       <article class="card"><strong>Online</strong><p>V2 hub, initiative pages, ledger seed, routines, and review path are available in GitHub Pages.</p></article>
       <article class="card"><strong>Partial</strong><p>Data, leads, and account plans are useful but require owner/Rose validation.</p></article>
-      <article class="card"><strong>Not live</strong><p>Call ingestion, feedback logging, and recurring agent workflows are specified, not fully automated.</p></article>
+      <article class="card"><strong>Runnable</strong><p>Feedback/call ingestion now has a pipeline; first real owner-feedback cycle is still unproven.</p></article>
     </div>
   </section>
 
@@ -102,17 +102,17 @@
           </tr>
           <tr>
             <td>Feedback and call ingestion.</td>
-            <td><span class="tag warn">Automated to candidates, not active ledger</span></td>
-            <td><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback ingestion</a>, <a href="/tx-dashboards/tx-strategy-v2/github-issue-capture.html">issue capture viewer</a>, <a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">ledger candidates</a>, issue forms, CSV templates.</td>
-            <td>Gives stakeholders a structured online input path and a scheduled/manual GitHub issue export that becomes reviewable ledger candidates.</td>
-            <td>Candidate-to-active-ledger promotion, Slack/Fathom ingestion, and read-safe review automation.</td>
+            <td><span class="tag wait">Runnable with gate</span></td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback ingestion</a>, <a href="/tx-dashboards/tx-strategy-v2/github-issue-capture.html">issue capture viewer</a>, <a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">ledger candidates</a>, issue forms, CSV templates, <code>scripts/tx_sync_feedback_pipeline.py</code>.</td>
+            <td>Gives stakeholders a structured online input path and a pipeline that refreshes candidates, validation, promotion, active ledger, queues, readbacks, compliance, and claims.</td>
+            <td>First real issue/call packet cycle; Slack/Fathom ingestion; read-safe extraction automation.</td>
           </tr>
           <tr>
             <td>Execution ledger / source of truth.</td>
             <td><span class="tag warn">Seed published</span></td>
             <td><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger views</a>, <a href="/tx-dashboards/tx-strategy-v2/ledger-source.html">CSV source</a>, published seed CSV.</td>
             <td>Creates the object model for account actions, owner asks, feedback, calls, evidence, and approval status.</td>
-            <td>Move from static seed to recurring update loop with owner edits and audit trail.</td>
+            <td>Run first owner-feedback cycle and promote approved candidates into active ledger.</td>
           </tr>
           <tr>
             <td>Agent coordination and routines.</td>
@@ -147,7 +147,7 @@
       <table>
         <thead><tr><th>Do not claim</th><th>Use this instead</th><th>Why</th></tr></thead>
         <tbody>
-          <tr><td>V2 is the live operating system.</td><td>V2 is a draft operating package ready for review and owner validation.</td><td>Feedback/call capture now exports to candidates, but active ledger promotion and a full weekly cycle are still unproven.</td></tr>
+          <tr><td>V2 is the live operating system.</td><td>V2 is a draft operating package with a runnable ingestion pipeline, ready for review and owner validation.</td><td>The first real owner-feedback cycle, Rose backing pack, and promoted ledger updates are still unproven.</td></tr>
           <tr><td>Lead lists are final.</td><td>Lead lists are suggested starting points with validation required from CS/Implementation owners.</td><td>Owner context and Rose baselines are still missing for several lists.</td></tr>
           <tr><td>Rose numbers are board-ready.</td><td>Rose numbers are trust-labeled; some are verified, some directional, some not board-ready.</td><td>Offline GMV, Axerrio, rate-catch timing, and current-period projections need caveats.</td></tr>
           <tr><td>Future Digital Enablers are product asks.</td><td>Enablers are blockers tied to accounts, pilots, KPIs, and go/no-go decisions.</td><td>Prevents product work from becoming abstract roadmap pressure.</td></tr>
@@ -168,7 +168,7 @@
           <tr><td>P0</td><td>Owner validation for Friday rows</td><td>Cata, Christine, Facu, Maga</td><td>Each row has deliverables, learnings, asks, next-week expectations, and owner/date.</td></tr>
           <tr><td>P0</td><td>Lead list validation</td><td>CS / Implementation owners + Mercurio</td><td>Each suggested lead has why selected, signal, action, expected result, expected learning, and validation state.</td></tr>
           <tr><td>P1</td><td>Account action plans for strategic accounts</td><td>Mercurio + Facu/Cata</td><td>Bill Doran, Kennicott, Dreisbach each have one full-stack next conversation and cross-initiative plan.</td></tr>
-          <tr><td>P1</td><td>Feedback/call ingestion first run</td><td>Pablito + call worker</td><td>At least five call or stakeholder updates converted into ledger rows with review-safe source and route.</td></tr>
+          <tr><td>P1</td><td>Feedback/call ingestion first real cycle</td><td>Pablito + call worker</td><td>At least five call or stakeholder updates captured, validated, and either promoted or held with a clear reason.</td></tr>
           <tr><td>P1</td><td>Workflow audit first run</td><td>Nahua + Codex</td><td>Current artifacts marked workflow-backed, missing, patched, or parked. No hidden provenance.</td></tr>
         </tbody>
       </table>

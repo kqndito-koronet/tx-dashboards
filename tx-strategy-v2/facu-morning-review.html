@@ -43,11 +43,24 @@
     <h2>V2 now has the first real operating loops</h2>
     <div class="grid">
       <article class="card"><strong>Feedback and call capture</strong><p>GitHub issue forms capture structured stakeholder feedback and call packets. They are no longer loose comments.</p></article>
-      <article class="card"><strong>Promotion validation</strong><p>Captured rows are checked for required fields before they can move into the execution ledger.</p></article>
-      <article class="card"><strong>Generated review queues</strong><p>Friday and Monday queues are generated from the ledger seed instead of being rewritten by hand.</p></article>
+      <article class="card"><strong>Runnable ingestion pipeline</strong><p><code>scripts/tx_sync_feedback_pipeline.py</code> refreshes candidates, validation, promotion, Friday/Monday queues, readbacks, compliance, and claim register.</p></article>
+      <article class="card"><strong>Generated review queues</strong><p>Friday and Monday queues are generated from the active ledger instead of being rewritten by hand.</p></article>
       <article class="card"><strong>Friday readback</strong><p>The system seeds a post-Friday readback: decision, owner, due date, expected result, expected learning, blocker, and next surface.</p></article>
       <article class="card"><strong>Launch gate</strong><p>V2 is explicitly a draft operating package. It is shareable for owner validation, not claimable as a live system.</p></article>
-      <article class="card"><strong>Remaining proof</strong><p>Rose still needs to back the strategic claims with a visual data pack before Thursday night.</p></article>
+      <article class="card"><strong>Remaining proof</strong><p>Rose still needs to back the strategic claims with a visual data pack before stronger claims travel.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Operating status</p>
+    <h2>The loop is runnable; the business content still needs owner/data validation.</h2>
+    <div class="grid">
+      <article class="card"><strong>20</strong><p>Active ledger rows currently powering the hub.</p></article>
+      <article class="card"><strong>13</strong><p>Friday-visible generated queue rows.</p></article>
+      <article class="card"><strong>13</strong><p>Monday-visible generated queue rows.</p></article>
+      <article class="card"><strong>20</strong><p>Agent lane queue rows across Rose, Mercurio, Socrates, Pablito, Nahua, Lautaro, Codex, and owners.</p></article>
+      <article class="card"><strong>9</strong><p>Claims in the claim register with trust labels and caveats.</p></article>
+      <article class="card"><strong>0</strong><p>Issue candidates promoted so far; promotion requires validation plus <code>tx-approved-for-ledger</code>.</p></article>
     </div>
   </section>
 
@@ -63,8 +76,9 @@
           <tr><td>5-9 min</td><td><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a></td><td>Is the message simple enough to send? Does it ask owners to validate, not rebuild?</td><td>Approve/change send note.</td></tr>
           <tr><td>9-12 min</td><td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday worksheet</a> + <a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">generated queues</a></td><td>Are the owner rows clear? Are deliverables, learnings, asks, and discussion items the right ones?</td><td>Approve/change Friday ask.</td></tr>
           <tr><td>12-15 min</td><td><a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a> + <a href="/tx-dashboards/tx-strategy-v2/promotion-readiness.html">promotion gate</a></td><td>Can a Friday discussion become a tracked commitment without manual cleanup?</td><td>Approve/change readback fields and promotion requirements.</td></tr>
-          <tr><td>15-18 min</td><td><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a> / <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a> / <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL</a> / <a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW</a></td><td>Check initiative scope, KPI, lead logic, value prop, and what owners must validate.</td><td>Approve/change each scope before stakeholder use.</td></tr>
-          <tr><td>18-20 min</td><td><a href="/tx-dashboards/tx-strategy-v2/overnight-build-queue.html">Overnight queue</a> + <a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">agent runbook</a> + <a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a></td><td>Are agent next tasks specific enough for Rose/Mercurio/Socrates/Pablito/Nahua?</td><td>Approve next-run tasks or change priorities.</td></tr>
+          <tr><td>15-17 min</td><td><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback ingestion</a> + <a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">workflow registry</a></td><td>Is the runnable ingestion loop clear enough to trust for first cycle?</td><td>Approve/change capture, validation, and promotion gate.</td></tr>
+          <tr><td>17-19 min</td><td><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a> / <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a> / <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL</a> / <a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW</a></td><td>Check initiative scope, KPI, lead logic, value prop, and what owners must validate.</td><td>Approve/change each scope before stakeholder use.</td></tr>
+          <tr><td>19-20 min</td><td><a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">agent runbook</a> + <a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a></td><td>Are agent next tasks specific enough for Rose/Mercurio/Socrates/Pablito/Nahua?</td><td>Approve next-run tasks or change priorities.</td></tr>
         </tbody>
       </table>
     </div>
@@ -83,8 +97,8 @@
           <tr><td>Use BUY/LIST/SELL/GROW pages?</td><td>Yes for review; not as final lead assignment.</td><td>Scopes and logic are useful; accounts/leads need owner validation.</td><td><span class="tag wait">Approve as review pages</span></td></tr>
           <tr><td>Use Rose numbers as final?</td><td>No.</td><td>Data backing pack still needed. Current data links are directional/trust-labeled.</td><td><span class="tag warn">Do not overstate</span></td></tr>
           <tr><td>Use generated queues?</td><td>Yes, as the control surface.</td><td>They make Friday/Monday review come from the ledger seed and expose what is missing.</td><td><span class="tag ok">Recommend approve</span></td></tr>
-          <tr><td>Use issue capture?</td><td>Yes, with promotion gate.</td><td>Stakeholders can add feedback or call packets; the validator prevents weak rows from becoming canonical.</td><td><span class="tag ok">Recommend approve</span></td></tr>
-          <tr><td>Promote V2 to live operating status?</td><td>No.</td><td>Workflow provenance, owner validation, and real ledger update loops are not fully running yet.</td><td><span class="tag bad">Keep draft</span></td></tr>
+          <tr><td>Use issue capture?</td><td>Yes, with promotion gate.</td><td>Stakeholders can add feedback or call packets; the runnable pipeline refreshes candidates, validation, ledger, queues, readbacks, compliance, and claims.</td><td><span class="tag ok">Recommend approve</span></td></tr>
+          <tr><td>Promote V2 to live operating status?</td><td>Not yet.</td><td>The pipeline is runnable, but the first real owner-feedback cycle and Rose backing pack are still unproven.</td><td><span class="tag bad">Keep draft</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -100,6 +114,23 @@
       <article class="card"><strong>Rose</strong><p>Produce data backing pack: OKR strip, drivers, top accounts, evidence table, claim register.</p></article>
       <article class="card"><strong>Mercurio</strong><p>Turn validated leads into account actions with value prop, metric, expected learning, owner/date.</p></article>
       <article class="card"><strong>Pablito / Nahua</strong><p>Pablito tracks owner edits and commitments. Nahua labels workflow compliance and quarantine risk.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">First live-cycle test</p>
+    <h2>What proves this is becoming an operating system</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Test</th><th>Pass condition</th><th>Owner</th><th>Where it shows up</th></tr></thead>
+        <tbody>
+          <tr><td>Owner feedback enters the system</td><td>At least one Cata/Christine/Maga/Facu correction is captured as GitHub feedback or call packet.</td><td>Pablito</td><td><a href="/tx-dashboards/tx-strategy-v2/github-issue-capture.html">Issue capture</a> and <a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">ledger candidates</a>.</td></tr>
+          <tr><td>Candidate validation works</td><td>Incomplete feedback is held with missing fields; complete feedback becomes promotion-ready.</td><td>Codex</td><td><a href="/tx-dashboards/tx-strategy-v2/promotion-readiness.html">Promotion readiness</a>.</td></tr>
+          <tr><td>Approval gate works</td><td>No issue candidate becomes active without <code>tx-approved-for-ledger</code>.</td><td>Codex + Facu/Pablito</td><td><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a> and promotion log.</td></tr>
+          <tr><td>Agents consume rows</td><td>Mercurio/Socrates/Rose/Pablito queues update from the active ledger, not from chat memory.</td><td>Codex + Nahua</td><td><a href="/tx-dashboards/tx-strategy-v2/agent-lane-queues.html">Agent queues</a>.</td></tr>
+          <tr><td>Readback closes the loop</td><td>Friday/Monday pages show what changed, what is blocked, and next owner/date.</td><td>Pablito + Socrates</td><td><a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a> and <a href="/tx-dashboards/tx-strategy-v2/monday-leadership-prefill.html">Monday prefill</a>.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
