@@ -24,22 +24,24 @@
   <header>
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Promotion Readiness</h1>
-    <p class="sub">Dry-run validation for ledger candidates. This page does not promote anything. It tells Pablito/Nahua what is missing before a feedback or call packet can become active ledger work.</p>
+    <p class="sub">Validation and promotion gate for ledger candidates. A candidate can only become active ledger work after required fields are complete and the issue has the explicit <code>tx-approved-for-ledger</code> label.</p>
     <div class="links">
       <a class="primary" href="/tx-dashboards/tx-strategy-v2/ledger.html">Back to ledger</a>
       <a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">Ledger candidates</a>
       <a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback ingestion</a>
       <a href="/tx-dashboards/tx-strategy-v2/data/tx_ledger_candidate_validation.csv">Download validation CSV</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_active_ledger.csv">Active ledger CSV</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_ledger_promotion_log.csv">Promotion log CSV</a>
     </div>
   </header>
 
   <section>
     <p class="eyebrow">Promotion rule</p>
-    <h2>Candidate first. Human validation next. Active ledger last.</h2>
+    <h2>Candidate first. Validation next. Explicit approval before active ledger.</h2>
     <div class="grid">
       <article class="card"><strong>Candidate</strong><p>Generated from GitHub issue capture. It is not assigned work yet.</p></article>
       <article class="card"><strong>Validated</strong><p>Required fields are complete and Pablito/Nahua know who should review it.</p></article>
-      <article class="card"><strong>Promoted</strong><p>Future step: human-reviewed candidate becomes active ledger row with owner/date.</p></article>
+      <article class="card"><strong>Promoted</strong><p>Only rows with validation pass plus <code>tx-approved-for-ledger</code> become active ledger rows.</p></article>
     </div>
   </section>
 
@@ -57,6 +59,22 @@
           <tr><td>conversation_expected</td><td>Defines what conversation or ask the item should trigger.</td></tr>
           <tr><td>expected_outcome + expected_learning</td><td>Captures success and learning even if the action fails.</td></tr>
           <tr><td>kpi_or_leading_indicator</td><td>Connects the item to execution tracking.</td></tr>
+          <tr><td><code>tx-approved-for-ledger</code> issue label</td><td>Prevents automatic promotion of weak, accidental, or unreviewed rows.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Generated outputs</p>
+    <h2>What this gate now creates</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Output</th><th>What it contains</th><th>Current state</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/data/tx_active_ledger.csv">Active ledger</a></td><td>Seed rows plus validated, explicitly approved candidate rows.</td><td>Seed rows only until approved issues exist.</td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/data/tx_ledger_promotion_log.csv">Promotion log</a></td><td>Candidate-by-candidate promoted / held / rejected state and reason.</td><td>Header-only until issue candidates exist.</td></tr>
+          <tr><td><a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a></td><td>Friday/Monday review queues generated from the active ledger.</td><td>Seed rows visible; promoted candidates will flow in after approval.</td></tr>
         </tbody>
       </table>
     </div>

@@ -3,7 +3,8 @@ import csv
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER = ROOT / "tx-strategy-v2" / "data" / "tx_execution_ledger_seed_2026-07-15.csv"
+ACTIVE_LEDGER = ROOT / "tx-strategy-v2" / "data" / "tx_active_ledger.csv"
+SEED_LEDGER = ROOT / "tx-strategy-v2" / "data" / "tx_execution_ledger_seed_2026-07-15.csv"
 OUT_DIR = ROOT / "tx-strategy-v2" / "data"
 FRIDAY = OUT_DIR / "tx_friday_generated_queue.csv"
 MONDAY = OUT_DIR / "tx_monday_generated_queue.csv"
@@ -32,9 +33,10 @@ FIELDS = [
 
 
 def read_ledger():
-    if not LEDGER.exists():
+    ledger = ACTIVE_LEDGER if ACTIVE_LEDGER.exists() else SEED_LEDGER
+    if not ledger.exists():
         return []
-    with LEDGER.open(newline="") as handle:
+    with ledger.open(newline="") as handle:
         return list(csv.DictReader(handle))
 
 
