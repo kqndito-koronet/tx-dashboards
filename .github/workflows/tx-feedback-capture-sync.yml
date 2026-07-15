@@ -29,14 +29,18 @@ jobs:
             --json number,title,state,labels,body,url,createdAt,updatedAt,author \
             > tx-strategy-v2/data/tx_github_issue_capture.json
 
+      - name: Build ledger candidate CSV
+        run: |
+          python3 scripts/tx_issue_capture_to_ledger.py
+
       - name: Commit capture export if changed
         run: |
-          if git diff --quiet -- tx-strategy-v2/data/tx_github_issue_capture.json; then
+          if git diff --quiet -- tx-strategy-v2/data/tx_github_issue_capture.json tx-strategy-v2/data/tx_issue_ledger_candidates.csv; then
             echo "No TX feedback issue changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tx-strategy-v2/data/tx_github_issue_capture.json
+          git add tx-strategy-v2/data/tx_github_issue_capture.json tx-strategy-v2/data/tx_issue_ledger_candidates.csv
           git commit -m "Sync TX feedback issue capture"
           git push
