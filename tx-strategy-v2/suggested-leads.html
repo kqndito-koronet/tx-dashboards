@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suggested Leads — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1500px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:1040px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;font-size:26px}.card p{margin:6px 0 0;color:#667085}
+    .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.toolbar button,.toolbar input{border:1px solid #d9e0ea;border-radius:7px;background:#fff;color:#101828;font-weight:900;min-height:36px;padding:0 11px}.toolbar button{cursor:pointer}.toolbar button.active{background:#101828;color:#fff;border-color:#101828}.toolbar input{min-width:min(420px,100%);font-weight:700}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1700px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.spec{background:#f4f0ff;color:#5925dc;border-color:#d9d6fe}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1500px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Suggested Lead Review Center</h1>
+    <p class="sub">This is the cross-initiative lead review surface. Rows are suggested starting points, not assignments. Owners validate account facts, lead logic, priority, next action, and whether the row should become Friday execution.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/owner-validation-brief.html">Owner validation</a>
+      <a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Weekly action queue</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_suggested_leads.csv">Download CSV</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Review rule</p>
+    <h2>Lead priority is based on intent, readiness, recency, and ability to learn.</h2>
+    <div id="summary" class="grid"></div>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Filter by account, signal, owner, trigger..." />
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="BUY">BUY</button>
+      <button data-filter="LIST">LIST</button>
+      <button data-filter="SELL">SELL</button>
+      <button data-filter="GROW">GROW</button>
+      <button data-filter="Strategic">Strategic</button>
+      <button data-filter="Needs owner validation">Needs owner</button>
+      <button data-filter="Needs Rose">Needs Rose</button>
+      <button data-filter="Needs Facu">Needs Facu</button>
+      <button data-filter="Learning">Learning</button>
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Initiative</th><th>Priority</th><th>Account / segment</th><th>Signal</th><th>Trigger</th><th>Why this lead</th><th>Conversation</th><th>Expected outcome</th><th>Expected learning</th><th>Owner</th><th>Validation</th><th>Review question</th><th>Source</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="13">Loading suggested leads...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+const csvUrl = "/tx-dashboards/tx-strategy-v2/data/tx_suggested_leads.csv";
+let rows = [];
+let activeFilter = "all";
+let search = "";
+
+function parseCSV(text) {
+  const out = [];
+  let row = [], cell = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i], next = text[i + 1];
+    if (ch === '"' && quoted && next === '"') { cell += '"'; i++; continue; }
+    if (ch === '"') { quoted = !quoted; continue; }
+    if (ch === "," && !quoted) { row.push(cell); cell = ""; continue; }
+    if ((ch === "\n" || ch === "\r") && !quoted) {
+      if (ch === "\r" && next === "\n") i++;
+      row.push(cell);
+      if (row.some(v => v.length)) out.push(row);
+      row = []; cell = "";
+      continue;
+    }
+    cell += ch;
+  }
+  if (cell.length || row.length) { row.push(cell); out.push(row); }
+  const headers = out.shift() || [];
+  return out.map(values => Object.fromEntries(headers.map((h, i) => [h, values[i] || ""])));
+}
+
+function esc(value) {
+  return String(value || "").replace(/[&<>"']/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[ch]));
+}
+
+function tagClass(state) {
+  if ((state || "").includes("Ready")) return "tag ok";
+  if ((state || "").includes("Learning") || (state || "").includes("Spec")) return "tag spec";
+  if ((state || "").includes("Rose") || (state || "").includes("Facu")) return "tag wait";
+  if ((state || "").includes("Needs")) return "tag warn";
+  return "tag";
+}
+
+function visibleRows() {
+  return rows.filter(row => {
+    const haystack = Object.values(row).join(" ").toLowerCase();
+    const filterMatch = activeFilter === "all" || Object.values(row).some(value => String(value).includes(activeFilter));
+    const searchMatch = !search || haystack.includes(search.toLowerCase());
+    return filterMatch && searchMatch;
+  });
+}
+
+function renderSummary() {
+  const counts = {
+    buy: rows.filter(r => r.initiative === "BUY").length,
+    list: rows.filter(r => r.initiative === "LIST").length,
+    needs: rows.filter(r => (r.validation_state || "").includes("Needs")).length,
+    approved: rows.filter(r => (r.validation_state || "").includes("Approved")).length
+  };
+  document.getElementById("summary").innerHTML = `
+    <article class="card"><strong>${rows.length}</strong><p>Suggested rows across initiatives.</p></article>
+    <article class="card"><strong>${counts.buy + counts.list}</strong><p>BUY/LIST rows where learning should start.</p></article>
+    <article class="card"><strong>${counts.needs}</strong><p>Rows needing owner, Rose, or Facu validation.</p></article>
+    <article class="card"><strong>${counts.approved}</strong><p>Approved execution rows. Should stay zero until owners confirm.</p></article>
+  `;
+}
+
+function renderRows() {
+  const data = visibleRows();
+  const body = document.getElementById("rows");
+  if (!data.length) {
+    body.innerHTML = '<tr><td colspan="13">No suggested leads match this filter.</td></tr>';
+    return;
+  }
+  body.innerHTML = data.map(row => `
+    <tr>
+      <td>${esc(row.initiative)}</td>
+      <td>${esc(row.priority)}</td>
+      <td>${esc(row.account_or_segment)}</td>
+      <td>${esc(row.signal)}</td>
+      <td>${esc(row.trigger)}</td>
+      <td>${esc(row.why_this_lead)}</td>
+      <td>${esc(row.conversation_direction)}</td>
+      <td>${esc(row.expected_outcome)}</td>
+      <td>${esc(row.expected_learning)}</td>
+      <td>${esc(row.owner_lane)}</td>
+      <td><span class="${tagClass(row.validation_state)}">${esc(row.validation_state)}</span></td>
+      <td>${esc(row.review_question)}</td>
+      <td><a href="${esc(row.source_link)}">${esc(row.source)}</a></td>
+    </tr>
+  `).join("");
+}
+
+document.querySelectorAll(".toolbar button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".toolbar button").forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+    activeFilter = button.dataset.filter;
+    renderRows();
+  });
+});
+
+document.getElementById("search").addEventListener("input", event => {
+  search = event.target.value;
+  renderRows();
+});
+
+fetch(csvUrl, { cache: "no-store" })
+  .then(response => response.ok ? response.text() : Promise.reject(new Error(response.statusText)))
+  .then(text => {
+    rows = parseCSV(text);
+    renderSummary();
+    renderRows();
+  })
+  .catch(error => {
+    document.getElementById("summary").innerHTML = '<article class="card"><strong>!</strong><p>Suggested leads failed to load.</p></article>';
+    document.getElementById("rows").innerHTML = `<tr><td colspan="13">Could not load ${esc(csvUrl)}: ${esc(error.message)}</td></tr>`;
+  });
+</script>
+</body>
+</html>
