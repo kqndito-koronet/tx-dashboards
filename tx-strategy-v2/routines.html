@@ -14,6 +14,7 @@
     .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px}.card h3{margin:0 0 8px}.card p{margin:0;color:#667085}
     .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:980px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    pre{margin:0;white-space:pre-wrap;background:#f3f6fb;border:1px solid #d9e0ea;border-radius:8px;padding:14px;color:#344054}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -34,6 +35,74 @@
       <article class="card"><h3>Tuesday/Wednesday build and route</h3><p>Rose refreshes data, Mercury updates account actions, Socrates drafts owner asks, Pablito tracks missing inputs.</p></article>
       <article class="card"><h3>Thursday Friday-pack lock</h3><p>Owners edit judgment, learnings, blockers, expectations. They do not rebuild context.</p></article>
       <article class="card"><h3>Friday execution review</h3><p>80% accounts/actions/results/learnings/blockers; dashboards only if they change an action.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Monday leadership prefill</p>
+    <h2>Monday is for economics, risk, and decisions</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Block</th><th>Required fields</th><th>Owner</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>OKR pacing</td><td>Target, actual, projected landing, YoY, Axerrio in/out, caveat, trust label.</td><td>Rose</td><td>Executive OKR strip.</td></tr>
+          <tr><td>Economics</td><td>GMV, digital GMV, monetization, driver decomposition, temporary vs durable.</td><td>Rose + Codex</td><td>Leadership current read.</td></tr>
+          <tr><td>Strategic accounts</td><td>Bill Doran / Kennicott / Dreisbach status, blocker, decision needed.</td><td>Facu + Cata</td><td>Account escalation queue.</td></tr>
+          <tr><td>Mid-term enablers</td><td>API, grower portal, standing orders, parity, deal desk: blocker, accounts, pilot KPI.</td><td>Maga + Facu</td><td>Monday decision list.</td></tr>
+          <tr><td>Friday carryover</td><td>Unresolved asks, overdue commitments, repeated blockers.</td><td>Pablito</td><td>Leadership follow-up queue.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Thursday lock</p>
+    <h2>Owners edit only what the system cannot know</h2>
+    <div class="grid">
+      <article class="card"><h3>System pre-fills</h3><p>KPI, leading indicators, account list, last known activity, previous commitments, open blockers, trust labels.</p></article>
+      <article class="card"><h3>Owner edits</h3><p>Accurate yes/no, actual result or learning, blocker owner, next action, due date, Facu needed.</p></article>
+    </div>
+    <div class="tableWrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Check</th><th>Pass condition</th><th>Fail route</th></tr></thead>
+        <tbody>
+          <tr><td>Owner confirmed?</td><td>Owner or delegate validated the row.</td><td>Mark `Needs owner`; show only as draft.</td></tr>
+          <tr><td>Account/action present?</td><td>Named account/pair/object and concrete action.</td><td>Park async unless Friday decision needed.</td></tr>
+          <tr><td>Learning/result present?</td><td>One sentence result or learning.</td><td>Ask owner for missing field; do not expand narrative.</td></tr>
+          <tr><td>Next action dated?</td><td>Owner and due date exist.</td><td>Route to Pablito follow-up queue.</td></tr>
+          <tr><td>Evidence labeled?</td><td>Verified/directional/needs validation/quarantined.</td><td>Route to Rose or mark caveat.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday execution review</p>
+    <h2>80% execution, 20% strategy routing</h2>
+    <pre>For each initiative:
+1. Accounts worked / total prioritized list
+2. Deliverables completed this week
+3. Result or learning
+4. Blocker and owner
+5. Ask from Facu / another stakeholder
+6. Next week expectation
+7. Monday escalation only if strategic or economic decision is needed</pre>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday +1 hour readback</p>
+    <h2>The meeting is not done until commitments are captured</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Step</th><th>Owner</th><th>Output</th><th>Where it shows up</th></tr></thead>
+        <tbody>
+          <tr><td>Capture commitments</td><td>Pablito</td><td>Owner, action, due date, source.</td><td>Ledger + Friday prefill next week.</td></tr>
+          <tr><td>Route learnings</td><td>Mercury + Socrates</td><td>Account plan update, talk track change, or parked learning.</td><td>Initiative page / value-prop gate.</td></tr>
+          <tr><td>Route data gaps</td><td>Rose</td><td>Dashboard gap row with source/date/trust need.</td><td>Dashboard gap queue.</td></tr>
+          <tr><td>Route workflow issues</td><td>Nahua + Codex</td><td>Workflow patch or canonical CR.</td><td>Workflow compliance page.</td></tr>
+          <tr><td>Prepare Facu focus queue</td><td>Codex + Pablito</td><td>Top decisions, meeting asks, customer calls to join.</td><td>Monday prefill / next-week work.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 

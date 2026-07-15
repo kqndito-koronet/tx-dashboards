@@ -16,6 +16,8 @@
     .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1100px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
     .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
     code{background:#f3f6fb;border:1px solid #d9e0ea;border-radius:5px;padding:2px 5px}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;font-size:26px}.card span{display:block;color:#667085;font-size:13px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -39,6 +41,83 @@
           <tr><td>Value-prop queue</td><td>Which talk tracks, objections, or proof claims need Lautaro path?</td><td>Lautaro + Mercury proposal</td><td>Must link to value-prop source and approval state.</td></tr>
           <tr><td>Dashboard gap queue</td><td>Which claims lack data or trust?</td><td>Rose</td><td>Must say data needed, freshness, and hub impact.</td></tr>
           <tr><td>Workflow compliance</td><td>Which outputs bypassed registered workflows?</td><td>Nahua + Codex</td><td>Workflow missing stays visible until routed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Filtered operating views</p>
+    <h2>The same ledger should power every review surface.</h2>
+    <div class="grid">
+      <article class="card"><strong>6</strong><span>Friday owner rows to validate.</span></article>
+      <article class="card"><strong>5</strong><span>Facu/owner decisions visible.</span></article>
+      <article class="card"><strong>6</strong><span>Rose backing outputs requested.</span></article>
+      <article class="card"><strong>2</strong><span>Canonical conflicts still open.</span></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday queue view</p>
+    <h2>Rows that should become the Friday prefill</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Ledger ID</th><th>Initiative</th><th>Account / object</th><th>Prefilled fact</th><th>Owner edit needed</th><th>Next action</th><th>Visible?</th></tr></thead>
+        <tbody>
+          <tr><td>TXL-FRI-001</td><td>BUY</td><td>Connection queues</td><td>Lead B / untransacted connections are suggested, not approved.</td><td>Cata/CS confirm accounts worked, result, blocker, next action.</td><td>Validate first weekly pair queue.</td><td><span class="tag wait">Friday if validated</span></td></tr>
+          <tr><td>TXL-FRI-002</td><td>LIST</td><td>Supply readiness candidates</td><td>Supply gap logic exists; Rose baseline still required.</td><td>Cata/CS identify first pilot or data blocker.</td><td>Pick pilot or define missing data.</td><td><span class="tag warn">Discovery visible</span></td></tr>
+          <tr><td>TXL-FRI-003</td><td>SELL</td><td>Implementation PMT queue</td><td>Commercial Readiness queue seeded from PMT notes.</td><td>Christine/Pablito validate which accounts need TX support.</td><td>Confirm first usage path for selected accounts.</td><td><span class="tag wait">Validation needed</span></td></tr>
+          <tr><td>TXL-FRI-004</td><td>GROW</td><td>Black Belt candidates</td><td>Operator view has candidate modes and metrics; candidates not final.</td><td>Facu approve candidate set and first measured play.</td><td>Lock first play with cohort, message, metric.</td><td><span class="tag wait">Facu approval</span></td></tr>
+          <tr><td>TXL-FRI-005</td><td>Strategic</td><td>Bill Doran / Kennicott / Dreisbach</td><td>Strategic accounts confirmed; account facts not fully sourced.</td><td>Cata/Facu confirm one next conversation per account.</td><td>Convert skeletons into account plans.</td><td><span class="tag wait">Partial</span></td></tr>
+          <tr><td>TXL-FRI-006</td><td>Enablers</td><td>Standing Orders / API / Portal / parity</td><td>Future enablers are Monday lane unless tied to blocker and pilot.</td><td>Maga brings blocker, accounts, KPI, go/no-go only.</td><td>Park broad roadmap debate.</td><td><span class="tag warn">Summary only</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Facu / owner approval queue</p>
+    <h2>Decisions that should not be buried in narrative</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>ID</th><th>Decision</th><th>Recommendation</th><th>Risk if ignored</th><th>Owner</th><th>Deadline</th></tr></thead>
+        <tbody>
+          <tr><td>TXL-APP-001</td><td>Approve first Black Belt candidate set.</td><td>Use Zeidler and one validated strong seller as first measured plays; keep strategic exceptions separate.</td><td>Growth becomes generic marketing instead of measured learning.</td><td>Facu</td><td>Before Friday</td></tr>
+          <tr><td>TXL-APP-002</td><td>Validate SELL queue with Implementation.</td><td>Ask Christine/Pablito to mark which PMTs need TX help and first usage path.</td><td>Commercial Readiness remains theory and Implementation feels audited.</td><td>Christine + Pablito</td><td>Thursday EOD</td></tr>
+          <tr><td>TXL-APP-003</td><td>Decide what is Friday vs Monday.</td><td>Friday handles execution/learnings; Monday handles monetization, long-term product, and strategic economics.</td><td>Friday becomes strategy debate and owners do not execute.</td><td>Facu</td><td>Before message send</td></tr>
+          <tr><td>TXL-APP-004</td><td>Canonical conflict cleanup.</td><td>Patch H1-H3/H1-H4 and K2K fee correction before agents reuse old language.</td><td>Agents keep producing inconsistent strategy.</td><td>Nahua + Codex</td><td>This week</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Value prop queue</p>
+    <h2>Messaging changes need proof and approval before they become talk tracks</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>ID</th><th>Motion</th><th>Claim / talk track</th><th>Evidence needed</th><th>Approval</th><th>Downstream artifact</th></tr></thead>
+        <tbody>
+          <tr><td>TXL-VP-001</td><td>BUY</td><td>Koronet can help the wholesaler buy better and build trust through repeat digital procurement.</td><td>Connection/order examples, price/service/product value, buyer discovery.</td><td><span class="tag wait">Lautaro/Facu</span></td><td>BUY talking points.</td></tr>
+          <tr><td>TXL-VP-002</td><td>LIST</td><td>Buyers call/text when online supply does not match what the wholesaler actually sells and can fulfill.</td><td>Supply gap baseline, call objections, offline-vs-online product mismatch.</td><td><span class="tag wait">Cata/Facu</span></td><td>LIST discovery guide.</td></tr>
+          <tr><td>TXL-VP-003</td><td>SELL</td><td>Commercial readiness helps wholesalers get real value from Koronet, not just setup.</td><td>PMT account examples and first usage path.</td><td><span class="tag wait">Christine/Facu</span></td><td>SELL readiness ask.</td></tr>
+          <tr><td>TXL-VP-004</td><td>GROW</td><td>Black Belt is expert-backed growth: diagnose, refine, amplify measured online behavior.</td><td>Candidate metrics, cohort response, play results.</td><td><span class="tag wait">Facu</span></td><td>Black Belt operator view.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Dashboard gap queue view</p>
+    <h2>Rose work that unlocks trust in the story</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>ID</th><th>Output</th><th>Decision supported</th><th>Missing proof</th><th>Owner</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>TXL-DATA-001</td><td>Executive OKR strip</td><td>Are we pacing and what is included?</td><td>Axerrio in/out, source date, projection basis.</td><td>Rose</td><td><span class="tag wait">Requested</span></td></tr>
+          <tr><td>TXL-DATA-002</td><td>Driver decomposition</td><td>Is growth rate, volume, mix, API, Axerrio, or pricing?</td><td>Permanent vs temporary tag by driver.</td><td>Rose</td><td><span class="tag wait">Requested</span></td></tr>
+          <tr><td>TXL-DATA-003</td><td>Top account concentration</td><td>Which accounts require action?</td><td>Top accounts, owner, action implication.</td><td>Rose + Mercury</td><td><span class="tag wait">Requested</span></td></tr>
+          <tr><td>TXL-DATA-004</td><td>BUY/LIST/SELL/GROW evidence table</td><td>Which initiative has proof vs gap?</td><td>One metric per motion and trust label.</td><td>Rose</td><td><span class="tag wait">Requested</span></td></tr>
         </tbody>
       </table>
     </div>

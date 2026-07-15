@@ -13,7 +13,9 @@
     .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
     .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
     .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1200px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
-    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;background:#fff;padding:16px}.card h3{margin:0 0 8px;font-size:20px}.card p{margin:0 0 10px;color:#667085}.card ul{margin:0;padding-left:18px;color:#344054}.card li{margin:5px 0}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -22,8 +24,18 @@
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Strategic Account Plans</h1>
     <p class="sub">Strategic accounts should not receive fragmented initiative asks. Each needs one BUY/LIST/SELL/GROW plan, one next conversation, and one owner path.</p>
-    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Execution ledger</a></div>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Execution ledger</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a><a href="/tx-dashboards/tx-strategy-v2/value-prop-gate.html">Value-prop gate</a></div>
   </header>
+
+  <section>
+    <p class="eyebrow">Review rule</p>
+    <h2>Strategic account plans separate known facts from proposed next moves.</h2>
+    <div class="grid">
+      <article class="card"><h3>Known</h3><p>Only sourced status or Facu-confirmed facts.</p><ul><li>Confirmed strategic account</li><li>Current owner lane</li><li>Known blocker or active work</li></ul></article>
+      <article class="card"><h3>Unknown</h3><p>Questions that should be answered before broad execution.</p><ul><li>Current BUY/LIST/SELL behavior</li><li>Owner willingness</li><li>Best first conversation</li></ul></article>
+      <article class="card"><h3>Next move</h3><p>One action that reduces ambiguity.</p><ul><li>Conversation to schedule</li><li>Data pull to request</li><li>Decision Facu/Cata must make</li></ul></article>
+    </div>
+  </section>
 
   <section>
     <p class="eyebrow">Account plan contract</p>
@@ -35,6 +47,38 @@
           <tr><td>Bill Doran</td><td>Strategic TX account from Chris/Cata lane; needs one full-stack plan.</td><td>Map buying/procurement motion and repeat potential.</td><td>Check supply/listing parity and branch/category gaps.</td><td>Confirm current usage and owner plan.</td><td>Only after readiness, define measured cohort play.</td><td>Account-specific; not generic Black Belt.</td><td>TX fees, online share, repeat orders, blocker cleared.</td><td>What stops next online repeat behavior?</td><td><span class="tag wait">Cata + Facu align</span></td></tr>
           <tr><td>Kennicott</td><td>Strategic W->R growth candidate; needs current status from Facu.</td><td>Understand whether buy motion creates value and trust.</td><td>Assess online supply competitiveness and completeness.</td><td>Check if product/workflow supports commercial usage.</td><td>Potential Black Belt if readiness exists.</td><td>Needs Facu status and account facts.</td><td>Online buyer activity, supply parity, repeat transactions.</td><td>Is it ready to amplify or still diagnose?</td><td><span class="tag wait">Facu input</span></td></tr>
           <tr><td>Dreisbach</td><td>Strategic active work with overdue blockers; should not drift.</td><td>Vendor/procurement value opportunity and source path.</td><td>Location/category supply assessment.</td><td>Implementation alignment overdue.</td><td>Measured growth test only after blocker cleanup.</td><td>Help them sell more/make sellers money, but tied to current blockers.</td><td>Overdue items cleared, next meeting, first measured play.</td><td>Which blocker is actually binding?</td><td><span class="tag bad">Overdue blockers</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Account action cards</p>
+    <h2>What each account needs before Friday</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Account</th><th>Known</th><th>Unknown</th><th>Best next conversation</th><th>What we should prepare</th><th>Friday status ask</th><th>Trust</th></tr></thead>
+        <tbody>
+          <tr><td>Bill Doran</td><td>Confirmed strategic account in Cata/Chris lane. Needs one full-stack plan.</td><td>Current online share, branch/category supply gaps, buyer cohorts, active blockers.</td><td>Align with Cata on the single objective before adding initiative asks.</td><td>Account 360, fee/GMV trend, supply parity questions, current owner/status, possible first cohort.</td><td>Cata shares current status, active work, blocker, next action, and where Facu should help.</td><td><span class="tag wait">Owner validation</span></td></tr>
+          <tr><td>Kennicott</td><td>Confirmed strategic account and possible W->R growth candidate.</td><td>Whether it is ready to amplify or still needs diagnosis; current supply/listing competitiveness.</td><td>Facu status review first, then decide if Black Belt, LIST, or strategic account path.</td><td>Account 360, online buyer base, supply quality, current commercial motion, known relationship context.</td><td>Facu fills current account facts and recommended path.</td><td><span class="tag wait">Facu input</span></td></tr>
+          <tr><td>Dreisbach</td><td>Confirmed strategic account with active overdue items in the ledger.</td><td>Which blocker is binding: implementation alignment, vendor/procurement, supply/listing, or growth readiness.</td><td>Clear overdue blocker and owner before starting new growth motion.</td><td>Overdue commitment readback, vendor list status, implementation alignment ask, account plan draft.</td><td>Confirm blocker owner, due date, and whether Friday or Monday should unblock it.</td><td><span class="tag bad">Overdue / needs cleanup</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Reusable account-plan fields</p>
+    <h2>Fields Mercury/Pablito should maintain after each touch</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Why it matters</th><th>Update source</th></tr></thead>
+        <tbody>
+          <tr><td>Current play</td><td>Prevents five initiatives from creating five narratives.</td><td>Facu/Cata/Mercury account review.</td></tr>
+          <tr><td>This-week touch</td><td>Shows whether the account is actually being worked.</td><td>Calendar, call notes, Slack, CRM.</td></tr>
+          <tr><td>Expected learning</td><td>Defines success even when the customer says no.</td><td>Pre-call packet.</td></tr>
+          <tr><td>What would it take?</td><td>Turns objections into product, data, pricing, or process requirements.</td><td>Call ingestion packet.</td></tr>
+          <tr><td>Next action owner/date</td><td>Makes Pablito tracking possible.</td><td>Friday readback.</td></tr>
         </tbody>
       </table>
     </div>
