@@ -61,6 +61,38 @@ body:
     validations:
       required: false
   - type: textarea
+    id: conversation_expected
+    attributes:
+      label: Conversation expected
+      description: What follow-up conversation or ask should this packet trigger?
+      placeholder: Ask buyer what would make the next order online / ask wholesaler what supply can be maintained.
+    validations:
+      required: false
+  - type: textarea
+    id: expected_outcome
+    attributes:
+      label: Expected outcome
+      description: What operational result should happen next?
+      placeholder: Blocker classified / next action agreed / pilot selected / owner assigned.
+    validations:
+      required: false
+  - type: textarea
+    id: expected_learning
+    attributes:
+      label: Expected learning
+      description: What learning should be captured even if the next action does not move?
+      placeholder: Whether blocker is price, supply, habit, terms, owner, timing, product, or data.
+    validations:
+      required: false
+  - type: textarea
+    id: kpi_or_leading_indicator
+    attributes:
+      label: KPI or leading indicator
+      description: What metric should move or be observed?
+      placeholder: Repeat order / active buyer response / supply uploaded / first usage path defined.
+    validations:
+      required: false
+  - type: textarea
     id: tasks
     attributes:
       label: Tasks / owner / due date

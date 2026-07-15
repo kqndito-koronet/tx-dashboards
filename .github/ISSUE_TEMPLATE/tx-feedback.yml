@@ -49,6 +49,38 @@ body:
     validations:
       required: true
   - type: textarea
+    id: conversation_expected
+    attributes:
+      label: Conversation expected
+      description: What conversation or ask should this row trigger?
+      placeholder: Ask what stopped the first online order / validate first usage path / confirm supply owner.
+    validations:
+      required: false
+  - type: textarea
+    id: expected_outcome
+    attributes:
+      label: Expected outcome
+      description: What operational result should happen next?
+      placeholder: Blocker classified / pilot selected / next order path agreed / owner assigned.
+    validations:
+      required: false
+  - type: textarea
+    id: expected_learning
+    attributes:
+      label: Expected learning
+      description: What do we learn even if the customer or owner says no?
+      placeholder: Whether blocker is price, supply, habit, terms, owner, timing, product, or data.
+    validations:
+      required: false
+  - type: textarea
+    id: kpi_or_leading_indicator
+    attributes:
+      label: KPI or leading indicator
+      description: What metric should move or be observed?
+      placeholder: Calls completed / repeat order / supply uploaded / first usage path defined.
+    validations:
+      required: false
+  - type: textarea
     id: blocker
     attributes:
       label: Blocker

@@ -46,7 +46,7 @@
 </main>
 <script>
 const csvUrl = "/tx-dashboards/tx-strategy-v2/data/tx_execution_ledger_seed_2026-07-15.csv";
-const keyColumns = ["ledger_id","initiative","account","read_safe_summary","workflow","owner_lane","trust_label","approval_state","decision_needed","next_action","next_action_owner","due_date","friday_visible","monday_visible","status"];
+const keyColumns = ["ledger_id","initiative","account","conversation_expected","expected_outcome","expected_learning","kpi_or_leading_indicator","objection_or_blocker","before_friday_owner_task","workflow","owner_lane","trust_label","approval_state","next_action","next_action_owner","due_date","friday_visible","monday_visible","status"];
 function parseCsv(text){
   const rows=[]; let row=[], cell="", inQuotes=false;
   for(let i=0;i<text.length;i++){

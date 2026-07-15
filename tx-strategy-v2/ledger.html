@@ -25,7 +25,7 @@
   <header>
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Execution Ledger</h1>
-    <p class="sub">The ledger is the router behind the hub. It turns feedback, calls, dashboard claims, account plays, and value-prop changes into owned actions, approval gates, and downstream artifacts. Current source seed: <code>ops/tx_execution_ledger_seed_2026-07-15.csv</code>.</p>
+    <p class="sub">The ledger is the router behind the hub. It turns feedback, calls, dashboard claims, account plays, and value-prop changes into owned actions, approval gates, and downstream artifacts. Current published source seed: <code>tx-strategy-v2/data/tx_execution_ledger_seed_2026-07-15.csv</code>.</p>
     <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger-source.html">Ledger source</a><a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">Ledger candidates</a><a href="/tx-dashboards/tx-strategy-v2/data/tx_execution_ledger_seed_2026-07-15.csv">Download CSV</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Account plans</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Dashboard gaps</a></div>
   </header>
 
@@ -62,14 +62,14 @@
     <h2>Rows that should become the Friday prefill</h2>
     <div class="tableWrap">
       <table>
-        <thead><tr><th>Ledger ID</th><th>Initiative</th><th>Account / object</th><th>Prefilled fact</th><th>Owner edit needed</th><th>Next action</th><th>Visible?</th></tr></thead>
+        <thead><tr><th>Ledger ID</th><th>Initiative</th><th>Account / object</th><th>Conversation expected</th><th>Expected outcome</th><th>Expected learning</th><th>Owner edit needed</th><th>Visible?</th></tr></thead>
         <tbody>
-          <tr><td>TXL-FRI-001</td><td>BUY</td><td>Connection queues</td><td>Lead B / untransacted connections are suggested, not approved.</td><td>Cata/CS confirm accounts worked, result, blocker, next action.</td><td>Validate first weekly pair queue.</td><td><span class="tag wait">Friday if validated</span></td></tr>
-          <tr><td>TXL-FRI-002</td><td>LIST</td><td>Supply readiness candidates</td><td>Supply gap logic exists; Rose baseline still required.</td><td>Cata/CS identify first pilot or data blocker.</td><td>Pick pilot or define missing data.</td><td><span class="tag warn">Discovery visible</span></td></tr>
-          <tr><td>TXL-FRI-003</td><td>SELL</td><td>Implementation PMT queue</td><td>Commercial Readiness queue seeded from PMT notes.</td><td>Christine/Pablito validate which accounts need TX support.</td><td>Confirm first usage path for selected accounts.</td><td><span class="tag wait">Validation needed</span></td></tr>
-          <tr><td>TXL-FRI-004</td><td>GROW</td><td>Black Belt candidates</td><td>Operator view has candidate modes and metrics; candidates not final.</td><td>Facu approve candidate set and first measured play.</td><td>Lock first play with cohort, message, metric.</td><td><span class="tag wait">Facu approval</span></td></tr>
-          <tr><td>TXL-FRI-005</td><td>Strategic</td><td>Bill Doran / Kennicott / Dreisbach</td><td>Strategic accounts confirmed; account facts not fully sourced.</td><td>Cata/Facu confirm one next conversation per account.</td><td>Convert skeletons into account plans.</td><td><span class="tag wait">Partial</span></td></tr>
-          <tr><td>TXL-FRI-006</td><td>Enablers</td><td>Standing Orders / API / Portal / parity</td><td>Future enablers are Monday lane unless tied to blocker and pilot.</td><td>Maga brings blocker, accounts, KPI, go/no-go only.</td><td>Park broad roadmap debate.</td><td><span class="tag warn">Summary only</span></td></tr>
+          <tr><td>TXL-FRI-001</td><td>BUY</td><td>Connection queues</td><td>Ask P0 pairs what stopped first/repeat online order.</td><td>Blocker classified and next order path or no-go captured.</td><td>Why connected pairs do not transact or repeat.</td><td>Cata/CS fill pairs worked, blocker, next action, due date.</td><td><span class="tag wait">Friday if validated</span></td></tr>
+          <tr><td>TXL-FRI-002</td><td>LIST</td><td>Supply readiness candidates</td><td>Ask what real sellable supply can be made credible online.</td><td>First pilot or explicit data/customer workflow blocker.</td><td>Which supply dimension blocks digital conversion.</td><td>Cata/CS mark gate pass/fail and Rose data needed.</td><td><span class="tag warn">Discovery visible</span></td></tr>
+          <tr><td>TXL-FRI-003</td><td>SELL</td><td>Implementation PMT queue</td><td>Ask which account has a first BUY/LIST/SELL usage path.</td><td>Selected PMTs marked TX support yes/no with owner/date.</td><td>What prevents implementation from becoming real usage.</td><td>Christine/Pablito validate accounts and usage paths.</td><td><span class="tag wait">Validation needed</span></td></tr>
+          <tr><td>TXL-FRI-004</td><td>GROW</td><td>Black Belt candidates</td><td>Ask which first measured play is approved.</td><td>One candidate/cohort/message/metric locked or parked.</td><td>Whether readiness can be amplified or needs more diagnosis.</td><td>Facu approve candidate set and first measured play.</td><td><span class="tag wait">Facu approval</span></td></tr>
+          <tr><td>TXL-FRI-005</td><td>Strategic</td><td>Bill Doran / Kennicott / Dreisbach</td><td>Ask what one next conversation reduces account ambiguity.</td><td>One blocker, metric, owner, and date per strategic account.</td><td>Which BUY/LIST/SELL/GROW lane is binding per account.</td><td>Cata/Facu confirm one next conversation per account.</td><td><span class="tag wait">Partial</span></td></tr>
+          <tr><td>TXL-FRI-006</td><td>Enablers</td><td>Standing Orders / API / Portal / parity</td><td>Ask which blocker is account-backed and pilotable.</td><td>Blocker-to-account-to-pilot-to-KPI, or park.</td><td>What product may need to scale once a play works.</td><td>Maga brings blocker, accounts, KPI, go/no-go only.</td><td><span class="tag warn">Summary only</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -133,6 +133,12 @@
           <tr><td><code>source_type</code></td><td>Yes</td><td>call, slack_feedback, github_issue, dashboard, agent_proposal, meeting, manual.</td></tr>
           <tr><td><code>read_safe_summary</code></td><td>Yes</td><td>Share-safe summary; no private commentary.</td></tr>
           <tr><td><code>initiative</code></td><td>Yes</td><td>BUY, LIST, SELL, GROW, Strategic, Enablers, OKR, System.</td></tr>
+          <tr><td><code>conversation_expected</code></td><td>Yes for initiative rows</td><td>Exact owner/customer conversation the row is trying to trigger.</td></tr>
+          <tr><td><code>expected_outcome</code></td><td>Yes for Friday rows</td><td>Operational result expected this week.</td></tr>
+          <tr><td><code>expected_learning</code></td><td>Yes</td><td>What we learn if the outcome does not happen.</td></tr>
+          <tr><td><code>kpi_or_leading_indicator</code></td><td>Yes</td><td>Metric used to judge the motion.</td></tr>
+          <tr><td><code>objection_or_blocker</code></td><td>Yes after touch</td><td>Customer/stakeholder objection, blocker, or no-response reason.</td></tr>
+          <tr><td><code>before_friday_owner_task</code></td><td>Yes</td><td>Smallest owner action needed before Friday review.</td></tr>
           <tr><td><code>workflow</code></td><td>Yes</td><td>Registered workflow or Workflow missing.</td></tr>
           <tr><td><code>owner_lane</code></td><td>Yes</td><td>Rose, Mercury, Socrates, Pablito, Nahua, Codex, Lautaro, Facu, stakeholder.</td></tr>
           <tr><td><code>value_prop_required</code></td><td>Yes</td><td>Yes/no; required for plays, talk tracks, objections, stakeholder notes.</td></tr>

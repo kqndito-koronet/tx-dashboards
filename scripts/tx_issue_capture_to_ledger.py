@@ -18,15 +18,24 @@ FIELDS = [
     "created_at",
     "updated_at",
     "author",
+    "call_date",
+    "source_link",
     "account",
     "initiative",
     "what_happened",
     "result_or_learning",
+    "conversation_expected",
+    "expected_outcome",
+    "expected_learning",
+    "kpi_or_leading_indicator",
     "blocker_or_objection",
     "next_action_owner_date",
     "need_from_facu_or_system",
     "directly_said",
     "read_safe_interpretation",
+    "account_signals",
+    "value_prop_signals",
+    "do_not_share",
     "trust_label",
     "routing",
     "promotion_state",
@@ -85,15 +94,24 @@ def row(issue):
         "created_at": issue.get("createdAt", ""),
         "updated_at": issue.get("updatedAt", ""),
         "author": (issue.get("author") or {}).get("login", ""),
+        "call_date": first(sections, "Date"),
+        "source_link": first(sections, "Source link"),
         "account": first(sections, "Account / object", "Account / meeting"),
         "initiative": first(sections, "Initiative"),
         "what_happened": first(sections, "What happened?"),
         "result_or_learning": first(sections, "Result or learning"),
+        "conversation_expected": first(sections, "Conversation expected"),
+        "expected_outcome": first(sections, "Expected outcome"),
+        "expected_learning": first(sections, "Expected learning"),
+        "kpi_or_leading_indicator": first(sections, "KPI or leading indicator"),
         "blocker_or_objection": first(sections, "Blocker", "Objections / blockers"),
         "next_action_owner_date": first(sections, "Next action / owner / date", "Tasks / owner / due date"),
         "need_from_facu_or_system": first(sections, "Need from Facu / system"),
         "directly_said": first(sections, "Directly said"),
         "read_safe_interpretation": first(sections, "Read-safe interpretation"),
+        "account_signals": first(sections, "Account signals"),
+        "value_prop_signals": first(sections, "Value-prop signals"),
+        "do_not_share": first(sections, "What not to write/share"),
         "trust_label": first(sections, "Trust label", "Visibility"),
         "routing": first(sections, "Routing / downstream artifact"),
         "promotion_state": "Needs review before ledger promotion",
@@ -105,7 +123,7 @@ def main():
     rows = [row(issue) for issue in issues]
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
