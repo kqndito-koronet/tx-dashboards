@@ -23,12 +23,14 @@
   <header>
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Friday Readback</h1>
-    <p class="sub">Seeded from the generated Friday queue. After the meeting, this should become the source of commitments, decisions, learnings, blockers, and next surfaces.</p>
+    <p class="sub">Seeded from the generated Friday queue. After the meeting, completed readback rows become the source of commitments, decisions, learnings, blockers, and next surfaces that can write back to the active ledger.</p>
     <div class="links">
       <a class="primary" href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Back to Friday prefill</a>
       <a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a>
       <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a>
       <a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_seed.csv">Download readback CSV</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_completed.csv">Completed input CSV</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_apply_log.csv">Apply log CSV</a>
     </div>
   </header>
 
@@ -39,6 +41,21 @@
       <article class="card"><strong>Decision</strong><p>Approved, changed, parked, escalated, or still open.</p></article>
       <article class="card"><strong>Commitment</strong><p>Owner, action, due date, and source ledger row.</p></article>
       <article class="card"><strong>Learning</strong><p>What changed our understanding and where it routes next.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Writeback loop</p>
+    <h2>Seed rows are not applied. Completed rows are.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Step</th><th>File</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><td>1. Seed</td><td><a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_seed.csv">tx_friday_readback_seed.csv</a></td><td>Generated from Friday queue. It is the starting checklist, not the final record.</td></tr>
+          <tr><td>2. Complete</td><td><a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_completed.csv">tx_friday_readback_completed.csv</a></td><td>Pablito/facilitator fills actual result, actual learning, blocker, route next, owner, and due date after Friday.</td></tr>
+          <tr><td>3. Apply</td><td><a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_apply_log.csv">tx_friday_readback_apply_log.csv</a></td><td><code>tx_apply_friday_readback.py</code> updates active ledger only when meeting status is no longer pending or actual result/learning exists.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
