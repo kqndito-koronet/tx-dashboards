@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Owner Validation Brief — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1420px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1320px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    code{background:#f3f6fb;border:1px solid #d9e0ea;border-radius:5px;padding:2px 5px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1420px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Owner Validation Brief</h1>
+    <p class="sub">One page for stakeholders. Owners do not need to read the whole hub first: validate what is accurate, fill what only they know, and flag what is wrong before Friday.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
+      <a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Weekly action queue</a>
+      <a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback/call ingestion</a>
+      <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=tx-feedback.yml" target="_blank" rel="noreferrer">Submit feedback</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Owner rule</p>
+    <h2>Validate, do not rebuild.</h2>
+    <div class="grid">
+      <article class="card"><strong>What to fill</strong><p>Accounts worked, result/learning, blocker, next action, owner/date, and need from Facu/system.</p></article>
+      <article class="card"><strong>What to correct</strong><p>Wrong lead logic, wrong account facts, wrong KPI, wrong owner lane, or unsupported claim.</p></article>
+      <article class="card"><strong>What to avoid</strong><p>Do not create a parallel strategy, broad roadmap, or unvalidated lead list. Route those as feedback.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Owner asks</p>
+    <h2>Minimum input needed before Friday</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Owner / lane</th><th>What this lane owns</th><th>Open first</th><th>Fill by Thursday EOD</th><th>Decision needed</th><th>Do not overclaim</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cata / CS</td>
+            <td>BUY and LIST. Connections becoming repeat transactions; real supply becoming visible online.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a>, <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a>, <a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">action queue</a></td>
+            <td>Accounts/pairs worked, blocker type, what would it take, next action/owner/date.</td>
+            <td>Which BUY pairs and LIST accounts should be worked first, corrected, or parked?</td>
+            <td>Suggested leads are not assigned leads until CS validates.</td>
+          </tr>
+          <tr>
+            <td>Christine</td>
+            <td>SELL / Commercial Readiness. Implementation accounts becoming real BUY/LIST/SELL usage.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL readiness queue</a>, <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a></td>
+            <td>Which PMTs need TX help, first usage path, readiness blocker, next owner/date.</td>
+            <td>Which 2-3 implementation/upsell accounts should get TX support now?</td>
+            <td>This is not an audit of Implementation; it is support for customers getting value.</td>
+          </tr>
+          <tr>
+            <td>Facu</td>
+            <td>GROW / Black Belt and strategic account decisions.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW operator</a>, <a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic accounts</a></td>
+            <td>Approve/park first measured play, confirm strategic account current facts, define next conversation.</td>
+            <td>Which GROW account/cohort/play is real enough to test first?</td>
+            <td>Do not turn Black Belt into generic marketing; it needs cohort, message, metric, expected learning.</td>
+          </tr>
+          <tr>
+            <td>Maga</td>
+            <td>Future Digital Enablers. Product topics that unblock BUY/LIST/SELL/GROW.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Future Enablers row</a>, <a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">dashboard gap queue</a></td>
+            <td>Blocker, account(s), pilot idea, KPI, go/no-go. If not account-backed, route to Monday/parking lot.</td>
+            <td>Which blocker is ready to discuss Friday vs Monday?</td>
+            <td>Do not present roadmap as Friday execution unless tied to account, blocker, and pilot.</td>
+          </tr>
+          <tr>
+            <td>Rose</td>
+            <td>Data backing. OKR pacing, claims, dashboard trust, lead-list evidence.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a>, <a href="/tx-dashboards/tx-strategy-v2/claim-register.html">claim register</a>, <a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">data backing</a></td>
+            <td>Trust labels, source/date, stale claims, top-account evidence, missing metrics.</td>
+            <td>Which claims are verified, directional, or not board-ready?</td>
+            <td>Do not let a strong narrative travel without source/date/trust label.</td>
+          </tr>
+          <tr>
+            <td>Pablito</td>
+            <td>Follow-up control. Owner edits, commitments, overdue items, and readbacks.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/ledger.html">ledger</a>, <a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a>, <a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">feedback ingestion</a></td>
+            <td>Owner/date/action for every commitment and feedback item.</td>
+            <td>Which rows need promotion, owner correction, or escalation?</td>
+            <td>Do not let feedback stay in chat; route it to candidate, ledger, or workflow feedback.</td>
+          </tr>
+          <tr>
+            <td>Mercurio</td>
+            <td>Account plays and GROW execution support.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/agent-lane-queues.html">agent queues</a>, <a href="/tx-dashboards/tx-strategy-v2/account-plans.html">account plans</a>, <a href="/tx-dashboards/tx-strategy-v2/external-research-workflow.html">external research</a></td>
+            <td>Account action proposals only after owner/data validation: play, value prop, metric, expected learning.</td>
+            <td>Which accounts are ready for proposal vs need more evidence?</td>
+            <td>Do not invent priorities from stale memory or unvalidated lead lists.</td>
+          </tr>
+          <tr>
+            <td>Socrates</td>
+            <td>Communication and coordination. Make approved strategy simple and consistent.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">send packet</a>, <a href="/tx-dashboards/tx-strategy-v2/claim-register.html">claim register</a>, <a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">workflow registry</a></td>
+            <td>Short message, owner-specific ask, links, and caveats. No new strategy claims.</td>
+            <td>Is the stakeholder message ready to send in Facu's voice?</td>
+            <td>Do not make a separate framework; communicate the approved one.</td>
+          </tr>
+          <tr>
+            <td>Nahua</td>
+            <td>Compliance, drift, and workflow quality.</td>
+            <td><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">workflow compliance</a>, <a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">workflow registry</a></td>
+            <td>Workflow-backed, missing, patched, parked, or quarantined status for key outputs.</td>
+            <td>Which repeated failure needs workflow patch vs CR vs quarantine?</td>
+            <td>Do not let ad hoc work become canonical without a workflow and review gate.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Feedback format</p>
+    <h2>If anything is wrong, use this.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>What to write</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Account / initiative</td><td>Account, pair, PMT, initiative, dashboard, or claim.</td><td>LIST / Bill Doran supply gap</td></tr>
+          <tr><td>What happened</td><td>Short factual update.</td><td>Customer said buyers call because bunch availability is missing online.</td></tr>
+          <tr><td>Result</td><td>What moved, failed, or became clearer.</td><td>They are open to testing, but only if updates are easy.</td></tr>
+          <tr><td>Blocker or learning</td><td>Supply, price, trust, habit, terms, timing, ops, tool, data, owner, or unknown.</td><td>Ops/update owner is the blocker.</td></tr>
+          <tr><td>Need from Facu/system</td><td>Decision, data, product, value prop, escalation, or workflow help.</td><td>Need Rose to quantify top offline products missing online.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
