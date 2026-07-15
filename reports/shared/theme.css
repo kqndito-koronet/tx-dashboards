@@ -1,0 +1,304 @@
+/*
+ * Koronet OS Dashboard Design System
+ * Extracted from tx_fee_pacing.html — single source of truth for the dark theme.
+ *
+ * Usage in new dashboards:
+ *   <style>/* contents of shared/theme.css inlined here by build.py *​/</style>
+ *
+ * Existing dashboards keep their inline CSS and are NOT broken by this file.
+ * Migration is progressive: new dashboards use theme.css from the start;
+ * existing dashboards adopt it when they're next touched.
+ */
+
+/* ── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:   #0f1419;   /* page background */
+  --card: #1a2230;   /* card / panel background */
+  --ink:  #e6edf3;   /* primary text */
+  --mut:  #8b98a9;   /* muted / secondary text */
+  --line: #2a3543;   /* borders, dividers */
+  --acc:  #4f9dff;   /* accent / links */
+  --up:   #36d399;   /* positive / growth */
+  --dn:   #f87272;   /* negative / decline */
+  --warn: #fbbd23;   /* warning / amber */
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* ── Layout ────────────────────────────────────────────────────────────── */
+.wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ── Breadcrumbs ───────────────────────────────────────────────────────── */
+.crumbs {
+  color: var(--mut);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.crumbs a {
+  color: var(--acc);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ── Headings ──────────────────────────────────────────────────────────── */
+h1 { font-size: 22px; margin: 0 0 2px; }
+.sub {
+  color: var(--mut);
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+/* ── KPI grid ──────────────────────────────────────────────────────────── */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+}
+.kpi-label {
+  color: var(--mut);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.kpi-val {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 5px 0 3px;
+}
+.kpi-sub {
+  color: var(--mut);
+  font-size: 11px;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+.card h2 {
+  font-size: 15px;
+  margin: 0 0 3px;
+  font-weight: 600;
+}
+.hint {
+  color: var(--mut);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+/* ── Tabs ──────────────────────────────────────────────────────────────── */
+.tabs {
+  display: inline-flex;
+  background: #121925;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.tabs button {
+  background: none;
+  border: none;
+  color: var(--mut);
+  padding: 7px 14px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.tabs button.on {
+  background: var(--acc);
+  color: #04101f;
+  font-weight: 600;
+}
+
+/* ── Type cards (summary cards grid) ───────────────────────────────────── */
+.tcards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.tcard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: .15s;
+}
+.tcard:hover {
+  border-color: var(--acc);
+  transform: translateY(-2px);
+}
+.tcard .nm { font-size: 13px; color: var(--mut); }
+.tcard .v  { font-size: 21px; font-weight: 700; margin: 3px 0; }
+.tcard .yo { font-size: 12px; }
+
+/* ── Color utilities ───────────────────────────────────────────────────── */
+.up { color: #36d399; }
+.dn { color: #f87272; }
+
+/* ── Tables ────────────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th, td {
+  text-align: left;
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--line);
+}
+th {
+  color: var(--mut);
+  font-weight: 500;
+  font-size: 12px;
+}
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+tr.drill { cursor: pointer; }
+tr.drill:hover { background: #222d3d; }
+.chev {
+  color: var(--mut);
+  text-align: right;
+  width: 18px;
+}
+
+/* ── Tooltips (inline term definitions) ────────────────────────────────── */
+.t {
+  position: relative;
+  border-bottom: 1px dotted var(--mut);
+  cursor: help;
+}
+.t sup { color: var(--acc); }
+.t:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  bottom: 135%;
+  width: 270px;
+  background: #0b0f14;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 9px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  z-index: 20;
+  box-shadow: 0 6px 24px #0008;
+  white-space: normal;
+}
+
+/* ── Glossary definitions ──────────────────────────────────────────────── */
+.gdef {
+  display: flex;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.gdef b {
+  min-width: 175px;
+  color: var(--acc);
+}
+.gdef span { color: var(--mut); }
+
+/* ── Drawer (slide-in detail panel) ────────────────────────────────────── */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 420px;
+  max-width: 100%;
+  background: #141b27;
+  border-left: 1px solid var(--line);
+  padding: 22px;
+  transform: translateX(102%);
+  transition: .25s;
+  overflow: auto;
+  box-shadow: -12px 0 40px #0009;
+  z-index: 30;
+}
+.drawer.open { transform: none; }
+.x {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  cursor: pointer;
+  color: var(--mut);
+  font-size: 22px;
+}
+
+/* ── Pills / tags ──────────────────────────────────────────────────────── */
+.pill {
+  display: inline-block;
+  background: #202b3b;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--mut);
+  margin: 3px 4px 3px 0;
+}
+
+/* ── Next-action links ─────────────────────────────────────────────────── */
+.nxt {
+  display: block;
+  background: #202b3b;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+.nxt:hover { border-color: var(--acc); }
+.nxt small { color: var(--mut); }
+
+/* ── Bar charts (inline horizontal) ────────────────────────────────────── */
+.bars { margin: 6px 0; }
+.barrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  font-size: 12px;
+}
+.barrow .lbl {
+  width: 90px;
+  color: var(--mut);
+}
+.barrow .bx {
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .kpis, .tcards { grid-template-columns: repeat(2, 1fr); }
+  .drawer { width: 100%; }
+}

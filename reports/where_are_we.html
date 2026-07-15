@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Where Are We v2 - Koronet OS</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script><style>:root{--bg:#0f1419;--card:#1a2230;--ink:#e6edf3;--mut:#8b98a9;--line:#2a3543;--acc:#4f9dff}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif}.wrap{max-width:1100px;margin:0 auto;padding:26px}
+.crumbs{color:var(--mut);font-size:12px;margin-bottom:8px}.crumbs a{color:var(--acc);text-decoration:none}h1{font-size:22px;margin:0 0 2px}.sub{color:var(--mut);font-size:13px;margin-bottom:16px}
+.note{background:#13202e;border:1px solid #24405c;border-radius:10px;padding:14px 16px;margin-bottom:18px}.note h3{margin:0 0 6px;font-size:13px;color:var(--acc);text-transform:uppercase;letter-spacing:.04em}.note ul{margin:6px 0 0;padding-left:18px;color:var(--mut);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi-label{color:var(--mut);font-size:11px;text-transform:uppercase}.kpi-val{font-size:23px;font-weight:700;margin:5px 0 3px}.kpi-sub{color:var(--mut);font-size:11px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}.card h2{font-size:15px;margin:0 0 4px}.hint{color:var(--mut);font-size:12px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:500;font-size:12px}.num{text-align:right;font-variant-numeric:tabular-nums}
+.warn{color:#fbbd23}
+.cls{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.clsbox{border-radius:10px;padding:12px;font-size:12px}
+.out{background:#13301f;border:1px solid #2f7d4f}.lead{background:#13283b;border:1px solid #2f5f7d}
+.unk{background:#2e2a12;border:1px solid #7d6a2f}.rsk{background:#301414;border:1px solid #7d2f2f}
+.clsbox h4{margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.clsbox ul{margin:0;padding-left:15px;color:#cdd9e5}.clsbox li{margin:2px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:500;font-size:11px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.warn{color:#fbbd23}.dn{color:#f87272}.up{color:#36d399}
+@media(max-width:760px){.cls{grid-template-columns:1fr 1fr}}</style></head>
+<body><div class=wrap>
+<div class=crumbs><a href="index.html">Koronet OS</a> &rsaquo; Where Are We v2</div>
+<h1>Where Are We &mdash; TX fees (take-rate rail)</h1>
+<div class=sub>Snowflake TRANSACTION_FEES + SALE_DETAILS &middot; ks_flag=TRUE &middot; reconciled to Chris data-state &middot; <b class=warn>NOT board-ready</b> (see caveats)</div>
+
+<div class=note><h3>What this is for</h3>Measure where we are, where fees come from, and where the opportunity is &mdash; <b>without</b> settling the 2.8-vs-4.0 target debate. Every figure here is <b>operational</b> (Snowflake live), pending reconciliation to the official Metabase/OKR definition. Figures = YoY-YTD unless noted.</div>
+
+<div class=kpis>
+ <div class=kpi><div class=kpi-label>TX fees 2026 YTD</div><div class=kpi-val>$1.13M</div><div class=kpi-sub>thru May &middot; take-rate rail</div></div>
+ <div class=kpi><div class=kpi-label>YoY-YTD</div><div class="kpi-val up">+32%</div><div class=kpi-sub>vs ~$0.86M same period 2025</div></div>
+ <div class=kpi><div class=kpi-label>2025 full year</div><div class=kpi-val>$1.92M</div><div class=kpi-sub>fees (take-rate rail)</div></div>
+ <div class=kpi><div class=kpi-label>Gap to target</div><div class="kpi-val warn">parked</div><div class=kpi-sub>2.8&rarr;4.0 debate deferred</div></div>
+</div>
+
+<div class=card><h2>Metric Classification <span class=hint style="font-weight:400">(mandatory frame &mdash; what each number is allowed to claim)</span></h2>
+<div class=cls>
+ <div class="clsbox out"><h4>&#127919; Outcome</h4><ul><li>TX fees</li><li>Fee-bearing GMV</li><li>Repeat fee-bearing transactions</li></ul></div>
+ <div class="clsbox lead"><h4>&#128200; Validated leading indicator</h4><ul><li>Channel mix (eComm/K2K/API)</li><li>High-offline / low-digital accounts</li><li>K2K growth</li></ul></div>
+ <div class="clsbox unk"><h4>&#10067; Unknown</h4><ul><li>Offline GMV &mdash; until &ldquo;Offline&rdquo; definition confirmed</li></ul></div>
+ <div class="clsbox rsk"><h4>&#9888; Risk</h4><ul><li>Top-account concentration</li><li>Take-rate compression</li><li>API denominator confusion</li></ul></div>
+</div></div>
+
+<div class=card><h2>1 &middot; Channel mix (2026 YTD fees + effective rate)</h2>
+<table><tr><th>Channel</th><th class=num>Fees</th><th class=num>Eff. rate</th></tr><tr><td>eCommerce</td><td class=num>$554,334</td><td class=num>1.27%</td></tr><tr><td>K2K</td><td class=num>$502,541</td><td class=num>1.84%</td></tr><tr><td>API</td><td class=num>$70,979</td><td class=num>0.15%</td></tr><tr><td>FedEx</td><td class=num>$5,904</td><td class=num>—</td></tr><tr><td>GPS</td><td class=num>$879</td><td class=num>—</td></tr></table>
+<div class=hint>eCommerce + K2K = 93% of fees. K2K carries the best rate (1.84%). API rate is denominator-sensitive &mdash; see caveats. <b>Class: validated leading indicator.</b></div></div>
+
+<div class=card><h2>2 &middot; Take-rate compression</h2><canvas id=rate height=90></canvas>
+<div class=hint>Effective seller-side rate 1.44% &rarr; 1.34% &rarr; 1.32%. INTERPRETATION: mix-shift toward lower-rate eCommerce, not a deliberate rate cut. <b>Class: risk.</b></div></div>
+
+<div class=card><h2>3 &middot; Top account concentration / risk</h2>
+<table><tr><th>Seller (2026 YTD fees)</th><th class=num>Fees</th><th>Flag</th></tr><tr><td>Sole Farms</td><td class=num>$110,711</td><td class=warn>9.7% of fees — near 10% board threshold</td></tr><tr><td>Jet Fresh</td><td class=num>$77,632</td><td class=></td></tr><tr><td>Fresca Farms</td><td class=num>$64,724</td><td class=></td></tr><tr><td>Kennicott (KBC)</td><td class=num>$58,044</td><td class=></td></tr><tr><td>Royal Flowers</td><td class=num>$48,482</td><td class=></td></tr><tr><td>FloraLink</td><td class=num>$48,434</td><td class=></td></tr><tr><td>Continental</td><td class=num>$46,356</td><td class=></td></tr><tr><td>Choice Farms</td><td class=num>$43,928</td><td class=></td></tr><tr><td>Rosaprima</td><td class=num>$36,795</td><td class=warn>+128% YoY</td></tr><tr><td>Allure Farms</td><td class=num>$36,783</td><td class=></td></tr></table>
+<div class=hint>Importers dominate the fee leaderboard; Sole sits near the 10% board-disclosure threshold. <b>Class: risk.</b></div></div>
+
+<div class=card><h2>4 &middot; Offline visible conversion pool</h2>
+<div class=kpi-val style="font-size:30px">~$623M</div>
+<div class=hint><span class=warn>&#9888; UNKNOWN:</span> ~$623M of visible &ldquo;Offline&rdquo; GMV at ~0% fee = the conversion TAM behind the W&rarr;R thesis. The definition of &ldquo;Offline&rdquo; is NOT confirmed and GMV is capped at $200k/line to strip corrupt rows. Do not treat as board-ready. <b>Class: unknown.</b></div></div>
+
+<div class=card><h2>5 &middot; High-offline / low-digital accounts (conversion targets)</h2>
+<table><tr><th>Account</th><th class=num>Offline GMV</th><th class=num>TX fee</th><th>Note</th></tr><tr><td>We Got Flowers</td><td class=num>$4,678,869</td><td class=num>$11</td><td>FCS / Felipe target</td></tr><tr><td>JFS Wholesale</td><td class=num>$1,225,519</td><td class=num>$~0</td><td>FCS cohort</td></tr><tr><td>Riverside Wholesale KY</td><td class=num>$519,548</td><td class=num>$~530</td><td>FCS cohort</td></tr><tr><td>Flora Fresh</td><td class=num>$529,000</td><td class=num>$355</td><td>FCS / Felipe target</td></tr></table>
+<div class=hint>Large offline books, ~$0 TX fee &rarr; the per-account W&rarr;R digital-conversion opportunity. <b>Class: validated leading indicator.</b></div></div>
+
+<div class=note style="border-color:#7d6a2f;background:#1c1810"><h3>6 &middot; Open questions / NOT board-ready caveats</h3><ul>
+ <li><b>&ldquo;Offline&rdquo; definition unconfirmed</b> (Q002/Q004 &mdash; Sofia/Dan own it).</li>
+ <li><b>API &ldquo;rate&rdquo; depends on denominator:</b> 0.15% of sales-channel GMV vs 1.23% of fee-bearing GMV. Most API channel volume is NOT fee-bearing &mdash; confirm why before quoting a rate.</li>
+ <li><b>Operational vs official:</b> Snowflake figures NOT yet reconciled to the official Metabase / Company-OKR definition (Lau&rsquo;s cleaning logic).</li>
+ <li><b>SaaS-vs-TX split</b> uses Salesforce ARR as a proxy, not the Intacct GL.</li>
+ <li><b>Offline GMV is capped/cleaned</b> &mdash; dirty source dates and values.</li>
+</ul></div>
+
+<div style="color:var(--mut);font-size:12px;margin-top:14px">Koronet OS &middot; re-run via build_where_are_we.py after each refresh &middot; claim labels per 00_CHARTER.md</div>
+</div>
+<script>
+const gc='#2a3543',tc='#8b98a9';
+new Chart(document.getElementById('rate'),{type:'line',
+ data:{labels:["2024", "2025", "2026 YTD"],datasets:[{label:'Effective take-rate %',data:[1.44,1.34,1.32],
+  borderColor:'#f87272',backgroundColor:'#f8727222',tension:.3,fill:true,pointRadius:4}]},
+ options:{plugins:{legend:{display:false}},scales:{
+  x:{grid:{color:gc},ticks:{color:tc}},
+  y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+'%'},suggestedMin:1.2,suggestedMax:1.5}}}});
+</script></body></html>

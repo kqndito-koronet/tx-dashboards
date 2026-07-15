@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Koronet Value Prop System v2</title>
+<title>Koronet Value Prop System</title>
 <style>
   :root {
     --bg: #ffffff; --surface: #f8f9fb; --surface2: #f0f2f5; --border: #e2e5ea;
     --text: #1a1a2e; --text2: #5a5a78; --text3: #9898b0;
     --green: #059669; --green-bg: #ecfdf5; --red: #dc2626; --red-bg: #fef2f2;
     --amber: #d97706; --amber-bg: #fffbeb; --blue: #2563eb; --blue-bg: #eff6ff;
-    --purple: #7c3aed; --purple-bg: #f5f3ff; --teal: #0d9488; --teal-bg: #f0fdfa;
+    --purple: #7c3aed; --purple-bg: #f5f3ff; --teal: #0d9488;
     --gray: #6b7280; --gray-bg: #f3f4f6;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1440px; margin: 0 auto; line-height: 1.6; }
+  body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 32px 40px; max-width: 1420px; margin: 0 auto; line-height: 1.6; }
 
   /* Header */
   .header { margin-bottom: 32px; border-bottom: 2px solid var(--text); padding-bottom: 16px; }
@@ -34,61 +34,43 @@
   .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
   .section-head h2 { font-size: 18px; font-weight: 600; }
   .section-head h3 { font-size: 15px; font-weight: 600; color: var(--text); }
-  .section-head .hint { font-size: 11px; color: var(--text3); }
 
   /* Promise box */
   .promise-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-bottom: 28px; text-align: center; }
   .promise-box .promise-text { font-size: 20px; font-weight: 600; color: var(--text); line-height: 1.5; }
   .promise-box .promise-sub { font-size: 13px; color: var(--text2); margin-top: 8px; max-width: 700px; margin-left: auto; margin-right: auto; }
 
-  /* Info box */
-  .info-box { background: var(--blue-bg); border: 1px solid #bfdbfe; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
-  .info-box h3 { font-size: 14px; font-weight: 600; color: var(--blue); margin-bottom: 8px; }
-  .info-box p, .info-box li { font-size: 13px; color: var(--text); }
-  .info-box ul { padding-left: 18px; margin-top: 6px; }
-
-  /* Alert box */
-  .alert-box { background: var(--red-bg); border: 1px solid #fecaca; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; }
-  .alert-box h4 { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 6px; }
-  .alert-box p, .alert-box li { font-size: 12px; color: var(--text); }
-  .alert-box ul { padding-left: 18px; margin-top: 4px; }
+  /* Why box */
+  .why-box { background: var(--blue-bg); border: 1px solid #bfdbfe; border-radius: 10px; padding: 20px 24px; margin-bottom: 28px; }
+  .why-box h3 { font-size: 14px; font-weight: 600; color: var(--blue); margin-bottom: 8px; }
+  .why-box p { font-size: 13px; color: var(--text); }
 
   /* Pillar */
   .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
   @media (max-width: 900px) { .pillar-grid { grid-template-columns: 1fr; } }
   .pillar { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .pillar-icon { font-size: 20px; margin-bottom: 8px; }
   .pillar h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
-  .pillar ul { padding-left: 16px; font-size: 13px; color: var(--text2); }
-  .pillar li { margin-bottom: 6px; }
 
-  /* Stat row */
-  .stat-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; flex: 1; min-width: 160px; }
-  .stat-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); margin-bottom: 4px; }
-  .stat-card .val { font-size: 22px; font-weight: 700; }
-  .stat-card .note { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  /* Claim rows */
+  .claim { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--surface2); }
+  .claim:last-child { border-bottom: none; }
+  .claim-text { flex: 1; font-size: 13px; color: var(--text); }
+  .claim-text .claim-detail { font-size: 11px; color: var(--text3); margin-top: 2px; }
 
   /* Badges */
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; white-space: nowrap; vertical-align: middle; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
   .badge-proven { background: var(--green-bg); color: var(--green); }
   .badge-tested { background: var(--amber-bg); color: var(--amber); }
   .badge-untested { background: var(--gray-bg); color: var(--gray); }
-  .badge-contradiction { background: var(--red-bg); color: var(--red); }
-  .badge-seg { background: var(--purple-bg); color: var(--purple); margin-right: 4px; }
-  .badge-teal { background: var(--teal-bg); color: var(--teal); }
 
-  /* Product card */
-  .product-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 20px; }
-  .product-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-  .product-card .pitch { font-size: 14px; color: var(--text2); margin-bottom: 16px; font-style: italic; }
-  .product-card .sub-section { margin-bottom: 16px; }
-  .product-card .sub-section h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); margin-bottom: 8px; }
-  .product-card .sub-section ul { padding-left: 18px; font-size: 13px; }
-  .product-card .sub-section li { margin-bottom: 4px; color: var(--text2); }
-  .product-card .sub-section li strong { color: var(--text); }
-  .product-card .links { font-size: 11px; color: var(--text3); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--surface2); }
-  .product-card .links a { color: var(--blue); text-decoration: none; }
-  .product-card .links a:hover { text-decoration: underline; }
+  /* Status badges for objections */
+  .status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+  .status-proven { background: var(--green-bg); color: var(--green); }
+  .status-proposed { background: var(--amber-bg); color: var(--amber); }
+  .status-noanswer { background: var(--red-bg); color: var(--red); }
+  .status-failed { background: var(--red-bg); color: var(--red); }
+  .status-untested { background: var(--gray-bg); color: var(--gray); }
 
   /* Tables */
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -96,1453 +78,894 @@
   td { padding: 10px 12px; border-bottom: 1px solid var(--surface2); vertical-align: top; }
   tr:hover { background: var(--surface); }
 
-  /* Cap map */
-  .cap-grid { overflow-x: auto; margin-bottom: 20px; }
-  .cap-grid table th { text-align: center; }
-  .cap-grid table td { text-align: center; font-size: 14px; }
-  .cap-grid table td:first-child { text-align: left; font-weight: 500; font-size: 13px; }
-  .cell-core { color: var(--green); font-weight: 700; }
-  .cell-partial { color: var(--amber); font-weight: 700; }
-  .cell-na { color: var(--text3); }
+  /* Verdict box */
+  .verdict-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
+  .verdict-box h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .verdict-box p, .verdict-box li { font-size: 13px; color: var(--text2); }
+  .verdict-box ul { padding-left: 18px; }
+  .verdict-box li { margin-bottom: 4px; }
+  .verdict-box strong { color: var(--text); }
+  .verdict-box .g { color: var(--green); }
+  .verdict-box .r { color: var(--red); }
 
-  /* Segment card */
-  .seg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
-  .seg-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-  .seg-card .seg-meta { font-size: 11px; color: var(--text3); margin-bottom: 12px; }
-  .seg-card .opp { background: var(--blue-bg); border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; }
-  .seg-card .opp strong { color: var(--blue); }
-  .seg-card .checklist { padding-left: 18px; font-size: 13px; margin-bottom: 12px; }
-  .seg-card .checklist li { margin-bottom: 4px; }
+  /* Win/Loss boxes */
+  .wl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  @media (max-width: 800px) { .wl-grid { grid-template-columns: 1fr; } }
+  .wl-box { border-radius: 10px; padding: 20px 24px; }
+  .wl-wins { background: var(--green-bg); border: 1px solid #a7f3d0; }
+  .wl-losses { background: var(--red-bg); border: 1px solid #fecaca; }
+  .wl-box h4 { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .wl-wins h4 { color: var(--green); }
+  .wl-losses h4 { color: var(--red); }
+  .wl-box ul { padding-left: 16px; font-size: 12px; }
+  .wl-box li { margin-bottom: 4px; color: var(--text2); }
 
-  /* Initiative card */
-  .init-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 20px; }
-  .init-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-  .init-card .init-why { font-size: 14px; color: var(--text2); margin-bottom: 16px; }
-  .init-card .sub-section { margin-bottom: 14px; }
-  .init-card .sub-section h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); margin-bottom: 6px; }
-  .init-card ul { padding-left: 18px; font-size: 13px; }
-  .init-card li { margin-bottom: 4px; color: var(--text2); }
-  .init-card li strong { color: var(--text); }
-  .init-number { background: var(--green-bg); border: 1px solid #a7f3d0; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
-  .init-number .num-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green); margin-bottom: 2px; }
-  .init-number .num-val { font-size: 20px; font-weight: 700; color: var(--green); }
-  .init-number .num-note { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  /* Segment cards */
+  .seg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+  .seg-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .seg-card .seg-count { font-size: 12px; color: var(--blue); font-weight: 600; margin-bottom: 8px; }
+  .seg-card .seg-approach { font-size: 13px; color: var(--text2); }
+
+  /* Headline stat */
+  .seg-headline { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+  .seg-headline .seg-big { font-size: 32px; font-weight: 700; color: var(--text); }
+  .seg-headline .seg-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* Talk track sections */
+  .tt-role { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+  .tt-role h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .tt-role .tt-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); font-weight: 500; }
+  .tt-role blockquote { background: var(--bg); border-left: 3px solid var(--blue); padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: var(--text); font-style: italic; margin: 8px 0 12px; }
+  .tt-role ul { padding-left: 18px; font-size: 13px; color: var(--text2); }
+  .tt-role li { margin-bottom: 6px; }
+
+  /* Battlecard */
+  .bc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .bc-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .bc-card .bc-who { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+  .bc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 800px) { .bc-grid { grid-template-columns: 1fr; } }
+  .bc-side { border-radius: 8px; padding: 16px; }
+  .bc-win { background: var(--green-bg); border: 1px solid #a7f3d0; }
+  .bc-lose { background: var(--red-bg); border: 1px solid #fecaca; }
+  .bc-side h4 { font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+  .bc-win h4 { color: var(--green); }
+  .bc-lose h4 { color: var(--red); }
+  .bc-side ul { padding-left: 16px; font-size: 12px; }
+  .bc-side li { margin-bottom: 4px; color: var(--text2); }
+  .bc-angle { margin-top: 16px; background: var(--blue-bg); border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--text); }
+  .bc-angle strong { color: var(--blue); }
+
+  /* Proof table */
+  .proof-legend { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .proof-legend .badge { font-size: 11px; padding: 4px 10px; }
+
+  /* Capability product grid */
+  .cap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+  .cap-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .cap-item .cap-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); margin-bottom: 2px; }
+  .cap-item .cap-products { font-size: 12px; color: var(--text); }
 
   /* Feedback button */
-  .feedback-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); font-size: 11px; color: var(--text2); cursor: pointer; text-decoration: none; transition: all 0.15s; }
-  .feedback-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .feedback-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--text2); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.15s; }
+  .feedback-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--text3); }
+  .feedback-btn svg { width: 14px; height: 14px; }
 
   /* Footer */
-  .footer { margin-top: 40px; padding-top: 20px; border-top: 2px solid var(--text); font-size: 11px; color: var(--text3); }
-  .footer a { color: var(--blue); text-decoration: none; }
-  .footer strong { color: var(--text2); }
+  .footer { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-text { font-size: 11px; color: var(--text3); }
+  .footer-text a { color: var(--blue); text-decoration: none; }
+  .footer-text a:hover { text-decoration: underline; }
 
-  /* Contradiction callout */
-  .contradiction { background: var(--red-bg); border: 1px solid #fecaca; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; }
-  .contradiction strong { color: var(--red); }
-
-  /* Evidence item */
-  .evidence { font-size: 12px; color: var(--text2); padding: 6px 0; border-bottom: 1px solid var(--surface2); }
-  .evidence:last-child { border-bottom: none; }
-
-  /* Objection row */
-  .obj-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--surface2); align-items: flex-start; }
-  .obj-row:last-child { border-bottom: none; }
-  .obj-text { flex: 1; font-size: 13px; }
-  .obj-rebuttal { font-size: 12px; color: var(--text2); margin-top: 4px; }
-
-  /* Responsive */
-  @media (max-width: 800px) {
-    body { padding: 16px; }
-    .tab-body { padding: 16px; }
-    .pillar-grid { grid-template-columns: 1fr; }
-    .stat-row { flex-direction: column; }
-  }
+  /* Note box */
+  .note-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 12px; color: var(--text2); margin-top: 16px; }
+  .note-box strong { color: var(--text); }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>Koronet Value Prop System v2</h1>
+  <h1>Koronet Value Prop System</h1>
   <div class="sub">
-    Sources: value-prop-v1.md, product-cards-v2.md, INVENTORY_MAP.md, WHOLESALER_JOURNEY.md, wholesaler-segmentation.md, OBJECTION_BANK.md, PROOF_BANK.md, initiatives.md, Mauro battlecards (Core/eSuite/eShop), Cata one-pagers | 2026-07-06
+    Stakeholder-facing reference. Source of truth: <code>value-prop/</code> in Koronet_OS. | Chapter TX | Jul 2026
   </div>
 </div>
 
 <!-- TABS -->
 <div class="tabs" id="mainTabs">
-  <button class="tab active" onclick="showTab('t1')">Capability Map</button>
-  <button class="tab" onclick="showTab('t2')">Product Battlecards</button>
-  <button class="tab" onclick="showTab('t3')">What is Koronet</button>
-  <button class="tab" onclick="showTab('t4')">Koronet for Wholesalers</button>
-  <button class="tab" onclick="showTab('t5')">TX Initiative Talking Points</button>
-  <button class="tab" onclick="showTab('t6')">Pricing</button>
+  <button class="tab active" onclick="switchTab('core')">Core Value Prop</button>
+  <button class="tab" onclick="switchTab('segments')">Segments</button>
+  <button class="tab" onclick="switchTab('objections')">Objections</button>
+  <button class="tab" onclick="switchTab('talktracks')">Talk Tracks</button>
+  <button class="tab" onclick="switchTab('battlecards')">Battlecards</button>
+  <button class="tab" onclick="switchTab('proof')">Proof Bank</button>
+  <button class="tab" onclick="switchTab('pricing')">Pricing</button>
 </div>
 
 <div class="tab-body">
 
-<!-- ==================== TAB 1: CAPABILITY MAP ==================== -->
-<div class="tab-content active" id="t1">
+<!-- ============================================================ -->
+<!-- TAB: CORE VALUE PROP -->
+<!-- ============================================================ -->
+<div class="tab-content active" id="tab-core">
 
-  <div class="section">
-    <div class="section-head">
-      <h2>Capability Map</h2>
-      <span class="hint">Which products fit which client types</span>
+  <div class="section-head">
+    <h2>Core Value Proposition</h2>
+    <a class="feedback-btn" href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Core+Value+Prop" target="_blank">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm3.82-1.636a.75.75 0 0 1 1.038.175l.007.009c.003.004.015.018.034.04.04.043.105.107.2.192.189.17.476.37.847.546.753.356 1.774.584 3.054.584a.75.75 0 0 1 0 1.5c-1.52 0-2.817-.282-3.803-.753a6.14 6.14 0 0 1-1.202-.775 3.83 3.83 0 0 1-.36-.345l-.028-.035-.014-.018-.005-.006-.002-.003v-.001l.516-.39-.516.39a.75.75 0 0 1 .234-1.11Z"/></svg>
+      Give Feedback
+    </a>
+  </div>
+
+  <!-- The Promise -->
+  <div class="promise-box">
+    <div class="promise-text">Grow your floral business -- sell more, source smarter, and run leaner -- on the network the trade already runs on.</div>
+  </div>
+
+  <!-- Why Koronet -->
+  <div class="why-box">
+    <h3>Why Koronet</h3>
+    <p>You're not buying software you run alone. Every other tool leaves you an island: re-keying between systems, chasing "did the order land?" Koronet connects you to <strong>the marketplace your trade already runs on</strong> -- the vendors you already call and the buyers who already order from you are here: <strong>15,000+ active users, ~$1.7B traded every year</strong> ($8B+ over the years). We're in it to help you grow.</p>
+    <div style="margin-top: 8px;"><span class="badge badge-proven">PROVEN</span> <span style="font-size: 11px; color: var(--text3); margin-left: 4px;">Snowflake/DataDeepDive | "4,000 businesses" dropped -- unverified</span></div>
+  </div>
+
+  <!-- Three Pillars -->
+  <div class="pillar-grid">
+    <!-- SELL MORE -->
+    <div class="pillar">
+      <div class="pillar-icon">1</div>
+      <h3>Sell More</h3>
+      <p style="font-size: 11px; color: var(--text3); margin-bottom: 12px;">Your eShop, your website, your whole catalog online</p>
+
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Your own eShop</strong> -- the ecommerce built for the floral trade. Buyers order on their own, anytime.
+          <div class="claim-detail">Source: eShops/eSuite Confluence wikis</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-tested">TESTED</span>
+        <div class="claim-text">
+          <strong>Koronet Studio</strong> -- your brand, built for the trade, no developers needed.
+          <div class="claim-detail">Source: Slack #custom-websites | Real but early</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Put your whole offer online</strong> -- sell by the box or by the bunch, and what's in transit, all in one place.
+          <div class="claim-detail">Source: Intercom + Catalog/Inventory wiki</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Sell network supply without buying first (K2K)</strong> -- list connected vendors' inventory in your eShop and sell it without purchasing upfront.
+          <div class="claim-detail">Source: K2K / Koronet Network wiki</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-tested">TESTED</span>
+        <div class="claim-text">
+          <strong>Win new clients</strong> -- a big network, plus Koronet Ads to get in front of verified buyers.
+          <div class="claim-detail">Source: koronet.com lineup | Product proven, outcome tested</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Grow every client with the CRM</strong> -- named campaigns reactivate quiet buyers and lift revenue, with influenced-revenue tracking.
+          <div class="claim-detail">Source: eShops CRM wiki + #eshops-setup</div>
+        </div>
+      </div>
+      <div class="note-box">
+        <strong>Evidence:</strong> Payments penetration ~9.5%; a large share of orders come in after hours; online = more frequent (smaller) orders.
+      </div>
     </div>
 
+    <!-- SOURCE SMARTER -->
+    <div class="pillar">
+      <div class="pillar-icon">2</div>
+      <h3>Source Smarter</h3>
+      <p style="font-size: 11px; color: var(--text3); margin-bottom: 12px;">Buy the network from one cart</p>
+
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>One cart for your existing vendors</strong> -- on-hand + in-transit availability in one place. Compare price, quality, and availability on one screen instead of ten logins.
+          <div class="claim-detail">Source: KP Confluence wiki + Family Flowers call</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Your whole team buys the moment you connect</strong> -- connection-based, not a login per vendor.
+          <div class="claim-detail">Source: Family Flowers call</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-tested">TESTED</span>
+        <div class="claim-text">
+          <strong>Add new vendors yourself</strong> -- request a connection and start buying immediately (single-location today).
+          <div class="claim-detail">Source: Easy Handshake wiki + Connections-Landing Slack</div>
+        </div>
+      </div>
+      <div class="note-box">
+        <strong>Known gaps:</strong> Landed-cost visibility is the #1 sourcing ask. Standing orders + vendor quality/origin signals are gaps.
+      </div>
+    </div>
+
+    <!-- RUN LEANER -->
+    <div class="pillar">
+      <div class="pillar-icon">3</div>
+      <h3>Run Leaner</h3>
+      <p style="font-size: 11px; color: var(--text3); margin-bottom: 12px;">Run your whole business in one place</p>
+
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Run your whole operation in one system</strong> -- buy, hold, sell, ship, bill, connected. No re-keying.
+          <div class="claim-detail">Source: Komet Core wiki</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Connect without changing how you operate</strong> -- eSuite = Connection; Komet Sales = Control.
+          <div class="claim-detail">Source: eSuite wiki</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Collect and reconcile payments right where you work</strong> -- card pay-on-checkout in eSuite, plus ACH & scheduled pay-later in Core. Receivables + Guaranteed-Pay visibility.
+          <div class="claim-detail">Source: Payments wiki + Sofia</div>
+        </div>
+      </div>
+      <div class="claim">
+        <span class="badge badge-proven">PROVEN</span>
+        <div class="claim-text">
+          <strong>Built for how flowers move</strong> -- boxes broken into bunches, substitutions, multi-location (Core).
+          <div class="claim-detail">Source: Core wiki + Sofia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capability Map -->
+  <div class="section">
+    <div class="section-head"><h3>Capability Map</h3></div>
     <div class="cap-grid">
+      <div class="cap-item"><div class="cap-cat">Buy</div><div class="cap-products">Koronet Procurement, Koronet Network / K2K (Easy Handshake)</div></div>
+      <div class="cap-item"><div class="cap-cat">Sell</div><div class="cap-products">Koronet eShops, Koronet Studio, Koronet Ads, K2K (sell network supply)</div></div>
+      <div class="cap-item"><div class="cap-cat">All-In</div><div class="cap-products">Koronet eSuite -- <em>Connection</em></div></div>
+      <div class="cap-item"><div class="cap-cat">Run / Full ERP</div><div class="cap-products">Komet Sales -- <em>Control</em>, Koronet Ops</div></div>
+      <div class="cap-item"><div class="cap-cat">Rails</div><div class="cap-products">Koronet Payments, the Koronet Network</div></div>
+    </div>
+  </div>
+
+  <div class="note-box" style="text-align: center;">
+    <strong>Anchor:</strong> we win when the client wins.
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB: SEGMENTS -->
+<!-- ============================================================ -->
+<div class="tab-content" id="tab-segments">
+
+  <div class="section-head">
+    <h2>Wholesaler Segmentation</h2>
+    <a class="feedback-btn" href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Segments" target="_blank">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm3.82-1.636a.75.75 0 0 1 1.038.175l.007.009c.003.004.015.018.034.04.04.043.105.107.2.192.189.17.476.37.847.546.753.356 1.774.584 3.054.584a.75.75 0 0 1 0 1.5c-1.52 0-2.817-.282-3.803-.753a6.14 6.14 0 0 1-1.202-.775 3.83 3.83 0 0 1-.36-.345l-.028-.035-.014-.018-.005-.006-.002-.003v-.001l.516-.39-.516.39a.75.75 0 0 1 .234-1.11Z"/></svg>
+      Give Feedback
+    </a>
+  </div>
+
+  <!-- Headline -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+    <div class="seg-headline">
+      <div class="seg-big">$2.56B</div>
+      <div class="seg-label">Wholesaler bunch GMV</div>
+    </div>
+    <div class="seg-headline">
+      <div class="seg-big" style="color: var(--red);">0.4%</div>
+      <div class="seg-label">Sells bunches online (Offline 95.6%, API 4.0%, eCom 0.4%, K2K 0%)</div>
+    </div>
+    <div class="seg-headline">
+      <div class="seg-big">271</div>
+      <div class="seg-label">Wholesalers (215 with sales). Only 22-29 have eShop/eSuite capability.</div>
+    </div>
+  </div>
+
+  <div class="verdict-box" style="margin-bottom: 24px;">
+    <h3>The Strategic Reframe</h3>
+    <p>The value is <strong>digitalize the existing book</strong>, not acquire net-new buyers. The gap is online penetration, not buyer scarcity. Kennicott Pittsburgh: 453 real buyers, only 129 ever online. Of 51 bunch-sellers, 48 sell &lt;10% of bunches online.</p>
+    <p style="margin-top: 8px;"><strong>The #1 transaction opportunity = put bunches online.</strong> Binding constraint = channel capability (245 of 271 are Core-only).</p>
+  </div>
+
+  <!-- Segments -->
+  <div class="seg-card">
+    <h3>Bunch-primary W2R houses</h3>
+    <div class="seg-count">33 wholesalers -- where the $2.56B concentrates</div>
+    <div class="seg-approach">The real prize. Cross with capability -- most are Core-only. <strong>Enable bunch-selling online.</strong></div>
+  </div>
+
+  <div class="seg-card">
+    <h3>Has eShop/eSuite + bunches + &lt;10% online</h3>
+    <div class="seg-count">4 wholesalers -- READY NOW</div>
+    <div class="seg-approach">Get them <strong>uploading + marketing</strong> bunches. Lead-by-example, high-touch. Named: H&T ($7.6M, 0.5% eCom), Flora Fresh ($5.6M, 0.6%), Petals Direct ($786K, 0.2%), Price's (small).</div>
+  </div>
+
+  <div class="seg-card">
+    <h3>Core-only, sells bunches offline, &lt;10% online</h3>
+    <div class="seg-count">44 wholesalers</div>
+    <div class="seg-approach">Enable eShop/eSuite (migrate), then digitize the bunch floor.</div>
+  </div>
+
+  <div class="seg-card">
+    <h3>Active K2K box-sellers</h3>
+    <div class="seg-count">98 wholesalers</div>
+    <div class="seg-approach">Box business is real but box-capped. Optimize boxes or pitch eShop + bunches.</div>
+  </div>
+
+  <div class="seg-card">
+    <h3>Connection-churn ("bought once, then stopped")</h3>
+    <div class="seg-count">299 of 2,260 K2K pairs (~48% silent 6mo)</div>
+    <div class="seg-approach">Reactivate: follow the buyer, fix standing-order metrics gap, re-match. Established silent 6mo = 11,939 buyer pairs = the win-back list.</div>
+  </div>
+
+  <div class="note-box" style="margin-top: 24px;">
+    <strong>Approach principles:</strong> Focus W2R; learn there, apply backward. Don't promise traffic (~200-500 reachable florists each). K2K to eSuite migration friction = eSuite Payments card-only (no ACH). Standing-order metrics gap is fundamental to fix.
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB: OBJECTIONS -->
+<!-- ============================================================ -->
+<div class="tab-content" id="tab-objections">
+
+  <div class="section-head">
+    <h2>Objection Bank</h2>
+    <a class="feedback-btn" href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Objections" target="_blank">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm3.82-1.636a.75.75 0 0 1 1.038.175l.007.009c.003.004.015.018.034.04.04.043.105.107.2.192.189.17.476.37.847.546.753.356 1.774.584 3.054.584a.75.75 0 0 1 0 1.5c-1.52 0-2.817-.282-3.803-.753a6.14 6.14 0 0 1-1.202-.775 3.83 3.83 0 0 1-.36-.345l-.028-.035-.014-.018-.005-.006-.002-.003v-.001l.516-.39-.516.39a.75.75 0 0 1 .234-1.11Z"/></svg>
+      Give Feedback
+    </a>
+  </div>
+
+  <div class="verdict-box">
+    <h3>Honest Read</h3>
+    <p>Only <strong class="r">ONE rebuttal is proven</strong> (match-the-rate + auto-reconcile). The marquee pricing play is untested. <strong class="g">ONSITE is the proven win-lever.</strong></p>
+    <ul style="margin-top: 8px;">
+      <li>All objections are <strong>real</strong> (sourced from client/strategy calls).</li>
+      <li>Rebuttals are mostly <strong>PROPOSED</strong> -- we do NOT yet have proof they win.</li>
+      <li>Two objections (#3 independence fear, #5 sales-tax) have <strong>no answer at all</strong> -- product/strategy gaps, not messaging gaps.</li>
+    </ul>
+  </div>
+
+  <!-- Objection Table -->
+  <div class="section">
+    <div style="overflow-x: auto;">
       <table>
         <thead>
           <tr>
-            <th style="text-align:left; min-width:180px;">Product</th>
-            <th>Wholesaler</th>
-            <th>Importer</th>
-            <th>Grower</th>
-            <th>Retailer / Florist</th>
+            <th style="width: 30px;">#</th>
+            <th style="width: 22%;">Objection</th>
+            <th style="width: 12%;">Segment</th>
+            <th style="width: 30%;">Rebuttal</th>
+            <th style="width: 12%;">Win/Loss Verdict</th>
+            <th style="width: 8%;">Status</th>
+            <th style="width: 8%;">Freq.</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Komet Core (ERP)</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>1</td>
+            <td><strong>"Komet is 5-10x more expensive"</strong><br><span style="font-size: 11px; color: var(--text3);">Carbone: $60 to $3,000/mo -- walked</span></td>
+            <td>Wholesalers off legacy (FCS/SMART)</td>
+            <td>Don't lead with ARR; recoup via payments on card volume, discount the SaaS. <em>Payments-offset / discount-SaaS rebuttal built Jun 23-26.</em></td>
+            <td><span class="status status-failed">FAILED TO DATE</span><br><span style="font-size: 10px; color: var(--text3);">Carbone, FloraMax, Webb's closed-LOST. First Choice & Mrs. Blooms are first tests.</span></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>eSuite</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>2</td>
+            <td><strong>"We have a cheaper processor"</strong></td>
+            <td>Wholesalers</td>
+            <td>Match-the-rate (white-label Stripe +~26bps) + auto-reconciliation in AR (Canavali).</td>
+            <td><span class="status status-proven">PROVEN AS PITCH</span><br><span style="font-size: 10px; color: var(--text3);">Verbal yes. Fails when we can't match (Chase) or product gap stacks.</span></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>eShop</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>3</td>
+            <td><strong>"You'll own my business"</strong><br><span style="font-size: 11px; color: var(--text3);">Independence fear</span></td>
+            <td>Wholesalers</td>
+            <td><em>No proven rebuttal.</em> Real, often unrecoverable ("Komet ya es mas corporativo"). Onsite/partner-framing is aspirational.</td>
+            <td><span class="status status-noanswer">NO PROVEN REBUTTAL</span></td>
+            <td><span class="status status-noanswer">NO ANSWER</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>Procurement</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-partial">&#9684;</td>
+            <td>4</td>
+            <td><strong>"My customers are old, won't switch online"</strong></td>
+            <td>Wholesalers (digitization)</td>
+            <td>Still 85% of book for someone leaning in; match online-to-offline first, then grow. Siedlers 12-13% to 19% online in 90d; Perry 26-30% baseline.</td>
+            <td><span class="status status-tested">ADOPTION-PROVEN</span><br><span style="font-size: 10px; color: var(--text3);">Converts on-platform; hasn't closed a skeptic in the room.</span></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>K2K / Network</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-partial">&#9684;</td>
+            <td>5</td>
+            <td><strong>Sales-tax / reseller-cert friction</strong><br><span style="font-size: 11px; color: var(--text3);">Audit pain at signup</span></td>
+            <td>Wholesalers scaling online</td>
+            <td><em>No answer -- product gap.</em></td>
+            <td><span class="status status-untested">NO DATA</span></td>
+            <td><span class="status status-noanswer">NO ANSWER</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>Payments</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>6</td>
+            <td><strong>K2K 1.5% = "double-dipping"</strong><br><span style="font-size: 11px; color: var(--text3);">Bill Doran blocker</span></td>
+            <td>Core/network clients</td>
+            <td>Waive for Procurement / volume-based waiver / phased removal. Internally the #1 adoption barrier.</td>
+            <td><span class="status status-untested">UNTESTED EXTERNALLY</span><br><span style="font-size: 10px; color: var(--text3);">Pricing mechanic, not a defended objection.</span></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>Studio</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>7</td>
+            <td><strong>Product fit -- hardgoods was weak</strong></td>
+            <td>Wholesalers</td>
+            <td>Hardgoods/Supplies now improving = re-engagement trigger.</td>
+            <td></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>Ads</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>8</td>
+            <td><strong>"You say it but you don't do it"</strong><br><span style="font-size: 11px; color: var(--text3);">Trust deficit</span></td>
+            <td>All</td>
+            <td>"We do what we tell and tell what we do." Lands in good-fit demos, BUT the Apr-1 sunset + $999 Extended Access burned trust.</td>
+            <td><span class="status status-proven">PROVEN IN DEMOS</span><br><span style="font-size: 10px; color: var(--text3);">Self-damaged by Apr-1 sunset. Rebuild via onsite + concessions.</span></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
           <tr>
-            <td>Supplies / Hardgoods</td>
-            <td class="cell-core">&#10003;</td>
-            <td class="cell-partial">&#9684;</td>
-            <td class="cell-na">&mdash;</td>
-            <td class="cell-na">&mdash;</td>
+            <td>9</td>
+            <td><strong>Signed but not activated</strong><br><span style="font-size: 11px; color: var(--text3);">0 transactions 60+ days post-launch</span></td>
+            <td>Onboarding / all</td>
+            <td>Structured onsite + activation ("escuelita"); measure 1+ real transaction.</td>
+            <td></td>
+            <td><span class="status status-proposed">PROPOSED</span></td>
+            <td style="text-align: center; color: var(--text3);">--</td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <div style="font-size:11px; color:var(--text3); margin-bottom:24px;">
-      <span class="cell-core" style="font-size:14px;">&#10003;</span> = core fit &nbsp;&nbsp;
-      <span class="cell-partial" style="font-size:14px;">&#9684;</span> = partial / add-on &nbsp;&nbsp;
-      <span class="cell-na">&mdash;</span> = not applicable &nbsp;&nbsp;|&nbsp;&nbsp;
-      K2K is no longer sold standalone (legacy accounts may still have it)
-    </div>
-
-    <div class="section-head"><h3>What each product does (in client language)</h3></div>
-    <table>
-      <thead>
-        <tr><th style="min-width:160px;">Product</th><th>What it does for you</th><th>Maturity</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Komet Core</strong></td>
-          <td>Run your whole operation in one floral ERP &mdash; buy, hold, sell, ship, bill &mdash; without re-keying between systems.</td>
-          <td><span class="badge badge-proven">PROVEN</span></td>
-        </tr>
-        <tr>
-          <td><strong>eSuite</strong></td>
-          <td>Sell, buy, and get paid online &mdash; connected to the network &mdash; without ripping out how you operate today.</td>
-          <td><span class="badge badge-proven">PROVEN</span></td>
-        </tr>
-        <tr>
-          <td><strong>eShop</strong></td>
-          <td>Your own branded store that sells your bunches and boxes online, 24/7 &mdash; buyers order on their own, anytime.</td>
-          <td><span class="badge badge-proven">PROVEN</span></td>
-        </tr>
-        <tr>
-          <td><strong>Procurement</strong></td>
-          <td>Buy from every vendor you're connected to in one cart &mdash; compare price, quality, and availability on one screen.</td>
-          <td><span class="badge badge-proven">PROVEN</span></td>
-        </tr>
-        <tr>
-          <td><strong>K2K / Network</strong></td>
-          <td>Connect and trade across the network &mdash; sell your vendors' inventory without buying it first. Box-only today.</td>
-          <td><span class="badge badge-tested">TESTED</span></td>
-        </tr>
-        <tr>
-          <td><strong>Payments</strong></td>
-          <td>Collect and reconcile where you work &mdash; card &amp; ACH, scheduled pay-later, receivables at a glance.</td>
-          <td><span class="badge badge-proven">PROVEN</span></td>
-        </tr>
-        <tr>
-          <td><strong>Studio</strong></td>
-          <td>A floral-industry website built for you &mdash; be found by florists, tell your story, feed your store.</td>
-          <td><span class="badge badge-untested">PRE-PUBLIC</span></td>
-        </tr>
-        <tr>
-          <td><strong>Ads</strong></td>
-          <td>Get in front of verified buyers across the network.</td>
-          <td><span class="badge badge-untested">OUTCOME UNPROVEN</span></td>
-        </tr>
-        <tr>
-          <td><strong>Supplies / HG</strong></td>
-          <td>Sell your supplies in your store too &mdash; a new high-margin channel for vases, ribbon, foam, wire, packaging.</td>
-          <td><span class="badge badge-tested">GATED (imagery, taxonomy)</span></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 
-  <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+Feedback:+Capability+Map&labels=feedback" target="_blank" class="feedback-btn">Feedback on this section</a>
-</div>
-
-<!-- ==================== TAB 2: PRODUCT BATTLECARDS ==================== -->
-<div class="tab-content" id="t2">
-
+  <!-- Win / Loss -->
   <div class="section">
-    <div class="section-head">
-      <h2>Product Battlecards</h2>
-      <span class="hint">Unified from Mauro battlecards + Cata one-pagers + OS product cards</span>
-    </div>
-
-    <!-- KOMET CORE -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>Komet Core (ERP)</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-        </div>
-      </div>
-      <div class="pitch">"Run your whole operation in one floral ERP &mdash; buy, hold, sell, ship, bill &mdash; and plug straight into the Komet buy/sell network so you sell more of what you already move."</div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
+    <div class="section-head"><h3>Win/Loss Verdicts</h3></div>
+    <div class="wl-grid">
+      <div class="wl-box wl-wins">
+        <h4>WINS -- why we won</h4>
         <ul>
-          <li><strong>Floral-native, not generic</strong> &mdash; built for boxes/bunches/stems, land cost, COGS breakdowns, Days of Service. Not a horizontal ERP bolted onto flowers. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>One system, kills double entry</strong> &mdash; SOs, Prebooks, POs, Order Entry, invoicing and AR in one place. Auto-create PO from vendor eShop = "phenomenal, that would save a lot of time." <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>The network is the moat</strong> &mdash; K2K lets you show and sell a supplier's inventory you don't own. "The magic isn't the ERP, it's how we help them buy and sell better." <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Cloud + margin control</strong> &mdash; per-customer price lists and advanced pricing tiers. Margin flexes by customer profile automatically. <span class="badge badge-proven">PROVEN</span></li>
+          <li><strong>JFS</strong> -- onsite go-live, ~$6M payments, reference account</li>
+          <li><strong>Siedlers</strong> -- 12% to 19% online in 90 days</li>
+          <li><strong>Price's</strong> -- onsite, ~Jul-8 go-live</li>
+          <li><strong>Flora Fresh</strong> -- internal champion</li>
+          <li><strong>Mrs. Blooms</strong> -- verbal yes, pending close</li>
         </ul>
+        <p style="font-size: 12px; margin-top: 8px; color: var(--green); font-weight: 600;">Repeatable lever: ONSITE implementation ("$2,500, pays off month 1 in payment fees; we win in person, not on Zoom").</p>
       </div>
-
-      <div class="sub-section">
-        <h4>Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-contradiction">FAILED</span>
-          <div class="obj-text">
-            <strong>"Komet is 5-10x more expensive"</strong> (Carbone: $60/mo to $3,000/mo, walked)
-            <div class="obj-rebuttal">Don't lead with ARR; recoup via payments. Payments-offset untested. Carbone, FloraMax, Webb's all lost on price.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text">
-            <strong>"You'll own my business"</strong> (independence fear)
-            <div class="obj-rebuttal">No proven rebuttal. Real, often unrecoverable.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text">
-            <strong>"Implementations feel endless"</strong>
-            <div class="obj-rebuttal">Set 60-90 day window upfront. Onsite accelerates to days. Name owners and timelines.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">GAP</span>
-          <div class="obj-text">
-            <strong>"We sell hardgoods and Komet makes us fake them as flowers"</strong>
-            <div class="obj-rebuttal">Unified model now treats HG as first-class &mdash; but V1 is new companies only. Do not commit to existing accounts.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">GAP</span>
-          <div class="obj-text">
-            <strong>"QuickBooks Online not supported"</strong>
-            <div class="obj-rebuttal">Product gap. QB Desktop only. Cash/check sync has gaps.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Proof Points</h4>
-        <div class="evidence"><strong>FCS migration prospect</strong> &mdash; evaluating Core as cloud replacement after FCS/Smart sunset. Auto-PO from vendor eShop rated "phenomenal." <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>Flora Fresh</strong> &mdash; live on Core inventory, adopted Inventory Evaluation Report. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>FGS (Jeroen)</strong> &mdash; eSuite webshop "quite simplified," K2K connections "super, super helpful." <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>JFS Wholesale</strong> &mdash; onsite go-live, ~$1.1M through Koronet Payments on a ~$2M wholesaler. <span class="badge badge-proven">PROVEN</span></div>
-      </div>
-
-      <div class="sub-section">
-        <h4>What It Does NOT Do</h4>
+      <div class="wl-box wl-losses">
+        <h4>LOSSES -- why we lost</h4>
         <ul>
-          <li>Hardgoods unified model = new companies only. Existing customers on legacy 3-model until separate migration.</li>
-          <li>QuickBooks Desktop only. No QBO. Cash/check payments don't sync bidirectionally.</li>
-          <li>Single session per user seat &mdash; no simultaneous multi-session.</li>
-          <li>Route management = customer-to-route association only, no optimization.</li>
-          <li>eShop filters (color, length, grade) incomplete with rapid-click UX bug.</li>
+          <li><strong>Carbone / FloraMax / Webb's</strong> -- price + FCS keeps running, no forcing function</li>
+          <li><strong>Northwest</strong> -- chose Odoo</li>
+          <li><strong>Product gaps:</strong> multi-currency USD/CAD killed Tenefleurs; hardgoods not shipped blocked Carbone/Reeves</li>
         </ul>
-      </div>
-
-      <div class="links">
-        Sources: <a href="https://docs.google.com/document/d/1x0Z3rH3-z21XOGeTv1MWZs4KCKfp10pHqYawRwgyOds" target="_blank">Mauro Battlecard: Komet Core</a> | No Cata one-pager exists for Core (GAP)
+        <p style="font-size: 12px; margin-top: 8px; color: var(--red); font-weight: 600;">Root cause (Felipe's self-critique): ARR-first before hardgoods/payments were ready + Apr-1 deadline mid-Mother's-Day + $999 charge + price increase = "the perfect storm."</p>
       </div>
     </div>
-
-    <!-- eSUITE WHOLESALER -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>eSuite Wholesaler</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-        </div>
-      </div>
-      <div class="pitch">"Sell, buy, and get paid online from one lightweight platform &mdash; connected to the network &mdash; without ripping out how you run today."</div>
-
-      <div class="contradiction">
-        <strong>CONTRADICTION: Network stats</strong> &mdash; Cata one-pagers claim "16,000+ users, 4,000+ businesses, $7B+ traded/year." Our verified data: ~15,000 users, ~$1.7B/yr GMV. "$7B" is ~4x our measured data. "4,000+ businesses" cannot be verified (608 seller companies / 383K buyer records). <span class="badge badge-contradiction">CONTRADICTION</span>
-      </div>
-      <div class="contradiction">
-        <strong>CONTRADICTION: "AI-powered CRM"</strong> &mdash; Cata one-pager says "AI writes and sends emails." Mauro battlecard: CRM is Customer.io automated campaigns (Welcome/Activation/Active/Inactive). No AI. CRM has known segmentation limitations (over-emails active offline buyers). <span class="badge badge-contradiction">CONTRADICTION</span>
-      </div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>One platform, whole workflow</strong> &mdash; Procurement, inventory, sales, marketing, eShop, Payments in a single account. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Lightweight, not rip-and-replace</strong> &mdash; one-click company setup; simplified UI over the Core engine. "Connection, not control." <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Network reach via K2K</strong> &mdash; offer own + K2K network inventory in the same eShop. Network Orders drop-ship grower to buyer. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Sell more than flowers</strong> &mdash; Supplies Division digitizes non-floral catalog with eShop visibility toggle. <span class="badge badge-tested">TESTED</span></li>
-          <li><strong>Get paid and reconcile</strong> &mdash; Koronet Payments with invoices, refunds, scheduled-payment checkout, Vendor Charges reconciliation. <span class="badge badge-proven">PROVEN</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text">
-            <strong>"Managing inventory and pricing is all by hand &mdash; too manual"</strong>
-            <div class="obj-rebuttal">Self-serve bulk XLS upload + guided templates. API automation is on the roadmap. Position as lightweight connection layer.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">GAP</span>
-          <div class="obj-text">
-            <strong>"eShop is missing the filters my buyers expect"</strong>
-            <div class="obj-rebuttal">Banners, tags, featured products, collection tags, per-customer price lists ship today. Color/length/grade filters are support-escalated.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text">
-            <strong>"Activating K2K exposes our vendors to our buyers &mdash; they'll bypass us"</strong>
-            <div class="obj-rebuttal">Control with eShop visibility toggles and vendor-filter-per-client. Stage what goes live. Real channel-conflict concern.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">GAP</span>
-          <div class="obj-text">
-            <strong>"Single session per user seat &mdash; no Elite integration"</strong>
-            <div class="obj-rebuttal">No multi-session and no Elite integration today. Acknowledge directly. Log to Product.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Proof Points</h4>
-        <div class="evidence"><strong>FGS</strong> &mdash; live on eSuite + eShop; webshop "quite simplified," K2K "super helpful." Building toward API integration. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>San Jose Floral</strong> &mdash; implementing eSuite storefront off K2K inventory, gradual activation. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>Heirloom</strong> &mdash; onboarding hard goods/supplies into catalog and PO flow. <span class="badge badge-tested">TESTED</span></div>
-        <div class="evidence"><strong>Hulls Burningham (Scott, AL)</strong> &mdash; Procurement-only account at fee threshold, active eSuite upsell conversation. <span class="badge badge-tested">TESTED</span></div>
-      </div>
-
-      <div class="sub-section">
-        <h4>What It Does NOT Do</h4>
-        <ul>
-          <li>Requires its own eSuite account &mdash; cannot be switched on inside an existing Core location.</li>
-          <li>No EDI. Accounting = QuickBooks only. Not a full ERP system of record.</li>
-          <li>Supplies = units only today. No box logic for supplies yet.</li>
-          <li>Single session per user seat. No Elite integration.</li>
-          <li>eShop color/length/grade filters and fast-click caching delay are unshipped.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: <a href="https://docs.google.com/document/d/161Gj7JZZ2i3rkEz4i4uiuleDjDUopyNcBS_yYOV0Wp0" target="_blank">Mauro Battlecard: eSuite Wholesaler</a> | Cata one-pagers: eSuite + eSuite Backoffice (PDFs)
-      </div>
+    <div class="note-box" style="margin-top: 16px;">
+      <strong>Implication:</strong> Lead with onsite + payments-auto-reconcile (proven). Be honest the pricing-offset is unproven. Don't pitch capabilities before they ship (the loss pattern).
     </div>
-
-    <!-- eSHOP -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>eShop</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-          <span class="badge badge-seg">Grower</span>
-        </div>
-      </div>
-      <div class="pitch">"Your own branded store that sells your bunches and boxes online, 24/7 &mdash; buyers order on their own, anytime, wired to your live inventory."</div>
-
-      <div class="contradiction">
-        <strong>CONTRADICTION: "AI agents pick the right message" (Win-back)</strong> &mdash; Cata one-pager says AI agents pick the right message for win-back. Mauro battlecard: CRM is Customer.io rule-based campaigns. No AI agents. <span class="badge badge-contradiction">CONTRADICTION</span>
-      </div>
-      <div class="contradiction">
-        <strong>TENSION: Bunch selling</strong> &mdash; VP copy says "sell by the box or by the bunch" as if straightforward. Reality: Sell-by-Bunch = paid add-on, Fresh Cut only, requires 3 feature flags. Adoption is approximately zero. <span class="badge badge-contradiction">CONTRADICTION</span>
-      </div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>New online channel on inventory you already have</strong> &mdash; buyers self-serve from live Komet availability. No new operation needed. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Sell the way flowers move &mdash; box AND bunch</strong> &mdash; On-Hand boxes always visible; Sell-by-Bunch is a paid add-on (Fresh Cut only, 3 flags required). Per-bunch markup. <span class="badge badge-tested">TESTED</span></li>
-          <li><strong>You own the buyer relationship, not a marketplace</strong> &mdash; unlike Biflorica/Tradewinds that charge both sides and take the customer, eShop keeps the branding and data with you. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Demand generation built in</strong> &mdash; Open Discovery surfaces catalog to logged-out buyers; CRM campaigns re-engage; GA4 funnel dashboard. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Merchandising and price control per buyer</strong> &mdash; price chain (Web Price > On-Hand > Price List > Price A/B > per-buyer markup), seasonal tags, banners, deeplinked campaigns. <span class="badge badge-proven">PROVEN</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text">
-            <strong>"eShops upsell is $600/mo and online split didn't grow &mdash; it's a loss"</strong>
-            <div class="obj-rebuttal">Reframe on incremental GMV. Tie upsell to a channel plan (Open Discovery + CRM + tags). Set a dated ROI review. Currently handled poorly in calls.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">GAP</span>
-          <div class="obj-text">
-            <strong>"No Meta Pixel / Google Tag Manager &mdash; can't run paid ads"</strong>
-            <div class="obj-rebuttal">Product gap. Today: UTM params + GA4-powered native funnel only. Log the feature request, don't promise a date.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text">
-            <strong>"CRM was bombarding my active clients &mdash; we paused all campaigns"</strong>
-            <div class="obj-rebuttal">Inactivity signal is eShop-only today (misses phone/WhatsApp/K2K). Configure conservatively. Omnichannel segmentation in progress.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text">
-            <strong>"A free marketplace lets me benchmark &mdash; why pay you?"</strong>
-            <div class="obj-rebuttal">Marketplaces charge both sides, own YOUR customer. eShop keeps relationship + branding + data at ~1.5%. Trade benchmarking for ownership.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Proof Points</h4>
-        <div class="evidence"><strong>Allure</strong> &mdash; Open Discovery generating organic leads they can't source otherwise. Collection tags in active use. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>Trilogy Floral</strong> &mdash; 25% conversion funnel in dashboard ("that's pretty incredible"). Using Open Discovery to direct Klaviyo traffic. <span class="badge badge-tested">REPORTED</span></div>
-        <div class="evidence"><strong>Price's Floral</strong> &mdash; closing to replace unmanaged Smart Systems e-commerce, ~45-day implementation. <span class="badge badge-tested">TESTED</span></div>
-        <div class="evidence"><strong>Remi Flowers (Ecuador)</strong> &mdash; evaluating eSuite Grower specifically for protected-relationship model vs Biflorica. "Oh fantastico." <span class="badge badge-tested">REPORTED</span></div>
-      </div>
-
-      <div class="sub-section">
-        <h4>What It Does NOT Do</h4>
-        <ul>
-          <li>Sell-by-Bunch = paid add-on, Fresh Cut only, requires Sell by Units + Future Sales + Show Future Inventory.</li>
-          <li>No Meta Pixel / GTM embed. Attribution = UTM + GA4 only.</li>
-          <li>CRM inactivity measured on eShop only, not global sales. Over-emails active offline buyers.</li>
-          <li>Self Register = eSuite only. Core/eShops = manual contact form.</li>
-          <li>Cross-vendor product consolidation and supplies on storefront = roadmap.</li>
-          <li>Base storefront on Core is unbranded. Custom branding requires eShops upsell (~$600/mo) or eSuite.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: <a href="https://docs.google.com/document/d/1KQjuH08BAL0rD0jNBCNi31DmRiXxVh9N8pVrmyXn9Uw" target="_blank">Mauro Battlecard: eShop</a> | Cata one-pager: eShops (PDF)
-      </div>
-    </div>
-
-    <!-- PROCUREMENT -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>Koronet Procurement</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-        </div>
-      </div>
-      <div class="pitch">"Buy from every vendor you're connected to in one cart &mdash; compare price, quality, and availability on one screen instead of ten logins."</div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>Consolidate orders across all vendors</strong> &mdash; one cart, one view. Connection-based, not a login per vendor. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Whole team buys on one connection</strong> &mdash; everyone on your team can order the moment you connect. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Add new vendors yourself</strong> &mdash; Easy Handshake: request a connection and start buying immediately. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Buy across borders</strong> &mdash; source from Colombia, Ecuador, Holland. Barcodes scan on both sides. <span class="badge badge-proven">PROVEN</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text">
-            <strong>"I can't see landed cost &mdash; I don't know what I'm really paying with freight"</strong>
-            <div class="obj-rebuttal">Product gap. Landed-cost visibility is the #1 sourcing ask. No workaround.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text">
-            <strong>"No standing orders through the system"</strong>
-            <div class="obj-rebuttal">Product gap. Standing orders = layer unlock, not current product.</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text">
-            <strong>"No quality/origin signals &mdash; can't tell Colombian from Ecuadorian"</strong>
-            <div class="obj-rebuttal">Product gap.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Proof Points</h4>
-        <div class="evidence"><strong>Shamrock Memphis</strong> &mdash; $118K GMV, 100% digital, 59% Procurement. Easy Handshake connections convert and repeat. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>A Florist First</strong> &mdash; $301K GMV, 100% digital. Uses Procurement as primary buying channel. Upgrading to eSuite. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>DKAY</strong> &mdash; 62 connections, $469K procurement &mdash; but $0 selling. Proof that BUY works before SELL. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>"6+ hrs/day to ~3" on procurement</strong> &mdash; teams cut procurement time in half. <span class="badge badge-tested">REPORTED &mdash; unverified source</span></div>
-      </div>
-
-      <div class="sub-section">
-        <h4>What It Does NOT Do</h4>
-        <ul>
-          <li>Not a discovery marketplace. You buy from vendors you're connected to.</li>
-          <li>No purchase fee (Koronet earns on resale, not on buying).</li>
-          <li>No landed-cost visibility, no standing orders, no quality/origin signals.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: value-prop-v1.md, product-cards-v2.md | Cata one-pager: Procurement (PDF) | No Mauro battlecard (GAP)
-      </div>
-    </div>
-
-    <!-- K2K -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>K2K / Koronet Network</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-          <span class="badge badge-seg">Grower</span>
-        </div>
-      </div>
-      <div class="pitch">"Connect and trade across the network &mdash; sell your vendors' inventory without buying it first. Even cross-border, barcodes scan both sides."</div>
-
-      <div class="alert-box">
-        <h4>Critical Limitation</h4>
-        <p><strong>K2K is box-only.</strong> Cannot sell bunches ($0 Units via K2K). This is the ceiling &mdash; K2K cannot carry a wholesaler's full business because bunches are what most florists buy. K2K is no longer sold standalone.</p>
-      </div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>Fast connection via Easy Handshake</strong> &mdash; buyer-requested connections convert at 57% vs blitz/ops-created at ~13%. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Cross-border trade</strong> &mdash; barcodes scan on both sides. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Synthetic inventory</strong> &mdash; sell what you don't own; system handles the order to the vendor. <span class="badge badge-proven">PROVEN</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">UNTESTED</span>
-          <div class="obj-text">
-            <strong>"1.5% reseller fee = double-dipping &mdash; I already pay to use the platform"</strong> (Bill Doran)
-            <div class="obj-rebuttal">Internal: #1 adoption barrier. Handling = discount/rebate toward 0.75-0.5% while netting more via payments+tx. A pricing mechanic, not a defended objection.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Proof Points</h4>
-        <div class="evidence"><strong>K2K network</strong> &mdash; +41% growth YoY. ~$16M boxes traded. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>Bill Doran</strong> &mdash; 963 connections. $14.1M Supplies/HG (83% of network total). eCom +67% growth. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>98 active K2K box-sellers</strong> across the network. <span class="badge badge-proven">PROVEN</span></div>
-      </div>
-
-      <div class="links">
-        Sources: value-prop-v1.md, product-cards-v2.md, wholesaler-segmentation.md | No Mauro battlecard (GAP) | No Cata one-pager (GAP)
-      </div>
-    </div>
-
-    <!-- PAYMENTS -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>Koronet Payments</h3>
-        <div>
-          <span class="badge badge-seg">All sellers</span>
-        </div>
-      </div>
-      <div class="pitch">"Collect and reconcile where you work &mdash; card &amp; ACH, scheduled pay-later, Receivables at a glance."</div>
-
-      <div class="contradiction">
-        <strong>TENSION: "Lower fees" claim</strong> &mdash; Cata one-pager says "get paid faster... lower fees." Standard card rate is 2.90%+$0.25 (market-standard, not "lower"). ACH at $1 flat IS lower. Objection bank shows price is a real barrier. <span class="badge badge-contradiction">CONTRADICTION</span>
-      </div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>One platform for cards + ACH</strong> &mdash; schedule by terms, auto-reconcile with AR. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Flexible fee structure</strong> &mdash; ACH $1 flat; Standard cards 2.90%+$0.25; Commercial 3.50%+$0.25; Card present 2.75%+$0.25. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Secure (Stripe)</strong> &mdash; no separate processor to manage. <span class="badge badge-proven">PROVEN</span></li>
-          <li><strong>Match-the-rate play</strong> &mdash; white-label Stripe +~26bps + auto-reconciliation in AR. <span class="badge badge-proven">PROVEN</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-proven">PROVEN</span>
-          <div class="obj-text">
-            <strong>"We have a cheaper processor"</strong>
-            <div class="obj-rebuttal">Match-the-rate + auto-reconciliation in AR (Canavali: verbal yes). Fails when we can't match (Chase).</div>
-          </div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-contradiction">UNRESOLVED</span>
-          <div class="obj-text">
-            <strong>"Is Payments mandatory?"</strong>
-            <div class="obj-rebuttal">It is a contract term. Current handling = "don't tell them up front" (deferral, not a rebuttal).</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Proof Points</h4>
-        <div class="evidence"><strong>JFS Wholesale</strong> &mdash; ~$1.1M through Koronet Payments on a ~$2M wholesaler. Onsite go-live. <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>Network penetration</strong> &mdash; ~9.5% payments penetration network-wide ($161M / $1.69B). <span class="badge badge-proven">PROVEN</span></div>
-        <div class="evidence"><strong>Siedlers</strong> &mdash; 63% Koronet Payments penetration. <span class="badge badge-tested">REPORTED</span></div>
-        <div class="evidence"><strong>Canavali</strong> &mdash; matched-the-rate, auto-reconciliation. Verbal yes. <span class="badge badge-tested">REPORTED</span></div>
-      </div>
-
-      <div class="sub-section">
-        <h4>What It Does NOT Do</h4>
-        <ul>
-          <li>eSuite checkout = card-only (no ACH yet).</li>
-          <li>Legacy/eSuite checkout not unified.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: value-prop-v1.md, product-cards-v2.md | Cata one-pager: Payments (PDF) | No Mauro battlecard (GAP)
-      </div>
-    </div>
-
-    <!-- STUDIO -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>Studio</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-          <span class="badge badge-seg">Grower</span>
-        </div>
-      </div>
-      <div class="pitch">"A floral-industry website built for you &mdash; be found by florists searching for wholesale flowers, tell your story, feed your store."</div>
-
-      <div class="contradiction">
-        <strong>TENSION: eSuite feature vs pre-public</strong> &mdash; Cata one-pager lists "Your own website &mdash; We build it for you" as an eSuite feature. Studio itself is labeled pre-public / real-but-early. <span class="badge badge-contradiction">CONTRADICTION</span>
-      </div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>Be found</strong> &mdash; show up in search results for "wholesale flowers [city]" over 6-12 months. <span class="badge badge-untested">UNTESTED</span></li>
-          <li><strong>Tell your story</strong> &mdash; your brand, built for the trade, no developers. <span class="badge badge-untested">PRE-PUBLIC</span></li>
-          <li><strong>Feed your store</strong> &mdash; paired with eShop to convert visitors into buyers. <span class="badge badge-untested">PRE-PUBLIC</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Status</h4>
-        <ul>
-          <li>Pre-public. Real but early. Feature the capability, don't over-promise.</li>
-          <li>No proof points. No battlecard. No one-pager. No objection handling.</li>
-          <li>SEO outcome unproven.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: value-prop-v1.md, product-cards-v2.md | No Mauro battlecard | No Cata one-pager
-      </div>
-    </div>
-
-    <!-- ADS -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>Koronet Ads</h3>
-        <div>
-          <span class="badge badge-seg">Wholesaler</span>
-          <span class="badge badge-seg">Importer</span>
-          <span class="badge badge-seg">Grower</span>
-        </div>
-      </div>
-      <div class="pitch">"Get in front of verified buyers across the network."</div>
-
-      <div class="sub-section">
-        <h4>Status</h4>
-        <ul>
-          <li>New product. Outcome unproven. <span class="badge badge-untested">OUTCOME UNPROVEN</span></li>
-          <li>Requires an eShop to land buyers on.</li>
-          <li>No proof points, no battlecard, no one-pager, no objection handling.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: value-prop-v1.md, product-cards-v2.md
-      </div>
-    </div>
-
-    <!-- SUPPLIES -->
-    <div class="product-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3>Supplies / Hardgoods</h3>
-        <div>
-          <span class="badge badge-seg">Supplies-heavy wholesalers</span>
-        </div>
-      </div>
-      <div class="pitch">"Sell your supplies in your store too &mdash; vases, ribbon, foam, wire, packaging &mdash; a new high-margin channel."</div>
-
-      <div class="sub-section">
-        <h4>Key Value Claims</h4>
-        <ul>
-          <li><strong>High-margin attach</strong> &mdash; mature online category. DVFlora has 5,000+ SKUs online. Competitors already do it. <span class="badge badge-tested">TESTED</span></li>
-          <li><strong>$14.1M GMV</strong> across network, 83% Bill Doran. <span class="badge badge-proven">PROVEN</span></li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Parity Gaps (must close to be credible)</h4>
-        <ul>
-          <li><strong>Product imagery</strong> &mdash; biggest gap. Supplies are bought by sight; our Supplies tab = data fields, no images.</li>
-          <li><strong>Deep category tree + faceted filters</strong> &mdash; material/color/size/shape/purpose/brand/price needed.</li>
-          <li><strong>Case/box selling</strong> &mdash; eSuite = units-only today. Case/pack is industry-standard.</li>
-          <li><strong>No K2K sync for hardgoods</strong> (V1 out of scope).</li>
-          <li><strong>R2 migration not built</strong> &mdash; new companies only at launch.</li>
-        </ul>
-      </div>
-
-      <div class="links">
-        Sources: wholesaler-segmentation.md, product-cards-v2.md | No standalone battlecard or one-pager
-      </div>
-    </div>
-
   </div>
-  <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+Feedback:+Battlecards&labels=feedback" target="_blank" class="feedback-btn">Feedback on this section</a>
+
 </div>
 
-<!-- ==================== TAB 3: WHAT IS KORONET ==================== -->
-<div class="tab-content" id="t3">
+<!-- ============================================================ -->
+<!-- TAB: TALK TRACKS -->
+<!-- ============================================================ -->
+<div class="tab-content" id="tab-talktracks">
 
-  <div class="section">
-    <div class="section-head">
-      <h2>What is Koronet</h2>
-      <span class="hint">The company pitch &mdash; verified numbers only</span>
+  <div class="section-head">
+    <h2>Coaching Talk Tracks</h2>
+    <a class="feedback-btn" href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Talk+Tracks" target="_blank">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm3.82-1.636a.75.75 0 0 1 1.038.175l.007.009c.003.004.015.018.034.04.04.043.105.107.2.192.189.17.476.37.847.546.753.356 1.774.584 3.054.584a.75.75 0 0 1 0 1.5c-1.52 0-2.817-.282-3.803-.753a6.14 6.14 0 0 1-1.202-.775 3.83 3.83 0 0 1-.36-.345l-.028-.035-.014-.018-.005-.006-.002-.003v-.001l.516-.39-.516.39a.75.75 0 0 1 .234-1.11Z"/></svg>
+      Give Feedback
+    </a>
+  </div>
+
+  <div class="note-box" style="margin-bottom: 24px;">
+    <strong>The spine for everyone:</strong> help the wholesaler digitalize their existing book. Don't promise traffic, don't overclaim. Lead with the client's outcome; products are <em>how</em>, never the message.
+  </div>
+
+  <!-- SALES -->
+  <div class="tt-role">
+    <h3><span class="badge badge-proven" style="font-size: 11px; padding: 4px 10px;">SALES</span> The Pitch + Objection Handling</h3>
+
+    <div class="tt-label">Open (digitalize-led)</div>
+    <blockquote>"You already do the volume -- mostly rep-keyed and offline. Our job is to put that book online: your buyers self-serve, your bunches sell online, and you reactivate the buyers who went quiet. Not new buyers -- the ones you have, ordering online."</blockquote>
+
+    <div class="tt-label">Reason to believe</div>
+    <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">The network ($1.7B/yr, your buyers & suppliers already here) + "we win when you win."</p>
+
+    <div class="tt-label">Objection handling</div>
+    <ul>
+      <li><strong>"5-10x more expensive"</strong> -- don't lead with ARR; "we make our money other ways -- discount the SaaS, recoup on payments as card volume grows." <span class="badge badge-tested">PROPOSED</span></li>
+      <li><strong>"Is Payments mandatory?"</strong> -- don't lead with the rate; lead product + onsite; rate negotiated later with data. <span class="badge badge-tested">PROPOSED</span></li>
+      <li><strong>"You're too big -- you'll own my business."</strong> -- No proven rebuttal. <em>Surface honestly, don't bluff.</em> <span class="badge badge-untested">NO ANSWER</span></li>
+      <li><strong>"My customers are old, won't switch online."</strong> -- "it's still 85% of your book for someone leaning in -- start by digitalizing the buyers you already have." <span class="badge badge-tested">PROPOSED</span></li>
+      <li><strong>"K2K 1.5% feels like double-dipping."</strong> -- waive on Procurement / volume-waiver / phased. <span class="badge badge-tested">PROPOSED</span></li>
+      <li><strong>Trust</strong> -- "we do what we tell and tell what we do." <span class="badge badge-tested">PROPOSED</span></li>
+    </ul>
+  </div>
+
+  <!-- CS -->
+  <div class="tt-role">
+    <h3><span class="badge" style="font-size: 11px; padding: 4px 10px; background: var(--purple-bg); color: var(--purple);">CS</span> Expansion Plays (by segment)</h3>
+    <ul>
+      <li><strong>Big-book / low-online (H&T, Flora Fresh):</strong> get bunches uploaded (tool exists, adoption near 0); push online/offline parity; drive existing buyers online (CRM).</li>
+      <li><strong>Core-bunch (44):</strong> enable eShop/eSuite, upload bunches, digitalize.</li>
+      <li><strong>Silent buyers (~21K):</strong> run the ranked reactivation list -- CRM win-back; follow the buyer to repeat; flag standing-order connections for credit.</li>
+      <li><strong>K2K box-sellers (98):</strong> add the storefront to sell bunches (growth ceiling on box-only).</li>
+      <li><strong>Supplies-heavy:</strong> the supplies-online attach (gated by parity).</li>
+    </ul>
+    <div class="note-box" style="margin-top: 12px;">
+      <strong>North star:</strong> online order share up, reactivated buyers, payments penetration.
+    </div>
+  </div>
+
+  <!-- IMPLEMENTATION -->
+  <div class="tt-role">
+    <h3><span class="badge" style="font-size: 11px; padding: 4px 10px; background: var(--amber-bg); color: var(--amber);">IMPL</span> Set This Live First</h3>
+    <ul>
+      <li><strong>Parity first:</strong> upload bunches and match floor pricing/availability -- before any marketing (else reps steer off-platform, buyers keep calling).</li>
+      <li><strong>Activation, not feature-flag-ON:</strong> success metric = 1+ real transaction without reverting to workarounds, not "it's enabled."</li>
+      <li><strong>Onsite go-live (enterprise):</strong> "we win in person, not on Zoom" -- pays for itself in payment fees month 1.</li>
+      <li><strong>Supplies:</strong> remember the eShop publish step (supplies don't surface automatically on migration).</li>
+      <li><strong>Payments friction:</strong> eSuite is card-only today -- set the contract disclaimer to enable Koronet Payments when ACH ships.</li>
+    </ul>
+  </div>
+
+  <div class="note-box" style="margin-top: 8px;">
+    <strong>The rule for all three roles:</strong> Never promise traffic. Never claim a capability that isn't live for <em>their</em> product (Core vs eShops-upgrade vs eSuite differ).
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB: BATTLECARDS -->
+<!-- ============================================================ -->
+<div class="tab-content" id="tab-battlecards">
+
+  <div class="section-head">
+    <h2>US Battlecards</h2>
+    <a class="feedback-btn" href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Battlecards" target="_blank">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm3.82-1.636a.75.75 0 0 1 1.038.175l.007.009c.003.004.015.018.034.04.04.043.105.107.2.192.189.17.476.37.847.546.753.356 1.774.584 3.054.584a.75.75 0 0 1 0 1.5c-1.52 0-2.817-.282-3.803-.753a6.14 6.14 0 0 1-1.202-.775 3.83 3.83 0 0 1-.36-.345l-.028-.035-.014-.018-.005-.006-.002-.003v-.001l.516-.39-.516.39a.75.75 0 0 1 .234-1.11Z"/></svg>
+      Give Feedback
+    </a>
+  </div>
+
+  <div class="note-box" style="margin-bottom: 24px;">
+    <strong>Reframe:</strong> FCS/SMART is <em>ours</em> (Koronet acquired it Dec 2023) -- not a battlecard, a <strong>migration playbook</strong>. The real external competitor = <strong>DV Flora</strong> (+ where holdouts flee: WooCommerce/self-built).
+  </div>
+
+  <!-- DV FLORA -->
+  <div class="bc-card">
+    <h3>DV Flora (Delaware Valley Floral Group)</h3>
+    <div class="bc-who">Vertically-integrated wholesaler + software + logistics (1959, NJ). Dutch Direct e-commerce + native iOS/Android app since ~2014. Acquisitive -- rolls up regional wholesalers (recently acquired Rokay, an FCS/Koronet account).</div>
+
+    <div class="bc-grid">
+      <div class="bc-side bc-win">
+        <h4>Where Koronet WINS</h4>
+        <ul>
+          <li><strong>Neutral operating system</strong> for a wholesaler's OWN business -- DV Flora's app only sells DV Flora's product</li>
+          <li><strong>Network supply</strong> (K2K + Procurement, farms/importers) -- a closed single-supplier storefront can't offer that</li>
+          <li><strong>Payments monetization</strong> (ACH $1, cards 2.9%+$0.25, auto-charge on terms) -- a value layer they don't sell</li>
+        </ul>
+      </div>
+      <div class="bc-side bc-lose">
+        <h4>Where THEY Win (be honest)</h4>
+        <ul>
+          <li>For a florist who just wants flowers next-day in a clean app, DV Flora is a <strong>complete bundle</strong> (flowers + trucks + app) -- we own neither flowers nor logistics</li>
+          <li><strong>Roll-ups physically remove accounts</strong> (acquire a wholesaler, migrate onto DV's stack)</li>
+          <li><strong>Hardgoods in one storefront today</strong> -- we're still closing that gap (R1-R3, ~Aug 2026)</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="promise-box">
-      <div class="promise-text">Grow your floral business &mdash; sell more, source smarter, and run leaner &mdash; on the network the trade already runs on.</div>
-      <div class="promise-sub">We win when you win. Our fees are a byproduct of your success, not a goal we push. If it doesn't help your business, it's not something we'll sell you.</div>
+    <div class="bc-angle">
+      <strong>Lead angle:</strong> "your own business on a neutral platform + the whole network's supply" vs "a storefront that only sells one wholesaler's flowers."
     </div>
+  </div>
 
-    <div class="info-box">
-      <h3>Why Koronet (the anchor pitch)</h3>
-      <p>You're not buying software you run alone &mdash; every other tool leaves you an island: re-keying between systems, chasing "did the order land?" Koronet connects you to the marketplace your trade already runs on &mdash; the vendors you already call and the buyers who already order from you are here. We don't replace how you work &mdash; we connect it.</p>
-    </div>
+  <!-- FCS / SMART -->
+  <div class="bc-card">
+    <h3>FCS / SMART -- Migration Playbook</h3>
+    <div class="bc-who">On-prem .NET/C#/SQL ERP. SMART reports = the standout clients fear losing. SMARTSite = basic ecom. Desktop/on-prem -- can't be updated, scaled, or shut down remotely. Security/continuity risk ("could fail any day"). ~19 FCS accounts (~$846K new-ARR pipeline).</div>
 
-    <div class="stat-row">
-      <div class="stat-card">
-        <div class="label">Active Users</div>
-        <div class="val">~15,000</div>
-        <div class="note"><span class="badge badge-proven">DATA-PROVEN</span> ~15,277 measured</div>
+    <div class="bc-grid">
+      <div class="bc-side bc-win">
+        <h4>Why They Move (the pitch)</h4>
+        <ul>
+          <li>Cloud + real e-commerce + payments + procurement network -- everything FCS structurally can't do</li>
+          <li>Frame as <strong>risk-removal</strong>, not "better features"</li>
+          <li><strong>Land-and-expand on FEES, not SaaS</strong> (up to 80% SaaS discount yr1; monetize payments + procurement tx-fees; 98% retention once in ecosystem)</li>
+        </ul>
       </div>
-      <div class="stat-card">
-        <div class="label">Annual GMV</div>
-        <div class="val">~$1.7B</div>
-        <div class="note"><span class="badge badge-proven">DATA-PROVEN</span> trailing 365d</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Cumulative GMV</div>
-        <div class="val">$8B+</div>
-        <div class="note"><span class="badge badge-proven">DATA-PROVEN</span> 2021&ndash;mid-2026</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Payments Penetration</div>
-        <div class="val">~9.5%</div>
-        <div class="note"><span class="badge badge-proven">DATA-PROVEN</span> $161M / $1.69B</div>
+      <div class="bc-side bc-lose">
+        <h4>Where We Lose</h4>
+        <ul>
+          <li>Price-sensitive holdouts reject the jump, ride Extended Access indefinitely</li>
+          <li>Flee to WooCommerce / self-built / cheaper stacks</li>
+          <li>Get acquired by DV Flora</li>
+          <li>"I'll lose my SMART reports" -- replicate SMART reports in Komet (open action)</li>
+        </ul>
       </div>
     </div>
 
-    <div class="alert-box">
-      <h4>Challenge Notes: Where collateral says something different</h4>
-      <ul>
-        <li><strong>"$7B+ traded/year"</strong> appears on Cata one-pagers. Our Snowflake data = ~$1.7B/yr. $7B is ~4x our measured data. May be cumulative or different scope. <span class="badge badge-contradiction">CONTRADICTION</span></li>
-        <li><strong>"4,000+ businesses"</strong> appears on Cata one-pagers. Cannot verify: 608 seller companies / 383K buyer records. Definition unclear. Dropped from VP copy. <span class="badge badge-contradiction">CONTRADICTION</span></li>
-        <li><strong>"AI-powered CRM"</strong> appears on Cata eSuite one-pager. CRM is Customer.io rule-based campaigns. No AI. <span class="badge badge-contradiction">CONTRADICTION</span></li>
-        <li><strong>"AI agents pick the right message"</strong> appears on Cata eShops one-pager. CRM is rule-based. No AI agents. <span class="badge badge-contradiction">CONTRADICTION</span></li>
+    <div style="margin-top: 16px;">
+      <div class="section-head"><h3>Proven Conversion Levers</h3></div>
+      <ul style="font-size: 13px; color: var(--text2); padding-left: 18px;">
+        <li><strong>On-site go-live + porting saved payment methods:</strong> JFS got 77% of sales on Koronet Payments in 3 days; Flora Fresh 40%</li>
+        <li><strong>Price's</strong> closed in &lt;2 weeks once "no isn't really an option"</li>
+        <li>Resolve Extended Access billing disputes before pitching</li>
       </ul>
     </div>
 
-    <div class="pillar-grid">
-      <div class="pillar">
-        <h3>Sell More</h3>
-        <ul>
-          <li><strong>Your own eShop</strong> &mdash; the ecommerce built for the floral trade. Buyers order on their own, anytime.</li>
-          <li><strong>Studio</strong> &mdash; your brand, built for the trade, no developers. (Pre-public)</li>
-          <li><strong>Put your whole offer online</strong> &mdash; boxes, bunches, in-transit, all in one place.</li>
-          <li><strong>K2K synthetic inventory</strong> &mdash; sell your vendors' product without buying it first.</li>
-          <li><strong>Win new clients</strong> &mdash; network + Koronet Ads. (Ads = outcome unproven)</li>
-          <li><strong>CRM</strong> &mdash; campaigns reactivate quiet buyers, influenced-revenue tracking.</li>
-        </ul>
-      </div>
-      <div class="pillar">
-        <h3>Source Smarter</h3>
-        <ul>
-          <li><strong>One cart for all vendors</strong> &mdash; compare price, quality, availability on one screen.</li>
-          <li><strong>Whole team buys on one connection</strong> &mdash; connection-based, not a login per vendor.</li>
-          <li><strong>Add vendors yourself</strong> &mdash; Easy Handshake: request and start buying immediately.</li>
-          <li><strong>Cross-border sourcing</strong> &mdash; Colombia, Ecuador, Holland. Barcodes scan both sides.</li>
-        </ul>
-      </div>
-      <div class="pillar">
-        <h3>Run Leaner</h3>
-        <ul>
-          <li><strong>One system</strong> &mdash; buy, hold, sell, ship, bill, connected. No re-keying.</li>
-          <li><strong>Connect without ripping out today</strong> &mdash; eSuite = Connection; Core = Control.</li>
-          <li><strong>Payments where you work</strong> &mdash; card + ACH, scheduled pay-later, receivables at a glance.</li>
-          <li><strong>Built for flowers</strong> &mdash; boxes broken into bunches, substitutions, multi-location.</li>
-        </ul>
-      </div>
+    <div class="bc-angle" style="margin-top: 16px;">
+      <strong>Net (US):</strong> Win DV Flora on neutral-OS + network. Win FCS holdouts on risk-removal + fees-not-SaaS + onsite/payment-porting + SMART-report parity. Shared threat to neutralize: price-sensitive flight -- the fee-led commercial model is the answer.
     </div>
+  </div>
 
-    <div class="section-head"><h3>Proof it works (verified only)</h3></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB: PROOF BANK -->
+<!-- ============================================================ -->
+<div class="tab-content" id="tab-proof">
+
+  <div class="section-head">
+    <h2>Proof Bank</h2>
+    <a class="feedback-btn" href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Proof+Bank" target="_blank">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm3.82-1.636a.75.75 0 0 1 1.038.175l.007.009c.003.004.015.018.034.04.04.043.105.107.2.192.189.17.476.37.847.546.753.356 1.774.584 3.054.584a.75.75 0 0 1 0 1.5c-1.52 0-2.817-.282-3.803-.753a6.14 6.14 0 0 1-1.202-.775 3.83 3.83 0 0 1-.36-.345l-.028-.035-.014-.018-.005-.006-.002-.003v-.001l.516-.39-.516.39a.75.75 0 0 1 .234-1.11Z"/></svg>
+      Give Feedback
+    </a>
+  </div>
+
+  <div class="verdict-box" style="margin-bottom: 24px;">
+    <h3>Honest Status</h3>
+    <p>The <strong>story is strong; the proof is mostly borrowed.</strong> Most "proof" is reported (said by CS/Sales/leadership), NOT independently verified. No claim ships externally above its proof status.</p>
+  </div>
+
+  <div class="proof-legend">
+    <span class="badge badge-proven">DATA-PROVEN -- verified in Snowflake/systems</span>
+    <span class="badge badge-tested">REPORTED -- said by CS/Sales/leadership, not independently verified</span>
+    <span class="badge" style="background: var(--red-bg); color: var(--red);">ASSUMPTION -- no source or pitch figure with no cited basis</span>
+  </div>
+
+  <!-- Verified Numbers -->
+  <div class="section">
+    <div class="section-head"><h3>Verified Claims (DataDeepDive, Snowflake)</h3></div>
     <table>
       <thead>
-        <tr><th>Account</th><th>What happened</th><th>Status</th></tr>
+        <tr><th>Claim</th><th>Status</th><th>Verified Value</th><th>Notes</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>JFS Wholesale</strong></td>
-          <td>Onsite go-live, processing payments immediately. ~$1.1M through Koronet Payments (a ~$2M wholesaler).</td>
-          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td><strong>"$7B+/yr traded"</strong></td>
+          <td><span class="badge badge-proven">CORRECTED</span></td>
+          <td>Annual GMV ~$1.7B. $8B+ cumulative (2021-mid-26). $24B all-time.</td>
+          <td>"$7B+" was cumulative, not per-year. Offline 83% / eShop 7% / API 7% / K2K 3%.</td>
         </tr>
         <tr>
-          <td><strong>Siedlers</strong></td>
-          <td>12-13% to 19% online in 90 days. 63% Koronet Payments penetration.</td>
-          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td><strong>"16,000+ users"</strong></td>
+          <td><span class="badge badge-proven">PROVEN</span></td>
+          <td>~15,277 active users</td>
+          <td></td>
         </tr>
         <tr>
-          <td><strong>Shamrock Memphis</strong></td>
-          <td>$118K GMV, 100% digital, 59% Procurement. Easy Handshake model works.</td>
-          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td><strong>"4,000+ businesses"</strong></td>
+          <td><span class="badge" style="background: var(--red-bg); color: var(--red);">CAN'T VERIFY</span></td>
+          <td>Clean fields = 608 seller cos / 383K buyer records</td>
+          <td>Dropped from copy until defined.</td>
         </tr>
         <tr>
-          <td><strong>Zeidler</strong></td>
-          <td>$951K GMV, 17.2% digital. Sells bunches online. Same impl effort as Riverside (0.09%). Difference = operational commitment.</td>
-          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td><strong>"~36% after-hours"</strong></td>
+          <td><span class="badge badge-proven">DIRECTIONALLY OK</span></td>
+          <td>27.8% in UTC (floor); ~36% local is plausible</td>
+          <td>Soften, don't over-state.</td>
         </tr>
         <tr>
-          <td><strong>Bill Doran</strong></td>
-          <td>$61.5M GMV. eCom +67% growth. 963 connections. $14.1M Supplies (83% of network).</td>
-          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td><strong>"43% higher ticket online"</strong></td>
+          <td><span class="badge" style="background: var(--red-bg); color: var(--red);">FALSE -- REMOVED</span></td>
+          <td>Offline AOV $698 vs eShop $251. Online is ~64% lower.</td>
+          <td>Online = frequent small reorders, not higher-ticket.</td>
         </tr>
         <tr>
-          <td><strong>A Florist First</strong></td>
-          <td>$301K GMV, 100% digital. Upgrading from Procurement to eSuite.</td>
-          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td><strong>"~8% via Koronet Payments"</strong></td>
+          <td><span class="badge badge-proven">PROVEN</span></td>
+          <td>Actually 9.5% ($161M / $1.69B)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>JFS</strong></td>
+          <td><span class="badge badge-proven">CORRECTED</span></td>
+          <td>$1.96M GMV, ~100% offline, $1.1M through Koronet Payments</td>
+          <td>Payments + onsite proof, NOT an online proof. The "$6M" figure was wrong.</td>
         </tr>
       </tbody>
     </table>
-
-    <div style="margin-top:20px;">
-      <div class="section-head"><h3>GMV Channel Mix</h3></div>
-      <table>
-        <thead>
-          <tr><th>Channel</th><th>Share</th><th>Note</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Offline</td><td><strong>~83%</strong></td><td>$0 in transaction fees</td></tr>
-          <tr><td>eShop / eCommerce</td><td>~7%</td><td>Transaction fees apply</td></tr>
-          <tr><td>API</td><td>~7%</td><td>Transaction fees apply</td></tr>
-          <tr><td>K2K</td><td>~3%</td><td>Box-only. Cannot sell bunches.</td></tr>
-        </tbody>
-      </table>
-      <div style="font-size:11px; color:var(--text3); margin-top:8px;">
-        <span class="badge badge-proven">DATA-PROVEN</span> Source: Snowflake SALES_SV, ks_flag, trailing 365d
-      </div>
-    </div>
   </div>
-  <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+Feedback:+What+is+Koronet&labels=feedback" target="_blank" class="feedback-btn">Feedback on this section</a>
+
+  <!-- Customer Proof Points -->
+  <div class="section">
+    <div class="section-head"><h3>Customer Proof Points</h3></div>
+    <table>
+      <thead>
+        <tr><th>Claim</th><th>Status</th><th>Source</th><th>Deep-dive to prove</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>JFS -- onsite, processing immediately, ~$6M payments</td>
+          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td>FCS/Northwest call</td>
+          <td>Snowflake payments by account (JFS) + call record</td>
+        </tr>
+        <tr>
+          <td>Siedlers -- ~20% online, 63% Koronet Payments</td>
+          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td>Christine/Facu call</td>
+          <td>Snowflake channel + payments share</td>
+        </tr>
+        <tr>
+          <td>Perry Farms -- $400K site, ~30% online</td>
+          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td>Call</td>
+          <td>Snowflake online share for account</td>
+        </tr>
+        <tr>
+          <td>Flora Fresh -- 2,100 clients / &lt;200 online</td>
+          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td>Call</td>
+          <td>Snowflake buyer/active-online counts</td>
+        </tr>
+        <tr>
+          <td>O2O -- 5,048 offline buyers activated, 81 vendors</td>
+          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td>Dan, Slack</td>
+          <td>Activation data / event logs</td>
+        </tr>
+        <tr>
+          <td>"Onsite pays for itself in the first month"</td>
+          <td><span class="badge" style="background: var(--red-bg); color: var(--red);">SALES-CLAIM</span></td>
+          <td>Felipe/Craig</td>
+          <td>Payment-fee data pre/post onsite for a cohort</td>
+        </tr>
+        <tr>
+          <td>Procurement "6+ hrs/day to ~3"</td>
+          <td><span class="badge badge-tested">REPORTED</span></td>
+          <td>One-pager</td>
+          <td>Qualitative -- treat as illustrative</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Capability Claims -->
+  <div class="section">
+    <div class="section-head"><h3>Capability Claims</h3></div>
+    <table>
+      <thead>
+        <tr><th>Claim</th><th>Status</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>eShops / eSuite / Procurement / Open Discovery capabilities</td>
+          <td><span class="badge badge-proven">KB-CONFIRMED</span></td>
+          <td>Confluence wikis</td>
+        </tr>
+        <tr>
+          <td>K2K Easy Handshake ("connect and start purchasing immediately"); single-location-only limit</td>
+          <td><span class="badge badge-proven">KB-CONFIRMED</span></td>
+          <td>Confluence 4391829505</td>
+        </tr>
+        <tr>
+          <td>Cross-border barcodes "scan on both sides"</td>
+          <td><span class="badge badge-proven">PRODUCT-CONFIRMED</span></td>
+          <td>Slack #axerrio + product</td>
+        </tr>
+        <tr>
+          <td>Supplies = "digitize full catalog inside eSuite"; new-cos-only / units-only / no K2K sync</td>
+          <td><span class="badge badge-proven">KB-CONFIRMED</span></td>
+          <td>Confluence 6302924821 / 5893685249</td>
+        </tr>
+        <tr>
+          <td>Studio = branded website builder</td>
+          <td><span class="badge badge-tested">REAL BUT EARLY</span></td>
+          <td>Slack #custom-websites (not in KB/site)</td>
+        </tr>
+        <tr>
+          <td>Network GMV mix: Offline ~83%, eShop ~7%, API ~7%, K2K ~3%</td>
+          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td>SALES_SV, ks_flag</td>
+        </tr>
+        <tr>
+          <td>Hardgoods/Supplies = $14.1M, 0.84% of GMV, 83% Bill Doran</td>
+          <td><span class="badge badge-proven">DATA-PROVEN</span></td>
+          <td>SALES_SV</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    <strong>What this means:</strong> Before external publish, the reported numbers must be proven (or replaced) and the $7B figure reconciled with Adam's official GMV definition. Deep-dive #1 (Snowflake) is converting headline + customer numbers from REPORTED to PROVEN. Deep-dive #2 = pull specific client calls/discoveries behind JFS/Siedlers/Perry to cite properly.
+  </div>
+
 </div>
 
-<!-- ==================== TAB 4: KORONET FOR WHOLESALERS ==================== -->
-<div class="tab-content" id="t4">
-
-  <div class="section">
-    <div class="section-head">
-      <h2>Koronet for Wholesalers</h2>
-      <span class="hint">Pitch by segment &mdash; 271 wholesalers, what to say to each</span>
-    </div>
-
-    <div class="info-box">
-      <h3>The strategic reframe</h3>
-      <p>The value prop is <strong>digitalize the existing book, not acquire net-new</strong>. The gap is online penetration of existing buyers, not buyer scarcity. Low online % on a big book = high absolute headroom, not low adoption.</p>
-    </div>
-
-    <!-- CORE ONLY -->
-    <div class="seg-card">
-      <h3>Core Only</h3>
-      <div class="seg-meta">245 of 271 wholesalers (90%) | The majority. 44 sell bunches offline at &lt;10% online but lack platform to go digital.</div>
-
-      <div class="opp">
-        <strong>If you have Core but don't have eShop/eSuite &rarr;</strong> Your florists can't see what you have. You're losing orders to whoever shows up online first. Your opportunity is to put your floor inventory online &mdash; starting with bunches.
-      </div>
-
-      <div class="sub-section">
-        <h4>What to pitch</h4>
-        <ul class="checklist">
-          <li><strong>Procurement</strong> &mdash; buy from all your vendors in one cart. Start here, no selling required.</li>
-          <li><strong>eShop/eSuite upgrade</strong> &mdash; to sell bunches online. Core alone cannot do this.</li>
-          <li><strong>The sequence:</strong> Buy Better (Procurement) &rarr; realize you need to sell online &rarr; add eShop/eSuite &rarr; publish bunches &rarr; price parity &rarr; grow.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Specific Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-untested">GAP</span>
-          <div class="obj-text"><strong>"I'm Core-only &mdash; I CAN'T sell bunches online even if I wanted to"</strong> &mdash; Fact. 245 of 271 wholesalers. They need eShop/eSuite. This is a platform capability question.</div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"eShops upsell is $600/mo &mdash; I can't justify that"</strong> &mdash; If 5% of your offline book shifts online, the fees pay for the upsell many times over. Unproven ROI argument.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Best in Class</h4>
-        <div class="evidence"><strong>KBC Pittsburgh</strong> &mdash; 453 buyers, 383 active, only 129 ever online. Units catalog not uploaded (0.05% vs peers 5-12%). The store has the boxes but not the floor. Shows the headroom. <span class="badge badge-proven">DATA-PROVEN</span></div>
-      </div>
-    </div>
-
-    <!-- CORE + PROCUREMENT -->
-    <div class="seg-card">
-      <h3>Core + Procurement (buys digital, sells analog)</h3>
-      <div class="seg-meta">The "offline is a misnomer" pattern &mdash; uses digital tools to BUY but sales are phone/walk-in</div>
-
-      <div class="opp">
-        <strong>If you have Procurement but don't sell online &rarr;</strong> You already buy digitally. Your opportunity is to publish what you buy and let your florists order online too. Core+Proc wholesalers grew eCom +23%. Core-only went -44%.
-      </div>
-
-      <div class="sub-section">
-        <h4>What to pitch</h4>
-        <ul class="checklist">
-          <li><strong>Validate they're getting value from Procurement first</strong> &mdash; then pivot to "now sell what you buy."</li>
-          <li><strong>eShop/eSuite</strong> &mdash; publish your procured inventory. Buyers see it, order it.</li>
-          <li>Procurement + eCommerce are COMPLEMENTS. Enabling buying helps selling.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Specific Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"Online means a 1.5% fee on volume that was free offline"</strong> &mdash; ROI argument: efficiency, reach, incremental volume outweigh fee. Free-fee onboarding buys time. #1 challenge.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Best in Class</h4>
-        <div class="evidence"><strong>DKAY</strong> &mdash; 62 connections, $469K procurement, $0 selling. Buys digitally, sells analog. <span class="badge badge-proven">DATA-PROVEN</span></div>
-        <div class="evidence"><strong>Arizona Family</strong> &mdash; 113 connections, $2.3M procurement, $0 selling. Same pattern. <span class="badge badge-proven">DATA-PROVEN</span></div>
-      </div>
-    </div>
-
-    <!-- CORE + eSHOP -->
-    <div class="seg-card">
-      <h3>Core + eShop (has store, underusing it)</h3>
-      <div class="seg-meta">Has the storefront but it's a ghost catalog. Likely stuck between Stage 2 and Stage 3.</div>
-
-      <div class="opp">
-        <strong>If you have an eShop but less than 10% online &rarr;</strong> Your store exists but doesn't convert. Your opportunity is to fix what's broken: upload bunches, match floor pricing, train reps.
-      </div>
-
-      <div class="sub-section">
-        <h4>Checklist &mdash; make sure you use these well</h4>
-        <ul class="checklist">
-          <li>Are bunches uploaded? (Most: no)</li>
-          <li>Does online pricing match offline? (Most: no)</li>
-          <li>Are reps using the eShop or steering orders away? (Most: steering away)</li>
-          <li>Is the eShop an actual sales channel or a ghost catalog? (Most: ghost)</li>
-          <li>Are deals and terms configured online? (Most: not fully)</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Specific Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"My reps won't use it &mdash; they steer orders offline to avoid the fee"</strong> &mdash; Rep enablement play: "Your reps sell UP instead of typing orders." The eShop handles reorders. Siedlers adopted this framing.</div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text"><strong>"Bunch upload is too much work &mdash; I can't photograph every bunch every morning"</strong> &mdash; Core adoption blocker. The tool exists but nobody uses it. Needs operational support, not a rebuttal.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Best in Class</h4>
-        <div class="evidence"><strong>Zeidler</strong> &mdash; $951K GMV, 17.2% digital. Sells bunches online. Same impl effort as Riverside (0.09%). Difference: uploads cooler inventory, treats eShop as sales channel extension. <span class="badge badge-proven">DATA-PROVEN</span></div>
-        <div class="evidence"><strong>Siedlers</strong> &mdash; 12-13% to 19% online in 90 days by matching online to offline + not cannibalizing reps. <span class="badge badge-tested">REPORTED</span></div>
-      </div>
-    </div>
-
-    <!-- eSUITE FULL -->
-    <div class="seg-card">
-      <h3>eSuite (full stack)</h3>
-      <div class="seg-meta">All-in on the platform &mdash; buy, sell, payments, all connected. 7 accounts with eSuite flag.</div>
-
-      <div class="opp">
-        <strong>If you have eSuite &rarr;</strong> Check readiness across ALL dimensions: supply listed, pricing matched, reps enabled, buyers onboarded, payments live. Your opportunity is depth, not breadth.
-      </div>
-
-      <div class="sub-section">
-        <h4>Checklist &mdash; maximize what you have</h4>
-        <ul class="checklist">
-          <li>Is Procurement active and covering your vendor base?</li>
-          <li>Are bunches + boxes + supplies all listed in the eShop?</li>
-          <li>Is checkout configured with Koronet Payments?</li>
-          <li>Are CRM campaigns running (and calibrated, not over-emailing)?</li>
-          <li>Are you using Open Discovery for organic leads?</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Best in Class</h4>
-        <div class="evidence"><strong>A Florist First</strong> &mdash; $301K GMV, 100% digital. Upgrading from Procurement to eSuite. <span class="badge badge-proven">DATA-PROVEN</span></div>
-        <div class="evidence"><strong>Shamrock Memphis</strong> &mdash; $118K GMV, 100% digital, 59% Procurement. <span class="badge badge-proven">DATA-PROVEN</span></div>
-      </div>
-    </div>
-
-    <!-- K2K ONLY -->
-    <div class="seg-card">
-      <h3>K2K Only (legacy, box-only)</h3>
-      <div class="seg-meta">98 active K2K box-sellers | Connected for box trading, but K2K cannot carry the full business.</div>
-
-      <div class="opp">
-        <strong>If you only have K2K &rarr;</strong> Your box business is real (~$16M, +41% growth), but K2K is box-only. It cannot sell bunches ($0). To grow beyond boxes, you need the storefront. Your opportunity is to add eShop for the bunches your florists actually buy.
-      </div>
-
-      <div class="sub-section">
-        <h4>What to pitch</h4>
-        <ul class="checklist">
-          <li><strong>Optimize K2K boxes</strong> &mdash; grow what works (box pre-orders, cross-border).</li>
-          <li><strong>Add eShop for bunches</strong> &mdash; K2K handles boxes, eShop handles bunches. Different motions for different formats.</li>
-          <li><strong>Migration friction:</strong> eSuite Payments is card-only (no ACH). Workaround = contract disclaimer.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Specific Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">UNTESTED</span>
-          <div class="obj-text"><strong>"K2K 1.5% reseller fee = double-dipping"</strong> (Bill Doran) &mdash; Handling = volume-based discount/rebate toward 0.75-0.5%. Not externally tested.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BUNCH vs BOX -->
-    <div class="seg-card">
-      <h3>Bunch sellers vs Box-only &mdash; how the pitch changes</h3>
-      <div class="seg-meta">The critical distinction that changes everything about the conversation</div>
-
-      <table>
-        <thead>
-          <tr><th style="min-width:140px;">Dimension</th><th>Box-Primary</th><th>Bunch-Primary (W2R houses)</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Who they are</strong></td>
-            <td>Importers, box resellers. Pre-order, advance booking, larger ticket.</td>
-            <td>33 primarily-bunch wholesalers. Walk-in, phone, rep-driven. The $2.56B opportunity.</td>
-          </tr>
-          <tr>
-            <td><strong>Pitch emphasis</strong></td>
-            <td>Stage 1 (Buy Better). K2K works well. eShop is nice-to-have for boxes.</td>
-            <td>Stage 2 (Publish) is the critical unlock. Their floor is invisible online. Stage 3 (Parity) is where the sale converts.</td>
-          </tr>
-          <tr>
-            <td><strong>Where the gap is</strong></td>
-            <td>Business already somewhat digitizable via K2K.</td>
-            <td>$2.56B bunch GMV, only 0.4% sells online. 48 of 51 sell &lt;10% of bunches online. Adoption of bunch upload = ~0.</td>
-          </tr>
-          <tr>
-            <td><strong>Key stat</strong></td>
-            <td>K2K grew +41%. ~$16M boxes.</td>
-            <td>Only ~22-29 wholesalers CAN sell bunches online. 245 of 271 are Core-only.</td>
-          </tr>
-          <tr>
-            <td><strong>Don't do this</strong></td>
-            <td>Don't focus here for the bunch play. "Focus W2R; farms = avoid."</td>
-            <td>Don't skip to Stage 4 (traffic). Get the catalog and pricing right first.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+<!-- PRICING TAB -->
+<div class="tab-content" id="tab-pricing">
+  <h2>Product Pricing</h2>
+  <p style="color:var(--text-dim);margin-bottom:16px;">
+    Editable Google Sheet — anyone at koronet.com can update. Google tracks who changed what and when.
+    <br>Fill in TBD prices when you have them. Put your name in "Updated by."
+  </p>
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;">
+    <iframe src="https://docs.google.com/spreadsheets/d/1dm61eIXfnvy9H_puQqWFxf5w3IILUFty57I8LicApZk/edit?usp=sharing&rm=minimal&widget=true&headers=false"
+      style="width:100%;height:500px;border:none;">
+    </iframe>
   </div>
-  <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+Feedback:+Wholesalers&labels=feedback" target="_blank" class="feedback-btn">Feedback on this section</a>
-</div>
-
-<!-- ==================== TAB 5: TX INITIATIVE TALKING POINTS ==================== -->
-<div class="tab-content" id="t5">
-
-  <div class="section">
-    <div class="section-head">
-      <h2>TX Initiative Talking Points</h2>
-      <span class="hint">6 canonical initiatives &mdash; the operating focus of Chapter TX</span>
-    </div>
-
-    <div class="info-box">
-      <h3>The unified model</h3>
-      <p><strong>Grow GMV &rarr; Digitalize GMV &rarr; Monetize digital GMV into durable fees.</strong><br>
-      Digitalization mechanism: BUY digitally &rarr; LIST bought/sellable supply online &rarr; SELL through digital sales motion.</p>
-    </div>
-
-    <!-- INITIATIVE 1 -->
-    <div class="init-card">
-      <h3>1. Digital Enablers &mdash; Build &rarr; Adopt &rarr; Learn</h3>
-      <div class="init-why">Convert product capability into commercial behavior. Product delivery does not equal revenue impact. Once an enabler is delivered, the work shifts to adoption and learning. When an enabler is in MVP/testing, the work is to validate real usage. When it's WIP, the work is to define expected behavior and launch KPI before Revenue over-promises it.</div>
-
-      <div class="init-number">
-        <div class="num-label">The Number</div>
-        <div class="num-val">3 status lanes: Delivered / Testing / WIP</div>
-        <div class="num-note">Every enabler must be labeled. Delivered: buyer onboarding, self-service checkout, all-in pricing. Testing: Axerrio K2K beta, Supplies HG. WIP: eShop/eSuite parity unlocks.</div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Talking Points</h4>
-        <ul>
-          <li><strong>Shipped =/= used.</strong> We have enablers sitting in accounts that nobody knows about or nobody adopted. The loop is: build, drive adoption, capture why it's not used, fix repeating blockers.</li>
-          <li><strong>Don't over-promise WIP.</strong> If the enabler is still being built, define the expected commercial behavior and launch KPI BEFORE Revenue sells it. The loss pattern (Carbone, FloraMax) came from pitching unshipped capabilities.</li>
-          <li><strong>Blockers split into 6 categories:</strong> training, sales motion, inventory, pricing/terms, delivery, or product gap. Most "product gaps" turn out to be training or sales motion issues.</li>
-          <li><strong>Buyer onboarding (self-register) and self-service checkout</strong> are delivered and in adoption mode. Track # accounts using them, # buyers/orders through them.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Expected Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"The product isn't ready"</strong> &mdash; Some things are. Some aren't. This initiative forces clarity on which is which. Don't let "product isn't ready" become the excuse for not driving adoption of what IS ready.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Owner</h4>
-        <p style="font-size:13px; color:var(--text2);">Product build: Agus/Fede (Maga coordinates). GTM adoption: Revenue, CS, Implementation. Data: Rose. Enablement: Socrates.</p>
-      </div>
-    </div>
-
-    <!-- INITIATIVE 2 -->
-    <div class="init-card">
-      <h3>2. Connection Funnel &mdash; Digitalize GMV: BUY</h3>
-      <div class="init-why">Help wholesalers buy better by activating the right connected supply and turning connections into repeat procurement. Better buying creates the input for LIST. If wholesalers do not repeatedly buy useful supply, there is nothing meaningful to list or sell online.</div>
-
-      <div class="init-number">
-        <div class="num-label">The Number</div>
-        <div class="num-val">~48% of K2K pairs silent 6+ months</div>
-        <div class="num-note">The leak is retention, not "never online." 20,949 established buyer-seller pairs have gone silent for 3+ months. That's the real win-back list.</div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Talking Points</h4>
-        <ul>
-          <li><strong>Buyer-requested connections (Easy Handshake) convert at 57%</strong> vs blitz/ops-created at ~13%. The highest-quality connections are the ones the client asks for.</li>
-          <li><strong>Connection churn is the problem, not "never online."</strong> ~48% of K2K pairs are silent for 6+ months. The pairs were online and stopped.</li>
-          <li><strong>Follow the buyer.</strong> The buyer's motivation determines whether a connection converts. Contact from buyer side AND vendor side.</li>
-          <li><strong>Initiative sources matter:</strong> Easy Handshake, Cupido, Daza, Blitz, manual/handshake &mdash; each has different conversion and learning.</li>
-          <li><strong>K2K grew +41% YoY.</strong> The network is expanding. The question is whether activated pairs STAY active.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Expected Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text"><strong>"Why did they stop buying?"</strong> &mdash; Could be awareness, supply, price, logistics, terms, or sales motion. This initiative's job is to find out. No single answer.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Owner</h4>
-        <p style="font-size:13px; color:var(--text2);">Business: Cata. Product/data: Fede/Agus. Data: Rose. Enablement: Socrates. Follow-up tracking: Pablito.</p>
-      </div>
-    </div>
-
-    <!-- INITIATIVE 3 -->
-    <div class="init-card">
-      <h3>3. Strategic Account Plays</h3>
-      <div class="init-why">Turn priority accounts into explicit plays with owner, ask, action, metric, and learning &mdash; instead of generic "top account" attention. Large accounts, mid-tier, and small role models need different motions. The system learns fastest when each play is explicit and measured.</div>
-
-      <div class="init-number">
-        <div class="num-label">The Number</div>
-        <div class="num-val"># accounts with an approved play</div>
-        <div class="num-note">The leading indicator. If accounts don't have explicit plays, they're getting generic attention.</div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Talking Points</h4>
-        <ul>
-          <li><strong>Three tracks:</strong> Whales (custom plays, exec alignment, high leverage), Mid-tier (Black Belt / structured program), Small role models (learn what works, replicate).</li>
-          <li><strong>Every play must have:</strong> what we believe, what we ask, what we do, what we measure, what we learn next.</li>
-          <li><strong>Validated plays become reusable</strong> and go into the plays registry. Rejected plays log why &mdash; learning either way.</li>
-          <li><strong>Onsite is the proven win lever.</strong> "$2,500, pays off month 1 in payment fees; we win in person, not on Zoom."</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Expected Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"We don't have bandwidth for custom plays on every account"</strong> &mdash; Start with 5. If the plays work, the motions become templates. If they don't, we learn why without scaling failure.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Owner</h4>
-        <p style="font-size:13px; color:var(--text2);">Business: Cata + Facu. Account strategy: Mercurio. Data: Rose. Enablement: Socrates. Deadlines: Pablito. Verification: Codex.</p>
-      </div>
-    </div>
-
-    <!-- INITIATIVE 4 -->
-    <div class="init-card">
-      <h3>4. Online Supply Readiness &mdash; Digitalize GMV: LIST</h3>
-      <div class="init-why">Make the supply wholesalers actually buy and sell offline visible, priced, reliable, and sellable online. Digital demand cannot convert against empty shelves, incomplete catalogs, stale availability, missing units, unclear terms, or inventory workflows teams cannot maintain.</div>
-
-      <div class="init-number">
-        <div class="num-label">The Number</div>
-        <div class="num-val">$2.56B bunch GMV, 0.4% online</div>
-        <div class="num-note">The biggest supply gap in the ecosystem. 48 of 51 bunch-sellers have less than 10% online. K2K cannot sell bunches at all ($0).</div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Talking Points</h4>
-        <ul>
-          <li><strong>What the wholesaler sells on the floor is NOT what appears online.</strong> The eShop shows boxes. The cooler has bunches. To a florist, the eShop looks like a different business.</li>
-          <li><strong>Only ~22-29 wholesalers CAN sell bunches online.</strong> 245 of 271 are Core-only. The binding constraint is channel capability, not willingness.</li>
-          <li><strong>The bunch upload tool exists. Adoption is approximately zero.</strong> "Is anyone adding bunches? Crickets." This is an operational problem, not a product problem.</li>
-          <li><strong>Zeidler proves it works.</strong> Same implementation effort as Riverside (0.09% digital). Zeidler is at 17.2%. The difference is operational commitment + bunch listing.</li>
-          <li><strong>Supplies/Hardgoods is a separate track:</strong> $14.1M GMV (83% Bill Doran). Gated by imagery, taxonomy, case-selling parity.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Expected Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text"><strong>"Bunch upload is too much work every morning"</strong> &mdash; The core adoption blocker. No proven answer. Needs operational support model, not a rebuttal.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Owner</h4>
-        <p style="font-size:13px; color:var(--text2);">Business: Cata. Supporting: CS, Implementation, Product. Data: Rose. Enablement: Socrates.</p>
-      </div>
-    </div>
-
-    <!-- INITIATIVE 5 -->
-    <div class="init-card">
-      <h3>5. Commercial Readiness in Implementation &mdash; Digitalize GMV: SELL</h3>
-      <div class="init-why">Ensure implementation leaves wholesalers ready to transact, not merely configured. Listing supply is not enough. The client needs buyer access, pricing/terms clarity, sales-team alignment, delivery setup, and a first commercial motion to convert the existing book.</div>
-
-      <div class="init-number">
-        <div class="num-label">The Number</div>
-        <div class="num-val">Signed =/= Activated</div>
-        <div class="num-note">0 transactions 60+ days post-launch is the failure signal. Measure >=1 real transaction, not "it's enabled."</div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Talking Points</h4>
-        <ul>
-          <li><strong>6 readiness dimensions:</strong> supply readiness, price/deal/terms, buyer access, delivery/pickup/payment, sales rep motion, first commercial play.</li>
-          <li><strong>The System Health Check</strong> &mdash; prefilled for each account before go-live. Client-friendly explanation of what's missing.</li>
-          <li><strong>"Signed =/= activated" is the operating principle.</strong> We measure first order, repeat orders, and online GMV from implemented accounts &mdash; not signatures.</li>
-          <li><strong>The implementation window is 60-90 days.</strong> After that, fatigue sets in. "Implementations feel endless" is a real churn signal.</li>
-          <li><strong>Implementation learnings route back to Product/GTM.</strong> If the same gap appears 3x, it's not a client problem &mdash; it's a system problem.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Expected Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"Implementation is a service team function, not a revenue function"</strong> &mdash; If the implementation doesn't produce a first transaction, it's a cost with no return. Readiness IS revenue.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Owner</h4>
-        <p style="font-size:13px; color:var(--text2);">Business: Christine (reports through Cata). Enablement: Socrates. Data: Rose. Plays: Mercurio.</p>
-      </div>
-    </div>
-
-    <!-- INITIATIVE 6 -->
-    <div class="init-card">
-      <h3>6. Growth / Black Belt &mdash; Grow + Digitalize</h3>
-      <div class="init-why">Use Black Belt to amplify SELL when it works and diagnose when it does not. Growth is not only ads. Black Belt amplifies demand, increases active online behavior, and understands where the funnel breaks through readiness, CRM, Deal Maker, eShop tuning, retargeting, traffic, and measurement.</div>
-
-      <div class="init-number">
-        <div class="num-label">The Number</div>
-        <div class="num-val">Online >= Offline (the readiness standard)</div>
-        <div class="num-note">Online must be at least as good as offline across availability, pricing, deals, terms, delivery/pickup, relationship, and sales-team trust. If any dimension is worse online, digitalization stalls.</div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Talking Points</h4>
-        <ul>
-          <li><strong>Growth is gated on readiness.</strong> Don't bring traffic to an empty store with wrong prices. Stages 1-3 come before Stage 4.</li>
-          <li><strong>The addressable market for most wholesalers is 200-500 florists.</strong> It's limited. Acquisition support is exclusive &mdash; only for those who earned it by doing Stages 1-3.</li>
-          <li><strong>Black Belt operating modes:</strong> Readiness check, existing-client digitalization, eShop tuning, CRM/Deal Maker, traffic/acquisition, diagnostic mode.</li>
-          <li><strong>Measure the funnel:</strong> invite &rarr; click &rarr; register &rarr; eShop visit &rarr; first order &rarr; repeat. CPL/CPA by stage, not aggregate leads.</li>
-          <li><strong>When the blocker is monetization/product/business-model</strong> (Standing Orders, Grower Portal, API/EDI, billing leakage) &mdash; route to leadership. Don't pretend the Friday operating group can solve it.</li>
-        </ul>
-      </div>
-
-      <div class="sub-section">
-        <h4>Expected Objections</h4>
-        <div class="obj-row">
-          <span class="badge badge-tested">PROPOSED</span>
-          <div class="obj-text"><strong>"My customers are old, they won't switch online"</strong> &mdash; Still 85% of your book. We start by digitalizing the buyers you already have. Siedlers went 12% to 19%. But this hasn't closed a skeptic in the room.</div>
-        </div>
-        <div class="obj-row">
-          <span class="badge badge-untested">NO ANSWER</span>
-          <div class="obj-text"><strong>"What does Black Belt actually cost and deliver?"</strong> &mdash; No Black Belt offer exists: what client gets, what client does, what metric proves it, what happens if it fails. GAP.</div>
-        </div>
-      </div>
-
-      <div class="sub-section">
-        <h4>Owner</h4>
-        <p style="font-size:13px; color:var(--text2);">Business: Facu. Narrative: Socrates. Account play: Mercurio. Data: Rose. Follow-up: Pablito.</p>
-      </div>
-    </div>
-
-  </div>
-  <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+Feedback:+Initiatives&labels=feedback" target="_blank" class="feedback-btn">Feedback on this section</a>
-</div>
-
-<!-- ==================== TAB 6: PRICING ==================== -->
-<div class="tab-content" id="t6">
-
-  <div class="section">
-    <div class="section-head">
-      <h2>Pricing Reference</h2>
-      <span class="hint">Canonical source &mdash; embedded from Google Sheets</span>
-    </div>
-
-    <div class="info-box">
-      <h3>Important</h3>
-      <p>This is the live pricing reference sheet. For deal-specific pricing, check with Deal Desk. Transaction fee rates and Payments processing rates are published in the Cata Payments one-pager. Core seat pricing and eSuite subscription pricing require Deal Desk validation before quoting.</p>
-    </div>
-
-    <iframe src="https://docs.google.com/spreadsheets/d/1dm61eIXfnvy9H_puQqWFxf5w3IILUFty57I8LicApZk/edit?usp=sharing&rm=minimal&widget=true&headers=false" style="width:100%;height:500px;border:none;border-radius:8px;"></iframe>
-
-    <div style="margin-top:16px;">
-      <table>
-        <thead>
-          <tr><th>Rate Type</th><th>Amount</th><th>Source</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>ACH</td><td><strong>$1 flat</strong></td><td><span class="badge badge-proven">PUBLISHED</span> Cata Payments one-pager</td></tr>
-          <tr><td>Standard cards</td><td><strong>2.90% + $0.25</strong></td><td><span class="badge badge-proven">PUBLISHED</span></td></tr>
-          <tr><td>Commercial cards</td><td><strong>3.50% + $0.25</strong></td><td><span class="badge badge-proven">PUBLISHED</span></td></tr>
-          <tr><td>Card present</td><td><strong>2.75% + $0.25</strong></td><td><span class="badge badge-proven">PUBLISHED</span></td></tr>
-          <tr><td>K2K reseller fee</td><td><strong>1.5%</strong></td><td><span class="badge badge-tested">STANDARD</span> volume-discount under discussion</td></tr>
-          <tr><td>eShops upsell</td><td><strong>~$600/mo</strong></td><td><span class="badge badge-tested">REPORTED</span> ~1-year commitment (Allure ref)</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+Feedback:+Pricing&labels=feedback" target="_blank" class="feedback-btn">Feedback on this section</a>
+  <p style="font-size:12px;color:var(--text-dim);">
+    Canonical source: <a href="https://docs.google.com/spreadsheets/d/1dm61eIXfnvy9H_puQqWFxf5w3IILUFty57I8LicApZk/edit" target="_blank">Google Sheet (open full)</a>
+    · Owner: Sofia Pardo (RevOps) · Accountable: Facu
+  </p>
+  <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+Pricing" target="_blank" class="feedback-btn" style="display:inline-block;margin-top:8px;padding:6px 14px;background:var(--accent,#2563eb);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;">Feedback on Pricing</a>
 </div>
 
 </div><!-- /tab-body -->
 
 <!-- FOOTER -->
 <div class="footer">
-  <p><strong>Source of truth:</strong> value-prop-v1.md, INVENTORY_MAP.md, WHOLESALER_JOURNEY.md, wholesaler-segmentation.md, OBJECTION_BANK.md, PROOF_BANK.md, product-cards-v2.md, initiatives.md (canonical), Mauro battlecards (Drive), Cata one-pagers (PDFs)</p>
-  <p style="margin-top:6px;"><strong>Last updated:</strong> 2026-07-06 | <strong>Built by:</strong> Pablito (value prop unification)</p>
-  <p style="margin-top:6px;"><strong>Confidence badges:</strong>
-    <span class="badge badge-proven">PROVEN</span> verified in data/systems &nbsp;
-    <span class="badge badge-tested">TESTED / REPORTED</span> said by CS/Sales/calls, not independently verified &nbsp;
-    <span class="badge badge-untested">UNTESTED / GAP</span> no source or product gap &nbsp;
-    <span class="badge badge-contradiction">CONTRADICTION</span> conflicting claims across materials
-  </p>
-  <p style="margin-top:6px;">
-    <a href="https://github.com/Koronet/Koronet_OS/issues/new?title=Value+Prop+v2+General+Feedback&labels=feedback" target="_blank" class="feedback-btn">General Feedback</a>
-  </p>
+  <div class="footer-text">
+    Source of truth: <code>value-prop/</code> in Koronet_OS. Only Facu can modify. Feedback via <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=Blank+issue&labels=value-prop-feedback&title=[VP+Feedback]+General" target="_blank">GitHub Issues</a>.
+    <br>Last updated: 2026-07-14
+  </div>
+  <div class="footer-text">
+    <a href="index.html">&larr; Hub</a>
+  </div>
 </div>
 
 <script>
-function showTab(id) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+function switchTab(id) {
+  // Deactivate all tabs and content
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  // Find the tab button by matching onclick
-  document.querySelectorAll('.tab').forEach(t => {
-    if (t.getAttribute('onclick') === "showTab('" + id + "')") t.classList.add('active');
-  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  // Activate selected
+  document.getElementById('tab-' + id).classList.add('active');
+  // Find the right button
+  const tabs = document.querySelectorAll('.tab');
+  const map = { core: 0, segments: 1, objections: 2, talktracks: 3, battlecards: 4, proof: 5, pricing: 6 };
+  tabs[map[id]].classList.add('active');
 }
 </script>
 

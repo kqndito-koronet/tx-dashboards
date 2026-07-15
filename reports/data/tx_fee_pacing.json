@@ -1,0 +1,1249 @@
+{
+ "dashboard": "TX Fee Pacing",
+ "pulled_at": "2026-06-17",
+ "source": "Snowflake PRODUCTION.ANALYTICS.TRANSACTION_FEES (ks_flag=TRUE)",
+ "target_2026": 4000000,
+ "notes": "June pending (fees billed in arrears). May Gross Profit Share pending. Projection is seasonality-aware (see Definitions).",
+ "rows_2026": [
+  [
+   "2026-01",
+   "API",
+   9050.46
+  ],
+  [
+   "2026-01",
+   "FedEx",
+   706.35
+  ],
+  [
+   "2026-01",
+   "Gross Profit Share",
+   142.4
+  ],
+  [
+   "2026-01",
+   "K2K",
+   63011.54
+  ],
+  [
+   "2026-01",
+   "eCommerce",
+   69751.58
+  ],
+  [
+   "2026-02",
+   "API",
+   17058.33
+  ],
+  [
+   "2026-02",
+   "FedEx",
+   1424.35
+  ],
+  [
+   "2026-02",
+   "Gross Profit Share",
+   194.33
+  ],
+  [
+   "2026-02",
+   "K2K",
+   92031.41
+  ],
+  [
+   "2026-02",
+   "eCommerce",
+   98619.26
+  ],
+  [
+   "2026-03",
+   "API",
+   12593.15
+  ],
+  [
+   "2026-03",
+   "FedEx",
+   1011.75
+  ],
+  [
+   "2026-03",
+   "Gross Profit Share",
+   40.05
+  ],
+  [
+   "2026-03",
+   "K2K",
+   76688.7
+  ],
+  [
+   "2026-03",
+   "eCommerce",
+   100300.6
+  ],
+  [
+   "2026-04",
+   "API",
+   14942.49
+  ],
+  [
+   "2026-04",
+   "FedEx",
+   1190.1
+  ],
+  [
+   "2026-04",
+   "Gross Profit Share",
+   502.85
+  ],
+  [
+   "2026-04",
+   "K2K",
+   133491.77
+  ],
+  [
+   "2026-04",
+   "eCommerce",
+   138479.6
+  ],
+  [
+   "2026-05",
+   "API",
+   17335.38
+  ],
+  [
+   "2026-05",
+   "FedEx",
+   1571.95
+  ],
+  [
+   "2026-05",
+   "K2K",
+   137316.87
+  ],
+  [
+   "2026-05",
+   "eCommerce",
+   147183.68
+  ]
+ ],
+ "monthly_totals_prior": {
+  "2024": [
+   77365.16,
+   111854.78,
+   89139.21,
+   106916.19,
+   155317.45,
+   88797.33,
+   66427.4,
+   88392.03,
+   132520.8,
+   141773.82,
+   106963.65,
+   105350.6
+  ],
+  "2025": [
+   117035.06,
+   163728.69,
+   142577.17,
+   199361.6,
+   237030.42,
+   136471.43,
+   110294.37,
+   138824.15,
+   184485.38,
+   191738.99,
+   156887.91,
+   145394.92
+  ]
+ },
+ "top_accounts_2026": [
+  [
+   "-Sole Farms",
+   110711.22
+  ],
+  [
+   "* Jet Fresh Flower Distributors Inc.",
+   77631.58
+  ],
+  [
+   "Fresca Farms",
+   64723.99
+  ],
+  [
+   "Kennicott Brothers Company",
+   58043.93
+  ],
+  [
+   "Royal Flowers Inc., Domestic",
+   48481.64
+  ],
+  [
+   "FloraLink",
+   48433.63
+  ],
+  [
+   "Continental Flowers",
+   46356.3
+  ],
+  [
+   "Choice Farms",
+   43928.47
+  ],
+  [
+   "Rosaprima International, LLC",
+   36794.64
+  ],
+  [
+   "Allure Farms",
+   36783.36
+  ],
+  [
+   "Bella Blossom LLC",
+   34761.85
+  ],
+  [
+   "Sunburst Farms",
+   32863.52
+  ],
+  [
+   "* Welyflor / PROFILE FLOWERS",
+   31988.97
+  ],
+  [
+   "Bill Doran Company",
+   30999.98
+  ],
+  [
+   "U.S. Greens Corp",
+   22252.06
+  ]
+ ],
+ "definitions": {
+  "eCommerce": "Seller-side fee (~1.5% std) on digital eShop/eCommerce orders. Largest fee line.",
+  "K2K": "Komet-to-Komet network trades. Seller-side fee per hop ('supply chain multiplication'). ~tied with eCommerce as largest.",
+  "API": "Fee on orders flowing through API integrations (e.g., Holex units).",
+  "FedEx": "Freight/shipping fee component; zone-based, reconciled monthly vs the FedEx invoice.",
+  "Gross Profit Share": "Revenue-share fee (a share of gross profit, e.g. Floropolis virtual broker). Often billed manually; May 2026 pending.",
+  "YTD TX Fees": "Sum of billed transaction fees Jan 1 -> latest closed month, ks_flag=TRUE (excludes demo companies).",
+  "Seasonality-aware projection": "Floral is highly seasonal (peaks Feb Valentine's + May Mother's Day), so naive last-2-months x12 OVERSTATES. Method: take 2025 actual monthly curve and scale by the 2026 YTD-vs-2025-YTD YoY factor (+32%). = honest full-year estimate.",
+  "Gap to $4M": "Target 2026 ($4M) minus the seasonality-aware projection.",
+  "YoY growth": "2026 YTD (Jan-May) vs same months 2025.",
+  "YoY view": "2024 vs 2025 vs 2026 monthly, so seasonality is read from real history (not assumed). Peaks: Feb (Valentine's), May (Mother's Day)."
+ },
+ "by_type_month": {
+  "2024": {
+   "eCommerce": [
+    39743.94,
+    51055.87,
+    52034.61,
+    62752.64,
+    85710.56,
+    55752.31,
+    38387.94,
+    54086.02,
+    79900.99,
+    81561.19,
+    55532.22,
+    54670.4
+   ],
+   "K2K": [
+    25382.72,
+    35687.75,
+    23735.14,
+    28922.94,
+    43528.35,
+    22804.65,
+    17971.95,
+    23540.11,
+    40629.51,
+    48648.14,
+    41495.21,
+    40303.8
+   ],
+   "API": [
+    10932.49,
+    23167.92,
+    12059.28,
+    13613.1,
+    23288.0,
+    8720.92,
+    8451.74,
+    9097.02,
+    9693.89,
+    10381.44,
+    8839.62,
+    9223.0
+   ],
+   "FedEx": [
+    1306.01,
+    1943.24,
+    1310.18,
+    1627.51,
+    2790.54,
+    1519.45,
+    1615.77,
+    1668.88,
+    2296.41,
+    1183.05,
+    1096.6,
+    1153.4
+   ],
+   "Gross Profit Share": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "2025": {
+   "eCommerce": [
+    59164.03,
+    78182.68,
+    73175.02,
+    91894.86,
+    117536.61,
+    68325.94,
+    51733.49,
+    63442.29,
+    82484.03,
+    86598.75,
+    75286.72,
+    71471.81
+   ],
+   "K2K": [
+    49912.66,
+    70335.1,
+    58365.9,
+    93491.97,
+    99235.18,
+    58144.3,
+    50304.18,
+    66925.66,
+    91243.98,
+    91807.14,
+    71447.35,
+    62733.24
+   ],
+   "API": [
+    7177.72,
+    13634.56,
+    9990.7,
+    12669.72,
+    18330.53,
+    8929.79,
+    7370.65,
+    7528.7,
+    9466.07,
+    12150.25,
+    10153.84,
+    10058.72
+   ],
+   "FedEx": [
+    780.65,
+    1576.35,
+    1045.55,
+    1305.05,
+    1928.1,
+    1071.4,
+    886.05,
+    927.5,
+    1291.3,
+    1182.85,
+    0.0,
+    1005.65
+   ],
+   "Gross Profit Share": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    125.5
+   ]
+  },
+  "2026": {
+   "eCommerce": [
+    69751.58,
+    98619.26,
+    100300.6,
+    138479.6,
+    147183.68,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "K2K": [
+    63011.54,
+    92031.41,
+    76688.7,
+    133491.77,
+    137316.87,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "API": [
+    9050.46,
+    17058.33,
+    12593.15,
+    14942.49,
+    17335.38,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "FedEx": [
+    706.35,
+    1424.35,
+    1011.75,
+    1190.1,
+    1571.95,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "Gross Profit Share": [
+    142.4,
+    194.33,
+    40.05,
+    502.85,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "clients_by_type_2026": {
+  "API": [
+   [
+    "Bloomnet",
+    20279.27
+   ],
+   [
+    "Kennicott Brothers Company",
+    12476.0
+   ],
+   [
+    "* Jet Fresh Flower Distributors Inc.",
+    7916.27
+   ],
+   [
+    "-Sole Farms",
+    4385.45
+   ]
+  ],
+  "K2K": [
+   [
+    "FloraLink",
+    48433.63
+   ],
+   [
+    "-Sole Farms",
+    44192.14
+   ],
+   [
+    "Kennicott Brothers Company",
+    41842.74
+   ],
+   [
+    "* Jet Fresh Flower Distributors Inc.",
+    28558.61
+   ],
+   [
+    "Fresca Farms",
+    24891.27
+   ],
+   [
+    "Royal Flowers Inc., Domestic",
+    17727.8
+   ],
+   [
+    "Continental Flowers",
+    16976.01
+   ],
+   [
+    "Choice Farms",
+    16633.87
+   ],
+   [
+    "Bill Doran Company",
+    16167.22
+   ],
+   [
+    "* Welyflor / PROFILE FLOWERS",
+    13523.04
+   ],
+   [
+    "Bella Blossom LLC",
+    12235.79
+   ],
+   [
+    "Rosaprima International, LLC",
+    10717.93
+   ],
+   [
+    "Mayesh Wholesale Florist Inc",
+    10000.28
+   ],
+   [
+    "Allure Farms",
+    9540.21
+   ],
+   [
+    "The Queens Flowers Corp",
+    9173.8
+   ],
+   [
+    "Sunburst Farms",
+    8219.73
+   ]
+  ],
+  "eCommerce": [
+   [
+    "-Sole Farms",
+    61068.33
+   ],
+   [
+    "* Jet Fresh Flower Distributors Inc.",
+    40854.9
+   ],
+   [
+    "Fresca Farms",
+    36396.98
+   ],
+   [
+    "Royal Flowers Inc., Domestic",
+    28730.92
+   ],
+   [
+    "Continental Flowers",
+    28558.79
+   ],
+   [
+    "Choice Farms",
+    26044.74
+   ],
+   [
+    "Allure Farms",
+    25987.73
+   ],
+   [
+    "Rosaprima International, LLC",
+    25120.07
+   ],
+   [
+    "Bella Blossom LLC",
+    22526.06
+   ],
+   [
+    "Sunburst Farms",
+    22071.65
+   ],
+   [
+    "* Welyflor / PROFILE FLOWERS",
+    18061.49
+   ],
+   [
+    "U.S. Greens Corp",
+    15074.23
+   ],
+   [
+    "Bill Doran Company",
+    14832.76
+   ]
+  ]
+ },
+ "jump_mar_apr": {
+  "K2K": [
+   [
+    "FloraLink",
+    6572.36,
+    12965.17
+   ],
+   [
+    "-Sole Farms",
+    6531.93,
+    10654.31
+   ],
+   [
+    "Kennicott Brothers Company",
+    5884.16,
+    9910.56
+   ],
+   [
+    "* Jet Fresh Flower Distributors Inc.",
+    4671.54,
+    8165.02
+   ],
+   [
+    "Fresca Farms",
+    4238.18,
+    5891.13
+   ]
+  ],
+  "eCommerce": [
+   [
+    "-Sole Farms",
+    11838.21,
+    14643.02
+   ],
+   [
+    "* Jet Fresh Flower Distributors Inc.",
+    7933.67,
+    9923.54
+   ],
+   [
+    "Rosaprima International, LLC",
+    6425.19,
+    7874.58
+   ],
+   [
+    "Fresca Farms",
+    7017.34,
+    7670.79
+   ]
+  ]
+ },
+ "account_360": {
+  "* Jet Fresh Flower Distributors Inc.": {
+   "id": "18322",
+   "mix": {
+    "API": 7916.27,
+    "FedEx": 301.8,
+    "K2K": 28558.61,
+    "eCommerce": 40854.9
+   },
+   "annual": {
+    "2024": 31798.45,
+    "2025": 119868.84,
+    "2026": 77631.58
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "18322",
+    "Name": "Jet Fresh Flower Distributors Inc.",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Champions",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 8009.77,
+    "ARR__c": 96117,
+    "Komet_Users__c": 42,
+    "Komet_Locations__c": 3
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": "Daniel Londo\u00f1o",
+    "csa": "Catalina Rojas",
+    "sla": "1 - High",
+    "renewal": "2026-09-30",
+    "days_to_renewal": 105,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "* Welyflor / PROFILE FLOWERS": {
+   "id": "453081",
+   "mix": {
+    "API": 404.44,
+    "K2K": 13523.04,
+    "eCommerce": 18061.49
+   },
+   "annual": {
+    "2024": 43347.4,
+    "2025": 40838.69,
+    "2026": 31988.97
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "453081",
+    "Name": "Welyflor / Profile Flowers",
+    "Business_Type__c": null,
+    "Segment__c": "Potential Loyalists",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 2199,
+    "ARR__c": 26388,
+    "Komet_Users__c": 7,
+    "Komet_Locations__c": 2
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": null,
+    "csa": "Laura Villegas",
+    "sla": "2 - Medium",
+    "renewal": "2027-03-01",
+    "days_to_renewal": 257,
+    "go_live": "2020-04-13",
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "-Sole Farms": {
+   "id": "25489",
+   "mix": {
+    "API": 4385.45,
+    "FedEx": 1065.3,
+    "K2K": 44192.14,
+    "eCommerce": 61068.33
+   },
+   "annual": {
+    "2024": 41123.2,
+    "2025": 131594.47,
+    "2026": 110711.22
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "25489",
+    "Name": "Sole Farms",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1,
+    "MRR__c": 5284.35,
+    "ARR__c": 63412,
+    "Komet_Users__c": 31,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": "Daniel Londo\u00f1o",
+    "csa": "Catalina Rojas",
+    "sla": "1 - High",
+    "renewal": "2027-01-01",
+    "days_to_renewal": 198,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Allure Farms": {
+   "id": "73730",
+   "mix": {
+    "API": 1062.52,
+    "FedEx": 192.9,
+    "K2K": 9540.21,
+    "eCommerce": 25987.73
+   },
+   "annual": {
+    "2024": 23959.24,
+    "2025": 52382.73,
+    "2026": 36783.36
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "73730",
+    "Name": "Allure Farms",
+    "Business_Type__c": "Wholesaler",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 7056.84,
+    "ARR__c": 84682,
+    "Komet_Users__c": 30,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Christian Medina",
+    "am": null,
+    "csa": "Christian Medina",
+    "sla": "1 - High",
+    "renewal": "2026-09-30",
+    "days_to_renewal": 105,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Bella Blossom LLC": {
+   "id": "17789",
+   "mix": {
+    "K2K": 12235.79,
+    "eCommerce": 22526.06
+   },
+   "annual": {
+    "2024": 20715.79,
+    "2025": 57130.64,
+    "2026": 34761.85
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "17789",
+    "Name": "Bella Blossom LLC",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 1684.63,
+    "ARR__c": 20216,
+    "Komet_Users__c": 9,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Juan Diego Toro",
+    "am": null,
+    "csa": "Maria Alejandra Mesa",
+    "sla": "3 - Low",
+    "renewal": "2025-10-08",
+    "days_to_renewal": -252,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Bill Doran Company": {
+   "id": "7030",
+   "mix": {
+    "K2K": 16167.22,
+    "eCommerce": 14832.76
+   },
+   "annual": {
+    "2024": 7649.49,
+    "2025": 33071.9,
+    "2026": 30999.98
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "7030",
+    "Name": "Bill Doran Company",
+    "Business_Type__c": "Wholesaler",
+    "Segment__c": "Champions",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 21030,
+    "ARR__c": 252360,
+    "Komet_Users__c": 251,
+    "Komet_Locations__c": 24
+   },
+   "rel": {
+    "owner": "Christian Medina",
+    "am": "Daniel Londo\u00f1o",
+    "csa": "Christian Medina",
+    "sla": "1 - High",
+    "renewal": "2026-12-16",
+    "days_to_renewal": 182,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Choice Farms": {
+   "id": "341499",
+   "mix": {
+    "API": 842.46,
+    "FedEx": 407.4,
+    "K2K": 16633.87,
+    "eCommerce": 26044.74
+   },
+   "annual": {
+    "2024": 90894.08,
+    "2025": 84820.42,
+    "2026": 43928.47
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "341499",
+    "Name": "Choice Farms",
+    "Business_Type__c": "Grower",
+    "Segment__c": "Need Attention",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 3998,
+    "ARR__c": 47976,
+    "Komet_Users__c": 18,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": null,
+    "csa": "Laura Villegas",
+    "sla": "1 - High",
+    "renewal": "2027-05-01",
+    "days_to_renewal": 318,
+    "go_live": "2019-01-01",
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Continental Flowers": {
+   "id": "146846",
+   "mix": {
+    "API": 821.5,
+    "K2K": 16976.01,
+    "eCommerce": 28558.79
+   },
+   "annual": {
+    "2024": 77060.06,
+    "2025": 92143.83,
+    "2026": 46356.3
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "146846",
+    "Name": "Continental Flowers",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Need Attention",
+    "Komet_Core__c": false,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 829,
+    "ARR__c": 9948,
+    "Komet_Users__c": 1,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Denisse Podsiadlo",
+    "am": null,
+    "csa": "Maria Alejandra Mesa",
+    "sla": "2 - Medium",
+    "renewal": "2026-11-30",
+    "days_to_renewal": 166,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "FloraLink": {
+   "id": "153031",
+   "mix": {
+    "K2K": 48433.63
+   },
+   "annual": {
+    "2024": 52125.87,
+    "2025": 83444.6,
+    "2026": 48433.63
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "153031",
+    "Name": "FloraLink",
+    "Business_Type__c": "Wholesaler",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 1179,
+    "ARR__c": 14148,
+    "Komet_Users__c": 4,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Christian Medina",
+    "am": "Diego Romero",
+    "csa": "Christian Medina",
+    "sla": "2 - Medium",
+    "renewal": "2027-05-01",
+    "days_to_renewal": 318,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Fresca Farms": {
+   "id": "103112",
+   "mix": {
+    "API": 3133.04,
+    "FedEx": 302.7,
+    "K2K": 24891.27,
+    "eCommerce": 36396.98
+   },
+   "annual": {
+    "2024": 22813.37,
+    "2025": 56141.11,
+    "2026": 64723.99
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "103112",
+    "Name": "Fresca Farms",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 8323.59,
+    "ARR__c": 99883,
+    "Komet_Users__c": 46,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": "Daniel Londo\u00f1o",
+    "csa": "Christian Medina",
+    "sla": "1 - High",
+    "renewal": "2026-11-01",
+    "days_to_renewal": 137,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Kennicott Brothers Company": {
+   "id": "44150",
+   "mix": {
+    "API": 12476.0,
+    "K2K": 41842.74,
+    "eCommerce": 3725.19
+   },
+   "annual": {
+    "2024": 71408.65,
+    "2025": 108644.06,
+    "2026": 58043.93
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "44150",
+    "Name": "Kennicott Brothers Company",
+    "Business_Type__c": "Retail",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 0.75,
+    "MRR__c": 26379.44,
+    "ARR__c": 316553,
+    "Komet_Users__c": 218,
+    "Komet_Locations__c": 31
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": null,
+    "csa": "Catalina Rojas",
+    "sla": "1 - High",
+    "renewal": "2026-10-01",
+    "days_to_renewal": 106,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Rosaprima International, LLC": {
+   "id": "12941",
+   "mix": {
+    "API": 637.09,
+    "FedEx": 319.55,
+    "K2K": 10717.93,
+    "eCommerce": 25120.07
+   },
+   "annual": {
+    "2024": 11206.14,
+    "2025": 30190.47,
+    "2026": 36794.64
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "12941",
+    "Name": "Rosaprima International, LLC",
+    "Business_Type__c": null,
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 8908.77,
+    "ARR__c": 106905,
+    "Komet_Users__c": 48,
+    "Komet_Locations__c": 6
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": "Daniel Londo\u00f1o",
+    "csa": "Catalina Rojas",
+    "sla": "2 - Medium",
+    "renewal": "2026-06-22",
+    "days_to_renewal": 5,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Royal Flowers Inc., Domestic": {
+   "id": "22143",
+   "mix": {
+    "API": 1371.92,
+    "FedEx": 651.0,
+    "K2K": 17727.8,
+    "eCommerce": 28730.92
+   },
+   "annual": {
+    "2024": 88240.03,
+    "2025": 98448.75,
+    "2026": 48481.64
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "22143",
+    "Name": "Royal Flowers Inc., Domestic",
+    "Business_Type__c": null,
+    "Segment__c": "About to Sleep",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 3734.26,
+    "ARR__c": 44811,
+    "Komet_Users__c": 26,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Sebastian Rodriguez",
+    "am": "Diego Romero",
+    "csa": "Catalina Rojas",
+    "sla": "1 - High",
+    "renewal": "2026-07-31",
+    "days_to_renewal": 44,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "Sunburst Farms": {
+   "id": "22218",
+   "mix": {
+    "API": 2366.64,
+    "FedEx": 205.5,
+    "K2K": 8219.73,
+    "eCommerce": 22071.65
+   },
+   "annual": {
+    "2024": 20524.15,
+    "2025": 53212.62,
+    "2026": 32863.52
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "22218",
+    "Name": "Sunburst Farms",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Loyal Customers",
+    "Komet_Core__c": true,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 6655.92,
+    "ARR__c": 79871,
+    "Komet_Users__c": 30,
+    "Komet_Locations__c": 2
+   },
+   "rel": {
+    "owner": "Catalina Rojas",
+    "am": null,
+    "csa": "Maria Alejandra Mesa",
+    "sla": "1 - High",
+    "renewal": "2026-08-31",
+    "days_to_renewal": 75,
+    "go_live": null,
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  },
+  "U.S. Greens Corp": {
+   "id": "468041",
+   "mix": {
+    "API": 488.29,
+    "K2K": 6689.54,
+    "eCommerce": 15074.23
+   },
+   "annual": {
+    "2024": 25705.73,
+    "2025": 38824.51,
+    "2026": 22252.06
+   },
+   "sf": {
+    "KometSales_CompanyId__c": "468041",
+    "Name": "U.S. Greens Corp",
+    "Business_Type__c": "Importer",
+    "Segment__c": "Promising",
+    "Komet_Core__c": false,
+    "Komet_E_commerce__c": true,
+    "K2K_Fee__c": true,
+    "E_commerce_Fee__c": true,
+    "API_Fee__c": true,
+    "API_Fee_Percentage__c": 1.5,
+    "MRR__c": 1090.67,
+    "ARR__c": 13088,
+    "Komet_Users__c": 1,
+    "Komet_Locations__c": 1
+   },
+   "rel": {
+    "owner": "Denisse Podsiadlo",
+    "am": null,
+    "csa": "Maria Alejandra Mesa",
+    "sla": "3 - Low",
+    "renewal": "2027-05-06",
+    "days_to_renewal": 323,
+    "go_live": "2020-06-16",
+    "churn_reason": null
+   },
+   "yoy_ytd_growth": null
+  }
+ },
+ "fathom_note": "Fathom: search per account on-demand (FloraLink had 1 recent mention). Org corpus = 8 teams."
+}

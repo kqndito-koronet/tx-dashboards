@@ -1,0 +1,904 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Hypothesis Registry v2 — Koronet OS</title>
+<style>:root{--bg:#0f1419;--card:#1a2230;--ink:#e6edf3;--mut:#8b98a9;--line:#2a3543;--acc:#4f9dff}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.5 -apple-system,Segoe UI,Roboto,sans-serif}.wrap{max-width:1300px;margin:0 auto;padding:20px}
+.crumbs{color:var(--mut);font-size:12px;margin-bottom:6px}.crumbs a{color:var(--acc);text-decoration:none}h1{font-size:21px;margin:0 0 2px}.sub{color:var(--mut);font-size:13px;margin-bottom:12px}
+.note{background:#13202e;border:1px solid #24405c;border-radius:10px;padding:12px 14px;margin-bottom:14px}.note h3{margin:0 0 5px;font-size:12px;color:var(--acc);text-transform:uppercase}.note ul{margin:5px 0 0;padding-left:18px;color:var(--mut)}
+.tabs{display:inline-flex;background:#121925;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:6px 0 12px}
+.tabs button{background:none;border:none;color:var(--mut);padding:8px 16px;cursor:pointer;font-size:13px}.tabs button.on{background:var(--acc);color:#04101f;font-weight:600}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.bar button,.bar select{background:#0b0f14;border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:6px 10px;font-size:12px;cursor:pointer}
+.bar .act{background:#1c2a3a;border-color:#2f5f7d}.bar input{background:#0b0f14;border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:6px 10px;font-size:12px;width:200px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:6px 7px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-weight:500;font-size:11px;position:sticky;top:0;background:var(--bg)}
+select.f,input.f,textarea.f{background:#0b0f14;border:1px solid var(--line);color:var(--ink);border-radius:5px;padding:3px 5px;font-size:11px;width:100%}textarea.f{min-height:34px}
+.badge{font-size:10px;padding:1px 7px;border-radius:10px;border:1px solid var(--line);white-space:nowrap}
+.s-Facu{background:#13283b;color:#4f9dff;border-color:#2f5f7d}.s-Leadership{background:#2e1230;color:#d98cff;border-color:#7d2f7d}
+.s-ClientCall{background:#13301f;color:#36d399;border-color:#2f7d4f}.s-InternalSignal{background:#2e2a12;color:#fbbd23;border-color:#7d6a2f}
+.s-DataSignal{background:#10283b;color:#4fd4ff;border-color:#2f6f7d}.s-AISynthesis{background:#252a33;color:#8b98a9}
+.st-active{color:#36d399}.st-new{color:#fbbd23}.st-park{color:#8b98a9}.st-rej{color:#f87272}
+.area-h{background:#161d29;font-weight:600;color:#cdd9e5;padding:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}.card h3{margin:0 0 6px}.kv{font-size:12px;color:var(--mut);margin:4px 0}.kv b{color:var(--ink)}
+#exp{display:none;margin-top:12px}#exp textarea{width:100%;min-height:160px;background:#0b0f14;border:1px solid var(--line);color:#36d399;border-radius:8px;padding:10px;font:11px monospace}
+.hide{display:none}</style></head><body><div class=wrap>
+<div class=crumbs><a href="index.html">Koronet OS</a> › Hypothesis Registry v2</div>
+<h1>Hypothesis Registry — editable OS</h1><div class=sub>Source Review Queue → Registry → Active Deep Dive · edit inline · Export Feedback JSON · nothing marked Facu-approved unless the source says so</div>
+<div class=note><h3>📌 What this is for</h3>Review, approve, reject, merge, park or deepen hypotheses. The dashboard does NOT invent them — it reads editable tables. Edit fields inline, then <b>Export Feedback JSON</b> to hand changes back to Codex/Claude.</div>
+<div class=tabs><button id=t0 class=on onclick="mode(0)">① Review Queue</button><button id=t1 onclick="mode(1)">② Registry</button><button id=t2 onclick="mode(2)">③ Active Deep Dive</button></div>
+<div class=bar id=bar></div>
+<div id=view></div>
+<div id=exp><textarea id=expt readonly></textarea></div>
+<script>
+const REG=[
+ {
+  "id": "H012",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P0",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "Best W\u2192R pilot profile = existing-traffic wholesaler w/ digital-minded operator.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "origin": "Felipe call FCALL-009/16/17.",
+  "evidence_for": "Flora Fresh ~$20M GMV, 2,100 customers.",
+  "evidence_against": "Examples may be non-representative.",
+  "could_be_wrong": "Existing traffic may not convert.",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Which 4 accounts to incubate first",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "H006",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Studio + eShop funnel",
+  "hypothesis": "Studio+eShop drives W\u2192R fees by taking over sites that already have traffic.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-005.",
+  "evidence_for": "Competitors charge high; traffic reduces CAC.",
+  "evidence_against": "Traffic may not convert.",
+  "could_be_wrong": "Free builds may not justify fees.",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Invest in Studio takeover motion?",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "H007",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "New clients",
+  "hypothesis": "Studio+eShop helps low-traffic wholesalers build demand (harder motion).",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-006.",
+  "evidence_for": "-",
+  "evidence_against": "Koronet may lack wholesaler acquisition engine.",
+  "could_be_wrong": "CAC too high.",
+  "confidence": "Medium-Low",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Deprioritize vs existing-traffic?",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "H013",
+  "review_state": "New - Unreviewed",
+  "priority": "P0",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Supply quality / stability",
+  "hypothesis": "Open-market UNIT inventory is the critical layer for wholesaler eShop.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "origin": "FCALL-005/19; '80% units'.",
+  "evidence_for": "Felipe repeated; K2K case-only misses motion.",
+  "evidence_against": "Unit inventory ops-heavy.",
+  "could_be_wrong": "Buyers may prefer analog.",
+  "confidence": "Medium-High",
+  "dashboardable": "Partial",
+  "needs_call": "No",
+  "needs_data": "Yes",
+  "decision": "Does unit-readiness gate pilots?",
+  "lever": "Activation"
+ },
+ {
+  "id": "SH-1",
+  "review_state": "New - Unreviewed",
+  "priority": "P0",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Supply quality / stability",
+  "hypothesis": "Supply completeness (Holland/Dutch, California) is a K2K adoption bottleneck.",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "origin": "Shamrock call 2026-06-17.",
+  "evidence_for": "Buyers would buy more w/ more Holland/CA online.",
+  "evidence_against": "Account-specific?",
+  "could_be_wrong": "Commercial not technical gap.",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Is supply coverage a priority lever?",
+  "lever": "Supply"
+ },
+ {
+  "id": "SH-4",
+  "review_state": "New - Unreviewed",
+  "priority": "P0",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "Online inventory/price PARITY vs rep-assisted decides adoption.",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "origin": "Shamrock + Agus signal.",
+  "evidence_for": "Online must reflect real inventory/pricing.",
+  "evidence_against": "Parity may already exist.",
+  "could_be_wrong": "Hard to measure.",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Is parity the activation gate?",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "SH-2",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "Digital paper-trail is an adoption driver for certain buyer segments.",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "origin": "Shamrock call.",
+  "evidence_for": "Meredith prefers written orders.",
+  "evidence_against": "Segment-specific.",
+  "could_be_wrong": "Phone habit dominates.",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "Which segments value paper trail",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "SH-3",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Supply quality / stability",
+  "hypothesis": "Flexible/scheduled recurring orders beat rigid standing orders.",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "origin": "Shamrock call.",
+  "evidence_for": "Customers want optionality.",
+  "evidence_against": "Standing orders fit some.",
+  "could_be_wrong": "Product change needed.",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Reframe standing orders?",
+  "lever": "Supply"
+ },
+ {
+  "id": "SH-5",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Buyer segmentation / channel conflict",
+  "hypothesis": "Channel conflict (florist relationships) is a GTM guardrail.",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "origin": "Shamrock call.",
+  "evidence_for": "Shamrock protects florist relationships.",
+  "evidence_against": "May not generalize.",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "GTM guardrails for digital push",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "H015",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "First eCommerce experience quality predicts repeat digital behavior.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "origin": "FCALL-018/019.",
+  "evidence_for": "Felipe: bad first experience kills return.",
+  "evidence_against": "Repeat driven by price/supply.",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "Yes",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "Add 1st-order follow-up",
+  "lever": "Retention"
+ },
+ {
+  "id": "H016",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Rep-assisted commerce",
+  "hypothesis": "Customer scorecards/gamification increase engagement inside a playbook.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "origin": "FCALL-022.",
+  "evidence_for": "Felipe report critique.",
+  "evidence_against": "Customers ignore scorecards.",
+  "could_be_wrong": "Weak data backfires.",
+  "confidence": "Low-Medium",
+  "dashboardable": "No",
+  "needs_call": "No",
+  "needs_data": "No",
+  "decision": "Build scorecard after profile picked",
+  "lever": "Activation"
+ },
+ {
+  "id": "H001",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "Dedicated-person activation playbook replicable beyond Pacifica.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Facu early idea.",
+  "evidence_for": "Pacifica anecdote.",
+  "evidence_against": "Pacifica non-representative?",
+  "could_be_wrong": "-",
+  "confidence": "Unknown",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Staff dedicated activation?",
+  "lever": "Activation"
+ },
+ {
+  "id": "H018",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "Small eComm incubator (4 of 20) beats broad activation.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "origin": "FCALL-024.",
+  "evidence_for": "Felipe recommendation.",
+  "evidence_against": "Too narrow may not move fees.",
+  "could_be_wrong": "Selection bias.",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Incubator vs broad model",
+  "lever": "Activation"
+ },
+ {
+  "id": "DS4",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P0",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "eCommerce module ON but ~$0 eComm fees = activation pool (FloraLink).",
+  "source_type": "Data Signal",
+  "source_person": "Snowflake + Salesforce",
+  "origin": "This session.",
+  "evidence_for": "SF eComm=true; Snowflake 100% K2K.",
+  "evidence_against": "Some intentionally K2K-only.",
+  "could_be_wrong": "Module unused for valid reasons.",
+  "confidence": "Medium",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "Yes",
+  "decision": "Size dormant-eComm pool",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "H004",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P0",
+  "area": "Importer \u2192 Wholesaler",
+  "sub": "PMF / leg",
+  "hypothesis": "Importer\u2192Wholesaler is the strongest short-term PMF leg for TX fees.",
+  "source_type": "Facu",
+  "source_person": "Facu (Chris anecdote)",
+  "origin": "Brain dump FC-001/002.",
+  "evidence_for": "Chris anecdote: wholesalers ask to buy online.",
+  "evidence_against": "Account-specific anecdote.",
+  "could_be_wrong": "Compliance-only, no repeat.",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Is I\u2192W the near-term focus?",
+  "lever": "TX Fees"
+ },
+ {
+  "id": "H005",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Importer \u2192 Wholesaler",
+  "sub": "PMF / leg",
+  "hypothesis": "Expand I\u2192W by replicating wholesaler online-buying pull across importers.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-003.",
+  "evidence_for": "Facu interpretation.",
+  "evidence_against": "Demand may not generalize.",
+  "could_be_wrong": "Idiosyncratic.",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "Importer expansion GTM",
+  "lever": "TX Fees"
+ },
+ {
+  "id": "DS1",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P0",
+  "area": "Payments / Monetization",
+  "sub": "Fee mechanics",
+  "hypothesis": "API: $48M GMV but 0.15% fee capture \u2014 unpriced/unbilled/strategic/leakage?",
+  "source_type": "Data Signal",
+  "source_person": "Snowflake transaction-fees",
+  "origin": "This session.",
+  "evidence_for": "API fee $71K on $47.8M GMV YTD.",
+  "evidence_against": "Contractually unpriced/strategic?",
+  "could_be_wrong": "Data mapping gaps.",
+  "confidence": "Medium",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "Yes",
+  "decision": "Is API capture a real lever?",
+  "lever": "TX Fees"
+ },
+ {
+  "id": "DS2",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P1",
+  "area": "Payments / Monetization",
+  "sub": "Leakage",
+  "hypothesis": "Hardcoded exclusions (BD M\u00e9xico 1,353 + KBC 689 tx/mo) \u2014 leakage or intended?",
+  "source_type": "Data Signal",
+  "source_person": "Slack + Snowflake",
+  "origin": "This session.",
+  "evidence_for": "#komet-transaction-fees Mar-2026.",
+  "evidence_against": "Likely intercompany.",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "Validate intent w/ Dan/Sof",
+  "decision": "TX Fees",
+  "lever": ""
+ },
+ {
+  "id": "DS3",
+  "review_state": "Active - Needs Refinement",
+  "priority": "P0",
+  "area": "Payments / Monetization",
+  "sub": "Fee mechanics",
+  "hypothesis": "Bill Doran buyer-fee 'wording' risks the expansion.",
+  "source_type": "Internal Signal",
+  "source_person": "Catalina / CS",
+  "origin": "Slack Apr-28.",
+  "evidence_for": "BD ARR $252K vs TX $31K; wording misalign.",
+  "evidence_against": "Quickly fixable?",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "Align wording before expansion",
+  "decision": "TX Fees",
+  "lever": ""
+ },
+ {
+  "id": "H011",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Payments / Monetization",
+  "sub": "Retention / barriers",
+  "hypothesis": "Need barriers-to-exit + transaction-layer value to keep buyers/vendors in.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-010.",
+  "evidence_for": "-",
+  "evidence_against": "Contracts/payments may suffice.",
+  "could_be_wrong": "Friction without retention.",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Inventory anti-bypass mechanisms",
+  "lever": "Payments"
+ },
+ {
+  "id": "DS6",
+  "review_state": "Active - Facu Approved",
+  "priority": "P1",
+  "area": "Payments / Monetization",
+  "sub": "Network",
+  "hypothesis": "K2K is the growth engine (network effects).",
+  "source_type": "Data Signal",
+  "source_person": "Snowflake",
+  "origin": "This session.",
+  "evidence_for": "K2K +120% 2024\u219225; GMV +42% YoY.",
+  "evidence_against": "-",
+  "could_be_wrong": "-",
+  "confidence": "High",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "Monitor + quantify network revenue",
+  "decision": "TX Fees",
+  "lever": ""
+ },
+ {
+  "id": "H008",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Internal Execution",
+  "sub": "Activation",
+  "hypothesis": "Early ROI expectation management is a cross-leg activation requirement.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-007.",
+  "evidence_for": "-",
+  "evidence_against": "Drop-off may be product bugs.",
+  "could_be_wrong": "-",
+  "confidence": "Unknown",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Onboarding-promise tracking",
+  "lever": "Activation"
+ },
+ {
+  "id": "H014",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Internal Execution",
+  "sub": "Activation",
+  "hypothesis": "Activation failure driven by digital-selling OPS after config, not setup.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Christine",
+  "origin": "FCALL-021.",
+  "evidence_for": "Felipe: good config, weak activation.",
+  "evidence_against": "Could be product/buyer-demand.",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "Ask Christine: config vs activation",
+  "lever": "Operational Efficiency"
+ },
+ {
+  "id": "H017",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Internal Execution",
+  "sub": "Incentives",
+  "hypothesis": "Sales/CS/rep incentives block or enable digital adoption.",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Catalina",
+  "origin": "FCALL-020.",
+  "evidence_for": "Commission concerns.",
+  "evidence_against": "May be aligned already.",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "No",
+  "decision": "Map online-order credit",
+  "lever": "Operational Efficiency"
+ },
+ {
+  "id": "H009",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Internal Execution",
+  "sub": "Activation",
+  "hypothesis": "Marketplace health needs intentional early wins per leg.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-008.",
+  "evidence_for": "-",
+  "evidence_against": "Liquidity may be centralized.",
+  "could_be_wrong": "-",
+  "confidence": "Medium",
+  "dashboardable": "Partial",
+  "needs_call": "No",
+  "needs_data": "Yes",
+  "decision": "Add time-to-first-value",
+  "lever": "Activation"
+ },
+ {
+  "id": "H002",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Internal Execution",
+  "sub": "Demand-side",
+  "hypothesis": "Demand-side buyer workflow is a bigger blocker than wholesaler effort.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Facu early idea.",
+  "evidence_for": "-",
+  "evidence_against": "Seller enablement may be bottleneck.",
+  "could_be_wrong": "-",
+  "confidence": "Unknown",
+  "dashboardable": "Partial",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Buyer interviews",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "H010",
+  "review_state": "New - Unreviewed",
+  "priority": "P1",
+  "area": "Internal Execution",
+  "sub": "Leakage",
+  "hypothesis": "Offline leakage via WhatsApp/direct relationships threatens TX fees.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Brain dump FC-009.",
+  "evidence_for": "-",
+  "evidence_against": "May be rare/restricted.",
+  "could_be_wrong": "Offset by platform value.",
+  "confidence": "Unknown",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "Yes",
+  "decision": "Leakage instrumentation",
+  "lever": "TX Fees"
+ },
+ {
+  "id": "H003",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Studio + eShop funnel",
+  "hypothesis": "Studio can become a transaction-conversion surface, not just website builder.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Facu early idea.",
+  "evidence_for": "-",
+  "evidence_against": "May not drive orders.",
+  "could_be_wrong": "-",
+  "confidence": "Unknown",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "Trace Studio\u2192orders (needs GA4)",
+  "lever": "Digital Conversion"
+ },
+ {
+  "id": "AI-1",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Existing clients",
+  "hypothesis": "Mandatory-payment \u2192 7.1\u00d7 TX fees; saved-PM \u2192 2.9\u00d7 frequency.",
+  "source_type": "AI Synthesis",
+  "source_person": "Chris corpus (GT-131)",
+  "origin": "Corpus, NOT verified.",
+  "evidence_for": "Prior analysis.",
+  "evidence_against": "Unverified for current book.",
+  "could_be_wrong": "Correlation\u2260causation.",
+  "confidence": "Unknown",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "No",
+  "decision": "Validate settings impact",
+  "lever": "Payments"
+ },
+ {
+  "id": "AI-2",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Wholesaler \u2192 Retailer",
+  "sub": "Supply quality / stability",
+  "hypothesis": "Standing orders ~$15.5M unmonetized; blocker = decision KS-47520.",
+  "source_type": "AI Synthesis",
+  "source_person": "Chris corpus (GT-127)",
+  "origin": "Corpus, NOT verified.",
+  "evidence_for": "Prior analysis.",
+  "evidence_against": "Unverified figure.",
+  "could_be_wrong": "-",
+  "confidence": "Unknown",
+  "dashboardable": "Partial",
+  "needs_call": "No",
+  "needs_data": "Yes",
+  "decision": "Size standing-order $",
+  "lever": "TX Fees"
+ },
+ {
+  "id": "DS5",
+  "review_state": "Contradicted",
+  "priority": "Reject",
+  "area": "Payments / Monetization",
+  "sub": "Fee mechanics",
+  "hypothesis": "Rosaprima 'at-risk -14% YoY' (corpus).",
+  "source_type": "AI Synthesis",
+  "source_person": "Chris corpus",
+  "origin": "Corpus.",
+  "evidence_for": "-",
+  "evidence_against": "Data: +128% YoY-YTD.",
+  "could_be_wrong": "-",
+  "confidence": "High",
+  "dashboardable": "Yes",
+  "needs_call": "No",
+  "needs_data": "Drop; growth account",
+  "decision": "TX Fees",
+  "lever": ""
+ },
+ {
+  "id": "FD-1",
+  "review_state": "New - Unreviewed",
+  "priority": "P2",
+  "area": "Farm Direct / Floropolis",
+  "sub": "Transferable learnings to Koronet",
+  "hypothesis": "Floropolis farm-direct learnings may transfer to Koronet motions.",
+  "source_type": "Facu",
+  "source_person": "Facu",
+  "origin": "Facu context.",
+  "evidence_for": "-",
+  "evidence_against": "Different market/model.",
+  "could_be_wrong": "Non-transferable risks.",
+  "confidence": "Unknown",
+  "dashboardable": "No",
+  "needs_call": "Yes",
+  "needs_data": "No",
+  "decision": "Which learnings transfer",
+  "lever": "TAM-SAM Understanding"
+ }
+], QUEUE=[
+ {
+  "id": "rq_001",
+  "review_state": "New - Unreviewed",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "link": "Drive: Chris<>Meredith",
+  "idea": "K2K box label/mark-code continuity breaks receiving.",
+  "context": "Can't match boxes to customer/order w/o mark code.",
+  "ai_interp": "Operational friction suppressing K2K trust.",
+  "why": "Indirect \u2014 protects K2K adoption.",
+  "sug_area": "Wholesaler \u2192 Retailer",
+  "sug_priority": "P2",
+  "evidence_level": "conversation signal",
+  "could_be_wrong": "Vendor-specific not systemic",
+  "facu_decision": "",
+  "facu_notes": "",
+  "merge_with": "",
+  "reject_reason": ""
+ },
+ {
+  "id": "rq_002",
+  "review_state": "New - Unreviewed",
+  "source_type": "Client Call",
+  "source_person": "Meredith / Shamrock",
+  "link": "Drive transcript",
+  "idea": "Low-maintenance growth tooling attractive if set-once.",
+  "context": "Meredith open to eShop/AI if not burdensome.",
+  "ai_interp": "Studio value prop must be low-labor.",
+  "why": "Direct if orders w/o labor.",
+  "sug_area": "Wholesaler \u2192 Retailer",
+  "sug_priority": "P1",
+  "evidence_level": "conversation signal",
+  "could_be_wrong": "Generic pitch won't fit",
+  "facu_decision": "",
+  "facu_notes": "",
+  "merge_with": "",
+  "reject_reason": ""
+ },
+ {
+  "id": "rq_003",
+  "review_state": "New - Unreviewed",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "link": "FCALL-006/007",
+  "idea": "Koronet Procurement may cannibalize importer eShop.",
+  "context": "Felipe hypothesis.",
+  "ai_interp": "Procurement may shift not grow wallet.",
+  "why": "Direct \u2014 net TX growth.",
+  "sug_area": "Importer \u2192 Wholesaler",
+  "sug_priority": "P1",
+  "evidence_level": "conversation signal",
+  "could_be_wrong": "May grow total wallet",
+  "facu_decision": "",
+  "facu_notes": "",
+  "merge_with": "",
+  "reject_reason": ""
+ },
+ {
+  "id": "rq_004",
+  "review_state": "New - Unreviewed",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "link": "FCALL-015",
+  "idea": "Buyer\u2194vendor connection monetization.",
+  "context": "Connect florists/event-planners to wholesalers.",
+  "ai_interp": "New fee surface.",
+  "why": "Direct.",
+  "sug_area": "Wholesaler \u2192 Retailer",
+  "sug_priority": "P2",
+  "evidence_level": "conversation signal",
+  "could_be_wrong": "Legal/pricing unclear",
+  "facu_decision": "",
+  "facu_notes": "",
+  "merge_with": "",
+  "reject_reason": ""
+ },
+ {
+  "id": "rq_005",
+  "review_state": "New - Unreviewed",
+  "source_type": "AI Synthesis",
+  "source_person": "Claude / Studio thesis",
+  "link": "Thinking 2026-06-17",
+  "idea": "Studio thesis: existing-client conversion first; traffic only if funnel converts; online must match offline; rep-assisted under existing-client.",
+  "context": "Synthesis Felipe+Shamrock+Facu.",
+  "ai_interp": "Frames Studio evaluation.",
+  "why": "Direct \u2014 guides investment.",
+  "sug_area": "Wholesaler \u2192 Retailer",
+  "sug_priority": "P1",
+  "evidence_level": "cross-source signal",
+  "could_be_wrong": "Needs GA4 to confirm",
+  "facu_decision": "",
+  "facu_notes": "",
+  "merge_with": "",
+  "reject_reason": ""
+ },
+ {
+  "id": "rq_006",
+  "review_state": "New - Unreviewed",
+  "source_type": "Internal Signal",
+  "source_person": "Felipe / Sales",
+  "link": "FCALL-013",
+  "idea": "Digital sales & payments correlate.",
+  "context": "Retail/event buyers prefer card.",
+  "ai_interp": "Payments reinforce digital adoption.",
+  "why": "Direct \u2014 stickiness.",
+  "sug_area": "Payments / Monetization",
+  "sug_priority": "P2",
+  "evidence_level": "conversation signal",
+  "could_be_wrong": "Needs payment data",
+  "facu_decision": "",
+  "facu_notes": "",
+  "merge_with": "",
+  "reject_reason": ""
+ }
+], ACTIVE=[
+ {
+  "id": "DS3",
+  "formulation": "Bill Doran's buyer-fee wording is causing friction that could threaten the expansion.",
+  "current_bet": "Align fee wording + clarify buyer charge before expansion closes.",
+  "why_now": "Active expansion; ARR $252K but TX only $31K YTD.",
+  "not_claiming": "Not claiming the fee is wrong \u2014 it's wording/comms.",
+  "clients_approved": "Bill Doran (Jun-18 Catalina call)",
+  "clients_suggested": "-",
+  "questions": "What is BD's exact objection? Told vs billed?",
+  "data_checks": "SF fee config; Snowflake BD TX by type/month; Slack Catalina thread.",
+  "sf_read": "Champions, Wholesaler, ARR $252K, 251 users, renewal Dec-16, K2K hub #1 (963 conns).",
+  "fathom_read": "Pull BD calls on demand.",
+  "snow_read": "BD TX 2026 YTD $31K (+321% YoY-YTD), K2K-heavy.",
+  "dashboard": "Account 360 + Active Tracker",
+  "next_proof": "Catalina call + billing example.",
+  "next_action": "Jun-18 Catalina call",
+  "owner": "Facu/Catalina",
+  "due": "2026-06-18",
+  "would_validate": "BD confirms wording issue; expansion proceeds.",
+  "would_kill": "BD objects to fee itself."
+ },
+ {
+  "id": "DS1",
+  "formulation": "API channel ($48M GMV) captures only 0.15% in fees \u2014 unrealized monetization or structural reason.",
+  "current_bet": "Classify API GMV: unpriced/unbilled/strategic/leakage.",
+  "why_now": "2nd-largest GMV channel, tiny fee \u2014 biggest capture question.",
+  "not_claiming": "Not claiming leakage \u2014 could be unpriced by design.",
+  "clients_approved": "-",
+  "clients_suggested": "Bloomnet $20K, KBC $12K, Jet Fresh, Sole",
+  "questions": "Which API integrations are fee-eligible? Why so low?",
+  "data_checks": "Snowflake API fee by company; SF API_Fee flags; contract rules.",
+  "sf_read": "Top-15 have API_Fee=true 1.5% (KBC 0.75%) yet 0.15% realized.",
+  "fathom_read": "-",
+  "snow_read": "API GMV $47.8M YTD, fee $71K = 0.15% vs K2K 1.84%.",
+  "dashboard": "Transaction-Type Deep Dive (waterfall)",
+  "next_proof": "API eligibility waterfall.",
+  "next_action": "Build API GMV\u2192eligible\u2192billed waterfall",
+  "owner": "Facu/Sofia/Dan Mazo",
+  "due": "",
+  "would_validate": "Large API GMV slice fee-eligible but unbilled.",
+  "would_kill": "API GMV contractually unpriced by design."
+ }
+];
+const edits={};  // id -> {field:val}
+let M=0,filt={};
+const sc=s=>"s-"+(s||"").replace(/[^A-Za-z]/g,"");
+const stcls=s=>/Approved|Facu Approved/.test(s)?"st-active":/New/.test(s)?"st-new":/Park/.test(s)?"st-park":/Reject|Contradicted/.test(s)?"st-rej":"";
+function setEdit(id,f,v){(edits[id]=edits[id]||{})[f]=v;}
+const SEL=(id,f,cur,opts)=>`<select class=f onchange="setEdit('${id}','${f}',this.value)">${opts.map(o=>`<option ${o==cur?'selected':''}>${o}</option>`).join('')}</select>`;
+const TXT=(id,f,cur)=>`<textarea class=f placeholder="notes…" oninput="setEdit('${id}','${f}',this.value)">${cur||''}</textarea>`;
+const STATES=["New - Unreviewed","Active - Facu Approved","Active - Needs Refinement","Parked","Rejected","Contradicted"];
+const PRIOS=["P0","P1","P2","Parking","Reject"];
+const DECS=["","Promote","Park","Reject","Merge","Needs More Context","Rewrite"];
+
+function bar(){
+ let h="";
+ if(M==0){h=`<button class=act onclick="exportJSON()">⤓ Export Feedback JSON</button><button onclick="refresh()">↻ Refresh from table</button>
+   <select onchange="filt.src=this.value;render()"><option value=''>All sources</option>${[...new Set(QUEUE.map(r=>r.source_type))].map(s=>`<option>${s}</option>`).join('')}</select>`;}
+ if(M==1){h=`<button class=act onclick="exportJSON()">⤓ Export Feedback JSON</button><button onclick="refresh()">↻ Refresh from table</button>
+   <input class=f placeholder="filter text…" oninput="filt.q=this.value;render()" style="width:180px">
+   <select onchange="filt.area=this.value;render()"><option value=''>All areas</option>${[...new Set(REG.map(r=>r.area))].map(a=>`<option>${a}</option>`).join('')}</select>
+   <select onchange="filt.src=this.value;render()"><option value=''>All sources</option>${[...new Set(REG.map(r=>r.source_type))].map(s=>`<option>${s}</option>`).join('')}</select>
+   <select onchange="filt.state=this.value;render()"><option value=''>All states</option>${STATES.map(s=>`<option>${s}</option>`).join('')}</select>
+   <button onclick="filt={area:'Wholesaler → Retailer'};syncF();render()">W→R only</button>
+   <button onclick="filt={src:'Client Call'};syncF();render()">Client calls</button>
+   <button onclick="filt={state:'New - Unreviewed'};syncF();render()">New only</button>
+   <button onclick="filt={};syncF();render()">Clear</button>`;}
+ if(M==2){h=`<span style="color:#8b98a9">Active hypotheses — full Fathom/Salesforce/Snowflake reads. <button class=act onclick="exportJSON()">⤓ Export Feedback JSON</button></span>`;}
+ document.getElementById('bar').innerHTML=h;
+}
+function syncF(){} 
+function render(){
+ const v=document.getElementById('view');
+ if(M==1){ // Registry grouped by area
+  let rows=REG.filter(r=>(!filt.area||r.area==filt.area)&&(!filt.src||r.source_type==filt.src)&&(!filt.state||r.review_state==filt.state)&&(!filt.q||JSON.stringify(r).toLowerCase().includes(filt.q.toLowerCase())));
+  const areas=[...new Set(rows.map(r=>r.area))];
+  let h=`<table><tr><th>ID</th><th>Sub-area</th><th>Hypothesis</th><th>Source</th><th>State (edit)</th><th>Pri</th><th>Conf</th><th>Dash/Call/Data</th><th>Decision needed</th><th>Facu decision</th><th>Notes</th></tr>`;
+  for(const a of areas){h+=`<tr><td class=area-h colspan=11>${a} · ${rows.filter(r=>r.area==a).length}</td></tr>`;
+   for(const r of rows.filter(r=>r.area==a)){h+=`<tr>
+    <td><b>${r.id}</b></td><td>${r.sub}</td><td>${r.hypothesis}</td>
+    <td><span class="badge ${sc(r.source_type)}">${r.source_type}</span><br><span style=color:#8b98a9>${r.source_person}</span></td>
+    <td>${SEL(r.id,'review_state',r.review_state,STATES)}</td>
+    <td>${SEL(r.id,'priority',r.priority,PRIOS)}</td>
+    <td class="${stcls(r.review_state)}">${r.confidence}</td>
+    <td style=font-size:10px>D:${r.dashboardable} · C:${r.needs_call} · X:${r.needs_data}</td>
+    <td style=font-size:11px>${r.decision}</td>
+    <td>${SEL(r.id,'facu_decision','',DECS)}</td><td>${TXT(r.id,'facu_notes','')}</td></tr>`;}}
+  v.innerHTML=h+"</table>";
+ } else if(M==0){ // Review Queue
+  let rows=QUEUE.filter(r=>!filt.src||r.source_type==filt.src);
+  let h=`<table><tr><th>ID</th><th>Source</th><th>Idea / Signal</th><th>Context</th><th>Why it matters</th><th>Evidence</th><th>Facu decision</th><th>Merge with</th><th>Notes</th></tr>`;
+  for(const r of rows){h+=`<tr><td><b>${r.id}</b></td>
+   <td><span class="badge ${sc(r.source_type)}">${r.source_type}</span><br><span style=color:#8b98a9>${r.source_person}</span></td>
+   <td>${r.idea}</td><td style=font-size:11px;color:#8b98a9>${r.context}</td><td style=font-size:11px>${r.why}</td><td style=font-size:10px>${r.evidence_level}<br><i>${r.could_be_wrong}</i></td>
+   <td>${SEL(r.id,'facu_decision','',DECS)}</td><td><input class=f placeholder=ID oninput="setEdit('${r.id}','merge_with',this.value)"></td><td>${TXT(r.id,'facu_notes','')}</td></tr>`;}
+  v.innerHTML=h+"</table>";
+ } else { // Active Deep Dive
+  let h="";
+  for(const a of ACTIVE){h+=`<div class=card><h3>${a.id} · ${a.formulation}</h3>
+   <div class=kv><b>Current bet:</b> ${a.current_bet}</div><div class=kv><b>Why now:</b> ${a.why_now}</div><div class=kv><b>Not claiming:</b> ${a.not_claiming}</div>
+   <div class=kv><b>Salesforce read:</b> ${a.sf_read}</div><div class=kv><b>Snowflake read:</b> ${a.snow_read}</div><div class=kv><b>Fathom read:</b> ${a.fathom_read}</div>
+   <div class=kv><b>Clients (approved):</b> ${a.clients_approved} · <b>(suggested):</b> ${a.clients_suggested}</div>
+   <div class=kv><b>Questions to ask:</b> ${a.questions}</div><div class=kv><b>Data to check:</b> ${a.data_checks}</div>
+   <div class=kv><b>Dashboard:</b> ${a.dashboard} · <b>Next proof:</b> ${a.next_proof}</div>
+   <div class=kv><b>✅ Validates if:</b> ${a.would_validate} · <b>❌ Kills if:</b> ${a.would_kill}</div>
+   <div class=kv><b>Next action:</b> ${a.next_action} · <b>Owner:</b> ${a.owner} · <b>Due:</b> ${a.due||'—'}</div>
+   <div class=kv><b>Facu feedback:</b> ${TXT(a.id,'facu_feedback','')}</div></div>`;}
+  v.innerHTML=h;
+ }
+}
+function mode(m){M=m;filt={};for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('on',i==m);bar();render();}
+function refresh(){location.reload();}
+function exportJSON(){const out={artifact:"hypothesis_review_dashboard",version:1,feedback_from:"Facu",rows:Object.entries(edits).map(([id,f])=>({id,...f}))};
+ document.getElementById('expt').value=JSON.stringify(out,null,2);document.getElementById('exp').style.display='block';
+ document.getElementById('expt').scrollIntoView({behavior:'smooth'});}
+mode(0);
+</script></body></html>
