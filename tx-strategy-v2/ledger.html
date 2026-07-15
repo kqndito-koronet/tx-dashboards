@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TX Execution Ledger — V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1380px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:920px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}
+    .primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1100px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+    code{background:#f3f6fb;border:1px solid #d9e0ea;border-radius:5px;padding:2px 5px}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Execution Ledger</h1>
+    <p class="sub">The ledger is the router behind the hub. It turns feedback, calls, dashboard claims, account plays, and value-prop changes into owned actions, approval gates, and downstream artifacts.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Account plans</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Core rule</p>
+    <h2>No active item without owner, workflow, evidence, approval state, and next action.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>View</th><th>What it answers</th><th>Primary owner</th><th>Gating rule</th></tr></thead>
+        <tbody>
+          <tr><td>Friday queue</td><td>Which account actions, results, learnings, blockers, and next-week expectations matter?</td><td>Pablito + Mercury</td><td>Must have account, owner, result/learning, next date.</td></tr>
+          <tr><td>Facu approval queue</td><td>Which decisions require Facu?</td><td>Codex + Pablito</td><td>Must include recommendation, risk, evidence, deadline.</td></tr>
+          <tr><td>Value-prop queue</td><td>Which talk tracks, objections, or proof claims need Lautaro path?</td><td>Lautaro + Mercury proposal</td><td>Must link to value-prop source and approval state.</td></tr>
+          <tr><td>Dashboard gap queue</td><td>Which claims lack data or trust?</td><td>Rose</td><td>Must say data needed, freshness, and hub impact.</td></tr>
+          <tr><td>Workflow compliance</td><td>Which outputs bypassed registered workflows?</td><td>Nahua + Codex</td><td>Workflow missing stays visible until routed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Schema</p>
+    <h2>Minimum fields for every ledger row</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Required</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>source_type</code></td><td>Yes</td><td>call, slack_feedback, github_issue, dashboard, agent_proposal, meeting, manual.</td></tr>
+          <tr><td><code>read_safe_summary</code></td><td>Yes</td><td>Share-safe summary; no private commentary.</td></tr>
+          <tr><td><code>initiative</code></td><td>Yes</td><td>BUY, LIST, SELL, GROW, Strategic, Enablers, OKR, System.</td></tr>
+          <tr><td><code>workflow</code></td><td>Yes</td><td>Registered workflow or Workflow missing.</td></tr>
+          <tr><td><code>owner_lane</code></td><td>Yes</td><td>Rose, Mercury, Socrates, Pablito, Nahua, Codex, Lautaro, Facu, stakeholder.</td></tr>
+          <tr><td><code>value_prop_required</code></td><td>Yes</td><td>Yes/no; required for plays, talk tracks, objections, stakeholder notes.</td></tr>
+          <tr><td><code>trust_label</code></td><td>Yes</td><td>Verified, Directional, Inferred, Pending reconciliation, Needs owner validation, Not board-ready.</td></tr>
+          <tr><td><code>approval_state</code></td><td>Yes</td><td>Draft, Proposed, Needs Facu, Needs owner, Needs Lautaro, Approved, Rejected, Parked, Quarantined.</td></tr>
+          <tr><td><code>downstream_artifact</code></td><td>Yes</td><td>Hub, Friday pack, Monday prefill, account plan, value prop update, dashboard gap, workflow patch, CR.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Seed rows</p>
+    <h2>Initial ledger rows to create next</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>ID</th><th>Initiative</th><th>Source</th><th>Summary</th><th>Owner</th><th>Approval</th><th>Next action</th></tr></thead>
+        <tbody>
+          <tr><td>TXL-seed-001</td><td>SELL</td><td>Audit</td><td>Commercial Readiness is weakest artifact; PMT queue missing from hub.</td><td>Pablito + Mercury</td><td><span class="tag wait">Needs owner</span></td><td>Build PMT readiness queue with Christine.</td></tr>
+          <tr><td>TXL-seed-002</td><td>Strategic</td><td>Facu approval</td><td>Bill Doran, Kennicott, Dreisbach need full-stack account plans.</td><td>Mercury</td><td><span class="tag wait">Needs Facu review</span></td><td>Draft one page per account.</td></tr>
+          <tr><td>TXL-seed-003</td><td>System</td><td>System audit</td><td>Workflow adoption 7%; missing workflow provenance must become visible.</td><td>Nahua + Codex</td><td><span class="tag bad">Blocked until tracked</span></td><td>Create workflow compliance view.</td></tr>
+          <tr><td>TXL-seed-004</td><td>GROW</td><td>Black Belt audit</td><td>Black Belt needs operator view: account, cohort, play, message, metric, learning.</td><td>Mercury + Facu</td><td><span class="tag wait">Needs approval</span></td><td>Add operator table to one-pager.</td></tr>
+          <tr><td>TXL-seed-005</td><td>Value prop</td><td>Session TLDR</td><td>Value prop is dependency for play design, meeting prep, post-call capture.</td><td>Lautaro + Codex</td><td><span class="tag ok">Rule accepted</span></td><td>Add dependency field to initiative pages.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
