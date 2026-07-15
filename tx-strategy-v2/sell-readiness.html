@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SELL Commercial Readiness Queue — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1460px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1320px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1460px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>SELL / Commercial Readiness Queue</h1>
+    <p class="sub">Commercial Readiness helps wholesaler implementations become real Koronet usage: customers buying, real supply listed, buyers able to transact, and measurement that proves what changed.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
+      <a href="/tx-dashboards/tx-strategy-v2/value-prop-gate.html">Value-prop gate</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Commercial readiness lens</p>
+    <h2>First transactions matter, but the target is a habit that can repeat.</h2>
+    <div class="grid">
+      <article class="card"><strong>BUY</strong><p>Can the wholesaler use Koronet to buy better, source smarter, or build trust in the system before trying to sell more?</p></article>
+      <article class="card"><strong>LIST</strong><p>Is the online supply credible enough: formats, varieties, timing, pricing, images, freshness, and fulfillment confidence?</p></article>
+      <article class="card"><strong>SELL</strong><p>Is there a clear buyer path, first cohort, measurable campaign/source, and support loop to make early usage repeat?</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Implementation / upsell queue</p>
+    <h2>Seeded from the PMT list Facu shared; owner validation required</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Account</th><th>Type / product</th><th>Sales / implementation owner</th><th>Contract timing</th><th>Readiness issue</th><th>Commercial readiness question</th><th>TX support offer</th><th>Friday ask</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>SYRIUS INC</td><td>Komet Core</td><td>George Velez / Felipe Mesa</td><td>Jul 9, 2026</td><td>Payment/Form incomplete.</td><td>What is the first real BUY/LIST/SELL usage path after setup?</td><td>Help define first usage path and tracking.</td><td>Confirm whether TX should support and who owns customer ask.</td><td><span class="tag warn">Needs validation</span></td></tr>
+          <tr><td>ABloom Floral Group</td><td>eSuite Wholesalers</td><td>Reassign / Mateo Morales</td><td>Moving to Aug per note</td><td>Ready incomplete; implementation delayed.</td><td>Can delay be used to define commercial path before kickoff?</td><td>Help prepare BUY/LIST/SELL readiness checklist.</td><td>Confirm new timing and owner.</td><td><span class="tag wait">Delayed</span></td></tr>
+          <tr><td>SPRINGFIELD FLORIST SUPPLY INC</td><td>Komet Core</td><td>Valentina Espinel / Mateo Morales</td><td>Jul 20, 2026</td><td>Payment/Form incomplete.</td><td>Which customer workflow should prove value first?</td><td>Define first cohort and measurement.</td><td>Confirm readiness path before go-live.</td><td><span class="tag warn">Upcoming</span></td></tr>
+          <tr><td>Penn Valley Flora LLC</td><td>eSuite Wholesalers</td><td>Reassign / Revenue Ops</td><td>Jul 8, 2026</td><td>Sales handoff missing.</td><td>Is commercial owner/context clear enough to create usage?</td><td>Help recover first usage plan after handoff gap.</td><td>Assign owner and next action.</td><td><span class="tag bad">Owner gap</span></td></tr>
+          <tr><td>Mayesh Wholesale Florist Inc</td><td>Multilocation upsell</td><td>Valentina Espinel / Catalina Rojas</td><td>Jul 1, 2026</td><td>Training confirmation pending.</td><td>Which branch/workflow is the upsell supposed to improve?</td><td>Route as strategic/supply learning, not generic implementation.</td><td>Confirm whether TX joins and which branch/use case.</td><td><span class="tag wait">Awaiting confirmation</span></td></tr>
+          <tr><td>Quinlan-Wasserman, Inc</td><td>eSuite Wholesalers</td><td>Nahomi Enriquez / Sebastian Rodriguez</td><td>Jul 3, 2026</td><td>Payment/Sales handoff incomplete.</td><td>What do they need to buy/list/sell first?</td><td>Light readiness review if Implementation requests support.</td><td>Confirm if support needed.</td><td><span class="tag warn">Needs validation</span></td></tr>
+          <tr><td>Tennessee Florist Supply - Knox</td><td>eSuite Wholesalers</td><td>Nahomi Enriquez / Felipe Mesa</td><td>Jul 6, 2026</td><td>Payment/Sales handoff incomplete.</td><td>What supply and buyer path should be ready before marketing?</td><td>Help define commercially ready supply and first buyer cohort.</td><td>Confirm whether TX should assist.</td><td><span class="tag warn">Needs validation</span></td></tr>
+          <tr><td>Wafex USA</td><td>eShops renewal add-on</td><td>George Velez / Christian Medina</td><td>Jul 6, 2026</td><td>Payment/Sales handoff incomplete.</td><td>Which renewal/add-on workflow must show usage?</td><td>Help tie renewal to measurable customer value.</td><td>Confirm owner and commercial outcome.</td><td><span class="tag warn">Needs validation</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Implementation-safe ask</p>
+    <h2>How TX helps without taking over account ownership</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>We help define</th><th>Why it matters</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>First usage path</td><td>If the customer only learns configuration, usage may not become a habit.</td><td>What they will buy, list, sell, and measure first.</td></tr>
+          <tr><td>Supply readiness</td><td>Marketing cannot compensate for weak or incomplete online supply.</td><td>Minimum credible supply checklist per account.</td></tr>
+          <tr><td>Measurement</td><td>UTMs/deep links/tags help show what works and what not to repeat.</td><td>Tracking plan tied to first cohort and first campaign/source.</td></tr>
+          <tr><td>Black Belt entry point</td><td>If an account proves readiness, it can graduate to growth support.</td><td>Ready-to-grow signal and next play recommendation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Gap Queue — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1380px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1200px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Dashboard Gap Queue</h1>
+    <p class="sub">Rose should not be asked for “more dashboards.” This queue turns strategy claims into exact data work: claim, source, trust label, missing proof, and decision supported.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Registry</a><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Rose Thursday backing pack</p>
+    <h2>One compact pack, not ten disconnected dashboards</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Needed output</th><th>Question it answers</th><th>Minimum fields</th><th>Trust needed</th><th>Due</th></tr></thead>
+        <tbody>
+          <tr><td>Executive OKR strip</td><td>Are we pacing, and what is included?</td><td>Target, actual, July MTD, projected Q3/full-year, YoY, Axerrio in/out, source date.</td><td><span class="tag ok">Verified source + caveat</span></td><td>Thu night</td></tr>
+          <tr><td>Driver decomposition</td><td>What is volume vs rate catch vs mix vs API/pricing/Axerrio?</td><td>Driver, amount, permanence, account/category, implication.</td><td><span class="tag warn">Directional acceptable if labeled</span></td><td>Thu night</td></tr>
+          <tr><td>Top account concentration</td><td>Which accounts drive fees and what should we do?</td><td>Account, YoY fee, GMV, online GMV, category, rate, owner, action implication.</td><td><span class="tag ok">Verified source</span></td><td>Thu night</td></tr>
+          <tr><td>BUY/LIST/SELL/GROW evidence table</td><td>Which motion has evidence vs data gap?</td><td>Motion, metric, current value, gap, decision supported.</td><td><span class="tag wait">Mixed labels allowed</span></td><td>Thu night</td></tr>
+          <tr><td>Dashboard claim register</td><td>Which first-view claims are supported?</td><td>Claim, source, date basis, freshness, caveat, trust label, stale date.</td><td><span class="tag ok">Required</span></td><td>Thu night</td></tr>
+          <tr><td>Quarantine list</td><td>Which pages should not be first-view?</td><td>Page, issue, owner, reroute, condition to restore.</td><td><span class="tag warn">Operational judgment</span></td><td>Thu night</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Current claim queue</p>
+    <h2>Claims that need labels before stakeholder use</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Claim</th><th>Current label</th><th>Evidence / source</th><th>Gap</th><th>Owner</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>July pacing is directionally strong.</td><td><span class="tag warn">Directional</span></td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a></td><td>Needs Axerrio inclusion/exclusion and date basis.</td><td>Rose</td><td>Publish in OKR strip with caveat.</td></tr>
+          <tr><td>Durability is not proven.</td><td><span class="tag warn">Interpretation</span></td><td>Rate-catch expiry + concentration.</td><td>Needs explicit logic chain and permanence tags.</td><td>Rose + Codex</td><td>Back with driver decomposition.</td></tr>
+          <tr><td>More GMV / digital GMV is required for durable fees.</td><td><span class="tag wait">Needs definition</span></td><td>where_are_we + ecosystem map.</td><td>GMV definitions and offline caveats.</td><td>Rose</td><td>Define metric spine.</td></tr>
+          <tr><td>Lead candidates from B/F/I lists are execution-ready.</td><td><span class="tag bad">Not approved</span></td><td>Lead dashboards.</td><td>Owner validation and account facts.</td><td>Mercury + CS</td><td>Keep as suggested, not assigned.</td></tr>
+          <tr><td>K2K fee language / Dave correction.</td><td><span class="tag wait">Pending reconciliation</span></td><td>Slack / Dave correction / fee dashboard.</td><td>Canonical update required.</td><td>Rose + Nahua</td><td>Do not use old double-charge framing.</td></tr>
+          <tr><td>H1-H3 vs old H1-H4 hypothesis registry.</td><td><span class="tag wait">Canonical sync needed</span></td><td>Hypothesis registry.</td><td>Old files still conflict.</td><td>Nahua + Codex</td><td>Create CR or quarantine old taxonomy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

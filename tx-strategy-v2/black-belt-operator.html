@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Black Belt Operator View — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1460px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1320px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Black Belt Operator View</h1>
+    <p class="sub">Black Belt is Growth: diagnose, refine, and amplify repeat online behavior. This page converts the one-pager and deep dive into the working table needed for Friday.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/black-belt.html">One-pager</a><a href="/tx-dashboards/black-belt-deep-dive.html">Deep dive</a><a href="/tx-dashboards/tx-strategy-v2/value-prop-gate.html">Value-prop gate</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Operator queue</p>
+    <h2>Candidate accounts need a mode, play, metric, and expected learning</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Account</th><th>Mode</th><th>Why candidate</th><th>Initial cohort / channel</th><th>Play hypothesis</th><th>Readiness gate</th><th>Metric to watch</th><th>Expected learning</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Zeidler Floral</td><td>Refine</td><td>Clean single-location proof signal; meaningful online share and online buyers.</td><td>Existing online buyers + low repeat cohorts.</td><td>If the right supply/cohort/message is timed well, repeat online behavior can grow.</td><td>Confirm supply freshness and owner willingness.</td><td>Repeat orders, online GMV, buyer retention, leakage signals.</td><td>What makes good existing online behavior repeat more often?</td><td><span class="tag wait">Candidate pending Facu approval</span></td></tr>
+          <tr><td>Maple Grove Floral</td><td>Refine / Study</td><td>Strong full-table online signal; needs location/willingness verification.</td><td>High-intent active buyers.</td><td>Existing digital behavior may be scalable if supply and owner support exist.</td><td>Verify single vs multi-location and stakeholder willingness.</td><td>Active online buyers, repeat rate, campaign response.</td><td>Whether strong digital baseline means scalable play or data artifact.</td><td><span class="tag warn">Needs validation</span></td></tr>
+          <tr><td>Floristcentric</td><td>Diagnose</td><td>Useful online buyer behavior but not enough to amplify blindly.</td><td>Registered/no-purchase or lapsed-online cohorts.</td><td>Discovery can expose why online usage does not repeat.</td><td>Confirm supply, cohort size, and channel reach.</td><td>Response rate, first/repeat order, reason for no purchase.</td><td>Which blocker is binding: supply, price, habit, or awareness?</td><td><span class="tag warn">Study candidate</span></td></tr>
+          <tr><td>A Florist First</td><td>Diagnose / Refine</td><td>Potentially useful buyer behavior and seller motion.</td><td>Existing online buyers or offline buyers where supply exists online.</td><td>Targeted message can identify what would move repeat online behavior.</td><td>Validate current supply and buyer list.</td><td>Buyer response, first/repeat order, leakage.</td><td>Which cohort is most realistic to grow?</td><td><span class="tag warn">Study candidate</span></td></tr>
+          <tr><td>Sims</td><td>Refine</td><td>Known to sell units/bunches online; useful LIST/GROW learning account.</td><td>Buyers already purchasing units/bunches.</td><td>Improve repeat behavior by aligning supply, timing, and message.</td><td>Confirm upload consistency and product depth.</td><td>Unit/bunch online GMV, repeat buyers, active SKUs.</td><td>What good online supply enables when maintained.</td><td><span class="tag wait">Learning candidate</span></td></tr>
+          <tr><td>Metropetals</td><td>Diagnose</td><td>Potential useful cohort; needs account facts before action.</td><td>TBD after account review.</td><td>Use account-specific discovery before campaign design.</td><td>Validate readiness, supply, and buyer base.</td><td>TBD.</td><td>Whether this belongs in Black Belt or another initiative.</td><td><span class="tag warn">Needs account review</span></td></tr>
+          <tr><td>Kennicott</td><td>Strategic exception</td><td>Facu-confirmed strategic account; no multi-location default execution.</td><td>Account-specific.</td><td>Could become Black Belt only after strategic account plan clarifies readiness.</td><td>One full-stack account plan first.</td><td>Account plan metric.</td><td>Whether to amplify or continue diagnosis.</td><td><span class="tag wait">Strategic account path</span></td></tr>
+          <tr><td>Dreisbach</td><td>Strategic exception</td><td>Facu-confirmed strategic account with active blockers.</td><td>Account-specific.</td><td>Growth play only after current blockers and readiness are understood.</td><td>Clear overdue blockers and implementation alignment.</td><td>Blockers cleared, first measured play.</td><td>Which blocker prevents growth.</td><td><span class="tag bad">Blocker cleanup first</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

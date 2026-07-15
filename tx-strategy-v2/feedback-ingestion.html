@@ -24,7 +24,7 @@
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Feedback & Call Ingestion</h1>
     <p class="sub">Stakeholders should not classify work. They give a short update; the system routes it to account plans, value prop, dashboards, follow-ups, or approval queues.</p>
-    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a></div>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/value-prop-gate.html">Value-prop gate</a></div>
   </header>
 
   <section>
@@ -66,6 +66,25 @@ Need from Facu/system:</pre>
       <article class="card"><h3>Dashboard gaps</h3><p>Routed to Rose/live dashboard workflow.</p></article>
       <article class="card"><h3>Workflow feedback</h3><p>Routed to Nahua/Codex if process failed.</p></article>
       <article class="card"><h3>Facu approval</h3><p>Only if strategic decision or stakeholder-facing claim changed.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Call packet template</p>
+    <h2>Read-safe before durable output</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Use</th><th>Stakeholder visible?</th></tr></thead>
+        <tbody>
+          <tr><td>call_id / source / date / attendees</td><td>Traceability and access control.</td><td>Only if appropriate.</td></tr>
+          <tr><td>directly_said</td><td>Customer facts or explicit commitments, separated from interpretation.</td><td>Yes, summarized.</td></tr>
+          <tr><td>read_safe_interpretation</td><td>Codex/Pablito interpretation that can be reviewed and corrected.</td><td>Yes, after review.</td></tr>
+          <tr><td>what_not_to_write_or_share</td><td>Private commentary, speculation, sensitive internal material.</td><td>No.</td></tr>
+          <tr><td>tasks / owner asks / decisions</td><td>Routes to ledger and Friday readback.</td><td>Yes.</td></tr>
+          <tr><td>objections / blockers / value-prop signals</td><td>Routes to value-prop gate, account plan, Product, or Rose.</td><td>Only after trust label.</td></tr>
+          <tr><td>trust label / review needed</td><td>Prevents call memory from becoming strategy too early.</td><td>Yes, as label.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 

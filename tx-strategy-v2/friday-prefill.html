@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Friday Prefill — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1420px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1300px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1420px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Friday Prefill</h1>
+    <p class="sub">Friday should start from a prefilled execution view. Stakeholders confirm, correct, and add learnings. They should not spend Friday reconstructing account context.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Execution ledger</a>
+      <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL queue</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">What owners fill by Thursday EOD</p>
+    <h2>Three boxes, not a blank update</h2>
+    <div class="grid">
+      <article class="card"><strong>Deliverables</strong><p>What was done this week: accounts worked / total list, calls, pilots, setup, messages, data pulls.</p></article>
+      <article class="card"><strong>Learnings</strong><p>What changed our understanding: objections, blockers, customer needs, what would it take, what did not work.</p></article>
+      <article class="card"><strong>Asks</strong><p>What they need from Facu, CS, Implementation, Product, Data, Marketing, or another stakeholder.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Friday status rows</p>
+    <h2>Comparable updates across initiatives</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Initiative</th><th>Owner</th><th>TLDR</th><th>KPI</th><th>Leading indicators</th><th>Accounts / leads</th><th>Deliverables</th><th>Learnings</th><th>Asks</th><th>Trust</th><th>Next expectation</th></tr></thead>
+        <tbody>
+          <tr><td>BUY</td><td>Cata / CS</td><td>Turn accepted connections into repeat transactions.</td><td>Connected buyer-supplier pairs that generate repeat transactions.</td><td>Pairs worked, first orders, second/third orders, buyer discovery calls, blockers classified.</td><td>Start from untransacted or one-order connection queues; CS validates.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Lead list needs validation</span></td><td>Bring top accounts, blockers, and next-week pair list.</td></tr>
+          <tr><td>LIST</td><td>Cata / CS</td><td>Make the wholesaler's real sellable supply visible online.</td><td>Supply-ready accounts/pilots with credible online supply.</td><td>Format, variety, time depth, freshness, fulfillment confidence, buyer base readiness.</td><td>Start from supply gap candidates and learning accounts; Rose validates metrics.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Directional until Rose baseline</span></td><td>Pick first pilot or define data blocker.</td></tr>
+          <tr><td>SELL</td><td>Christine</td><td>Make wholesaler implementation commercially ready for BUY/LIST/SELL usage.</td><td>Accounts that reach real usage, not just setup.</td><td>First usage path defined, first/second/third transactions, supply readiness, buyer path, tracking in place.</td><td><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">PMT readiness queue</a>.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Queue seeded from user-provided PMT list</span></td><td>Confirm which implementation accounts need TX support.</td></tr>
+          <tr><td>GROW</td><td>Facu</td><td>Diagnose, refine, and amplify repeat online behavior.</td><td>Repeat online growth from accounts ready enough to test.</td><td>Cohorts selected, campaign/live test, buyer response, repeat orders, leakage signals.</td><td><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">Black Belt operator view</a>.</td><td><span class="tag wait">Facu fill</span></td><td><span class="tag wait">Facu fill</span></td><td><span class="tag wait">Facu fill</span></td><td><span class="tag warn">Candidates need approval</span></td><td>Approve candidate set and first measured play.</td></tr>
+          <tr><td>Strategic Accounts</td><td>Cata + Facu</td><td>One full-stack plan for Bill Doran, Kennicott, and Dreisbach.</td><td>Account plan with next conversation, owner, and blocker cleared.</td><td>BUY/LIST/SELL/GROW actions aligned, no duplicate asks, next meeting, decision needed.</td><td><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Account plans</a>.</td><td><span class="tag wait">Cata/Facu fill</span></td><td><span class="tag wait">Cata/Facu fill</span></td><td><span class="tag wait">Cata/Facu fill</span></td><td><span class="tag warn">Needs account-owner validation</span></td><td>Confirm one next conversation per account.</td></tr>
+          <tr><td>Future Enablers</td><td>Maga</td><td>Product enablers unblock BUY/LIST/SELL/GROW after a real blocker is proven.</td><td>Blocker-to-pilot-to-KPI path.</td><td>Affected accounts, pilot population, expected behavior, go/no-go metric, product requirement.</td><td>Standing orders, API, grower portal, parity, deal desk ideas.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Monday/leadership lane</span></td><td>Bring only blockers tied to accounts and pilots.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
