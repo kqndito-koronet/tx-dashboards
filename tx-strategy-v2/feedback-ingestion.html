@@ -40,6 +40,22 @@ Need from Facu/system:</pre>
   </section>
 
   <section>
+    <p class="eyebrow">Operating pipeline</p>
+    <h2>Feedback must create a visible downstream change.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Input</th><th>First owner</th><th>Ledger classification</th><th>Consumer</th><th>Required output</th></tr></thead>
+        <tbody>
+          <tr><td>Stakeholder says an account moved, stalled, objected, or needs help.</td><td>Pablito</td><td>feedback_ingestion -> tx_execution_ledger_update</td><td>Mercurio or Socrates</td><td>Account action, stakeholder ask, Friday row, or explicit parked reason.</td></tr>
+          <tr><td>Call transcript or Fathom note contains a customer signal.</td><td>Pablito + call worker</td><td>post_call_capture -> tx_execution_ledger_update</td><td>Mercurio, Lautaro, Rose, or Nahua</td><td>Task, objection, account signal, dashboard gap, or workflow feedback.</td></tr>
+          <tr><td>Owner corrects an initiative page, lead, KPI, or talk track.</td><td>Pablito</td><td>feedback_ingestion -> affected workflow feedback file</td><td>Socrates / Nahua / Codex</td><td>Workflow feedback entry, CR if reusable, and visible status.</td></tr>
+          <tr><td>Data claim is challenged.</td><td>Rose + Codex</td><td>live_dashboard_build or okr_pacing</td><td>Rose</td><td>Claim register update, trust label change, or data gap queue row.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
     <p class="eyebrow">Current capture layer</p>
     <h2>GitHub Issues capture feedback before full automation exists</h2>
     <div class="tableWrap">

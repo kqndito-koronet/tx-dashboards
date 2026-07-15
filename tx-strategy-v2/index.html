@@ -100,7 +100,7 @@
     <div class="group"><span class="label">Start</span><a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Facu review</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a><a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a><a href="/tx-dashboards/tx-strategy-v2/monday-leadership-prefill.html">Monday prefill</a><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a><a href="/tx-dashboards/tx-strategy-v2/launch-readiness.html">Launch</a></div>
     <div class="group"><span class="label">Lanes</span><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a><a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL</a><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic</a></div>
     <div class="group"><span class="label">Control</span><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a><a href="/tx-dashboards/tx-strategy-v2/agent-lane-queues.html">Agent queues</a><a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Action queue</a><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback</a><a href="/tx-dashboards/tx-strategy-v2/promotion-readiness.html">Promotion</a><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data backing</a><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance</a></div>
-    <div class="group"><span class="label">Reference</span><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Registry</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URLs</a><a href="/tx-dashboards/tx-strategy-v1/index.html">V1 backup</a></div>
+    <div class="group"><span class="label">Reference</span><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Dashboard registry</a><a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Workflow registry</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URLs</a><a href="/tx-dashboards/tx-strategy-v1/index.html">V1 backup</a></div>
   </nav>
 
   <section id="read">
@@ -137,6 +137,7 @@
     </div>
     <div class="quickLinks">
       <a href="/tx-dashboards/tx-strategy-v2/tx-agent-handoffs.html">Open TX agent handoffs</a>
+      <a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Open workflow registry</a>
       <a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Open generated compliance audit</a>
       <a href="/tx-dashboards/tx-strategy-v2/launch-readiness.html">Open launch readiness</a>
       <a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Open readiness matrix</a>
@@ -155,6 +156,33 @@
           <tr><td>Comms</td><td>Socrates communicates approved strategy. It does not invent data or final P0 accounts.</td><td>Socrates</td><td><span class="trust approval">Approved framing</span></td></tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <section id="ingestion-loop">
+    <p class="eyebrow">Feedback and call loop</p>
+    <h2>Stakeholders give the smallest useful update; the system turns it into work.</h2>
+    <p class="subtle">
+      The goal is not to make Cata, Christine, Maga, or Facu maintain another system.
+      They provide what happened, what changed, and what they need. Pablito captures it,
+      the ledger routes it, and Mercurio/Socrates/Rose update the right operating surface.
+    </p>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Step</th><th>Owner</th><th>What happens</th><th>Output</th><th>Review gate</th></tr></thead>
+        <tbody>
+          <tr><td>1. Capture</td><td>Pablito</td><td>Collect 30-second feedback or call packet.</td><td>Read-safe feedback/call row.</td><td>Source and account/initiative required.</td></tr>
+          <tr><td>2. Route</td><td>Ledger workflow</td><td>Classify initiative, workflow, owner lane, trust label, and approval state.</td><td>Ledger candidate or active row.</td><td>No owner/workflow means blocked, not hidden.</td></tr>
+          <tr><td>3. Consume</td><td>Mercurio / Socrates / Rose</td><td>Turn the row into account action, stakeholder comms, dashboard gap, or value-prop change.</td><td>Updated account plan, Friday row, data gap, talk track, or workflow patch.</td><td>Major claims or account priorities need review.</td></tr>
+          <tr><td>4. Read back</td><td>Pablito + Socrates</td><td>Show what changed and what is expected next.</td><td>Friday readback or Monday prefill.</td><td>Owner can correct before it becomes durable.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="quickLinks">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Open feedback/call ingestion</a>
+      <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Open ledger</a>
+      <a href="/tx-dashboards/tx-strategy-v2/agent-lane-queues.html">Open agent queues</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Open Friday readback</a>
     </div>
   </section>
 
