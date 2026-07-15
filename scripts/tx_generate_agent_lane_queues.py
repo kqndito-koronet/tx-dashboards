@@ -14,8 +14,13 @@ FIELDS = [
     "initiative",
     "account",
     "input_signal",
+    "conversation_expected",
+    "expected_outcome",
+    "expected_learning",
     "output_expected",
+    "first_move",
     "acceptance_criteria",
+    "review_gate",
     "due_date",
     "source_link",
     "trust_label",
@@ -69,6 +74,39 @@ def acceptance(row):
     return "Output has source, owner, due date, next action, and review gate."
 
 
+def first_move(row):
+    lane_name = lane(row)
+    initiative = (row.get("initiative") or "").strip()
+    account = (row.get("account") or "").strip() or "the relevant object"
+    if lane_name == "Rose":
+        return f"Confirm source/date/trust label for {initiative or 'this claim'} and mark missing data."
+    if lane_name == "Mercurio":
+        return f"Convert {account} into an account action proposal only if owner/data validation exists."
+    if lane_name == "Socrates":
+        return "Turn the approved row into short stakeholder-facing copy with links and caveats."
+    if lane_name == "Pablito":
+        return "Check owner/date/action completeness and add missing fields to the readback queue."
+    if lane_name == "Nahua":
+        return "Classify whether this is workflow-backed, missing, patched, parked, or quarantined."
+    if lane_name == "Facu":
+        return "Approve, change, or park the decision; avoid silent strategy drift."
+    return "Clarify owner, next action, and review gate before execution."
+
+
+def review_gate(row):
+    approval = (row.get("approval_state") or "").strip()
+    trust = (row.get("trust_label") or "").strip()
+    if "approved" in approval.lower():
+        return "Can proceed if owner/date/action are current."
+    if "facu" in approval.lower():
+        return "Needs Facu review before stakeholder-facing use."
+    if "owner" in approval.lower():
+        return "Needs initiative/account owner validation before active execution."
+    if "rose" in approval.lower() or "data" in trust.lower():
+        return "Needs Rose/source validation before stronger claim."
+    return "Keep as draft/review row until approval state is explicit."
+
+
 def row_to_queue(row, index):
     return {
         "queue_id": f"AGQ-{index:03d}",
@@ -77,8 +115,13 @@ def row_to_queue(row, index):
         "initiative": row.get("initiative", ""),
         "account": row.get("account", ""),
         "input_signal": row.get("read_safe_summary") or row.get("decision_needed", ""),
+        "conversation_expected": row.get("conversation_expected", ""),
+        "expected_outcome": row.get("expected_outcome", ""),
+        "expected_learning": row.get("expected_learning", ""),
         "output_expected": row.get("next_action") or row.get("decision_needed", ""),
+        "first_move": first_move(row),
         "acceptance_criteria": acceptance(row),
+        "review_gate": review_gate(row),
         "due_date": row.get("due_date", ""),
         "source_link": row.get("evidence_link") or row.get("source_link", ""),
         "trust_label": row.get("trust_label", ""),
