@@ -24,7 +24,7 @@
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Routines and Workflow Enforcement</h1>
     <p class="sub">The system should make the right work easier than ad hoc work. Routines connect Monday, Friday, calls, feedback, dashboards, and value prop.</p>
-    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Workflow registry</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a><a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a><a href="/tx-dashboards/tx-strategy-v2/monday-leadership-prefill.html">Monday prefill</a><a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">Agent runbook</a></div>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Workflow registry</a><a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Suggested leads</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a><a href="/tx-dashboards/tx-strategy-v2/friday-readback.html">Friday readback</a><a href="/tx-dashboards/tx-strategy-v2/monday-leadership-prefill.html">Monday prefill</a><a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">Agent runbook</a></div>
   </header>
 
   <section>
@@ -67,6 +67,7 @@
         <thead><tr><th>Check</th><th>Pass condition</th><th>Fail route</th></tr></thead>
         <tbody>
           <tr><td>Owner confirmed?</td><td>Owner or delegate validated the row.</td><td>Mark `Needs owner`; show only as draft.</td></tr>
+          <tr><td>Suggested lead reviewed?</td><td>Signal, trigger, expected conversation, outcome, learning, and validation state exist.</td><td>Run `lead_review`; do not assign the row yet.</td></tr>
           <tr><td>Account/action present?</td><td>Named account/pair/object and concrete action.</td><td>Park async unless Friday decision needed.</td></tr>
           <tr><td>Learning/result present?</td><td>One sentence result or learning.</td><td>Ask owner for missing field; do not expand narrative.</td></tr>
           <tr><td>Next action dated?</td><td>Owner and due date exist.</td><td>Route to Pablito follow-up queue.</td></tr>
