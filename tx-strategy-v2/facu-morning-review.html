@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facu Morning Review — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1380px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:19px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1180px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Facu Morning Review</h1>
+    <p class="sub">Start here tomorrow. This page tells you what to review, what to approve/change/park, what can be shared, and what still needs owner validation.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday worksheet</a>
+      <a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URL inventory</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">20-minute review path</p>
+    <h2>Review in this order</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Time</th><th>Open</th><th>What to check</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>0-3 min</td><td><a href="/tx-dashboards/tx-strategy-v2/index.html">Cockpit</a></td><td>Does the main story still feel right: GMV -> digital GMV -> monetize; BUY/LIST/SELL/GROW execution?</td><td>Approve/change headline framing.</td></tr>
+          <tr><td>3-7 min</td><td><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a></td><td>Is the message simple enough to send? Does it ask owners to validate, not rebuild?</td><td>Approve/change send note.</td></tr>
+          <tr><td>7-12 min</td><td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday worksheet</a></td><td>Are the owner rows clear? Are discussion items the right ones?</td><td>Approve/change Friday ask.</td></tr>
+          <tr><td>12-16 min</td><td><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a> / <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a> / <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL</a> / <a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW</a></td><td>Check initiative scope, KPI, lead logic, and what owners must validate.</td><td>Approve/change each scope before stakeholder use.</td></tr>
+          <tr><td>16-20 min</td><td><a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">Agent runbook</a> + <a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a></td><td>Are agent next tasks clear enough for Rose/Mercury/Socrates/Pablito/Nahua?</td><td>Approve next-run tasks or change priorities.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Approve / change / park</p>
+    <h2>Decision checklist</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Decision</th><th>Recommendation</th><th>Why</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Share V2 hub?</td><td>Yes, as draft operating package.</td><td>Useful for alignment; still clearly labeled as draft and validation-dependent.</td><td><span class="tag ok">Recommend approve</span></td></tr>
+          <tr><td>Send stakeholder note?</td><td>Change lightly before send.</td><td>Message is usable but should reflect your exact voice before posting.</td><td><span class="tag wait">Facu review</span></td></tr>
+          <tr><td>Use Friday worksheet?</td><td>Yes.</td><td>It forces deliverables, learnings, asks, owner edits, discussion queue, commitment readback.</td><td><span class="tag ok">Recommend approve</span></td></tr>
+          <tr><td>Use BUY/LIST/SELL/GROW pages?</td><td>Yes for review; not as final lead assignment.</td><td>Scopes and logic are useful; accounts/leads need owner validation.</td><td><span class="tag wait">Approve as review pages</span></td></tr>
+          <tr><td>Use Rose numbers as final?</td><td>No.</td><td>Data backing pack still needed. Current data links are directional/trust-labeled.</td><td><span class="tag warn">Do not overstate</span></td></tr>
+          <tr><td>Promote V2 to live operating status?</td><td>No.</td><td>Workflow provenance, owner validation, and real ledger update loops are not fully running yet.</td><td><span class="tag bad">Keep draft</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What to ask each owner</p>
+    <h2>Minimum ask before Friday</h2>
+    <div class="grid">
+      <article class="card"><strong>Cata / CS</strong><p>Validate BUY and LIST rows: accounts worked, result, blocker, next action, and which lead logic is wrong.</p></article>
+      <article class="card"><strong>Christine</strong><p>Validate SELL readiness queue: which PMTs need TX help and what first usage path is realistic.</p></article>
+      <article class="card"><strong>Maga</strong><p>Bring Future Enablers only as blocker -> account(s) -> pilot -> KPI -> go/no-go.</p></article>
+      <article class="card"><strong>Rose</strong><p>Produce data backing pack: OKR strip, drivers, top accounts, evidence table, claim register.</p></article>
+      <article class="card"><strong>Mercury</strong><p>Turn validated leads into account actions with value prop, metric, expected learning, owner/date.</p></article>
+      <article class="card"><strong>Pablito / Nahua</strong><p>Pablito tracks owner edits and commitments. Nahua labels workflow compliance and quarantine risk.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Open risks</p>
+    <h2>Do not hide these</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Risk</th><th>How V2 handles it</th><th>Owner</th></tr></thead>
+        <tbody>
+          <tr><td>Lead lists are not owner-approved.</td><td>Every lead page says validation required; Friday asks owners to correct.</td><td>CS / Implementation owners</td></tr>
+          <tr><td>Data backing is not final.</td><td>Rose gap queue defines exact pack needed; claims stay trust-labeled.</td><td>Rose</td></tr>
+          <tr><td>V2 could overwhelm stakeholders.</td><td>Send packet points each owner to one first page and one action.</td><td>Socrates + Facu</td></tr>
+          <tr><td>Agents could drift into big unapproved actions.</td><td>Agent runbook requires recurring job, ledger row, acceptance criteria, review gate.</td><td>Codex + Nahua</td></tr>
+          <tr><td>Friday could become strategy debate.</td><td>Friday worksheet parks broad roadmap and routes Monday topics separately.</td><td>Facu</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
