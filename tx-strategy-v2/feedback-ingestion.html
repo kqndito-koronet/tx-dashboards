@@ -42,6 +42,7 @@ Need from Facu/system:</pre>
   <section>
     <p class="eyebrow">Operating pipeline</p>
     <h2>Feedback must create a visible downstream change.</h2>
+    <p class="sub">Runnable pipeline: <code>python3 scripts/tx_sync_feedback_pipeline.py</code>. The scheduled GitHub Action fetches issues first, then runs this same pipeline to refresh candidates, validation, promotion log, active ledger, queues, readbacks, compliance, and claim register.</p>
     <div class="tableWrap">
       <table>
         <thead><tr><th>Input</th><th>First owner</th><th>Ledger classification</th><th>Consumer</th><th>Required output</th></tr></thead>

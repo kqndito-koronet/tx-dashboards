@@ -143,6 +143,6 @@ body:
     id: routing
     attributes:
       label: Routing / downstream artifact
-      placeholder: Pablito task / Mercury account plan / Rose dashboard gap / Lautaro value prop / Nahua workflow patch.
+      placeholder: Pablito task / Mercurio account plan / Rose dashboard gap / Lautaro value prop / Nahua workflow patch.
     validations:
       required: true

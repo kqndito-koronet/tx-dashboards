@@ -31,16 +31,7 @@ jobs:
 
       - name: Build ledger candidate CSV
         run: |
-          python3 scripts/tx_issue_capture_to_ledger.py
-          python3 scripts/tx_validate_ledger_candidates.py
-          python3 scripts/tx_promote_validated_candidates.py
-          python3 scripts/tx_apply_friday_readback.py
-          python3 scripts/tx_generate_review_queues.py
-          python3 scripts/tx_generate_friday_readback.py
-          python3 scripts/tx_generate_monday_prefill.py
-          python3 scripts/tx_generate_agent_lane_queues.py
-          python3 scripts/tx_generate_workflow_compliance_audit.py
-          python3 scripts/tx_generate_claim_register.py
+          python3 scripts/tx_sync_feedback_pipeline.py
 
       - name: Commit capture export if changed
         run: |
