@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent Routine Runbook — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1420px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1220px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Agent Routine Runbook</h1>
+    <p class="sub">This is the handoff from static V2 pages to recurring work. Agents do not get autonomy by producing big outputs; they earn it by running a clear routine, updating the ledger, and improving from feedback.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger-source.html">Ledger source</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Operating rule</p>
+    <h2>Every agent output must update one surface and one ledger row.</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Agent / lane</th><th>Recurring job</th><th>Input</th><th>Output</th><th>Acceptance criteria</th><th>Cadence</th></tr></thead>
+        <tbody>
+          <tr><td>Rose</td><td>TX Data Backing Pack</td><td>Snowflake/dashboards, OKR definitions, dashboard gap queue.</td><td>OKR strip, driver decomposition, top-account concentration, BUY/LIST/SELL/GROW evidence, claim register.</td><td>Every claim has source/date/trust label and decision supported.</td><td>Thu night + Monday prefill.</td></tr>
+          <tr><td>Mercury</td><td>Account play proposals and execution tracking</td><td>Validated lead lists, account plans, call learnings, value-prop gate.</td><td>Account action rows: account, play, value prop, expected learning, owner, due date.</td><td>No play without account, owner, metric, expected learning, and approval state.</td><td>Tue/Wed build, Friday readback.</td></tr>
+          <tr><td>Socrates</td><td>Stakeholder communication and Friday package clarity</td><td>Approved strategy, Friday worksheet, owner link map, Facu comments.</td><td>Stakeholder note, slide copy, owner asks, simplified narrative.</td><td>No new strategy claims; links to source page and tells owner exactly what to fill.</td><td>Before send + after owner feedback.</td></tr>
+          <tr><td>Pablito</td><td>Follow-up and commitment control</td><td>Friday meeting, feedback packets, overdue queue, ledger source.</td><td>Commitment readback, owner/date/action rows, overdue alerts, next Friday prefill updates.</td><td>Every commitment has owner, due date, source, destination artifact.</td><td>Friday +1 hour, daily until done.</td></tr>
+          <tr><td>Nahua</td><td>Workflow compliance and canonical drift checks</td><td>New outputs, workflow registry, canonical files, stale memory/conflict signals.</td><td>Compliance gate result, quarantine list, workflow patches, canonical CR queue.</td><td>Ad hoc repeats become workflow patches; major conflicts are visible before use.</td><td>Before publish + weekly audit.</td></tr>
+          <tr><td>Lautaro / value prop lane</td><td>Talk-track proof and objection library</td><td>Call objections, account plays, value-prop gate, customer proof.</td><td>Approved talk track, objection response, proof caveat, before/after changes.</td><td>No customer-facing claim without source, audience, and approval state.</td><td>As call learnings arrive.</td></tr>
+          <tr><td>Codex</td><td>Integration, publishing, and verification</td><td>Agent outputs, Facu feedback, repo state, Pages deploy state.</td><td>Published hub updates, build log, URL checks, goal audit.</td><td>Repo clean, Pages 200 checks pass, V2 remains draft until gates pass.</td><td>Continuous during build sessions.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Next run prompts</p>
+    <h2>What to ask each lane next</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Lane</th><th>Prompt / task</th><th>Where result should land</th><th>Review gate</th></tr></thead>
+        <tbody>
+          <tr><td>Rose</td><td>Produce the TX Data Backing Pack from the dashboard gap queue: OKR strip, drivers, top accounts, evidence table, claim register.</td><td>Dashboard gap queue + current read.</td><td>Codex checks labels; Facu reviews narrative.</td></tr>
+          <tr><td>Mercury</td><td>Turn BUY/LIST/SELL/GROW pages into account action proposals with owner, value prop, metric, expected learning.</td><td>Ledger source + Friday prefill.</td><td>Facu approves priorities; owners validate facts.</td></tr>
+          <tr><td>Socrates</td><td>Rewrite the stakeholder send packet into the shortest clear note after Facu reviews links.</td><td>Stakeholder send packet.</td><td>Facu approval before send.</td></tr>
+          <tr><td>Pablito</td><td>Create the first commitment readback from Friday prefill rows and current overdue items.</td><td>Ledger source + Friday prefill.</td><td>Owner/date/action completeness.</td></tr>
+          <tr><td>Nahua</td><td>Run V2 compliance: which pages can be stakeholder-facing, which are seed/review-only, which require quarantine.</td><td>Workflow compliance + URL inventory.</td><td>Publish blocker status.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
