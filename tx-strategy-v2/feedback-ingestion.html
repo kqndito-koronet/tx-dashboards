@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feedback & Call Ingestion — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1320px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}h3{margin:0 0 8px}.sub{color:#667085;max-width:920px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:980px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    code,pre{background:#f3f6fb;border:1px solid #d9e0ea;border-radius:7px}code{padding:2px 5px}pre{padding:14px;overflow:auto;white-space:pre-wrap}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Feedback & Call Ingestion</h1>
+    <p class="sub">Stakeholders should not classify work. They give a short update; the system routes it to account plans, value prop, dashboards, follow-ups, or approval queues.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">30-second feedback</p>
+    <h2>One input format for stakeholders</h2>
+    <pre>Account / initiative:
+What happened:
+Result:
+Blocker or learning:
+Need from Facu/system:</pre>
+    <p class="sub">This is intentionally simple. Pablito captures it, the ledger routes it, and the right agent consumes it.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Routing map</p>
+    <h2>Where each signal goes</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Signal</th><th>Route</th><th>Workflow</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>Customer objected to pitch, pricing, proof, or positioning.</td><td>Lautaro + Mercury proposal</td><td>value_prop_update</td><td>Objection/proof update candidate.</td></tr>
+          <tr><td>Account did not move because supply/listing is weak.</td><td>Mercury + Rose</td><td>initiative_execution_build</td><td>LIST account action + dashboard gap.</td></tr>
+          <tr><td>Owner needs Facu in a meeting.</td><td>Pablito</td><td>overdue_actions_triage</td><td>Facu approval/escalation queue.</td></tr>
+          <tr><td>Dashboard number seems wrong.</td><td>Rose + Codex</td><td>live_dashboard_build</td><td>Data gap or corrected claim.</td></tr>
+          <tr><td>Talk track did not land.</td><td>Socrates + Lautaro</td><td>stakeholder_enablement + value_prop_update</td><td>Revised owner-facing ask.</td></tr>
+          <tr><td>Same ad-hoc request happens three times.</td><td>Nahua</td><td>canonical_reconciliation or workflow patch</td><td>New/updated workflow.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Post-call packet</p>
+    <h2>Calls produce five outputs, not generic summaries</h2>
+    <div class="grid">
+      <article class="card"><h3>Tasks</h3><p>Owner/date/action for Pablito.</p></article>
+      <article class="card"><h3>Account signals</h3><p>Routed to Mercury/account plan.</p></article>
+      <article class="card"><h3>Objections / value prop</h3><p>Routed to Lautaro/value prop workflow.</p></article>
+      <article class="card"><h3>Dashboard gaps</h3><p>Routed to Rose/live dashboard workflow.</p></article>
+      <article class="card"><h3>Workflow feedback</h3><p>Routed to Nahua/Codex if process failed.</p></article>
+      <article class="card"><h3>Facu approval</h3><p>Only if strategic decision or stakeholder-facing claim changed.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Read-safe packet fields</p>
+    <h2>Required before durable output</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Why required</th></tr></thead>
+        <tbody>
+          <tr><td>Source and date</td><td>Prevents unsourced memory from becoming strategy.</td></tr>
+          <tr><td>Directly said vs interpretation</td><td>Keeps private or speculative commentary out of durable files.</td></tr>
+          <tr><td>Account and initiative</td><td>Routes to action, not a generic learning bucket.</td></tr>
+          <tr><td>Value-prop link</td><td>Prevents unapproved pitch/proof changes.</td></tr>
+          <tr><td>Confidence and approval state</td><td>Controls whether it can show up in Friday/Monday/stakeholder comms.</td></tr>
+          <tr><td>Downstream update</td><td>Forces a task, account plan, dashboard gap, value-prop update, or workflow patch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workflow Compliance — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1320px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:920px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px}.card strong{display:block;font-size:28px}.card p{margin:6px 0 0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1050px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Workflow Compliance</h1>
+    <p class="sub">Workflow adoption was audited at 7%. V2 must make off-workflow work visible until routed, patched, or explicitly parked. Nahua verdict: blocked for live operating status until gates pass; allowed as draft operating prototype.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a></div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Current compliance target</p>
+    <h2>Recover from 7% to 80%+</h2>
+    <div class="grid">
+      <article class="card"><strong>7%</strong><p>Audited workflow adoption baseline.</p></article>
+      <article class="card"><strong>50%</strong><p>This-week recovery target for TX hub work.</p></article>
+      <article class="card"><strong>80%+</strong><p>Two-week operating target before packages are accepted.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Publish blockers</p>
+    <h2>Codex should not publish major V2 updates when these are open</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Blocker</th><th>Why it matters</th><th>Owner</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Major output has no workflow provenance.</td><td>Preserves ad hoc behavior and makes repeatability impossible.</td><td>Codex + Nahua</td><td><span class="tag bad">Block publish or label missing</span></td></tr>
+          <tr><td>Value-prop dependency missing for talk track/play.</td><td>Risks unapproved messaging or contradicted proof.</td><td>Lautaro + Codex</td><td><span class="tag bad">Block stakeholder-facing use</span></td></tr>
+          <tr><td>Dashboard claim lacks source/trust label.</td><td>Turns directional analysis into false certainty.</td><td>Rose + Codex</td><td><span class="tag bad">Block claim</span></td></tr>
+          <tr><td>Account action lacks owner/date.</td><td>Looks active but cannot execute.</td><td>Pablito + Mercury</td><td><span class="tag wait">Needs owner</span></td></tr>
+          <tr><td>Canonical conflict affects current story.</td><td>Agents may operate from different strategy models.</td><td>Nahua + Facu</td><td><span class="tag bad">CR required</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Recovery checklist</p>
+    <h2>Weekly Nahua check</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Check</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>Registered workflows used this week</td><td>Count + list.</td></tr>
+          <tr><td>Ad-hoc outputs that should have been workflows</td><td>Ledger rows marked Workflow missing.</td></tr>
+          <tr><td>Skill runs missing workflow log</td><td>Patch queue or workflow update.</td></tr>
+          <tr><td>Open workflow feedback not applied</td><td>`applied_in` or explicitly parked.</td></tr>
+          <tr><td>Canonical conflicts found</td><td>Change request with owner and decision needed.</td></tr>
+          <tr><td>Next workflow patches</td><td>P0/P1 patch list.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

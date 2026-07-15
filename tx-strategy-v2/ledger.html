@@ -23,7 +23,7 @@
   <header>
     <p class="eyebrow">TX Enablement V2</p>
     <h1>Execution Ledger</h1>
-    <p class="sub">The ledger is the router behind the hub. It turns feedback, calls, dashboard claims, account plays, and value-prop changes into owned actions, approval gates, and downstream artifacts.</p>
+    <p class="sub">The ledger is the router behind the hub. It turns feedback, calls, dashboard claims, account plays, and value-prop changes into owned actions, approval gates, and downstream artifacts. Current source seed: <code>ops/tx_execution_ledger_seed_2026-07-15.csv</code>.</p>
     <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Account plans</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a></div>
   </header>
 
@@ -67,16 +67,20 @@
 
   <section>
     <p class="eyebrow">Seed rows</p>
-    <h2>Initial ledger rows to create next</h2>
+    <h2>Initial ledger rows now created from audit + Pablito proposal</h2>
     <div class="tableWrap">
       <table>
         <thead><tr><th>ID</th><th>Initiative</th><th>Source</th><th>Summary</th><th>Owner</th><th>Approval</th><th>Next action</th></tr></thead>
         <tbody>
-          <tr><td>TXL-seed-001</td><td>SELL</td><td>Audit</td><td>Commercial Readiness is weakest artifact; PMT queue missing from hub.</td><td>Pablito + Mercury</td><td><span class="tag wait">Needs owner</span></td><td>Build PMT readiness queue with Christine.</td></tr>
-          <tr><td>TXL-seed-002</td><td>Strategic</td><td>Facu approval</td><td>Bill Doran, Kennicott, Dreisbach need full-stack account plans.</td><td>Mercury</td><td><span class="tag wait">Needs Facu review</span></td><td>Draft one page per account.</td></tr>
-          <tr><td>TXL-seed-003</td><td>System</td><td>System audit</td><td>Workflow adoption 7%; missing workflow provenance must become visible.</td><td>Nahua + Codex</td><td><span class="tag bad">Blocked until tracked</span></td><td>Create workflow compliance view.</td></tr>
-          <tr><td>TXL-seed-004</td><td>GROW</td><td>Black Belt audit</td><td>Black Belt needs operator view: account, cohort, play, message, metric, learning.</td><td>Mercury + Facu</td><td><span class="tag wait">Needs approval</span></td><td>Add operator table to one-pager.</td></tr>
-          <tr><td>TXL-seed-005</td><td>Value prop</td><td>Session TLDR</td><td>Value prop is dependency for play design, meeting prep, post-call capture.</td><td>Lautaro + Codex</td><td><span class="tag ok">Rule accepted</span></td><td>Add dependency field to initiative pages.</td></tr>
+          <tr><td>TXL-001</td><td>System</td><td>System audit</td><td>Workflow adoption is 7%; workflow provenance must become visible.</td><td>Nahua + Codex</td><td><span class="tag bad">Needs Facu</span></td><td>Create workflow compliance view and gate.</td></tr>
+          <tr><td>TXL-002</td><td>SELL</td><td>GitHub audit</td><td>Commercial Readiness is weakest artifact; PMT queue missing from hub.</td><td>Pablito + Mercury</td><td><span class="tag wait">Needs owner</span></td><td>Build PMT readiness queue with Christine.</td></tr>
+          <tr><td>TXL-011</td><td>Strategic</td><td>Pablito seed</td><td>Dreisbach curated vendor list reported ready and overdue.</td><td>Pablito</td><td><span class="tag wait">Needs Facu</span></td><td>Deliver or explicitly re-date/block it.</td></tr>
+          <tr><td>TXL-013</td><td>Strategic</td><td>Pablito seed</td><td>Dreisbach implementation alignment overdue with Camila + Sebastian.</td><td>Pablito</td><td><span class="tag wait">Needs owner</span></td><td>Schedule or park implementation alignment.</td></tr>
+          <tr><td>TXL-015</td><td>SELL</td><td>Pablito seed</td><td>Veldkamps eSuite timeline/open questions need resolution.</td><td>Pablito</td><td><span class="tag wait">Needs owner</span></td><td>Get timeline and next action from Santiago.</td></tr>
+          <tr><td>TXL-016</td><td>Strategic</td><td>Pablito seed</td><td>Bill Doran needs account profile/actions/plays.</td><td>Mercury</td><td><span class="tag wait">Proposed</span></td><td>Build first strategic account plan.</td></tr>
+          <tr><td>TXL-018</td><td>System</td><td>Pablito seed</td><td>K2K fee correction needs canonical propagation.</td><td>Nahua</td><td><span class="tag bad">Needs Facu</span></td><td>Patch canonical learnings or create CR.</td></tr>
+          <tr><td>TXL-019</td><td>System</td><td>Pablito seed</td><td>H1-H3 vs H1-H4 hypothesis conflict blocks correctness.</td><td>Nahua</td><td><span class="tag bad">Needs Facu</span></td><td>Create canonical conflict patch queue.</td></tr>
+          <tr><td>TXL-020</td><td>System</td><td>Pablito seed</td><td>First TX Execution Ledger file/table and views need publishing.</td><td>Codex + Pablito</td><td><span class="tag ok">In progress</span></td><td>Publish ledger seed and views.</td></tr>
         </tbody>
       </table>
     </div>
