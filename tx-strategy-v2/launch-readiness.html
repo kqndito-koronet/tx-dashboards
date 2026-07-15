@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Launch Readiness — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1380px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:22px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1100px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Launch Readiness</h1>
+    <p class="sub">The shortest review surface before sending V2. It answers: can we send it, what do we call it, what must be validated, and what cannot be promised yet?</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Morning review</a>
+      <a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a>
+      <a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Full readiness matrix</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Verdict</p>
+    <h2>Send as a draft operating package, not as final truth.</h2>
+    <div class="grid">
+      <article class="card"><strong>Sendable</strong><p>Strategy frame, owner asks, Friday worksheet, weekly action queue, and feedback capture are online.</p></article>
+      <article class="card"><strong>Validated by owners</strong><p>Lead lists, Friday rows, implementation queue, and account facts still need Cata/Christine/Facu/Maga validation.</p></article>
+      <article class="card"><strong>Data caveated</strong><p>Current read is directionally useful, but Rose backing pack is still required before stronger claims travel.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Launch gates</p>
+    <h2>What is ready vs what needs review</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Gate</th><th>Status</th><th>Evidence</th><th>Launch wording</th><th>Next owner action</th></tr></thead>
+        <tbody>
+          <tr><td>V1 backup preserved</td><td><span class="tag ok">Ready</span></td><td>Backup tag/branch/pointer exist.</td><td>V1 is safe. V2 is new draft operating package.</td><td>None.</td></tr>
+          <tr><td>Hub and navigation</td><td><span class="tag ok">Ready</span></td><td><a href="/tx-dashboards/tx-strategy-v2/">Cockpit</a>, <a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URL inventory</a>.</td><td>Use hub as starting point.</td><td>Facu reviews voice.</td></tr>
+          <tr><td>Stakeholder message</td><td><span class="tag wait">Facu review</span></td><td><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a>.</td><td>Draft note is ready; Facu can edit voice before sending.</td><td>Approve/change send note.</td></tr>
+          <tr><td>Friday operating package</td><td><span class="tag ok">Ready for owner edits</span></td><td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>.</td><td>Owners validate rows; they do not rebuild the deck.</td><td>Owners fill deliverables/learnings/asks by Thursday EOD.</td></tr>
+          <tr><td>Weekly action queue</td><td><span class="tag wait">Suggested, not assigned</span></td><td><a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Action queue</a>.</td><td>Use as starting point. Owner validation required.</td><td>Cata/Christine/Facu/Maga correct or approve rows.</td></tr>
+          <tr><td>Feedback/call capture</td><td><span class="tag ok">Capture path ready</span></td><td><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback system</a>, <a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">ledger candidates</a>.</td><td>Submit updates through forms or short format; system can export candidates.</td><td>Pablito reviews and promotes candidates.</td></tr>
+          <tr><td>Reporting</td><td><span class="tag warn">Directionally usable</span></td><td><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Current read</a>, <a href="/tx-dashboards/tx-strategy-v2/dashboard-gap-queue.html">Rose gap queue</a>.</td><td>Use caveats. Do not call board-ready.</td><td>Rose produces OKR strip, metric spine, top 15, channel/category cuts.</td></tr>
+          <tr><td>Operating status</td><td><span class="tag bad">Do not claim live OS</span></td><td><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Workflow compliance</a>.</td><td>Review-ready package with capture workflow, not proven weekly operating system.</td><td>Run one full cycle: owner edits, feedback issues, candidate promotion, Friday readback.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Say / do not say</p>
+    <h2>Recommended language</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Say</th><th>Do not say</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>“This is the TX Enablement V2 draft operating package.”</td><td>“This is the final operating system.”</td><td>Owner validation and first live cycle are still pending.</td></tr>
+          <tr><td>“Friday is execution and learning.”</td><td>“Friday is a strategy review.”</td><td>Keeps 80% of conversation on actions, learnings, blockers, asks.</td></tr>
+          <tr><td>“Please validate your row and add what the system cannot know.”</td><td>“Please rebuild your section.”</td><td>Minimizes stakeholder effort.</td></tr>
+          <tr><td>“Suggested leads, not assigned leads.”</td><td>“These are the accounts you must work.”</td><td>CS/Implementation owners need to validate reality.</td></tr>
+          <tr><td>“Data is trust-labeled and Rose is closing the backing pack.”</td><td>“All numbers are final.”</td><td>Protects credibility and avoids board-ready overclaim.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
