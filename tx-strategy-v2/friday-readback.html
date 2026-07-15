@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Friday Readback — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1500px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:22px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow:auto;max-height:760px;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1500px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:10px;text-align:left;vertical-align:top;font-size:13px}th{position:sticky;top:0;background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    input{width:min(520px,100%);min-height:42px;border:1px solid #d9e0ea;border-radius:8px;padding:0 12px;font:inherit}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}.count{color:#667085;font-weight:800}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1500px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Friday Readback</h1>
+    <p class="sub">Seeded from the generated Friday queue. After the meeting, this should become the source of commitments, decisions, learnings, blockers, and next surfaces.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Back to Friday prefill</a>
+      <a href="/tx-dashboards/tx-strategy-v2/generated-review-queues.html">Generated queues</a>
+      <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_seed.csv">Download readback CSV</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Readback rule</p>
+    <h2>The meeting is not done until every live item has a captured outcome.</h2>
+    <div class="grid">
+      <article class="card"><strong>Decision</strong><p>Approved, changed, parked, escalated, or still open.</p></article>
+      <article class="card"><strong>Commitment</strong><p>Owner, action, due date, and source ledger row.</p></article>
+      <article class="card"><strong>Learning</strong><p>What changed our understanding and where it routes next.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Post-Friday capture</p>
+    <h2>Pending rows seeded from Friday queue</h2>
+    <div class="toolbar"><input id="filter" type="search" placeholder="Filter readback rows..." /><span class="count" id="count">Loading...</span></div>
+    <div class="tableWrap" style="margin-top:14px"><table id="readbackTable"></table></div>
+  </section>
+</main>
+<script>
+const csvUrl = "/tx-dashboards/tx-strategy-v2/data/tx_friday_readback_seed.csv";
+function parseCsv(text){
+  const rows=[]; let row=[], cell="", inQuotes=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i], n=text[i+1];
+    if(c === '"' && inQuotes && n === '"'){ cell += '"'; i++; continue; }
+    if(c === '"'){ inQuotes = !inQuotes; continue; }
+    if(c === "," && !inQuotes){ row.push(cell); cell=""; continue; }
+    if((c === "\n" || c === "\r") && !inQuotes){
+      if(c === "\r" && n === "\n") i++;
+      row.push(cell); cell="";
+      if(row.some(v => v.length)) rows.push(row);
+      row=[]; continue;
+    }
+    cell += c;
+  }
+  if(cell.length || row.length){ row.push(cell); rows.push(row); }
+  return rows;
+}
+function esc(value){return String(value || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(headers, rows){
+  document.getElementById("readbackTable").innerHTML = "<thead><tr>" + headers.map(h => `<th>${esc(h)}</th>`).join("") + "</tr></thead><tbody>" +
+    rows.map(row => "<tr>" + headers.map((_, i) => `<td>${esc(row[i])}</td>`).join("") + "</tr>").join("") + "</tbody>";
+  document.getElementById("count").textContent = `${rows.length} rows`;
+}
+fetch(csvUrl).then(r => r.text()).then(text => {
+  const parsed=parseCsv(text); const headers=parsed.shift() || []; const data=parsed;
+  render(headers, data);
+  document.getElementById("filter").addEventListener("input", e => {
+    const q=e.target.value.toLowerCase().trim();
+    render(headers, q ? data.filter(row => row.join(" ").toLowerCase().includes(q)) : data);
+  });
+}).catch(() => { document.getElementById("count").textContent = "Readback CSV not loaded"; });
+</script>
+</body>
+</html>
