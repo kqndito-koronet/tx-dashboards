@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weekly Action Queue — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1500px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{border:1px solid #d9e0ea;border-radius:9px;padding:16px;background:#fff}.card strong{display:block;margin-bottom:6px;font-size:22px}.card p{margin:0;color:#667085}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1500px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.live{background:#ecfdf3;color:#067647;border-color:#abefc6}.review{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.seed{background:#f8fafc;color:#344054;border-color:#d9e0ea}.spec{background:#f4f0ff;color:#5925dc;border-color:#d9d6fe}.needs{background:#fffaeb;color:#b54708;border-color:#fedf89}.quarantine{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}main{width:min(100% - 24px,1500px)}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>Weekly Action Queue</h1>
+    <p class="sub">A normalized execution queue from the lead lists. This is not the full strategy and not a final assignment list. It is the smallest weekly view owners can validate, correct, and execute.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/">Back to cockpit</a>
+      <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
+      <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Execution ledger</a>
+      <a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Review readiness</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">WIP limits</p>
+    <h2>Keep the week small enough to execute</h2>
+    <div class="grid">
+      <article class="card"><strong>10 max</strong><p>Cata / CS across BUY + LIST until owner validation proves more capacity.</p></article>
+      <article class="card"><strong>5 max</strong><p>Christine / Implementation commercial readiness rows.</p></article>
+      <article class="card"><strong>3 max</strong><p>Maga / Future Enabler rows, only when tied to blocker, account, pilot, KPI.</p></article>
+      <article class="card"><strong>0 active</strong><p>Any row without owner, next action, due date, and validation state stays seed/spec.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Status taxonomy</p>
+    <h2>Every row uses one strict label</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Status</th><th>Meaning</th><th>Can it be used Friday?</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag live">Live verified</span></td><td>Owner validated, evidence/trust label present, owner/date/action present.</td><td>Yes.</td></tr>
+          <tr><td><span class="tag review">Review-ready</span></td><td>Useful enough for owner review, but not accepted as fact yet.</td><td>Yes, as validation ask.</td></tr>
+          <tr><td><span class="tag seed">Seed</span></td><td>System-generated starting point or static CSV/page row.</td><td>Only if clearly labeled.</td></tr>
+          <tr><td><span class="tag spec">Spec/template</span></td><td>Defines fields or process; not a live result.</td><td>Only as process reference.</td></tr>
+          <tr><td><span class="tag needs">Needs owner validation</span></td><td>Account/action may be useful but must be corrected or approved by owner.</td><td>Only as owner ask.</td></tr>
+          <tr><td><span class="tag quarantine">Quarantined</span></td><td>Risky, stale, unsupported, or conflicting claim/action.</td><td>No.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">This week's normalized queue</p>
+    <h2>Suggested, not assigned, until the owner validates</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Initiative</th><th>Account / pair</th><th>Source</th><th>Why this lead</th><th>Why now / trigger</th><th>What to say</th><th>Expected result</th><th>Expected learning</th><th>Owner lane</th><th>Due</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>BUY</td><td>Top accepted/no-order pairs</td><td><a href="/tx-dashboards/lead-lists/lead_list_B_untransacted_connections.html">Lead B</a></td><td>Connection intent exists but first transaction did not happen.</td><td>Immediately after connection acceptance or stalled expected first order.</td><td>What were you expecting to buy from this supplier, and what stopped you from trying the first order online?</td><td>Classify blocker and agree one next step.</td><td>Supply, price, trust, terms, habit, timing, or tool blocker.</td><td>Cata / CS</td><td>Owner sets</td><td><span class="tag needs">Needs owner validation</span></td></tr>
+          <tr><td>BUY</td><td>Top one-order/no-repeat pairs</td><td><a href="/tx-dashboards/lead-lists/lead_list_C_stopped_online.html">Lead C</a></td><td>First order happened, so repeat failure is more actionable than cold conversion.</td><td>Right after expected reorder window.</td><td>What would make the next order from this supplier worth doing online again?</td><td>Second/third order path or clear blocker.</td><td>What breaks repeat procurement after initial trust.</td><td>Cata / CS</td><td>Owner sets</td><td><span class="tag needs">Needs owner validation</span></td></tr>
+          <tr><td>BUY</td><td>Low-ratio procurement intent accounts</td><td><a href="/tx-dashboards/lead-lists/lead_list_I_low_ratio_procurement_intent.html">Lead I</a></td><td>They appear to have buying intent but low online conversion.</td><td>Recent procurement activity or buyer search/click signal.</td><td>What are you trying to source, and what would make that routine easier to do through Koronet?</td><td>Buying need captured and routed to supply or connection action.</td><td>What buyers need to buy better online.</td><td>Cata / CS</td><td>Owner sets</td><td><span class="tag review">Review-ready</span></td></tr>
+          <tr><td>LIST</td><td>Bunch / format upload gap candidates</td><td><a href="/tx-dashboards/lead-lists/lead_list_F_bunch_upload_gaps.html">Lead F</a></td><td>Online supply may not represent what the wholesaler sells offline.</td><td>Supply gap plus existing eShop/eSuite or proof of online selling.</td><td>Which top products sell offline but are not reliably visible online in the right format and time window?</td><td>One pilot candidate or data blocker.</td><td>Whether format/variety/time-depth is binding.</td><td>Cata / CS + Rose</td><td>Owner sets</td><td><span class="tag needs">Needs Rose + owner validation</span></td></tr>
+          <tr><td>LIST</td><td>Always-on / high-online learning accounts</td><td><a href="/tx-dashboards/lead-lists/lead_list_G_always_on_benchmark.html">Lead G</a> / <a href="/tx-dashboards/lead-lists/lead_list_H_high_online_deep_dive.html">Lead H</a></td><td>Best current sellers teach what good supply and buyer behavior look like.</td><td>Use as learning account before assigning execution target.</td><td>What exactly makes their online catalog useful: format, time depth, freshness, competitiveness, buyer base?</td><td>Benchmark pattern or gap taxonomy.</td><td>What to copy, what does not transfer, and what depends on account context.</td><td>Rose + Cata / CS</td><td>Owner sets</td><td><span class="tag seed">Learning seed</span></td></tr>
+          <tr><td>SELL</td><td>SYRIUS INC</td><td><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL queue</a></td><td>Near-term implementation with incomplete readiness fields.</td><td>Contract started Jul 9, 2026; setup still incomplete in seed.</td><td>What is the first real usage path after setup: buy, list, sell, or repeat?</td><td>Commercial readiness path defined or routed back to implementation support.</td><td>Whether setup has a credible usage motion.</td><td>Christine</td><td>Owner sets</td><td><span class="tag needs">Needs owner validation</span></td></tr>
+          <tr><td>SELL</td><td>SPRINGFIELD FLORIST SUPPLY INC</td><td><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL queue</a></td><td>Upcoming wholesaler implementation where TX can help shape usage early.</td><td>Contract timing Jul 20, 2026.</td><td>Which customer workflow should prove value first, and what must be ready before marketing?</td><td>First usage path and measurement plan.</td><td>How to make go-live create a real habit, not only setup.</td><td>Christine</td><td>Owner sets</td><td><span class="tag review">Review-ready</span></td></tr>
+          <tr><td>GROW</td><td>Zeidler Floral</td><td><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW operator</a></td><td>Clean learning candidate with meaningful online behavior signal.</td><td>Candidate pending Facu approval.</td><td>Which existing online buyer cohort should repeat more often, and what message/supply moment should trigger it?</td><td>One measured Black Belt play.</td><td>What makes good online behavior grow further.</td><td>Facu + Mercury</td><td>Facu sets</td><td><span class="tag needs">Needs Facu approval</span></td></tr>
+          <tr><td>Strategic</td><td>Bill Doran</td><td><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic account plans</a></td><td>Confirmed strategic account; should not receive fragmented initiative asks.</td><td>Cata already working; needs one full-stack next conversation.</td><td>What is the account-level plan across BUY, LIST, SELL, and GROW, and which conversation happens first?</td><td>One next conversation, owner, ask, date.</td><td>Whether top account motion requires a specific cross-initiative plan.</td><td>Cata + Facu</td><td>Owner sets</td><td><span class="tag needs">Needs account facts</span></td></tr>
+          <tr><td>Strategic</td><td>Kennicott / Dreisbach</td><td><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic account plans</a></td><td>Confirmed strategic accounts; not default Black Belt execution due complexity.</td><td>Facu confirms current status and next conversation.</td><td>Which one blocker or account-level objective should we align before any initiative ask?</td><td>Account plan update or blocker owner/date.</td><td>Whether they are ready to amplify or need diagnosis first.</td><td>Cata + Facu</td><td>Owner sets</td><td><span class="tag needs">Needs account facts</span></td></tr>
+          <tr><td>Future Enablers</td><td>Account-backed blocker only</td><td><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday enablers row</a></td><td>Product topics should not become abstract roadmap debate.</td><td>Only bring when tied to account(s), pilot, KPI, go/no-go.</td><td>Which blocker is preventing BUY/LIST/SELL/GROW, which accounts prove it, and how would we test it?</td><td>Park, pilot, or Monday leadership discussion.</td><td>Whether this is product, process, value prop, or account-specific.</td><td>Maga</td><td>Owner sets</td><td><span class="tag spec">Spec/template</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

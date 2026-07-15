@@ -38,6 +38,24 @@
   </section>
 
   <section>
+    <p class="eyebrow">Strict status taxonomy</p>
+    <h2>Published does not mean live</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Status</th><th>Use when</th><th>Stakeholder meaning</th><th>Promotion requirement</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag ok">Live verified</span></td><td>Owner validation, evidence, trust label, owner/date/action, and ledger row are present.</td><td>Can be used as current operating truth.</td><td>Keep freshness/stale date current.</td></tr>
+          <tr><td><span class="tag wait">Review-ready</span></td><td>Useful enough for review but not accepted as fact.</td><td>Validate, correct, or approve.</td><td>Owner validation and missing evidence.</td></tr>
+          <tr><td><span class="tag wait">Seed</span></td><td>Static source, prefill, or generated starting point.</td><td>Starting point only.</td><td>Owner/date/action and evidence.</td></tr>
+          <tr><td><span class="tag wait">Spec/template</span></td><td>Defines fields, workflow, or format but has no live data yet.</td><td>Use as process reference.</td><td>First real run and ledger output.</td></tr>
+          <tr><td><span class="tag warn">Needs owner validation</span></td><td>Account/action may be right but has not been accepted by the owner lane.</td><td>Ask owner to validate; do not assign silently.</td><td>Owner confirms or changes row.</td></tr>
+          <tr><td><span class="tag bad">Quarantined</span></td><td>Unsupported, stale, conflicting, private/raw, or risky claim.</td><td>Do not use in stakeholder-facing work.</td><td>Source, correction, or explicit park decision.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
     <p class="eyebrow">Publish blockers</p>
     <h2>Codex should not publish major V2 updates when these are open</h2>
     <div class="tableWrap">
@@ -49,6 +67,23 @@
           <tr><td>Dashboard claim lacks source/trust label.</td><td>Turns directional analysis into false certainty.</td><td>Rose + Codex</td><td><span class="tag bad">Block claim</span></td></tr>
           <tr><td>Account action lacks owner/date.</td><td>Looks active but cannot execute.</td><td>Pablito + Mercury</td><td><span class="tag wait">Needs owner</span></td></tr>
           <tr><td>Canonical conflict affects current story.</td><td>Agents may operate from different strategy models.</td><td>Nahua + Facu</td><td><span class="tag bad">CR required</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Ledger rule</p>
+    <h2>No ledger row, no active work</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Object</th><th>Minimum fields before active status</th><th>Otherwise label as</th></tr></thead>
+        <tbody>
+          <tr><td>Account action</td><td>Account/pair, initiative, owner, due date, next action, expected result, expected learning, source, trust label.</td><td>Seed or needs owner validation.</td></tr>
+          <tr><td>Dashboard claim</td><td>Claim, source, pulled/built date, date basis, trust label, stale date, board-readiness flag.</td><td>Directional or quarantined.</td></tr>
+          <tr><td>Feedback item</td><td>Who said it, account/initiative, directly-said vs interpretation, result/learning, route, owner, due date.</td><td>Spec/template until captured.</td></tr>
+          <tr><td>Call packet</td><td>Read-safe source, extracted signal, confidence, private material excluded, review state, destination artifact.</td><td>Internal only.</td></tr>
+          <tr><td>Value-prop/talk track</td><td>Approved claim, source proof, account/segment fit, objection handled, reviewer, approval state.</td><td>Review-ready only.</td></tr>
         </tbody>
       </table>
     </div>

@@ -32,11 +32,13 @@
       <table>
         <thead><tr><th>Needed output</th><th>Question it answers</th><th>Minimum fields</th><th>Trust needed</th><th>Due</th></tr></thead>
         <tbody>
-          <tr><td>Executive OKR strip</td><td>Are we pacing, and what is included?</td><td>Target, actual, July MTD, projected Q3/full-year, YoY, Axerrio in/out, source date.</td><td><span class="tag ok">Verified source + caveat</span></td><td>Thu night</td></tr>
+          <tr><td>Executive OKR strip</td><td>Are we pacing, and what is included?</td><td>Q3 target, actual/MTD, July projection, Aug/Sep required, YoY, Axerrio in/out, source date, date basis, trust label, stale date.</td><td><span class="tag ok">Verified source + caveat</span></td><td>Thu night</td></tr>
+          <tr><td>GMV / digital GMV metric spine</td><td>What exactly do we mean by GMV, digital GMV, fee-bearing GMV, and offline GMV?</td><td>Total GMV, online/digital GMV, fee-bearing GMV, offline GMV, procurement-side GMV, excluded GMV, definition, source, caveat.</td><td><span class="tag ok">Required before stronger narrative</span></td><td>Thu night</td></tr>
           <tr><td>Driver decomposition</td><td>What is volume vs rate catch vs mix vs API/pricing/Axerrio?</td><td>Driver, amount, permanence, account/category, implication.</td><td><span class="tag warn">Directional acceptable if labeled</span></td><td>Thu night</td></tr>
-          <tr><td>Top account concentration</td><td>Which accounts drive fees and what should we do?</td><td>Account, YoY fee, GMV, online GMV, category, rate, owner, action implication.</td><td><span class="tag ok">Verified source</span></td><td>Thu night</td></tr>
+          <tr><td>Top 15 account action table</td><td>Which accounts drive fees and what should we do?</td><td>Account, fees, online GMV, total/offline GMV if available, rate, driver type, owner, action implication, caveat, Sole threshold risk.</td><td><span class="tag ok">Verified source</span></td><td>Thu night</td></tr>
+          <tr><td>Channel/category cuts</td><td>Which layers/categories are moving and where does LIST need evidence?</td><td>K2K/eCommerce/API/GPS/FedEx MTD/QTD/YTD, YoY, rate/denominator note, category/supply cut, trust label.</td><td><span class="tag warn">Directional acceptable if labeled</span></td><td>Thu night</td></tr>
           <tr><td>BUY/LIST/SELL/GROW evidence table</td><td>Which motion has evidence vs data gap?</td><td>Motion, metric, current value, gap, decision supported.</td><td><span class="tag wait">Mixed labels allowed</span></td><td>Thu night</td></tr>
-          <tr><td>Dashboard claim register</td><td>Which first-view claims are supported?</td><td>Claim, source, date basis, freshness, caveat, trust label, stale date.</td><td><span class="tag ok">Required</span></td><td>Thu night</td></tr>
+          <tr><td>Claim + lead evidence register</td><td>Which first-view claims and lead lists are supported?</td><td>Claim/lead list, source, pulled/built date, selection logic, owner validation state, caveat, trust label, stale date, board-readiness flag.</td><td><span class="tag ok">Required</span></td><td>Thu night</td></tr>
           <tr><td>Quarantine list</td><td>Which pages should not be first-view?</td><td>Page, issue, owner, reroute, condition to restore.</td><td><span class="tag warn">Operational judgment</span></td><td>Thu night</td></tr>
         </tbody>
       </table>
@@ -56,6 +58,24 @@
           <tr><td>Lead candidates from B/F/I lists are execution-ready.</td><td><span class="tag bad">Not approved</span></td><td>Lead dashboards.</td><td>Owner validation and account facts.</td><td>Mercury + CS</td><td>Keep as suggested, not assigned.</td></tr>
           <tr><td>K2K fee language / Dave correction.</td><td><span class="tag wait">Pending reconciliation</span></td><td>Slack / Dave correction / fee dashboard.</td><td>Canonical update required.</td><td>Rose + Nahua</td><td>Do not use old double-charge framing.</td></tr>
           <tr><td>H1-H3 vs old H1-H4 hypothesis registry.</td><td><span class="tag wait">Canonical sync needed</span></td><td>Hypothesis registry.</td><td>Old files still conflict.</td><td>Nahua + Codex</td><td>Create CR or quarantine old taxonomy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Definition spine</p>
+    <h2>Metrics Rose must label before stronger claims travel</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Working definition needed</th><th>Current treatment</th><th>Required label</th></tr></thead>
+        <tbody>
+          <tr><td>Total GMV</td><td>All relevant transaction GMV by date basis, exclusions, caps, and source table.</td><td>Useful but must be reconciled by source/date basis.</td><td><span class="tag wait">Needs definition</span></td></tr>
+          <tr><td>Digital / online GMV</td><td>GMV transacted through online channels, separated by eCommerce, K2K, API, procurement-side if relevant.</td><td>Core strategy metric; currently directional in some views.</td><td><span class="tag warn">Directional until refreshed</span></td></tr>
+          <tr><td>Fee-bearing GMV</td><td>GMV eligible for TX fee capture under current pricing/contract rules.</td><td>Needed to explain monetize without confusing with all GMV.</td><td><span class="tag wait">Needs Rose + pricing logic</span></td></tr>
+          <tr><td>Offline GMV</td><td>GMV outside digital transaction channels, with dirty-row/capping/account exclusions explicit.</td><td>Opportunity signal only.</td><td><span class="tag bad">Not board-ready</span></td></tr>
+          <tr><td>Procurement-side GMV</td><td>BUY-side digital purchasing value, separated from sell-side fee mechanics.</td><td>Important for BUY; K2K sell-side fee correction must be respected.</td><td><span class="tag wait">Needs explicit separation</span></td></tr>
+          <tr><td>Excluded GMV</td><td>Rows/accounts excluded from the read, especially Axerrio if not in Snowflake.</td><td>Must be visible in OKR strip.</td><td><span class="tag ok">Required caveat</span></td></tr>
         </tbody>
       </table>
     </div>
