@@ -1,0 +1,86 @@
+name: TX Feedback / Owner Update
+description: Capture a stakeholder update, blocker, learning, or owner ask for TX V2.
+title: "[TX Feedback] <account / initiative>"
+labels:
+  - tx-strategy
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for short stakeholder updates. Keep it read-safe. Do not include private commentary or sensitive call notes.
+  - type: input
+    id: account
+    attributes:
+      label: Account / object
+      description: Account, buyer/supplier pair, initiative object, or dashboard claim.
+      placeholder: Bill Doran / BUY pair / LIST pilot / SELL PMT
+    validations:
+      required: true
+  - type: dropdown
+    id: initiative
+    attributes:
+      label: Initiative
+      options:
+        - BUY
+        - LIST
+        - SELL
+        - GROW
+        - Strategic Accounts
+        - Future Digital Enablers
+        - Reporting / Dashboard
+        - Workflow / System
+    validations:
+      required: true
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: One short factual update.
+      placeholder: We spoke with the account; they said...
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result or learning
+      description: What changed, moved, failed, or became clearer?
+      placeholder: They agreed to a follow-up / blocker is supply freshness / no movement because...
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: Blocker
+      description: Use the closest type if possible.
+      placeholder: Supply / price / trust / habit / terms / timing / ops / tool / data / owner / unknown
+    validations:
+      required: false
+  - type: textarea
+    id: next_action
+    attributes:
+      label: Next action / owner / date
+      description: The row cannot become active without these.
+      placeholder: Cata to schedule buyer discovery by 2026-07-17.
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: Need from Facu / system
+      description: What support, decision, data, product input, or escalation is needed?
+      placeholder: Need Facu in meeting / Rose data pull / value-prop proof / product answer.
+    validations:
+      required: false
+  - type: dropdown
+    id: visibility
+    attributes:
+      label: Visibility
+      options:
+        - Review-ready for TX V2
+        - Internal only
+        - Needs owner validation
+        - Needs Rose/data validation
+        - Needs Facu approval
+    validations:
+      required: true

@@ -1,0 +1,116 @@
+name: TX Call Packet
+description: Convert a call or meeting into a read-safe TX V2 packet.
+title: "[TX Call Packet] <account / date>"
+labels:
+  - tx-strategy
+  - call-packet
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this after calls or meetings. Separate what was directly said from interpretation. Do not paste private or sensitive content.
+  - type: input
+    id: account
+    attributes:
+      label: Account / meeting
+      placeholder: Account name or meeting title
+    validations:
+      required: true
+  - type: input
+    id: call_date
+    attributes:
+      label: Date
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source link
+      description: Fathom/Calendar/Doc/Slack link if available.
+      placeholder: https://...
+    validations:
+      required: false
+  - type: dropdown
+    id: initiative
+    attributes:
+      label: Initiative
+      options:
+        - BUY
+        - LIST
+        - SELL
+        - GROW
+        - Strategic Accounts
+        - Future Digital Enablers
+        - Reporting / Dashboard
+        - Workflow / System
+    validations:
+      required: true
+  - type: textarea
+    id: directly_said
+    attributes:
+      label: Directly said
+      description: Facts, commitments, objections, or quotes that were explicitly said and are safe to record.
+    validations:
+      required: true
+  - type: textarea
+    id: interpretation
+    attributes:
+      label: Read-safe interpretation
+      description: Your interpretation, clearly separated from direct facts.
+    validations:
+      required: false
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks / owner / due date
+      placeholder: Owner to do X by YYYY-MM-DD.
+    validations:
+      required: false
+  - type: textarea
+    id: objections
+    attributes:
+      label: Objections / blockers
+      placeholder: Supply / price / trust / habit / terms / timing / ops / tool / data / owner / unknown
+    validations:
+      required: false
+  - type: textarea
+    id: account_signals
+    attributes:
+      label: Account signals
+      description: Signals that should update account plan, lead score, or action queue.
+    validations:
+      required: false
+  - type: textarea
+    id: value_prop
+    attributes:
+      label: Value-prop signals
+      description: What landed, did not land, or needs proof?
+    validations:
+      required: false
+  - type: textarea
+    id: do_not_share
+    attributes:
+      label: What not to write/share
+      description: Private, speculative, or sensitive material that should stay out of durable stakeholder-facing artifacts.
+    validations:
+      required: false
+  - type: dropdown
+    id: trust
+    attributes:
+      label: Trust label
+      options:
+        - Verified direct statement
+        - Directional
+        - Inferred
+        - Needs owner validation
+        - Internal only
+    validations:
+      required: true
+  - type: textarea
+    id: routing
+    attributes:
+      label: Routing / downstream artifact
+      placeholder: Pablito task / Mercury account plan / Rose dashboard gap / Lautaro value prop / Nahua workflow patch.
+    validations:
+      required: true
