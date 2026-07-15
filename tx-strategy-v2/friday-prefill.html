@@ -43,6 +43,25 @@
   </section>
 
   <section>
+    <p class="eyebrow">Action contract</p>
+    <h2>Every owner row should answer the same seven questions</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Field</th><th>Owner must fill</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Lead/account/pair</td><td>Exact account, buyer/supplier pair, or cohort worked.</td><td>Zeidler low-repeat cohort.</td></tr>
+          <tr><td>Why this lead now</td><td>Trigger or reason it is worth this week’s time.</td><td>Accepted connection but no first order.</td></tr>
+          <tr><td>Conversation to have</td><td>Exact question or ask.</td><td>“What stopped the first online order?”</td></tr>
+          <tr><td>Expected outcome</td><td>Operational result expected.</td><td>Blocker classified and next order path agreed.</td></tr>
+          <tr><td>Expected learning</td><td>What we learn even if no movement happens.</td><td>Price vs supply vs habit blocker.</td></tr>
+          <tr><td>KPI / leading indicator</td><td>Metric watched this week.</td><td>Calls completed, repeat order, supply uploaded.</td></tr>
+          <tr><td>Owner/date</td><td>Person and due date.</td><td>Cata, Friday EOD.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
     <p class="eyebrow">Friday lock status</p>
     <h2>What is ready, what needs owner input, and what stays out</h2>
     <div class="tableWrap">
@@ -80,17 +99,17 @@
 
   <section>
     <p class="eyebrow">Friday status rows</p>
-    <h2>Comparable updates across initiatives</h2>
+    <h2>One row per lane: done, learned, blocked, next.</h2>
     <div class="tableWrap">
       <table>
-        <thead><tr><th>Initiative</th><th>Owner</th><th>TLDR</th><th>KPI</th><th>Leading indicators</th><th>Accounts / leads</th><th>Deliverables</th><th>Learnings</th><th>Asks</th><th>Trust</th><th>Next expectation</th></tr></thead>
+        <thead><tr><th>Lane</th><th>Owner</th><th>This week</th><th>Learning</th><th>Blocker</th><th>Next action</th><th>Need from Facu/system</th><th>Trust</th></tr></thead>
         <tbody>
-          <tr><td>BUY</td><td>Cata / CS</td><td>Turn accepted connections into repeat transactions.</td><td>Connected buyer-supplier pairs that generate repeat transactions.</td><td>Pairs worked, first orders, second/third orders, buyer discovery calls, blockers classified.</td><td>Start from untransacted or one-order connection queues; CS validates.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Lead list needs validation</span></td><td>Bring top accounts, blockers, and next-week pair list.</td></tr>
-          <tr><td>LIST</td><td>Cata / CS</td><td>Make the wholesaler's real sellable supply visible online.</td><td>Supply-ready accounts/pilots with credible online supply.</td><td>Format, variety, time depth, freshness, fulfillment confidence, buyer base readiness.</td><td>Start from supply gap candidates and learning accounts; Rose validates metrics.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Directional until Rose baseline</span></td><td>Pick first pilot or define data blocker.</td></tr>
-          <tr><td>SELL</td><td>Christine</td><td>Make wholesaler implementation commercially ready for BUY/LIST/SELL usage.</td><td>Accounts that reach real usage, not just setup.</td><td>First usage path defined, first/second/third transactions, supply readiness, buyer path, tracking in place.</td><td><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">PMT readiness queue</a>.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Queue seeded from user-provided PMT list</span></td><td>Confirm which implementation accounts need TX support.</td></tr>
-          <tr><td>GROW</td><td>Facu</td><td>Diagnose, refine, and amplify repeat online behavior.</td><td>Repeat online growth from accounts ready enough to test.</td><td>Cohorts selected, campaign/live test, buyer response, repeat orders, leakage signals.</td><td><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">Black Belt operator view</a>.</td><td><span class="tag wait">Facu fill</span></td><td><span class="tag wait">Facu fill</span></td><td><span class="tag wait">Facu fill</span></td><td><span class="tag warn">Candidates need approval</span></td><td>Approve candidate set and first measured play.</td></tr>
-          <tr><td>Strategic Accounts</td><td>Cata + Facu</td><td>One full-stack plan for Bill Doran, Kennicott, and Dreisbach.</td><td>Account plan with next conversation, owner, and blocker cleared.</td><td>BUY/LIST/SELL/GROW actions aligned, no duplicate asks, next meeting, decision needed.</td><td><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Account plans</a>.</td><td><span class="tag wait">Cata/Facu fill</span></td><td><span class="tag wait">Cata/Facu fill</span></td><td><span class="tag wait">Cata/Facu fill</span></td><td><span class="tag warn">Needs account-owner validation</span></td><td>Confirm one next conversation per account.</td></tr>
-          <tr><td>Future Enablers</td><td>Maga</td><td>Product enablers unblock BUY/LIST/SELL/GROW after a real blocker is proven.</td><td>Blocker-to-pilot-to-KPI path.</td><td>Affected accounts, pilot population, expected behavior, go/no-go metric, product requirement.</td><td>Standing orders, API, grower portal, parity, deal desk ideas.</td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Monday/leadership lane</span></td><td>Bring only blockers tied to accounts and pilots.</td></tr>
+          <tr><td>BUY</td><td>Cata / CS</td><td><span class="tag wait">Owner fill: accounts/pairs worked</span></td><td><span class="tag wait">Owner fill: what moved or stalled</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill: next pair/account/date</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Lead list needs validation</span></td></tr>
+          <tr><td>LIST</td><td>Cata / CS</td><td><span class="tag wait">Owner fill: accounts assessed/piloted</span></td><td><span class="tag wait">Owner fill: what makes supply hard/easy</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill: pilot/data blocker/date</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Rose baseline pending</span></td></tr>
+          <tr><td>SELL</td><td>Christine</td><td><span class="tag wait">Owner fill: PMTs reviewed</span></td><td><span class="tag wait">Owner fill: usage path learned</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill: account/TX support/date</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Seeded from user-provided PMT list</span></td></tr>
+          <tr><td>GROW</td><td>Facu</td><td><span class="tag wait">Facu fill: candidates reviewed</span></td><td><span class="tag wait">Facu fill: what play is worth testing</span></td><td><span class="tag wait">Facu fill</span></td><td><span class="tag wait">Facu fill: first measured play/date</span></td><td><span class="tag wait">Facu fill</span></td><td><span class="tag warn">Candidates need approval</span></td></tr>
+          <tr><td>Strategic Accounts</td><td>Cata + Facu</td><td><span class="tag wait">Owner fill: account facts updated</span></td><td><span class="tag wait">Owner fill: what account needs next</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill: next conversation/date</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Needs account-owner validation</span></td></tr>
+          <tr><td>Future Enablers</td><td>Maga</td><td><span class="tag wait">Owner fill: blocker/pilot candidates</span></td><td><span class="tag wait">Owner fill: what product may need to scale</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag wait">Owner fill: Monday/Fri path</span></td><td><span class="tag wait">Owner fill</span></td><td><span class="tag warn">Monday/leadership lane</span></td></tr>
         </tbody>
       </table>
     </div>

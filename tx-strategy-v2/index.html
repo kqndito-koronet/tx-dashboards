@@ -38,6 +38,8 @@
     .band.strategic{background:#fff4e5;color:#7c3e00}
     nav{position:sticky;top:10px;z-index:4;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:10px}
     nav a{border-radius:7px;padding:9px 12px;background:#f8fafc;color:#344054;font-size:13px;text-decoration:none}
+    nav .group{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px;border:1px solid #edf1f6;border-radius:9px;background:#fff}
+    nav .label{padding:0 4px;color:#667085;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
     section{margin-bottom:16px;padding:24px}
     .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
     .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -74,17 +76,15 @@
       <p class="eyebrow">Transactions Enablement V2</p>
       <h1>Move more real floral trade online.</h1>
       <p class="heroCopy">
-        Use this to lock Friday rows, review owner asks, route blockers, and keep strategy tied to evidence.
-        Current status: draft operating prototype, not yet live operating status.
+        Start here to run TX V2 this week. V2 is a draft execution package: validate Friday rows,
+        pick the next account actions, surface blockers, and keep every claim tied to evidence.
+        It is not yet a live operating system.
       </p>
       <div class="actions">
-        <a class="primary" href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Start with Friday prefill</a>
-        <a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Facu morning review</a>
+        <a class="primary" href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Facu 20-min review</a>
+        <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
+        <a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Stakeholder send packet</a>
         <a href="/tx-dashboards/tx-strategy-v2/launch-readiness.html">Launch readiness</a>
-        <a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Review readiness</a>
-        <a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Weekly action queue</a>
-        <a href="#initiatives">Review initiatives</a>
-        <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Open execution ledger</a>
         <a href="/tx-dashboards/tx-strategy-v1/index.html">Backup V1</a>
       </div>
     </div>
@@ -97,45 +97,19 @@
   </section>
 
   <nav>
-    <a href="#read">Current Read</a>
-    <a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data Backing</a>
-    <a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Morning Review</a>
-    <a href="/tx-dashboards/tx-strategy-v2/launch-readiness.html">Launch</a>
-    <a href="/tx-dashboards/tx-strategy-v2/review-readiness-matrix.html">Readiness</a>
-    <a href="#system">System Rules</a>
-    <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday Prefill</a>
-    <a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Action Queue</a>
-    <a href="#initiatives">Initiatives</a>
-    <a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a>
-    <a href="/tx-dashboards/tx-strategy-v2/ledger-candidates.html">Ledger Candidates</a>
-    <a href="/tx-dashboards/tx-strategy-v2/ledger-source.html">Ledger Source</a>
-    <a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Accounts</a>
-    <a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a>
-    <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a>
-    <a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL Queue</a>
-    <a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW Queue</a>
-    <a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a>
-    <a href="/tx-dashboards/tx-strategy-v2/agent-routine-runbook.html">Agent Runbook</a>
-    <a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback</a>
-    <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=tx-feedback.yml" target="_blank" rel="noreferrer">Submit Feedback</a>
-    <a href="/tx-dashboards/tx-strategy-v2/github-issue-capture.html">Issue Capture</a>
-    <a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Registry</a>
-    <a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance</a>
-    <a href="/tx-dashboards/tx-strategy-v2/overnight-build-queue.html">Build Queue</a>
-    <a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send Packet</a>
-    <a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URL Inventory</a>
-    <a href="#reports">Reports</a>
-    <a href="#agents">Agents</a>
-    <a href="#next">Next Build</a>
+    <div class="group"><span class="label">Start</span><a href="/tx-dashboards/tx-strategy-v2/facu-morning-review.html">Facu review</a><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a><a href="/tx-dashboards/tx-strategy-v2/stakeholder-send-packet.html">Send packet</a><a href="/tx-dashboards/tx-strategy-v2/launch-readiness.html">Launch</a></div>
+    <div class="group"><span class="label">Lanes</span><a href="/tx-dashboards/tx-strategy-v2/buy-connection-funnel.html">BUY</a><a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">LIST</a><a href="/tx-dashboards/tx-strategy-v2/sell-readiness.html">SELL</a><a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">GROW</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic</a></div>
+    <div class="group"><span class="label">Control</span><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Action queue</a><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback</a><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data backing</a><a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Compliance</a></div>
+    <div class="group"><span class="label">Reference</span><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Registry</a><a href="/tx-dashboards/tx-strategy-v2/routines.html">Routines</a><a href="/tx-dashboards/tx-strategy-v2/v2-url-inventory.html">URLs</a><a href="/tx-dashboards/tx-strategy-v1/index.html">V1 backup</a></div>
   </nav>
 
   <section id="read">
     <p class="eyebrow">Current read</p>
-    <h2>We can hit near-term monetization and still not prove durable TX growth.</h2>
+    <h2>Near-term revenue is not the same as durable TX growth.</h2>
     <p class="subtle">
-      July pacing is directionally strong, but durability is not proven. Rate catches, top-account concentration,
-      API/pricing work, and Axerrio can make Q3 look healthy while the harder operating question remains:
-      what does it take to make more BUY, LIST, SELL, and GROW activity happen online?
+      July may look strong because of pricing, API, billing, top accounts, and Axerrio effects.
+      V2 keeps that work visible, but Friday should focus on the harder question:
+      which BUY, LIST, SELL, and GROW actions create more repeat online trade?
     </p>
     <div class="readStrip">
       <article class="metric"><small>Short term</small><strong>Capture fair share</strong><p>Top accounts, API, pricing, deal desk, billing integrity.</p></article>
@@ -154,11 +128,11 @@
 
   <section id="system">
     <p class="eyebrow">How this system works</p>
-    <h2>V2 makes drift visible instead of letting it become strategy.</h2>
+    <h2>Simple rule: execution first, evidence always.</h2>
     <div class="grid3">
-      <div class="rule"><strong>Facu decides.</strong><p>Hypotheses, initiatives, strategic account prioritization, stakeholder-facing narrative, and cross-initiative account asks.</p></div>
-      <div class="rule"><strong>Agents propose through workflows.</strong><p>Mercury, Rose, Socrates, Pablito, Nahua, and Codex must declare workflow, owner, evidence, and approval state.</p></div>
-      <div class="rule dangerRule"><strong>No workflow, no active status.</strong><p>A play, dashboard, claim, or account ask without workflow provenance is labeled missing, parked, or quarantined.</p></div>
+      <div class="rule"><strong>Facu decides.</strong><p>Strategy, priorities, account asks, and stakeholder narrative stay with Facu.</p></div>
+      <div class="rule"><strong>Owners validate.</strong><p>Owners confirm what happened, what changed, what is blocked, and what happens next.</p></div>
+      <div class="rule dangerRule"><strong>Agents support.</strong><p>Agents propose rows, check evidence, route feedback, and flag anything that is not approved or sourced.</p></div>
     </div>
     <div class="quickLinks">
       <a href="/tx-dashboards/tx-strategy-v2/workflow-compliance.html">Open compliance gates</a>
@@ -253,7 +227,7 @@
       <table>
         <thead><tr><th>Account</th><th>Why strategic</th><th>BUY</th><th>LIST</th><th>SELL</th><th>GROW</th><th>Next decision</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td>Bill Doran</td><td>Chris/Cata strategic account; major TX leverage.</td><td>Map repeat procurement angle.</td><td>Verify supply/listing gaps by branch/category.</td><td>Align current implementation/commercial usage.</td><td>Potential full-stack plan once readiness is clear.</td><td>Cata + Facu align next conversation.</td><td><span class="trust approval">Plan draft needed</span></td></tr>
+          <tr><td>Bill Doran</td><td>Chris/Cata strategic account with potential TX leverage.</td><td>Map repeat procurement angle.</td><td>Verify supply/listing gaps by branch/category.</td><td>Align current implementation/commercial usage.</td><td>Potential full-stack plan once readiness is clear.</td><td>Cata + Facu align next conversation.</td><td><span class="trust approval">Plan draft needed</span></td></tr>
           <tr><td>Kennicott</td><td>Strategic W->R growth/account plan candidate.</td><td>Understand current buying routes.</td><td>Supply quality and competitiveness assessment.</td><td>Commercial usage/readiness unknown.</td><td>Black Belt or strategic play if readiness exists.</td><td>Facu fills current status.</td><td><span class="trust directional">Needs update</span></td></tr>
           <tr><td>Dreisbach</td><td>Active strategic work with overdue dependencies.</td><td>Vendor/procurement value opportunity.</td><td>Supply and catalog opportunity by location.</td><td>Implementation alignment overdue.</td><td>Potential measured growth test after readiness.</td><td>Resolve overdue blockers and owner asks.</td><td><span class="trust blocked">Overdue blockers</span></td></tr>
         </tbody>

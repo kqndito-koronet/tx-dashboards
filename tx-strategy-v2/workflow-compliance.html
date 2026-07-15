@@ -38,6 +38,24 @@
   </section>
 
   <section>
+    <p class="eyebrow">Reality check</p>
+    <h2>What is real now vs what is still a template</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Layer</th><th>Current state</th><th>What is real</th><th>What is not real yet</th></tr></thead>
+        <tbody>
+          <tr><td>Feedback capture</td><td><span class="tag ok">Configured</span></td><td>GitHub issue forms exist; blank issues are disabled; feedback and call packet templates are online.</td><td>No stakeholder issue volume yet.</td></tr>
+          <tr><td>Issue export</td><td><span class="tag ok">Configured</span></td><td>Manual + weekday workflow exports `tx-strategy` issues and builds candidate CSV rows.</td><td>No active promotion to ledger yet.</td></tr>
+          <tr><td>Ledger</td><td><span class="tag wait">Seed + candidates</span></td><td>20-row static seed ledger and empty candidate queue are published.</td><td>No generated active ledger from approved candidates.</td></tr>
+          <tr><td>Call ingestion</td><td><span class="tag wait">Spec/template</span></td><td>Read-safe call packet structure and routing rules exist.</td><td>No Fathom/Slack/Calendar ingestion automation yet.</td></tr>
+          <tr><td>Friday reporting</td><td><span class="tag wait">Static prefill</span></td><td>Owner-fillable Friday page exists.</td><td>Not generated from live ledger state yet.</td></tr>
+          <tr><td>Agent routines</td><td><span class="tag wait">Runbook</span></td><td>Roles, gates, and review loops are defined.</td><td>Not scheduled autonomous jobs yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
     <p class="eyebrow">Strict status taxonomy</p>
     <h2>Published does not mean live</h2>
     <div class="tableWrap">
@@ -84,6 +102,26 @@
           <tr><td>Feedback item</td><td>Who said it, account/initiative, directly-said vs interpretation, result/learning, route, owner, due date.</td><td>Spec/template until captured.</td></tr>
           <tr><td>Call packet</td><td>Read-safe source, extracted signal, confidence, private material excluded, review state, destination artifact.</td><td>Internal only.</td></tr>
           <tr><td>Value-prop/talk track</td><td>Approved claim, source proof, account/segment fit, objection handled, reviewer, approval state.</td><td>Review-ready only.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Candidate promotion gate</p>
+    <h2>A candidate cannot become active work until it passes validation</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Required field</th><th>Why it matters</th><th>If missing</th></tr></thead>
+        <tbody>
+          <tr><td>Source</td><td>Prevents unsourced memory from becoming operating truth.</td><td>Keep as candidate or quarantine.</td></tr>
+          <tr><td>Issue/call/account link</td><td>Makes the row traceable.</td><td>Needs Pablito triage.</td></tr>
+          <tr><td>Owner</td><td>Stops “active” work without accountability.</td><td>Needs owner validation.</td></tr>
+          <tr><td>Due date</td><td>Allows overdue tracking and Friday readback.</td><td>Needs owner/date.</td></tr>
+          <tr><td>Route</td><td>Directs to BUY, LIST, SELL, GROW, Strategic, Enabler, Rose, or quarantine.</td><td>Needs triage.</td></tr>
+          <tr><td>Trust label</td><td>Separates verified, directional, inferred, owner-needed, and not-board-ready items.</td><td>Needs Rose/Nahua review.</td></tr>
+          <tr><td>Expected outcome + learning</td><td>Keeps the row useful even when the action fails.</td><td>Needs Mercury/Pablito completion.</td></tr>
+          <tr><td>Reviewer</td><td>Creates the human approval point before active ledger promotion.</td><td>Cannot promote.</td></tr>
         </tbody>
       </table>
     </div>
