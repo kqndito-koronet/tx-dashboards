@@ -1,0 +1,42 @@
+name: TX feedback capture sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 13 * * 1-5"
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Export TX feedback and call packet issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p tx-strategy-v2/data
+          gh issue list \
+            --repo "${{ github.repository }}" \
+            --state all \
+            --label tx-strategy \
+            --limit 200 \
+            --json number,title,state,labels,body,url,createdAt,updatedAt,author \
+            > tx-strategy-v2/data/tx_github_issue_capture.json
+
+      - name: Commit capture export if changed
+        run: |
+          if git diff --quiet -- tx-strategy-v2/data/tx_github_issue_capture.json; then
+            echo "No TX feedback issue changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tx-strategy-v2/data/tx_github_issue_capture.json
+          git commit -m "Sync TX feedback issue capture"
+          git push

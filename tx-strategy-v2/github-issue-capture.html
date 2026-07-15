@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Issue Capture — TX V2</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1400px,calc(100% - 40px));margin:0 auto;padding:30px 0 70px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:24px;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);line-height:.98;margin:0 0 12px}h2{font-size:30px;margin:0 0 8px}.sub{color:#667085;max-width:980px;font-size:17px}
+    .eyebrow{margin:0 0 8px;color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.links a{display:inline-flex;align-items:center;min-height:38px;border:1px solid #d9e0ea;border-radius:7px;padding:0 13px;background:#fff;color:#101828}.primary{background:#2457c5!important;border-color:#2457c5!important;color:#fff!important}
+    .tableWrap{overflow-x:auto;border:1px solid #d9e0ea;border-radius:9px;background:#fff}table{width:100%;min-width:1180px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid #d9e0ea;background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.open{background:#ecfdf3;color:#067647;border-color:#abefc6}.closed{background:#f2f4f7;color:#344054;border-color:#d0d5dd}
+    input{width:min(520px,100%);min-height:42px;border:1px solid #d9e0ea;border-radius:8px;padding:0 12px;font:inherit}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}.count{color:#667085;font-weight:800}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">TX Enablement V2</p>
+    <h1>GitHub Issue Capture</h1>
+    <p class="sub">Structured feedback and call packet issues exported by the TX feedback capture sync workflow. This is the capture layer, not the final execution ledger.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Back to feedback system</a>
+      <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=tx-feedback.yml" target="_blank" rel="noreferrer">Submit feedback</a>
+      <a href="https://github.com/kqndito-koronet/tx-dashboards/issues/new?template=tx-call-packet.yml" target="_blank" rel="noreferrer">Submit call packet</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_github_issue_capture.json">Raw JSON</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Captured issues</p>
+    <h2>Search feedback, call packets, owner edits, and dashboard corrections</h2>
+    <div class="toolbar">
+      <input id="filter" type="search" placeholder="Filter issues..." />
+      <span class="count" id="count">Loading...</span>
+    </div>
+    <div class="tableWrap" style="margin-top:14px">
+      <table id="issueTable"></table>
+    </div>
+  </section>
+</main>
+<script>
+const url = "/tx-dashboards/tx-strategy-v2/data/tx_github_issue_capture.json";
+function esc(value){
+  return String(value || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function labels(issue){
+  return (issue.labels || []).map(l => l.name).join(", ");
+}
+function render(rows){
+  const table=document.getElementById("issueTable");
+  table.innerHTML = "<thead><tr><th>#</th><th>Title</th><th>State</th><th>Labels</th><th>Author</th><th>Updated</th><th>Body preview</th></tr></thead><tbody>" +
+    rows.map(issue => {
+      const state = String(issue.state || "").toLowerCase();
+      const body = String(issue.body || "").slice(0, 260);
+      return `<tr>
+        <td><a href="${esc(issue.url)}" target="_blank" rel="noreferrer">#${esc(issue.number)}</a></td>
+        <td>${esc(issue.title)}</td>
+        <td><span class="tag ${state === "open" ? "open" : "closed"}">${esc(issue.state)}</span></td>
+        <td>${esc(labels(issue))}</td>
+        <td>${esc(issue.author && issue.author.login)}</td>
+        <td>${esc(issue.updatedAt)}</td>
+        <td>${esc(body)}</td>
+      </tr>`;
+    }).join("") + "</tbody>";
+  document.getElementById("count").textContent = `${rows.length} issues`;
+}
+fetch(url).then(r => r.json()).then(data => {
+  const all = Array.isArray(data) ? data : [];
+  render(all);
+  document.getElementById("filter").addEventListener("input", e => {
+    const q=e.target.value.toLowerCase().trim();
+    render(q ? all.filter(issue => JSON.stringify(issue).toLowerCase().includes(q)) : all);
+  });
+}).catch(() => {
+  document.getElementById("count").textContent = "Capture file not loaded yet";
+});
+</script>
+</body>
+</html>
