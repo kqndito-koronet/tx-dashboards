@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead List G: Always-On Wholesalers (Benchmark)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-card { background: #f0fdf4; border-radius: 8px; padding: 16px; }
+  .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+  .meta-card .value { font-size: 20px; font-weight: 700; color: #166534; }
+  .meta-card.blue { background: #eff6ff; }
+  .meta-card.blue .value { color: #1e40af; }
+  .meta-card.amber { background: #fffbeb; }
+  .meta-card.amber .value { color: #92400e; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .section h3 { font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 8px; color: #374151; }
+  .section .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  tbody tr:hover { background: #f9fafb; }
+  .gmv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rank { color: #9ca3af; font-weight: 500; }
+  .pct { font-weight: 700; }
+  .pct-green { color: #16a34a; }
+  .pct-amber { color: #f59e0b; }
+  .tier-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tier-100 { background: #dcfce7; color: #166534; }
+  .tier-high { background: #dbeafe; color: #1e40af; }
+  .tier-mid { background: #fef3c7; color: #92400e; }
+  .consistency-bar { display: inline-block; width: 60px; height: 8px; border-radius: 4px; background: #e5e7eb; position: relative; overflow: hidden; vertical-align: middle; }
+  .consistency-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 4px; }
+  .fill-green { background: #22c55e; }
+  .fill-amber { background: #f59e0b; }
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #9ca3af; }
+  .methodology { background: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .methodology strong { color: #374151; }
+  .enablement { background: #eff6ff; border-radius: 8px; padding: 20px; margin-top: 12px; }
+  .enablement h3 { color: #1e40af; margin-top: 0; }
+  .enablement ul, .enablement ol { margin-left: 20px; margin-bottom: 12px; }
+  .enablement li { font-size: 13px; color: #374151; line-height: 1.8; }
+  .enablement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+  .enablement-card { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb; }
+  .enablement-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 8px; }
+  .insight-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .insight-box h4 { color: #166534; font-size: 13px; margin-bottom: 8px; }
+  .insight-box p { font-size: 13px; color: #374151; line-height: 1.6; }
+  @media (max-width: 768px) { .enablement-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lead List G: Always-On Wholesalers (Benchmark)</h1>
+    <div class="subtitle">Owner: Facu / Chapter TX | Generated 2026-07-06 by Minerva | Purpose: Benchmark + Playbook Extraction</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">100% Online Wholesalers</div>
+        <div class="value">35</div>
+      </div>
+      <div class="meta-card blue">
+        <div class="label">Mixed Online (10-99%)</div>
+        <div class="value">8</div>
+      </div>
+      <div class="meta-card amber">
+        <div class="label">Total "Always-On" GMV</div>
+        <div class="value">$176.2M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section">
+    <h2>Purpose</h2>
+    <div class="desc">
+      This is NOT a lead list for outreach. This is the <strong>benchmark set</strong> -- the wholesalers who ALREADY sell online consistently. The purpose is to <strong>study what makes them work</strong> and extract playbooks that can be applied to the offline-majority wholesalers in Lists A, F, and I. There are two distinct groups: (1) 35 wholesalers that are 100% online -- likely eCommerce-native or small K2K-only operations, and (2) 8 wholesalers with a meaningful mix of online+offline -- these are the real models to study because they've solved the transition challenge.
+    </div>
+    <div class="methodology">
+      <strong>Methodology:</strong> SALE_DETAILS, H1 2026, ks_flag=TRUE, sales &lt; $100K (Rule 4), company_industry = 'Floral - Wholesaler'.
+      Online = eCommerce + API + K2K (Rule 6). Monthly consistency checked over Jan-Jun 2026 (6 months).
+      Filtered to companies with total GMV > $100K and avg monthly online ratio > 5%.
+      | Trust: <strong>trusted</strong>
+    </div>
+  </div>
+
+  <!-- KEY INSIGHTS -->
+  <div class="section">
+    <h2>Key Insights</h2>
+
+    <div class="insight-box">
+      <h4>Insight 1: The "100% online" group is a different species</h4>
+      <p>35 wholesalers sell 100% online with 0% stddev (perfectly consistent). These are likely K2K eCommerce-only operations -- they don't have a walk-in cooler or phone sales. They're useful as proof of concept but NOT as models for traditional wholesalers who need to add online to an existing offline business.</p>
+    </div>
+    <div class="insight-box">
+      <h4>Insight 2: The "mixed model" group is the real playbook</h4>
+      <p>8 wholesalers operate a genuine dual-channel business. Mayesh (24% online, $94M total) is the ceiling. KBC (13.6%, $64M) and Bill Doran (3.5%, $61M) are the Big 3. Sims (12.4%), Maple Grove (30.2%), Zeidler (17.2%), Juliet (10.9%), and Metropetals (8.7%) round out the group. THESE are the models to study.</p>
+    </div>
+    <div class="insight-box">
+      <h4>Insight 3: Consistency matters more than peak</h4>
+      <p>Mayesh maintains 19.6-29.5% online ratio month-over-month (stddev 4.0). KBC is 10.8-16.6% (stddev 2.1). These aren't one-month spikes -- they're sustained operational models. Compare to Juliet (5-20%, stddev 5.5) which is volatile. Consistency = real adoption, not a promotional blip.</p>
+    </div>
+  </div>
+
+  <!-- ENABLEMENT -->
+  <div class="section">
+    <h2>Enablement Kit</h2>
+
+    <div class="enablement">
+      <h3>WHY This List Matters (Strategic Logic)</h3>
+      <ul>
+        <li><strong>Playbook source:</strong> "82% of GMV is offline" is the problem. These wholesalers are the ones who've cracked part of it. Understanding HOW they did it = the playbook for everyone else.</li>
+        <li><strong>H3 - Digitalize:</strong> The insight from the ecosystem analysis is that "offline" wholesalers already BUY digital (Procurement) -- the gap is sell-side. These always-on wholesalers have solved the sell-side. What's different about them?</li>
+        <li><strong>Credibility in the field:</strong> When CS tells a wholesaler "you should list inventory online," the response is "nobody does that." Having a benchmark list of 43 wholesalers who DO it, with names and numbers, is the credibility ammunition.</li>
+      </ul>
+    </div>
+
+    <div class="enablement-grid">
+      <div class="enablement-card">
+        <h4>Research Questions (for CS interviews)</h4>
+        <ol style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li>"What triggered your decision to sell online? Was it a specific event, a customer request, or a gradual shift?"</li>
+          <li>"How do you manage inventory for online orders vs walk-in customers? Do you reserve stock, or is it first-come-first-served?"</li>
+          <li>"What percentage of your online orders come from new customers vs existing customers who used to call?"</li>
+          <li>"What's the most common product type your online buyers order? Is it the same as walk-in, or different?"</li>
+          <li>"If you could change one thing about the online selling tools, what would it be?"</li>
+        </ol>
+      </div>
+      <div class="enablement-card">
+        <h4>What We're Looking For</h4>
+        <ul style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li><strong>Operational model:</strong> How do they keep catalog fresh? Dedicated person? Time of day? Automation?</li>
+          <li><strong>Customer acquisition:</strong> Did online ATTRACT new buyers or just shift existing ones from phone?</li>
+          <li><strong>Product selection:</strong> Do they list everything or a curated subset? Which products sell best online?</li>
+          <li><strong>Channel conflict:</strong> Did they face pushback from sales staff who felt threatened by online orders?</li>
+          <li><strong>ROI story:</strong> Can they quantify the benefit? "We saved X hours/week" or "We gained Y new customers"</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Who to Assign</h3>
+    <div class="enablement" style="background: #f0fdf4;">
+      <ul>
+        <li><strong>Facu:</strong> Own the benchmark analysis. Select 3-4 mixed-model wholesalers for deep-dive CS interviews (suggested: Zeidler, Maple Grove, Sims, Metropetals).</li>
+        <li><strong>CS (Cata):</strong> Schedule and execute the discovery interviews using the research questions above. 1 interview per week, record on Fathom.</li>
+        <li><strong>Mercurio:</strong> Build playbook from interview findings. What's replicable? What's specific to that wholesaler's context?</li>
+        <li><strong>Product (Adrian):</strong> Collect feature requests from interviews. "What would you change about online selling tools?" -- data-backed product feedback.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TABLE: MIXED MODEL (THE REAL BENCHMARKS) -->
+  <div class="section">
+    <h2>Mixed-Model Wholesalers (The Real Benchmarks)</h2>
+    <div class="desc">These wholesalers operate both online and offline channels. They're the models to study for the digital transition playbook.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Wholesaler</th>
+          <th style="text-align:right">Online GMV</th>
+          <th style="text-align:right">Offline GMV</th>
+          <th style="text-align:right">Total GMV</th>
+          <th style="text-align:right">Online %</th>
+          <th>Consistency (6mo)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: #f0fdf4;">
+          <td class="rank">1</td>
+          <td><strong>Maple Grove Floral</strong></td>
+          <td style="text-align:right" class="gmv">$201,830</td>
+          <td style="text-align:right" class="gmv">$466,645</td>
+          <td style="text-align:right" class="gmv">$668,475</td>
+          <td style="text-align:right" class="pct pct-green">30.2%</td>
+          <td>20.7-39.3% (stddev 7.4)</td>
+          <td>Best Units-online model. 35% of Units sold online. Study this.</td>
+        </tr>
+        <tr style="background: #f0fdf4;">
+          <td class="rank">2</td>
+          <td><strong>Mayesh Wholesale</strong></td>
+          <td style="text-align:right" class="gmv">$22,704,036</td>
+          <td style="text-align:right" class="gmv">$71,404,092</td>
+          <td style="text-align:right" class="gmv">$94,108,128</td>
+          <td style="text-align:right" class="pct pct-green">24.1%</td>
+          <td>19.6-29.5% (stddev 4.0)</td>
+          <td>Largest mixed model. API-driven (own website). Stable and scaled.</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td><strong>Zeidler Floral</strong></td>
+          <td style="text-align:right" class="gmv">$163,709</td>
+          <td style="text-align:right" class="gmv">$787,121</td>
+          <td style="text-align:right" class="gmv">$950,830</td>
+          <td style="text-align:right" class="pct pct-green">17.2%</td>
+          <td>Consistent 6/6 months</td>
+          <td>100% Units online. Pure "live cooler" model. Interview priority.</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td><strong>Kennicott Brothers</strong></td>
+          <td style="text-align:right" class="gmv">$8,738,429</td>
+          <td style="text-align:right" class="gmv">$55,313,489</td>
+          <td style="text-align:right" class="gmv">$64,051,918</td>
+          <td style="text-align:right" class="pct pct-amber">13.6%</td>
+          <td>10.8-16.6% (stddev 2.1)</td>
+          <td>Big 3. Boxes+eCommerce is strong; Units barely started. The $49M opportunity.</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td><strong>Sims Flower Distribution</strong></td>
+          <td style="text-align:right" class="gmv">$176,265</td>
+          <td style="text-align:right" class="gmv">$1,250,505</td>
+          <td style="text-align:right" class="gmv">$1,426,770</td>
+          <td style="text-align:right" class="pct pct-amber">12.4%</td>
+          <td>7.1-24.2% (stddev 7.1)</td>
+          <td>New ramp. Volatile but growing. What triggered them?</td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td>! Juliet Wholesale</td>
+          <td style="text-align:right" class="gmv">$27,912</td>
+          <td style="text-align:right" class="gmv">$228,835</td>
+          <td style="text-align:right" class="gmv">$256,747</td>
+          <td style="text-align:right" class="pct pct-amber">10.9%</td>
+          <td>5.0-20.0% (stddev 5.5)</td>
+          <td>Small but active. Volatile -- needs stabilization.</td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td>Metropetals</td>
+          <td style="text-align:right" class="gmv">$46,328</td>
+          <td style="text-align:right" class="gmv">$484,099</td>
+          <td style="text-align:right" class="gmv">$530,427</td>
+          <td style="text-align:right" class="pct pct-amber">8.7%</td>
+          <td>3.2-13.4% (stddev 4.1)</td>
+          <td>Growing. Study what products sell online.</td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td>Floristcentric, LLC</td>
+          <td style="text-align:right" class="gmv">$62,182</td>
+          <td style="text-align:right" class="gmv">$801,713</td>
+          <td style="text-align:right" class="gmv">$863,895</td>
+          <td style="text-align:right" class="pct pct-amber">7.2%</td>
+          <td>6.1-8.9% (stddev 1.2)</td>
+          <td>Most consistent mixed model after Mayesh/KBC. Low variance = real habit.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLE: 100% ONLINE -->
+  <div class="section">
+    <h2>100% Online Wholesalers (eCommerce-Native)</h2>
+    <div class="desc">These operate entirely online. Not models for traditional wholesalers, but proof that the channel works at scale. Top 15 by GMV shown.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Wholesaler</th>
+          <th style="text-align:right">Online GMV (H1 2026)</th>
+          <th>Months Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="rank">1</td><td>FloraLink</td><td style="text-align:right" class="gmv">$3,961,010</td><td>6/6</td></tr>
+        <tr><td class="rank">2</td><td>Cleveland Plant & Flower Co.</td><td style="text-align:right" class="gmv">$493,514</td><td>6/6</td></tr>
+        <tr><td class="rank">3</td><td>Baisch & Skinner</td><td style="text-align:right" class="gmv">$437,483</td><td>6/6</td></tr>
+        <tr><td class="rank">4</td><td>BOTANICA WHOLESALE DALLAS</td><td style="text-align:right" class="gmv">$362,784</td><td>6/6</td></tr>
+        <tr><td class="rank">5</td><td>Palm Beach Whsle Flowers</td><td style="text-align:right" class="gmv">$338,873</td><td>6/6</td></tr>
+        <tr><td class="rank">6</td><td>TFS- Chattanooga</td><td style="text-align:right" class="gmv">$325,668</td><td>6/6</td></tr>
+        <tr><td class="rank">7</td><td>Jacksonville Flower Market</td><td style="text-align:right" class="gmv">$301,942</td><td>6/6</td></tr>
+        <tr><td class="rank">8</td><td>A Florist First</td><td style="text-align:right" class="gmv">$301,075</td><td>6/6</td></tr>
+        <tr><td class="rank">9</td><td>M&M CUT FLORA</td><td style="text-align:right" class="gmv">$278,326</td><td>6/6</td></tr>
+        <tr><td class="rank">10</td><td>R&W WHOLESALE, INC.</td><td style="text-align:right" class="gmv">$270,144</td><td>6/6</td></tr>
+        <tr><td class="rank">11</td><td>HARDIN'S WHLSE - LIBERTY</td><td style="text-align:right" class="gmv">$261,285</td><td>6/6</td></tr>
+        <tr><td class="rank">12</td><td>Flowers Direct Inc</td><td style="text-align:right" class="gmv">$201,236</td><td>5/6</td></tr>
+        <tr><td class="rank">13</td><td>Pikes Peak Floral</td><td style="text-align:right" class="gmv">$179,409</td><td>6/6</td></tr>
+        <tr><td class="rank">14</td><td>Sieck Floral Distributing</td><td style="text-align:right" class="gmv">$178,470</td><td>6/6</td></tr>
+        <tr><td class="rank">15</td><td>Tradewinds / KING FLORAL</td><td style="text-align:right" class="gmv">$175,515</td><td>6/6</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    Minerva / Koronet Revenue OS | Data: SALE_DETAILS, H1 2026 (monthly) | Trust: trusted | Rules: ks_flag, sales&lt;100K, online=eCom+API+K2K
+  </div>
+</div>
+</body>
+</html>

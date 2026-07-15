@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead List H: High Online Ratio Deep Dive</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-card { background: #f0fdf4; border-radius: 8px; padding: 16px; }
+  .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 4px; }
+  .meta-card .value { font-size: 20px; font-weight: 700; color: #166534; }
+  .meta-card.blue { background: #eff6ff; }
+  .meta-card.blue .value { color: #1e40af; }
+  .meta-card.purple { background: #f5f3ff; }
+  .meta-card.purple .value { color: #6d28d9; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .section h3 { font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 8px; color: #374151; }
+  .section .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  tbody tr:hover { background: #f9fafb; }
+  .gmv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rank { color: #9ca3af; font-weight: 500; }
+  .channel-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .ch-ecom { background: #dbeafe; color: #1e40af; }
+  .ch-api { background: #e0e7ff; color: #3730a3; }
+  .ch-offline { background: #f3f4f6; color: #6b7280; }
+  .inv-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .inv-boxes { background: #fef3c7; color: #92400e; }
+  .inv-units { background: #d1fae5; color: #065f46; }
+  .inv-hg { background: #f3f4f6; color: #6b7280; }
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #9ca3af; }
+  .methodology { background: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .methodology strong { color: #374151; }
+  .enablement { background: #eff6ff; border-radius: 8px; padding: 20px; margin-top: 12px; }
+  .enablement h3 { color: #1e40af; margin-top: 0; }
+  .enablement ul, .enablement ol { margin-left: 20px; margin-bottom: 12px; }
+  .enablement li { font-size: 13px; color: #374151; line-height: 1.8; }
+  .enablement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+  .enablement-card { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb; }
+  .enablement-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 8px; }
+  .profile-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  .profile-card h3 { color: #1e40af; margin-top: 0; font-size: 16px; }
+  .profile-card .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  .profile-card .stat { text-align: center; }
+  .profile-card .stat-value { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .profile-card .stat-label { font-size: 11px; color: #6b7280; text-transform: uppercase; }
+  .objection { background: #fff7ed; border-left: 3px solid #f59e0b; padding: 12px 16px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+  .objection .q { font-weight: 600; font-size: 13px; color: #92400e; margin-bottom: 4px; }
+  .objection .a { font-size: 13px; color: #374151; line-height: 1.5; }
+  .finding { background: #fefce8; border-left: 3px solid #eab308; padding: 12px 16px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+  .finding strong { color: #854d0e; }
+  .finding p { font-size: 13px; color: #374151; line-height: 1.5; }
+  @media (max-width: 768px) { .enablement-grid { grid-template-columns: 1fr; } .profile-card .stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lead List H: High Online Ratio Deep Dive</h1>
+    <div class="subtitle">Owner: Growth / Playbook | Generated 2026-07-06 by Minerva | Hypothesis: H3 (Digitalize wholesaler sales)</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Qualified Wholesalers (>10% online, >$500K)</div>
+        <div class="value">6</div>
+      </div>
+      <div class="meta-card blue">
+        <div class="label">Combined Online GMV</div>
+        <div class="value">$32.0M</div>
+      </div>
+      <div class="meta-card purple">
+        <div class="label">Combined Total GMV</div>
+        <div class="value">$161.5M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section">
+    <h2>Purpose</h2>
+    <div class="desc">
+      This deep dive answers: <strong>WHAT do high-online-ratio wholesalers sell online, and WHY?</strong> We lowered the threshold from 30% to 10% because only 2 wholesalers with >$500K GMV exceed 30%. At >10%, we get 6 wholesalers with enough scale and online maturity to study. The product-by-channel breakdown reveals which inventory types (Boxes vs Units) and which channels (eCommerce vs API) drive online sales -- and where the next opportunity lies.
+    </div>
+    <div class="methodology">
+      <strong>Methodology:</strong> SALE_DETAILS, H1 2026, ks_flag=TRUE, sales &lt; $100K (Rule 4), company_industry = 'Floral - Wholesaler'.
+      Step 1: Identified wholesalers with total GMV > $500K and online ratio > 10%.
+      Step 2: For each, broke down sales by inventory_division (Units/Boxes/Hard Goods) and sales_channel (eCommerce/API/Offline).
+      | Trust: <strong>trusted</strong>
+    </div>
+  </div>
+
+  <!-- COMPANY PROFILES -->
+  <div class="section">
+    <h2>Company Profiles with Product Breakdown</h2>
+
+    <!-- FloraLink -->
+    <div class="profile-card">
+      <h3>FloraLink -- 100% Online, $4.0M</h3>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">100%</div><div class="stat-label">Online Ratio</div></div>
+        <div class="stat"><div class="stat-value">$4.0M</div><div class="stat-label">Total GMV</div></div>
+        <div class="stat"><div class="stat-value">101</div><div class="stat-label">Buyers</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Inventory</th><th>Channel</th><th style="text-align:right">GMV</th><th style="text-align:right">Orders</th><th style="text-align:right">Buyers</th><th style="text-align:right">Categories</th></tr></thead>
+        <tbody>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$3,961,010</td><td style="text-align:right">43,681</td><td style="text-align:right">101</td><td style="text-align:right">127</td></tr>
+        </tbody>
+      </table>
+      <div class="finding"><strong>Finding:</strong> <p>Pure eCommerce, Boxes only. This is likely a K2K eCommerce-only operation. 127 product categories across 101 buyers = broad catalog. Model for "what a well-populated eShop looks like."</p></div>
+    </div>
+
+    <!-- Maple Grove -->
+    <div class="profile-card">
+      <h3>Maple Grove Floral -- 30.2% Online, $668K</h3>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">30.2%</div><div class="stat-label">Online Ratio</div></div>
+        <div class="stat"><div class="stat-value">$668K</div><div class="stat-label">Total GMV</div></div>
+        <div class="stat"><div class="stat-value">79</div><div class="stat-label">Buyers (offline)</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Inventory</th><th>Channel</th><th style="text-align:right">GMV</th><th style="text-align:right">Orders</th><th style="text-align:right">Buyers</th><th style="text-align:right">Categories</th></tr></thead>
+        <tbody>
+          <tr><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$346,634</td><td style="text-align:right">1,756</td><td style="text-align:right">79</td><td style="text-align:right">127</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$190,186</td><td style="text-align:right">1,021</td><td style="text-align:right">55</td><td style="text-align:right">111</td></tr>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$119,251</td><td style="text-align:right">534</td><td style="text-align:right">58</td><td style="text-align:right">42</td></tr>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$11,644</td><td style="text-align:right">79</td><td style="text-align:right">24</td><td style="text-align:right">22</td></tr>
+        </tbody>
+      </table>
+      <div class="finding"><strong>Finding:</strong> <p>THE best "live cooler" model. 35% of Units sold online via eCommerce. 55 buyers ordering loose bunches digitally across 111 categories. This is EXACTLY what we want every wholesaler to do. Small enough to study their workflow in detail. INTERVIEW PRIORITY #1.</p></div>
+    </div>
+
+    <!-- Mayesh -->
+    <div class="profile-card">
+      <h3>Mayesh Wholesale Florist -- 24.1% Online, $94.1M</h3>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">24.1%</div><div class="stat-label">Online Ratio</div></div>
+        <div class="stat"><div class="stat-value">$94.1M</div><div class="stat-label">Total GMV</div></div>
+        <div class="stat"><div class="stat-value">9,434</div><div class="stat-label">Offline Buyers (Units)</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Inventory</th><th>Channel</th><th style="text-align:right">GMV</th><th style="text-align:right">Orders</th><th style="text-align:right">Buyers</th><th style="text-align:right">Categories</th></tr></thead>
+        <tbody>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$45,768,447</td><td style="text-align:right">43,554</td><td style="text-align:right">121</td><td style="text-align:right">497</td></tr>
+          <tr><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$25,635,645</td><td style="text-align:right">82,014</td><td style="text-align:right">9,434</td><td style="text-align:right">503</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-api">API</span></td><td style="text-align:right" class="gmv">$16,041,068</td><td style="text-align:right">26,104</td><td style="text-align:right">2,394</td><td style="text-align:right">277</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-api">API</span></td><td style="text-align:right" class="gmv">$6,649,386</td><td style="text-align:right">15,655</td><td style="text-align:right">3,193</td><td style="text-align:right">395</td></tr>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$13,582</td><td style="text-align:right">60</td><td style="text-align:right">42</td><td style="text-align:right">33</td></tr>
+        </tbody>
+      </table>
+      <div class="finding"><strong>Finding:</strong> <p>Mayesh's online sales are 99.9% API (their own website, mayesh.com), NOT Komet eCommerce. They list both Boxes AND Units via API. Key question: can we replicate the API model for others via eShop? Also: 9,434 offline-only buyers for Units, 3,193 online API buyers = massive expansion potential on their own buyer base.</p></div>
+    </div>
+
+    <!-- Zeidler -->
+    <div class="profile-card">
+      <h3>Zeidler Floral -- 17.2% Online, $951K</h3>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">17.2%</div><div class="stat-label">Online Ratio</div></div>
+        <div class="stat"><div class="stat-value">$951K</div><div class="stat-label">Total GMV</div></div>
+        <div class="stat"><div class="stat-value">35</div><div class="stat-label">Online Buyers</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Inventory</th><th>Channel</th><th style="text-align:right">GMV</th><th style="text-align:right">Orders</th><th style="text-align:right">Buyers</th><th style="text-align:right">Categories</th></tr></thead>
+        <tbody>
+          <tr><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$786,869</td><td style="text-align:right">3,362</td><td style="text-align:right">162</td><td style="text-align:right">22</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$163,709</td><td style="text-align:right">560</td><td style="text-align:right">35</td><td style="text-align:right">14</td></tr>
+        </tbody>
+      </table>
+      <div class="finding"><strong>Finding:</strong> <p>PURE "live cooler" model. 100% Units (no Boxes at all -- $252 in Boxes, negligible). Sells loose stems via Komet eCommerce to 35 buyers. 14 product categories online. This is the smallest-surface proof point: a wholesaler whose entire digital business is listing cooler inventory on eShop. INTERVIEW PRIORITY #2 (after Maple Grove). Key questions: how many SKUs in cooler? How do they keep it current? How did they start?</p></div>
+    </div>
+
+    <!-- KBC -->
+    <div class="profile-card">
+      <h3>Kennicott Brothers Company -- 13.6% Online, $64.1M</h3>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">13.6%</div><div class="stat-label">Online Ratio</div></div>
+        <div class="stat"><div class="stat-value">$64.1M</div><div class="stat-label">Total GMV</div></div>
+        <div class="stat"><div class="stat-value">7,057</div><div class="stat-label">Offline Buyers (Units)</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Inventory</th><th>Channel</th><th style="text-align:right">GMV</th><th style="text-align:right">Orders</th><th style="text-align:right">Buyers</th><th style="text-align:right">Categories</th></tr></thead>
+        <tbody>
+          <tr><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$49,327,142</td><td style="text-align:right">160,053</td><td style="text-align:right">7,057</td><td style="text-align:right">70</td></tr>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$5,986,347</td><td style="text-align:right">16,660</td><td style="text-align:right">1,000</td><td style="text-align:right">53</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$5,706,907</td><td style="text-align:right">11,442</td><td style="text-align:right">1,651</td><td style="text-align:right">58</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-api">API</span></td><td style="text-align:right" class="gmv">$2,417,529</td><td style="text-align:right">5,713</td><td style="text-align:right">564</td><td style="text-align:right">49</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-units">Units</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$613,994</td><td style="text-align:right">2,008</td><td style="text-align:right">691</td><td style="text-align:right">65</td></tr>
+        </tbody>
+      </table>
+      <div class="finding"><strong>Finding:</strong> <p>KBC's online success is Boxes-via-eCommerce ($5.7M, 1,651 buyers). But the $49.3M Units-offline gap is enormous -- only $614K Units online via eCommerce and $2.4M via API. That's 5.8% Units online penetration. If KBC could reach Maple Grove's 35% penetration on Units, that's $18.3M in new online GMV. This is Play 1 (Bunch Upload at KBC) in action.</p></div>
+    </div>
+
+    <!-- Sims -->
+    <div class="profile-card">
+      <h3>Sims Flower Distribution -- 12.4% Online, $1.4M</h3>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">12.4%</div><div class="stat-label">Online Ratio</div></div>
+        <div class="stat"><div class="stat-value">$1.4M</div><div class="stat-label">Total GMV</div></div>
+        <div class="stat"><div class="stat-value">29</div><div class="stat-label">Offline Buyers</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Inventory</th><th>Channel</th><th style="text-align:right">GMV</th><th style="text-align:right">Orders</th><th style="text-align:right">Buyers</th><th style="text-align:right">Categories</th></tr></thead>
+        <tbody>
+          <tr><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-offline">Offline</span></td><td style="text-align:right" class="gmv">$1,250,475</td><td style="text-align:right">831</td><td style="text-align:right">29</td><td style="text-align:right">78</td></tr>
+          <tr style="background: #f0fdf4;"><td><span class="inv-tag inv-boxes">Boxes</span></td><td><span class="channel-tag ch-ecom">eCommerce</span></td><td style="text-align:right" class="gmv">$176,265</td><td style="text-align:right">163</td><td style="text-align:right">14</td><td style="text-align:right">62</td></tr>
+        </tbody>
+      </table>
+      <div class="finding"><strong>Finding:</strong> <p>New ramp -- $0 online to $176K (12.4%) in H1 2026. Boxes-only via eCommerce. 14 of 29 buyers ordering online = 48% buyer adoption rate. 62 of 78 categories online = broad catalog. This is a recent conversion story. CS interview needed: what triggered the ramp? What made it work?</p></div>
+    </div>
+  </div>
+
+  <!-- ENABLEMENT -->
+  <div class="section">
+    <h2>Enablement Kit</h2>
+
+    <div class="enablement">
+      <h3>WHY This Deep Dive Matters (Strategic Logic)</h3>
+      <ul>
+        <li><strong>H3 validated:</strong> These 6 wholesalers prove that mixed online/offline models work. The question is not "can wholesalers sell online?" but "what conditions make it happen?"</li>
+        <li><strong>Three distinct models emerged:</strong> (1) Boxes-via-eCommerce (FloraLink, Sims, KBC-Boxes), (2) Units-via-eCommerce (Maple Grove, Zeidler), (3) Everything-via-API (Mayesh). Each requires a different playbook.</li>
+        <li><strong>The #1 growth lever is Units-via-eCommerce.</strong> Boxes are already online for the leaders. The $49M+ gap is in loose bunches/stems. Maple Grove and Zeidler prove the model works. KBC is the biggest prize.</li>
+      </ul>
+    </div>
+
+    <div class="enablement-grid">
+      <div class="enablement-card">
+        <h4>Key Questions for Deep-Dive Interviews</h4>
+        <ol style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li>"Walk me through your morning: how does cooler inventory get listed online? Who does it? How long does it take?"</li>
+          <li>"Your online buyers -- are they mostly the same florists who used to call, or are they new customers who found you online?"</li>
+          <li>"What products sell best online vs walk-in? Is there a difference in what they buy or how much?"</li>
+        </ol>
+      </div>
+      <div class="enablement-card">
+        <h4>Expected Outcomes</h4>
+        <ul style="margin-left: 16px; font-size: 13px; line-height: 2;">
+          <li><strong>Maple Grove interview:</strong> Document the "15-minute morning routine" for listing cooler inventory. Package as a how-to.</li>
+          <li><strong>Zeidler interview:</strong> Understand the pure Units eShop model. What are the 14 categories? How minimal is the effort?</li>
+          <li><strong>Sims interview:</strong> What triggered the $0-to-$176K ramp? Was it CS-driven, self-driven, or event-driven?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Expected Objections (when presenting findings to offline wholesalers)</h3>
+
+    <div class="objection">
+      <div class="q">1. "Mayesh is huge -- that model doesn't apply to me"</div>
+      <div class="a"><strong>Response:</strong> That's why we studied Maple Grove ($668K total) and Zeidler ($951K total). They're your size. Maple Grove lists 111 categories of loose bunches online and 55 buyers order that way. Zeidler does it with just 14 categories and 35 buyers. The model scales down.</div>
+    </div>
+    <div class="objection">
+      <div class="q">2. "They probably have more staff / better tech"</div>
+      <div class="a"><strong>Response:</strong> Zeidler runs this with the same Komet platform you already use. No special tech. They list on eShop, buyers see it, buyers order. The effort is 15 minutes in the morning. We can show you exactly how they set it up.</div>
+    </div>
+    <div class="objection">
+      <div class="q">3. "My customers don't shop online"</div>
+      <div class="a"><strong>Response:</strong> 55 of Maple Grove's 79 buyers (70%) now order online. They didn't start that way -- they were all phone buyers first. The shift happened because the cooler inventory became visible. Florists browse on their phone at 6am before the shop opens.</div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Who to Assign</h3>
+    <div class="enablement" style="background: #f0fdf4;">
+      <ul>
+        <li><strong>Facu:</strong> Own the playbook extraction. Use findings to build the "digital transition playbook" for wholesale accounts.</li>
+        <li><strong>CS (Cata):</strong> Schedule 3 interviews: Maple Grove, Zeidler, Sims. Use research questions above. Record on Fathom.</li>
+        <li><strong>Mercurio:</strong> After interviews, build 3 playbook variants: (1) Units-via-eShop for small wholesalers, (2) Boxes-via-eShop for mid-size, (3) API model for large/tech-forward.</li>
+        <li><strong>Christine (Implementations):</strong> For each playbook, define the "system health check" -- what must be configured before launch? Catalog populated? eShop enabled? Pricing set?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    Minerva / Koronet Revenue OS | Data: SALE_DETAILS, H1 2026 | Trust: trusted | Rules: ks_flag, sales&lt;100K, online=eCom+API+K2K
+  </div>
+</div>
+</body>
+</html>
