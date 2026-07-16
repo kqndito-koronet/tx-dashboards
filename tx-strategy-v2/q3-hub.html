@@ -3,294 +3,195 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Q3 TX Hub - Operating Read</title>
+  <title>Q3 TX Hub — Execution + Learning</title>
   <style>
-    :root{--bg:#f6f8fb;--panel:#fff;--ink:#111827;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--navy:#172033;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
     main{width:min(1480px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
     a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
-    header,section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
-    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(440px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(430px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
     .hero>div{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px}
     .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
-    h1,h2,h3,p{margin-top:0}
-    h1{font-size:clamp(38px,5vw,62px);line-height:.98;margin-bottom:12px}
-    h2{font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin-bottom:8px}
-    h3{font-size:18px;margin-bottom:8px}
-    .sub{color:var(--muted);font-size:17px;max-width:980px}.small{color:var(--muted);font-size:13px}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(38px,5vw,62px);line-height:.98;margin-bottom:12px}h2{font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:17px;max-width:1040px}.small{color:var(--muted);font-size:13px}
     .links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#101828;padding:0 12px;font-size:14px;text-decoration:none}.primary{background:var(--blue)!important;border-color:var(--blue)!important;color:#fff!important}
     .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
     .card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
-    .metric strong{font-size:28px}.danger{border-left:5px solid var(--red)}.okLine{border-left:5px solid var(--green)}.warnLine{border-left:5px solid var(--gold)}.blueLine{border-left:5px solid var(--blue)}.purpleLine{border-left:5px solid var(--purple)}
-    .model{display:grid;gap:8px}.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.row4 span{border-radius:7px;background:var(--navy);color:#fff;font-weight:950;text-align:center;padding:13px 6px}.row4 small{display:block;margin-top:3px;color:#dbe4ff;font-size:11px;font-weight:800}
-    .band{border-radius:7px;padding:11px 13px;font-weight:900}.band.gold{background:#fff4e5;color:#7c3e00}.band.purple{background:#f4f0ff;color:#4c1d95}.band.blue{background:#eff6ff;color:#1d4ed8}
-    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;min-width:1120px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:11px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .metric strong{font-size:29px}.blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900}.band.gold{background:#fff4e5;color:#7c3e00}.band.blue{background:#eff6ff;color:#1d4ed8}.band.green{background:#ecfdf3;color:#067647}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;min-width:1180px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:11px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
     .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.spec{background:#f4f0ff;color:#5925dc;border-color:#d9d6fe}
-    .stack{display:grid;gap:10px}
-    .command{border:2px solid #2457c5}
     .tightList{margin:8px 0 0;padding-left:18px;color:#344054}.tightList li{margin:4px 0}
-    @media(max-width:980px){main{width:min(100% - 24px,1480px)}.hero,.grid2,.grid3,.grid4,.row4{grid-template-columns:1fr}table{min-width:960px}}
+    @media(max-width:980px){main{width:min(100% - 24px,1480px)}.hero,.grid2,.grid3,.grid4{grid-template-columns:1fr}table{min-width:980px}}
   </style>
 </head>
 <body>
 <main>
   <section class="hero">
     <div>
-      <p class="eyebrow">Q3 TX Hub - operating read</p>
-      <h1>Q3 is about execution, usage, and learning.</h1>
+      <p class="eyebrow">Q3 TX Hub</p>
+      <h1>Measure movement. Learn why it moves or not.</h1>
       <p class="sub">
-        We are not asking owners for more reporting. We are giving them the account facts,
-        the customer questions, and the help menu so Friday can focus on what moved,
-        what blocked usage, and what we do next.
+        This is the first TX execution rhythm. We start with the data we have, make target accounts visible,
+        ask owners to add context, and use every week to improve buying, listing, commercial readiness, and growth.
       </p>
       <div class="links">
-        <a class="primary" href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday prefill</a>
-        <a href="/tx-dashboards/tx-strategy-v2/target-account-board.html">Target account board</a>
-        <a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Suggested leads</a>
-        <a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a>
-        <a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data backing</a>
-        <a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback loop</a>
+        <a class="primary" href="/tx-dashboards/tx-strategy-v2/target-account-board.html">Open Target Account Board</a>
+        <a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday Prefill</a>
+        <a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Suggested Leads</a>
+        <a href="/tx-dashboards/okr-diagnostic.html">OKR Diagnostic</a>
+        <a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data Backing</a>
       </div>
     </div>
-    <div class="model">
-      <p class="eyebrow">Current read</p>
+    <div>
+      <p class="eyebrow">Current Read</p>
       <div class="grid2">
         <article class="card metric okLine"><small>Q3 TX fee target</small><strong>$670K</strong><p>Requires +54.5% YoY vs Q3 2025.</p></article>
-        <article class="card metric okLine"><small>Jul 1-13 Snowflake fees</small><strong>+55.7%</strong><p>Just above required slope, excluding Axerrio.</p></article>
+        <article class="card metric okLine"><small>Jul 1-13 Snowflake fees</small><strong>+55.7%</strong><p>Barely above required slope, excluding Axerrio.</p></article>
         <article class="card metric warnLine"><small>July projection incl. Axerrio est.</small><strong>+52.5%</strong><p>Below +54.5% Q3 pace. Axerrio actual blocked.</p></article>
-        <article class="card metric danger"><small>Top 15 concentration</small><strong>64.8%</strong><p>$40.7K of $62.8K Jul 1-13 fees.</p></article>
+        <article class="card metric danger"><small>Top 15 concentration</small><strong>64.8%</strong><p>Top accounts carry July fee movement.</p></article>
       </div>
-      <div class="band gold">Near term can be on pace. Durable growth still needs more GMV and more digital GMV.</div>
+      <div class="band gold" style="margin-top:10px">Near-term pacing may be achievable. Durable growth needs more GMV and more digital GMV.</div>
     </div>
   </section>
 
-  <section class="command">
-    <p class="eyebrow">This week operating board</p>
-    <h2>Start here: accounts, usage, blockers, next action.</h2>
+  <section>
+    <p class="eyebrow">Q3 Focus</p>
+    <h2>Use existing customers and products to learn what it takes to digitalize more of the market.</h2>
+    <div class="grid4">
+      <article class="card blueLine"><small>BUY</small><strong>Buy more digitally</strong><p>What do wholesalers need to buy, why do they not buy online, and what would make it repeatable?</p></article>
+      <article class="card okLine"><small>LIST</small><strong>Publish real supply</strong><p>Bunches, varieties, future availability, in-transit, and online supply similar to what they sell offline.</p></article>
+      <article class="card warnLine"><small>Commercial Readiness</small><strong>Use Koronet deeply enough</strong><p>Implementation should help accounts use products, buy digitally, list supply, and reach first online sales.</p></article>
+      <article class="card purpleLine"><small>GROW</small><strong>Scale only when ready</strong><p>Growth Program is the upside for accounts with enough usage, supply, buyer signal, and willingness.</p></article>
+    </div>
+    <div class="band blue" style="margin-top:12px">Product enablers support this only when tied to an account blocker, pilot, KPI, and learning loop.</div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What CS + Implementation work on now</p>
+    <h2>Not six initiatives. Two operating jobs plus a Growth gate.</h2>
     <div class="grid3">
       <article class="card blueLine">
-        <small>Cata / CS</small>
-        <strong>Target accounts with buy/list calls in the next 2 weeks</strong>
-        <p>Bring the target list and the accounts touched in the last 30 days. We prefill digital buying, connections, repeat, online sales, and supply signals.</p>
-        <ul class="tightList">
-          <li>Are digital purchases increasing?</li>
-          <li>Are active connections transacting repeatedly?</li>
-          <li>Is online supply similar to offline supply?</li>
-        </ul>
+        <small>CS + Implementation</small><strong>Help wholesalers buy digitally</strong>
+        <p>Use connections, Procurement, and customer discovery to understand what they want to buy, what they do not find, and why they stay offline.</p>
       </article>
-      <article class="card warnLine">
-        <small>Christine / Implementation</small>
-        <strong>Wholesaler accounts moving toward commercial readiness</strong>
-        <p>Show which implementation accounts are buying digitally, publishing useful supply, and moving toward first online sales inside the 30-day OKR window.</p>
-        <ul class="tightList">
-          <li>>=20 procurement purchases within 30 days?</li>
-          <li>>=5 online sales within 30 days?</li>
-          <li>>3 buying/selling transactions within 30 days?</li>
-        </ul>
+      <article class="card okLine">
+        <small>CS + Implementation</small><strong>Help supply become sellable online</strong>
+        <p>Make sure online supply is useful enough: formats, varieties, time depth, and similarity to offline business.</p>
       </article>
       <article class="card purpleLine">
-        <small>Facu / GROW</small>
-        <strong>Accounts mature enough to earn Black Belt help</strong>
-        <p>Growth is the incentive for accounts that use products, buy digitally, list useful supply, and have enough buyer signal to test a repeatable sales motion.</p>
-        <ul class="tightList">
-          <li>Candidate approved or still diagnosis?</li>
-          <li>Which cohort/message/channel is being tested?</li>
-          <li>What metric proves the play is worth scaling?</li>
-        </ul>
+        <small>Growth gate</small><strong>Promote only ready accounts</strong>
+        <p>Growth is the reward for readiness. If buy/list/usage is weak, diagnose first; do not amplify empty or unusable supply.</p>
       </article>
     </div>
   </section>
 
   <section>
-    <p class="eyebrow">What the data says today</p>
-    <h2>We are close on Q3 fee pacing, but the path is concentrated and not durable enough.</h2>
-    <div class="tableWrap">
+    <p class="eyebrow">Q3 Operating Status</p>
+    <h2>Status is target coverage, metric movement, leading indicators, learnings, and next action.</h2>
+    <div id="boardSummary" class="grid4">
+      <article class="card"><strong>Loading</strong><p>Target account board summary.</p></article>
+    </div>
+    <div class="tableWrap" style="margin-top:12px">
       <table>
-        <thead><tr><th>Metric / OKR</th><th>Target</th><th>Current read</th><th>So what</th><th>Trust</th><th>Source</th></tr></thead>
+        <thead><tr><th>Group</th><th>Target / worked read</th><th>Metric movement</th><th>Leading indicators</th><th>Learning / blocker</th><th>Next action</th></tr></thead>
         <tbody>
-          <tr><td><strong>Q3 TX fees incl. Axerrio</strong></td><td>$670K / +54.5% YoY</td><td>July projected ~$181.3K, including Axerrio estimate. Aug+Sep need ~$489K.</td><td>Close, but not cleanly above target once Axerrio estimate is included.</td><td><span class="tag warn">Directional</span></td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a></td></tr>
-          <tr><td><strong>Core Snowflake TX fees</strong></td><td>+54.5% YoY slope</td><td>$62.8K vs $40.3K prior year = +55.7% Jul 1-13.</td><td>Core fees are barely above the required slope.</td><td><span class="tag warn">Directional source-backed</span></td><td><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Data backing</a></td></tr>
-          <tr><td><strong>Total GMV</strong></td><td>No explicit Q3 GMV target found</td><td>$36.3M vs $33.8M prior year = +7.5%.</td><td>GMV is not growing fast enough to carry fee growth by itself.</td><td><span class="tag warn">Directional</span></td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a></td></tr>
-          <tr><td><strong>Online GMV</strong></td><td>No explicit Q3 online-GMV target found</td><td>$5.76M vs $5.12M prior year = +12.6%.</td><td>Digital GMV growth is real, but not enough to explain +54.5% fee target.</td><td><span class="tag warn">Definition caveat</span></td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a></td></tr>
-          <tr><td><strong>Top 15 fee contribution</strong></td><td>Explain July driver</td><td>Top 15 = $40.7K of $62.8K, +83.4% YoY. Everyone else +21.9%.</td><td>Top accounts are carrying the month. That is useful and risky.</td><td><span class="tag warn">Directional source-backed</span></td><td><a href="/tx-dashboards/okr-diagnostic.html">OKR diagnostic</a></td></tr>
-          <tr><td><strong>BUY signal</strong></td><td>Repeat digital buying</td><td>23,504 K2K connections; 20,904 active; 7,094 active connections ever transacted online.</td><td>The problem is activation and repeat, not just connection count.</td><td><span class="tag warn">Definition caveat</span></td><td><a href="/tx-dashboards/connections.html">Connections dashboard</a></td></tr>
-          <tr><td><strong>LIST signal</strong></td><td>Enough real supply online</td><td>82 of 143 wholesalers near-zero online sales. BDC 22,102 products, 16.4% online.</td><td>Buyers cannot buy what is not listed in the formats and time windows they need.</td><td><span class="tag warn">Needs validation</span></td><td><a href="/tx-dashboards/cohorts.html">Cohorts dashboard</a></td></tr>
+          <tr><td><strong>CS / Cata</strong></td><td>Target list pending owner validation; board includes already-touched CS accounts and FCS/Easy Handshake signals.</td><td>Needs Rose metrics by account.</td><td>Connections, first/repeat transactions, digital buying, online sales, supply signals.</td><td>Need owner context and call learnings.</td><td>Validate target accounts and what calls happen in next 2 weeks.</td></tr>
+          <tr><td><strong>Implementation / Christine</strong></td><td>Board seeded from Christine/Pablito notes: current wholesaler implementations and recent calls.</td><td>30-day OKR reads pending Rose.</td><td>Procurement purchases, online sales, product usage, supply uploaded, first buy/list/sell path.</td><td>Need to identify whether blockers are digital buying, supply, product usage, setup, or buyer activation.</td><td>Review weekly account scorecard against 80/80/70 OKRs.</td></tr>
+          <tr><td><strong>Growth / Facu</strong></td><td>Candidate list exists; not execution-approved yet.</td><td>Candidate metrics are directional from local run.</td><td>Online buyers, repeat, AOV/frequency, traffic/conversion when available.</td><td>Need readiness gate before campaign/growth plays.</td><td>Approve first measured play or park candidates for diagnosis.</td></tr>
+          <tr><td><strong>Product / Maga</strong></td><td>No standalone Friday workstream unless account-backed.</td><td>Pilot-based only.</td><td>Feature usage by account: future availability, bunch uploads, in-transit, blockers.</td><td>Bring product only when field execution proves a blocker.</td><td>Attach enabler to account + blocker + KPI, otherwise park to Monday.</td></tr>
         </tbody>
       </table>
     </div>
-  </section>
-
-  <section>
-    <p class="eyebrow">Company OKRs that TX must support</p>
-    <h2>Friday should connect owner work to Q3 outcomes, not generic updates.</h2>
-    <div class="tableWrap">
-      <table>
-        <thead><tr><th>OKR / KR</th><th>Why TX cares</th><th>Current status</th><th>How we get it</th><th>Owner</th><th>ETA</th></tr></thead>
-        <tbody>
-          <tr><td><strong>$670K transaction fees</strong></td><td>Chapter-level Q3 fee target.</td><td><span class="tag warn">Directional pacing available</span></td><td>Rose refreshes CONSOLIDATED_TRANSACTION_FEES plus Axerrio actual from Europe sheet.</td><td>Rose + Dan/Sofia</td><td>Same day after Axerrio source</td></tr>
-          <tr><td><strong>80% eSuite/Procurement wholesalers with >=20 procurement purchases within 30 days</strong></td><td>Directly maps to BUY and Commercial Readiness.</td><td><span class="tag bad">Blocked</span></td><td>Implementation go-live cohort joined to PROCUREMENT_DETAILS, purchases from go_live to go_live+30.</td><td>Christine + Rose</td><td>1 business day after cohort export</td></tr>
-          <tr><td><strong>80% eSuite wholesalers with >=5 online sales within 30 days</strong></td><td>Directly maps to LIST and Commercial Readiness.</td><td><span class="tag bad">Blocked</span></td><td>Q3 eSuite go-live cohort joined to sell-side online transactions. Confirm eCom + API + K2K definition.</td><td>Christine + Rose</td><td>1 business day after cohort export</td></tr>
-          <tr><td><strong>70% new Core installs with >3 buying/selling transactions within 30 days</strong></td><td>Implementation should become real usage, not just setup.</td><td><span class="tag bad">Blocked</span></td><td>Core install cohort joined to SALE_DETAILS and PROCUREMENT_DETAILS first 30 days.</td><td>Christine + Rose</td><td>1 business day after cohort export</td></tr>
-          <tr><td><strong>Commercial ARR / renewals</strong></td><td>Not a Transactions-owned KR. TX contributes indirectly when accounts get more value and use the products deeply enough to support transaction fees.</td><td><span class="tag spec">Context only</span></td><td>Do not track as TX execution. Keep TX focused on transaction fees, digital buying, online supply, first usage, and repeat transactions.</td><td>Commercial owners</td><td>Do not include in Friday TX scorecard</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <p class="eyebrow">Leading indicators we can actually manage</p>
-    <h2>Numbers first. If the number is missing, the retrieval path is the work.</h2>
-    <div class="grid4">
-      <article class="card blueLine"><small>BUY</small><strong>7,094 active connections ever transacted</strong><p>From 20,904 active connections. Friday work: which pairs get to first, second, third transaction?</p></article>
-      <article class="card okLine"><small>LIST</small><strong>82 / 143 wholesalers near-zero online sales</strong><p>Friday work: which sellers have enough supply to fix now, and which need product/setup/data first?</p></article>
-      <article class="card warnLine"><small>Commercial Readiness</small><strong>80 / 80 / 70 OKR reads missing</strong><p>Friday work: Christine account scorecard vs 30-day procurement purchases, online sales, and Core transactions.</p></article>
-      <article class="card purpleLine"><small>GROW / Black Belt</small><strong>Candidate list needs approval</strong><p>Friday work: approve one measured play, or send account back to buy/list/readiness diagnosis.</p></article>
-    </div>
-    <div class="band blue" style="margin-top:12px">Strategic Accounts apply all of the above as one client plan. Enablers only matter when tied to blocker, account, pilot, KPI, and learning loop.</div>
   </section>
 
   <section>
     <p class="eyebrow">Target Account Operating Board</p>
-    <h2>Status starts with target populations, not isolated accounts.</h2>
-    <p class="sub">The board is filterable and expandable by owner, lane, target/worked status, metrics, leading indicators, learnings, blockers, next action, and trust. The first seed uses accounts already visible from Christine notes, Slack/Fathom digest, CS discussions, local lead lists, and Growth candidate runs.</p>
-    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/target-account-board.html">Open target account board</a><a href="/tx-dashboards/tx-strategy-v2/data/tx_target_account_board.csv">Download CSV</a></div>
-    <h3 style="margin-top:16px">Row schema</h3>
-    <div class="tableWrap">
+    <h2>The expandable board shows accounts already visible in calls, Slack, local files, and candidate runs.</h2>
+    <p class="sub">This is not a final assignment list. It is the starting operating surface: target, worked status, metrics, leading indicators, learning, blocker, next question, help needed, and trust.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/target-account-board.html">Open full board</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/tx_target_account_board.csv">Download board CSV</a>
+    </div>
+    <div class="tableWrap" style="margin-top:12px">
       <table>
-        <thead><tr><th>Field</th><th>What the system should prefill</th><th>What the owner validates or adds</th><th>Why it matters</th></tr></thead>
+        <thead><tr><th>Board row</th><th>What it answers</th><th>Owner adds</th><th>Agent improves</th></tr></thead>
         <tbody>
-          <tr><td><strong>Account / pair</strong></td><td>Account, buyer-supplier pair, initiative, product ownership, account owner.</td><td>Wrong owner, missing stakeholder, duplicated account, or should be excluded.</td><td>One client, one plan. Avoid fragmented asks.</td></tr>
-          <tr><td><strong>Last 30 days touched?</strong></td><td>Salesforce activity, Fathom calls, Slack-known activity when available.</td><td>Missing calls, informal contact, or context not in system.</td><td>Friday should show work done and blanks.</td></tr>
-          <tr><td><strong>BUY status</strong></td><td>Connections, accepted connections, first transaction, repeat, procurement purchases.</td><td>What they want to buy, why they do not buy, and next buying action.</td><td>Wholesalers feel value faster when they buy better online.</td></tr>
-          <tr><td><strong>LIST status</strong></td><td>Products/features, online GMV, offline GMV, formats, bunches, future availability, varieties, online-vs-offline supply.</td><td>Operational constraint, willingness, and what would it take to publish useful supply.</td><td>They cannot sell online what they do not list online.</td></tr>
-          <tr><td><strong>Commercial readiness</strong></td><td>30-day OKR status, product usage, first buy/list/sell path, online sales.</td><td>What blocks real usage after implementation and what help would make the account ready.</td><td>Implementation value is measured by usage, not just setup.</td></tr>
-          <tr><td><strong>GROW readiness</strong></td><td>Online buyers, repeat buyers, frequency, AOV, traffic/conversion when available.</td><td>Ready for Black Belt, needs diagnosis, or should be parked.</td><td>Growth help goes to accounts mature enough to benefit from it.</td></tr>
-          <tr><td><strong>Blocker / what would it take</strong></td><td>Known objections and call-derived learnings.</td><td>Customer's actual condition to move forward, owner, date.</td><td>This is what turns reporting into action.</td></tr>
+          <tr><td>Target population</td><td>Which accounts/pairs/projects/cohorts are in scope this week?</td><td>Missing/wrong accounts and priority context.</td><td>Pablito finds touched accounts; Rose adds metrics.</td></tr>
+          <tr><td>Worked status</td><td>Which targets already had calls, Slack activity, Salesforce activity, or meetings?</td><td>Informal context and missing touches.</td><td>Pablito extracts source-backed activity.</td></tr>
+          <tr><td>Metric movement</td><td>Transactions, fees, procurement purchases, online sales, repeat, online GMV.</td><td>Why movement does or does not reflect reality.</td><td>Rose fills source-backed metrics.</td></tr>
+          <tr><td>Leading indicators</td><td>Connections, first orders, supply uploaded, bunches, future availability, buyers activated.</td><td>What actually happened in the customer conversation.</td><td>Rose/Pablito update from data and calls.</td></tr>
+          <tr><td>Learning / blocker</td><td>Why it did not move and what would need to be true.</td><td>Customer context, objection, next step.</td><td>Mercurio creates enablement; Socrates packages ask.</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section>
-    <p class="eyebrow">Stakeholder execution ask</p>
-    <h2>Keep Friday simple: target accounts, what happened, what we learned, what happens next.</h2>
-    <div class="tableWrap">
-      <table>
-        <thead><tr><th>Owner</th><th>Accounts / calls</th><th>What we want to see</th><th>What we track</th><th>What we need to learn</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>Cata / CS</strong></td>
-            <td>Target accounts Cata shares, plus target accounts touched in the last 30 days. Prioritize accounts with calls in the next 2 weeks to discuss how they buy and how they list.</td>
-            <td>Digital purchases increase, useful connections increase, active connections transact, churned/stalled leads have a clear reason, and sellers publish supply that can actually support sales.</td>
-            <td>Connections approved, active connections, first transactions, repeat transactions, digital buying, online sales, supply listed by format/time depth, and online supply vs offline business.</td>
-            <td>What do they want to buy? Why are they not buying online? Are they buying enough supply? Are they listing it by the bunch, future availability, and similar to what they sell offline?</td>
-          </tr>
-          <tr>
-            <td><strong>Christine / Implementation</strong></td>
-            <td>Wholesaler implementation calls and current wholesaler accounts from her queue: new, upsell, re-implementation, Core, eSuite, eShop, Procurement.</td>
-            <td>Wholesalers buy digitally, upload/publish enough supply, and are ready to generate online sales or enter Black Belt when mature enough.</td>
-            <td>30-day OKRs: eSuite/Procurement wholesalers with >=20 procurement purchases; eSuite wholesalers with >=5 online sales; Core installs with >3 buying/selling transactions.</td>
-            <td>What prevents more digital buying? What prevents supply from being published? What product usage is missing? Which accounts need help before marketing/growth makes sense?</td>
-          </tr>
-          <tr>
-            <td><strong>Facu / GROW</strong></td>
-            <td>Accounts that are mature enough to benefit from Black Belt, including strong implementation candidates like Valentina's accounts when they show buy/list/sell readiness.</td>
-            <td>More accounts qualify for the program because they have enough product usage, supply, buyer signals, and willingness to test a growth motion.</td>
-            <td>Eligible accounts, buyer cohorts, online buyers, repeat buyers, frequency, AOV, campaign tests, traffic, conversion, and repeat online sales.</td>
-            <td>Which accounts are ready to scale? Which need diagnosis first? What would it take to digitalize their sales motion before spending more on campaigns?</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <p class="eyebrow">Friday execution rows</p>
-    <h2>Show the work done. Show the blanks. Then decide next week.</h2>
-    <div class="tableWrap">
-      <table>
-        <thead><tr><th>Lane</th><th>Owner</th><th>Status today</th><th>Results to show</th><th>Deliverables to show</th><th>Learning / blocker</th><th>Next ask</th></tr></thead>
-        <tbody>
-          <tr><td><strong>BUY</strong></td><td>Cata / CS</td><td><span class="tag bad">Invalid until owner validates</span></td><td>First orders, repeat orders, transaction fees by cohort.</td><td>Pairs worked / total list, calls, next pairs.</td><td>Why connected pairs do or do not transact.</td><td>Validate first weekly pair queue or reject logic by Jul 16.</td></tr>
-          <tr><td><strong>LIST</strong></td><td>Cata / CS + Rose</td><td><span class="tag bad">Invalid until pilot/data blocker exists</span></td><td>Supply uploaded, online share, buyer activity after supply change.</td><td>Accounts assessed, top products, pilot selected or data blocker.</td><td>What prevents useful supply online.</td><td>Pick one LIST pilot or name Rose data blocker by Jul 16.</td></tr>
-          <tr><td><strong>Commercial Readiness</strong></td><td>Christine</td><td><span class="tag bad">Needs account scorecard</span></td><td>30-day procurement purchases, online sales, buying/selling transactions, and usage depth.</td><td>Wholesaler calls, PMT accounts reviewed, first digital buying/listing/selling path, next milestone.</td><td>What blocks digital buying, useful supply publishing, or first online sales.</td><td>Show weekly status for her wholesaler accounts against OKRs and leading indicators.</td></tr>
-          <tr><td><strong>GROW / Black Belt</strong></td><td>Facu</td><td><span class="tag wait">Needs first measured play approval</span></td><td>Accounts entering program, repeat online buyers, buyer response, conversion, AOV/frequency.</td><td>Candidate, maturity reason, cohort, play, message, metric.</td><td>Whether the account is ready to scale or still needs buy/list/sell diagnosis.</td><td>Approve first program candidate and show why Valentina-type accounts can earn the program.</td></tr>
-          <tr><td><strong>Strategic Accounts</strong></td><td>Cata + Facu</td><td><span class="tag wait">Confirmed accounts, missing next conversations</span></td><td>Account-level movement and blocker cleared.</td><td>Bill Doran, Kennicott, Dreisbach plan rows.</td><td>Which lane is binding per account.</td><td>One next conversation, owner/date, metric per account.</td></tr>
-          <tr><td><strong>Enablers</strong></td><td>Maga / Product</td><td><span class="tag warn">Park unless account-backed</span></td><td>Pilot KPI, adoption result, blocker removed.</td><td>Delivered/testing/WIP capability tied to account blocker.</td><td>Whether product should scale a proven pattern.</td><td>Bring only account-backed blocker or park to Monday.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <p class="eyebrow">Suggested accounts to validate</p>
-    <h2>These are not assignments. They are reviewable candidates with metrics.</h2>
-    <div class="tableWrap">
-      <table>
-        <thead><tr><th>Lane</th><th>Account / pair</th><th>Signal</th><th>Why now</th><th>Who validates</th><th>Review question</th></tr></thead>
-        <tbody>
-          <tr><td>BUY</td><td>Kennicott -> ASHLAND ADDISON FLORIST</td><td>$9.56M H1 offline GMV, $0 online, active K2K.</td><td>Large intent/value gap, but must stay inside Kennicott strategic plan.</td><td>Cata / Facu</td><td>Can this be worked without fragmenting Kennicott?</td></tr>
-          <tr><td>BUY</td><td>Floral Chain Direct -> Bay State Farm Direct Wilmington</td><td>$999K offline GMV, $0 online.</td><td>Potential first-order blocker discovery.</td><td>Cata / CS</td><td>Is this pair current enough to call?</td></tr>
-          <tr><td>LIST</td><td>WE GOT FLOWERS</td><td>$2.87M offline Units, $0 online Units.</td><td>Clear format/coverage gap if product setup is real.</td><td>Cata / CS + Rose</td><td>Can they upload and maintain top products?</td></tr>
-          <tr><td>LIST</td><td>Stemline Wholesale</td><td>$2.25M offline Units, $72 online Units.</td><td>Near-zero online Units against large offline base.</td><td>Cata / CS + Rose</td><td>Better first pilot than larger complex accounts?</td></tr>
-          <tr><td>GROW</td><td>Zeidler Floral</td><td>17.4% online, 35 online buyers.</td><td>Clean first Black Belt measured play candidate.</td><td>Facu</td><td>Approve as first measured play or keep as study?</td></tr>
-          <tr><td>Strategic</td><td>Bill Doran / Kennicott / Dreisbach</td><td>Confirmed strategic accounts.</td><td>Need one full-stack plan, not fragmented initiative asks.</td><td>Cata + Facu</td><td>What is the next customer conversation and blocker?</td></tr>
-        </tbody>
-      </table>
+    <p class="eyebrow">How We Help</p>
+    <h2>Bring the account and blocker; we prepare the next conversation.</h2>
+    <div class="grid3">
+      <article class="card blueLine"><small>Data + account prep</small><strong>What is true?</strong><p>Product usage, BUY behavior, LIST coverage, online/offline GMV, buyer cohorts, recent activity.</p></article>
+      <article class="card okLine"><small>Conversation support</small><strong>What do we ask?</strong><p>Talking points, discovery questions, objections, what-would-it-take prompts, call learnings.</p></article>
+      <article class="card purpleLine"><small>Growth support</small><strong>What do we scale?</strong><p>Cohorts, CRM, campaigns, landing pages, traffic, conversion, repeat behavior, only after readiness.</p></article>
     </div>
     <div class="links">
-      <a class="primary" href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Open filterable lead center</a>
-      <a href="/tx-dashboards/tx-strategy-v2/target-account-board.html">Open target account board</a>
-      <a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Weekly action queue</a>
       <a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Strategic account plans</a>
+      <a href="/tx-dashboards/tx-strategy-v2/black-belt-operator.html">Black Belt / Growth</a>
+      <a href="/tx-dashboards/value-prop.html">Value proposition</a>
+      <a href="/tx-dashboards/tx-strategy-v2/list-supply-readiness.html">Supply readiness</a>
     </div>
   </section>
 
   <section>
-    <p class="eyebrow">What is missing and how we get it</p>
-    <h2>No skeleton gaps. Every blank needs a retrieval path.</h2>
+    <p class="eyebrow">Friday Rhythm</p>
+    <h2>Show the work done. Show the blanks. Learn why. Decide next week.</h2>
     <div class="tableWrap">
       <table>
-        <thead><tr><th>Missing read</th><th>Why it matters</th><th>Exact way to get it</th><th>Owner</th><th>ETA / rule</th></tr></thead>
+        <thead><tr><th>Step</th><th>Question</th><th>Output</th></tr></thead>
         <tbody>
-          <tr><td>Axerrio July actual</td><td>Q3 target includes Axerrio; current July read uses estimate.</td><td>Dan updates Europe TX Fees Control Sheet or sends CFO/Intacct export.</td><td>Dan/Sofia + Rose</td><td>Same day after source shared.</td></tr>
-          <tr><td>Implementation 30-day OKR pacing</td><td>Commercial Readiness cannot be judged without first-30-day usage.</td><td>Export Q3 go-live cohort, join to PROCUREMENT_DETAILS and SALE_DETAILS by go_live+30.</td><td>Christine + Rose</td><td>1 business day after cohort export.</td></tr>
-          <tr><td>LIST supply maturity</td><td>We cannot prioritize supply pilots on opinions.</td><td>Rose builds account table: product ownership, eShop/eSuite/API, online/offline GMV, formats, bunches, in-transit, time depth, varieties, demand alignment.</td><td>Rose + Cata</td><td>Use directional candidates until baseline exists.</td></tr>
-          <tr><td>Actual calls and learnings</td><td>Friday cannot be about activity without customer learning.</td><td>Use call packet / Fathom read-safe extraction: account, source, directly said, interpretation, blocker, what would it take, next action.</td><td>Pablito + owners</td><td>Friday +1h readback.</td></tr>
-          <tr><td>Owner-validated lead lists</td><td>Suggested accounts are not assignments.</td><td>Owner marks each candidate: accurate, wrong, already contacted, missing context, owner/date, next action.</td><td>Cata / Christine / Facu</td><td>Before Friday discussion.</td></tr>
-          <tr><td>Product enabler relevance</td><td>Future enablers should not become roadmap debate.</td><td>Each enabler needs account-backed blocker, affected initiative, pilot KPI, timing, and field feedback needed.</td><td>Maga + Product</td><td>Otherwise park to Monday.</td></tr>
+          <tr><td>1. Target</td><td>Which accounts were in scope?</td><td>Target accounts: XX.</td></tr>
+          <tr><td>2. Worked</td><td>Which accounts were actually touched?</td><td>Accounts worked: YY / XX.</td></tr>
+          <tr><td>3. Metrics</td><td>Did transactions, purchases, online sales, repeat, or fees move?</td><td>Movement or no movement, with trust label.</td></tr>
+          <tr><td>4. Leading indicators</td><td>Did calls, connections, supply, product usage, buyers, or campaigns move?</td><td>Early signals and missing activity.</td></tr>
+          <tr><td>5. Learning</td><td>If it did not move, why?</td><td>Customer blocker, objection, what would it take.</td></tr>
+          <tr><td>6. Next week</td><td>What changes?</td><td>Account, owner, date, help needed.</td></tr>
         </tbody>
       </table>
     </div>
+    <div class="band green" style="margin-top:12px">We will measure movement. If it does not move, we will ask why. If we learn why, we will change the play.</div>
   </section>
 
   <section>
-    <p class="eyebrow">How we help</p>
-    <h2>What we want to do: help each account get more value from Koronet.</h2>
-    <p class="sub">
-      Owners should not have to prepare every customer conversation from scratch. Use or ask for the help below:
-      account facts, product usage, buying opportunities, supply gaps, talking points, objections, and growth plays.
-    </p>
+    <p class="eyebrow">Backup + Continuous Improvement</p>
+    <h2>Keep the stakeholder view simple; put evidence and workflows behind links.</h2>
     <div class="grid3">
-      <article class="card blueLine"><small>Use the products</small><strong>Show what they have and what they use</strong><p>Products/features available, expected usage, actual usage, and what blocks adoption.</p></article>
-      <article class="card okLine"><small>BUY online</small><strong>Help them source through Koronet</strong><p>Supply analysis, procurement opportunities, cheaper/better/more exclusive supply, and what they say they want to buy.</p></article>
-      <article class="card okLine"><small>LIST online</small><strong>Help them publish supply buyers can use</strong><p>Bunches, boxes, varieties, in-transit, future availability, top products, and online supply vs offline business.</p></article>
-      <article class="card warnLine"><small>Implementation / Commercial Readiness</small><strong>Do all of the above before growth</strong><p>Implementation helps the wholesaler use products, buy digitally, list useful supply, and reach first online sales.</p></article>
-      <article class="card purpleLine"><small>GROW / Black Belt</small><strong>Reward readiness with growth help</strong><p>Accounts with strong buying and supply readiness can qualify for help with cohorts, campaigns, landing pages, traffic, conversion, and repeat buyers.</p></article>
-      <article class="card blueLine"><small>Ask for help</small><strong>Bring the account and the blocker</strong><p>If the account is stuck, ask for data, account prep, value prop, talking points, objections, external research, or a product blocker read.</p></article>
-    </div>
-  </section>
-
-  <section>
-    <p class="eyebrow">Where the deeper work lives</p>
-    <h2>Keep the first view simple. Put complexity behind links.</h2>
-    <div class="grid3">
-      <article class="card"><small>Owner tools</small><strong>Low-lift Friday reporting</strong><p>Prefill, suggested leads, action queue, call packets, account plans.</p><div class="links"><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday</a><a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Leads</a><a href="/tx-dashboards/tx-strategy-v2/account-plans.html">Plans</a></div></article>
-      <article class="card"><small>Reference</small><strong>Evidence and dashboards</strong><p>OKR diagnostic, current read, dashboard registry, claims, value prop, Black Belt deep dive.</p><div class="links"><a href="/tx-dashboards/okr-diagnostic.html">OKR</a><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Dashboards</a><a href="/tx-dashboards/value-prop.html">Value prop</a></div></article>
-      <article class="card"><small>Control</small><strong>Backend operating system</strong><p>Workflow registry, feedback ingestion, ledger, generated queues, compliance, agent handoffs.</p><div class="links"><a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Workflows</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback</a></div></article>
+      <article class="card"><small>Evidence</small><strong>Data backing</strong><p>OKR diagnostic, current read, source dashboards, and trust labels.</p><div class="links"><a href="/tx-dashboards/okr-diagnostic.html">OKR</a><a href="/tx-dashboards/tx-strategy-v2/current-read-data-backing.html">Backing</a><a href="/tx-dashboards/tx-strategy-v2/dashboard-registry.html">Registry</a></div></article>
+      <article class="card"><small>Execution</small><strong>Owner tools</strong><p>Friday prefill, target board, suggested leads, action queue, account plans.</p><div class="links"><a href="/tx-dashboards/tx-strategy-v2/friday-prefill.html">Friday</a><a href="/tx-dashboards/tx-strategy-v2/weekly-action-queue.html">Queue</a><a href="/tx-dashboards/tx-strategy-v2/suggested-leads.html">Leads</a></div></article>
+      <article class="card"><small>Backend</small><strong>Agent workflows</strong><p>Rose, Pablito, Socrates, Mercurio, Nahua improve data, activity, comms, enablement, and routines.</p><div class="links"><a href="/tx-dashboards/tx-strategy-v2/workflow-registry.html">Workflows</a><a href="/tx-dashboards/tx-strategy-v2/feedback-ingestion.html">Feedback</a><a href="/tx-dashboards/tx-strategy-v2/ledger.html">Ledger</a></div></article>
     </div>
   </section>
 </main>
+<script>
+const csvUrl="/tx-dashboards/tx-strategy-v2/data/tx_target_account_board.csv";
+function parseCSV(text){const out=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const ch=text[i],next=text[i+1];if(ch==='"'&&quoted&&next==='"'){cell+='"';i++;continue}if(ch==='"'){quoted=!quoted;continue}if(ch===","&&!quoted){row.push(cell);cell="";continue}if((ch==="\n"||ch==="\r")&&!quoted){if(ch==="\r"&&next==="\n")i++;row.push(cell);if(row.some(v=>v.length))out.push(row);row=[];cell="";continue}cell+=ch}if(cell.length||row.length){row.push(cell);out.push(row)}const headers=out.shift()||[];return out.map(values=>Object.fromEntries(headers.map((h,i)=>[h,values[i]||""])))}
+function esc(v){return String(v||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+fetch(csvUrl,{cache:"no-store"}).then(r=>r.ok?r.text():Promise.reject(new Error(r.statusText))).then(text=>{
+  const rows=parseCSV(text);
+  const worked=rows.filter(r=>(r.worked_status||"").includes("Worked")).length;
+  const impl=rows.filter(r=>r.group==="Implementation").length;
+  const cs=rows.filter(r=>r.group==="CS").length;
+  const growth=rows.filter(r=>r.group==="GROW").length;
+  const strategic=rows.filter(r=>r.group==="Strategic").length;
+  document.getElementById("boardSummary").innerHTML=`
+    <article class="card metric blueLine"><small>Seeded target rows</small><strong>${rows.length}</strong><p>Review targets, not final assignments.</p></article>
+    <article class="card metric okLine"><small>Already worked / touched</small><strong>${worked}</strong><p>Visible from Slack, Fathom, or local notes.</p></article>
+    <article class="card metric warnLine"><small>CS + Implementation rows</small><strong>${cs+impl}</strong><p>Main Friday execution focus.</p></article>
+    <article class="card metric purpleLine"><small>Growth / Strategic rows</small><strong>${growth+strategic}</strong><p>Require readiness or one-client plan.</p></article>`;
+}).catch(err=>{
+  document.getElementById("boardSummary").innerHTML=`<article class="card danger"><strong>Board not loaded</strong><p>${esc(err.message)}</p></article>`;
+});
+</script>
 </body>
 </html>
