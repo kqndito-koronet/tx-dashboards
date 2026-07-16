@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CS + Implementation Digital Usage Dashboard</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1560px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    header,section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:23px;margin-bottom:14px}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(38px,5vw,64px);line-height:.98;margin-bottom:10px}h2{font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin-bottom:8px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}.sub{color:var(--muted);font-size:17px;max-width:1060px}
+    .links,.toolbar{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a,.toolbar button,.toolbar input{display:inline-flex;align-items:center;min-height:38px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#101828;padding:0 12px;font-weight:900}.primary{background:var(--blue)!important;color:#fff!important;border-color:var(--blue)!important}.toolbar button{cursor:pointer}.toolbar button.active{background:#101828;color:#fff;border-color:#101828}.toolbar input{min-width:min(430px,100%);font-weight:750}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:15px}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}.card strong{display:block;margin-bottom:5px;font-size:27px;line-height:1.05}.card p{margin:0;color:var(--muted)}
+    .blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900}.band.gold{background:#fff4e5;color:#7c3e00}.band.blue{background:#eff6ff;color:#1d4ed8}.band.red{background:#fef3f2;color:#b42318}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;min-width:2450px;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:10px;text-align:left;vertical-align:top;font-size:12.5px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:23px;border-radius:999px;padding:0 8px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.spec{background:#f4f0ff;color:#5925dc;border-color:#d9d6fe}
+    .score{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;background:#f2f4f7;color:#344054;font-weight:950}.score.s1{background:#fee4e2;color:#b42318}.score.s2{background:#fffaeb;color:#b54708}.score.s3{background:#eef4ff;color:#3538cd}.score.s4,.score.s5{background:#ecfdf3;color:#067647}
+    @media(max-width:980px){main{width:min(100% - 24px,1560px)}.grid3,.grid4{grid-template-columns:1fr}table{min-width:1900px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Urgent Operating Dashboard</p>
+    <h1>CS + Implementation digital usage</h1>
+    <p class="sub">Accounts currently visible in CS and Implementation work, scored where we have source-backed local evidence. The goal is to see, in total and per account, whether digital buying, digital selling, supply/listing, connections, and usage are moving.</p>
+    <div class="links">
+      <a class="primary" href="/tx-dashboards/tx-strategy-v2/q3-hub.html">Back to Q3 Hub</a>
+      <a href="/tx-dashboards/tx-strategy-v2/data/cs_implementation_accounts.csv">Download CSV</a>
+      <a href="/tx-dashboards/tx-strategy-v2/source-cs-impl.html">Source notes</a>
+      <a href="/tx-dashboards/tx-strategy-v2/target-account-board.html">Target board</a>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">Total Read</p>
+    <h2>Coverage first: what is known, what is being worked, and what needs Rose.</h2>
+    <div id="summary" class="grid4"></div>
+    <div id="scoreSummary" class="grid4" style="margin-top:12px"></div>
+    <div class="band red" style="margin-top:12px">Fresh Snowflake metrics are blocked in this Codex session by MFA/TOTP. Rose must fill current 30-day and July metrics; this dashboard makes the rows and missing reads explicit now.</div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Metric Decision Flow</p>
+    <h2>For each account, ask the same questions every week.</h2>
+    <div class="grid3">
+      <article class="card blueLine"><small>1. BUY</small><strong>Are they buying digitally?</strong><p>Procurement purchases, K2K/Procurement connections, approved connections, first and repeat purchases.</p></article>
+      <article class="card okLine"><small>2. LIST</small><strong>Is useful supply online?</strong><p>Bunches, boxes, varieties, future availability, in-transit, and online supply similar to offline business.</p></article>
+      <article class="card purpleLine"><small>3. SELL / Usage</small><strong>Are buyers transacting online?</strong><p>Online sales, active buyers, first/second/repeat orders, AOV/frequency, campaign/source when Growth starts.</p></article>
+    </div>
+    <div class="band blue" style="margin-top:12px">If a metric is not moving, the owner adds why: no connection, no product usage, no supply, no buyer activation, pricing/offline habit, product blocker, or no customer willingness.</div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Account Board</p>
+    <h2>Filter by owner group, score, blocker, or source.</h2>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search account, blocker, owner, metric, source..." />
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="Implementation">Implementation</button>
+      <button data-filter="CS">CS</button>
+      <button data-filter="Strategic">Strategic</button>
+      <button data-filter="Worked">Worked</button>
+      <button data-filter="Missing source">Missing metrics</button>
+      <button data-filter="Blocked source">Blocked source</button>
+      <button data-filter="Source-backed local">Source-backed</button>
+      <button data-filter="Christine">Christine</button>
+      <button data-filter="Cata">Cata</button>
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Group</th><th>Account</th><th>Owner</th><th>Work status</th><th>Activity</th>
+            <th>BUY</th><th>BUY read</th><th>BUY metric</th>
+            <th>LIST</th><th>LIST read</th><th>LIST metric</th>
+            <th>SELL</th><th>SELL read</th><th>SELL metric</th>
+            <th>Connections</th><th>Usage / product signal</th><th>Blocker</th><th>Next question</th><th>Next action</th><th>Metric gap</th><th>Source</th>
+          </tr>
+        </thead>
+        <tbody id="rows"><tr><td colspan="21">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">What Rose Must Fill Next</p>
+    <h2>This is the real-data backfill, not optional enrichment.</h2>
+    <div class="tableWrap">
+      <table style="min-width:1180px">
+        <thead><tr><th>Metric family</th><th>Account-level fields needed</th><th>Why it matters</th><th>Source path</th></tr></thead>
+        <tbody>
+          <tr><td>Commercial Readiness OKRs</td><td>Go-live date, product package, >=20 procurement purchases within 30 days, >=5 online sales within 30 days, >3 buy/sell transactions within 30 days.</td><td>Christine can see whether implementation is producing real usage, not just setup.</td><td>Implementation cohort + PROCUREMENT_DETAILS + SALE_DETAILS.</td></tr>
+          <tr><td>Digital buying</td><td>Total procurement, Procurement channel, Web/standalone, # vendors, active connections, first/repeat procurement purchases.</td><td>Shows whether wholesalers are using Koronet to buy, and what they still buy offline.</td><td>PROCUREMENT_DETAILS / PROCUREMENTS_SV + K2K/EH connections.</td></tr>
+          <tr><td>Digital selling</td><td>Total GMV, eCom GMV, API/K2K GMV, online %, active online buyers L90D, first/second/repeat orders, AOV/frequency.</td><td>Shows whether the customer is actually selling online and whether buyer behavior repeats.</td><td>SALE_DETAILS + transaction-fee views + buyer cohorts.</td></tr>
+          <tr><td>Supply/listing</td><td>Formats online, bunches enabled/used, varieties online, offline-vs-online supply similarity, future availability/in-transit usage, products listed over time.</td><td>Shows whether buyers can find what the wholesaler actually sells.</td><td>Inventory/catalog/product usage tables; if historical catalog unavailable, proxy from online/offline sales patterns.</td></tr>
+          <tr><td>Activity/learnings</td><td>Calls, Salesforce activity, Slack mentions, direct blocker, what-would-it-take, next action/date.</td><td>Friday needs execution and learning, not only metrics.</td><td>Fathom + Salesforce + Slack + owner validation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+const csvUrl="/tx-dashboards/tx-strategy-v2/data/cs_implementation_accounts.csv";
+let rows=[],activeFilter="all",search="";
+function parseCSV(text){const out=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const ch=text[i],next=text[i+1];if(ch==='"'&&quoted&&next==='"'){cell+='"';i++;continue}if(ch==='"'){quoted=!quoted;continue}if(ch===","&&!quoted){row.push(cell);cell="";continue}if((ch==="\n"||ch==="\r")&&!quoted){if(ch==="\r"&&next==="\n")i++;row.push(cell);if(row.some(v=>v.length))out.push(row);row=[];cell="";continue}cell+=ch}if(cell.length||row.length){row.push(cell);out.push(row)}const headers=out.shift()||[];return out.map(values=>Object.fromEntries(headers.map((h,i)=>[h,values[i]||""])))}
+function esc(v){return String(v||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+function tagClass(v){const t=String(v||"").toLowerCase();if(t.includes("source-backed"))return"tag ok";if(t.includes("missing")||t.includes("blocked"))return"tag bad";if(t.includes("directional")||t.includes("needs"))return"tag warn";if(t.includes("slack"))return"tag wait";return"tag"}
+function score(v){const n=parseInt(v,10);return n?`<span class="score s${n}">${n}</span>`:`<span class="tag bad">?</span>`}
+function visible(){return rows.filter(r=>{const hay=Object.values(r).join(" ").toLowerCase();const fm=activeFilter==="all"||hay.includes(activeFilter.toLowerCase());const sm=!search||hay.includes(search.toLowerCase());return fm&&sm})}
+function avg(vals){const nums=vals.map(v=>parseInt(v,10)).filter(Boolean);return nums.length?(nums.reduce((a,b)=>a+b,0)/nums.length).toFixed(1):"n/a"}
+function renderSummary(){
+  const worked=rows.filter(r=>(r.work_status||"").toLowerCase().includes("worked")).length;
+  const impl=rows.filter(r=>r.owner_group==="Implementation").length;
+  const cs=rows.filter(r=>r.owner_group==="CS").length;
+  const scored=rows.filter(r=>r.buy_score||r.list_score||r.sell_score).length;
+  const missing=rows.filter(r=>Object.values(r).join(" ").includes("Missing source")||Object.values(r).join(" ").includes("Blocked source")).length;
+  document.getElementById("summary").innerHTML=`
+    <article class="card blueLine"><small>Total account rows</small><strong>${rows.length}</strong><p>${impl} Implementation, ${cs} CS, plus strategic-CS rows.</p></article>
+    <article class="card okLine"><small>Worked / touched</small><strong>${worked}</strong><p>Has Slack, Fathom, tracker, or local activity source.</p></article>
+    <article class="card warnLine"><small>Rows with scored BUY/LIST/SELL</small><strong>${scored}</strong><p>At least one dimension has local evidence.</p></article>
+    <article class="card danger"><small>Rows needing Rose/source backfill</small><strong>${missing}</strong><p>Metrics or freshness are not yet source-backed.</p></article>`;
+  document.getElementById("scoreSummary").innerHTML=`
+    <article class="card blueLine"><small>Average BUY score</small><strong>${avg(rows.map(r=>r.buy_score))}</strong><p>Only among scored rows; ? means not measured yet.</p></article>
+    <article class="card okLine"><small>Average LIST score</small><strong>${avg(rows.map(r=>r.list_score))}</strong><p>Supply/list readiness coverage is still thin.</p></article>
+    <article class="card purpleLine"><small>Average SELL score</small><strong>${avg(rows.map(r=>r.sell_score))}</strong><p>Online sales/readiness by account, not company-wide.</p></article>
+    <article class="card warnLine"><small>Current truth level</small><strong>Mixed</strong><p>Local evidence + Slack activity; fresh account metrics pending.</p></article>`;
+}
+function renderRows(){
+  const data=visible(),body=document.getElementById("rows");
+  if(!data.length){body.innerHTML='<tr><td colspan="21">No rows match this filter.</td></tr>';return}
+  body.innerHTML=data.map(r=>`
+    <tr>
+      <td>${esc(r.owner_group)}</td>
+      <td><strong>${esc(r.account)}</strong><br><span class="tag">${esc(r.account_type)}</span></td>
+      <td>${esc(r.current_owner)}</td>
+      <td>${esc(r.work_status)}</td>
+      <td>${esc(r.activity_date)}<br>${esc(r.activity_source)}</td>
+      <td>${score(r.buy_score)}</td><td>${esc(r.buy_read)}<br><span class="${tagClass(r.buy_trust)}">${esc(r.buy_trust)}</span></td><td>${esc(r.buy_metric)}</td>
+      <td>${score(r.list_score)}</td><td>${esc(r.list_read)}<br><span class="${tagClass(r.list_trust)}">${esc(r.list_trust)}</span></td><td>${esc(r.list_metric)}</td>
+      <td>${score(r.sell_score)}</td><td>${esc(r.sell_read)}<br><span class="${tagClass(r.sell_trust)}">${esc(r.sell_trust)}</span></td><td>${esc(r.sell_metric)}</td>
+      <td>${esc(r.connections_signal)}</td><td>${esc(r.usage_signal)}</td><td>${esc(r.blocker)}</td><td>${esc(r.next_question)}</td><td>${esc(r.next_action)}</td><td>${esc(r.metric_gap)}</td><td><a href="${esc(r.source_link)}">${esc(r.source_label)}</a></td>
+    </tr>`).join("");
+}
+document.querySelectorAll(".toolbar button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".toolbar button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeFilter=btn.dataset.filter;renderRows()}));
+document.getElementById("search").addEventListener("input",e=>{search=e.target.value;renderRows()});
+fetch(csvUrl,{cache:"no-store"}).then(r=>r.ok?r.text():Promise.reject(new Error(r.statusText))).then(text=>{rows=parseCSV(text);renderSummary();renderRows()}).catch(err=>{document.getElementById("summary").innerHTML=`<article class="card danger"><strong>Load failed</strong><p>${esc(err.message)}</p></article>`;document.getElementById("rows").innerHTML=`<tr><td colspan="21">${esc(err.message)}</td></tr>`});
+</script>
+</body>
+</html>

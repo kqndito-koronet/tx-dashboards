@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CS + Implementation Source Notes</title>
+  <style>
+    body{margin:0;background:#f6f8fb;color:#101828;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1100px,calc(100% - 32px));margin:0 auto;padding:28px 0 64px}
+    section,header{background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 14px 34px rgba(16,24,40,.07);padding:22px;margin-bottom:14px}
+    h1{font-size:42px;line-height:1;margin:0 0 10px}h2{font-size:24px;margin:0 0 8px}.muted{color:#667085}.eyebrow{color:#067a91;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px}
+    a{color:#2457c5;font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    .links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{border:1px solid #d9e0ea;border-radius:7px;background:#fff;color:#101828;padding:9px 12px}.primary{background:#2457c5!important;color:#fff!important;border-color:#2457c5!important}
+    ul{margin:8px 0 0;padding-left:20px}li{margin:5px 0}.tag{display:inline-block;border-radius:999px;border:1px solid #d9e0ea;background:#f8fafc;padding:3px 8px;font-size:12px;font-weight:900;color:#344054}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Source Notes</p>
+    <h1>CS + Implementation source notes</h1>
+    <p class="muted">This page explains where the urgent CS/Implementation dashboard numbers came from. It is not a replacement for Rose's fresh Snowflake run.</p>
+    <div class="links"><a class="primary" href="/tx-dashboards/tx-strategy-v2/cs-implementation-dashboard.html">Back to dashboard</a><a href="/tx-dashboards/tx-strategy-v2/data/cs_implementation_accounts.csv">CSV</a></div>
+  </header>
+  <section><h2>Access caveat</h2><p>Fresh Snowflake is currently blocked in this Codex session by MFA/TOTP. Rows are labeled from local source packets, Slack reads, Fathom scan summaries, or blocked-source retrieval paths.</p></section>
+  <section id="prices"><h2>Price's Floral</h2><ul><li><span class="tag">Source</span> `ops/maturity_matrix.md`</li><li>BUY 5: 97.3% Procurement capture, $82K of $84K, 35+ active K2K connections.</li><li>LIST 2 / SELL 1: eShop configured but pre-live; go-live moved to week of Jul 15.</li></ul></section>
+  <section id="jfs"><h2>JFS Wholesale</h2><ul><li><span class="tag">Source</span> `ops/maturity_matrix.md` and `ops/fathom_wholesaler_scan.md`</li><li>BUY 1: $0 Procurement module; $1.64M standalone PO; 35 active K2K connections.</li><li>LIST 2: eShop exists but bunches disabled; 11 eShop users, one ever purchased.</li><li>SELL 1: $144 total eCommerce sales ever.</li></ul></section>
+  <section id="baisch"><h2>Baisch & Skinner</h2><ul><li><span class="tag">Source</span> `ops/wholesaler_specific_metrics_v2.md` and Fathom scan.</li><li>Procurement: $286K total, $24.9K Procurement channel, 8.7% Procurement capture.</li><li>eCom: $437K and 97 eCom customers in local profile query.</li><li>Blocker: PO traceability / K2K overwriting POs.</li></ul></section>
+  <section id="pampa"><h2>Pampa Products</h2><ul><li><span class="tag">Source</span> Fathom scan and implementation Slack.</li><li>Go-live blocked on Easy Handshake directory submission; eCommerce delayed to August.</li></ul></section>
+  <section id="sims"><h2>Sims Flowers</h2><ul><li><span class="tag">Source</span> Fathom scan and offline dashboard.</li><li>Implementation call mentions labeling, multilocation pricing, cross-docking. Online ramp signal needs Rose verification before using as result.</li></ul></section>
+  <section id="veldkamp"><h2>Veldkamp / Bellcamps</h2><ul><li><span class="tag">Source</span> Fathom wholesaler scan.</li><li>Veldkamp review defined ideal client as one willing to upload full inventory including bunches.</li><li>Bellcamps procurement opportunity reported as $11-20K/month in Pablito tracker context.</li></ul></section>
+  <section id="wgf"><h2>We Got Flowers</h2><ul><li><span class="tag">Source</span> Pablito tracker and offline dashboard.</li><li>Pricing/surcharge/bundle/payment incentive blocker. Online ramp signal requires fresh validation.</li></ul></section>
+  <section id="cleveland"><h2>Cleveland Plant & Flower</h2><ul><li><span class="tag">Source</span> Wholesaler metrics v2 and implementation Slack.</li><li>$493.5K eCom GMV and 61 eCom customers in profile query. Slack confirms eShop start question on Jun 3.</li></ul></section>
+  <section id="florafresh"><h2>Flora Fresh</h2><ul><li><span class="tag">Source</span> Slack handover and offline dashboard.</li><li>Slack says $20M annual, 58% KPayments, opportunity to grow eCommerce and Procurement usage. Online ramp signal requires fresh validation.</li></ul></section>
+  <section id="bdc"><h2>Bill Doran</h2><ul><li><span class="tag">Source</span> Wholesaler metrics v2.</li><li>$2.14M eCom / $60.5M total = 3.5%; 298 eCom customers; 6,887 standing orders.</li><li>$1.07M Units online, nearly 50/50 boxes/units online.</li></ul></section>
+  <section id="kbc"><h2>Kennicott</h2><ul><li><span class="tag">Source</span> Maturity matrix and Wholesaler metrics v2.</li><li>$6.32M eCom / $64.0M total = 9.9%; 1,651 eCom customers; 7,070 standing orders.</li><li>4,356 of 9,890 products online; Units are 89.2% of offline business but 9.7% of eCom.</li></ul></section>
+  <section id="dreisbach"><h2>Dreisbach</h2><ul><li><span class="tag">Source</span> Fathom scan and maturity matrix.</li><li>$25.6K total eCommerce ever, ~0.26% of $10M base. 100% boxes online, zero Units/bunches. Operational constraint: no live inventory.</li></ul></section>
+</main>
+</body>
+</html>
