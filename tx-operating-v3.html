@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TX Operating Dashboard v3</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1480px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none;cursor:pointer}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(28px,4vw,42px);line-height:1.05;margin-bottom:12px}h2{font-size:clamp(20px,2.5vw,28px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:15px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:15px}.card strong{display:block;margin-bottom:5px;font-size:20px;line-height:1.1}.card p{margin:0;color:var(--muted);font-size:12px}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.cyanLine{border-left:5px solid var(--cyan)}.purpleLine{border-left:5px solid var(--purple)}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #edf1f6;padding:10px 12px;text-align:left;vertical-align:top;font-size:13px}
+    th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase;position:sticky;top:0;z-index:2;cursor:pointer;user-select:none;white-space:nowrap}
+    th:hover{background:#e8edf5}th .sort-arrow{margin-left:4px;font-size:9px;color:var(--muted)}
+    tr:last-child td{border-bottom:none}
+    tr.clickable{cursor:pointer}tr.clickable:hover td{background:#f8fafc}
+    .tag{display:inline-flex;align-items:center;min-height:22px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900;white-space:nowrap}
+    .tag.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.tag.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.tag.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.tag.wait{background:#eef4ff;color:#3538cd;border-color:#c7d7fe}.tag.neutral{background:#f8fafc;color:#344054;border-color:var(--line)}
+    /* Confidence badges */
+    .conf{font-size:9px;font-weight:900;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-left:4px;letter-spacing:.03em;display:inline-block}
+    .conf.high{background:#ecfdf3;color:#067647}
+    .conf.med{background:#fffaeb;color:#b54708}
+    .conf.low{background:#fef3f2;color:#b42318}
+    .conf.gap{background:#1a1d26;color:#8b8fa3;border:1px solid #3d4255}
+    /* Breadcrumb */
+    .breadcrumb{display:flex;align-items:center;gap:6px;padding:12px 18px;background:#fff;border:1px solid var(--line);border-radius:9px;margin-bottom:14px;font-size:14px;font-weight:700;box-shadow:var(--shadow)}
+    .breadcrumb span{color:var(--muted);font-weight:400}
+    .breadcrumb a{font-weight:800}
+    /* Funnel bar */
+    .funnel-wrap{margin:10px 0}
+    .funnel-label{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+    .funnel-bar{display:flex;height:32px;border-radius:6px;overflow:hidden;border:1px solid var(--line);cursor:pointer}
+    .funnel-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;min-width:2px;transition:opacity .15s;position:relative}
+    .funnel-seg:hover{opacity:.85}
+    .funnel-seg .tip{display:none;position:absolute;top:-32px;left:50%;transform:translateX(-50%);background:#101828;color:#fff;padding:4px 8px;border-radius:5px;font-size:11px;white-space:nowrap;z-index:10}
+    .funnel-seg:hover .tip{display:block}
+    .funnel-legend{display:flex;gap:14px;margin-top:6px;flex-wrap:wrap}
+    .funnel-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#344054}
+    .funnel-dot{width:10px;height:10px;border-radius:3px}
+    /* Detail panels */
+    .detail-panels{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .detail-panel{border:1px solid var(--line);border-radius:9px;padding:18px;background:#fff}
+    .detail-panel h3{font-size:16px;margin-bottom:12px}
+    .metric-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f6fb;font-size:13px}
+    .metric-row:last-child{border-bottom:none}
+    .metric-label{color:var(--muted);font-weight:600}
+    .metric-value{font-weight:800}
+    .diagnostic{margin-top:14px;padding:12px 16px;border-radius:8px;font-size:13px;font-weight:600}
+    .diagnostic em{font-style:normal;font-weight:400;display:block;margin-top:4px;font-size:12px}
+    .diag-dormant{background:#fffbf0;border:1px solid #fedf89;color:#7c3e00}
+    .diag-dormant em{color:#b54708}
+    .diag-active{background:#ecfdf3;border:1px solid #abefc6;color:#067647}
+    .diag-active em{color:#12805c}
+    .diag-churned{background:#fef3f2;border:1px solid #fecdca;color:#b42318}
+    .diag-churned em{color:#912018}
+    .diag-noconn{background:#f8fafc;border:1px solid var(--line);color:#344054}
+    .diag-noconn em{color:var(--muted)}
+    .diag-activated{background:#eef4ff;border:1px solid #c7d7fe;color:#3538cd}
+    .diag-activated em{color:#3538cd}
+    .diag-offline{background:#fffbf0;border:1px solid #fedf89;color:#7c3e00}
+    .diag-offline em{color:#b54708}
+    .diag-low{background:#fffaeb;border:1px solid #fedf89;color:#b54708}
+    .diag-low em{color:#b54708}
+    .diag-growing{background:#eef4ff;border:1px solid #c7d7fe;color:#3538cd}
+    .diag-growing em{color:#3538cd}
+    .diag-healthy{background:#ecfdf3;border:1px solid #abefc6;color:#067647}
+    .diag-healthy em{color:#12805c}
+    .diag-nosupply{background:#fef3f2;border:1px solid #fecdca;color:#b42318}
+    .diag-nosupply em{color:#912018}
+    .header-card{padding:18px;border:1px solid var(--line);border-radius:9px;background:#fff;margin-bottom:14px;box-shadow:var(--shadow)}
+    .header-card h2{margin-bottom:4px}
+    .header-meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+    .header-meta strong{color:var(--ink)}
+    .activity-log{margin-top:14px;border:1px solid var(--line);border-radius:9px;padding:14px;background:#fff;box-shadow:var(--shadow)}
+    .activity-log h3{font-size:14px;margin-bottom:8px}
+    .log-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f6fb;font-size:12px;color:#344054}
+    .log-item:last-child{border-bottom:none}
+    .mini-funnel{display:flex;align-items:center;gap:4px;margin:12px 0;font-size:12px;font-weight:700;flex-wrap:wrap}
+    .mini-funnel-step{padding:6px 12px;border-radius:6px;text-align:center;min-width:60px}
+    .mini-funnel-arrow{color:var(--muted);font-weight:400}
+    .feature-flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .ff{display:inline-flex;align-items:center;height:22px;border-radius:5px;padding:0 8px;font-size:11px;font-weight:800}
+    .ff-on{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+    .ff-off{background:#fef3f2;color:#b42318;border:1px solid #fecdca}
+    .supply-block{margin-top:12px;padding:12px;background:#f8fafc;border-radius:7px;border:1px solid var(--line);font-size:12px}
+    .supply-block strong{font-size:13px}
+    /* Data Health section */
+    .dh-section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-top:20px}
+    .dh-section h2{margin-bottom:16px}
+    .dh-group{margin-bottom:18px}
+    .dh-group h3{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .dh-table{width:100%;border-collapse:collapse;font-size:13px}
+    .dh-table th,.dh-table td{padding:8px 12px;border-bottom:1px solid #edf1f6;text-align:left}
+    .dh-table th{background:#f3f6fb;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase;color:#344054}
+    .dh-table tr:last-child td{border-bottom:none}
+    .dh-table td:first-child{font-weight:700}
+    .dh-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+    .dh-dot.green{background:#22c55e}.dh-dot.yellow{background:#f59e0b}.dh-dot.black{background:#1a1d26}
+    /* Tooltip on hover */
+    .ttip{position:relative;cursor:help;border-bottom:1px dashed var(--muted)}
+    .ttip:hover::after{content:attr(data-tip);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);background:#101828;color:#fff;padding:6px 10px;border-radius:5px;font-size:11px;z-index:20;font-weight:400;max-width:320px;white-space:normal;width:max-content}
+    /* Panel C mini table */
+    .panel-c{margin-top:14px;border:1px solid var(--line);border-radius:9px;padding:14px;background:#fff;box-shadow:var(--shadow)}
+    .panel-c h3{font-size:14px;margin-bottom:10px}
+    .panel-c table{width:100%;border-collapse:collapse;font-size:12px}
+    .panel-c th,.panel-c td{padding:6px 10px;border-bottom:1px solid #edf1f6;text-align:left}
+    .panel-c th{background:#f3f6fb;font-size:10px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .panel-c tr:last-child td{border-bottom:none}
+    @media(max-width:980px){main{width:min(100% - 24px,1480px)}.grid2,.grid3,.grid4,.grid6,.detail-panels{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+
+<div class="breadcrumb" id="breadcrumb">
+  <a onclick="goLevel(0)">TX Total</a>
+</div>
+
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// DATA (from Snowflake + SFDC — H1 2026, data run Jul 16 2026)
+// n=name, impl=impl consultant, cs=CS advisor, lc=lifecycle, sys=products,
+// gl=go-live, k2k=connections, pt=procurement total, pk=procurement K2K,
+// po=procurement unknown/offline, ft=fees total, fe=fees eCom,
+// fk=fees K2K, fa=fees API, gon=GMV online eCom, gk=GMV K2K,
+// goff=GMV offline, gt=GMV total, av=active vendors L30D,
+// as=active spend L30D, ch=churned vendors
+// ═══════════════════════════════════════════════════════════════════════
+const ACCOUNTS = [{"n": "Petals Direct", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-01-15", "k2k": 2, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Baisch & Skinner", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "", "k2k": 210, "pt": 319447, "pk": 25207, "po": 294239, "ft": 6254, "fe": 0, "fk": 6254, "fa": 0, "gon": 493115, "gk": 0, "goff": 0, "gt": 493115, "av": 5, "as": 267, "ch": 27}, {"n": "South Carolina Specialty Cut", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2020-09-08", "k2k": 5, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Rokay Floral", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce, FCS Smart System", "gl": "2024-12-01", "k2k": 26, "pt": 66043, "pk": 0, "po": 66043, "ft": 1418, "fe": 0, "fk": 1418, "fa": 0, "gon": 102590, "gk": 0, "goff": 0, "gt": 102590, "av": 0, "as": 0, "ch": 0}, {"n": "CINCINNATI WHSLE FLORIST INC.5643", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2025-06-11", "k2k": 30, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 8}, {"n": "The Oklahoma Flower Market", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement Free Trial, FCS Smart System", "gl": "2024-11-08", "k2k": 14, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "MRS. BLOOM'S DIRECT, INC.", "impl": "George Velez", "cs": "", "lc": "", "sys": "Koronet Procurement, FCS Smart System", "gl": "2025-09-01", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Younger & Son Inc", "impl": "Fernando Yepez", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-02-18", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 14}, {"n": "Palm Beach Whsle Flowers, Inc.", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement, FCS Smart System", "gl": "", "k2k": 0, "pt": 346446, "pk": 346446, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Floropolis", "impl": "Camila Peña", "cs": "", "lc": "Onboarding", "sys": "eSuite Wholesaler, Koronet Procurement", "gl": "2026-01-14", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "TFS Bristol", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "", "sys": "Koronet Procurement", "gl": "2024-10-21", "k2k": 39, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Heirloom Home Decor", "impl": "Milena Mezamell", "cs": "", "lc": "", "sys": "Komet Core", "gl": "2026-04-29", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Floristcentric, LLC", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2021-08-14", "k2k": 22, "pt": 455633, "pk": 286, "po": 455347, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 64201, "gk": 0, "goff": 830813, "gt": 895014, "av": 2, "as": 252, "ch": 0}, {"n": "Prestige Blooms", "impl": "Valentina Espinel", "cs": "Koronet Customer Support", "lc": "Past Due", "sys": "K2K E-Commerce", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Allied Cut Flower", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2024-10-15", "k2k": 9, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Metropolitan Wholesale/Cityside Flowers", "impl": "Christine Nickelsen", "cs": "", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 14, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Florabundance.", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement, FCS Smart System", "gl": "2026-05-06", "k2k": 24, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "DVFLORA SEWELL", "impl": "George Velez", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement Free Trial", "gl": "", "k2k": 39, "pt": 1498130, "pk": 1433778, "po": 64351, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 31, "as": 169785, "ch": 8}, {"n": "SQ Flora", "impl": "Christine Nickelsen", "cs": "", "lc": "Onboarding", "sys": "Axerrio Core", "gl": "2026-06-29", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Ensign Wholesale Flower Market", "impl": "George Velez", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2024-05-02", "k2k": 14, "pt": 161041, "pk": 109439, "po": 51602, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 45161, "gk": 0, "goff": 0, "gt": 45161, "av": 43, "as": 30787, "ch": 8}, {"n": "JOHNSENS WHOLESALE FLORIST", "impl": "George Velez", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 48, "pt": 144072, "pk": 144072, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 23, "as": 7859, "ch": 22}, {"n": "M&M CUT FLORA", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 44, "pt": 280733, "pk": 280733, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 12}, {"n": "H&T Wholesale Flowers", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement", "gl": "2026-03-30", "k2k": 46, "pt": 2529710, "pk": 1254, "po": 2528457, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 29970, "gk": 0, "goff": 4642773, "gt": 4672744, "av": 0, "as": 0, "ch": 0}, {"n": "Sieck Wright Floral Products", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Past Due", "sys": "K2K E-Commerce, Koronet Procurement Free Trial", "gl": "2023-09-20", "k2k": 14, "pt": 61060, "pk": 10956, "po": 50105, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "CD Wholesale", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2024-02-06", "k2k": 0, "pt": 854634, "pk": 0, "po": 854634, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Riverside Wholesale Florists KY", "impl": "Milena Mezamell", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Komet Core, FCS Smart System", "gl": "2026-04-06", "k2k": 4, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 627, "gk": 0, "goff": 792066, "gt": 792693, "av": 0, "as": 0, "ch": 0}, {"n": "Metropetals", "impl": "George Velez", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-10-21", "k2k": 27, "pt": 388224, "pk": 0, "po": 388224, "ft": 1061, "fe": 16, "fk": 1045, "fa": 0, "gon": 48196, "gk": 0, "goff": 554787, "gt": 602983, "av": 0, "as": 0, "ch": 0}, {"n": "AMORES FLORES INC", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-04-08", "k2k": 6, "pt": 818423, "pk": 0, "po": 818423, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 951, "gk": 0, "goff": 1852054, "gt": 1853005, "av": 0, "as": 0, "ch": 0}, {"n": "Fleurametz USA NYC", "impl": "Valentina Espinel", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement Free Trial", "gl": "2025-06-03", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 1044, "fe": 0, "fk": 1044, "fa": 0, "gon": 76718, "gk": 0, "goff": 0, "gt": 76718, "av": 0, "as": 0, "ch": 0}, {"n": "Cataleya Flowers D&A", "impl": "Camila Peña", "cs": "Maria Alejandra Mesa", "lc": "Past Due", "sys": "K2K E-Commerce", "gl": "2025-09-22", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Lucas and Greer, Inc. dba L & G Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Julian Partridge", "lc": "Adoption", "sys": "Koronet Procurement, FCS Smart System", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 13}, {"n": "Full Pot - Ft. Lauderdale", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2024-07-06", "k2k": 42, "pt": 359217, "pk": 359038, "po": 179, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 8}, {"n": "Metro Flower Market LLC", "impl": "George Velez", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core", "gl": "2020-08-14", "k2k": 23, "pt": 1205812, "pk": 0, "po": 1205812, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 6047, "gk": 0, "goff": 3451625, "gt": 3457672, "av": 0, "as": 0, "ch": 0}, {"n": "Schaefer Greenhouses", "impl": "Camila Peña", "cs": "", "lc": "Past Due", "sys": "eSuite Wholesaler, Koronet Procurement", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Del Tropico/Ameriblooms", "impl": "Milena Mezamell", "cs": "Koronet Customer Support", "lc": "Onboarding", "sys": "Komet Core", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "BOTANICA WHOLESALE FLORIST DALLAS (IRVING), LLC", "impl": "Milena Mezamell", "cs": "Catalina Rojas", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2026-04-20", "k2k": 47, "pt": 295872, "pk": 150518, "po": 145354, "ft": 2802, "fe": 0, "fk": 2802, "fa": 0, "gon": 236219, "gk": 150326, "goff": 0, "gt": 386545, "av": 27, "as": 14292, "ch": 9}, {"n": "EPIC FARMS USA LLC", "impl": "Christine Nickelsen", "cs": "Santiago Bermudez", "lc": "Adoption", "sys": "Komet Core", "gl": "", "k2k": 1, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Washington Floral Service, Inc", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, FCS Smart System", "gl": "2022-08-30", "k2k": 77, "pt": 0, "pk": 0, "po": 0, "ft": 1019, "fe": 0, "fk": 1019, "fa": 0, "gon": 90568, "gk": 0, "goff": 0, "gt": 90568, "av": 0, "as": 0, "ch": 0}, {"n": "Bill Doran Company (2)", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core", "gl": "2019-03-01", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Acassia Wholesale Flowers LLC", "impl": "Valentina Espinel", "cs": "", "lc": "Past Due", "sys": "K2K E-Commerce", "gl": "2025-08-25", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "WHOLESALE NORTON'S FLORIST", "impl": "Milena Mezamell", "cs": "Koronet Customer Support", "lc": "Onboarding", "sys": "Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Claymore C. Sieck Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2023-06-29", "k2k": 20, "pt": 158027, "pk": 157619, "po": 408, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 17, "as": 12684, "ch": 5}, {"n": "Gassafy Wholesale Florist Inc", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Onboarding", "sys": "Koronet Procurement", "gl": "2024-09-19", "k2k": 36, "pt": 54701, "pk": 54701, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 23, "as": 7964, "ch": 8}, {"n": "NY Floral Supply", "impl": "Valentina Espinel", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-12-02", "k2k": 2, "pt": 795778, "pk": 0, "po": 795778, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 19253, "gk": 0, "goff": 1376212, "gt": 1395465, "av": 0, "as": 0, "ch": 0}, {"n": "Hartford Florist Supply", "impl": "Christine Nickelsen", "cs": "", "lc": "Past Due", "sys": "Koronet Procurement", "gl": "2025-05-04", "k2k": 19, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Honey Bee Wholesale Florist, LLC", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement Free Trial", "gl": "2024-04-17", "k2k": 14, "pt": 66674, "pk": 6829, "po": 59845, "ft": 1385, "fe": 0, "fk": 1385, "fa": 0, "gon": 101275, "gk": 0, "goff": 0, "gt": 101275, "av": 7, "as": 903, "ch": 9}, {"n": "First Choice Floral", "impl": "Milena Mezamell", "cs": "Julian Partridge", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement Free Trial", "gl": "", "k2k": 52, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Mayesh Wholesale Florist Inc", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 2, "pt": 41769673, "pk": 0, "po": 41769673, "ft": 11399, "fe": 198, "fk": 11201, "fa": 0, "gon": 24119530, "gk": 0, "goff": 75889064, "gt": 100008594, "av": 0, "as": 0, "ch": 0}, {"n": "Coward Wholesale", "impl": "Fernando Yepez", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-03-18", "k2k": 24, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Louisiana Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2023-06-08", "k2k": 44, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Webb's Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 33, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "San Jose Floral Service LLC", "impl": "George Velez", "cs": "", "lc": "", "sys": "Komet Core", "gl": "2026-04-15", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Ashland Addison", "impl": "Camila Peña", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2021-08-09", "k2k": 30, "pt": 279720, "pk": 242869, "po": 36851, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 56249, "gk": 0, "goff": 0, "gt": 56249, "av": 36, "as": 21430, "ch": 11}, {"n": "FM Group B.V./SPA", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Axerrio Core", "gl": "2026-01-26", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Jacksonville Flower Market", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2024-11-27", "k2k": 13, "pt": 313892, "pk": 313892, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "UNITED WHOLESALE- FFL  ENTERPRISES", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Past Due", "sys": "Koronet Procurement", "gl": "2025-03-10", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Flowers Direct Inc", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2023-03-17", "k2k": 58, "pt": 599785, "pk": 452754, "po": 147031, "ft": 2753, "fe": 0, "fk": 2753, "fa": 0, "gon": 217573, "gk": 0, "goff": 0, "gt": 217573, "av": 42, "as": 36599, "ch": 7}, {"n": "Fleurametz Chicago", "impl": "Milena Mezamell", "cs": "Koronet Customer Support", "lc": "", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2025-01-27", "k2k": 5, "pt": 215526, "pk": 171448, "po": 44077, "ft": 1017, "fe": 0, "fk": 1017, "fa": 0, "gon": 83545, "gk": 0, "goff": 0, "gt": 83545, "av": 29, "as": 18676, "ch": 0}, {"n": "CHICAGO´S WHOLESALE", "impl": "Christine Nickelsen", "cs": "", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Flora Fresh Inc", "impl": "Milena Mezamell", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial, FCS Smart System", "gl": "2026-01-15", "k2k": 17, "pt": 2555957, "pk": 577, "po": 2555379, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 32283, "gk": 0, "goff": 5798040, "gt": 5830323, "av": 0, "as": 0, "ch": 0}, {"n": "Quinlan-Wasserman, Inc", "impl": "George Velez", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 19, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "LD Trading/ Lawrence Developments Inc.", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 36, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "MAIN WHOLESALE FLORIST LLC / NJ Clifton Location", "impl": "Camila Peña", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Nova Packaging Solutions, Inc.", "impl": "Milena Mezamell", "cs": "", "lc": "Onboarding", "sys": "Komet Core", "gl": "2026-04-22", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "MAIN WHOLESALE FLORIST LLC / Philadephia Location", "impl": "Camila Peña", "cs": "", "lc": "", "sys": "eSuite Wholesaler, Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "HARDIN´S WHLSE - LIBERTY", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 48, "pt": 273158, "pk": 273158, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 34, "as": 18421, "ch": 13}, {"n": "A Florist First", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2022-09-12", "k2k": 17, "pt": 231496, "pk": 0, "po": 231496, "ft": 4314, "fe": 0, "fk": 4314, "fa": 0, "gon": 316950, "gk": 0, "goff": 0, "gt": 316950, "av": 0, "as": 0, "ch": 0}, {"n": "BlossomR", "impl": "Valentina Espinel", "cs": "", "lc": "", "sys": "Komet Core", "gl": "2025-08-29", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Orlando Wholesale Florist", "impl": "George Velez", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2023-08-01", "k2k": 19, "pt": 1632781, "pk": 2838, "po": 1629942, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 26468, "gk": 0, "goff": 2952636, "gt": 2979104, "av": 1, "as": 156, "ch": 0}, {"n": "Shamrock Wholesale Florist Memphis", "impl": "Camila Peña", "cs": "", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2025-09-11", "k2k": 0, "pt": 188976, "pk": 114108, "po": 74868, "ft": 1612, "fe": 0, "fk": 1612, "fa": 0, "gon": 123247, "gk": 0, "goff": 0, "gt": 123247, "av": 24, "as": 17114, "ch": 5}, {"n": "Maple Grove Floral", "impl": "George Velez", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "2024-07-26", "k2k": 30, "pt": 416628, "pk": 73405, "po": 343223, "ft": 3130, "fe": 2947, "fk": 183, "fa": 0, "gon": 217200, "gk": 0, "goff": 507757, "gt": 724957, "av": 33, "as": 13997, "ch": 10}, {"n": "Len Busch Roses", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2022-08-01", "k2k": 24, "pt": 0, "pk": 0, "po": 0, "ft": 1049, "fe": 0, "fk": 1049, "fa": 0, "gon": 77681, "gk": 0, "goff": 0, "gt": 77681, "av": 1, "as": 496, "ch": 0}, {"n": "FUJI WHOLESALE FLOWERS", "impl": "Fernando Yepez", "cs": "", "lc": "", "sys": "Koronet Procurement Free Trial", "gl": "2026-04-22", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Solo Wholesale Flower LLC", "impl": "Camila Peña", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2025-05-29", "k2k": 0, "pt": 387176, "pk": 339276, "po": 47900, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 72170, "gk": 0, "goff": 0, "gt": 72170, "av": 31, "as": 33116, "ch": 6}, {"n": "WE GOT FLOWERS", "impl": "Valentina Espinel", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 10, "pt": 1402920, "pk": 7519, "po": 1395401, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 491, "gk": 0, "goff": 3039350, "gt": 3039841, "av": 0, "as": 0, "ch": 14}, {"n": "Sieck Floral Distributing, Inc", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "", "k2k": 18, "pt": 133563, "pk": 2048, "po": 131515, "ft": 2526, "fe": 0, "fk": 2526, "fa": 0, "gon": 202003, "gk": 0, "goff": 0, "gt": 202003, "av": 12, "as": 2048, "ch": 0}, {"n": "MARAFLOR", "impl": "Camila Peña", "cs": "", "lc": "Past Due", "sys": "eSuite Wholesaler, Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Asiri Blooms LLC", "impl": "Fernando Yepez", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-03-19", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Coward & Glisson Whsl. Flst.", "impl": "Fernando Yepez", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-04-20", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Juliet Wholesale Flowers LLC", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "FreshLink", "impl": "Christine Nickelsen", "cs": "Catalina Rojas", "lc": "Adoption", "sys": "Komet Core", "gl": "", "k2k": 24, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "San Antonio Flower CO", "impl": "Milena Mezamell", "cs": "", "lc": "", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "", "k2k": 27, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 9}, {"n": "Mikes Finest Wholesale Flowers, Inc.", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "FCS Smart System", "gl": "", "k2k": 30, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Rose Runners", "impl": "Milena Mezamell", "cs": "Maria Alejandra Mesa", "lc": "Past Due", "sys": "Komet Core, Koronet Procurement", "gl": "2025-05-12", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Tradewinds/ KING FLORAL SUPPLY", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2025-01-01", "k2k": 20, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Price's Floral Wholesale, LLC", "impl": "Milena Mezamell", "cs": "Koronet Customer Support", "lc": "Past Due", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Taylor Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2020-11-05", "k2k": 5, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "PETALS WEST, INC.", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 46, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Import Flowers Nashville LLC", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Past Due", "sys": "K2K E-Commerce", "gl": "", "k2k": 38, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Zeidler Floral", "impl": "Valentina Espinel", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement, FCS Smart System", "gl": "2026-03-20", "k2k": 0, "pt": 547537, "pk": 85430, "po": 462107, "ft": 2457, "fe": 2455, "fk": 2, "fa": 0, "gon": 183976, "gk": 0, "goff": 855400, "gt": 1039376, "av": 8, "as": 15832, "ch": 0}, {"n": "Valley Floral Co. of OKC - Oklahoma", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2025-09-01", "k2k": 37, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "New England Wholesale Florist", "impl": "Milena Mezamell", "cs": "", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Apex Floral Distributors Mississauga", "impl": "George Velez", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Penelope's Petals, LLC", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-08-30", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Valley Floral Co. - Wichita", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2025-09-01", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Kennicott Brothers Company", "impl": "George Velez", "cs": "Catalina Rojas", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 434, "pt": 34054438, "pk": 4626936, "po": 29427502, "ft": 72285, "fe": 4597, "fk": 51846, "fa": 15842, "gon": 9764913, "gk": 0, "goff": 60011743, "gt": 69776656, "av": 29, "as": 637545, "ch": 0}, {"n": "R&W WHOLESALE, INC.", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 17, "pt": 286483, "pk": 286330, "po": 154, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Tropical Blooms Inc.", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2022-03-21", "k2k": 4, "pt": 2460467, "pk": 0, "po": 2460467, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 9196, "gk": 0, "goff": 3614789, "gt": 3623985, "av": 0, "as": 0, "ch": 0}, {"n": "Magnolia Wholesale Florist Inc", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2023-05-19", "k2k": 17, "pt": 66012, "pk": 0, "po": 66012, "ft": 1486, "fe": 0, "fk": 1486, "fa": 0, "gon": 117793, "gk": 0, "goff": 0, "gt": 117793, "av": 0, "as": 0, "ch": 0}, {"n": "Las Vegas Floral Wholesale", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement Free Trial, FCS Smart System", "gl": "2023-10-11", "k2k": 20, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "HALL´S - BIRMINGHAM", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 9}, {"n": "Frank Adams Wholesale Florist", "impl": "George Velez", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce, Koronet Procurement, FCS Smart System", "gl": "2022-05-13", "k2k": 19, "pt": 49854, "pk": 0, "po": 49854, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 49854, "gk": 0, "goff": 0, "gt": 49854, "av": 0, "as": 0, "ch": 0}, {"n": "FloraLink", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core", "gl": "", "k2k": 35, "pt": 4185030, "pk": 0, "po": 4185030, "ft": 55298, "fe": 0, "fk": 55298, "fa": 0, "gon": 4193820, "gk": 0, "goff": 0, "gt": 4193820, "av": 0, "as": 0, "ch": 0}, {"n": "Malar Horticulture International LLC", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Past Due", "sys": "K2K E-Commerce", "gl": "2024-07-31", "k2k": 3, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Cleveland Plant & Flower Co.", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "", "k2k": 239, "pt": 318401, "pk": 0, "po": 318401, "ft": 6871, "fe": 0, "fk": 6871, "fa": 0, "gon": 533090, "gk": 0, "goff": 0, "gt": 533090, "av": 0, "as": 0, "ch": 0}, {"n": "Vosz Floral LLC", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2020-11-23", "k2k": 1, "pt": 348340, "pk": 5973, "po": 342367, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 15233, "gk": 0, "goff": 1052087, "gt": 1067320, "av": 0, "as": 0, "ch": 11}, {"n": "Wolfe Wholesale Florist, Inc. Waco", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "DKAY WHOLESALE INC", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement, FCS Smart System", "gl": "2021-09-08", "k2k": 1, "pt": 480548, "pk": 479972, "po": 576, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 25, "as": 22488, "ch": 20}, {"n": "Northline Wholesale Flowers", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2024-11-26", "k2k": 18, "pt": 193869, "pk": 3666, "po": 190203, "ft": 3738, "fe": 0, "fk": 3738, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 12, "as": 3270, "ch": 3}, {"n": "KD & Company", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2022-08-25", "k2k": 71, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "FleuraMetz Montreal Ltd", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "K2K E-Commerce", "gl": "2025-01-09", "k2k": 26, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "MAGNOLIA HOLDINGS 301 LLC  ABSOLUTELY BEAUTIFUL FLOWERS", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 11, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "National Floral Supply", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2019-09-30", "k2k": 9, "pt": 92759, "pk": 0, "po": 92759, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 1675109, "gt": 1675109, "av": 0, "as": 0, "ch": 0}, {"n": "Southern Floral Co", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2020-08-04", "k2k": 22, "pt": 684036, "pk": 636378, "po": 47658, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 77083, "gk": 0, "goff": 0, "gt": 77083, "av": 27, "as": 27302, "ch": 12}, {"n": "The Flower Emporium LLC", "impl": "George Velez", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2023-11-01", "k2k": 30, "pt": 60665, "pk": 14207, "po": 46458, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 7, "as": 1862, "ch": 0}, {"n": "BOTANICA WHSLE FLORIST-HOUSTON", "impl": "Valentina Espinel", "cs": "", "lc": "Onboarding", "sys": "K2K E-Commerce", "gl": "2025-04-20", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "White Rose Flowers & Supplies Inc.", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Past Due", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2024-08-08", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Dreisbach Wholesale", "impl": "Camila Peña", "cs": "", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement", "gl": "2025-11-21", "k2k": 98, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 19, "as": 2664, "ch": 14}, {"n": "Lubbock Wholesale", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "", "k2k": 5, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Delaware Valley Floral Group", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2021-01-20", "k2k": 41, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Sims Flower Distribution", "impl": "George Velez", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-09-23", "k2k": 12, "pt": 1179042, "pk": 0, "po": 1179042, "ft": 2569, "fe": 160, "fk": 2409, "fa": 0, "gon": 180569, "gk": 0, "goff": 1372600, "gt": 1553169, "av": 0, "as": 0, "ch": 0}, {"n": "Arizona Floral Exchange", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2020-11-10", "k2k": 7, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 7, "as": 1366, "ch": 16}, {"n": "Alders Wholesale Florist, Inc.", "impl": "George Velez", "cs": "Christian Medina", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 43, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 9}, {"n": "Staalduinen Floral-LTF1118", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "", "sys": "Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Arizona Family Florist", "impl": "George Velez", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "", "k2k": 86, "pt": 2509833, "pk": 87, "po": 2509746, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 1935070, "gt": 1935070, "av": 0, "as": 0, "ch": 0}, {"n": "Ninfa Flowers", "impl": "Christine Nickelsen", "cs": "Davie van Eekelen", "lc": "Adoption", "sys": "Komet Core", "gl": "2024-07-30", "k2k": 1, "pt": 3179029, "pk": 0, "po": 3179029, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "American Agroproducts", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2019-08-27", "k2k": 15, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Exclusive Wholesale", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "", "sys": "Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Bill Doran Company", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Onboarding", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 4, "pt": 49963226, "pk": 1736087, "po": 48227139, "ft": 36766, "fe": 18142, "fk": 18624, "fa": 0, "gon": 2312306, "gk": 0, "goff": 63686522, "gt": 65998828, "av": 56, "as": 211940, "ch": 3}, {"n": "SOS Floral", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "", "k2k": 1, "pt": 870439, "pk": 0, "po": 870439, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Verdnatura", "impl": "Christine Nickelsen", "cs": "", "lc": "Onboarding", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Coastal Wholesale Flowers, Inc.", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "", "k2k": 43, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 18}, {"n": "Promoflor SRL", "impl": "Camila Peña", "cs": "", "lc": "", "sys": "Komet Core", "gl": "2025-08-19", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Derita Floral Floral Supply Co", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2026-03-09", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Fletch Wholesale LLC", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2022-04-26", "k2k": 19, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Tradewinds / Pristine Wholesale Floral", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "Onboarding", "sys": "Koronet Procurement", "gl": "2025-02-28", "k2k": 15, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "ALLIANCE FLORAL COMPANY. 6270", "impl": "Christine Nickelsen", "cs": "Koronet Customer Support", "lc": "", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 26, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 9}, {"n": "Stemline Wholesale", "impl": "Milena Mezamell", "cs": "", "lc": "Adoption", "sys": "Komet Core", "gl": "2025-10-01", "k2k": 0, "pt": 1954356, "pk": 159821, "po": 1794536, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 29454, "gk": 0, "goff": 2499331, "gt": 2528785, "av": 23, "as": 27096, "ch": 0}, {"n": "JFS Wholesale Floral", "impl": "Manuel Szajowicz", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Komet Core, FCS Smart System", "gl": "2026-04-23", "k2k": 0, "pt": 1863979, "pk": 0, "po": 1863979, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 144, "gk": 0, "goff": 2298725, "gt": 2298869, "av": 0, "as": 0, "ch": 0}, {"n": "BRIEGER WHSLE -TX.", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Onboarding", "sys": "Koronet Procurement", "gl": "2026-05-06", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 15}, {"n": "Test Revops", "impl": "Christine Nickelsen", "cs": "", "lc": "Onboarding", "sys": "Komet Core, eSuite Grower, Koronet Procurement", "gl": "2026-05-07", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "NYC FLORAL GREENS", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Past Due", "sys": "Komet Core, Koronet Procurement Free Trial", "gl": "2023-08-24", "k2k": 9, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Charleston Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Christian Medina", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "2020-06-04", "k2k": 10, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 1263491, "gt": 1263491, "av": 0, "as": 0, "ch": 0}, {"n": "DC FLOWERS DIRECT", "impl": "Valentina Espinel", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "Komet Core, Koronet Procurement", "gl": "2023-06-21", "k2k": 21, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Bo's Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement Free Trial", "gl": "2023-12-05", "k2k": 15, "pt": 323555, "pk": 315988, "po": 7567, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Valley Floral Co. of Oklahoma LLC - Tulsa", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "2025-09-01", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Royal Flower Import Group Inc.", "impl": "George Velez", "cs": "Catalina Rojas", "lc": "Adoption", "sys": "Komet Core", "gl": "2026-06-17", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Unifour Wholesale", "impl": "Christine Nickelsen", "cs": "", "lc": "", "sys": "Koronet Procurement", "gl": "", "k2k": 15, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Creations from Heaven", "impl": "Nahomi Enriquez", "cs": "", "lc": "Past Due", "sys": "Komet Core, Koronet Procurement", "gl": "", "k2k": 0, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Tennessee Florist Supply - Knox", "impl": "Nahomi Enriquez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "eSuite Wholesaler, Koronet Procurement", "gl": "", "k2k": 45, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "Torchio Nursery", "impl": "George Velez", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "Koronet Procurement", "gl": "2024-12-17", "k2k": 18, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}, {"n": "TFS- Chattanooga", "impl": "Valentina Espinel", "cs": "Koronet Customer Support", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2025-07-18", "k2k": 37, "pt": 296843, "pk": 233578, "po": 63265, "ft": 1504, "fe": 0, "fk": 1504, "fa": 0, "gon": 107260, "gk": 233794, "goff": 0, "gt": 341054, "av": 25, "as": 25312, "ch": 2}, {"n": "Tristate Wholesale Florist", "impl": "Christine Nickelsen", "cs": "Maria Alejandra Mesa", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2024-04-17", "k2k": 14, "pt": 77154, "pk": 0, "po": 77154, "ft": 1876, "fe": 0, "fk": 1876, "fa": 0, "gon": 135462, "gk": 0, "goff": 0, "gt": 135462, "av": 0, "as": 0, "ch": 0}, {"n": "Pikes Peak Floral", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce, Koronet Procurement", "gl": "2020-03-05", "k2k": 16, "pt": 131540, "pk": 19472, "po": 112069, "ft": 2456, "fe": 2, "fk": 2454, "fa": 0, "gon": 191845, "gk": 0, "goff": 1632, "gt": 193477, "av": 10, "as": 2154, "ch": 0}, {"n": "Florasource KC", "impl": "Christine Nickelsen", "cs": "Laura Villegas", "lc": "Adoption", "sys": "K2K E-Commerce", "gl": "2023-10-24", "k2k": 1, "pt": 0, "pk": 0, "po": 0, "ft": 0, "fe": 0, "fk": 0, "fa": 0, "gon": 0, "gk": 0, "goff": 0, "gt": 0, "av": 0, "as": 0, "ch": 0}];
+
+// Exclude test account
+const DATA = ACCOUNTS.filter(a => a.n !== 'Test Revops');
+
+// ═══════════════════════════════════════════════════════════════════════
+// DEPARTMENT ASSIGNMENT
+// ═══════════════════════════════════════════════════════════════════════
+const IMPL_CONSULTANTS = ['Christine Nickelsen','Valentina Espinel','George Velez','Camila Peña','Fernando Yepez','Milena Mezamell','Nahomi Enriquez','Manuel Szajowicz'];
+const CS_ADVISORS_SET = new Set(['Christian Medina','Laura Villegas','Maria Alejandra Mesa','Catalina Rojas','Santiago Bermudez','Julian Partridge','Davie van Eekelen']);
+
+function getDept(a) {
+  if (CS_ADVISORS_SET.has(a.cs) && a.cs !== 'Koronet Customer Support') return 'Customer Success';
+  return 'Implementation';
+}
+
+function getRep(a) {
+  const d = getDept(a);
+  return d === 'Customer Success' ? a.cs : a.impl;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// CONFIDENCE BADGE HELPER
+// ═══════════════════════════════════════════════════════════════════════
+function conf(level) {
+  const labels = {high:'HIGH',med:'MEDIUM',low:'LOW',gap:'GAP'};
+  return '<span class="conf ' + level + '">' + labels[level] + '</span>';
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// FUNNEL LOGIC (derived from data)
+// ═══════════════════════════════════════════════════════════════════════
+function buyFunnel(a) {
+  if (a.ch > 0 && a.av === 0 && a.as === 0) return 'Churned';
+  if (a.k2k === 0) return 'No connections';
+  if (a.av > 0 || a.as > 0) return 'Active';
+  if (a.pk > 0) return 'Activated';
+  return 'Dormant';
+}
+
+function sellFunnel(a) {
+  if (a.gt === 0) return 'No supply';
+  if (a.gon === 0 && (a.gk||0) === 0) return 'Offline only';
+  const onlineTotal = a.gon + (a.gk || 0);
+  const pctOnline = a.gt > 0 ? onlineTotal / a.gt : 0;
+  if (pctOnline < 0.15) return 'Low online';
+  if (pctOnline < 0.50) return 'Growing';
+  return 'Healthy';
+}
+
+const BUY_COLORS = {'No connections':'#94a3b8','Dormant':'#f59e0b','Activated':'#eab308','Active':'#22c55e','Churned':'#ef4444'};
+const SELL_COLORS = {'No supply':'#94a3b8','Offline only':'#f59e0b','Low online':'#eab308','Growing':'#3b82f6','Healthy':'#22c55e'};
+const BUY_TAG_CLASS = {'No connections':'neutral','Dormant':'warn','Activated':'wait','Active':'ok','Churned':'bad'};
+const SELL_TAG_CLASS = {'No supply':'neutral','Offline only':'warn','Low online':'wait','Growing':'wait','Healthy':'ok'};
+const BUY_STAGES = ['No connections','Dormant','Activated','Active','Churned'];
+const SELL_STAGES = ['No supply','Offline only','Low online','Growing','Healthy'];
+
+// ═══════════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════════
+function fmt(v) { return v >= 1e6 ? '$' + (v/1e6).toFixed(1) + 'M' : v >= 1e3 ? '$' + (v/1e3).toFixed(0) + 'K' : '$' + v; }
+function pct(n,d) { return d > 0 ? (n/d*100).toFixed(1) + '%' : '0%'; }
+function daysSince(d) { if (!d) return ''; const dt = new Date(d); const now = new Date('2026-07-15'); return Math.floor((now - dt) / 86400000); }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function aggregate(list) {
+  const r = {accounts:list.length, k2k:0, pt:0, pk:0, po:0, ft:0, fe:0, fk:0, fa:0, gon:0, gk:0, goff:0, gt:0, av:0, as:0, ch:0};
+  const buy = {}, sell = {};
+  BUY_STAGES.forEach(s => buy[s] = 0);
+  SELL_STAGES.forEach(s => sell[s] = 0);
+  list.forEach(a => {
+    r.k2k += a.k2k; r.pt += a.pt; r.pk += a.pk; r.po += (a.po||0);
+    r.ft += a.ft; r.fe += a.fe; r.fk += a.fk; r.fa += (a.fa||0);
+    r.gon += a.gon; r.gk += (a.gk||0); r.goff += a.goff; r.gt += a.gt;
+    r.av += a.av; r.as += a.as; r.ch += a.ch;
+    buy[buyFunnel(a)]++;
+    sell[sellFunnel(a)]++;
+  });
+  r.buy = buy; r.sell = sell;
+  r.withProc = list.filter(a => a.pt > 0).length;
+  r.activeL30D = list.filter(a => a.av > 0 || a.as > 0).length;
+  r.dormant = buy['Dormant'] || 0;
+  r.sellingOnline = list.filter(a => a.gon > 0 || a.gk > 0).length;
+  r.offlineOnly = sell['Offline only'] || 0;
+  r.pctOnlineBuy = r.pt > 0 ? (r.pk / r.pt * 100).toFixed(1) : '0.0';
+  r.pctOnlineSell = r.gt > 0 ? ((r.gon + r.gk) / r.gt * 100).toFixed(1) : '0.0';
+  return r;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════
+let state = { level: 0, dept: null, rep: null, account: null };
+let sortCol = null, sortDir = 1;
+
+function goLevel(level, dept, rep, account) {
+  state.level = level;
+  if (level >= 1) state.dept = dept || state.dept;
+  if (level >= 2) state.rep = rep || state.rep;
+  if (level >= 3) state.account = account || state.account;
+  if (level < 3) state.account = null;
+  if (level < 2) state.rep = null;
+  if (level < 1) state.dept = null;
+  sortCol = null; sortDir = 1;
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// RENDER BREADCRUMB
+// ═══════════════════════════════════════════════════════════════════════
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  let html = '<a onclick="goLevel(0)">TX Total</a>';
+  if (state.level >= 1) html += ' <span>&rsaquo;</span> <a onclick="goLevel(1,\'' + esc(state.dept) + '\')">' + esc(state.dept) + '</a>';
+  if (state.level >= 2) html += ' <span>&rsaquo;</span> <a onclick="goLevel(2,null,\'' + esc(state.rep).replace(/'/g,"\\'") + '\')">' + esc(state.rep) + '</a>';
+  if (state.level >= 3) html += ' <span>&rsaquo;</span> <span style="color:var(--ink)">' + esc(state.account) + '</span>';
+  bc.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// FUNNEL BAR RENDERER
+// ═══════════════════════════════════════════════════════════════════════
+function renderFunnelBar(label, counts, colors, stages, total, footnote) {
+  let html = '<div class="funnel-wrap"><div class="funnel-label">' + label + '</div><div class="funnel-bar">';
+  stages.forEach(s => {
+    const c = counts[s] || 0;
+    const w = total > 0 ? (c / total * 100) : 0;
+    if (w > 0) {
+      html += '<div class="funnel-seg" style="width:' + w + '%;background:' + colors[s] + '">' + (w > 5 ? c : '') + '<span class="tip">' + s + ': ' + c + '</span></div>';
+    }
+  });
+  html += '</div><div class="funnel-legend">';
+  stages.forEach(s => {
+    html += '<div class="funnel-legend-item"><div class="funnel-dot" style="background:' + colors[s] + '"></div>' + s + ': ' + (counts[s] || 0) + '</div>';
+  });
+  html += '</div>';
+  if (footnote) html += '<div style="font-size:11px;color:var(--muted);margin-top:4px;font-style:italic">' + footnote + '</div>';
+  html += '</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// SORTABLE TABLE HELPER
+// ═══════════════════════════════════════════════════════════════════════
+function thSort(col, label) {
+  const arrow = sortCol === col ? (sortDir > 0 ? ' &#9650;' : ' &#9660;') : '';
+  return '<th onclick="sortCol=\'' + col + '\';sortDir=' + (sortCol === col ? -sortDir : 1) + ';render()">' + label + '<span class="sort-arrow">' + arrow + '</span></th>';
+}
+
+function doSort(rows, defaultCol, defaultDir) {
+  if (sortCol) {
+    rows.sort((a,b) => {
+      let va = a[sortCol], vb = b[sortCol];
+      if (va === undefined || va === null) va = '';
+      if (vb === undefined || vb === null) vb = '';
+      if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+      return sortDir * ((va||0) - (vb||0));
+    });
+  } else if (defaultCol) {
+    rows.sort((a,b) => (defaultDir||1) * ((a[defaultCol]||0) - (b[defaultCol]||0)));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// SUMMARY CARDS v3 (6 cards with confidence badges + fee/buy splits)
+// ═══════════════════════════════════════════════════════════════════════
+function renderCards(agg, list) {
+  const totalFees = list.reduce((s,a) => s + a.ft, 0);
+  const feeCom = list.reduce((s,a) => s + a.fe, 0);
+  const feeK2K = list.reduce((s,a) => s + a.fk, 0);
+  const feeAPI = list.reduce((s,a) => s + (a.fa||0), 0);
+
+  // Buy channels
+  const procTotal = list.reduce((s,a) => s + a.pk, 0); // K2K procurement = "Procurement" channel
+  // po = offline/unknown in v2 data. We'll split: Web is embedded in pk for some, but our data doesn't have explicit web channel
+  // Based on spec: pk = Procurement channel, po = Unknown channel. Web channel data not separately available in v2 data.
+  // For v3: Procurement $ = pk, Unknown $ = po, Web $ = we don't have it separated yet -> $0
+  const procOnline = procTotal; // Procurement channel
+  const procUnknown = list.reduce((s,a) => s + (a.po||0), 0); // Unknown channel
+  const procWeb = 0; // Web channel not separated in data
+  const buyTotal = list.reduce((s,a) => s + a.pt, 0);
+  const knownOnline = procOnline + procWeb;
+  const pctKnownOnline = buyTotal > 0 ? (knownOnline / buyTotal * 100).toFixed(1) : '0.0';
+
+  // Sell
+  const onlineGMV = agg.gon + agg.gk;
+  const sellTotal = agg.gt;
+  const pctOnlineSell = sellTotal > 0 ? (onlineGMV / sellTotal * 100).toFixed(1) : '0.0';
+
+  let html = '<div class="grid6">';
+  html += '<div class="card blueLine"><small>Total Accounts' + conf('high') + '</small><strong>' + agg.accounts + '</strong><p>With procurement: ' + agg.withProc + '</p></div>';
+  html += '<div class="card cyanLine"><small>TX Fees H1' + conf('high') + '</small><strong>' + fmt(totalFees) + '</strong><p>eCom: ' + fmt(feeCom) + ' | K2K: ' + fmt(feeK2K) + ' | API: ' + fmt(feeAPI) + '</p></div>';
+  html += '<div class="card warnLine"><small>Buy Online' + conf('med') + '</small><strong>' + fmt(procOnline) + ' Proc</strong><p>Unknown: ' + fmt(procUnknown) + ' (' + pct(procUnknown, buyTotal) + ')</p></div>';
+  html += '<div class="card okLine"><small>Sell Online' + conf('high') + '</small><strong>' + fmt(onlineGMV) + '</strong><p>' + pctOnlineSell + '% of ' + fmt(sellTotal) + '</p></div>';
+  html += '<div class="card purpleLine"><small>Active L30D (Buy)' + conf('high') + '</small><strong>' + agg.activeL30D + '</strong><p>Dormant: ' + agg.dormant + '</p></div>';
+  html += '<div class="card blueLine"><small>Calls Jun 1+' + conf('high') + '</small><strong>via Fathom</strong><p>Per-account in drill-down</p></div>';
+  html += '</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ACTIVITY COLUMNS HELPER (for tables)
+// ═══════════════════════════════════════════════════════════════════════
+function activityHeaders() {
+  return thSort('_calls','Calls (Jun 1+)') + thSort('_lastTouch','Last Touch') + thSort('_contacted','% Contacted');
+}
+
+function activityCells(list) {
+  // We can't compute real Fathom/SFDC data here — show aggregate placeholders
+  const total = list.length;
+  const withLC = list.filter(a => a.lc && a.lc !== '').length;
+  return '<td title="Fathom API">--</td><td>--</td><td>' + (total > 0 ? Math.round(withLC/total*100) + '%' : '--') + '</td>';
+}
+
+function activityCellsAccount(a) {
+  return '<td title="Check Fathom">--</td><td>' + (a.lc || '--') + '</td><td>--</td>';
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// LEVEL 0: TX TOTAL
+// ═══════════════════════════════════════════════════════════════════════
+function renderLevel0() {
+  const all = aggregate(DATA);
+
+  let html = '<section><p class="eyebrow">TX Operating Dashboard v3</p>';
+  html += '<h2>TX Total</h2>';
+  html += '<p class="sub">Real data from Snowflake + SFDC. Period: H1 2026 (Jan 1 &ndash; Jun 30). Data run: Jul 16, 2026.<br>';
+  html += '<strong>v3 additions:</strong> Confidence labels on every metric | Data Health section | Fees &amp; buy-side channel splits | Activity data.</p>';
+  html += '</section>';
+
+  html += renderCards(all, DATA);
+
+  // Funnels side by side with confidence
+  html += '<div class="grid2">';
+  html += '<section>' + renderFunnelBar('BUY FUNNEL (K2K Procurement) ' + conf('med'), all.buy, BUY_COLORS, BUY_STAGES, all.accounts, 'Based on Procurement+Web channels. &ldquo;Unknown&rdquo; (' + fmt(all.po) + ') not classified.') + '</section>';
+  html += '<section>' + renderFunnelBar('SELL FUNNEL (GMV Online) ' + conf('high'), all.sell, SELL_COLORS, SELL_STAGES, all.accounts) + '</section>';
+  html += '</div>';
+
+  // Department table with activity and fee/buy splits
+  const depts = {};
+  DATA.forEach(a => {
+    const d = getDept(a);
+    if (!depts[d]) depts[d] = [];
+    depts[d].push(a);
+  });
+
+  let deptRows = Object.keys(depts).map(d => {
+    const agg = aggregate(depts[d]);
+    return {name: d, ...agg, list: depts[d], ft: depts[d].reduce((s,a)=>s+a.ft,0), fe: depts[d].reduce((s,a)=>s+a.fe,0), fk: depts[d].reduce((s,a)=>s+a.fk,0), fa: depts[d].reduce((s,a)=>s+(a.fa||0),0)};
+  });
+
+  doSort(deptRows, 'ft', -1);
+
+  html += '<section><h3>By Department</h3>';
+  html += '<div class="tableWrap"><table><tr>';
+  html += thSort('name','Department');
+  html += thSort('accounts','Accounts');
+  html += thSort('ft','TX Fees' + conf('high'));
+  html += '<th>Fees: eCom|K2K|API</th>';
+  html += thSort('pk','Proc $' + conf('high'));
+  html += thSort('po','Unknown $' + conf('med'));
+  html += thSort('gon','Online GMV');
+  html += thSort('goff','Offline GMV');
+  html += thSort('pctOnlineSell','% Online Sell');
+  html += thSort('activeL30D','Active L30D');
+  html += thSort('dormant','Dormant');
+  html += thSort('buy.Churned','Churned');
+  html += activityHeaders();
+  html += '</tr>';
+
+  deptRows.forEach(r => {
+    html += '<tr class="clickable" onclick="goLevel(1,\'' + esc(r.name) + '\')">';
+    html += '<td><strong>' + esc(r.name) + '</strong></td>';
+    html += '<td>' + r.accounts + '</td>';
+    html += '<td><strong>' + fmt(r.ft) + '</strong></td>';
+    html += '<td style="font-size:12px">' + fmt(r.fe) + ' | ' + fmt(r.fk) + ' | ' + fmt(r.fa) + '</td>';
+    html += '<td>' + fmt(r.pk) + '</td>';
+    html += '<td>' + fmt(r.po) + '</td>';
+    html += '<td>' + fmt(r.gon + r.gk) + '</td>';
+    html += '<td>' + fmt(r.goff) + '</td>';
+    html += '<td>' + r.pctOnlineSell + '%</td>';
+    html += '<td>' + r.activeL30D + '</td>';
+    html += '<td>' + (r.buy['Dormant']||0) + '</td>';
+    html += '<td>' + (r.buy['Churned']||0) + '</td>';
+    html += activityCells(r.list);
+    html += '</tr>';
+  });
+  html += '</table></div></section>';
+
+  // Data Health section at level 0
+  html += renderDataHealth();
+
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// LEVEL 1: DEPARTMENT
+// ═══════════════════════════════════════════════════════════════════════
+function renderLevel1() {
+  const deptAccounts = DATA.filter(a => getDept(a) === state.dept);
+  const agg = aggregate(deptAccounts);
+
+  let html = '<section><p class="eyebrow">' + esc(state.dept) + '</p>';
+  html += '<h2>' + esc(state.dept) + ' (' + agg.accounts + ' accounts)</h2>';
+  html += '</section>';
+
+  html += renderCards(agg, deptAccounts);
+
+  html += '<div class="grid2">';
+  html += '<section>' + renderFunnelBar('BUY FUNNEL ' + conf('med'), agg.buy, BUY_COLORS, BUY_STAGES, agg.accounts, 'Unknown channel (' + fmt(agg.po) + ') not classified.') + '</section>';
+  html += '<section>' + renderFunnelBar('SELL FUNNEL ' + conf('high'), agg.sell, SELL_COLORS, SELL_STAGES, agg.accounts) + '</section>';
+  html += '</div>';
+
+  // Group by rep
+  const repMap = {};
+  deptAccounts.forEach(a => {
+    const r = getRep(a);
+    if (!repMap[r]) repMap[r] = [];
+    repMap[r].push(a);
+  });
+
+  let repRows = Object.keys(repMap).map(r => {
+    const agg = aggregate(repMap[r]);
+    return {name: r, ...agg, list: repMap[r], ft: repMap[r].reduce((s,a)=>s+a.ft,0), fe: repMap[r].reduce((s,a)=>s+a.fe,0), fk: repMap[r].reduce((s,a)=>s+a.fk,0), fa: repMap[r].reduce((s,a)=>s+(a.fa||0),0)};
+  });
+
+  doSort(repRows, 'accounts', -1);
+  if (!sortCol) repRows.sort((a,b) => b.accounts - a.accounts);
+
+  const role = state.dept === 'Customer Success' ? 'CS Advisor' : 'Impl Consultant';
+
+  html += '<section><h3>By ' + role + '</h3>';
+  html += '<div class="tableWrap"><table><tr>';
+  html += thSort('name','Rep');
+  html += thSort('accounts','Accounts');
+  html += thSort('ft','TX Fees' + conf('high'));
+  html += '<th>Fees: eCom|K2K|API</th>';
+  html += thSort('pk','Proc $' + conf('high'));
+  html += thSort('po','Unknown $' + conf('med'));
+  html += thSort('gon','Online GMV');
+  html += thSort('goff','Offline GMV');
+  html += thSort('pctOnlineSell','% Online Sell');
+  html += thSort('pctOnlineBuy','% Online Buy');
+  html += thSort('activeL30D','Active (Buy)');
+  html += thSort('dormant','Dormant');
+  html += thSort('buy.Churned','Churned');
+  html += activityHeaders();
+  html += '</tr>';
+
+  repRows.forEach(r => {
+    html += '<tr class="clickable" onclick="goLevel(2,null,\'' + esc(r.name).replace(/'/g,"\\'") + '\')">';
+    html += '<td><strong>' + esc(r.name) + '</strong></td>';
+    html += '<td>' + r.accounts + '</td>';
+    html += '<td><strong>' + fmt(r.ft) + '</strong></td>';
+    html += '<td style="font-size:12px">' + fmt(r.fe) + ' | ' + fmt(r.fk) + ' | ' + fmt(r.fa) + '</td>';
+    html += '<td>' + fmt(r.pk) + '</td>';
+    html += '<td>' + fmt(r.po) + '</td>';
+    html += '<td>' + fmt(r.gon + r.gk) + '</td>';
+    html += '<td>' + fmt(r.goff) + '</td>';
+    html += '<td>' + r.pctOnlineSell + '%</td>';
+    html += '<td>' + r.pctOnlineBuy + '%</td>';
+    html += '<td>' + r.activeL30D + '</td>';
+    html += '<td>' + (r.buy['Dormant']||0) + '</td>';
+    html += '<td>' + (r.buy['Churned']||0) + '</td>';
+    html += activityCells(r.list);
+    html += '</tr>';
+  });
+  html += '</table></div></section>';
+
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// LEVEL 2: REP
+// ═══════════════════════════════════════════════════════════════════════
+function renderLevel2() {
+  const repAccounts = DATA.filter(a => getRep(a) === state.rep);
+  const agg = aggregate(repAccounts);
+  const role = state.dept === 'Customer Success' ? 'Customer Success Advisor' : 'Implementation Consultant';
+
+  let html = '<section><p class="eyebrow">' + role + '</p>';
+  html += '<h2>' + esc(state.rep) + ' (' + agg.accounts + ' accounts)</h2>';
+  html += '</section>';
+
+  html += renderCards(agg, repAccounts);
+
+  html += '<div class="grid2">';
+  html += '<section>' + renderFunnelBar('BUY FUNNEL ' + conf('med'), agg.buy, BUY_COLORS, BUY_STAGES, agg.accounts, 'Unknown channel (' + fmt(agg.po) + ') not classified.') + '</section>';
+  html += '<section>' + renderFunnelBar('SELL FUNNEL ' + conf('high'), agg.sell, SELL_COLORS, SELL_STAGES, agg.accounts) + '</section>';
+  html += '</div>';
+
+  // Account table with all v3 columns
+  let accts = repAccounts.map(a => ({
+    ...a, buyStage: buyFunnel(a), sellStage: sellFunnel(a),
+    daysLive: a.gl ? daysSince(a.gl) : '',
+    onlinePctBuy: a.pt > 0 ? (a.pk / a.pt * 100) : 0,
+    onlinePctSell: a.gt > 0 ? ((a.gon + (a.gk||0)) / a.gt * 100) : 0,
+    lastTouch: a.lc || '--'
+  }));
+
+  doSort(accts, 'ft', -1);
+  if (!sortCol) accts.sort((a,b) => (b.ft||0) - (a.ft||0));
+
+  html += '<section><h3>Accounts</h3>';
+  html += '<div class="tableWrap"><table><tr>';
+  html += thSort('n','Account');
+  html += thSort('sys','Product');
+  html += thSort('daysLive','Days Live');
+  html += thSort('ft','TX Fees');
+  html += '<th>Fees Split</th>';
+  html += thSort('pk','Proc $');
+  html += thSort('po','Unknown $');
+  html += thSort('onlinePctBuy','% Buy');
+  html += thSort('gon','Online GMV');
+  html += thSort('onlinePctSell','% Sell');
+  html += thSort('buyStage','Buy Stage');
+  html += thSort('sellStage','Sell Stage');
+  html += activityHeaders();
+  html += '</tr>';
+
+  accts.forEach(a => {
+    html += '<tr class="clickable" onclick="goLevel(3,null,null,\'' + esc(a.n).replace(/'/g,"\\'") + '\')">';
+    html += '<td><strong>' + esc(a.n) + '</strong></td>';
+    html += '<td style="font-size:12px;max-width:160px">' + esc(a.sys) + '</td>';
+    html += '<td>' + (a.daysLive !== '' ? a.daysLive + 'd' : '--') + '</td>';
+    html += '<td><strong>' + fmt(a.ft) + '</strong></td>';
+    html += '<td style="font-size:11px">' + fmt(a.fe) + '|' + fmt(a.fk) + '|' + fmt(a.fa||0) + '</td>';
+    html += '<td>' + fmt(a.pk) + '</td>';
+    html += '<td>' + fmt(a.po||0) + '</td>';
+    html += '<td>' + (a.pt > 0 ? a.onlinePctBuy.toFixed(1) + '%' : '--') + '</td>';
+    html += '<td>' + fmt(a.gon) + '</td>';
+    html += '<td>' + (a.gt > 0 ? a.onlinePctSell.toFixed(1) + '%' : '--') + '</td>';
+    html += '<td><span class="tag ' + BUY_TAG_CLASS[a.buyStage] + '">' + a.buyStage + '</span></td>';
+    html += '<td><span class="tag ' + SELL_TAG_CLASS[a.sellStage] + '">' + a.sellStage + '</span></td>';
+    html += activityCellsAccount(a);
+    html += '</tr>';
+  });
+  html += '</table></div></section>';
+
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// LEVEL 3: ACCOUNT DETAIL
+// ═══════════════════════════════════════════════════════════════════════
+function renderLevel3() {
+  const a = DATA.find(x => x.n === state.account);
+  if (!a) return '<section><h2>Account not found</h2></section>';
+
+  const bs = buyFunnel(a);
+  const ss = sellFunnel(a);
+  const dl = a.gl ? daysSince(a.gl) : null;
+  const totalConn = a.k2k;
+  const activeVendors = a.av;
+  const churnedVendors = a.ch;
+  const dormantConn = Math.max(0, totalConn - activeVendors - churnedVendors);
+  const onlineBuyPct = a.pt > 0 ? (a.pk / a.pt * 100).toFixed(1) : '0.0';
+  const onlineSellPct = a.gt > 0 ? ((a.gon + (a.gk||0)) / a.gt * 100).toFixed(1) : '0.0';
+
+  // Feature flags from sys
+  const sysLower = (a.sys || '').toLowerCase();
+  const hasProcurement = sysLower.includes('procurement');
+  const hasEShop = sysLower.includes('esuite') || sysLower.includes('e-commerce') || sysLower.includes('ecommerce');
+  const hasK2K = sysLower.includes('k2k');
+  const hasFCS = sysLower.includes('fcs') || sysLower.includes('smart');
+
+  // Channel mix for buy diagnostic
+  const unknownPct = a.pt > 0 ? ((a.po||0) / a.pt * 100).toFixed(1) : '0.0';
+  const isMostlyUnknown = a.pt > 0 && (a.po||0) / a.pt > 0.7;
+
+  // ── Header card ──
+  let html = '<div class="header-card">';
+  html += '<h2>' + esc(a.n) + '</h2>';
+  html += '<div class="header-meta">';
+  html += '<span><strong>Product:</strong> ' + esc(a.sys) + '</span>';
+  html += '<span><strong>Impl:</strong> ' + esc(a.impl) + '</span>';
+  if (a.cs) html += '<span><strong>CS:</strong> ' + esc(a.cs) + '</span>';
+  html += '<span><strong>Status:</strong> ' + (a.lc || 'N/A') + '</span>';
+  if (dl !== null) html += '<span><strong>Days live:</strong> ' + dl + '</span>';
+  html += '</div></div>';
+
+  // ── Two panels ──
+  html += '<div class="detail-panels">';
+
+  // ══════════ PANEL A: Compra online? ══════════
+  html += '<div class="detail-panel">';
+  html += '<h3>PANEL A: Compra online? <span class="tag ' + BUY_TAG_CLASS[bs] + '">' + bs + '</span></h3>';
+
+  // Mini funnel
+  html += '<div class="mini-funnel">';
+  const buySteps = [
+    {label:'Connected', val: totalConn, color: totalConn > 0 ? '#3b82f6' : '#e5e7eb'},
+    {label:'Activated', val: a.pk > 0 ? 1 : 0, color: a.pk > 0 ? '#eab308' : '#e5e7eb'},
+    {label:'Active', val: activeVendors, color: activeVendors > 0 ? '#22c55e' : '#e5e7eb'},
+    {label:'Churned', val: churnedVendors, color: churnedVendors > 0 ? '#ef4444' : '#e5e7eb'}
+  ];
+  buySteps.forEach((s,i) => {
+    if (i > 0) html += '<span class="mini-funnel-arrow">&rarr;</span>';
+    html += '<div class="mini-funnel-step" style="background:' + s.color + '20;border:2px solid ' + s.color + ';color:' + (s.val > 0 ? s.color : '#94a3b8') + '">' + s.label + ': ' + s.val + '</div>';
+  });
+  html += '</div>';
+  html += '<div style="background:#f8fafc;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:700;margin-bottom:12px">Current stage: <span class="tag ' + BUY_TAG_CLASS[bs] + '">' + bs + '</span></div>';
+
+  // Buy channel split with confidence
+  html += '<div style="margin-bottom:12px;padding:10px 14px;background:#f0f4ff;border-radius:7px;border:1px solid #c7d7fe">';
+  html += '<div class="funnel-label">BUY-SIDE BY CHANNEL</div>';
+  html += '<div class="metric-row"><span class="metric-label">Procurement (K2K)' + conf('high') + '</span><span class="metric-value">' + fmt(a.pk) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">Web' + conf('high') + '</span><span class="metric-value">$0</span></div>';
+  html += '<div class="metric-row"><span class="metric-label"><span class="ttip" data-tip="82.5% of buy-side is Unknown channel -- likely offline/manual but unconfirmed">Unknown' + conf('med') + '</span></span><span class="metric-value">' + fmt(a.po||0) + '</span></div>';
+  html += '<div class="metric-row" style="border-top:2px solid var(--line);padding-top:8px"><span class="metric-label"><strong>Total Procurement</strong></span><span class="metric-value"><strong>' + fmt(a.pt) + '</strong></span></div>';
+  html += '</div>';
+
+  // Key metrics with confidence
+  html += '<div class="metric-row"><span class="metric-label">% Online buy' + conf('med') + '</span><span class="metric-value">' + onlineBuyPct + '%</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">Vendors: Active L30D' + conf('high') + '</span><span class="metric-value">' + activeVendors + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">Active vendor spend L30D' + conf('high') + '</span><span class="metric-value">' + fmt(a.as) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">Connections' + conf('high') + '</span><span class="metric-value">' + totalConn + ' total / ' + dormantConn + ' dormant / ' + churnedVendors + ' churned</span></div>';
+
+  // Diagnostic — enhanced for channel mix
+  let diagBuyClass = 'diag-noconn';
+  let diagBuyText = '';
+  if (bs === 'No connections') { diagBuyClass = 'diag-noconn'; diagBuyText = '<strong>Sin conexiones K2K.</strong><em>Necesita supply: conectar vendors relevantes para que pueda empezar a comprar online.</em>'; }
+  else if (bs === 'Dormant') { diagBuyClass = 'diag-dormant'; diagBuyText = '<strong>Tiene ' + totalConn + ' conexiones pero $0 en procurement K2K.</strong><em>Ni lo intento? Lo intento y no encontro? Encontro pero no compro? Revisar si tiene supply relevante y si sabe usar la herramienta.</em>'; }
+  else if (bs === 'Activated') { diagBuyClass = 'diag-activated'; diagBuyText = '<strong>Compro al menos una vez por K2K (' + fmt(a.pk) + ').</strong><em>Se mantiene? Esta diversificando vendors? Que categorias falta cubrir?</em>'; }
+  else if (bs === 'Active') { diagBuyClass = 'diag-active'; diagBuyText = '<strong>Comprando de ' + activeVendors + ' vendors en L30D (' + fmt(a.as) + ').</strong><em>Se mantiene? Esta diversificando? Crece la spend?</em>'; }
+  else if (bs === 'Churned') { diagBuyClass = 'diag-churned'; diagBuyText = '<strong>' + churnedVendors + ' vendors churneados, $0 activo.</strong><em>Se fue offline? No le gusto la experiencia? No tiene necesidad? Cuando fue la ultima compra?</em>'; }
+
+  // Append channel-mix insight
+  if (isMostlyUnknown && a.pt > 0) {
+    diagBuyText += '<em style="margin-top:6px;display:block;color:#6941c6"><strong>Canal:</strong> ' + unknownPct + '% de sus compras es &ldquo;Unknown&rdquo;. Probablemente compra por ERP/telefono. Si es Core, podriamos ver mas detalle.</em>';
+  }
+  html += '<div class="diagnostic ' + diagBuyClass + '">' + diagBuyText + '</div>';
+
+  html += '<p style="margin-top:12px"><a href="procurement-framework-v6.html" style="font-size:13px">&#8594; Buy Deep Dive</a></p>';
+  html += '</div>';
+
+  // ══════════ PANEL B: Vende online? ══════════
+  html += '<div class="detail-panel">';
+  html += '<h3>PANEL B: Vende online? <span class="tag ' + SELL_TAG_CLASS[ss] + '">' + ss + '</span></h3>';
+
+  // Mini funnel
+  html += '<div class="mini-funnel">';
+  const hasOnlineGMV = (a.gon + (a.gk||0)) > 0;
+  const sellSteps = [
+    {label:'Supply', val: a.gt > 0 ? 'Yes' : 'No', color: a.gt > 0 ? '#3b82f6' : '#e5e7eb'},
+    {label:'Online', val: hasOnlineGMV ? 'Yes' : 'No', color: hasOnlineGMV ? '#22c55e' : '#e5e7eb'},
+    {label:'Fees', val: a.ft > 0 ? fmt(a.ft) : '$0', color: a.ft > 0 ? '#8b5cf6' : '#e5e7eb'}
+  ];
+  sellSteps.forEach((s,i) => {
+    if (i > 0) html += '<span class="mini-funnel-arrow">&rarr;</span>';
+    html += '<div class="mini-funnel-step" style="background:' + s.color + '20;border:2px solid ' + s.color + ';color:' + (s.val !== 'No' && s.val !== '$0' ? s.color : '#94a3b8') + '">' + s.label + ': ' + s.val + '</div>';
+  });
+  html += '</div>';
+  html += '<div style="background:#f8fafc;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:700;margin-bottom:12px">Current stage: <span class="tag ' + SELL_TAG_CLASS[ss] + '">' + ss + '</span></div>';
+
+  // Fees split by channel with confidence
+  html += '<div style="margin-bottom:12px;padding:10px 14px;background:#f5f0ff;border-radius:7px;border:1px solid #d9d6fe">';
+  html += '<div class="funnel-label">FEES BY CHANNEL (sell-side)</div>';
+  html += '<div class="metric-row"><span class="metric-label">eCom Fees' + conf('high') + '</span><span class="metric-value">' + fmt(a.fe) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">K2K Fees' + conf('high') + '</span><span class="metric-value">' + fmt(a.fk) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">API Fees' + conf('high') + '</span><span class="metric-value">' + fmt(a.fa||0) + '</span></div>';
+  html += '<div class="metric-row" style="border-top:2px solid var(--line);padding-top:8px"><span class="metric-label"><strong>Total Fees</strong>' + conf('high') + '</span><span class="metric-value"><strong>' + fmt(a.ft) + '</strong></span></div>';
+  html += '<div style="font-size:10px;color:var(--muted);margin-top:4px;font-style:italic">Note: fees are SELL-SIDE only. The wholesaler pays fees when they SELL, not when they BUY.</div>';
+  html += '</div>';
+
+  // Key metrics with confidence
+  html += '<div class="metric-row"><span class="metric-label">Total GMV' + conf('high') + '</span><span class="metric-value">' + fmt(a.gt) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">Online GMV (eCom)' + conf('high') + '</span><span class="metric-value">' + fmt(a.gon) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">K2K GMV' + conf('high') + '</span><span class="metric-value">' + fmt(a.gk || 0) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">Offline GMV' + conf('high') + '</span><span class="metric-value">' + fmt(a.goff) + '</span></div>';
+  html += '<div class="metric-row"><span class="metric-label">% Online sell' + conf('high') + '</span><span class="metric-value">' + onlineSellPct + '%</span></div>';
+
+  // Feature flags with confidence
+  html += '<div style="margin-top:12px"><div class="funnel-label">Feature Flags (from product)' + conf('med') + '</div>';
+  html += '<div style="font-size:10px;color:var(--muted);margin-bottom:4px">SFDC booleans &mdash; may be stale (3 mismatches found by Codex)</div>';
+  html += '<div class="feature-flags">';
+  html += '<span class="ff ' + (hasProcurement ? 'ff-on' : 'ff-off') + '">Procurement ' + (hasProcurement ? '&#10003;' : '&#10007;') + '</span>';
+  html += '<span class="ff ' + (hasEShop ? 'ff-on' : 'ff-off') + '">eShop ' + (hasEShop ? '&#10003;' : '&#10007;') + '</span>';
+  html += '<span class="ff ' + (hasK2K ? 'ff-on' : 'ff-off') + '">K2K ' + (hasK2K ? '&#10003;' : '&#10007;') + '</span>';
+  html += '<span class="ff ' + (hasFCS ? 'ff-on' : 'ff-off') + '">FCS/Smart ' + (hasFCS ? '&#10003;' : '&#10007;') + '</span>';
+  html += '</div></div>';
+
+  // Supply to list with confidence
+  html += '<div class="supply-block">';
+  html += '<strong>Supply to list</strong>' + conf('low') + '<br>';
+  if (a.goff > 0 && a.gon === 0 && (a.gk||0) === 0) {
+    html += 'Has ' + fmt(a.goff) + ' in offline GMV but $0 online. Categories sold offline are not available online.';
+  } else if (a.goff > 0 && (a.gon > 0 || (a.gk||0) > 0)) {
+    html += 'Online: ' + fmt(a.gon + (a.gk||0)) + ' | Offline: ' + fmt(a.goff) + ' | Gap: ' + fmt(a.goff) + ' in offline sales could shift online.';
+  } else if (a.gt === 0) {
+    html += 'No GMV data available. Account may not have eShop set up.';
+  } else {
+    html += 'All GMV appears to be online. Good coverage.';
+  }
+  html += '<br><span style="color:var(--muted);font-size:11px">Catalog completeness: ' + conf('gap') + ' &mdash; no OFERTA/listing snapshot in Snowflake</span>';
+  html += '<br><span style="color:var(--muted);font-size:11px">Forward availability: ' + conf('low') + ' &mdash; config only, no actual listing data</span>';
+  html += '<br><span style="color:var(--muted);font-size:11px">Bunches/format: ' + conf('med') + ' &mdash; Core only, GAP for eSuite-only</span>';
+  html += '</div>';
+
+  // Sell Diagnostic
+  let diagSellClass = 'diag-nosupply';
+  let diagSellText = '';
+  if (ss === 'No supply') { diagSellClass = 'diag-nosupply'; diagSellText = '<strong>$0 GMV total.</strong><em>No tiene eShop? Cuando se implementa? Tiene infraestructura para vender online?</em>'; }
+  else if (ss === 'Offline only') { diagSellClass = 'diag-offline'; diagSellText = '<strong>Vende ' + fmt(a.goff) + ' offline pero $0 online.</strong><em>Tiene eShop? Tiene supply listada online? Feature flags activos? Que categorias podria listar?</em>'; }
+  else if (ss === 'Low online') { diagSellClass = 'diag-low'; diagSellText = '<strong>Solo ' + onlineSellPct + '% online.</strong><em>Supply pobre? No tiene bunches? No tiene trafico? Que categorias faltan online?</em>'; }
+  else if (ss === 'Growing') { diagSellClass = 'diag-growing'; diagSellText = '<strong>Creciendo: ' + onlineSellPct + '% online.</strong><em>Que categorias faltan? Como mejorar supply? Bunches gap?</em>'; }
+  else if (ss === 'Healthy') { diagSellClass = 'diag-healthy'; diagSellText = '<strong>' + onlineSellPct + '% online -- healthy.</strong><em>Se mantiene? Revenue diversificado? TX fees tracking?</em>'; }
+  html += '<div class="diagnostic ' + diagSellClass + '">' + diagSellText + '</div>';
+
+  html += '<p style="margin-top:12px"><a href="#" style="font-size:13px;color:var(--muted)">&#8594; Sell Deep Dive (future)</a></p>';
+  html += '</div>';
+  html += '</div>'; // close detail-panels
+
+  // ══════════ PANEL C: Data Health (account-level) ══════════
+  html += '<div class="panel-c">';
+  html += '<h3>PANEL C: Data Health &mdash; ' + esc(a.n) + '</h3>';
+  html += '<table><tr><th>Data Point</th><th>Available?</th><th>Confidence</th><th>What would help</th></tr>';
+  html += '<tr><td>Buy channels</td><td>Partial</td><td>' + conf('med') + '</td><td>Resolver &ldquo;Unknown&rdquo; channel classification</td></tr>';
+  html += '<tr><td>Sell channels</td><td>Yes</td><td>' + conf('high') + '</td><td>&mdash;</td></tr>';
+  html += '<tr><td>Catalog/listings</td><td>No</td><td>' + conf('gap') + '</td><td>OFERTA snapshot in Snowflake</td></tr>';
+  html += '<tr><td>Search intent</td><td>No</td><td>' + conf('gap') + '</td><td>GA4 integration (exists, not connected)</td></tr>';
+  html += '<tr><td>Forward availability</td><td>Config only</td><td>' + conf('low') + '</td><td>Actual listing data vs config</td></tr>';
+  html += '<tr><td>Feature flags</td><td>SFDC</td><td>' + conf('med') + '</td><td>Sync SFDC &harr; Snowflake</td></tr>';
+  html += '<tr><td>Login/sessions</td><td>No</td><td>' + conf('gap') + '</td><td>GA4 / Mixpanel</td></tr>';
+  html += '<tr><td>Bunches format</td><td>Core only</td><td>' + conf('med') + '</td><td>eSuite offline data</td></tr>';
+  html += '<tr><td>Go-live date</td><td>' + (a.gl ? 'Yes' : 'Missing') + '</td><td>' + (a.gl ? conf('high') : conf('med')) + '</td><td>' + (a.gl ? '&mdash;' : 'Fill SFDC Go_Live_Date') + '</td></tr>';
+  html += '</table></div>';
+
+  // ── Activity section ──
+  html += '<div class="activity-log">';
+  html += '<h3>Activity &amp; Context</h3>';
+  html += '<div class="log-item"><span><strong>Product:</strong> ' + esc(a.sys) + '</span></div>';
+  html += '<div class="log-item"><span><strong>Implementation Consultant:</strong> ' + esc(a.impl) + '</span></div>';
+  if (a.cs) html += '<div class="log-item"><span><strong>CS Advisor:</strong> ' + esc(a.cs) + '</span></div>';
+  html += '<div class="log-item"><span><strong>Lifecycle Stage:</strong> ' + (a.lc || 'N/A') + '</span></div>';
+  if (a.gl) html += '<div class="log-item"><span><strong>Go-live:</strong> ' + a.gl + ' (' + daysSince(a.gl) + ' days ago)</span></div>';
+  html += '<div class="log-item"><span><strong>Fathom calls:</strong> Available via Fathom MCP (Jun 1+)' + conf('high') + '</span></div>';
+  html += '<div class="log-item"><span><strong>SFDC Last Activity:</strong> Check SFDC' + conf('med') + '</span></div>';
+  html += '<div class="log-item"><span><strong>Effort (Cupido):</strong> Check Cupido dashboard' + conf('high') + ' (for tracked pairs) ' + conf('gap') + ' (non-Cupido accounts)</span></div>';
+  html += '</div>';
+
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// DATA HEALTH SECTION (standalone at bottom of Level 0)
+// ═══════════════════════════════════════════════════════════════════════
+function renderDataHealth() {
+  let html = '<div class="dh-section">';
+  html += '<p class="eyebrow">System View</p>';
+  html += '<h2>Data Health &mdash; What We Can and Can&rsquo;t Measure</h2>';
+
+  // ── Available Now (GREEN) ──
+  html += '<div class="dh-group">';
+  html += '<h3><span class="dh-dot green"></span> Available Now ' + conf('high') + '</h3>';
+  html += '<div class="tableWrap"><table class="dh-table"><tr><th>Data Point</th><th>Source</th><th>Notes</th></tr>';
+  html += '<tr><td>TX Fees by channel</td><td>Snowflake CONSOLIDATED_TRANSACTION_FEES_SV</td><td>eCom, K2K, API &mdash; verified by Codex</td></tr>';
+  html += '<tr><td>Sell-side GMV by channel</td><td>Snowflake SALE_DETAILS</td><td>Online (eCom), K2K, Offline</td></tr>';
+  html += '<tr><td>K2K Connections</td><td>Snowflake K2K_CONNECTIONS_SV</td><td>Total, active, churned</td></tr>';
+  html += '<tr><td>Procurement by channel</td><td>Snowflake PROCUREMENTS_SV</td><td>sales_channel: Procurement, Web, Unknown</td></tr>';
+  html += '<tr><td>Feature flags</td><td>SFDC Account booleans</td><td>Procurement, eShop, K2K, FCS</td></tr>';
+  html += '<tr><td>Rep assignment</td><td>SFDC Implementation_Lead, CS_Advisor</td><td>&mdash;</td></tr>';
+  html += '<tr><td>Fathom calls</td><td>Fathom API</td><td>Jun 1+ recordings</td></tr>';
+  html += '</table></div></div>';
+
+  // ── Available but Not Integrated (YELLOW) ──
+  html += '<div class="dh-group">';
+  html += '<h3><span class="dh-dot yellow"></span> Available but Not Integrated ' + conf('med') + ' &rarr; actionable</h3>';
+  html += '<div class="tableWrap"><table class="dh-table"><tr><th>Data Point</th><th>Where It Lives</th><th>Owner</th><th>Action</th></tr>';
+  html += '<tr><td>GA4 search/click/intent data</td><td>GA4 &mdash; 50 events in KP, incl. search_not_found</td><td>Agust&iacute;n</td><td>First pull via ga4_pull.py</td></tr>';
+  html += '<tr><td>SFDC Activity logs</td><td>SFDC &mdash; last activity date exists</td><td>RevOps</td><td>Add to weekly refresh</td></tr>';
+  html += '<tr><td>BigQuery pipeline (GA4&rarr;dashboards)</td><td>BigQuery</td><td>Agust&iacute;n</td><td>Rose needs access &mdash; email Agust&iacute;n</td></tr>';
+  html += '<tr><td>Offline prices in POs</td><td>total_price, total_cost in PROCUREMENT_DETAILS</td><td>Rose</td><td>Add to supply quality calc</td></tr>';
+  html += '<tr><td>Format match (bunches)</td><td>inventory_division in SALE_DETAILS</td><td>Rose</td><td>Calculated for top 46 accounts</td></tr>';
+  html += '</table></div></div>';
+
+  // ── Not Available (BLACK) ──
+  html += '<div class="dh-group">';
+  html += '<h3><span class="dh-dot black"></span> Not Available &mdash; Would Transform the Dashboard ' + conf('gap') + ' &rarr; product request</h3>';
+  html += '<div class="tableWrap"><table class="dh-table"><tr><th>Data Point</th><th>Why It Matters</th><th>Status</th></tr>';
+  html += '<tr><td>Catalog/listing snapshot</td><td>What&rsquo;s in the eShop RIGHT NOW &mdash; no OFERTA table in Snowflake</td><td>Product request</td></tr>';
+  html += '<tr><td>&ldquo;Unknown&rdquo; channel resolution</td><td>82.5% of buy-side unclassified &mdash; blocks % online buy accuracy</td><td>Data engineering</td></tr>';
+  html += '<tr><td>Forward availability actual</td><td>Not just config &mdash; no daily availability snapshot exists</td><td>Product request</td></tr>';
+  html += '<tr><td>Login/session data per user</td><td>USER_BY_COMPANIES has last_login but not frequency</td><td>GA4 / Mixpanel integration</td></tr>';
+  html += '<tr><td>Cart abandonment / conversion funnel</td><td>Not in Snowflake</td><td>Product + GA4</td></tr>';
+  html += '<tr><td>Search-to-purchase funnel</td><td>GA4 has events but needs company_id (KS-49279)</td><td>Blocked on KS-49279</td></tr>';
+  html += '<tr><td>Standing order active/inactive status</td><td>STATUS_SO field not explored</td><td>Rose &mdash; explore</td></tr>';
+  html += '</table></div></div>';
+
+  html += '</div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════════════════
+function render() {
+  renderBreadcrumb();
+  const app = document.getElementById('app');
+  switch(state.level) {
+    case 0: app.innerHTML = renderLevel0(); break;
+    case 1: app.innerHTML = renderLevel1(); break;
+    case 2: app.innerHTML = renderLevel2(); break;
+    case 3: app.innerHTML = renderLevel3(); break;
+  }
+  window.scrollTo(0, 0);
+}
+
+render();
+</script>
+</main>
+</body>
+</html>
