@@ -584,6 +584,22 @@ function renderBuyBlock(accounts, level) {
         <div class="kpi-box"><div class="kpi-label">Manual / Offline</div><div class="kpi-val">${fmtK(buy.totalPO)}</div></div>
         <div class="kpi-box"><div class="kpi-label">Accounts Buying</div><div class="kpi-val">${buy.buyingAccts}</div><div class="kpi-sub">of ${accounts.length} total</div></div>
       </div>
+      <div class="grid2" style="margin:14px 0">
+        <div class="card" style="border-left:4px solid var(--red)">
+          <small>LEAKAGE — Behavioral</small>
+          <strong>${fmtK(buy.totalLeakage)} across ${buy.matchedLeakage.filter(r=>r.leakage>0).length} wholesalers</strong>
+          <p>Compran offline a vendors que SÍ están en K2K. Es hábito, no infraestructura.</p>
+          <p style="margin-top:8px;color:var(--ink)"><strong>Acción:</strong> CS → "¿Sabías que podés comprar de [vendor] por Procurement?"</p>
+          <p><strong>Owner:</strong> Customer Success Advisor</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--gold)">
+          <small>GAP — Infrastructure</small>
+          <strong>${fmtK(buy.totalGap)} across ${buy.matchedLeakage.filter(r=>r.gap>0).length} wholesalers</strong>
+          <p>Compran offline a vendors que NO están en K2K. No pueden comprar online aunque quieran.</p>
+          <p style="margin-top:8px;color:var(--ink)"><strong>Acción:</strong> Implementation → conectar vendor al ecosistema K2K</p>
+          <p><strong>Owner:</strong> Implementation Consultant</p>
+        </div>
+      </div>
       ${leakageLayerHTML}
       ${vendorLayerHTML}
     </div>
@@ -647,8 +663,19 @@ function renderListBlock(accounts, level) {
         <div class="kpi-box"><div class="kpi-label">Avg Coverage</div><div class="kpi-val">${fmtPct(list.avgCoverage)}</div><div class="kpi-sub">products in inventory vs online</div></div>
         <div class="kpi-box"><div class="kpi-label">Bunches: Selling / Enabled / OFF</div><div class="kpi-val">15 / 43 / rest</div><div class="kpi-sub"><span class="confidence conf-med">MEDIUM</span> Maga Jun 30</div></div>
       </div>
+      <div class="band gold" style="margin-bottom:14px">
+        <strong>Quick Win: 28 wholesalers tienen bunches habilitados y $0 en ventas de bunches.</strong>
+        Discovery call para entender por qué. Role models: BDC ($1.07M), Maple Grove (35.4% penetración), Zeidler (17.2%).
+        Bug conocido: "future sales by bunch" bloquea a Floristcentric y Riverside.
+      </div>
       ${inventoryLayerHTML}
       ${coverageLayerHTML}
+      <div class="diagnostic insight" style="margin-top:12px">
+        <strong>Definición Coverage %:</strong> Categorías vendidas online / categorías vendidas offline (H1 2026).
+        Mide qué % de lo que venden offline también venden online.
+        Solo para Core accounts — si no tienen Core, no vemos offline.
+        <span class="confidence conf-high">HIGH</span> para Core, <span class="confidence conf-gap">GAP</span> para eSuite-only.
+      </div>
     </div>
   </div>`;
 }
@@ -857,9 +884,12 @@ function renderAccountRow(a, showOwner) {
   const sellSignal = sellStage === 'Healthy' ? 'ok' : sellStage === 'Growing' ? 'ok' : sellStage === 'Low Online' ? 'warn' : 'bad';
   const statusDot = a.lc === 'Adoption' ? 'green' : a.lc === 'Onboarding' ? 'yellow' : 'gray';
   const onlinePct = a.gt > 0 ? (a.gon / a.gt * 100) : 0;
+  const daysLive = a.gl ? Math.floor((new Date() - new Date(a.gl)) / 86400000) : null;
+  const daysTag = daysLive === null ? '<span class="small">—</span>' : daysLive <= 30 ? `<span class="tag" style="background:#eff6ff;color:#1d4ed8;border-color:#c7d7fe">${daysLive}d NEW</span>` : daysLive <= 90 ? `<span class="tag warn">${daysLive}d RAMP</span>` : `<span class="small">${daysLive}d</span>`;
   return `<tr class="clickable" onclick="selectedAccount='${a.n.replace(/'/g,"\\'")}';drillPath.push({type:'account',name:'${a.n.replace(/'/g,"\\'")}'});render()">
     <td><strong style="color:var(--blue)">${a.n}</strong><br><span class="small">${a.sys}</span></td>
     <td><span class="acct-status"><span class="dot ${statusDot}"></span> ${a.lc || 'N/A'}</span></td>
+    <td>${daysTag}</td>
     ${showOwner ? `<td class="small">${a.impl || '-'}<br>${a.cs || '-'}</td>` : ''}
     <td class="num">${a.k2k}</td>
     <td class="num">${fmtK(a.pt)}</td>
@@ -904,7 +934,7 @@ function renderRepDrilldown(ownerName, accounts) {
     <div style="margin-top:16px">
       <h3>Accounts <span class="period-badge">H1 2026</span></h3>
       <div class="tableWrap"><table class="drill-table">
-        <tr><th>Account</th><th>Status</th><th class="num">K2K</th><th class="num">Procure Total</th><th class="num">Procure K2K</th><th class="num">Fees</th><th class="num">GMV Online</th><th class="num">GMV Offline</th><th class="num">Online %</th><th>Buy Stage</th><th>Sell Stage</th></tr>
+        <tr><th>Account</th><th>Status</th><th>Days Live</th><th class="num">K2K</th><th class="num">Procure Total</th><th class="num">Procure K2K</th><th class="num">Fees</th><th class="num">GMV Online</th><th class="num">GMV Offline</th><th class="num">Online %</th><th>Buy Stage</th><th>Sell Stage</th></tr>
         ${accounts.sort((a,b) => b.gt - a.gt).map(a => renderAccountRow(a, false)).join('')}
       </table></div>
     </div>
@@ -951,7 +981,7 @@ function render() {
   if (currentView === 'all') {
     // Flat table
     drillHTML = `<div class="tableWrap"><table class="drill-table">
-      <tr><th>Account</th><th>Status</th><th>Impl / CS</th><th class="num">K2K</th><th class="num">Procure Total</th><th class="num">Procure K2K</th><th class="num">Fees</th><th class="num">GMV Online</th><th class="num">GMV Offline</th><th class="num">Online %</th><th>Buy Stage</th><th>Sell Stage</th></tr>
+      <tr><th>Account</th><th>Status</th><th>Days Live</th><th>Impl / CS</th><th class="num">K2K</th><th class="num">Procure Total</th><th class="num">Procure K2K</th><th class="num">Fees</th><th class="num">GMV Online</th><th class="num">GMV Offline</th><th class="num">Online %</th><th>Buy Stage</th><th>Sell Stage</th></tr>
       ${filtered.sort((a,b) => b.gt - a.gt).map(a => renderAccountRow(a, true)).join('')}
     </table></div>`;
   } else {
@@ -1020,6 +1050,30 @@ function render() {
         <tr><td style="color:var(--purple);font-weight:800">SELL</td><td>Buyer cohorts</td><td><span class="source-tag source-snow">SNOWFLAKE</span> SALE_DETAILS</td><td>H1 2026 (Jan 1 - Jun 30)</td><td><span class="confidence conf-high">HIGH</span></td></tr>
       </table></div>
       <p class="small" style="margin-top:12px">Rose (Data Agent L1) | Jul 15, 2026 | NOT VERIFIED by Codex | Terminology: Connected / Activated / Active / Churned / Dormant (NEVER "Mature" / "Inmature")</p>
+    </section>
+
+    <!-- Definitions -->
+    <section>
+      <details>
+        <summary style="cursor:pointer;font-weight:800;font-size:16px;padding:8px 0">Definiciones</summary>
+        <div class="tableWrap" style="margin-top:12px">
+          <table>
+            <tr><th style="width:180px">Término</th><th>Definición</th></tr>
+            <tr><td><strong>Coverage %</strong></td><td>Categorías vendidas online / categorías vendidas offline (H1 2026). Solo Core accounts — sin Core no vemos offline.</td></tr>
+            <tr><td><strong>Leakage</strong></td><td>$ comprado offline a vendors que SÍ están conectados en K2K. Problema behavioral — el vendor está, el wholesaler no lo usa.</td></tr>
+            <tr><td><strong>Gap</strong></td><td>$ comprado offline a vendors que NO están en K2K. Problema de infraestructura — el vendor no está conectado.</td></tr>
+            <tr><td><strong>Buy Stage</strong></td><td>No Connections (0 K2K) → Dormant (K2K pero $0 procurement) → Activated (compró ≥1 vez) → Active (compró L30D) → Churned (era activo, paró)</td></tr>
+            <tr><td><strong>Sell Stage</strong></td><td>No Sales (GMV=0) → Offline Only (online=0) → Low Online (&lt;15%) → Growing (15-50%) → Healthy (&gt;50%). Nota: thresholds son proxy, mostrar % directo para decisiones.</td></tr>
+            <tr><td><strong>Bunch penetration</strong></td><td>$ bunches vendidos online / $ total vendido online (H1 2026). 43 accounts con feature, 15 vendiendo, 28 dark. Fuente: Maga Jun 30.</td></tr>
+            <tr><td><strong>Days Live</strong></td><td>Días desde Go-Live Date (SFDC). NEW = 0-30d, RAMP = 31-90d. Si no tiene fecha: —</td></tr>
+            <tr><td><strong>Connected</strong></td><td>Tiene conexión K2K (existe en el sistema)</td></tr>
+            <tr><td><strong>Activated</strong></td><td>Compró ≥1 vez via esa conexión (PROCUREMENTS_SV join, no el campo k2k_connection_status)</td></tr>
+            <tr><td><strong>Active</strong></td><td>Compró en los últimos 30 días</td></tr>
+            <tr><td><strong>Churned</strong></td><td>Era Active, dejó de comprar en L30D</td></tr>
+            <tr><td><strong>Dormant</strong></td><td>Conectado pero nunca compró</td></tr>
+          </table>
+        </div>
+      </details>
     </section>
   `;
 }
