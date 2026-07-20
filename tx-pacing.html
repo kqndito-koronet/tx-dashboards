@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TX Fee Pacing Q3 2026</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1480px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,52px);line-height:1;margin-bottom:10px}h2{font-size:clamp(20px,2.4vw,28px);line-height:1.15;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:15px;max-width:1040px;margin-bottom:4px}.small{color:var(--muted);font-size:13px}
+    .links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#101828;padding:0 12px;font-size:14px;text-decoration:none}.primary{background:var(--blue)!important;border-color:var(--blue)!important;color:#fff!important}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}.blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px;margin-top:10px}.band.gold{background:#fff4e5;color:#7c3e00}.band.blue{background:#eff6ff;color:#1d4ed8}.band.green{background:#ecfdf3;color:#067647}.band.red{background:#fef3f2;color:#b42318}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:11px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}th.num{text-align:right}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    .bar-container{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+    .bar-group{display:flex;flex-direction:column;gap:4px}
+    .bar-label{font-size:13px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+    .bar-label span{font-size:12px;font-weight:500;color:var(--muted)}
+    .bar-track{position:relative;height:28px;background:#f0f3f8;border-radius:6px;overflow:hidden}
+    .bar-fill-25{position:absolute;top:0;left:0;height:100%;border-radius:6px;opacity:.35}
+    .bar-fill-26{position:absolute;top:0;left:0;height:100%;border-radius:6px}
+    .bar-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;color:var(--ink)}
+    .scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .scenario-card{border:1px solid var(--line);border-radius:9px;padding:15px;text-align:center}
+    .scenario-card .label{font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+    .scenario-card .val{font-size:26px;font-weight:800;margin-bottom:4px}
+    .scenario-card .desc{font-size:12px;color:var(--muted)}
+    .prov{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6}
+    .prov code{background:#f0f3f8;padding:2px 6px;border-radius:4px;font-size:11px}
+    @media(max-width:980px){main{width:min(100% - 24px,1480px)}.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- ============================================================ -->
+  <!-- HEADER                                                        -->
+  <!-- ============================================================ -->
+  <section style="border:none;box-shadow:none;background:transparent;padding:0 0 4px">
+    <p class="eyebrow">TX Chapter</p>
+    <h1>TX Fee Pacing Q3 2026</h1>
+    <p class="sub">Target: <strong>$670K</strong> &nbsp;|&nbsp; Data as of <strong>Jul 20, 2026</strong> (20 comparable days)</p>
+    <div class="links">
+      <a href="/tx-dashboards/tx-scorecard-v3.html">Wholesaler Scorecard</a>
+      <a href="/tx-dashboards/tx-strategy-v2/q3-hub.html">Q3 Hub</a>
+      <a href="/tx-dashboards/okr-diagnostic.html">OKR Diagnostic</a>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S1: PACING SUMMARY (4 CARDS)                                  -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 1 &mdash; Pacing Summary</p>
+    <h2>Where we stand through 20 comparable days</h2>
+    <div class="grid4">
+      <article class="card metric okLine">
+        <small>Core MTD (Jul 1-20)</small>
+        <strong>$94,332</strong>
+        <p>+42.3% YoY (vs $66,297)</p>
+      </article>
+      <article class="card metric blueLine">
+        <small>Total MTD (incl. Axerrio est.)</small>
+        <strong>~$100,461</strong>
+        <p>Core $94.3K + Axerrio ~$6.1K</p>
+      </article>
+      <article class="card metric warnLine">
+        <small>Pacing vs needed rate</small>
+        <strong>77.6%</strong>
+        <p>Need +54.5% YoY, have +42.3%</p>
+      </article>
+      <article class="card metric warnLine">
+        <small>Projected Q3 (linear)</small>
+        <strong>~$645K</strong>
+        <p>Gap: ~$24K short of $670K (-3.6%)</p>
+      </article>
+    </div>
+    <div class="band gold">Pacing at 77.6% of needed rate. Growth is strong (+42.3%) but +54.5% is required. The gap is ~$24K, or ~3.6% of target. Aug+Sep J-shape is key.</div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S2: YOY COMPARISON                                            -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 2 &mdash; YoY Comparison</p>
+    <h2>Core metrics: Jul 1-20 (comparable days)</h2>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th class="num">2025 (Jul 1-20)</th>
+            <th class="num">2026 (Jul 1-20)</th>
+            <th class="num">YoY</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core TX Fees</strong></td>
+            <td class="num">$66,297</td>
+            <td class="num">$94,332</td>
+            <td class="num" style="color:var(--green)">+42.3%</td>
+            <td><span class="tag warn">Below +54.5% needed</span></td>
+          </tr>
+          <tr>
+            <td><strong>Online GMV</strong></td>
+            <td class="num">$9.95M</td>
+            <td class="num">$11.10M</td>
+            <td class="num" style="color:var(--green)">+11.5%</td>
+            <td><span class="tag ok">Volume growing</span></td>
+          </tr>
+          <tr>
+            <td><strong>Take Rate (Fees/Online GMV)</strong></td>
+            <td class="num">0.67%</td>
+            <td class="num">0.85%</td>
+            <td class="num" style="color:var(--green)">+18 bps</td>
+            <td><span class="tag ok">Rate expansion</span></td>
+          </tr>
+          <tr>
+            <td><strong>Required Q3 YoY</strong></td>
+            <td class="num" style="color:var(--muted)">&mdash;</td>
+            <td class="num" style="color:var(--muted)">&mdash;</td>
+            <td class="num"><strong>+54.5%</strong></td>
+            <td><span class="tag warn">12.2pp gap</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="band blue">Take rate is the story: +18 bps means fee growth is 3.7x GMV growth. This is take-rate expansion, not volume surge.</div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S3: FEES BY CHANNEL                                           -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 3 &mdash; Fees by Channel</p>
+    <h2>Jul 1-20: Channel breakdown (Core fees only)</h2>
+    <div class="bar-container">
+
+      <!-- K2K -->
+      <div class="bar-group">
+        <div class="bar-label">K2K &mdash; $43,727 (46.3%) <span>+42.0% YoY</span></div>
+        <div class="bar-track">
+          <div class="bar-fill-25" style="width:70.4%;background:var(--blue)"></div>
+          <div class="bar-fill-26" style="width:100%;background:var(--blue)"></div>
+          <div class="bar-val">$43.7K</div>
+        </div>
+      </div>
+
+      <!-- eCom -->
+      <div class="bar-group">
+        <div class="bar-label">eCommerce &mdash; $43,095 (45.7%) <span>+39.4% YoY</span></div>
+        <div class="bar-track">
+          <div class="bar-fill-25" style="width:70.8%;background:var(--green)"></div>
+          <div class="bar-fill-26" style="width:98.6%;background:var(--green)"></div>
+          <div class="bar-val">$43.1K</div>
+        </div>
+      </div>
+
+      <!-- API -->
+      <div class="bar-group">
+        <div class="bar-label">API &mdash; $5,558 (5.9%) <span>+35.4% YoY</span></div>
+        <div class="bar-track">
+          <div class="bar-fill-25" style="width:9.4%;background:var(--purple)"></div>
+          <div class="bar-fill-26" style="width:12.7%;background:var(--purple)"></div>
+          <div class="bar-val" style="right:auto;left:14.5%">$5.6K</div>
+        </div>
+      </div>
+
+      <!-- GPS/FedEx -->
+      <div class="bar-group">
+        <div class="bar-label">GPS / FedEx &mdash; $1,952 (2.1%) <span>+305% YoY</span></div>
+        <div class="bar-track">
+          <div class="bar-fill-25" style="width:1.1%;background:var(--gold)"></div>
+          <div class="bar-fill-26" style="width:4.5%;background:var(--gold)"></div>
+          <div class="bar-val" style="right:auto;left:6.5%">$2.0K</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:currentColor;opacity:.3;display:inline-block"></span> 2025</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:currentColor;display:inline-block"></span> 2026</span>
+    </div>
+
+    <div class="band green">K2K and eCom nearly equal (~46% each). GPS/FedEx tiny but +305% signals new adoption. All channels growing &gt;35% YoY.</div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S4: FEES BY INDUSTRY                                          -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 4 &mdash; Fees by Industry / Layer</p>
+    <h2>Who generates the fees (estimated from account classification)</h2>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Industry</th>
+            <th class="num">2025 Jul 1-20 (est.)</th>
+            <th class="num">2026 Jul 1-20</th>
+            <th class="num">YoY (est.)</th>
+            <th class="num">Share 2026</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Importers</strong></td>
+            <td class="num">~$31K</td>
+            <td class="num">~$44K</td>
+            <td class="num" style="color:var(--green)">~+42%</td>
+            <td class="num">~47%</td>
+            <td><span class="tag ok">Largest layer</span></td>
+          </tr>
+          <tr>
+            <td><strong>Wholesalers</strong></td>
+            <td class="num">~$22K</td>
+            <td class="num">~$30K</td>
+            <td class="num" style="color:var(--green)">~+36%</td>
+            <td class="num">~32%</td>
+            <td><span class="tag warn">Below avg growth</span></td>
+          </tr>
+          <tr>
+            <td><strong>Growers</strong></td>
+            <td class="num">~$9K</td>
+            <td class="num">~$14K</td>
+            <td class="num" style="color:var(--green)">~+56%</td>
+            <td class="num">~15%</td>
+            <td><span class="tag ok">Fastest growing</span></td>
+          </tr>
+          <tr>
+            <td><strong>Other / Unclassified</strong></td>
+            <td class="num">~$4K</td>
+            <td class="num">~$6K</td>
+            <td class="num" style="color:var(--green)">~+50%</td>
+            <td class="num">~6%</td>
+            <td><span class="tag" style="opacity:.6">Small base</span></td>
+          </tr>
+          <tr style="background:#f8fafc;font-weight:700">
+            <td><strong>Total</strong></td>
+            <td class="num">$66,297</td>
+            <td class="num">$94,332</td>
+            <td class="num" style="color:var(--green)">+42.3%</td>
+            <td class="num">100%</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:8px">Industry breakdown is estimated from Salesforce Business_Type__c classification of top accounts. Exact decomposition requires query 08_fees_by_industry.sql with full account mapping. Will be precise in next refresh.</p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S5: CONCENTRATION                                             -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 5 &mdash; Concentration</p>
+    <h2>Top 15 accounts by fees (Jul 1-20)</h2>
+    <div class="band gold" style="margin-top:0;margin-bottom:12px">Top 15 data pending next refresh. Prior run (Jun 17): top 15 = 64.8% of total fees. Query 09_top15_concentration.sql ready.</div>
+    <p class="small">Next refresh will populate this table with Jul 1-20 account-level data. Concentration risk remains a key metric to watch weekly.</p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S6: PROJECTION                                                -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 6 &mdash; Q3 Projection</p>
+    <h2>J-shape weighted projection using Q3 2025 monthly distribution</h2>
+
+    <div class="tableWrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th class="num">Q3 2025 Actual</th>
+            <th class="num">Share of Q3</th>
+            <th class="num">Required 2026 (+54.5%)</th>
+            <th class="num">At current pace (+42.3%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>July</strong></td>
+            <td class="num">$110,294</td>
+            <td class="num">25.4%</td>
+            <td class="num">$170,354</td>
+            <td class="num">$156,838</td>
+          </tr>
+          <tr>
+            <td><strong>August</strong></td>
+            <td class="num">$138,824</td>
+            <td class="num">32.0%</td>
+            <td class="num">$214,483</td>
+            <td class="num">$197,463</td>
+          </tr>
+          <tr>
+            <td><strong>September</strong></td>
+            <td class="num">$184,508</td>
+            <td class="num">42.5%</td>
+            <td class="num">$285,065</td>
+            <td class="num">$262,494</td>
+          </tr>
+          <tr style="background:#f8fafc;font-weight:700">
+            <td><strong>Q3 Total (Core only)</strong></td>
+            <td class="num">$433,627</td>
+            <td class="num">100%</td>
+            <td class="num">$670,000</td>
+            <td class="num">$616,795</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Scenarios</h3>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:var(--gold)">
+        <div class="label">Maintain +42.3%</div>
+        <div class="val" style="color:var(--gold)">~$645K</div>
+        <div class="desc">Core ~$617K + Axerrio ~$28.5K<br>Gap: -$24K (-3.6%)</div>
+      </div>
+      <div class="scenario-card" style="border-color:var(--green)">
+        <div class="label">Accelerate to +54.5%</div>
+        <div class="val" style="color:var(--green)">~$699K</div>
+        <div class="desc">Core $670K + Axerrio ~$28.5K<br>Exceeds target by $29K</div>
+      </div>
+      <div class="scenario-card" style="border-color:var(--red)">
+        <div class="label">Decelerate to +30%</div>
+        <div class="val" style="color:var(--red)">~$592K</div>
+        <div class="desc">Core ~$564K + Axerrio ~$28.5K<br>Gap: -$78K (-11.6%)</div>
+      </div>
+    </div>
+
+    <div class="band blue">The J-shape is our friend: Sep carries 42.5% of Q3. If growth accelerates in peak months (historically it does), the gap narrows. But betting on the J-shape alone is not a strategy.</div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S7: AXERRIO                                                   -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 7 &mdash; Axerrio</p>
+    <h2>Axerrio contribution (separate line per methodology)</h2>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th class="num">Amount</th>
+            <th>Type</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>H1 2026 Actual</strong></td>
+            <td class="num">~$54,000</td>
+            <td><span class="tag ok">Actual</span></td>
+            <td>Sofia's Control Sheet (~$9K/mo avg)</td>
+          </tr>
+          <tr>
+            <td><strong>Jul 2026 (pro-rata 20/31)</strong></td>
+            <td class="num">~$6,129</td>
+            <td><span class="tag warn">Estimate</span></td>
+            <td>Pro-rated from ~$9,500/mo estimate</td>
+          </tr>
+          <tr>
+            <td><strong>Jul 2026 Full Month</strong></td>
+            <td class="num">~$9,500</td>
+            <td><span class="tag warn">Estimate</span></td>
+            <td>H1 monthly average</td>
+          </tr>
+          <tr>
+            <td><strong>Q3 2026 Estimate</strong></td>
+            <td class="num">~$28,500</td>
+            <td><span class="tag warn">Estimate</span></td>
+            <td>3 months x ~$9,500</td>
+          </tr>
+          <tr style="background:#fef3f2">
+            <td><strong>Q3 2025 Axerrio</strong></td>
+            <td class="num">&mdash;</td>
+            <td><span class="tag bad">Not available</span></td>
+            <td>Pending from Sofia. When provided, YoY will be calculable.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:8px">Source: Google Drive sheet ID 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM. Axerrio always reported as separate line (R14 methodology).</p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- S8: WEEKLY TREND                                              -->
+  <!-- ============================================================ -->
+  <section>
+    <p class="eyebrow">Section 8 &mdash; Weekly Trend</p>
+    <h2>Week-over-week snapshots (cumulative within month)</h2>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th class="num">Core MTD</th>
+            <th class="num">YoY</th>
+            <th class="num">Pacing %</th>
+            <th class="num">&Delta; vs Prior Week</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jul 1-13 (Run 1)</td>
+            <td class="num">$62,841</td>
+            <td class="num">+55.7%</td>
+            <td class="num">102.2%</td>
+            <td class="num">&mdash;</td>
+            <td><span class="tag ok">Above pace</span></td>
+          </tr>
+          <tr>
+            <td>Jul 1-15 (Run 2)</td>
+            <td class="num">$70,436</td>
+            <td class="num">+49.8%</td>
+            <td class="num">91.4%</td>
+            <td class="num">-10.8pp</td>
+            <td><span class="tag warn">Pace dropped</span></td>
+          </tr>
+          <tr style="background:#f8fafc">
+            <td><strong>Jul 1-20 (Run 3)</strong></td>
+            <td class="num"><strong>$94,332</strong></td>
+            <td class="num"><strong>+42.3%</strong></td>
+            <td class="num"><strong>77.6%</strong></td>
+            <td class="num" style="color:var(--red)"><strong>-13.8pp</strong></td>
+            <td><span class="tag warn">Below pace</span></td>
+          </tr>
+          <tr style="color:var(--muted)">
+            <td>Jul 1-24 (Run 4)</td>
+            <td class="num">&mdash;</td>
+            <td class="num">&mdash;</td>
+            <td class="num">&mdash;</td>
+            <td class="num">&mdash;</td>
+            <td><span class="tag" style="opacity:.5">Thu Jul 24</span></td>
+          </tr>
+          <tr style="color:var(--muted)">
+            <td>Jul 1-31 (EOM)</td>
+            <td class="num">&mdash;</td>
+            <td class="num">&mdash;</td>
+            <td class="num">&mdash;</td>
+            <td class="num">&mdash;</td>
+            <td><span class="tag" style="opacity:.5">End of month</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="band red">Pacing dropped from 102.2% (Jul 13) to 77.6% (Jul 20). This is the critical trend to watch. If Jul 24 doesn't recover, the gap widens.</div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER: PROVENANCE                                            -->
+  <!-- ============================================================ -->
+  <section style="background:#f8fafc">
+    <p class="eyebrow">Provenance</p>
+    <h3>Data sources and methodology</h3>
+    <div class="prov">
+      <strong>Core fees 2026:</strong> <code>PRODUCTION.ANALYTICS.EXPECTED_TRANSACTION_FEES</code> (shipping_date Jul 1-20, 2026)<br>
+      <strong>Core fees 2025:</strong> <code>PRODUCTION.ANALYTICS.TRANSACTION_FEES</code> (transaction_date Jul 1-20, 2025, status='Billed')<br>
+      <strong>GMV:</strong> <code>PRODUCTION.ANALYTICS.SALES</code> (online, comparable days)<br>
+      <strong>Axerrio:</strong> Sofia's Control Sheet (Google Drive, pro-rated)<br>
+      <strong>Channel split:</strong> Query 07_fees_by_channel.sql<br>
+      <strong>Q3 2025 full:</strong> Query 06_q3_prior_full.sql &mdash; Jul $110,294 / Aug $138,824 / Sep $184,508 = $433,627<br>
+      <strong>Cutoff:</strong> Jul 20, 2026 &mdash; last day with substantial fees (&gt;$1K/day) and substantial GMV (&gt;$500K/day)<br>
+      <strong>Methodology:</strong> Canonical pacing per R14 &mdash; comparable days, same period both years, Axerrio always separate<br>
+      <strong>All queries:</strong> <code>/Users/facu/Koronet_OS/scripts/sql/pacing/</code> (01 through 09)<br>
+      <strong>Pacing run file:</strong> <code>/Users/facu/Koronet_OS/agents/rose/memory/pacing_runs/pacing_2026-07-20.md</code>
+    </div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span class="small">Last refreshed: <strong>Jul 20, 2026</strong> &nbsp;|&nbsp; Next: <strong>Jul 24, 2026</strong> (Thursday)</span>
+      <span class="small">Methodology: <a href="#">scorecard_canonical.md</a> &nbsp;|&nbsp; <a href="#">pacing_methodology.md</a></span>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
