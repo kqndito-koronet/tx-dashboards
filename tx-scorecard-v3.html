@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TX Scorecard v3 — BUY / LIST / SELL</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+    main{width:min(1520px,calc(100% - 48px));margin:0 auto;padding:32px 0 80px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:28px 30px;margin-bottom:18px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(36px,5vw,58px);line-height:.98;margin-bottom:14px}h2{font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin-bottom:10px}h3{font-size:19px;margin-bottom:10px}
+    .sub{color:var(--muted);font-size:17px;max-width:1040px;line-height:1.55}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fff;padding:18px}.card strong{display:block;margin-bottom:6px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}
+    .band{border-radius:8px;padding:13px 16px;font-weight:900;line-height:1.5}.band.gold{background:#fff4e5;color:#7c3e00}.band.blue{background:#eff6ff;color:#1d4ed8}.band.green{background:#ecfdf3;color:#067647}.band.red{background:#fef3f2;color:#b42318}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:12px 14px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase;position:sticky;top:0;z-index:1}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 10px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}
+    .real{display:inline-flex;align-items:center;min-height:20px;border-radius:4px;padding:0 7px;background:#ecfdf3;color:#067647;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;margin-left:6px}
+    .source-tag{display:inline-flex;align-items:center;min-height:20px;border-radius:4px;padding:0 7px;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-right:6px}
+    .source-snow{background:#eff6ff;color:#1d4ed8;border:1px solid #c7d7fe}
+    .source-sfdc{background:#f4f0ff;color:#5925dc;border:1px solid #d9d6fe}
+    tr.clickable{cursor:pointer;transition:background .1s}tr.clickable:hover{background:#f8fafc}
+    @media(max-width:1080px){main{width:min(100% - 24px,1520px)}.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+    .pacing-card{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);color:#fff;border-radius:12px;padding:20px 28px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    .pacing-card .pc-item{display:flex;flex-direction:column;gap:2px}.pacing-card .pc-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8}.pacing-card .pc-value{font-size:22px;font-weight:900;line-height:1.1}
+    .pacing-card .pc-yoy{color:#4ade80}.pacing-card .pc-gap{color:#fb923c}
+    .pacing-card .pc-divider{width:1px;height:40px;background:#334155;flex-shrink:0}
+    .breadcrumb{display:flex;align-items:center;gap:8px;padding:12px 0;font-size:14px;font-weight:700;color:var(--muted);flex-wrap:wrap}
+    .breadcrumb span{cursor:pointer;color:var(--blue);transition:color .1s}.breadcrumb span:hover{color:#1d4ed8;text-decoration:underline}
+    .breadcrumb .bc-sep{color:var(--line);font-weight:400;cursor:default}.breadcrumb .bc-current{color:var(--ink);cursor:default}
+    .bls-section{border-radius:12px;margin-bottom:14px;overflow:hidden;border:1px solid var(--line);background:#fff}
+    .bls-section.buy{border-left:5px solid var(--blue)}.bls-section.list{border-left:5px solid var(--green)}.bls-section.sell{border-left:5px solid var(--purple)}
+    .bls-header{padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:background .1s}
+    .bls-header:hover{background:#f8fafc}
+    .bls-header h3{margin:0;font-size:18px;display:flex;align-items:center;gap:10px}
+    .bls-header .bls-summary{font-size:14px;color:var(--muted);font-weight:600}
+    .bls-body{display:none;padding:0 24px 24px;border-top:1px solid var(--line)}
+    .bls-section.open .bls-body{display:block}
+    .bls-arrow{font-size:14px;color:var(--muted);transition:transform .2s;flex-shrink:0;margin-left:12px}
+    .bls-section.open .bls-arrow{transform:rotate(90deg)}
+    .layer{border:1px solid var(--line);border-radius:10px;margin:14px 0;overflow:hidden}
+    .layer-header{padding:12px 16px;background:#f9fafb;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:800;user-select:none}
+    .layer-header:hover{background:#f3f6fb}
+    .layer-body{display:none;padding:14px 16px;border-top:1px solid #edf1f6}
+    .layer.open .layer-body{display:block}
+    .layer-arrow{font-size:12px;color:var(--muted);transition:transform .2s}
+    .layer.open .layer-arrow{transform:rotate(90deg)}
+    .drill-table tr.clickable td:first-child{color:var(--blue);font-weight:800}
+    .drill-table .dept-badge{display:inline-flex;align-items:center;min-height:22px;border-radius:6px;padding:0 8px;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-right:6px;background:#eff6ff;color:#1d4ed8;border:1px solid #c7d7fe}
+    .acct-status{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700}
+    .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+    .dot.green{background:#22c55e}.dot.yellow{background:#eab308}.dot.red{background:#ef4444}.dot.gray{background:#9ca3af}
+    .mini-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;min-width:60px;background:#e5e7eb}
+    .mini-bar .fill{height:100%}.mini-bar .fill.blue{background:var(--blue)}.mini-bar .fill.green{background:var(--green)}.mini-bar .fill.purple{background:var(--purple)}.mini-bar .fill.red{background:var(--red)}.mini-bar .fill.gold{background:var(--gold)}
+    .kpi-row{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+    .kpi-box{border:1px solid var(--line);border-radius:8px;padding:12px 16px;background:#fff;min-width:140px;flex:1}
+    .kpi-box .kpi-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+    .kpi-box .kpi-val{font-size:24px;font-weight:900;line-height:1.1}
+    .kpi-box .kpi-sub{font-size:12px;color:var(--muted);margin-top:2px}
+    .diagnostic{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin:10px 0;font-size:14px;font-weight:600;color:#92400e}
+    .diagnostic strong{color:#78350f}
+    .diagnostic.insight{background:#eff6ff;border-color:#93c5fd;color:#1e40af}
+    .diagnostic.insight strong{color:#1e3a8a}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--blue);cursor:pointer;margin-bottom:12px}
+    .back-link:hover{text-decoration:underline}
+    td.num{text-align:right;font-variant-numeric:tabular-nums}
+    th.num{text-align:right}
+    /* v3 additions */
+    .tab-bar{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--line);padding-bottom:0}
+    .tab-bar button{background:none;border:none;border-bottom:3px solid transparent;padding:10px 18px;font-size:14px;font-weight:800;color:var(--muted);cursor:pointer;transition:all .15s;font-family:inherit;margin-bottom:-2px}
+    .tab-bar button:hover{color:var(--ink)}
+    .tab-bar button.active{color:var(--blue);border-bottom-color:var(--blue)}
+    .filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 18px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;margin-bottom:16px}
+    .filter-bar label{font-size:11px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .filter-bar select{font-size:13px;font-weight:700;padding:6px 28px 6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer;font-family:inherit;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;min-width:140px}
+    .filter-bar select:focus{outline:2px solid var(--blue);outline-offset:-1px}
+    .filter-group{display:flex;flex-direction:column;gap:3px}
+    .period-badge{display:inline-flex;align-items:center;min-height:22px;border-radius:6px;padding:0 10px;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;background:#f0f4ff;color:#3538cd;border:1px solid #c7d7fe;margin-left:8px}
+    .section-period{font-size:13px;font-weight:800;color:var(--cyan);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .acct-count-badge{display:inline-flex;align-items:center;min-height:20px;border-radius:4px;padding:0 7px;background:#f1f5f9;color:#475569;font-size:10px;font-weight:900;letter-spacing:.04em;margin-left:8px}
+  </style>
+</head>
+<body>
+<main id="app"></main>
+
+<script>
+// ============================================
+// DATA — ACCOUNTS (from v2)
+// ============================================
+const ACCOUNTS = [{"n":"Petals Direct","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Adoption","sys":"Komet Core","gl":"2024-01-15","k2k":2,"pt":0,"pk":0,"po":0,"ft":0,"fe":0,"fk":0,"fa":0,"gon":0,"gk":0,"goff":0,"gt":0,"av":0,"as":0,"ch":0},{"n":"Baisch & Skinner","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Onboarding","sys":"K2K E-Commerce, Koronet Procurement","gl":"","k2k":210,"pt":319447,"pk":25207,"po":294239,"ft":6254,"fe":0,"fk":6254,"fa":0,"gon":493115,"gk":0,"goff":0,"gt":493115,"av":5,"as":267,"ch":27},{"n":"South Carolina Specialty Cut","impl":"Christine Nickelsen","cs":"Maria Alejandra Mesa","lc":"Adoption","sys":"K2K E-Commerce","gl":"2020-09-08","k2k":5,"pt":0,"pk":0,"po":0,"ft":0,"fe":0,"fk":0,"fa":0,"gon":0,"gk":0,"goff":0,"gt":0,"av":0,"as":0,"ch":0},{"n":"Rokay Floral","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Onboarding","sys":"K2K E-Commerce, FCS Smart System","gl":"2024-12-01","k2k":26,"pt":66043,"pk":0,"po":66043,"ft":1418,"fe":0,"fk":1418,"fa":0,"gon":102590,"gk":0,"goff":0,"gt":102590,"av":0,"as":0,"ch":0},{"n":"CINCINNATI WHSLE FLORIST INC.5643","impl":"Christine Nickelsen","cs":"","lc":"","sys":"Koronet Procurement","gl":"2025-06-11","k2k":30,"pt":0,"pk":0,"po":0,"ft":0,"fe":0,"fk":0,"fa":0,"gon":0,"gk":0,"goff":0,"gt":0,"av":0,"as":0,"ch":8},{"n":"The Oklahoma Flower Market","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Onboarding","sys":"K2K E-Commerce, Koronet Procurement Free Trial, FCS Smart System","gl":"2024-11-08","k2k":14,"pt":0,"pk":0,"po":0,"ft":0,"fe":0,"fk":0,"fa":0,"gon":0,"gk":0,"goff":0,"gt":0,"av":0,"as":0,"ch":0},{"n":"MRS. BLOOM\u2019S DIRECT, INC.","impl":"George Velez","cs":"","lc":"","sys":"Koronet Procurement, FCS Smart System","gl":"2025-09-01","k2k":0,"pt":0,"pk":0,"po":0,"ft":0,"fe":0,"fk":0,"fa":0,"gon":0,"gk":0,"goff":0,"gt":0,"av":0,"as":0,"ch":0},{"n":"Younger & Son Inc","impl":"Fernando Yepez","cs":"","lc":"","sys":"Koronet Procurement","gl":"2026-02-18","k2k":0,"pt":0,"pk":0,"po":0,"ft":0,"fe":0,"fk":0,"fa":0,"gon":0,"gk":0,"goff":0,"gt":0,"av":0,"as":0,"ch":14},{"n":"Kennicott Brothers Company","impl":"George Velez","cs":"Catalina Rojas","lc":"Adoption","sys":"Komet Core, Koronet Procurement","gl":"","k2k":434,"pt":34054438,"pk":4626936,"po":29427502,"ft":72285,"fe":4597,"fk":51846,"fa":15842,"gon":9764913,"gk":0,"goff":60011743,"gt":69776656,"av":29,"as":637545,"ch":0},{"n":"Mayesh Wholesale Florist Inc","impl":"Christine Nickelsen","cs":"Laura Villegas","lc":"Adoption","sys":"Komet Core, Koronet Procurement","gl":"","k2k":2,"pt":41769673,"pk":0,"po":41769673,"ft":11399,"fe":198,"fk":11201,"fa":0,"gon":24119530,"gk":0,"goff":75889064,"gt":100008594,"av":0,"as":0,"ch":0},{"n":"Bill Doran Company","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Onboarding","sys":"Komet Core, Koronet Procurement","gl":"","k2k":4,"pt":49963226,"pk":1736087,"po":48227139,"ft":36766,"fe":18142,"fk":18624,"fa":0,"gon":2312306,"gk":0,"goff":63686522,"gt":65998828,"av":56,"as":211940,"ch":3},{"n":"FloraLink","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Onboarding","sys":"Komet Core","gl":"","k2k":35,"pt":4185030,"pk":0,"po":4185030,"ft":55298,"fe":0,"fk":55298,"fa":0,"gon":4193820,"gk":0,"goff":0,"gt":4193820,"av":0,"as":0,"ch":0},{"n":"Flora Fresh Inc","impl":"Milena Mezamell","cs":"Laura Villegas","lc":"Adoption","sys":"Komet Core, Koronet Procurement Free Trial, FCS Smart System","gl":"2026-01-15","k2k":17,"pt":2555957,"pk":577,"po":2555379,"ft":0,"fe":0,"fk":0,"fa":0,"gon":32283,"gk":0,"goff":5798040,"gt":5830323,"av":0,"as":0,"ch":0},{"n":"Cleveland Plant & Flower Co.","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Adoption","sys":"K2K E-Commerce, Koronet Procurement","gl":"","k2k":239,"pt":318401,"pk":0,"po":318401,"ft":6871,"fe":0,"fk":6871,"fa":0,"gon":533090,"gk":0,"goff":0,"gt":533090,"av":0,"as":0,"ch":0},{"n":"Flowers Direct Inc","impl":"Christine Nickelsen","cs":"Christian Medina","lc":"Adoption","sys":"K2K E-Commerce, Koronet Procurement","gl":"2023-03-17","k2k":58,"pt":599785,"pk":452754,"po":147031,"ft":2753,"fe":0,"fk":2753,"fa":0,"gon":217573,"gk":0,"goff":0,"gt":217573,"av":42,"as":36599,"ch":7},{"n":"Maple Grove Floral","impl":"George Velez","cs":"Christian Medina","lc":"Adoption","sys":"Komet Core, Koronet Procurement","gl":"2024-07-26","k2k":30,"pt":416628,"pk":73405,"po":343223,"ft":3130,"fe":2947,"fk":183,"fa":0,"gon":217200,"gk":0,"goff":507757,"gt":724957,"av":33,"as":13997,"ch":10},{"n":"Zeidler Floral","impl":"Valentina Espinel","cs":"Koronet Customer Support","lc":"Adoption","sys":"Komet Core, Koronet Procurement, FCS Smart System","gl":"2026-03-20","k2k":0,"pt":547537,"pk":85430,"po":462107,"ft":2457,"fe":2455,"fk":2,"fa":0,"gon":183976,"gk":0,"goff":855400,"gt":1039376,"av":8,"as":15832,"ch":0},{"n":"Sims Flower Distribution","impl":"George Velez","cs":"Christian Medina","lc":"Adoption","sys":"Komet Core","gl":"2024-09-23","k2k":12,"pt":1179042,"pk":0,"po":1179042,"ft":2569,"fe":160,"fk":2409,"fa":0,"gon":180569,"gk":0,"goff":1372600,"gt":1553169,"av":0,"as":0,"ch":0}];
+
+// Fees by industry Jul 1-20 (2026 expected vs 2025 actual)
+const FEES_2026_BY_INDUSTRY = [
+  {industry:"Floral - Importer", fees:69439, companies:95},
+  {industry:"Floral - Wholesaler", fees:20399, companies:55},
+  {industry:"Floral - Retailer", fees:2091, companies:2},
+  {industry:"Unknown", fees:1334, companies:2},
+  {industry:"Floral - Grower", fees:1123, companies:13}
+];
+const FEES_2025_BY_INDUSTRY = [
+  {industry:"Floral - Importer", fees:50545, companies:87},
+  {industry:"Floral - Wholesaler", fees:13248, companies:53},
+  {industry:"Unknown", fees:1555, companies:2},
+  {industry:"Floral - Grower", fees:949, companies:10}
+];
+
+// Top 15 fee concentration Jul 1-20, 2026
+const TOP_FEE_COMPANIES = [
+  {company:"Kennicott Brothers Company", fees:7324},
+  {company:"-Sole Farms", fees:7216},
+  {company:"Jet Fresh Flower Distributors Inc.", fees:6702},
+  {company:"Fresca Farms", fees:5309},
+  {company:"Rosaprima International, LLC", fees:4931},
+  {company:"Continental Flowers", fees:4392},
+  {company:"Choice Farms", fees:4072},
+  {company:"Bill Doran Company", fees:3851},
+  {company:"FloraLink", fees:3382},
+  {company:"Bella Blossom LLC", fees:2731},
+  {company:"Royal Flowers Inc., Domestic", fees:2692},
+  {company:"Details Direct", fees:2084},
+  {company:"Gala Roses", fees:1914},
+  {company:"Sunburst Farms", fees:1893},
+  {company:"Welyflor / PROFILE FLOWERS", fees:1892}
+];
+
+// ============================================
+// NEW DATA — v2 queries (Jul 15, 2026)
+// ============================================
+
+// Q1: LEAKAGE vs GAP — offline procurement split by K2K connection
+const LEAKAGE_GAP = [
+  {company:"Bill Doran Company", totalOffline:49333907, leakage:9879039, gap:39454868, leakPct:20.0, gapPct:80.0, leakVendors:59, gapVendors:416},
+  {company:"Mayesh Wholesale Florist Inc", totalOffline:41883098, leakage:2220, gap:41880878, leakPct:0.0, gapPct:100.0, leakVendors:2, gapVendors:820},
+  {company:"Kennicott Brothers Company", totalOffline:26156566, leakage:12180759, gap:13975807, leakPct:46.6, gapPct:53.4, leakVendors:34, gapVendors:207},
+  {company:"Promoflor SRL", totalOffline:4221980, leakage:0, gap:4221980, leakPct:0.0, gapPct:100.0, leakVendors:0, gapVendors:1},
+  {company:"Apex Floral Distributors", totalOffline:3344842, leakage:16499, gap:3328342, leakPct:0.5, gapPct:99.5, leakVendors:1, gapVendors:136},
+  {company:"Ninfa Flowers", totalOffline:3181261, leakage:0, gap:3181261, leakPct:0.0, gapPct:100.0, leakVendors:0, gapVendors:23},
+  {company:"Flora Fresh Inc", totalOffline:2561673, leakage:328005, gap:2233668, leakPct:12.8, gapPct:87.2, leakVendors:16, gapVendors:114},
+  {company:"Arizona Family Florist", totalOffline:2539934, leakage:616171, gap:1923763, leakPct:24.3, gapPct:75.7, leakVendors:54, gapVendors:112},
+  {company:"H&T Wholesale Flowers", totalOffline:2529654, leakage:1644922, gap:884732, leakPct:65.0, gapPct:35.0, leakVendors:34, gapVendors:65},
+  {company:"Tropical Blooms Inc.", totalOffline:2492094, leakage:391688, gap:2100406, leakPct:15.7, gapPct:84.3, leakVendors:8, gapVendors:47},
+  {company:"Del Tropico/Ameriblooms", totalOffline:2305251, leakage:132599, gap:2172652, leakPct:5.8, gapPct:94.2, leakVendors:1, gapVendors:192},
+  {company:"JFS Wholesale Floral", totalOffline:1881677, leakage:339741, gap:1541937, leakPct:18.1, gapPct:81.9, leakVendors:32, gapVendors:74},
+  {company:"Stemline Wholesale", totalOffline:1783059, leakage:308412, gap:1474647, leakPct:17.3, gapPct:82.7, leakVendors:23, gapVendors:57},
+  {company:"Orlando Wholesale Florist", totalOffline:1631897, leakage:429539, gap:1202358, leakPct:26.3, gapPct:73.7, leakVendors:28, gapVendors:74},
+  {company:"WE GOT FLOWERS", totalOffline:1409909, leakage:632967, gap:776942, leakPct:44.9, gapPct:55.1, leakVendors:30, gapVendors:66},
+  {company:"Sims Flower Distribution", totalOffline:1390611, leakage:304320, gap:1086291, leakPct:21.9, gapPct:78.1, leakVendors:33, gapVendors:45},
+  {company:"Bill Doran Company (2)", totalOffline:1279753, leakage:0, gap:1279753, leakPct:0.0, gapPct:100.0, leakVendors:0, gapVendors:195},
+  {company:"White Rose Flowers", totalOffline:1261551, leakage:0, gap:1261551, leakPct:0.0, gapPct:100.0, leakVendors:0, gapVendors:41},
+  {company:"Metro Flower Market LLC", totalOffline:1228718, leakage:337693, gap:891025, leakPct:27.5, gapPct:72.5, leakVendors:18, gapVendors:127},
+  {company:"SOS Floral", totalOffline:877172, leakage:13964, gap:863207, leakPct:1.6, gapPct:98.4, leakVendors:1, gapVendors:99}
+];
+
+// Q2: Bunches in inventory
+const INVENTORY_BUNCHES = [
+  {company:"Kennicott Brothers Company", products:16765, units:1471712450, stems:1899145238, categories:74},
+  {company:"Mayesh Wholesale Florist Inc", products:17007, units:60479023, stems:61256225, categories:653},
+  {company:"Floral Cooperative Purchasing", products:286, units:29929032, stems:29969091, categories:77},
+  {company:"Bill Doran Company (2)", products:3267, units:16670526, stems:16891710, categories:255},
+  {company:"Arizona Family Florist", products:3181, units:4455171, stems:11982412, categories:102},
+  {company:"Premier Wholesale INC", products:5, units:1250841, stems:1250841, categories:3},
+  {company:"Metro Flower Market LLC", products:1999, units:869191, stems:4548765, categories:109},
+  {company:"Bill Doran Company", products:5198, units:575564, stems:1346793, categories:102},
+  {company:"New England Wholesale Florist", products:216, units:231639, stems:619623, categories:38},
+  {company:"Apex Floral Distributors", products:733, units:194485, stems:263187, categories:61},
+  {company:"National Floral Supply", products:894, units:163983, stems:195944, categories:94},
+  {company:"JFS Wholesale Floral", products:738, units:118630, stems:150953, categories:141},
+  {company:"H&T Wholesale Flowers", products:867, units:107130, stems:360849, categories:79},
+  {company:"WHOLESALE NORTON'S FLORIST", products:891, units:98118, stems:225666, categories:52},
+  {company:"CD Wholesale", products:714, units:71343, stems:182074, categories:103},
+  {company:"Stemline Wholesale", products:314, units:63557, stems:115550, categories:60},
+  {company:"Orlando Wholesale Florist", products:392, units:58678, stems:75002, categories:76},
+  {company:"Charleston Wholesale Florist", products:1025, units:56365, stems:56365, categories:8},
+  {company:"Lone Star Flower Market", products:797, units:54808, stems:155233, categories:123},
+  {company:"Tropical Blooms Inc.", products:226, units:52177, stems:104835, categories:28}
+];
+
+// Q3: Inventory vs Online Sales
+const INVENTORY_VS_ONLINE = [
+  {company:"Kennicott Brothers Company", invCats:74, invProds:16765, invUnits:1471712450, onCats:67, onProds:5919, onUnitsGmv:3472635, onTotalGmv:9904546, coveragePct:35.3},
+  {company:"Mayesh Wholesale Florist Inc", invCats:653, invProds:17007, invUnits:60479023, onCats:424, onProds:7687, onUnitsGmv:6977172, onTotalGmv:24246257, coveragePct:45.2},
+  {company:"Floral Cooperative Purchasing", invCats:77, invProds:286, invUnits:29929032, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"Bill Doran Company (2)", invCats:255, invProds:3267, invUnits:16670526, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"Arizona Family Florist", invCats:102, invProds:3181, invUnits:4455171, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"Premier Wholesale INC", invCats:3, invProds:5, invUnits:1250841, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"Metro Flower Market LLC", invCats:109, invProds:1999, invUnits:869191, onCats:44, onProds:154, onUnitsGmv:5904, onTotalGmv:6047, coveragePct:7.7},
+  {company:"Bill Doran Company", invCats:102, invProds:5198, invUnits:575564, onCats:116, onProds:3792, onUnitsGmv:1164563, onTotalGmv:2327772, coveragePct:73.0},
+  {company:"New England Wholesale Florist", invCats:38, invProds:216, invUnits:231639, onCats:1, onProds:1, onUnitsGmv:0, onTotalGmv:75, coveragePct:0.5},
+  {company:"Apex Floral Distributors", invCats:61, invProds:733, invUnits:194485, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"National Floral Supply", invCats:94, invProds:894, invUnits:163983, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"JFS Wholesale Floral", invCats:141, invProds:738, invUnits:118630, onCats:5, onProds:6, onUnitsGmv:144, onTotalGmv:144, coveragePct:0.8},
+  {company:"H&T Wholesale Flowers", invCats:79, invProds:867, invUnits:107130, onCats:47, onProds:283, onUnitsGmv:14790, onTotalGmv:32022, coveragePct:32.6},
+  {company:"WHOLESALE NORTON'S FLORIST", invCats:52, invProds:891, invUnits:98118, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"CD Wholesale", invCats:103, invProds:714, invUnits:71343, onCats:2, onProds:2, onUnitsGmv:0, onTotalGmv:181, coveragePct:0.3},
+  {company:"Stemline Wholesale", invCats:60, invProds:314, invUnits:63557, onCats:32, onProds:195, onUnitsGmv:72, onTotalGmv:31086, coveragePct:62.1},
+  {company:"Orlando Wholesale Florist", invCats:76, invProds:392, invUnits:58678, onCats:84, onProds:330, onUnitsGmv:21871, onTotalGmv:26663, coveragePct:84.2},
+  {company:"Charleston Wholesale Florist", invCats:8, invProds:1025, invUnits:56365, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"Lone Star Flower Market", invCats:123, invProds:797, invUnits:54808, onCats:0, onProds:0, onUnitsGmv:0, onTotalGmv:0, coveragePct:0.0},
+  {company:"Tropical Blooms Inc.", invCats:28, invProds:226, invUnits:52177, onCats:12, onProds:30, onUnitsGmv:0, onTotalGmv:9196, coveragePct:13.3}
+];
+
+// Q4: Buyer cohorts
+const BUYER_COHORTS = [
+  {company:"Mayesh Wholesale Florist Inc", totalBuyers:4220, repeat3plus:1499, repeat2:825, newRecent:217, oneTimeOld:1679, avgSpend:5745},
+  {company:"Kennicott Brothers Company", totalBuyers:1901, repeat3plus:834, repeat2:317, newRecent:201, oneTimeOld:549, avgSpend:5208},
+  {company:"Bill Doran Company", totalBuyers:315, repeat3plus:192, repeat2:40, newRecent:31, oneTimeOld:52, avgSpend:7390},
+  {company:"Baisch & Skinner", totalBuyers:103, repeat3plus:40, repeat2:24, newRecent:13, oneTimeOld:26, avgSpend:4916},
+  {company:"FloraLink", totalBuyers:102, repeat3plus:93, repeat2:2, newRecent:3, oneTimeOld:4, avgSpend:41509},
+  {company:"BOTANICA WHOLESALE FLORIST DALLAS", totalBuyers:77, repeat3plus:26, repeat2:13, newRecent:6, oneTimeOld:32, avgSpend:3132},
+  {company:"Flora Fresh Inc", totalBuyers:73, repeat3plus:8, repeat2:12, newRecent:10, oneTimeOld:43, avgSpend:448},
+  {company:"Cleveland Plant & Flower Co.", totalBuyers:63, repeat3plus:42, repeat2:7, newRecent:2, oneTimeOld:12, avgSpend:8530},
+  {company:"Pikes Peak Floral", totalBuyers:62, repeat3plus:19, repeat2:9, newRecent:20, oneTimeOld:14, avgSpend:3103},
+  {company:"Maple Grove Floral", totalBuyers:57, repeat3plus:40, repeat2:4, newRecent:2, oneTimeOld:11, avgSpend:3887},
+  {company:"Georgia State Floral Dist.", totalBuyers:41, repeat3plus:11, repeat2:11, newRecent:0, oneTimeOld:19, avgSpend:4354},
+  {company:"Floristcentric, LLC", totalBuyers:39, repeat3plus:22, repeat2:5, newRecent:1, oneTimeOld:11, avgSpend:1653},
+  {company:"Zeidler Floral", totalBuyers:35, repeat3plus:29, repeat2:3, newRecent:1, oneTimeOld:2, avgSpend:5392},
+  {company:"Frank Adams Wholesale", totalBuyers:30, repeat3plus:9, repeat2:7, newRecent:8, oneTimeOld:6, avgSpend:1718},
+  {company:"A Florist First", totalBuyers:29, repeat3plus:17, repeat2:3, newRecent:2, oneTimeOld:7, avgSpend:11042},
+  {company:"BOTANICA WHSLE FLORIST-HOUSTON", totalBuyers:27, repeat3plus:6, repeat2:5, newRecent:3, oneTimeOld:13, avgSpend:2616},
+  {company:"Sieck Floral Distributing", totalBuyers:26, repeat3plus:19, repeat2:3, newRecent:1, oneTimeOld:3, avgSpend:7897},
+  {company:"Shamrock Wholesale Florist", totalBuyers:24, repeat3plus:11, repeat2:5, newRecent:3, oneTimeOld:5, avgSpend:5184},
+  {company:"Vosz Floral LLC", totalBuyers:23, repeat3plus:9, repeat2:5, newRecent:6, oneTimeOld:3, avgSpend:692},
+  {company:"Orlando Wholesale Florist", totalBuyers:22, repeat3plus:11, repeat2:4, newRecent:0, oneTimeOld:7, avgSpend:1212}
+];
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const fmt = n => n == null ? '\u2014' : '$' + Math.round(n).toLocaleString();
+const fmtK = n => n == null ? '\u2014' : n >= 1000000 ? '$' + (n/1000000).toFixed(1) + 'M' : n >= 1000 ? '$' + (n/1000).toFixed(1) + 'K' : '$' + Math.round(n).toLocaleString();
+const fmtPct = n => n == null ? '\u2014' : n.toFixed(1) + '%';
+const fmtNum = n => n == null ? '\u2014' : Math.round(n).toLocaleString();
+
+// ============================================
+// FILTER STATE
+// ============================================
+const filterState = {
+  product: 'All',
+  status: 'All',
+  buyStage: 'All',
+  sellStage: 'All'
+};
+
+// Derive product from sys field
+function getProducts(sys) {
+  if (!sys) return [];
+  const products = [];
+  if (sys.includes('Komet Core')) products.push('Komet Core');
+  if (sys.includes('eSuite')) products.push('eSuite Wholesaler');
+  if (sys.includes('Koronet Procurement')) products.push('Koronet Procurement');
+  if (sys.includes('K2K E-Commerce')) products.push('K2K E-Commerce');
+  if (sys.includes('FCS')) products.push('FCS');
+  return products;
+}
+
+function matchesProduct(acct) {
+  if (filterState.product === 'All') return true;
+  return getProducts(acct.sys).includes(filterState.product);
+}
+
+function matchesStatus(acct) {
+  if (filterState.status === 'All') return true;
+  if (filterState.status === 'Past Due') return !acct.lc || acct.lc === '';
+  return acct.lc === filterState.status;
+}
+
+// Buy stage: derive from K2K connections + procurement data
+function getBuyStage(acct) {
+  if (acct.k2k === 0 && acct.pt === 0) return 'No Connections';
+  if (acct.k2k > 0 && acct.pt === 0 && acct.pk === 0) return 'Dormant';
+  if (acct.pk > 0 && acct.pk > acct.pt * 0.1) return 'Active';
+  if (acct.pk > 0) return 'Activated';
+  if (acct.pt > 0 && acct.pk === 0) return 'Churned';
+  return 'No Connections';
+}
+
+function matchesBuyStage(acct) {
+  if (filterState.buyStage === 'All') return true;
+  return getBuyStage(acct) === filterState.buyStage;
+}
+
+// Sell stage: derive from GMV data
+function getSellStage(acct) {
+  if (acct.gon === 0 && acct.goff === 0) return 'No Sales';
+  if (acct.gon === 0 && acct.goff > 0) return 'Offline Only';
+  const onlinePct = acct.gt > 0 ? (acct.gon / acct.gt * 100) : 0;
+  if (onlinePct < 15) return 'Low Online';
+  if (onlinePct < 50) return 'Growing';
+  return 'Healthy';
+}
+
+function matchesSellStage(acct) {
+  if (filterState.sellStage === 'All') return true;
+  return getSellStage(acct) === filterState.sellStage;
+}
+
+function matchesAllFilters(acct) {
+  return matchesProduct(acct) && matchesStatus(acct) && matchesBuyStage(acct) && matchesSellStage(acct);
+}
+
+function getFilteredAccounts() {
+  return ACCOUNTS.filter(matchesAllFilters);
+}
+
+// ============================================
+// VIEW STATE (Impl / CS / All)
+// ============================================
+let currentView = 'impl'; // 'impl' | 'cs' | 'all'
+
+// ============================================
+// RENDER FILTER BAR
+// ============================================
+function renderFilterBar() {
+  return `<div class="filter-bar" id="filter-bar">
+    <div style="font-size:13px;font-weight:900;color:var(--ink);margin-right:8px">FILTERS</div>
+    <div class="filter-group">
+      <label>Product</label>
+      <select id="filter-product" onchange="filterState.product=this.value;render()">
+        <option value="All"${filterState.product==='All'?' selected':''}>All Products</option>
+        <option value="Komet Core"${filterState.product==='Komet Core'?' selected':''}>Komet Core</option>
+        <option value="eSuite Wholesaler"${filterState.product==='eSuite Wholesaler'?' selected':''}>eSuite Wholesaler</option>
+        <option value="Koronet Procurement"${filterState.product==='Koronet Procurement'?' selected':''}>Koronet Procurement</option>
+        <option value="K2K E-Commerce"${filterState.product==='K2K E-Commerce'?' selected':''}>K2K E-Commerce</option>
+        <option value="FCS"${filterState.product==='FCS'?' selected':''}>FCS</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Status</label>
+      <select id="filter-status" onchange="filterState.status=this.value;render()">
+        <option value="All"${filterState.status==='All'?' selected':''}>All Statuses</option>
+        <option value="Adoption"${filterState.status==='Adoption'?' selected':''}>Adoption</option>
+        <option value="Onboarding"${filterState.status==='Onboarding'?' selected':''}>Onboarding</option>
+        <option value="Past Due"${filterState.status==='Past Due'?' selected':''}>Past Due / Blank</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Buy Stage</label>
+      <select id="filter-buy" onchange="filterState.buyStage=this.value;render()">
+        <option value="All"${filterState.buyStage==='All'?' selected':''}>All Buy Stages</option>
+        <option value="No Connections"${filterState.buyStage==='No Connections'?' selected':''}>No Connections</option>
+        <option value="Dormant"${filterState.buyStage==='Dormant'?' selected':''}>Dormant</option>
+        <option value="Activated"${filterState.buyStage==='Activated'?' selected':''}>Activated</option>
+        <option value="Active"${filterState.buyStage==='Active'?' selected':''}>Active</option>
+        <option value="Churned"${filterState.buyStage==='Churned'?' selected':''}>Churned</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Sell Stage</label>
+      <select id="filter-sell" onchange="filterState.sellStage=this.value;render()">
+        <option value="All"${filterState.sellStage==='All'?' selected':''}>All Sell Stages</option>
+        <option value="No Sales"${filterState.sellStage==='No Sales'?' selected':''}>No Sales</option>
+        <option value="Offline Only"${filterState.sellStage==='Offline Only'?' selected':''}>Offline Only</option>
+        <option value="Low Online"${filterState.sellStage==='Low Online'?' selected':''}>Low Online</option>
+        <option value="Growing"${filterState.sellStage==='Growing'?' selected':''}>Growing</option>
+        <option value="Healthy"${filterState.sellStage==='Healthy'?' selected':''}>Healthy</option>
+      </select>
+    </div>
+    <div style="margin-left:auto;font-size:12px;color:var(--muted);font-weight:700">${getFilteredAccounts().length} of ${ACCOUNTS.length} accounts</div>
+  </div>`;
+}
+
+// ============================================
+// RENDER TAB BAR (Impl / CS / All)
+// ============================================
+function renderViewTabs() {
+  return `<div class="tab-bar" id="view-tabs">
+    <button class="${currentView==='impl'?'active':''}" onclick="currentView='impl';render()">By Implementation Lead</button>
+    <button class="${currentView==='cs'?'active':''}" onclick="currentView='cs';render()">By CS Advisor</button>
+    <button class="${currentView==='all'?'active':''}" onclick="currentView='all';render()">All Reps</button>
+  </div>`;
+}
+
+// ============================================
+// PACING CARD — Jul 1-20 2026 (PACING scope)
+// ============================================
+function renderPacingCard() {
+  const total2026 = FEES_2026_BY_INDUSTRY.reduce((s,r) => s + r.fees, 0);
+  const total2025 = FEES_2025_BY_INDUSTRY.reduce((s,r) => s + r.fees, 0);
+  const yoy = total2025 > 0 ? ((total2026 - total2025) / total2025 * 100) : 0;
+  const daysElapsed = 20;
+  const daysInQ = 92;
+  const dailyRate = total2026 / daysElapsed;
+  const projectedQ3 = dailyRate * daysInQ;
+  const target = 670000;
+  const neededRate = target / daysInQ;
+  const pacing = (dailyRate / neededRate * 100);
+
+  return `<div class="pacing-card">
+    <div class="pc-item"><span class="pc-label">Scope</span><span class="pc-value" style="font-size:14px">Jul 1-20, 2026 (comparable days)</span></div>
+    <div class="pc-divider"></div>
+    <div class="pc-item"><span class="pc-label">Q3 Target</span><span class="pc-value">${fmtK(target)}</span></div>
+    <div class="pc-divider"></div>
+    <div class="pc-item"><span class="pc-label">Core + Axerrio MTD</span><span class="pc-value">${fmtK(total2026)}</span></div>
+    <div class="pc-divider"></div>
+    <div class="pc-item"><span class="pc-label">YoY (same 20d)</span><span class="pc-value pc-yoy">+${yoy.toFixed(1)}%</span></div>
+    <div class="pc-divider"></div>
+    <div class="pc-item"><span class="pc-label">Daily Rate</span><span class="pc-value">${fmtK(dailyRate)}/d</span></div>
+    <div class="pc-divider"></div>
+    <div class="pc-item"><span class="pc-label">Pacing</span><span class="pc-value ${pacing >= 100 ? 'pc-yoy' : 'pc-gap'}">${pacing.toFixed(1)}%</span></div>
+    <div style="margin-left:auto;font-size:11px;color:#64748b">
+      <span class="source-tag source-snow">SNOWFLAKE</span> EXPECTED_TRANSACTION_FEES + TRANSACTION_FEES<br>
+      <strong>Period: Jul 1-20, 2026</strong> | ks_flag=TRUE | <span class="real">REAL DATA</span>
+    </div>
+  </div>`;
+}
+
+// ============================================
+// PACING DETAIL SECTION — Jul 1-20 2026
+// ============================================
+function renderPacingDetailSection() {
+  const total2026 = FEES_2026_BY_INDUSTRY.reduce((s,r) => s + r.fees, 0);
+  const total2025 = FEES_2025_BY_INDUSTRY.reduce((s,r) => s + r.fees, 0);
+  const yoy = total2025 > 0 ? ((total2026 - total2025) / total2025 * 100) : 0;
+
+  return `<section>
+    <div class="section-period">PACING <span class="period-badge">Jul 1-20, 2026 (comparable days)</span></div>
+    <p class="eyebrow">TX-Level Pacing</p>
+    <h2>Fee Pacing by Industry & Top Companies</h2>
+    <p class="sub">TX-level fee pacing. Core + Axerrio, Jul 1-20 comparable days vs same period 2025. This is NOT per-wholesaler; this is the full TX chapter.</p>
+
+    <div class="layer open"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+      <span>Fees YoY by Industry <span class="period-badge">Jul 1-20, 2026 vs Jul 1-20, 2025</span></span><span class="layer-arrow">&#9654;</span></div>
+      <div class="layer-body"><div class="tableWrap"><table>
+        <tr><th>Industry</th><th class="num">2026 Fees (Jul 1-20)</th><th class="num">2025 Fees (Jul 1-20)</th><th class="num">YoY %</th><th class="num">Companies</th></tr>
+        ${FEES_2026_BY_INDUSTRY.map(r => {
+          const match = FEES_2025_BY_INDUSTRY.find(x => x.industry === r.industry);
+          const prev = match ? match.fees : 0;
+          const y = prev > 0 ? ((r.fees - prev) / prev * 100) : 999;
+          return `<tr><td>${r.industry}</td><td class="num">${fmtK(r.fees)}</td><td class="num">${fmtK(prev)}</td>
+            <td class="num"><span class="${y > 0 ? 'tag ok' : 'tag bad'}">${y < 900 ? (y > 0 ? '+' : '') + y.toFixed(1) + '%' : 'New'}</span></td>
+            <td class="num">${r.companies}</td></tr>`;
+        }).join('')}
+        <tr style="font-weight:900;background:#f9fafb"><td>Total</td><td class="num">${fmtK(total2026)}</td><td class="num">${fmtK(total2025)}</td>
+          <td class="num"><span class="tag ok">+${yoy.toFixed(1)}%</span></td><td class="num">${FEES_2026_BY_INDUSTRY.reduce((s,r)=>s+r.companies,0)}</td></tr>
+      </table></div>
+      <p class="small" style="margin-top:8px"><span class="source-tag source-snow">SNOWFLAKE</span> EXPECTED_TRANSACTION_FEES (2026) + TRANSACTION_FEES (2025), Jul 1-20, ks_flag=TRUE</p>
+      </div></div>
+
+    <div class="layer"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+      <span>Fee Concentration -- Top 15 Companies <span class="period-badge">Jul 1-20, 2026</span></span><span class="layer-arrow">&#9654;</span></div>
+      <div class="layer-body"><div class="tableWrap"><table>
+        <tr><th>#</th><th>Company</th><th class="num">Fees (Jul 1-20)</th><th class="num">% of Total</th><th class="num">Cumulative</th></tr>
+        ${TOP_FEE_COMPANIES.map((r,i) => {
+          const cum = TOP_FEE_COMPANIES.slice(0,i+1).reduce((s,x) => s + x.fees, 0);
+          return `<tr><td>${i+1}</td><td>${r.company}</td><td class="num">${fmtK(r.fees)}</td><td class="num">${fmtPct(r.fees/total2026*100)}</td><td class="num">${fmtPct(cum/total2026*100)}</td></tr>`;
+        }).join('')}
+      </table></div>
+      <p class="small" style="margin-top:8px"><span class="source-tag source-snow">SNOWFLAKE</span> EXPECTED_TRANSACTION_FEES, Jul 1-20 2026, ks_flag=TRUE</p>
+      </div></div>
+  </section>`;
+}
+
+
+// ============================================
+// GROUP ACCOUNTS by owner (impl or cs)
+// ============================================
+function groupBy(accounts, field) {
+  const groups = {};
+  accounts.forEach(a => {
+    const key = a[field] || '(Unassigned)';
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(a);
+  });
+  return groups;
+}
+
+// ============================================
+// RENDER ACCOUNT ROW for drill-down table
+// ============================================
+function renderAccountRow(a) {
+  const buyStage = getBuyStage(a);
+  const sellStage = getSellStage(a);
+  const buySignal = buyStage === 'Active' ? 'ok' : buyStage === 'Activated' ? 'warn' : buyStage === 'Dormant' ? 'warn' : 'bad';
+  const sellSignal = sellStage === 'Healthy' ? 'ok' : sellStage === 'Growing' ? 'ok' : sellStage === 'Low Online' ? 'warn' : 'bad';
+  const statusDot = a.lc === 'Adoption' ? 'green' : a.lc === 'Onboarding' ? 'yellow' : 'gray';
+  return `<tr>
+    <td><strong>${a.n}</strong><br><span class="small">${a.sys}</span></td>
+    <td><span class="acct-status"><span class="dot ${statusDot}"></span> ${a.lc || 'N/A'}</span></td>
+    <td class="num">${a.k2k}</td>
+    <td class="num">${fmtK(a.pt)}</td>
+    <td class="num">${fmtK(a.pk)}</td>
+    <td class="num">${fmtK(a.ft)}</td>
+    <td class="num">${fmtK(a.gon)}</td>
+    <td class="num">${fmtK(a.goff)}</td>
+    <td class="num">${fmtK(a.gt)}</td>
+    <td><span class="tag ${buySignal}">${buyStage}</span></td>
+    <td><span class="tag ${sellSignal}">${sellStage}</span></td>
+  </tr>`;
+}
+
+// ============================================
+// RENDER OWNER SUMMARY ROW
+// ============================================
+function renderOwnerSummaryRow(name, accounts) {
+  const totalK2K = accounts.reduce((s,a) => s + a.k2k, 0);
+  const totalPT = accounts.reduce((s,a) => s + a.pt, 0);
+  const totalPK = accounts.reduce((s,a) => s + a.pk, 0);
+  const totalFT = accounts.reduce((s,a) => s + a.ft, 0);
+  const totalGon = accounts.reduce((s,a) => s + a.gon, 0);
+  const totalGoff = accounts.reduce((s,a) => s + a.goff, 0);
+  const totalGT = accounts.reduce((s,a) => s + a.gt, 0);
+  return `<tr style="font-weight:900;background:#f0f4ff">
+    <td>${name} <span class="acct-count-badge">${accounts.length} accounts</span></td>
+    <td></td>
+    <td class="num">${totalK2K}</td>
+    <td class="num">${fmtK(totalPT)}</td>
+    <td class="num">${fmtK(totalPK)}</td>
+    <td class="num">${fmtK(totalFT)}</td>
+    <td class="num">${fmtK(totalGon)}</td>
+    <td class="num">${fmtK(totalGoff)}</td>
+    <td class="num">${fmtK(totalGT)}</td>
+    <td></td>
+    <td></td>
+  </tr>`;
+}
+
+// ============================================
+// WHOLESALER SCORECARD — H1 2026
+// ============================================
+function renderWholesalerScorecard() {
+  const filtered = getFilteredAccounts();
+  const headerLabel = currentView === 'impl' ? 'Implementation Lead' : currentView === 'cs' ? 'CS Advisor' : 'Owner';
+  const groupField = currentView === 'impl' ? 'impl' : currentView === 'cs' ? 'cs' : 'impl';
+
+  let drillHTML = '';
+
+  if (currentView === 'all') {
+    // Flat table, all reps
+    drillHTML = `<div class="tableWrap"><table class="drill-table">
+      <tr><th>Account</th><th>Status</th><th class="num">K2K Conn</th><th class="num">Procure Total</th><th class="num">Procure K2K</th><th class="num">Fees Total</th><th class="num">GMV Online</th><th class="num">GMV Offline</th><th class="num">GMV Total</th><th>Buy Stage</th><th>Sell Stage</th></tr>
+      ${filtered.map(a => renderAccountRow(a)).join('')}
+    </table></div>`;
+  } else {
+    // Grouped by owner
+    const groups = groupBy(filtered, groupField);
+    const sortedOwners = Object.keys(groups).sort((a,b) => {
+      const aGT = groups[a].reduce((s,x) => s + x.gt, 0);
+      const bGT = groups[b].reduce((s,x) => s + x.gt, 0);
+      return bGT - aGT;
+    });
+
+    drillHTML = sortedOwners.map(owner => {
+      const accts = groups[owner];
+      return `<div class="layer"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>${owner} <span class="acct-count-badge">${accts.length} accounts</span> | GMV: ${fmtK(accts.reduce((s,a) => s + a.gt, 0))} | Fees: ${fmtK(accts.reduce((s,a) => s + a.ft, 0))}</span><span class="layer-arrow">&#9654;</span></div>
+        <div class="layer-body"><div class="tableWrap"><table class="drill-table">
+          <tr><th>Account</th><th>Status</th><th class="num">K2K Conn</th><th class="num">Procure Total</th><th class="num">Procure K2K</th><th class="num">Fees Total</th><th class="num">GMV Online</th><th class="num">GMV Offline</th><th class="num">GMV Total</th><th>Buy Stage</th><th>Sell Stage</th></tr>
+          ${renderOwnerSummaryRow(owner, accts)}
+          ${accts.map(a => renderAccountRow(a)).join('')}
+        </table></div></div></div>`;
+    }).join('');
+  }
+
+  return `<section>
+    <div class="section-period">WHOLESALER SCORECARD <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></div>
+    <p class="eyebrow">Account Drill-Down</p>
+    <h2>Wholesaler Scorecard by ${headerLabel}</h2>
+    <p class="sub">All account-level data covers H1 2026 (Jan 1 - Jun 30, 2026). Drill down by ${currentView === 'impl' ? 'Implementation Lead' : currentView === 'cs' ? 'CS Advisor' : 'all owners'}. Use the filters above to slice by Product, Status, Buy Stage, or Sell Stage.</p>
+    ${renderViewTabs()}
+    ${drillHTML}
+  </section>`;
+}
+
+// ============================================
+// BUY SECTION — H1 2026
+// ============================================
+function renderBuySection() {
+  const totalOffline = LEAKAGE_GAP.reduce((s,r) => s + r.totalOffline, 0);
+  const totalLeakage = LEAKAGE_GAP.reduce((s,r) => s + r.leakage, 0);
+  const totalGap = LEAKAGE_GAP.reduce((s,r) => s + r.gap, 0);
+  const leakPct = totalOffline > 0 ? (totalLeakage/totalOffline*100) : 0;
+  const gapPct = totalOffline > 0 ? (totalGap/totalOffline*100) : 0;
+
+  return `<div class="bls-section buy" id="buy-section">
+    <div class="bls-header" onclick="this.parentElement.classList.toggle('open')">
+      <div>
+        <h3><span style="color:var(--blue)">BUY</span> -- Compran dentro de la plataforma? <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></h3>
+        <div class="bls-summary">${fmtK(totalOffline)} offline procurement | ${fmtPct(leakPct)} LEAKAGE (connected) | ${fmtPct(gapPct)} GAP (not connected)</div>
+      </div>
+      <span class="bls-arrow">&#9654;</span>
+    </div>
+    <div class="bls-body">
+      <div class="kpi-row">
+        <div class="kpi-box"><div class="kpi-label">Total Offline Procurement</div><div class="kpi-val">${fmtK(totalOffline)}</div><div class="kpi-sub">Top 20 wholesalers, H1 2026 (Jan 1 - Jun 30)</div></div>
+        <div class="kpi-box"><div class="kpi-label">LEAKAGE (vendor connected)</div><div class="kpi-val" style="color:var(--red)">${fmtK(totalLeakage)}</div><div class="kpi-sub">${fmtPct(leakPct)} -- compran offline a vendors con K2K activo</div></div>
+        <div class="kpi-box"><div class="kpi-label">GAP (vendor NOT connected)</div><div class="kpi-val" style="color:var(--gold)">${fmtK(totalGap)}</div><div class="kpi-sub">${fmtPct(gapPct)} -- vendors fuera de la red K2K</div></div>
+      </div>
+      <div class="diagnostic"><strong>Leakage vs Gap:</strong> De ${fmtK(totalOffline)} en compras offline (H1 2026), solo ${fmtPct(leakPct)} es a vendors conectados por K2K (LEAKAGE = se puede migrar a online). El ${fmtPct(gapPct)} restante es GAP = no hay conexion K2K, necesitan onboardear al vendor primero.</div>
+
+      <div class="layer open"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Layer 1: LEAKAGE vs GAP por Wholesaler <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></span><span class="layer-arrow">&#9654;</span></div>
+        <div class="layer-body"><div class="tableWrap"><table>
+          <tr><th>Wholesaler</th><th class="num">Total Offline</th><th class="num">LEAKAGE</th><th class="num">GAP</th><th class="num">Leak %</th><th class="num">Gap %</th><th class="num">Leak Vendors</th><th class="num">Gap Vendors</th><th>Signal</th></tr>
+          ${LEAKAGE_GAP.map(r => {
+            const signal = r.leakPct > 30 ? 'ok' : r.leakPct > 10 ? 'warn' : 'bad';
+            const label = r.leakPct > 30 ? 'Migration ready' : r.leakPct > 10 ? 'Partial K2K' : 'Need connections';
+            return `<tr>
+              <td>${r.company}</td><td class="num">${fmtK(r.totalOffline)}</td><td class="num" style="color:var(--red)">${fmtK(r.leakage)}</td><td class="num" style="color:var(--gold)">${fmtK(r.gap)}</td>
+              <td class="num">${fmtPct(r.leakPct)}</td><td class="num">${fmtPct(r.gapPct)}</td>
+              <td class="num">${r.leakVendors}</td><td class="num">${r.gapVendors}</td>
+              <td><span class="tag ${signal}">${label}</span></td>
+            </tr>`;
+          }).join('')}
+        </table></div>
+        <div class="mini-bar" style="height:16px;margin:12px 0;border-radius:6px">
+          <div class="fill red" style="width:${leakPct}%" title="Leakage ${fmtPct(leakPct)}"></div>
+          <div class="fill gold" style="width:${gapPct}%" title="Gap ${fmtPct(gapPct)}"></div>
+        </div>
+        <p class="small" style="margin-top:4px"><span style="display:inline-block;width:12px;height:12px;background:var(--red);border-radius:3px;vertical-align:middle;margin-right:4px"></span> LEAKAGE (vendor conectado, compra offline)
+        &nbsp;&nbsp;<span style="display:inline-block;width:12px;height:12px;background:var(--gold);border-radius:3px;vertical-align:middle;margin-right:4px"></span> GAP (vendor no conectado)</p>
+        <div class="diagnostic insight" style="margin-top:12px"><strong>Key insight:</strong> KBC tiene el mejor ratio de leakage (46.6%) = 34 vendors conectados donde se puede migrar $12.2M a online. H&T lidera con 65% leakage. Mayesh tiene $41.9M offline pero solo $2.2K de leakage = casi todo su supply chain esta FUERA de K2K (820 vendors gap).</div>
+        <p class="small" style="margin-top:8px"><span class="source-tag source-snow">SNOWFLAKE</span> PROCUREMENTS_SV + COMPANIES_SV + K2K_CONNECTIONS_SV | <strong>H1 2026 (Jan 1 - Jun 30)</strong> | ks_flag=TRUE, vendor_code JOIN</p>
+        </div></div>
+    </div>
+  </div>`;
+}
+
+// ============================================
+// LIST SECTION — H1 2026
+// ============================================
+function renderListSection() {
+  const totalInvUnits = INVENTORY_BUNCHES.reduce((s,r) => s + r.units, 0);
+  const totalInvProds = INVENTORY_BUNCHES.reduce((s,r) => s + r.products, 0);
+  const companiesWithInventory = INVENTORY_BUNCHES.length;
+  const companiesSelling = INVENTORY_VS_ONLINE.filter(r => r.onProds > 0).length;
+  const avgCoverage = INVENTORY_VS_ONLINE.filter(r => r.coveragePct > 0).length > 0
+    ? INVENTORY_VS_ONLINE.filter(r => r.coveragePct > 0).reduce((s,r) => s + r.coveragePct, 0) / INVENTORY_VS_ONLINE.filter(r => r.coveragePct > 0).length : 0;
+
+  return `<div class="bls-section list" id="list-section">
+    <div class="bls-header" onclick="this.parentElement.classList.toggle('open')">
+      <div>
+        <h3><span style="color:var(--green)">LIST</span> -- Lo que compran/tienen, lo publican? <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></h3>
+        <div class="bls-summary">${fmtNum(totalInvUnits)} bunches en inventario | ${companiesSelling} de ${companiesWithInventory} venden online | ${fmtPct(avgCoverage)} coverage promedio</div>
+      </div>
+      <span class="bls-arrow">&#9654;</span>
+    </div>
+    <div class="bls-body">
+      <div class="kpi-row">
+        <div class="kpi-box"><div class="kpi-label">Total Bunches en Inventario</div><div class="kpi-val" style="color:var(--green)">${fmtNum(totalInvUnits)}</div><div class="kpi-sub">Units division, top 20, H1 2026</div></div>
+        <div class="kpi-box"><div class="kpi-label">Productos Distintos</div><div class="kpi-val">${fmtNum(totalInvProds)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">Venden Online</div><div class="kpi-val">${companiesSelling}</div><div class="kpi-sub">de ${companiesWithInventory} con inventario</div></div>
+        <div class="kpi-box"><div class="kpi-label">Coverage Promedio</div><div class="kpi-val">${fmtPct(avgCoverage)}</div><div class="kpi-sub">productos en inventario vs online</div></div>
+      </div>
+
+      <div class="layer open"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Layer 1: Bunches en Inventario (top 20 wholesalers) <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></span><span class="layer-arrow">&#9654;</span></div>
+        <div class="layer-body"><div class="tableWrap"><table>
+          <tr><th>Company</th><th class="num">Products</th><th class="num">Units (Bunches)</th><th class="num">Stems</th><th class="num">Categories</th></tr>
+          ${INVENTORY_BUNCHES.map(r => `<tr>
+            <td>${r.company}</td><td class="num">${fmtNum(r.products)}</td><td class="num">${fmtNum(r.units)}</td>
+            <td class="num">${fmtNum(r.stems)}</td><td class="num">${r.categories}</td>
+          </tr>`).join('')}
+        </table></div>
+        <div class="diagnostic"><strong>KBC domina:</strong> 1.47 BILLONES de bunches en inventario con 16,765 productos y 74 categorias. Mayesh tiene 60.5M bunches con 653 categorias (mucho mas diverso). BDC (2) tiene 16.7M bunches pero CERO ventas online = todo ese inventario invisible al eShop.</div>
+        <p class="small" style="margin-top:8px"><span class="source-tag source-snow">SNOWFLAKE</span> INVENTORY_DETAILS | <strong>H1 2026 (Jan 1 - Jun 30)</strong> | ks_flag=TRUE, inventory_division='Units', Floral-Wholesaler</p>
+        </div></div>
+
+      <div class="layer"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Layer 2: Inventario vs Ventas Online -- el LIST gap <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></span><span class="layer-arrow">&#9654;</span></div>
+        <div class="layer-body"><div class="tableWrap"><table>
+          <tr><th>Company</th><th class="num">Inv Categories</th><th class="num">Inv Products</th><th class="num">Inv Units</th><th class="num">Online Categories</th><th class="num">Online Products</th><th class="num">Online Units GMV</th><th class="num">Coverage %</th><th>Signal</th></tr>
+          ${INVENTORY_VS_ONLINE.map(r => {
+            const signal = r.coveragePct > 60 ? 'ok' : r.coveragePct > 20 ? 'warn' : 'bad';
+            const label = r.coveragePct > 60 ? 'Listed' : r.coveragePct > 20 ? 'Partial' : r.coveragePct > 0 ? 'Token' : 'DARK';
+            return `<tr>
+              <td>${r.company}</td><td class="num">${r.invCats}</td><td class="num">${fmtNum(r.invProds)}</td><td class="num">${fmtNum(r.invUnits)}</td>
+              <td class="num">${r.onCats}</td><td class="num">${fmtNum(r.onProds)}</td><td class="num">${fmtK(r.onUnitsGmv)}</td>
+              <td class="num">${fmtPct(r.coveragePct)}</td>
+              <td><span class="tag ${signal}">${label}</span></td>
+            </tr>`;
+          }).join('')}
+        </table></div>
+        <div class="diagnostic"><strong>El gap de listing es masivo:</strong> 8 de 20 wholesalers tienen CERO productos online (DARK). KBC tiene 16,765 productos en inventario pero solo 5,919 online (35.3% coverage). Orlando es el mejor del mid-tier con 84.2%. BDC tiene 73% coverage pero solo 575K bunches vs 16.7M en BDC(2).</div>
+        <p class="small" style="margin-top:8px"><span class="source-tag source-snow">SNOWFLAKE</span> INVENTORY_DETAILS + SALE_DETAILS | <strong>H1 2026 (Jan 1 - Jun 30)</strong> | ks_flag=TRUE, eCom+API</p>
+        </div></div>
+    </div>
+  </div>`;
+}
+
+// ============================================
+// SELL SECTION — H1 2026 (buyers) + Jul 1-20 (fees pacing moved to top)
+// ============================================
+function renderSellSection() {
+  const totalBuyers = BUYER_COHORTS.reduce((s,r) => s + r.totalBuyers, 0);
+  const totalRepeat3 = BUYER_COHORTS.reduce((s,r) => s + r.repeat3plus, 0);
+  const totalRepeat2 = BUYER_COHORTS.reduce((s,r) => s + r.repeat2, 0);
+  const totalNew = BUYER_COHORTS.reduce((s,r) => s + r.newRecent, 0);
+  const totalOneTime = BUYER_COHORTS.reduce((s,r) => s + r.oneTimeOld, 0);
+  const repeat3Pct = totalBuyers > 0 ? (totalRepeat3/totalBuyers*100) : 0;
+  const churnPct = totalBuyers > 0 ? (totalOneTime/totalBuyers*100) : 0;
+
+  return `<div class="bls-section sell" id="sell-section">
+    <div class="bls-header" onclick="this.parentElement.classList.toggle('open')">
+      <div>
+        <h3><span style="color:var(--purple)">SELL</span> -- Tienen transacciones online? <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></h3>
+        <div class="bls-summary">${fmtNum(totalBuyers)} compradores online | ${fmtPct(repeat3Pct)} repeat 3+ meses</div>
+      </div>
+      <span class="bls-arrow">&#9654;</span>
+    </div>
+    <div class="bls-body">
+      <div class="kpi-row">
+        <div class="kpi-box"><div class="kpi-label">Total Online Buyers</div><div class="kpi-val" style="color:var(--purple)">${fmtNum(totalBuyers)}</div><div class="kpi-sub">eCom + API, H1 2026 (Jan 1 - Jun 30)</div></div>
+        <div class="kpi-box"><div class="kpi-label">Repeat 3+ Months</div><div class="kpi-val" style="color:var(--green)">${fmtNum(totalRepeat3)}</div><div class="kpi-sub">${fmtPct(repeat3Pct)} del total</div></div>
+        <div class="kpi-box"><div class="kpi-label">Repeat 2 Months</div><div class="kpi-val">${fmtNum(totalRepeat2)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">New (Jun-Jul)</div><div class="kpi-val" style="color:var(--cyan)">${fmtNum(totalNew)}</div></div>
+        <div class="kpi-box"><div class="kpi-label">One-time (pre Jun)</div><div class="kpi-val" style="color:var(--red)">${fmtNum(totalOneTime)}</div><div class="kpi-sub">${fmtPct(churnPct)} posible churn</div></div>
+      </div>
+      <div class="mini-bar" style="height:20px;margin:12px 0;border-radius:6px">
+        <div class="fill green" style="width:${repeat3Pct}%" title="Repeat 3+ ${fmtPct(repeat3Pct)}"></div>
+        <div class="fill blue" style="width:${totalBuyers > 0 ? totalRepeat2/totalBuyers*100 : 0}%" title="Repeat 2"></div>
+        <div class="fill" style="width:${totalBuyers > 0 ? totalNew/totalBuyers*100 : 0}%;background:var(--cyan)" title="New"></div>
+        <div class="fill red" style="width:${churnPct}%" title="One-time old"></div>
+      </div>
+      <p class="small"><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;margin-right:3px"></span> Repeat 3+
+      <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px;margin:0 3px 0 10px"></span> Repeat 2
+      <span style="display:inline-block;width:10px;height:10px;background:var(--cyan);border-radius:2px;margin:0 3px 0 10px"></span> New (Jun+)
+      <span style="display:inline-block;width:10px;height:10px;background:var(--red);border-radius:2px;margin:0 3px 0 10px"></span> One-time old (posible churn)</p>
+
+      <div class="layer open"><div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Layer 1: Buyer Cohorts por Wholesaler <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></span><span class="layer-arrow">&#9654;</span></div>
+        <div class="layer-body"><div class="tableWrap"><table>
+          <tr><th>Company</th><th class="num">Total Buyers</th><th class="num">Repeat 3+</th><th class="num">Repeat 2</th><th class="num">New (Jun+)</th><th class="num">One-time Old</th><th class="num">Avg $/Buyer</th><th>Retention</th></tr>
+          ${BUYER_COHORTS.map(r => {
+            const retPct = r.totalBuyers > 0 ? ((r.repeat3plus + r.repeat2) / r.totalBuyers * 100) : 0;
+            const signal = retPct > 60 ? 'ok' : retPct > 40 ? 'warn' : 'bad';
+            return `<tr>
+              <td>${r.company}</td><td class="num">${fmtNum(r.totalBuyers)}</td>
+              <td class="num" style="color:var(--green)">${fmtNum(r.repeat3plus)}</td>
+              <td class="num">${fmtNum(r.repeat2)}</td>
+              <td class="num" style="color:var(--cyan)">${fmtNum(r.newRecent)}</td>
+              <td class="num" style="color:var(--red)">${fmtNum(r.oneTimeOld)}</td>
+              <td class="num">${fmtK(r.avgSpend)}</td>
+              <td><span class="tag ${signal}">${fmtPct(retPct)}</span></td>
+            </tr>`;
+          }).join('')}
+        </table></div>
+        <div class="diagnostic"><strong>Retention patterns:</strong> FloraLink tiene 91.2% retention (93 de 102 buyers son repeat 3+) con $41.5K avg spend = best in class. Mayesh tiene 1,499 repeat 3+ pero 1,679 one-time old = problema de churn masivo. KBC tiene buen balance: 834 repeat 3+ + 201 new recientes.</div>
+        <div class="diagnostic insight"><strong>Churn risk:</strong> ${fmtNum(totalOneTime)} compradores compraron una sola vez antes de Junio y no volvieron. A ${fmtK(BUYER_COHORTS.reduce((s,r) => s + r.avgSpend * r.oneTimeOld, 0) / totalOneTime)} promedio, eso representa ${fmtK(BUYER_COHORTS.reduce((s,r) => s + r.avgSpend * r.oneTimeOld, 0))} en GMV potencial perdido.</div>
+        <p class="small" style="margin-top:8px"><span class="source-tag source-snow">SNOWFLAKE</span> SALE_DETAILS | <strong>H1 2026 (Jan 1 - Jun 30)</strong> | ks_flag=TRUE, sales&lt;100K, eCom+API, dump accounts excluidos</p>
+        </div></div>
+    </div>
+  </div>`;
+}
+
+// ============================================
+// CROSS-CUTTING INSIGHTS — H1 2026
+// ============================================
+function renderCrossCuttingInsights() {
+  return `<section>
+    <div class="section-period">CROSS-CUTTING <span class="period-badge">H1 2026 (Jan 1 - Jun 30)</span></div>
+    <p class="eyebrow">Cross-Cutting Insights</p>
+    <h3>BUY -> LIST -> SELL: Donde se rompe el funnel?</h3>
+    <div class="grid3">
+      <div class="card">
+        <small>BUY: Offline Procurement (H1 2026)</small>
+        <strong style="color:var(--blue)">${fmtK(LEAKAGE_GAP.reduce((s,r) => s + r.totalOffline, 0))}</strong>
+        <p>${fmtPct(LEAKAGE_GAP.reduce((s,r) => s + r.leakage, 0) / LEAKAGE_GAP.reduce((s,r) => s + r.totalOffline, 0) * 100)} LEAKAGE (migratable)</p>
+        <p>${fmtPct(LEAKAGE_GAP.reduce((s,r) => s + r.gap, 0) / LEAKAGE_GAP.reduce((s,r) => s + r.totalOffline, 0) * 100)} GAP (need connections)</p>
+      </div>
+      <div class="card">
+        <small>LIST: Inventory vs Online (H1 2026)</small>
+        <strong style="color:var(--green)">${fmtNum(INVENTORY_BUNCHES.reduce((s,r) => s + r.units, 0))} bunches</strong>
+        <p>${INVENTORY_VS_ONLINE.filter(r => r.coveragePct === 0).length} de ${INVENTORY_VS_ONLINE.length} wholesalers DARK (0% online)</p>
+        <p>${fmtPct(INVENTORY_VS_ONLINE.filter(r => r.coveragePct > 0).reduce((s,r) => s + r.coveragePct, 0) / Math.max(1, INVENTORY_VS_ONLINE.filter(r => r.coveragePct > 0).length))} avg coverage (when listed)</p>
+      </div>
+      <div class="card">
+        <small>SELL: Buyer Health (H1 2026)</small>
+        <strong style="color:var(--purple)">${fmtNum(BUYER_COHORTS.reduce((s,r) => s + r.totalBuyers, 0))} buyers</strong>
+        <p>${fmtPct(BUYER_COHORTS.reduce((s,r) => s + r.repeat3plus, 0) / BUYER_COHORTS.reduce((s,r) => s + r.totalBuyers, 0) * 100)} repeat 3+ months</p>
+        <p>${fmtPct(BUYER_COHORTS.reduce((s,r) => s + r.oneTimeOld, 0) / BUYER_COHORTS.reduce((s,r) => s + r.totalBuyers, 0) * 100)} one-time old (churn risk)</p>
+      </div>
+    </div>
+  </section>`;
+}
+
+// ============================================
+// MAIN RENDER
+// ============================================
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    ${renderPacingCard()}
+
+    <section>
+      <p class="eyebrow">TX Scorecard v3 <span class="real">REAL DATA</span></p>
+      <h1>BUY / LIST / SELL</h1>
+      <p class="sub">Scorecard v3 with separated timelines: <strong>Pacing</strong> (Jul 1-20, 2026 comparable days, TX-level) at top, then <strong>Wholesaler Scorecard</strong> (H1 2026, Jan 1 - Jun 30) with BUY/LIST/SELL drill-down. Filters + Impl/CS view switching added.</p>
+      <div class="band blue" style="margin-top:14px">Two scopes: <strong>PACING = Jul 1-20, 2026</strong> (TX-level fees) | <strong>SCORECARD = H1 2026 (Jan 1 - Jun 30)</strong> (wholesaler deep dive)</div>
+    </section>
+
+    ${renderFilterBar()}
+    ${renderPacingDetailSection()}
+
+    <section style="padding:14px 18px;background:#f0f4ff;border:1px solid #c7d7fe">
+      <div style="font-size:15px;font-weight:900;color:#1d4ed8">WHOLESALER SCORECARD -- H1 2026 (Jan 1 - Jun 30)</div>
+      <div style="font-size:13px;color:#3b5998;margin-top:4px">Everything below covers the H1 2026 period. Account-level BUY/LIST/SELL data with drill-down by Implementation Lead or CS Advisor.</div>
+    </section>
+
+    ${renderWholesalerScorecard()}
+    ${renderCrossCuttingInsights()}
+    ${renderBuySection()}
+    ${renderListSection()}
+    ${renderSellSection()}
+
+    <section>
+      <p class="eyebrow">Provenance</p>
+      <h3>Queries Executed</h3>
+      <div class="tableWrap"><table>
+        <tr><th>#</th><th>Query</th><th>Period</th><th>Tables</th><th>Filters</th><th>Rows</th></tr>
+        <tr><td>PACING</td><td>Fee pacing by industry + top 15 companies</td><td><strong>Jul 1-20, 2026</strong> (comparable days)</td><td>EXPECTED_TRANSACTION_FEES + TRANSACTION_FEES</td><td>ks_flag=TRUE</td><td>5+15</td></tr>
+        <tr><td>Q1</td><td>Leakage vs Gap (offline procurement x K2K connection)</td><td><strong>H1 2026 (Jan 1 - Jun 30)</strong></td><td>PROCUREMENTS_SV, COMPANIES_SV, K2K_CONNECTIONS_SV</td><td>ks_flag=TRUE, Floral-Wholesaler, sales_channel IN (Unknown, N/A), K2K Active, vendor_code JOIN</td><td>20</td></tr>
+        <tr><td>Q2</td><td>Bunches en inventario</td><td><strong>H1 2026 (Jan 1 - Jun 30)</strong></td><td>INVENTORY_DETAILS</td><td>ks_flag=TRUE, Floral-Wholesaler, inventory_division=Units, units>1000</td><td>20</td></tr>
+        <tr><td>Q3</td><td>Inventory vs Online Sales (LIST gap)</td><td><strong>H1 2026 (Jan 1 - Jun 30)</strong></td><td>INVENTORY_DETAILS + SALE_DETAILS</td><td>ks_flag=TRUE, Floral-Wholesaler, eCom+API, units>10K, sales&lt;100K</td><td>20</td></tr>
+        <tr><td>Q4</td><td>Buyer cohorts (new/repeat/churned)</td><td><strong>H1 2026 (Jan 1 - Jun 30)</strong></td><td>SALE_DETAILS</td><td>ks_flag=TRUE, Floral-Wholesaler, eCom+API, sales&lt;100K, dump accounts excluidos</td><td>20</td></tr>
+        <tr><td>ACCTS</td><td>Wholesaler account data (impl, cs, lifecycle, K2K, procurement, fees, GMV)</td><td><strong>H1 2026 (Jan 1 - Jun 30)</strong></td><td>ACCOUNTS (SFDC + Snowflake join)</td><td>Wholesaler accounts with TX products</td><td>18</td></tr>
+      </table></div>
+      <p class="small" style="margin-top:12px">Rose (Data Agent L1) | Jul 15, 2026 | NOT VERIFIED by Codex | Confidence: MEDIUM-HIGH (queries proven, joins validated on BDC)</p>
+      <p class="small"><strong>Caveat Q1:</strong> Join via vendor_code entre PROCUREMENTS_SV y K2K_CONNECTIONS_SV. Vendor codes pueden no matchear 100% entre tablas. Leakage % es piso conservador.</p>
+      <p class="small"><strong>Caveat Q2:</strong> INVENTORY_DETAILS es base table (no hay vista semantica de inventario). Numeros de KBC parecen incluir inventario historico acumulado, no snapshot actual.</p>
+    </section>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>
