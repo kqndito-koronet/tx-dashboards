@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deep Dive — Arizona Family Florist | Koronet Revenue OS</title>
+  <style>
+    :root{--bg:#0f1117;--panel:#181b23;--ink:#e8eaed;--muted:#8b8fa3;--line:#2a2e3a;--blue:#4a8cff;--green:#12805c;--green-bright:#34d399;--gold:#d4920a;--red:#e53935;--purple:#8b5cf6;--cyan:#22c9db;--shadow:0 14px 34px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1520px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
+    .hero>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,52px);line-height:.98;margin-bottom:12px}h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:16px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}
+    .blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.greenLine{border-left:5px solid var(--green-bright)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}.cyanLine{border-left:5px solid var(--cyan)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px}.band.gold{background:rgba(212,146,10,.15);color:#f0b429}.band.blue{background:rgba(74,140,255,.1);color:#6ba3ff}.band.green{background:rgba(18,128,92,.15);color:#34d399}.band.red{background:rgba(229,57,53,.12);color:#ff6b6b}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+    table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:14px}th{background:#1e2230;color:#8b8fa3;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#8b8fa3;font-size:11px;font-weight:900}
+    .ok{background:rgba(18,128,92,.18);color:#34d399;border-color:rgba(52,211,153,.3)}.warn{background:rgba(212,146,10,.15);color:#f0b429;border-color:rgba(240,180,41,.3)}.bad{background:rgba(229,57,53,.15);color:#ff6b6b;border-color:rgba(255,107,107,.3)}
+    .sq-bar-track{height:22px;background:#252936;border-radius:10px;overflow:hidden;position:relative;margin:4px 0}
+    .sq-bar-fill{height:100%;border-radius:10px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff;transition:width .3s}
+    .sq-bar-fill.green{background:var(--green)}.sq-bar-fill.gold{background:var(--gold)}.sq-bar-fill.red{background:var(--red)}.sq-bar-fill.blue{background:var(--blue)}.sq-bar-fill.purple{background:var(--purple)}
+    .nav-strip{display:flex;flex-wrap:wrap;gap:7px;padding:10px 0}
+    .nav-strip a{display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);padding:0 12px;font-size:13px;font-weight:700;text-decoration:none}
+    .nav-strip a:hover{background:#252936;border-color:#3d4255}
+    .provenance{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.6}.provenance strong{color:var(--ink)}
+    details{margin-bottom:10px}
+    details>summary{cursor:pointer;padding:12px 16px;background:#1a1d26;border:1px solid var(--line);border-radius:8px;font-weight:800;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s}
+    details>summary::-webkit-details-marker{display:none}
+    details>summary::before{content:"\25B6";font-size:10px;color:var(--cyan);transition:transform .2s}
+    details[open]>summary::before{transform:rotate(90deg)}
+    details>summary:hover{background:#212536}
+    details>.layer-content{padding:16px;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;background:var(--panel)}
+    .section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}.section-header h2{margin:0}
+    .section-summary{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:15px;font-weight:700;color:var(--ink)}
+    .section-summary .muted{color:var(--muted);font-weight:400;font-size:13px}
+    .so-what{border:1px solid var(--line);border-radius:8px;background:rgba(34,201,219,.04);border-left:4px solid var(--cyan);padding:14px 18px;margin:10px 0}
+    .so-what strong{color:var(--cyan);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+    .so-what p{margin:4px 0 0;font-size:13px;color:var(--ink)}
+    .flag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+    .flag-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#1a1d26}
+    .flag-item .flag-label{font-size:13px;font-weight:700;color:var(--ink)}
+    .flag-item .flag-value{font-size:13px;font-weight:900}.flag-value.yes{color:var(--green-bright)}.flag-value.no{color:#ff6b6b}
+    .confidence{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:2px 8px;border-radius:999px}
+    .confidence.high{background:rgba(18,128,92,.18);color:#34d399}.confidence.medium{background:rgba(212,146,10,.15);color:#f0b429}
+    .headline-bar{background:linear-gradient(135deg,rgba(229,57,53,.12),rgba(212,146,10,.10));border:1px solid rgba(229,57,53,.25);border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:18px;font-weight:900;color:#ff6b6b;line-height:1.3}
+    .funnel-banner{display:flex;align-items:center;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+    .funnel-step{flex:1;padding:12px 16px;text-align:center;font-weight:900;font-size:13px}
+    .funnel-step .label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:2px}
+    .funnel-step .value{font-size:14px}
+    .funnel-arrow{width:24px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:18px}
+    .question-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--gold);margin-bottom:10px}
+    .question-card h4{margin:0 0 6px;font-size:15px;color:var(--gold)}
+    .question-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--cyan);margin-bottom:10px}
+    .action-card h4{margin:0 0 6px;font-size:16px;color:var(--ink)}
+    .action-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card .owner{margin-top:8px;font-size:12px;font-weight:900;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em}
+    .visit-card{background:linear-gradient(135deg,rgba(74,140,255,.08),rgba(139,92,246,.06));border:1px solid rgba(74,140,255,.25);border-radius:10px;padding:20px;margin-bottom:14px}
+    .visit-card h3{color:var(--blue);margin:0 0 10px}
+    .visit-card .detail{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+    .visit-card .detail strong{color:var(--ink)}
+    .time-depth-bar{display:flex;gap:2px;margin:8px 0}
+    .time-depth-bar .td-segment{flex:1;text-align:center;padding:8px 4px;border-radius:6px;font-size:12px;font-weight:800}
+    @media(max-width:980px){main{width:min(100% - 24px,1520px)}.hero,.grid2,.grid3,.grid6{grid-template-columns:1fr}table{min-width:600px}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- HEADER -->
+  <section class="hero" id="header">
+    <div>
+      <p class="eyebrow">Account Deep Dive -- Rose (Data Agent L1)</p>
+      <h1>Arizona Family Florist</h1>
+      <p class="sub">
+        Company 193828 | Komet Core + Procurement Free Trial | Go-Live: 2017 (8+ years) | 2 locations<br>
+        Impl: <strong>George Velez</strong> | CS: <strong>Christian Medina</strong> | Owner: Sebastian Rodriguez
+      </p>
+      <div class="band gold" style="margin-top:12px">
+        LIFECYCLE: Onboarding (SFDC) -- ANOMALY: enrolled since 2017 | MRR: $985 | eShop: configured but hidden
+      </div>
+      <div class="band blue" style="margin-top:8px">
+        Framework v5 | H1 2026 (Jan 1 - Jun 30) | Rules: R1-R12
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Navigation</p>
+      <div class="nav-strip">
+        <a href="#summary">Summary</a>
+        <a href="#buy">BUY</a>
+        <a href="#list">LIST</a>
+        <a href="#sell">SELL</a>
+        <a href="#supply-quality">Supply Quality</a>
+        <a href="#questions">Questions</a>
+        <a href="#actions">Actions</a>
+        <a href="#provenance-section">Provenance</a>
+      </div>
+      <div style="margin-top:10px">
+        <p class="small">Rose | Built 2026-07-21 | <span class="confidence medium">UNVERIFIED (needs Codex)</span></p>
+      </div>
+      <div class="nav-strip" style="margin-top:6px">
+        <a href="deep-dive-wgf.html">We Got Flowers</a>
+        <a href="deep-dive-ht.html">H&T Wholesale</a>
+        <a href="deep-dive-afx.html">AZ Floral Exchange</a>
+        <a href="deep-dive-jfs.html">JFS Wholesale</a>
+        <a href="wholesaler-scorecard.html" style="color:var(--cyan)">Scorecard</a>
+        <a href="tx-pacing.html" style="color:var(--cyan)">TX Pacing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEADLINE -->
+  <div class="headline-bar">
+    eShop apagado. 61 K2K connections = dead lanes. Matt Donahue es power user (13.9K logins) pero todo es offline. $0.54 fees en H1 2026.
+  </div>
+
+  <!-- VISIT CONTEXT -->
+  <div class="visit-card">
+    <h3>Phoenix Visit Context</h3>
+    <div class="detail">
+      <div><strong>Dates:</strong> Jul 22-23, 2026</div>
+      <div><strong>Visitors:</strong> Dave, Craig, Facu</div>
+      <div><strong>Location:</strong> Phoenix, AZ</div>
+    </div>
+    <p style="margin-top:10px;color:var(--ink);font-size:13px"><strong>Key contacts:</strong> Matt Donahue (13.9K logins, daily power user), Kristal Ortiz (7.9K logins), Brent Denham (owner, 5.4K logins). New hires: Martin Viteri (admin, Dec 2025), Daniela Morales (Apr 2025). Strong Hispanic market florist base in Phoenix.</p>
+  </div>
+
+  <!-- FUNNEL POSITION -->
+  <div class="funnel-banner">
+    <div class="funnel-step" style="background:rgba(229,57,53,.12);color:#ff6b6b">
+      <div class="label">BUY</div>
+      <div class="value">0.004% online</div>
+      <div style="font-size:10px;opacity:.7">$87 of $2.34M</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(229,57,53,.12);color:#ff6b6b">
+      <div class="label">LIST</div>
+      <div class="value">Hidden</div>
+      <div style="font-size:10px;opacity:.7">eShop ON but inventory hidden</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(229,57,53,.12);color:#ff6b6b">
+      <div class="label">SELL</div>
+      <div class="value">0% online</div>
+      <div style="font-size:10px;opacity:.7">$3.2M all offline</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <section id="summary">
+    <h2>Executive Summary</h2>
+    <div class="grid6" style="margin-bottom:16px">
+      <div class="card danger metric">
+        <small>Buy (Procurement)</small>
+        <strong>$2.34M</strong>
+        <p>0.004% online <span class="tag bad" style="margin-left:4px">dead</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>List (eShop)</small>
+        <strong>Hidden</strong>
+        <p>Inventory concealed <span class="tag bad" style="margin-left:4px">OFF</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>Sell (Online GMV)</small>
+        <strong>$0</strong>
+        <p>100% offline <span class="tag bad" style="margin-left:4px">zero</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>Fees H1 2026</small>
+        <strong>$0.54</strong>
+        <p>1 fee event</p>
+      </div>
+      <div class="card cyanLine metric">
+        <small>K2K Connections</small>
+        <strong>61</strong>
+        <p>60 active, 1 suspended</p>
+      </div>
+      <div class="card okLine metric">
+        <small>GMV Growth</small>
+        <strong>+12.1%</strong>
+        <p>$3.2M H1 2026 YoY</p>
+      </div>
+    </div>
+
+    <div class="band red">
+      AZ Family is a paradox: deep Komet Core adoption (4 daily users, 13.9K logins from power user), growing business (+12% YoY), but ZERO digital commerce. eShop exists in backend but inventory is hidden. 61 K2K connections with 1 transaction ($87). Procurement free trial since Jan 2025, never adopted. Fee potential at 10% online = ~$9.6K/yr.
+    </div>
+  </section>
+
+  <!-- BUY SECTION -->
+  <section id="buy" style="border-left:5px solid var(--blue)">
+    <div class="section-header">
+      <h2 style="color:var(--blue)">BUY</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $2.34M offline H1 2026 | Procurement = $87 (1 vendor, 2 lines) | 161+ vendors, all manual PO
+      <div class="muted">Procurement free trial activated Jan 2025. 18 months later: ONE transaction. K2K Blitz Mar 2026 added 16 importers with ZERO follow-through.</div>
+    </div>
+
+    <details open>
+      <summary>Procurement Reality</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card warnLine">
+            <small>H1 2025 Procurement</small>
+            <strong>$1,808</strong>
+            <p>23 lines | 4 vendors | Trial activity</p>
+          </div>
+          <div class="card danger">
+            <small>H1 2026 Procurement</small>
+            <strong style="color:#ff6b6b">$87</strong>
+            <p>2 lines | 1 vendor (Tutuli Flower Farms) | -95%</p>
+          </div>
+        </div>
+        <div class="so-what">
+          <strong>PROCUREMENT IS DEAD</strong>
+          <p>From $1,808 in H1 2025 to $87 in H1 2026 = -95%. The free trial never converted to real usage. 61 K2K connections exist but only Tutuli Flower Farms ($87) was used for online procurement. The support case "List of products pending mapping in Staging Area" (May 2025) suggests they tried but hit friction.</p>
+        </div>
+        <div class="provenance"><strong>Source:</strong> PROCUREMENT_DETAILS | ks_flag=TRUE | company_name ILIKE '%arizona family%' | 4 rows (channel x period)</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>K2K Connections: 61 Dead Lanes</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card cyanLine"><small>Active</small><strong>60</strong><p>vendors connected</p></div>
+          <div class="card"><small>Suspended</small><strong>1</strong><p>Floraroma S.A.</p></div>
+          <div class="card danger"><small>Used for Procurement</small><strong style="color:#ff6b6b">1</strong><p>1.6% conversion rate</p></div>
+        </div>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Wave</th><th>Date</th><th>Connections</th><th>Source</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Wave 1</td><td>Mar 2022</td><td>~35 importers</td><td>Handshake</td><td><span class="tag bad">0 used</span></td></tr>
+              <tr><td>Wave 2</td><td>Dec 2023</td><td>+8 importers</td><td>Handshake</td><td><span class="tag bad">0 used</span></td></tr>
+              <tr><td>Wave 3</td><td>Jan 2026</td><td>+1 (FOB UIO)</td><td>Handshake</td><td><span class="tag bad">0 used</span></td></tr>
+              <tr style="background:rgba(229,57,53,.06)"><td><strong>Blitz</strong></td><td><strong>Mar 27, 2026</strong></td><td><strong>+16 importers</strong></td><td>Blitz</td><td><span class="tag bad">0 used post-blitz</span></td></tr>
+              <tr><td>Wave 5</td><td>Apr 2026</td><td>+1 (Gypso)</td><td>Handshake</td><td><span class="tag bad">0 used</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what">
+          <strong>DEAD LANES</strong>
+          <p>4 waves of connection creation over 4 years. Not a single one produced sustained procurement. The Mar 2026 Blitz deployed 16 importers with zero follow-through. These connections are infrastructure without activation.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- LIST SECTION -->
+  <section id="list" style="border-left:5px solid var(--green-bright)">
+    <div class="section-header">
+      <h2 style="color:var(--green-bright)">LIST</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      eShop enabled in backend BUT inventory hidden | Future Sales OFF in eCom | Units/Bunches OFF in eCom
+      <div class="muted">The eShop infrastructure exists but 4 settings prevent it from working. Quick wins if someone flips the switches.</div>
+    </div>
+
+    <details open>
+      <summary>Feature Flags (Critical Settings)</summary>
+      <div class="layer-content">
+        <div class="flag-grid">
+          <div class="flag-item"><span class="flag-label">ecommerceEnabled</span><span class="flag-value yes">1 (ON)</span></div>
+          <div class="flag-item" style="border-color:rgba(255,107,107,.3)"><span class="flag-label">ecommerceHideOnHandInventory</span><span class="flag-value no">1 (HIDDEN!)</span></div>
+          <div class="flag-item" style="border-color:rgba(255,107,107,.3)"><span class="flag-label">ecommerceAllowFutureSales</span><span class="flag-value no">0 (OFF)</span></div>
+          <div class="flag-item" style="border-color:rgba(255,107,107,.3)"><span class="flag-label">ecommerceDaysInAdvance</span><span class="flag-value no">0</span></div>
+          <div class="flag-item" style="border-color:rgba(255,107,107,.3)"><span class="flag-label">ecommerceEnableSalesOnHandInventoryUnits</span><span class="flag-value no">0</span></div>
+          <div class="flag-item" style="border-color:rgba(255,107,107,.3)"><span class="flag-label">ecommerceEnableSalesProductBunches</span><span class="flag-value no">false</span></div>
+          <div class="flag-item"><span class="flag-label">futureSalesEnabled (Core)</span><span class="flag-value yes">1 (30 days)</span></div>
+          <div class="flag-item"><span class="flag-label">vendorAvailabilityEcommerceEnabled</span><span class="flag-value yes">1</span></div>
+          <div class="flag-item"><span class="flag-label">creditCardsEcommerceEnabled</span><span class="flag-value yes">true</span></div>
+          <div class="flag-item"><span class="flag-label">stripeIntegrationEcommerceEnabled</span><span class="flag-value yes">1</span></div>
+        </div>
+        <div class="so-what" style="margin-top:14px">
+          <strong>THE PARADOX</strong>
+          <p>eShop is ON but inventory is HIDDEN (ecommerceHideOnHandInventory=1). Future sales work in Core (30 days ahead) but are OFF in eCom. Payment infrastructure is ready (Stripe, credit cards, payment links). The technical foundation exists -- someone has to flip the switch AND expose inventory.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Time Depth: Forward Orders</summary>
+      <div class="layer-content">
+        <div class="time-depth-bar">
+          <div class="td-segment" style="background:rgba(212,146,10,.2);color:var(--gold)"><div style="font-size:20px;font-weight:900">415</div><div>Next 7d</div></div>
+          <div class="td-segment" style="background:rgba(212,146,10,.18);color:var(--gold)"><div style="font-size:20px;font-weight:900">452</div><div>7-14d</div></div>
+          <div class="td-segment" style="background:rgba(212,146,10,.12);color:var(--gold)"><div style="font-size:20px;font-weight:900">295</div><div>14-30d</div></div>
+          <div class="td-segment" style="background:rgba(212,146,10,.08);color:var(--gold)"><div style="font-size:20px;font-weight:900">40</div><div>30d+</div></div>
+        </div>
+        <p style="margin-top:8px;font-size:14px;font-weight:800;color:var(--muted)">All 1,202 forward orders are OFFLINE. Zero online.</p>
+        <div class="so-what">
+          <strong>PLANNING DEPTH</strong>
+          <p>Peak planning at 7-14 days (452 orders). AZ Family plans 2 weeks ahead consistently. If eShop future sales were ON, their florist customers could pre-order instead of calling.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SELL SECTION -->
+  <section id="sell" style="border-left:5px solid var(--purple)">
+    <div class="section-header">
+      <h2 style="color:var(--purple)">SELL</h2>
+      <span class="confidence medium">MEDIUM CONFIDENCE (R5 risk)</span>
+    </div>
+    <div class="section-summary">
+      $3.2M GMV H1 2026 (+12.1% YoY) | 100% offline | 200+ customers | Strong Hispanic market
+      <div class="muted">Growing, healthy business. Zero digital commerce. All customers buy in-person or by phone.</div>
+    </div>
+
+    <details open>
+      <summary>GMV Trend (Monthly)</summary>
+      <div class="layer-content">
+        <div style="display:flex;gap:3px;align-items:flex-end;height:100px;padding:4px 0;margin-bottom:8px">
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:31%;opacity:.7" title="Jul 25: $226K"></div>
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:33%;opacity:.7" title="Aug 25: $240K"></div>
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:57%;opacity:.7" title="Sep 25: $414K"></div>
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:72%;opacity:.7" title="Oct 25: $524K"></div>
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:56%;opacity:.7" title="Nov 25: $407K"></div>
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:51%;opacity:.7" title="Dec 25: $370K"></div>
+          <div style="flex:1;background:var(--green-bright);border-radius:4px 4px 0 0;height:65%;opacity:.8" title="Jan 26: $474K"></div>
+          <div style="flex:1;background:var(--green-bright);border-radius:4px 4px 0 0;height:100%" title="Feb 26: $731K - PEAK"></div>
+          <div style="flex:1;background:var(--green-bright);border-radius:4px 4px 0 0;height:73%;" title="Mar 26: $530K"></div>
+          <div style="flex:1;background:var(--green-bright);border-radius:4px 4px 0 0;height:75%;" title="Apr 26: $548K"></div>
+          <div style="flex:1;background:var(--green-bright);border-radius:4px 4px 0 0;height:85%;" title="May 26: $624K"></div>
+          <div style="flex:1;background:var(--green-bright);border-radius:4px 4px 0 0;height:40%;" title="Jun 26: $295K"></div>
+        </div>
+        <div style="display:flex;gap:3px">
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--muted)">Jul</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--muted)">Aug</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--muted)">Sep</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--muted)">Oct</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--muted)">Nov</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--muted)">Dec</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--green-bright);font-weight:900">Jan</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--green-bright);font-weight:900">Feb</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--green-bright)">Mar</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--green-bright)">Apr</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--green-bright)">May</div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--green-bright)">Jun</div>
+        </div>
+        <p style="margin-top:8px;font-size:13px;color:var(--muted)">Feb peak = $731K (Valentine's Day). Annualized ~$5.4M. Season: Oct-May high, Jun-Aug low.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Fees: $0.54 H1 2026</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card danger"><small>H1 2025</small><strong>$19.04</strong><p>11 events</p></div>
+          <div class="card danger"><small>H2 2025</small><strong>$1.02</strong><p>1 event</p></div>
+          <div class="card danger"><small>H1 2026</small><strong style="color:#ff6b6b">$0.54</strong><p>1 event</p></div>
+        </div>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Scenario</th><th style="text-align:right">Online GMV</th><th style="text-align:right">Rate</th><th style="text-align:right">Annual Fees</th></tr></thead>
+            <tbody>
+              <tr><td>5% online</td><td style="text-align:right">~$270K</td><td style="text-align:right">1.5%</td><td style="text-align:right"><strong>~$4,050</strong></td></tr>
+              <tr><td>10% online</td><td style="text-align:right">~$540K</td><td style="text-align:right">1.5%</td><td style="text-align:right"><strong>~$8,100</strong></td></tr>
+              <tr><td>25% online</td><td style="text-align:right">~$1.35M</td><td style="text-align:right">1.5%</td><td style="text-align:right"><strong>~$20,250</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Top Customers H1 2026</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>#</th><th>Customer</th><th style="text-align:right">Sales</th><th>Profile</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Downtown Tempe Foundation</strong></td><td style="text-align:right">$90,633</td><td>Institution</td></tr>
+              <tr><td>2</td><td>GALERIA FLORAL</td><td style="text-align:right">$75,501</td><td>Hispanic retail</td></tr>
+              <tr><td>3</td><td>ANNES FLOWERS AND GIFTS</td><td style="text-align:right">$75,323</td><td>Retail florist</td></tr>
+              <tr><td>4</td><td>FLOWERS BY RENEE</td><td style="text-align:right">$72,683</td><td>Retail florist</td></tr>
+              <tr><td>5</td><td>Special Event Designs</td><td style="text-align:right">$71,630</td><td>Event florist</td></tr>
+              <tr><td>6</td><td>Elite Weddings & Events</td><td style="text-align:right">$65,450</td><td>Wedding/events</td></tr>
+              <tr><td>7</td><td>FLOWERS BY IMPULSE</td><td style="text-align:right">$64,774</td><td>High volume greens</td></tr>
+              <tr><td>8</td><td>Arreglos Mariposa & Potro</td><td style="text-align:right">$39,036</td><td>Hispanic retail</td></tr>
+              <tr><td>9</td><td>Tempe Blooms</td><td style="text-align:right">$35,369</td><td>Retail</td></tr>
+              <tr><td>10</td><td>Flower Lab</td><td style="text-align:right">$33,362</td><td>Retail</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what" style="margin-top:12px">
+          <strong>MARKET</strong>
+          <p>Strong Hispanic florist market (Galeria Floral, Millan, Hernandez, Floreria Arreglos). Mix of retail florists, event/wedding planners, and institutional buyers. 100% offline -- none use eShop.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SUPPLY QUALITY -->
+  <section id="supply-quality">
+    <div class="section-header"><h2>Supply Quality</h2></div>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card">
+        <small>K2K Connection Conversion</small>
+        <strong style="color:#ff6b6b">1.6%</strong>
+        <p>1 of 61 vendors used for Procurement</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill red" style="width:2%"></div></div>
+      </div>
+      <div class="card">
+        <small>Core Adoption</small>
+        <strong style="color:var(--green-bright)">Excellent</strong>
+        <p>4 daily users, 13.9K logins power user</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill green" style="width:90%">90%</div></div>
+      </div>
+      <div class="card">
+        <small>Digital Commerce</small>
+        <strong style="color:#ff6b6b">0%</strong>
+        <p>Zero online buy or sell</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill red" style="width:1%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP QUESTIONS -->
+  <section id="questions">
+    <h2>Top 3 Questions for This Account</h2>
+    <div class="question-card">
+      <h4>1. eShop esta configurado pero el inventario esta oculto. Por que? Quien lo decidio?</h4>
+      <p>ecommerceEnabled=1 but ecommerceHideOnHandInventory=1. Payment infra ready (Stripe, credit cards). Was it deliberately hidden or is it a default setting nobody changed? Matt Donahue (13.9K logins) or Brent Denham would know.</p>
+    </div>
+    <div class="question-card">
+      <h4>2. 200+ clientes compran por telefono. Algun florist alguna vez pidio "quiero ver tu catalogo online"?</h4>
+      <p>The Hispanic florist market in Phoenix may have different digital adoption patterns. Is there latent demand for an online catalog? Or is the phone/in-person model working so well nobody wants to change?</p>
+    </div>
+    <div class="question-card">
+      <h4>3. El Blitz de Mar 2026 agrego 16 importers con CERO uso posterior. Que paso?</h4>
+      <p>Implementations team did a K2K Blitz on Mar 27, 2026. 16 new connections, zero procurement after. Was there training? Did AZ Family even know these connections were created? What was the intended workflow?</p>
+    </div>
+  </section>
+
+  <!-- ACTIONS -->
+  <section id="actions">
+    <h2>Actions (Priority Order)</h2>
+    <div class="action-card">
+      <h4>1. Flip the eShop switch: unhide inventory</h4>
+      <p>Change ecommerceHideOnHandInventory from 1 to 0. This single setting change exposes inventory to online buyers. Talk to Brent/Matt first.</p>
+      <div class="owner">Owner: CS (Christian Medina) + Impl (George Velez)</div>
+    </div>
+    <div class="action-card">
+      <h4>2. Enable Future Sales in eCommerce</h4>
+      <p>futureSalesEnabled=1 in Core (30 days) but 0 in eCommerce. Flip ecommerceAllowFutureSales to 1 + set ecommerceDaysInAdvance to match Core. Clients can then pre-order.</p>
+      <div class="owner">Owner: Impl (George Velez)</div>
+    </div>
+    <div class="action-card">
+      <h4>3. Procurement activation conversation</h4>
+      <p>61 dead K2K connections. Free trial since Jan 2025. Need to understand WHY they never adopted. Was it the staging area mapping (support case May 2025)? Workflow friction? Lack of value perception?</p>
+      <div class="owner">Owner: CS + Impl</div>
+    </div>
+    <div class="action-card">
+      <h4>4. Resolve 3 open support cases (Apr-Jun 2026)</h4>
+      <p>3 Intercom conversations from Apr and Jun 2026 still in "New" status. Close them or address them before the visit.</p>
+      <div class="owner">Owner: Support</div>
+    </div>
+    <div class="action-card">
+      <h4>5. Understand the Hispanic florist segment</h4>
+      <p>Multiple Hispanic-named florists in the top 25 (Galeria Floral, Millan, Hernandez, Arreglos Mariposa). Is there a specific approach needed for this market? Language, WhatsApp ordering, etc?</p>
+      <div class="owner">Owner: Mercurio (GTM)</div>
+    </div>
+  </section>
+
+  <!-- PROVENANCE -->
+  <section id="provenance-section">
+    <h2>Provenance</h2>
+    <div class="provenance">
+      <strong>Queries:</strong> 14 SQL queries + SFDC CLI + Fathom (0 results) + Intercom (via Snowflake sync)<br>
+      <strong>Rules:</strong> R1 (ks_flag), R2 (transaction_date), R3 (MAX=Jun 30), R4 (sales&lt;100K), R5 (CAVEAT: CUSTOMERS join may fan-out), R6 (sell/buy online), R8 (semantic views), R9 (provenance), R11 (1.5% rates), R12 (SAMPLES not pure dump)<br>
+      <strong>Confidence:</strong> HIGH on most, MEDIUM on GMV total (R5 risk)<br>
+      <strong>Known gaps:</strong> Fathom: 0 calls. Intercom: ID mismatch. SFDC: 3 records (main + L1 + training).
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

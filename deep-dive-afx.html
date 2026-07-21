@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deep Dive — Arizona Floral Exchange | Koronet Revenue OS</title>
+  <style>
+    :root{--bg:#0f1117;--panel:#181b23;--ink:#e8eaed;--muted:#8b8fa3;--line:#2a2e3a;--blue:#4a8cff;--green:#12805c;--green-bright:#34d399;--gold:#d4920a;--red:#e53935;--purple:#8b5cf6;--cyan:#22c9db;--shadow:0 14px 34px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1520px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
+    .hero>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,52px);line-height:.98;margin-bottom:12px}h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:16px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}
+    .blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.greenLine{border-left:5px solid var(--green-bright)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}.cyanLine{border-left:5px solid var(--cyan)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px}.band.gold{background:rgba(212,146,10,.15);color:#f0b429}.band.blue{background:rgba(74,140,255,.1);color:#6ba3ff}.band.green{background:rgba(18,128,92,.15);color:#34d399}.band.red{background:rgba(229,57,53,.12);color:#ff6b6b}.band.purple{background:rgba(139,92,246,.12);color:#a78bfa}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+    table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:14px}th{background:#1e2230;color:#8b8fa3;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#8b8fa3;font-size:11px;font-weight:900}
+    .ok{background:rgba(18,128,92,.18);color:#34d399;border-color:rgba(52,211,153,.3)}.warn{background:rgba(212,146,10,.15);color:#f0b429;border-color:rgba(240,180,41,.3)}.bad{background:rgba(229,57,53,.15);color:#ff6b6b;border-color:rgba(255,107,107,.3)}
+    .sq-bar-track{height:22px;background:#252936;border-radius:10px;overflow:hidden;position:relative;margin:4px 0}
+    .sq-bar-fill{height:100%;border-radius:10px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff;transition:width .3s}
+    .sq-bar-fill.green{background:var(--green)}.sq-bar-fill.gold{background:var(--gold)}.sq-bar-fill.red{background:var(--red)}.sq-bar-fill.blue{background:var(--blue)}.sq-bar-fill.purple{background:var(--purple)}
+    .nav-strip{display:flex;flex-wrap:wrap;gap:7px;padding:10px 0}
+    .nav-strip a{display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);padding:0 12px;font-size:13px;font-weight:700;text-decoration:none}
+    .nav-strip a:hover{background:#252936;border-color:#3d4255}
+    .provenance{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.6}.provenance strong{color:var(--ink)}
+    details{margin-bottom:10px}
+    details>summary{cursor:pointer;padding:12px 16px;background:#1a1d26;border:1px solid var(--line);border-radius:8px;font-weight:800;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s}
+    details>summary::-webkit-details-marker{display:none}
+    details>summary::before{content:"\25B6";font-size:10px;color:var(--cyan);transition:transform .2s}
+    details[open]>summary::before{transform:rotate(90deg)}
+    details>summary:hover{background:#212536}
+    details>.layer-content{padding:16px;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;background:var(--panel)}
+    .section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}.section-header h2{margin:0}
+    .section-summary{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:15px;font-weight:700;color:var(--ink)}
+    .section-summary .muted{color:var(--muted);font-weight:400;font-size:13px}
+    .so-what{border:1px solid var(--line);border-radius:8px;background:rgba(34,201,219,.04);border-left:4px solid var(--cyan);padding:14px 18px;margin:10px 0}
+    .so-what strong{color:var(--cyan);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+    .so-what p{margin:4px 0 0;font-size:13px;color:var(--ink)}
+    .flag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+    .flag-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#1a1d26}
+    .flag-item .flag-label{font-size:13px;font-weight:700;color:var(--ink)}
+    .flag-item .flag-value{font-size:13px;font-weight:900}.flag-value.yes{color:var(--green-bright)}.flag-value.no{color:#ff6b6b}
+    .confidence{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:2px 8px;border-radius:999px}
+    .confidence.high{background:rgba(18,128,92,.18);color:#34d399}.confidence.medium{background:rgba(212,146,10,.15);color:#f0b429}
+    .headline-bar{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(74,140,255,.08));border:1px solid rgba(139,92,246,.25);border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:18px;font-weight:900;color:#a78bfa;line-height:1.3}
+    .funnel-banner{display:flex;align-items:center;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+    .funnel-step{flex:1;padding:12px 16px;text-align:center;font-weight:900;font-size:13px}
+    .funnel-step .label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:2px}
+    .funnel-step .value{font-size:14px}
+    .funnel-arrow{width:24px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:18px}
+    .question-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--gold);margin-bottom:10px}
+    .question-card h4{margin:0 0 6px;font-size:15px;color:var(--gold)}
+    .question-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--cyan);margin-bottom:10px}
+    .action-card h4{margin:0 0 6px;font-size:16px;color:var(--ink)}
+    .action-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card .owner{margin-top:8px;font-size:12px;font-weight:900;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em}
+    .visit-card{background:linear-gradient(135deg,rgba(74,140,255,.08),rgba(139,92,246,.06));border:1px solid rgba(74,140,255,.25);border-radius:10px;padding:20px;margin-bottom:14px}
+    .visit-card h3{color:var(--blue);margin:0 0 10px}
+    .visit-card .detail{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+    .visit-card .detail strong{color:var(--ink)}
+    .time-depth-bar{display:flex;gap:2px;margin:8px 0}
+    .time-depth-bar .td-segment{flex:1;text-align:center;padding:8px 4px;border-radius:6px;font-size:12px;font-weight:800}
+    @media(max-width:980px){main{width:min(100% - 24px,1520px)}.hero,.grid2,.grid3,.grid6{grid-template-columns:1fr}table{min-width:600px}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- HEADER -->
+  <section class="hero" id="header">
+    <div>
+      <p class="eyebrow">Account Deep Dive -- Rose (Data Agent L1)</p>
+      <h1>Arizona Floral Exchange</h1>
+      <p class="sub">
+        Company 477128 | K2K eCommerce + Koronet Procurement | Go-Live: Nov 10, 2020 (5+ years)<br>
+        Impl: <strong>Christine Nickelsen</strong> | CS: <strong>Christian Medina</strong> | Owner: Sebastian Rodriguez
+      </p>
+      <div class="band purple" style="margin-top:12px">
+        LIFECYCLE: Adoption | SmartSystem for core ERP (sunset candidate) | MRR: $719 | K2K eCommerce = TRUE
+      </div>
+      <div class="band blue" style="margin-top:8px">
+        Framework v5 | H1 2026 (Jan 1 - Jun 30) | Rules: R1-R12, R14
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Navigation</p>
+      <div class="nav-strip">
+        <a href="#summary">Summary</a>
+        <a href="#buy">BUY</a>
+        <a href="#list">LIST</a>
+        <a href="#sell">SELL</a>
+        <a href="#supply-quality">Supply Quality</a>
+        <a href="#questions">Questions</a>
+        <a href="#actions">Actions</a>
+        <a href="#provenance-section">Provenance</a>
+      </div>
+      <div style="margin-top:10px">
+        <p class="small">Rose | Built 2026-07-21 | <span class="confidence medium">UNVERIFIED (needs Codex)</span></p>
+      </div>
+      <div class="nav-strip" style="margin-top:6px">
+        <a href="deep-dive-wgf.html">We Got Flowers</a>
+        <a href="deep-dive-ht.html">H&T Wholesale</a>
+        <a href="deep-dive-azfamily.html">AZ Family Florist</a>
+        <a href="deep-dive-jfs.html">JFS Wholesale</a>
+        <a href="wholesaler-scorecard.html" style="color:var(--cyan)">Scorecard</a>
+        <a href="tx-pacing.html" style="color:var(--cyan)">TX Pacing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEADLINE -->
+  <div class="headline-bar">
+    Solo $38K en Komet de $3.5M reales. SmartSystem sunset = la oportunidad. Procurement crecio 51x YoY pero enero 2026 se perdio entero por bug de conexiones.
+  </div>
+
+  <!-- VISIT CONTEXT -->
+  <div class="visit-card">
+    <h3>Phoenix Visit Context</h3>
+    <div class="detail">
+      <div><strong>Dates:</strong> Jul 22-23, 2026</div>
+      <div><strong>Visitors:</strong> Dave, Craig, Facu</div>
+      <div><strong>Location:</strong> Gilbert, AZ</div>
+    </div>
+    <p style="margin-top:10px;color:var(--ink);font-size:13px"><strong>Dave Sack context (Jul 18-19):</strong> "SmartSystem sunset conversion prospect that didn't convert but is using K2K. Very interested in what they are using for inventory." This is THE strategic conversation -- SmartSystem is dying, AFX has to migrate somewhere. Holistic pricing opportunity.</p>
+  </div>
+
+  <!-- FUNNEL POSITION -->
+  <div class="funnel-banner">
+    <div class="funnel-step" style="background:rgba(18,128,92,.12);color:var(--green-bright)">
+      <div class="label">BUY</div>
+      <div class="value">50% online</div>
+      <div style="font-size:10px;opacity:.7">$23K Procurement H1 2026</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(229,57,53,.12);color:#ff6b6b">
+      <div class="label">LIST</div>
+      <div class="value">3 items only</div>
+      <div style="font-size:10px;opacity:.7">Zero future inventory</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(139,92,246,.12);color:#a78bfa">
+      <div class="label">SELL</div>
+      <div class="value">100% K2K eCom</div>
+      <div style="font-size:10px;opacity:.7">$38K H1 2026 (of $3.5M real)</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <section id="summary">
+    <h2>Executive Summary</h2>
+    <div class="grid6" style="margin-bottom:16px">
+      <div class="card okLine metric">
+        <small>Buy (Procurement)</small>
+        <strong>$46.7K</strong>
+        <p>50% online <span class="tag ok" style="margin-left:4px">growing</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>List (Depth)</small>
+        <strong>3 items</strong>
+        <p>Next 7d only <span class="tag bad" style="margin-left:4px">critical</span></p>
+      </div>
+      <div class="card purpleLine metric">
+        <small>Sell (eCom GMV)</small>
+        <strong>$38.4K</strong>
+        <p>100% K2K eCom <span class="tag warn" style="margin-left:4px">declining</span></p>
+      </div>
+      <div class="card warnLine metric">
+        <small>Fees H1 2026</small>
+        <strong>$524</strong>
+        <p>1.37% take rate</p>
+      </div>
+      <div class="card cyanLine metric">
+        <small>K2K Connections</small>
+        <strong>37</strong>
+        <p>Active of 38 total</p>
+      </div>
+      <div class="card blueLine metric">
+        <small>Real Annual Sales</small>
+        <strong>$3.5M</strong>
+        <p>98% outside Komet</p>
+      </div>
+    </div>
+
+    <div class="band gold">
+      AFX is a SmartSystem-for-ERP account that uses Komet only for K2K eCom selling ($38K) and Procurement buying ($23K). 98% of its $3.5M business runs outside Komet. The SmartSystem sunset means AFX must migrate -- the question is when and to what. Procurement grew 51x YoY (the bright spot). Jan 2026 was lost entirely due to a corrupted connections bug.
+    </div>
+  </section>
+
+  <!-- BUY SECTION -->
+  <section id="buy" style="border-left:5px solid var(--blue)">
+    <div class="section-header">
+      <h2 style="color:var(--blue)">BUY</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $46.7K total H1 2026 | 50% Procurement (online) | 26 vendors active | +64% YoY
+      <div class="muted">Procurement is the BRIGHT SPOT: grew from $452 in H1 2025 to $23,233 in H1 2026 (51x). Most vendors use both Web and Procurement channels.</div>
+    </div>
+
+    <details open>
+      <summary>Channel Breakdown (H1 2026)</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card blueLine">
+            <small>Procurement (Online)</small>
+            <strong style="color:var(--blue)">$23,233</strong>
+            <p>238 POs | 26 vendors | 50%</p>
+          </div>
+          <div class="card warnLine">
+            <small>Web (Manual)</small>
+            <strong>$22,314</strong>
+            <p>178 POs | 26 vendors | 48%</p>
+          </div>
+          <div class="card">
+            <small>Unknown</small>
+            <strong>$1,183</strong>
+            <p>9 POs | 5 vendors | 2%</p>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="small" style="margin-bottom:4px">Channel Mix</div>
+          <div style="display:flex;height:28px;border-radius:8px;overflow:hidden;background:#252936">
+            <div style="width:50%;background:var(--blue);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff">Procurement 50%</div>
+            <div style="width:48%;background:var(--gold);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff">Web 48%</div>
+            <div style="width:2%;background:#555"></div>
+          </div>
+        </div>
+        <div class="so-what">
+          <strong>YOY GROWTH</strong>
+          <p>H1 2025: $452 Procurement | H1 2026: $23,233 Procurement = <strong>51x growth</strong>. "Unknown" channel nearly disappeared ($42K H2 2025 to $1.2K H1 2026) = better classification or migration to identified channels.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Top 15 Vendors H1 2026</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>Vendor</th><th style="text-align:right">Cost</th><th style="text-align:right">Units</th><th style="text-align:right">POs</th><th>Channels</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Miaflora Farms</strong></td><td style="text-align:right">$4,751</td><td style="text-align:right">6,821</td><td style="text-align:right">36</td><td>Web + Procurement</td></tr>
+              <tr><td>RosaPrima</td><td style="text-align:right">$4,581</td><td style="text-align:right">6,781</td><td style="text-align:right">25</td><td>Procurement + Web + Unknown</td></tr>
+              <tr><td>Protean Flower Farms</td><td style="text-align:right">$4,504</td><td style="text-align:right">5,835</td><td style="text-align:right">37</td><td>Procurement + Web</td></tr>
+              <tr><td>Bella Blossom</td><td style="text-align:right">$4,450</td><td style="text-align:right">2,923</td><td style="text-align:right">36</td><td>Procurement + Web</td></tr>
+              <tr><td>Sunburst Farms</td><td style="text-align:right">$3,770</td><td style="text-align:right">3,944</td><td style="text-align:right">33</td><td>Web + Procurement</td></tr>
+              <tr><td>Allure Farms</td><td style="text-align:right">$3,700</td><td style="text-align:right">2,123</td><td style="text-align:right">26</td><td>Web + Procurement</td></tr>
+              <tr><td>ROYAL FLOWERS</td><td style="text-align:right">$3,595</td><td style="text-align:right">4,428</td><td style="text-align:right">25</td><td>Procurement + Web</td></tr>
+              <tr><td>U.S. Greens Corp</td><td style="text-align:right">$2,019</td><td style="text-align:right">870</td><td style="text-align:right">13</td><td>Procurement + Web</td></tr>
+              <tr><td>Continental Flowers</td><td style="text-align:right">$1,943</td><td style="text-align:right">2,178</td><td style="text-align:right">17</td><td>Web + Procurement</td></tr>
+              <tr><td>Gardens America</td><td style="text-align:right">$1,781</td><td style="text-align:right">932</td><td style="text-align:right">23</td><td>Web + Procurement</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="provenance"><strong>Source:</strong> PROCUREMENT_DETAILS | 25 vendors, H1 2026 | ks_flag=TRUE | 425 POs</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- LIST SECTION -->
+  <section id="list" style="border-left:5px solid var(--green-bright)">
+    <div class="section-header">
+      <h2 style="color:var(--green-bright)">LIST</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      eShop = FALSE | K2K eCommerce = TRUE | 100% Boxes | Only 3 items listed for next 7 days
+      <div class="muted">AFX sells exclusively via K2K eCommerce. Has future_sales_enabled + 20 days_in_advance but publishes almost nothing.</div>
+    </div>
+
+    <details open>
+      <summary>Time Depth</summary>
+      <div class="layer-content">
+        <div class="time-depth-bar">
+          <div class="td-segment" style="background:rgba(229,57,53,.15);color:#ff6b6b"><div style="font-size:24px;font-weight:900">3</div><div>Next 7d</div></div>
+          <div class="td-segment" style="background:rgba(229,57,53,.08);color:#ff6b6b"><div style="font-size:24px;font-weight:900">0</div><div>7-14d</div></div>
+          <div class="td-segment" style="background:rgba(229,57,53,.06);color:#ff6b6b"><div style="font-size:24px;font-weight:900">0</div><div>14-30d</div></div>
+          <div class="td-segment" style="background:rgba(229,57,53,.04);color:#ff6b6b"><div style="font-size:24px;font-weight:900">0</div><div>30d+</div></div>
+        </div>
+        <div class="so-what" style="margin-top:14px">
+          <strong>CRITICAL</strong>
+          <p>Despite ecommerce_days_in_advance=20 and future_sales_enabled=TRUE, AFX lists almost NOTHING. Wedding florists (their primary clientele) plan weeks ahead. If they can't see future availability, they don't buy. This is THE adoption bottleneck.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>eShop Users & Buyers</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card okLine">
+            <small>Champion Internal</small>
+            <strong>Paul Cox: 1,310 logins</strong>
+            <p>Owner. Active daily. Last login Jul 20.</p>
+          </div>
+          <div class="card purpleLine">
+            <small>Champion eCom</small>
+            <strong>Angela: 765 logins</strong>
+            <p>angela@azfloralexchange.com. Daily user.</p>
+          </div>
+        </div>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Customer</th><th style="text-align:right">H1 2026 GMV</th><th style="text-align:right">Items</th><th>Profile</th></tr></thead>
+            <tbody>
+              <tr><td><strong>CREME DE LA BLOOM</strong></td><td style="text-align:right"><strong>$12,315</strong></td><td style="text-align:right">89</td><td><span class="tag ok">32% of total</span></td></tr>
+              <tr><td>SIMPLY BEAUTIFUL WEDDING</td><td style="text-align:right">$8,987</td><td style="text-align:right">82</td><td>Wedding events</td></tr>
+              <tr><td>BLUME EVENTS</td><td style="text-align:right">$7,387</td><td style="text-align:right">60</td><td>Events</td></tr>
+              <tr><td>CHANDLER FLOWERS</td><td style="text-align:right">$3,822</td><td style="text-align:right">33</td><td>Retail florist</td></tr>
+              <tr><td>RAZZLE DAZZLE</td><td style="text-align:right">$2,791</td><td style="text-align:right">28</td><td>Events</td></tr>
+              <tr><td>SARAHS GARDEN WEDDING</td><td style="text-align:right">$1,638</td><td style="text-align:right">11</td><td>Wedding</td></tr>
+              <tr><td>Bloom Florals</td><td style="text-align:right">$1,092</td><td style="text-align:right">6</td><td>Retail</td></tr>
+              <tr><td>CRISMON'S FLOWERS</td><td style="text-align:right">$322</td><td style="text-align:right">2</td><td>Small retail</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what">
+          <strong>CONCENTRATION RISK</strong>
+          <p>Only 8 buyers in H1 2026. Top 3 = 75% of GMV. CREME DE LA BLOOM is 32% alone. 63% of registered eCommerce users (66 of 104) NEVER logged in. AFX specializes in wedding/event florists.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SELL SECTION -->
+  <section id="sell" style="border-left:5px solid var(--purple)">
+    <div class="section-header">
+      <h2 style="color:var(--purple)">SELL</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $38.4K GMV H1 2026 (-12.7% YoY) | 100% eCommerce via K2K | 8 buyers | ~$1K fees/yr
+      <div class="muted">Decline driven by Jan 2026 outage ($0 GMV). Normalize for Jan and it's FLAT, not declining.</div>
+    </div>
+
+    <details open>
+      <summary>Monthly GMV Trend</summary>
+      <div class="layer-content">
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Month</th><th style="text-align:right">GMV</th><th style="text-align:right">Items</th><th style="text-align:right">Clients</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr style="background:rgba(229,57,53,.08)"><td><strong>Jan 2026</strong></td><td style="text-align:right;color:#ff6b6b"><strong>$0</strong></td><td style="text-align:right">0</td><td style="text-align:right">0</td><td><span class="tag bad">OUTAGE</span> -- corrupted connections</td></tr>
+              <tr><td>Feb 2026</td><td style="text-align:right">$3,836</td><td style="text-align:right">32</td><td style="text-align:right">4</td><td>Recovery</td></tr>
+              <tr><td>Mar 2026</td><td style="text-align:right">$11,431</td><td style="text-align:right">96</td><td style="text-align:right">5</td><td>Best month H1</td></tr>
+              <tr><td>Apr 2026</td><td style="text-align:right">$10,890</td><td style="text-align:right">87</td><td style="text-align:right">5</td><td>Strong</td></tr>
+              <tr><td>May 2026</td><td style="text-align:right">$9,001</td><td style="text-align:right">67</td><td style="text-align:right">7</td><td>Most clients</td></tr>
+              <tr><td>Jun 2026</td><td style="text-align:right">$3,195</td><td style="text-align:right">29</td><td style="text-align:right">4</td><td>Summer dip</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what">
+          <strong>JAN 2026 OUTAGE</strong>
+          <p>Corrupted connections after single-to-multi-location migration (Intercom Jan 16, 2026). Clients couldn't buy -- "product is unavailable" error. Fixed by Fernando Yepez team. Lost ~$6-8K in January revenue. Without this bug, YoY would be FLAT, not -13%.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Fees: $524 H1 2026</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card warnLine"><small>FY 2025 Fees</small><strong>$1,038</strong><p>550 events | 1.30% take rate</p></div>
+          <div class="card warnLine"><small>H1 2026 Fees</small><strong>$524</strong><p>286 events | 1.37% take rate</p></div>
+          <div class="card"><small>Expected Jul 2026</small><strong>$12</strong><p>9 K2K buyer events</p></div>
+        </div>
+        <div class="so-what">
+          <strong>FEE REALITY</strong>
+          <p>~$1K/year in fees. This account generates minimal TX revenue. Take rate is stable (1.37%). The problem is VOLUME not RATE. If AFX migrates SmartSystem inventory to Komet, the fee base scales with the GMV that migrates.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SUPPLY QUALITY -->
+  <section id="supply-quality">
+    <div class="section-header"><h2>Supply Quality</h2></div>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card">
+        <small>Procurement Adoption</small>
+        <strong style="color:var(--green-bright)">51x YoY</strong>
+        <p>$452 H1 2025 to $23K H1 2026</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill green" style="width:50%">50% online</div></div>
+      </div>
+      <div class="card">
+        <small>Vendor Coverage</small>
+        <strong>26 of 37</strong>
+        <p>K2K connections with purchases</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill blue" style="width:70%">70%</div></div>
+      </div>
+      <div class="card">
+        <small>Sell vs Buy Alignment</small>
+        <strong style="color:var(--gold)">Hydrangea over-bought</strong>
+        <p>Buys $5.3K, sells $3.8K. Rose aligned.</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill gold" style="width:60%">60%</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP QUESTIONS -->
+  <section id="questions">
+    <h2>Top 3 Questions for This Account</h2>
+    <div class="question-card">
+      <h4>1. SmartSystem sunset timeline. Cuando migran? Que necesitan?</h4>
+      <p>Dave Sack: "tried and failed to move them to Komet Core from SmartSystem last year." AFX uses SmartSystem for inventory, core ERP. It's being sunset. What's their timeline? What would make Komet Core compelling? Holistic pricing might work.</p>
+    </div>
+    <div class="question-card">
+      <h4>2. Por que 66 eCommerce users registrados nunca hicieron login?</h4>
+      <p>63% of registered users never entered. Wedding florists who signed up for an event and never returned? Or registration friction that prevents activation? Paul Cox (1,310 logins) knows.</p>
+    </div>
+    <div class="question-card">
+      <h4>3. El outage de Enero les costo ~$6K. Como lo tomaron?</h4>
+      <p>Single-to-multi-location migration broke connections. $0 in January. Is there lingering distrust? Has it impacted their willingness to adopt more features? The eSuite upsell (reason for multi-location) -- where does that stand?</p>
+    </div>
+  </section>
+
+  <!-- ACTIONS -->
+  <section id="actions">
+    <h2>Actions (Priority Order)</h2>
+    <div class="action-card">
+      <h4>1. SmartSystem migration conversation (strategic)</h4>
+      <p>AFX is using dying software for its core operations. Present Komet Core as the migration path with holistic pricing. This unlocks the other 98% of their $3.5M business.</p>
+      <div class="owner">Owner: Dave Sack + Sales</div>
+    </div>
+    <div class="action-card">
+      <h4>2. Fix listing depth (publish future inventory)</h4>
+      <p>future_sales_enabled=TRUE, days_in_advance=20 but only 3 items listed. Wedding florists need to plan. If AFX published availability for 2-3 weeks out, buyers would find product.</p>
+      <div class="owner">Owner: CS (Christian Medina / Sebastian Rodriguez)</div>
+    </div>
+    <div class="action-card">
+      <h4>3. Activate 66 dormant eShop users</h4>
+      <p>63% never logged in. Campaign or personal outreach to re-engage. Focus on wedding season (Oct-May).</p>
+      <div class="owner">Owner: CS (Sebastian Rodriguez)</div>
+    </div>
+    <div class="action-card">
+      <h4>4. Protect Creme de la Bloom (32% of GMV)</h4>
+      <p>Single buyer = 1/3 of revenue. If they churn, GMV drops 32%. Understand if they buy only for events or regularly.</p>
+      <div class="owner">Owner: CS + AFX ops (Paul Cox)</div>
+    </div>
+    <div class="action-card">
+      <h4>5. Advance eSuite upsell</h4>
+      <p>Multi-location migration was done FOR eSuite (Intercom Jan 2026). Where did it go? This could be the bridge from SmartSystem to full Komet.</p>
+      <div class="owner">Owner: Impl (Christine Nickelsen) + Sales</div>
+    </div>
+  </section>
+
+  <!-- PROVENANCE -->
+  <section id="provenance-section">
+    <h2>Provenance</h2>
+    <div class="provenance">
+      <strong>Sources:</strong> COMPANIES, SALE_DETAILS, PROCUREMENT_DETAILS, K2K_CONNECTIONS, TRANSACTION_FEES, EXPECTED_TRANSACTION_FEES, USER_STATS, SUPPORT_CASES (Intercom sync), SFDC CLI, Slack search<br>
+      <strong>Rules:</strong> R1 (ks_flag), R2 (transaction_date), R3 (MAX=Jun 30), R4 (sales&lt;100K), R5 (dedup), R6 (sell/buy online), R9 (provenance), R11 (1.5% rates), R12 (dump=0)<br>
+      <strong>Confidence:</strong> HIGH on all claims<br>
+      <strong>Known gaps:</strong> Fathom: 0 calls found. Intercom: 5 conversations. No direct customer meetings on record.
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deep Dive — We Got Flowers | Koronet Revenue OS</title>
+  <style>
+    :root{--bg:#0f1117;--panel:#181b23;--ink:#e8eaed;--muted:#8b8fa3;--line:#2a2e3a;--blue:#4a8cff;--green:#12805c;--green-bright:#34d399;--gold:#d4920a;--red:#e53935;--purple:#8b5cf6;--cyan:#22c9db;--shadow:0 14px 34px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1520px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
+    .hero>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,52px);line-height:.98;margin-bottom:12px}h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:16px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}
+    .blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.greenLine{border-left:5px solid var(--green-bright)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}.cyanLine{border-left:5px solid var(--cyan)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px}.band.gold{background:rgba(212,146,10,.15);color:#f0b429}.band.blue{background:rgba(74,140,255,.1);color:#6ba3ff}.band.green{background:rgba(18,128,92,.15);color:#34d399}.band.red{background:rgba(229,57,53,.12);color:#ff6b6b}.band.purple{background:rgba(139,92,246,.12);color:#a78bfa}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+    table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:14px}th{background:#1e2230;color:#8b8fa3;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#8b8fa3;font-size:11px;font-weight:900}
+    .ok{background:rgba(18,128,92,.18);color:#34d399;border-color:rgba(52,211,153,.3)}.warn{background:rgba(212,146,10,.15);color:#f0b429;border-color:rgba(240,180,41,.3)}.bad{background:rgba(229,57,53,.15);color:#ff6b6b;border-color:rgba(255,107,107,.3)}.spec{background:rgba(139,92,246,.15);color:#a78bfa;border-color:rgba(167,139,250,.3)}
+    .sq-bar-track{height:22px;background:#252936;border-radius:10px;overflow:hidden;position:relative;margin:4px 0}
+    .sq-bar-fill{height:100%;border-radius:10px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff;transition:width .3s}
+    .sq-bar-fill.green{background:var(--green)}.sq-bar-fill.gold{background:var(--gold)}.sq-bar-fill.red{background:var(--red)}.sq-bar-fill.blue{background:var(--blue)}.sq-bar-fill.purple{background:var(--purple)}
+    .nav-strip{display:flex;flex-wrap:wrap;gap:7px;padding:10px 0}
+    .nav-strip a{display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);padding:0 12px;font-size:13px;font-weight:700;text-decoration:none}
+    .nav-strip a:hover{background:#252936;border-color:#3d4255}
+    .nav-strip a.active{border-color:var(--cyan);color:var(--cyan)}
+    .provenance{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.6}.provenance strong{color:var(--ink)}
+    details{margin-bottom:10px}
+    details>summary{cursor:pointer;padding:12px 16px;background:#1a1d26;border:1px solid var(--line);border-radius:8px;font-weight:800;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s}
+    details>summary::-webkit-details-marker{display:none}
+    details>summary::before{content:"\25B6";font-size:10px;color:var(--cyan);transition:transform .2s}
+    details[open]>summary::before{transform:rotate(90deg)}
+    details>summary:hover{background:#212536}
+    details>.layer-content{padding:16px;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;background:var(--panel)}
+    .section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .section-header h2{margin:0}
+    .section-summary{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:15px;font-weight:700;color:var(--ink)}
+    .section-summary .muted{color:var(--muted);font-weight:400;font-size:13px}
+    .so-what{border:1px solid var(--line);border-radius:8px;background:rgba(34,201,219,.04);border-left:4px solid var(--cyan);padding:14px 18px;margin:10px 0}
+    .so-what strong{color:var(--cyan);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+    .so-what p{margin:4px 0 0;font-size:13px;color:var(--ink)}
+    .flag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+    .flag-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#1a1d26}
+    .flag-item .flag-label{font-size:13px;font-weight:700;color:var(--ink)}
+    .flag-item .flag-value{font-size:13px;font-weight:900}.flag-value.yes{color:var(--green-bright)}.flag-value.no{color:#ff6b6b}
+    .confidence{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:2px 8px;border-radius:999px}
+    .confidence.high{background:rgba(18,128,92,.18);color:#34d399}.confidence.medium{background:rgba(212,146,10,.15);color:#f0b429}.confidence.low{background:rgba(229,57,53,.12);color:#ff6b6b}
+    .headline-bar{background:linear-gradient(135deg,rgba(229,57,53,.12),rgba(212,146,10,.10));border:1px solid rgba(229,57,53,.25);border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:18px;font-weight:900;color:#ff6b6b;line-height:1.3}
+    .funnel-banner{display:flex;align-items:center;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+    .funnel-step{flex:1;padding:12px 16px;text-align:center;font-weight:900;font-size:13px;position:relative}
+    .funnel-step .label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:2px}
+    .funnel-step .value{font-size:14px}
+    .funnel-arrow{width:24px;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:18px}
+    .question-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--gold);margin-bottom:10px}
+    .question-card h4{margin:0 0 6px;font-size:15px;color:var(--gold)}
+    .question-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--cyan);margin-bottom:10px}
+    .action-card h4{margin:0 0 6px;font-size:16px;color:var(--ink)}
+    .action-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card .owner{margin-top:8px;font-size:12px;font-weight:900;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em}
+    .visit-card{background:linear-gradient(135deg,rgba(74,140,255,.08),rgba(139,92,246,.06));border:1px solid rgba(74,140,255,.25);border-radius:10px;padding:20px;margin-bottom:14px}
+    .visit-card h3{color:var(--blue);margin:0 0 10px}
+    .visit-card .detail{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+    .visit-card .detail strong{color:var(--ink)}
+    .time-depth-bar{display:flex;gap:2px;margin:8px 0}
+    .time-depth-bar .td-segment{flex:1;text-align:center;padding:8px 4px;border-radius:6px;font-size:12px;font-weight:800}
+    @media(max-width:980px){main{width:min(100% - 24px,1520px)}.hero,.grid2,.grid3,.grid4,.grid6{grid-template-columns:1fr}table{min-width:600px}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- HEADER -->
+  <section class="hero" id="header">
+    <div>
+      <p class="eyebrow">Account Deep Dive -- Rose (Data Agent L1)</p>
+      <h1>We Got Flowers</h1>
+      <p class="sub">
+        Company 735220 | Komet Core + Koronet Procurement | Go-Live: <span style="color:var(--gold)">NULL (not recorded)</span><br>
+        Impl: <strong>Valentina Espinel</strong> | CS: <strong>Christian Medina</strong>
+      </p>
+      <div class="band gold" style="margin-top:12px">
+        LIFECYCLE: Adoption | MRR: $2,198 | K2K: 16 active connections
+      </div>
+      <div class="band blue" style="margin-top:8px">
+        Framework v5 | H1 2026 (Jan 1 - Jul 17) | Rules: R1-R12
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Navigation</p>
+      <div class="nav-strip">
+        <a href="#summary">Summary</a>
+        <a href="#buy">BUY</a>
+        <a href="#list">LIST</a>
+        <a href="#sell">SELL</a>
+        <a href="#supply-quality">Supply Quality</a>
+        <a href="#questions">Questions</a>
+        <a href="#actions">Actions</a>
+        <a href="#provenance-section">Provenance</a>
+      </div>
+      <div style="margin-top:10px">
+        <p class="small">Rose | Built 2026-07-21 | <span class="confidence medium">UNVERIFIED (needs Codex)</span></p>
+      </div>
+      <div class="nav-strip" style="margin-top:6px">
+        <a href="deep-dive-ht.html">H&T Wholesale</a>
+        <a href="deep-dive-afx.html">AZ Floral Exchange</a>
+        <a href="deep-dive-azfamily.html">AZ Family Florist</a>
+        <a href="deep-dive-jfs.html">JFS Wholesale</a>
+        <a href="wholesaler-scorecard.html" style="color:var(--cyan)">Scorecard</a>
+        <a href="tx-pacing.html" style="color:var(--cyan)">TX Pacing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEADLINE -->
+  <div class="headline-bar">
+    100% offline con $2.99M GMV. Sin eShop. 680 forward orders offline, zero online. $10.89 en fees en todo H1 2026.
+  </div>
+
+  <!-- VISIT CONTEXT -->
+  <div class="visit-card">
+    <h3>Phoenix Visit Context</h3>
+    <div class="detail">
+      <div><strong>Dates:</strong> Jul 22-23, 2026</div>
+      <div><strong>Visitors:</strong> Dave, Craig, Facu</div>
+      <div><strong>Location:</strong> Phoenix, AZ</div>
+    </div>
+    <p style="margin-top:10px;color:var(--ink);font-size:13px"><strong>Key observation:</strong> WGF is NOT a Phoenix account but relevant context -- Procurement was blocked by surcharges (Fathom Jul 7). Naranjo identified as test vendor. Follow up with George/Valentina on resolution status.</p>
+  </div>
+
+  <!-- FUNNEL POSITION -->
+  <div class="funnel-banner">
+    <div class="funnel-step" style="background:rgba(74,140,255,.12);color:var(--blue)">
+      <div class="label">BUY</div>
+      <div class="value">0.5% online</div>
+      <div style="font-size:10px;opacity:.7">$7.5K of $1.42M</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(52,211,153,.12);color:var(--green-bright)">
+      <div class="label">LIST</div>
+      <div class="value">95% gap</div>
+      <div style="font-size:10px;opacity:.7">3 of 64 cats online</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(139,92,246,.12);color:#a78bfa">
+      <div class="label">SELL</div>
+      <div class="value">0.02% online</div>
+      <div style="font-size:10px;opacity:.7">$491 of $2.99M</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <section id="summary">
+    <h2>Executive Summary</h2>
+    <div class="grid6" style="margin-bottom:16px">
+      <div class="card blueLine metric">
+        <small>Buy (Procurement)</small>
+        <strong>$1.42M</strong>
+        <p>0.5% online <span class="tag bad" style="margin-left:4px">critical</span></p>
+      </div>
+      <div class="card greenLine metric">
+        <small>List (Inventory)</small>
+        <strong>64 cat</strong>
+        <p>95% gap <span class="tag bad" style="margin-left:4px">critical</span></p>
+      </div>
+      <div class="card purpleLine metric">
+        <small>Sell (Online GMV)</small>
+        <strong>$491</strong>
+        <p>0.02% online <span class="tag bad" style="margin-left:4px">critical</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>Fees Billed YTD</small>
+        <strong>$10.89</strong>
+        <p>8 K2K transactions</p>
+      </div>
+      <div class="card cyanLine metric">
+        <small>K2K Connections</small>
+        <strong>16</strong>
+        <p>Active of 19 total</p>
+      </div>
+      <div class="card warnLine metric">
+        <small>Annualized GMV</small>
+        <strong>~$6M</strong>
+        <p>321 customers | 93 cats</p>
+      </div>
+    </div>
+
+    <div class="band red">
+      $2.99M GMV completamente offline. Sin eShop no puede vender online. Procurement bloqueado por surcharges (Jul 7). 16 K2K connections activas generando solo $7.5K en compras. Fee ceiling: ~$45K/yr at 50% online.
+    </div>
+  </section>
+
+  <!-- BUY SECTION -->
+  <section id="buy" style="border-left:5px solid var(--blue)">
+    <div class="section-header">
+      <h2 style="color:var(--blue)">BUY</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $1.42M total procurement | 0.5% online (Procurement) | 18 vendors via Procurement | 96 offline
+      <div class="muted">Procurement trial lost momentum after May 2026. Surcharges and staging issues block adoption.</div>
+    </div>
+
+    <details open>
+      <summary>Channel Breakdown</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card warnLine">
+            <small>Unknown (Offline)</small>
+            <strong style="color:var(--gold)">$1,372,004</strong>
+            <p>11,262 items | 95 vendors | 96.7%</p>
+          </div>
+          <div class="card blueLine">
+            <small>Procurement (Online)</small>
+            <strong style="color:var(--blue)">$7,519</strong>
+            <p>83 items | 18 vendors | 0.53%</p>
+          </div>
+          <div class="card">
+            <small>N/A + Web</small>
+            <strong>$37,735</strong>
+            <p>138 items | 2.66%</p>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="small" style="margin-bottom:4px">Channel Mix</div>
+          <div style="display:flex;height:28px;border-radius:8px;overflow:hidden;background:#252936">
+            <div style="width:96.7%;background:var(--gold);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff">Offline 96.7%</div>
+            <div style="width:3.3%;background:var(--blue);display:flex;align-items:center;font-size:9px;font-weight:900;color:#fff"></div>
+          </div>
+        </div>
+        <div class="provenance"><strong>Source:</strong> PROCUREMENTS_SV | ks_flag=TRUE | shipping_date >= 2026-01-01 | company_name='WE GOT FLOWERS' | 11,483 items</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Leakage vs Gap ($1.37M offline)</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card danger">
+            <small>LEAKAGE -- vendors WITH K2K, buys offline</small>
+            <strong style="color:#ff6b6b">$78K</strong>
+            <p>8 vendors | 5.5% of offline cost</p>
+          </div>
+          <div class="card warnLine">
+            <small>GAP -- vendors NOT connected</small>
+            <strong style="color:var(--gold)">$1.33M</strong>
+            <p>88 vendors | 94.5% of offline cost</p>
+          </div>
+        </div>
+
+        <h3 style="color:#ff6b6b;margin-top:16px">LEAKAGE: ~$78K (8 vendors)</h3>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Vendor</th><th style="text-align:right">Offline Cost</th><th>Type</th></tr></thead>
+            <tbody>
+              <tr><td><strong>DRAMM & ECHTER</strong></td><td style="text-align:right"><strong>$46,054</strong></td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>GALLERIA FARMS</td><td style="text-align:right">$19,039</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>NATIVE BLOOMS - MAYTA</td><td style="text-align:right">$4,271</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>MIAFLORA FARMS</td><td style="text-align:right">$2,799</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>PACIFICA FARMS</td><td style="text-align:right">$2,547</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>PATFLOR SCARL</td><td style="text-align:right">$1,775</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>WAFEX MIAMI</td><td style="text-align:right">$1,267</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>MUCH FLOWERS</td><td style="text-align:right">$277</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="color:var(--gold);margin-top:16px">TOP 5 GAP VENDORS: $514K</h3>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Vendor</th><th style="text-align:right">Offline Cost</th><th>Type</th></tr></thead>
+            <tbody>
+              <tr><td><strong>NARANJO ROSES MIAMI</strong></td><td style="text-align:right"><strong>$190,448</strong></td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>HOLEX USA INC</td><td style="text-align:right">$90,756</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>GALA ROSES LLC</td><td style="text-align:right">$88,065</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>FLOREXPO</td><td style="text-align:right">$81,221</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>THE QUEEN'S FLOWERS</td><td style="text-align:right">$78,106</td><td><span class="tag warn">GAP</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what">
+          <strong>SO WHAT</strong>
+          <p>94.5% of offline procurement is GAP (no K2K connection). The top 5 GAP vendors alone = $514K. Naranjo ($190K) was identified as the first test case for Procurement (Fathom Jul 7). Dramm & Echter ($46K) is the biggest LEAKAGE -- already connected but buys offline by habit.</p>
+        </div>
+        <div class="provenance"><strong>Source:</strong> PROCUREMENT_DETAILS x K2K_CONNECTIONS | ks_flag=TRUE | 96 vendors offline</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Top 15 Vendors</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>Vendor</th><th>Channel</th><th style="text-align:right">Cost</th><th style="text-align:right">POs</th><th>Last PO</th><th>Flag</th></tr></thead>
+            <tbody>
+              <tr style="background:rgba(212,146,10,.06)"><td><strong>NARANJO ROSES MIAMI</strong></td><td><span class="tag warn">Offline</span></td><td style="text-align:right"><strong>$190,448</strong></td><td style="text-align:right">192</td><td>Jul 17</td><td><span class="tag warn">GAP - test case</span></td></tr>
+              <tr><td>HOLEX USA INC</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$90,756</td><td style="text-align:right">159</td><td>Jul 17</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>GALA ROSES LLC</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$88,065</td><td style="text-align:right">237</td><td>Jul 17</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>FLOREXPO</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$81,221</td><td style="text-align:right">218</td><td>Jul 16</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>THE QUEEN'S FLOWERS</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$78,106</td><td style="text-align:right">120</td><td>Jul 17</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>HOJA VERDE</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$73,266</td><td style="text-align:right">157</td><td>Jul 17</td><td></td></tr>
+              <tr><td>SHAW LAKE FARMS</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$46,158</td><td style="text-align:right">53</td><td>Jul 15</td><td></td></tr>
+              <tr style="background:rgba(229,57,53,.06)"><td><strong>DRAMM & ECHTER</strong></td><td><span class="tag bad">Offline</span></td><td style="text-align:right"><strong style="color:#ff6b6b">$46,054</strong></td><td style="text-align:right">128</td><td>Jul 16</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>SYNDICATE SALES</td><td><span class="tag">N/A</span></td><td style="text-align:right">$37,460</td><td style="text-align:right">6</td><td>May 27</td><td><span class="tag">Hardgoods</span></td></tr>
+              <tr><td>MELLANO & CO</td><td><span class="tag warn">Offline</span></td><td style="text-align:right">$36,012</td><td style="text-align:right">124</td><td>Jul 16</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="provenance"><strong>Source:</strong> PROCUREMENT_DETAILS x COMPANIES x VENDORS | ks_flag=TRUE | H1 2026 | 116 rows</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- LIST SECTION -->
+  <section id="list" style="border-left:5px solid var(--green-bright)">
+    <div class="section-header">
+      <h2 style="color:var(--green-bright)">LIST</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      64 categories in inventory | ~22,000+ units | 95% listing gap | NO eShop
+      <div class="muted">eShop is OFF. Inventory exists but is invisible to online buyers. 680 forward orders all offline.</div>
+    </div>
+
+    <details open>
+      <summary>Feature Flags</summary>
+      <div class="layer-content">
+        <div class="flag-grid">
+          <div class="flag-item"><span class="flag-label">Komet Core</span><span class="flag-value yes">YES</span></div>
+          <div class="flag-item"><span class="flag-label">Procurement</span><span class="flag-value yes">YES</span></div>
+          <div class="flag-item"><span class="flag-label">eShop</span><span class="flag-value no">NO</span></div>
+          <div class="flag-item"><span class="flag-label">eSuite</span><span class="flag-value no">NO</span></div>
+          <div class="flag-item"><span class="flag-label">K2K eCommerce</span><span class="flag-value no">NO</span></div>
+          <div class="flag-item"><span class="flag-label">Vendor Availability</span><span class="flag-value yes">YES</span></div>
+          <div class="flag-item"><span class="flag-label">eCom Days in Advance</span><span class="flag-value no">0</span></div>
+          <div class="flag-item"><span class="flag-label">eCom Max Age</span><span class="flag-value">7</span></div>
+        </div>
+        <div class="so-what" style="margin-top:14px">
+          <strong>BLOCKER</strong>
+          <p>Without eShop, WGF cannot sell online. Period. eShop activation is the #1 prerequisite for any sell-side fees.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Time Depth: Forward Orders (Online vs Offline)</summary>
+      <div class="layer-content">
+        <div style="margin-bottom:16px">
+          <div class="small" style="margin-bottom:8px">OFFLINE forward orders</div>
+          <div class="time-depth-bar">
+            <div class="td-segment" style="background:rgba(212,146,10,.2);color:var(--gold)">
+              <div style="font-size:20px;font-weight:900">388</div>
+              <div>Next 7d</div>
+            </div>
+            <div class="td-segment" style="background:rgba(212,146,10,.15);color:var(--gold)">
+              <div style="font-size:20px;font-weight:900">170</div>
+              <div>7-14d</div>
+            </div>
+            <div class="td-segment" style="background:rgba(212,146,10,.1);color:var(--gold)">
+              <div style="font-size:20px;font-weight:900">38</div>
+              <div>14-30d</div>
+            </div>
+            <div class="td-segment" style="background:rgba(212,146,10,.08);color:var(--gold)">
+              <div style="font-size:20px;font-weight:900">84</div>
+              <div>30d+</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="small" style="margin-bottom:8px">ONLINE forward orders</div>
+          <div class="time-depth-bar">
+            <div class="td-segment" style="background:rgba(229,57,53,.1);color:#ff6b6b">
+              <div style="font-size:20px;font-weight:900">0</div>
+              <div>Next 7d</div>
+            </div>
+            <div class="td-segment" style="background:rgba(229,57,53,.08);color:#ff6b6b">
+              <div style="font-size:20px;font-weight:900">0</div>
+              <div>7-14d</div>
+            </div>
+            <div class="td-segment" style="background:rgba(229,57,53,.06);color:#ff6b6b">
+              <div style="font-size:20px;font-weight:900">0</div>
+              <div>14-30d</div>
+            </div>
+            <div class="td-segment" style="background:rgba(229,57,53,.04);color:#ff6b6b">
+              <div style="font-size:20px;font-weight:900">0</div>
+              <div>30d+</div>
+            </div>
+          </div>
+        </div>
+        <div class="so-what" style="margin-top:14px">
+          <strong>CRITICAL GAP</strong>
+          <p>680 forward orders offline, ZERO online. WGF plans weeks ahead (84 orders at 30+ days = standing orders/pre-books) but all through manual channels. With eShop + future availability, part of this could migrate online.</p>
+        </div>
+        <div class="provenance"><strong>Source:</strong> SALE_DETAILS | shipping_date > CURRENT_DATE | company_name ILIKE '%we got flowers%'</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Inventory Snapshot: Top Categories</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>Category</th><th style="text-align:right">Products</th><th style="text-align:right">Units</th><th>Sold Online?</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ROSE</strong></td><td style="text-align:right">58</td><td style="text-align:right">11,700</td><td><span class="tag bad">1 product | $158</span></td></tr>
+              <tr><td>CARNATION</td><td style="text-align:right">14</td><td style="text-align:right">4,253</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>GREENS</td><td style="text-align:right">40</td><td style="text-align:right">1,130</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>PLANTS</td><td style="text-align:right">28</td><td style="text-align:right">955</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>PRESERVED</td><td style="text-align:right">54</td><td style="text-align:right">661</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>HYDRANGEA</td><td style="text-align:right">4</td><td style="text-align:right">466</td><td><span class="tag warn">$189</span></td></tr>
+              <tr><td>POMS</td><td style="text-align:right">16</td><td style="text-align:right">317</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>GYPSOPHILIA</td><td style="text-align:right">2</td><td style="text-align:right">307</td><td><span class="tag bad">No</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="provenance"><strong>Source:</strong> INVENTORY_DETAILS | ks_flag=TRUE | 64 categories</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SELL SECTION -->
+  <section id="sell" style="border-left:5px solid var(--purple)">
+    <div class="section-header">
+      <h2 style="color:var(--purple)">SELL</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $2.99M total GMV H1 2026 | 99.98% offline | 321 customers | $491 eCommerce (1 buyer)
+      <div class="muted">Without eShop, sell-side is structurally offline. The one online buyer (Flora Bella, $491) was a one-time purchase.</div>
+    </div>
+
+    <details open>
+      <summary>GMV by Channel</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card warnLine">
+            <small>Offline</small>
+            <strong style="color:var(--gold)">$2,990,465</strong>
+            <p>321 customers | 93 categories | 81,510 items</p>
+          </div>
+          <div class="card danger">
+            <small>eCommerce</small>
+            <strong style="color:#ff6b6b">$491</strong>
+            <p>1 customer | 3 categories | 3 items</p>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="small" style="margin-bottom:4px">Sell Channel Mix</div>
+          <div style="display:flex;height:28px;border-radius:8px;overflow:hidden;background:#252936">
+            <div style="width:99.98%;background:var(--gold);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff">Offline 99.98%</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Fees: $10.89 YTD</summary>
+      <div class="layer-content">
+        <div class="card danger" style="margin-bottom:14px">
+          <small>Billed Fees H1 2026</small>
+          <strong style="color:#ff6b6b">$10.89</strong>
+          <p>8 K2K transactions | Expected Jul 2026: $0</p>
+        </div>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Scenario</th><th style="text-align:right">Online GMV</th><th style="text-align:right">Rate</th><th style="text-align:right">Annual Fees</th></tr></thead>
+            <tbody>
+              <tr><td>10% sell-side online (with eShop)</td><td style="text-align:right">~$600K</td><td style="text-align:right">1.5%</td><td style="text-align:right"><strong>~$9,000</strong></td></tr>
+              <tr><td>25% sell-side online</td><td style="text-align:right">~$1.5M</td><td style="text-align:right">1.5%</td><td style="text-align:right"><strong>~$22,500</strong></td></tr>
+              <tr><td>50% sell-side online</td><td style="text-align:right">~$3M</td><td style="text-align:right">1.5%</td><td style="text-align:right"><strong>~$45,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="provenance"><strong>Source:</strong> TRANSACTION_FEES | ks_flag=TRUE | transaction_date >= 2026-01-01 | 8 rows. Rate: assumed 1.5% standard (not in discounted list).</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Top Categories by GMV</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>Category</th><th style="text-align:right">Offline GMV</th><th style="text-align:right">Online GMV</th><th>Online %</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ROSE</strong></td><td style="text-align:right">$807,987</td><td style="text-align:right">$158</td><td><span class="tag bad">0.02%</span></td></tr>
+              <tr><td>GREENS</td><td style="text-align:right">$279,487</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>CARNATION</td><td style="text-align:right">$133,464</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>ROSE SPRAY</td><td style="text-align:right">$117,709</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>HYDRANGEA</td><td style="text-align:right">$106,297</td><td style="text-align:right">$189</td><td><span class="tag bad">0.18%</span></td></tr>
+              <tr><td>RANUNCULUS</td><td style="text-align:right">$102,136</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>PLANTS</td><td style="text-align:right">$92,197</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>STOCK</td><td style="text-align:right">$88,437</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>POMS</td><td style="text-align:right">$75,556</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+              <tr><td>LILY</td><td style="text-align:right">$70,742</td><td style="text-align:right">$0</td><td><span class="tag bad">0%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Shrinkage / Dump</summary>
+      <div class="layer-content">
+        <div class="grid2">
+          <div class="card danger">
+            <small>DUMP</small>
+            <strong>$84,288</strong>
+            <p>3,263 items | ~2.8% of offline GMV</p>
+          </div>
+          <div class="card warnLine">
+            <small>Inventory Adjustment</small>
+            <strong>$0</strong>
+            <p>727 items | pure waste</p>
+          </div>
+        </div>
+        <div class="provenance" style="margin-top:12px"><strong>Source:</strong> SALE_DETAILS | customer_name ILIKE dump/shrink patterns | ~3,990 items total shrinkage</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SUPPLY QUALITY -->
+  <section id="supply-quality">
+    <div class="section-header">
+      <h2>Supply Quality</h2>
+      <span class="confidence medium">MEDIUM CONFIDENCE</span>
+    </div>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card">
+        <small>MVP Score (can buy what they sell online?)</small>
+        <strong>67%</strong>
+        <p>10 of 15 top cats have SOME Procurement</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill gold" style="width:67%">67%</div></div>
+      </div>
+      <div class="card">
+        <small>Competitive (2+ vendors online per cat?)</small>
+        <strong style="color:#ff6b6b">13%</strong>
+        <p>~2 of 15 categories</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill red" style="width:13%">13%</div></div>
+      </div>
+      <div class="card">
+        <small>Demand (customers buy online?)</small>
+        <strong style="color:#ff6b6b">0%</strong>
+        <p>No eShop = N/A</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill red" style="width:2%"></div></div>
+      </div>
+    </div>
+    <div class="so-what">
+      <strong>INTERPRETATION</strong>
+      <p>Supply quality scoring is largely irrelevant without eShop. The online Procurement volumes are negligible ($7.5K total). First activate eShop, then supply quality matters.</p>
+    </div>
+  </section>
+
+  <!-- TOP QUESTIONS -->
+  <section id="questions">
+    <h2>Top 3 Questions for This Account</h2>
+    <div class="question-card">
+      <h4>1. Surcharges bloquearon Procurement. Se resolvio?</h4>
+      <p>Fathom Jul 7: costos inexactos por surcharges (fuel charges) en Procurement POs. George estaba investigando "Landed Cost" column. Sin esta fix, WGF no confia en Procurement pricing. Naranjo (top vendor, $190K, sin surcharges) era el test case. Did they test?</p>
+    </div>
+    <div class="question-card">
+      <h4>2. Quien decide si activan eShop?</h4>
+      <p>WGF tiene $2.99M en GMV offline y 321 clientes activos. eShop activation seria un massive unlock. Pero esta en lifecycle "Adoption" y todavia no domina Procurement. Is eShop on the roadmap? Who at WGF makes this call?</p>
+    </div>
+    <div class="question-card">
+      <h4>3. Por que los K2K connections no se usan?</h4>
+      <p>16 active K2K connections pero solo $7.5K en Procurement (0.5%). Connections se crearon en May-Jun 2026 via Easy Handshake. Fue un batch deploy sin training? Do they know HOW to use Procurement with these vendors?</p>
+    </div>
+  </section>
+
+  <!-- ACTIONS -->
+  <section id="actions">
+    <h2>Actions (Priority Order)</h2>
+    <div class="action-card" style="margin-bottom:10px">
+      <h4>1. Resolve Procurement blockers (surcharges + staging)</h4>
+      <p>Follow up with George/Valentina on Jul 7 commitments. Without this, Procurement stays dead.</p>
+      <div class="owner">Owner: George Velez (Impl) + Valentina Espinel</div>
+    </div>
+    <div class="action-card" style="margin-bottom:10px">
+      <h4>2. Activate Procurement with Naranjo ($190K vendor, no surcharges)</h4>
+      <p>Naranjo is the #1 vendor. Identified as test case. If it works = proof of concept for 95 other offline vendors.</p>
+      <div class="owner">Owner: CS (Christian Medina) + WGF operations</div>
+    </div>
+    <div class="action-card" style="margin-bottom:10px">
+      <h4>3. Convert leakage vendors (Dramm & Echter $46K)</h4>
+      <p>Already connected via K2K but buying offline. CS intervention to change purchasing habit.</p>
+      <div class="owner">Owner: CS (Christian Medina)</div>
+    </div>
+    <div class="action-card" style="margin-bottom:10px">
+      <h4>4. Evaluate eShop activation timeline</h4>
+      <p>Without eShop, $2.99M GMV stays at $0 fees. Sequence: Procurement stable first, then eShop.</p>
+      <div class="owner">Owner: Impl + Sales</div>
+    </div>
+    <div class="action-card" style="margin-bottom:10px">
+      <h4>5. Connect top 5 GAP vendors ($514K)</h4>
+      <p>Holex ($91K), Gala Roses ($88K), Florexpo ($81K), Queen's Flowers ($78K). These 4 = $338K offline with no K2K connection.</p>
+      <div class="owner">Owner: Network Team</div>
+    </div>
+  </section>
+
+  <!-- PROVENANCE -->
+  <section id="provenance-section">
+    <h2>Provenance</h2>
+    <div class="provenance">
+      <strong>Queries:</strong> 13 SQL deep dive + 3 extras (time depth x2, dump check) + SFDC + Fathom<br>
+      <strong>Rules applied:</strong> R1 (ks_flag), R2 (transaction_date), R3 (MAX date check: 2026-06-30), R4 (sales&lt;100K), R5 (no CUSTOMERS join), R6 (sell/buy side online), R7 (vendor blank Units), R8 (semantic views), R9 (provenance), R11 (fee rates), R12 (dump excluded)<br>
+      <strong>Data period:</strong> H1 2026 (2026-01-01 to 2026-07-17 for procurement, 2026-06-30 for fees billed)<br>
+      <strong>Confidence:</strong> MEDIUM -- data is solid but account is early in adoption, many modules give empty results<br>
+      <strong>Known gaps:</strong> Go-Live date not recorded in SFDC. Fee rates SFDC fields not verified (K2K_Fees__c, E_Commerce_Fees__c).
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

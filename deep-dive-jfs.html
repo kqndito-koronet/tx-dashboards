@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deep Dive — JFS Wholesale Floral | Koronet Revenue OS</title>
+  <style>
+    :root{--bg:#0f1117;--panel:#181b23;--ink:#e8eaed;--muted:#8b8fa3;--line:#2a2e3a;--blue:#4a8cff;--green:#12805c;--green-bright:#34d399;--gold:#d4920a;--red:#e53935;--purple:#8b5cf6;--cyan:#22c9db;--shadow:0 14px 34px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1520px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
+    .hero>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,52px);line-height:.98;margin-bottom:12px}h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:16px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}
+    .blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.greenLine{border-left:5px solid var(--green-bright)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}.cyanLine{border-left:5px solid var(--cyan)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px}.band.gold{background:rgba(212,146,10,.15);color:#f0b429}.band.blue{background:rgba(74,140,255,.1);color:#6ba3ff}.band.green{background:rgba(18,128,92,.15);color:#34d399}.band.red{background:rgba(229,57,53,.12);color:#ff6b6b}.band.purple{background:rgba(139,92,246,.12);color:#a78bfa}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+    table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:14px}th{background:#1e2230;color:#8b8fa3;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#8b8fa3;font-size:11px;font-weight:900}
+    .ok{background:rgba(18,128,92,.18);color:#34d399;border-color:rgba(52,211,153,.3)}.warn{background:rgba(212,146,10,.15);color:#f0b429;border-color:rgba(240,180,41,.3)}.bad{background:rgba(229,57,53,.15);color:#ff6b6b;border-color:rgba(255,107,107,.3)}
+    .sq-bar-track{height:22px;background:#252936;border-radius:10px;overflow:hidden;position:relative;margin:4px 0}
+    .sq-bar-fill{height:100%;border-radius:10px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff;transition:width .3s}
+    .sq-bar-fill.green{background:var(--green)}.sq-bar-fill.gold{background:var(--gold)}.sq-bar-fill.red{background:var(--red)}.sq-bar-fill.blue{background:var(--blue)}.sq-bar-fill.purple{background:var(--purple)}
+    .nav-strip{display:flex;flex-wrap:wrap;gap:7px;padding:10px 0}
+    .nav-strip a{display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);padding:0 12px;font-size:13px;font-weight:700;text-decoration:none}
+    .nav-strip a:hover{background:#252936;border-color:#3d4255}
+    .provenance{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.6}.provenance strong{color:var(--ink)}
+    details{margin-bottom:10px}
+    details>summary{cursor:pointer;padding:12px 16px;background:#1a1d26;border:1px solid var(--line);border-radius:8px;font-weight:800;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s}
+    details>summary::-webkit-details-marker{display:none}
+    details>summary::before{content:"\25B6";font-size:10px;color:var(--cyan);transition:transform .2s}
+    details[open]>summary::before{transform:rotate(90deg)}
+    details>summary:hover{background:#212536}
+    details>.layer-content{padding:16px;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;background:var(--panel)}
+    .section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}.section-header h2{margin:0}
+    .section-summary{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:15px;font-weight:700;color:var(--ink)}
+    .section-summary .muted{color:var(--muted);font-weight:400;font-size:13px}
+    .so-what{border:1px solid var(--line);border-radius:8px;background:rgba(34,201,219,.04);border-left:4px solid var(--cyan);padding:14px 18px;margin:10px 0}
+    .so-what strong{color:var(--cyan);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+    .so-what p{margin:4px 0 0;font-size:13px;color:var(--ink)}
+    .flag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+    .flag-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#1a1d26}
+    .flag-item .flag-label{font-size:13px;font-weight:700;color:var(--ink)}
+    .flag-item .flag-value{font-size:13px;font-weight:900}.flag-value.yes{color:var(--green-bright)}.flag-value.no{color:#ff6b6b}
+    .confidence{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:2px 8px;border-radius:999px}
+    .confidence.high{background:rgba(18,128,92,.18);color:#34d399}.confidence.medium{background:rgba(212,146,10,.15);color:#f0b429}
+    .headline-bar{background:linear-gradient(135deg,rgba(212,146,10,.15),rgba(74,140,255,.08));border:1px solid rgba(212,146,10,.25);border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:18px;font-weight:900;color:#f0b429;line-height:1.3}
+    .funnel-banner{display:flex;align-items:center;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+    .funnel-step{flex:1;padding:12px 16px;text-align:center;font-weight:900;font-size:13px}
+    .funnel-step .label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:2px}
+    .funnel-step .value{font-size:14px}
+    .funnel-arrow{width:24px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:18px}
+    .question-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--gold);margin-bottom:10px}
+    .question-card h4{margin:0 0 6px;font-size:15px;color:var(--gold)}
+    .question-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--cyan);margin-bottom:10px}
+    .action-card h4{margin:0 0 6px;font-size:16px;color:var(--ink)}
+    .action-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card .owner{margin-top:8px;font-size:12px;font-weight:900;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em}
+    .visit-card{background:linear-gradient(135deg,rgba(18,128,92,.08),rgba(74,140,255,.06));border:1px solid rgba(18,128,92,.25);border-radius:10px;padding:20px;margin-bottom:14px}
+    .visit-card h3{color:var(--green-bright);margin:0 0 10px}
+    .visit-card .detail{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+    .visit-card .detail strong{color:var(--ink)}
+    .time-depth-bar{display:flex;gap:2px;margin:8px 0}
+    .time-depth-bar .td-segment{flex:1;text-align:center;padding:8px 4px;border-radius:6px;font-size:12px;font-weight:800}
+    @media(max-width:980px){main{width:min(100% - 24px,1520px)}.hero,.grid2,.grid3,.grid6{grid-template-columns:1fr}table{min-width:600px}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- HEADER -->
+  <section class="hero" id="header">
+    <div>
+      <p class="eyebrow">Account Deep Dive -- Rose (Data Agent L1)</p>
+      <h1>JFS Wholesale Floral</h1>
+      <p class="sub">
+        Company 808079 | Komet Core (migrated from SMART System) | Go-Live: Apr 22, 2026 (13 weeks) | 2 locations<br>
+        Impl: <strong>Manuel Szajowicz</strong> | CS: <span style="color:#ff6b6b;font-weight:900">NOT ASSIGNED (generic)</span>
+      </p>
+      <div class="band gold" style="margin-top:12px">
+        DBA: JFS Wholesale Floral | Legal: Jimmy's Flowers, Inc. | MRR: $2,598 | Syracuse, UT | Low Touch
+      </div>
+      <div class="band blue" style="margin-top:8px">
+        Framework v5 | Since go-live Apr 22 - Jul 21, 2026 | Rules: R1-R12
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Navigation</p>
+      <div class="nav-strip">
+        <a href="#summary">Summary</a>
+        <a href="#buy">BUY</a>
+        <a href="#list">LIST</a>
+        <a href="#sell">SELL</a>
+        <a href="#supply-quality">Supply Quality</a>
+        <a href="#questions">Questions</a>
+        <a href="#actions">Actions</a>
+        <a href="#provenance-section">Provenance</a>
+      </div>
+      <div style="margin-top:10px">
+        <p class="small">Rose | Built 2026-07-21 | <span class="confidence high">HIGH CONFIDENCE</span></p>
+      </div>
+      <div class="nav-strip" style="margin-top:6px">
+        <a href="deep-dive-wgf.html">We Got Flowers</a>
+        <a href="deep-dive-ht.html">H&T Wholesale</a>
+        <a href="deep-dive-afx.html">AZ Floral Exchange</a>
+        <a href="deep-dive-azfamily.html">AZ Family Florist</a>
+        <a href="wholesaler-scorecard.html" style="color:var(--cyan)">Scorecard</a>
+        <a href="tx-pacing.html" style="color:var(--cyan)">TX Pacing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEADLINE -->
+  <div class="headline-bar">
+    $0 fees (todo deshabilitado). $2.35M GMV en 13 semanas = run-rate $9.4M/yr. Weekly specials = el hook. eCom expert meeting esta semana.
+  </div>
+
+  <!-- VISIT CONTEXT -->
+  <div class="visit-card">
+    <h3>eCom Expert Meeting -- THIS WEEK (last week of July)</h3>
+    <div class="detail">
+      <div><strong>What:</strong> Digitize weekly specials via eShop</div>
+      <div><strong>Who:</strong> Nate Kusuda + Komet eCom expert</div>
+      <div><strong>Blocker:</strong> Physical inventory count (may be done)</div>
+    </div>
+    <p style="margin-top:10px;color:var(--ink);font-size:13px"><strong>From Fathom Jul 8:</strong> Nate confirmed eCommerce is paused until physical inventory is accurate. Weekly specials (currently manual email/print) are the first digitization target. Meeting with eCom expert scheduled for last week of July. Hard goods SKUs need re-mapping (corrupted on first load). 4 new hires training directly on Komet.</p>
+  </div>
+
+  <!-- FUNNEL POSITION -->
+  <div class="funnel-banner">
+    <div class="funnel-step" style="background:rgba(229,57,53,.12);color:#ff6b6b">
+      <div class="label">BUY</div>
+      <div class="value">0% online</div>
+      <div style="font-size:10px;opacity:.7">$1.9M all manual PO</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(212,146,10,.12);color:var(--gold)">
+      <div class="label">LIST</div>
+      <div class="value">Blocked</div>
+      <div style="font-size:10px;opacity:.7">Inventory count pending</div>
+    </div>
+    <div class="funnel-arrow">&#9654;</div>
+    <div class="funnel-step" style="background:rgba(229,57,53,.12);color:#ff6b6b">
+      <div class="label">SELL</div>
+      <div class="value">$144 total</div>
+      <div style="font-size:10px;opacity:.7">99.994% offline</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <section id="summary">
+    <h2>Executive Summary</h2>
+    <div class="grid6" style="margin-bottom:16px">
+      <div class="card danger metric">
+        <small>Buy (Procurement)</small>
+        <strong>$1.9M</strong>
+        <p>0% online <span class="tag bad" style="margin-left:4px">manual</span></p>
+      </div>
+      <div class="card warnLine metric">
+        <small>List (eShop)</small>
+        <strong>Blocked</strong>
+        <p>Inventory count <span class="tag warn" style="margin-left:4px">pending</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>Sell (Online GMV)</small>
+        <strong>$144</strong>
+        <p>6 test items <span class="tag bad" style="margin-left:4px">test only</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>Fees</small>
+        <strong>$0</strong>
+        <p>ALL modules OFF <span class="tag bad" style="margin-left:4px">disabled</span></p>
+      </div>
+      <div class="card cyanLine metric">
+        <small>K2K Connections</small>
+        <strong>34</strong>
+        <p>Active of 49 total</p>
+      </div>
+      <div class="card okLine metric">
+        <small>Run-Rate GMV</small>
+        <strong>~$9.4M</strong>
+        <p>428 customers | 13 weeks</p>
+      </div>
+    </div>
+
+    <div class="band gold">
+      JFS is a recently migrated account (SMART System to Komet Core, Apr 22) with massive volume ($9.4M run-rate) but ZERO fee infrastructure. All fee modules are disabled. eCommerce is blocked by inventory count. The weekly specials digitization (eCom expert meeting this week) is the immediate unlock. 428 customers, strong anchors (Jimmy's 4 stores = 18%, Broulim's 6 stores = 14%), and deep forward planning (3,893 offline orders).
+    </div>
+  </section>
+
+  <!-- BUY SECTION -->
+  <section id="buy" style="border-left:5px solid var(--blue)">
+    <div class="section-header">
+      <h2 style="color:var(--blue)">BUY</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $1.9M total procurement (since go-live) | 100% manual PO ("Unknown" channel) | 90+ vendors | 34 K2K unused
+      <div class="muted">JFS does not use Koronet Procurement. All buying is manual PO entry in Komet Core despite 34 active K2K connections.</div>
+    </div>
+
+    <details open>
+      <summary>Monthly Procurement</summary>
+      <div class="layer-content">
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Month</th><th>Channel</th><th style="text-align:right">Cost</th><th style="text-align:right">Units</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td>Apr 2026 (9d)</td><td><span class="tag warn">Unknown</span></td><td style="text-align:right">$740,030</td><td style="text-align:right">160,472</td><td><span class="tag">includes inventory import</span></td></tr>
+              <tr><td>May 2026</td><td><span class="tag warn">Unknown</span></td><td style="text-align:right">$400,292</td><td style="text-align:right">183,492</td><td>Normalized month</td></tr>
+              <tr><td>Jun 2026</td><td><span class="tag warn">Unknown</span></td><td style="text-align:right">$304,556</td><td style="text-align:right">148,515</td><td>Normalized</td></tr>
+              <tr><td>Jul 2026 (partial)</td><td><span class="tag warn">Unknown</span></td><td style="text-align:right">$454,416</td><td style="text-align:right">124,446</td><td><span class="tag">includes $275K inv import</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what">
+          <strong>NORMALIZED RUN-RATE</strong>
+          <p>Excluding inventory imports, JFS buys ~$130K/month from 90+ vendors. Normalized monthly cost (May-Jun avg) = ~$350K. All manual PO -- zero Procurement, zero K2K buying. If moved to Procurement, vendor-side fees would activate.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Top 10 Vendors (Jul 2026)</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>Vendor</th><th style="text-align:right">Cost Jul</th><th style="text-align:right">Units</th><th>K2K?</th></tr></thead>
+            <tbody>
+              <tr style="color:var(--muted)"><td>Inventory Import</td><td style="text-align:right">$275,250</td><td style="text-align:right">30,000</td><td><span class="tag">N/A</span></td></tr>
+              <tr><td><strong>MOBI'S</strong></td><td style="text-align:right"><strong>$29,695</strong></td><td style="text-align:right">3,884</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>THE QUEENS FLOWERS</td><td style="text-align:right">$16,860</td><td style="text-align:right">6,059</td><td><span class="tag ok">Active</span></td></tr>
+              <tr><td>NATIVE BLOOMS (MAYTA)</td><td style="text-align:right">$6,881</td><td style="text-align:right">7,742</td><td><span class="tag ok">Active</span></td></tr>
+              <tr><td>PYRAMID FLOWERS</td><td style="text-align:right">$6,654</td><td style="text-align:right">933</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>TESSA CORP (GALA ROSES)</td><td style="text-align:right">$4,888</td><td style="text-align:right">1,186</td><td><span class="tag ok">Active</span></td></tr>
+              <tr><td>CHANNEL ISLANDS FLOWERS</td><td style="text-align:right">$4,713</td><td style="text-align:right">824</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>EL CHAUPI FARM</td><td style="text-align:right">$4,642</td><td style="text-align:right">495</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>BANDY RANCH</td><td style="text-align:right">$4,507</td><td style="text-align:right">492</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>ESMERALDA</td><td style="text-align:right">$4,303</td><td style="text-align:right">3,450</td><td><span class="tag bad">No</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what" style="margin-top:12px">
+          <strong>VENDOR GAP</strong>
+          <p>MOBI'S is the real #1 vendor (~$30K/mo) but has NO K2K connection. Queen's Flowers and several others are connected but NOT buying via K2K. Multiple top vendors (Pyramid, Channel Islands, Bandy Ranch, Esmeralda) have no K2K at all.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- LIST SECTION -->
+  <section id="list" style="border-left:5px solid var(--green-bright)">
+    <div class="section-header">
+      <h2 style="color:var(--green-bright)">LIST</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      eShop BLOCKED by physical inventory count | 18 registered users (4 logged in, 0 real purchases) | Weekly specials = first target
+      <div class="muted">Future Sales enabled + On-Hand Inventory Units enabled. The infrastructure is ready. The blocker is inventory accuracy.</div>
+    </div>
+
+    <details open>
+      <summary>Feature Flags</summary>
+      <div class="layer-content">
+        <div class="flag-grid">
+          <div class="flag-item"><span class="flag-label">eShops (SFDC)</span><span class="flag-value no">FALSE</span></div>
+          <div class="flag-item"><span class="flag-label">Future Sales Enabled</span><span class="flag-value yes">TRUE</span></div>
+          <div class="flag-item"><span class="flag-label">eCom Future Sales Enabled</span><span class="flag-value yes">TRUE</span></div>
+          <div class="flag-item"><span class="flag-label">On-Hand Inventory Units</span><span class="flag-value yes">TRUE</span></div>
+          <div class="flag-item"><span class="flag-label">Koronet Payments</span><span class="flag-value yes">TRUE</span></div>
+          <div class="flag-item"><span class="flag-label">eCom Days in Advance</span><span class="flag-value">3</span></div>
+          <div class="flag-item"><span class="flag-label">eCom Max Age</span><span class="flag-value">10</span></div>
+          <div class="flag-item" style="border-color:rgba(255,107,107,.3)"><span class="flag-label">ALL Fee Modules</span><span class="flag-value no">DISABLED ($0)</span></div>
+        </div>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Time Depth: Forward Orders</summary>
+      <div class="layer-content">
+        <div style="margin-bottom:16px">
+          <div class="small" style="margin-bottom:8px">OFFLINE forward orders (3,893 total)</div>
+          <div class="time-depth-bar">
+            <div class="td-segment" style="background:rgba(212,146,10,.2);color:var(--gold)"><div style="font-size:20px;font-weight:900">1,347</div><div>Next 7d</div></div>
+            <div class="td-segment" style="background:rgba(212,146,10,.18);color:var(--gold)"><div style="font-size:20px;font-weight:900">1,209</div><div>7-14d</div></div>
+            <div class="td-segment" style="background:rgba(212,146,10,.12);color:var(--gold)"><div style="font-size:20px;font-weight:900">932</div><div>14-30d</div></div>
+            <div class="td-segment" style="background:rgba(212,146,10,.08);color:var(--gold)"><div style="font-size:20px;font-weight:900">405</div><div>30d+</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="small" style="margin-bottom:8px">ONLINE forward orders</div>
+          <div class="time-depth-bar">
+            <div class="td-segment" style="background:rgba(229,57,53,.1);color:#ff6b6b"><div style="font-size:20px;font-weight:900">0</div><div>All horizons</div></div>
+          </div>
+        </div>
+        <div class="so-what" style="margin-top:14px">
+          <strong>DEEP PLANNING</strong>
+          <p>3,893 forward orders (all offline). 405 at 30+ days = standing orders / pre-books with recurring customers. JFS uses future sales extensively in Core. When eCom activates, this forward planning can shift digital.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>eShop Users (18 registered)</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>User</th><th>Customer</th><th>Last Login</th><th>Purchased?</th></tr></thead>
+            <tbody>
+              <tr style="background:rgba(18,128,92,.06)"><td><strong>Kristi Edwards</strong></td><td>Wild Aura Floral</td><td>Jul 12, 2026</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>Sydney Moore</td><td>Poppy Lane Floral</td><td>May 20, 2026</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>Connor Nesbit</td><td>Leuca Floral</td><td>May 5, 2026</td><td><span class="tag bad">No</span></td></tr>
+              <tr><td>Sarah Burke</td><td>Rosies Posies</td><td>Apr 23, 2026</td><td><span class="tag bad">No</span></td></tr>
+              <tr style="color:var(--muted)"><td>Milena Mezamell (Koronet)</td><td>Test account</td><td>Apr 16, 2026</td><td><span class="tag">Test only ($144)</span></td></tr>
+              <tr><td colspan="4" style="color:var(--muted);font-style:italic">+ 13 registered users who never logged in (Bear River, Tulips & Thyme, Mille Fleur, etc.)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what" style="margin-top:12px">
+          <strong>EARLY ADOPTERS EXIST</strong>
+          <p>Kristi Edwards (Wild Aura Floral) logged in Jul 12 -- active interest. Bear River Floral has $118 of real eCommerce sales. 4 users logged in, 13 never did. When eShop activates post-inventory count, these 4 are the first targets.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SELL SECTION -->
+  <section id="sell" style="border-left:5px solid var(--purple)">
+    <div class="section-header">
+      <h2 style="color:var(--purple)">SELL</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $2.35M GMV in 13 weeks | 99.994% offline | 428 customers | Run-rate ~$9.4M/yr | $0 fees
+      <div class="muted">Massive volume for a new account. SFDC says $3.4M annual -- actual run-rate is 2.8x that. Break-and-bunch wholesaler (bouquets #1 at $445K).</div>
+    </div>
+
+    <details open>
+      <summary>Monthly GMV Trend</summary>
+      <div class="layer-content">
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Month</th><th style="text-align:right">Offline</th><th style="text-align:right">eCom</th><th style="text-align:right">Total</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td>Apr 2026 (9 days)</td><td style="text-align:right">$233,157</td><td style="text-align:right">$0</td><td style="text-align:right">$233,157</td><td>Post go-live ramp</td></tr>
+              <tr><td><strong>May 2026</strong></td><td style="text-align:right"><strong>$984,855</strong></td><td style="text-align:right">$144</td><td style="text-align:right"><strong>$984,999</strong></td><td><span class="tag ok">Mother's Day peak</span></td></tr>
+              <tr><td>Jun 2026</td><td style="text-align:right">$648,392</td><td style="text-align:right">$0</td><td style="text-align:right">$648,392</td><td>Normal month</td></tr>
+              <tr><td>Jul 2026 (~21d)</td><td style="text-align:right">$423,734</td><td style="text-align:right">$0</td><td style="text-align:right">$423,734</td><td>Tracking ~$600K full</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what">
+          <strong>VELOCITY</strong>
+          <p>May was distorted by Mother's Day ($985K). Jun-Jul normalize to ~$190K/week. Annualized run-rate (Jun-Jul basis) = $9.0-9.9M/yr. SFDC Annual Sales ($3.4M) is STALE -- needs update to $9.4M.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Customer Structure</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card okLine">
+            <small>Jimmy's Own Stores (4)</small>
+            <strong>$415K</strong>
+            <p>Layton, Central, Ogden, Bountiful | 17.7% of GMV</p>
+          </div>
+          <div class="card blueLine">
+            <small>Broulim's Grocery (6)</small>
+            <strong>$318K</strong>
+            <p>Driggs, Ammon, Rigby, Rexburg, Alpine, Afton | 13.5%</p>
+          </div>
+          <div class="card purpleLine">
+            <small>Independent Florists</small>
+            <strong>~$1.6M</strong>
+            <p>Fleur Market, Simply Flowers, Burlap Flower, Poppy Lane, etc.</p>
+          </div>
+        </div>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>#</th><th>Customer</th><th style="text-align:right">Sales</th><th>Segment</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Jimmy's - Layton</strong></td><td style="text-align:right">$101,676</td><td><span class="tag ok">Own store</span></td></tr>
+              <tr><td>2</td><td>Jimmy's - Central Bouquets</td><td style="text-align:right">$96,418</td><td><span class="tag ok">Own store</span></td></tr>
+              <tr><td>3</td><td>Jimmy's - Central Sympathy</td><td style="text-align:right">$84,687</td><td><span class="tag ok">Own store</span></td></tr>
+              <tr><td>4</td><td>Jimmy's - Ogden</td><td style="text-align:right">$82,538</td><td><span class="tag ok">Own store</span></td></tr>
+              <tr><td>5</td><td><strong>Broulim's DRIGGS</strong></td><td style="text-align:right">$75,058</td><td><span class="tag" style="background:rgba(74,140,255,.15);color:#6ba3ff;border-color:rgba(74,140,255,.3)">Grocery</span></td></tr>
+              <tr><td>6</td><td>Broulim's AMMON</td><td style="text-align:right">$68,140</td><td><span class="tag" style="background:rgba(74,140,255,.15);color:#6ba3ff;border-color:rgba(74,140,255,.3)">Grocery</span></td></tr>
+              <tr><td>7</td><td>Broulim's RIGBY</td><td style="text-align:right">$63,392</td><td><span class="tag" style="background:rgba(74,140,255,.15);color:#6ba3ff;border-color:rgba(74,140,255,.3)">Grocery</span></td></tr>
+              <tr><td>8</td><td>Fleur Market</td><td style="text-align:right">$55,900</td><td>Independent florist</td></tr>
+              <tr><td>9</td><td>Broulim's REXBURG</td><td style="text-align:right">$55,440</td><td><span class="tag" style="background:rgba(74,140,255,.15);color:#6ba3ff;border-color:rgba(74,140,255,.3)">Grocery</span></td></tr>
+              <tr><td>10</td><td>Jimmy's - Bountiful</td><td style="text-align:right">$50,370</td><td><span class="tag ok">Own store</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what">
+          <strong>GROCERY CHAIN PLAY</strong>
+          <p>Broulim's (6 stores, $318K, every week active) is the ideal digital ordering target. If Broulim's HQ placed orders online instead of phone/fax, that's $318K+ in eCom GMV = ~$4,770/yr in fees at 1.5%. Same applies to Lee's Marketplace, Kent's Market, Macey's.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Fees: $0 (All Modules Disabled)</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card danger">
+            <small>Current State</small>
+            <strong style="color:#ff6b6b">$0 fees forever</strong>
+            <p>K2K Fee = FALSE | eCom Fee = FALSE | API Fee = FALSE | Fee Value = 0 | All rates = $0</p>
+          </div>
+          <div class="card okLine">
+            <small>Fee Potential (if enabled)</small>
+            <strong>$141K/yr at 100%</strong>
+            <p>$94K at 1% | $14.1K at 10% online | Run-rate $9.4M GMV</p>
+          </div>
+        </div>
+        <div class="so-what">
+          <strong>COMMERCIAL DECISION NEEDED</strong>
+          <p>Fee modules must be deliberately enabled. This is a commercial/sales decision, not a technical one. Timing matters: enabling fees before eShop activation would charge for nothing. Sequence: (1) eShop live with specials, (2) volume ramps, (3) enable fee modules.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Product Mix</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead><tr><th>Category</th><th>Division</th><th style="text-align:right">Sales</th><th style="text-align:right">Units</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Bouquets</strong></td><td>Units</td><td style="text-align:right"><strong>$444,836</strong></td><td style="text-align:right">43,748</td></tr>
+              <tr><td>Rose</td><td>Units</td><td style="text-align:right">$241,429</td><td style="text-align:right">186,384</td></tr>
+              <tr><td>MISC</td><td>Units</td><td style="text-align:right">$101,659</td><td style="text-align:right">10,291</td></tr>
+              <tr><td>Containers</td><td>Hard Goods</td><td style="text-align:right">$88,980</td><td style="text-align:right">4,714</td></tr>
+              <tr><td>Supplies</td><td>Hard Goods</td><td style="text-align:right">$84,506</td><td style="text-align:right">19,780</td></tr>
+              <tr><td>Ranunculus</td><td>Units</td><td style="text-align:right">$78,253</td><td style="text-align:right">3,384</td></tr>
+              <tr><td>Spray Rose</td><td>Units</td><td style="text-align:right">$76,779</td><td style="text-align:right">4,156</td></tr>
+              <tr><td>Carnation</td><td>Units</td><td style="text-align:right">$64,858</td><td style="text-align:right">111,623</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="so-what" style="margin-top:12px">
+          <strong>PROFILE</strong>
+          <p>Break-and-bunch wholesaler. Bouquets are #1 ($445K) = JFS makes bouquets in-house. Hard Goods (containers + supplies) = $173K combined. ~85% Units, ~15% Hard Goods. The weekly specials likely feature bouquets and seasonal stems.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- SUPPLY QUALITY -->
+  <section id="supply-quality">
+    <div class="section-header"><h2>Supply Quality</h2></div>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card">
+        <small>ERP Adoption</small>
+        <strong style="color:var(--green-bright)">7/10</strong>
+        <p>5 daily users, 294 settings configured</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill green" style="width:70%">7/10</div></div>
+      </div>
+      <div class="card">
+        <small>Digital Commerce</small>
+        <strong style="color:#ff6b6b">1/10</strong>
+        <p>$144 eCom, 0% procurement online</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill red" style="width:10%">1/10</div></div>
+      </div>
+      <div class="card">
+        <small>Customer Base</small>
+        <strong style="color:var(--green-bright)">7/10</strong>
+        <p>428 total, 290 L30d, strong anchors</p>
+        <div class="sq-bar-track"><div class="sq-bar-fill green" style="width:70%">7/10</div></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <small>Shrinkage</small>
+        <strong style="color:var(--gold)">Notable</strong>
+        <p>Inventory Adjustment: 144,406 units ($951 sales) = pure waste. DUMP CUSTOMER: 8,359 units ($35,883 sales) = recovery model.</p>
+      </div>
+      <div class="card">
+        <small>Vendor Depth</small>
+        <strong style="color:var(--green-bright)">90+ vendors</strong>
+        <p>Diversified supply. Top vendor (MOBI'S) = ~$30K/mo real purchases.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP QUESTIONS -->
+  <section id="questions">
+    <h2>Top 3 Questions for This Account</h2>
+    <div class="question-card">
+      <h4>1. Se completo el physical inventory count?</h4>
+      <p>Fathom Jul 8: Nate said "this week or next" for the count. If complete, the path to eCommerce is open. If not, what's blocking it? Valentina/Manuel should confirm status.</p>
+    </div>
+    <div class="question-card">
+      <h4>2. Weekly specials meeting with eCom expert -- did it happen? What's the plan?</h4>
+      <p>Scheduled for last week of July. JFS currently distributes weekly specials via manual email/print. Digitizing this to the eShop portal is the first hook. What did they decide? What's the go-live timeline?</p>
+    </div>
+    <div class="question-card">
+      <h4>3. When and how do fee modules get enabled?</h4>
+      <p>ALL fee modules are at $0/FALSE. This is a $9.4M GMV account generating $0 in TX fees. At even 5% online with 1.5% rate = $7K/yr. The commercial conversation about fee activation timing needs to happen. Who owns this decision?</p>
+    </div>
+  </section>
+
+  <!-- ACTIONS -->
+  <section id="actions">
+    <h2>Actions (Priority Order)</h2>
+    <div class="action-card">
+      <h4>1. Confirm physical inventory count completion</h4>
+      <p>This is the gate to eCommerce. If done, proceed to weekly specials digitization. If not, escalate blockers.</p>
+      <div class="owner">Owner: Valentina Espinel / Manuel Szajowicz</div>
+    </div>
+    <div class="action-card">
+      <h4>2. Execute weekly specials digitization (eCom expert meeting)</h4>
+      <p>First digital commerce hook. Start with specials catalog on eShop. Target the 4 users who already logged in (Kristi, Sydney, Connor, Sarah).</p>
+      <div class="owner">Owner: Komet eCom Expert + Nate Kusuda</div>
+    </div>
+    <div class="action-card">
+      <h4>3. Assign real CSM</h4>
+      <p>"Koronet Customer Support" is generic. Valentina Espinel was proposed. Formalize in SFDC. A $9.4M account deserves dedicated CS.</p>
+      <div class="owner">Owner: CS Management</div>
+    </div>
+    <div class="action-card">
+      <h4>4. Update SFDC Annual Sales to $9.4M</h4>
+      <p>Currently shows $3.4M. Actual run-rate is 2.8x that. This affects account prioritization and resource allocation.</p>
+      <div class="owner">Owner: Account Owner (Mateo Morales)</div>
+    </div>
+    <div class="action-card">
+      <h4>5. Plan fee module activation (commercial decision)</h4>
+      <p>Sequence: (1) eShop live with specials, (2) prove value to JFS, (3) enable fee modules. Do NOT enable fees before eShop has traction.</p>
+      <div class="owner">Owner: Sales + CS</div>
+    </div>
+    <div class="action-card">
+      <h4>6. Grocery chain digital play (Broulim's)</h4>
+      <p>Broulim's (6 stores, $318K, weekly orders) is the ideal candidate for online ordering. If Broulim's HQ migrates to eShop = instant volume. Same for Lee's, Kent's, Macey's.</p>
+      <div class="owner">Owner: CS + Nate Kusuda</div>
+    </div>
+  </section>
+
+  <!-- PROVENANCE -->
+  <section id="provenance-section">
+    <h2>Provenance</h2>
+    <div class="provenance">
+      <strong>Sources:</strong> COMPANIES_SV, SALES_SV (60,785 deduped rows), PROCUREMENTS_SV (354 rows), K2K_CONNECTIONS_SV (49 buyer, 0 vendor), CONSOLIDATED_TRANSACTION_FEES_SV (0 rows), USER_STATS_SV (528 rows), SUPPORT_CASES_SV (6 rows), SFDC CLI (5 records), Fathom (2 meetings, 1 JFS-specific), Intercom (100 conversations, 5 contacts)<br>
+      <strong>Rules:</strong> R1 (ks_flag), R3 (MAX=Jun 30), R4 (sales&lt;100K), R5 (dedup), R6 (sell=eCom+API+K2K), R7 (vendor blank on Units), R8 (SV only), R9 (provenance), R12 (dump excluded)<br>
+      <strong>Confidence:</strong> HIGH on all claims (multiple source confirmation)<br>
+      <strong>Note:</strong> Jacksonville Flower Market (651200) is a separate entity in FL, not corporately related to JFS UT. $302K H1 2026 via K2K, 17 connections.
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
