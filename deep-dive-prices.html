@@ -1,0 +1,1631 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deep Dive — Price's Floral Wholesale | Koronet Revenue OS</title>
+  <style>
+    :root{--bg:#0f1117;--panel:#181b23;--ink:#e8eaed;--muted:#8b8fa3;--line:#2a2e3a;--blue:#4a8cff;--green:#12805c;--green-bright:#34d399;--gold:#d4920a;--red:#e53935;--purple:#8b5cf6;--cyan:#22c9db;--shadow:0 14px 34px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1520px,calc(100% - 40px));margin:0 auto;padding:28px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:14px;background:transparent;border:none;box-shadow:none;padding:0}
+    .hero>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,52px);line-height:.98;margin-bottom:12px}h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin-bottom:8px}h3{font-size:18px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:16px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:15px}.card strong{display:block;margin-bottom:5px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted)}.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:29px}
+    .blueLine{border-left:5px solid var(--blue)}
+    .okLine{border-left:5px solid var(--green)}
+    .greenLine{border-left:5px solid var(--green-bright)}
+    .warnLine{border-left:5px solid var(--gold)}
+    .danger{border-left:5px solid var(--red)}
+    .purpleLine{border-left:5px solid var(--purple)}
+    .cyanLine{border-left:5px solid var(--cyan)}
+    .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px}.band.gold{background:rgba(212,146,10,.15);color:#f0b429}.band.blue{background:rgba(74,140,255,.1);color:#6ba3ff}.band.green{background:rgba(18,128,92,.15);color:#34d399}.band.red{background:rgba(229,57,53,.12);color:#ff6b6b}
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:14px}
+    th{background:#1e2230;color:#8b8fa3;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    tr:last-child td{border-bottom:none}
+    .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#8b8fa3;font-size:11px;font-weight:900}
+    .ok{background:rgba(18,128,92,.18);color:#34d399;border-color:rgba(52,211,153,.3)}
+    .warn{background:rgba(212,146,10,.15);color:#f0b429;border-color:rgba(240,180,41,.3)}
+    .bad{background:rgba(229,57,53,.15);color:#ff6b6b;border-color:rgba(255,107,107,.3)}
+    .spec{background:rgba(139,92,246,.15);color:#a78bfa;border-color:rgba(167,139,250,.3)}
+    .sq-bar-track{height:22px;background:#252936;border-radius:10px;overflow:hidden;position:relative;margin:4px 0}
+    .sq-bar-fill{height:100%;border-radius:10px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff;transition:width .3s}
+    .sq-bar-fill.green{background:var(--green)}.sq-bar-fill.gold{background:var(--gold)}.sq-bar-fill.red{background:var(--red)}.sq-bar-fill.blue{background:var(--blue)}.sq-bar-fill.purple{background:var(--purple)}
+    .nav-strip{display:flex;flex-wrap:wrap;gap:7px;padding:10px 0}
+    .nav-strip a{display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);padding:0 12px;font-size:13px;font-weight:700;text-decoration:none}
+    .nav-strip a:hover{background:#252936;border-color:#3d4255}
+    .provenance{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.6}
+    .provenance strong{color:var(--ink)}
+    details{margin-bottom:10px}
+    details>summary{cursor:pointer;padding:12px 16px;background:#1a1d26;border:1px solid var(--line);border-radius:8px;font-weight:800;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s}
+    details>summary::-webkit-details-marker{display:none}
+    details>summary::before{content:"\25B6";font-size:10px;color:var(--cyan);transition:transform .2s}
+    details[open]>summary::before{transform:rotate(90deg)}
+    details>summary:hover{background:#212536}
+    details>.layer-content{padding:16px;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;background:var(--panel)}
+    .section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .section-header h2{margin:0}
+    .section-summary{background:#1a1d26;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:15px;font-weight:700;color:var(--ink)}
+    .section-summary .muted{color:var(--muted);font-weight:400;font-size:13px}
+    .action-card{border:1px solid var(--line);border-radius:9px;background:#1a1d26;padding:18px;border-left:4px solid var(--cyan)}
+    .action-card h4{margin:0 0 6px;font-size:16px;color:var(--ink)}
+    .action-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .action-card .owner{margin-top:8px;font-size:12px;font-weight:900;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em}
+    .so-what{border:1px solid var(--line);border-radius:8px;background:rgba(34,201,219,.04);border-left:4px solid var(--cyan);padding:14px 18px;margin:10px 0}
+    .so-what strong{color:var(--cyan);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+    .so-what p{margin:4px 0 0;font-size:13px;color:var(--ink)}
+    .diagnostic-card{border:1px solid var(--line);border-radius:9px;padding:16px;background:#1a1d26}
+    .diagnostic-card .status{font-size:14px;font-weight:800;margin-bottom:6px}
+    .diagnostic-card .question{font-size:13px;color:var(--muted);font-style:italic;line-height:1.5}
+    .flag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+    .flag-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#1a1d26}
+    .flag-item .flag-label{font-size:13px;font-weight:700;color:var(--ink)}
+    .flag-item .flag-value{font-size:13px;font-weight:900}
+    .flag-value.yes{color:var(--green-bright)}
+    .flag-value.no{color:#ff6b6b}
+    .confidence{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:2px 8px;border-radius:999px}
+    .confidence.high{background:rgba(18,128,92,.18);color:#34d399}
+    .confidence.medium{background:rgba(212,146,10,.15);color:#f0b429}
+    .confidence.low{background:rgba(229,57,53,.12);color:#ff6b6b}
+    @media(max-width:980px){main{width:min(100% - 24px,1520px)}.hero,.grid2,.grid3,.grid4,.grid6{grid-template-columns:1fr}table{min-width:600px}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- ============================================================= -->
+  <!-- HEADER                                                        -->
+  <!-- ============================================================= -->
+  <section class="hero" id="header">
+    <div>
+      <p class="eyebrow">Account Deep Dive -- Rose (Data Agent L1)</p>
+      <h1>Price's Floral Wholesale</h1>
+      <p class="sub">
+        Company 816515 | Komet Core + Procurement + eShops | Go-Live: Jul 14, 2026 (7 days)<br>
+        Impl: <strong>Milena Mezamell</strong> | CS: <span style="color:#ff6b6b;font-weight:900">NOT ASSIGNED</span>
+      </p>
+      <div class="band red" style="margin-top:12px">
+        LIFECYCLE: PAST DUE | Go-Live Date: NULL in SFDC | NOT in Cupido | Touch Level: NULL
+      </div>
+      <div class="band blue" style="margin-top:8px">
+        Framework v5 | 2026 YTD (Jan 1 - Jul 20) | Rules: R1, R2, R4, R5, R6, R7, R8, R9, R11, R12
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Navigation</p>
+      <div class="nav-strip">
+        <a href="#summary">Summary</a>
+        <a href="#buy">BUY</a>
+        <a href="#list">LIST</a>
+        <a href="#sell">SELL</a>
+        <a href="#supply-quality">Supply Quality</a>
+        <a href="#diagnostic">Diagnostic</a>
+        <a href="#actions">Actions</a>
+        <a href="#provenance-section">Provenance</a>
+      </div>
+      <div style="margin-top:14px">
+        <p class="small">Rose | Built 2026-07-21 | <span class="confidence medium">UNVERIFIED (needs Codex)</span></p>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <a href="wholesaler-scorecard.html" class="nav-strip" style="padding:0;margin:0"><span style="display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--cyan);padding:0 12px;font-size:13px;font-weight:700">Wholesaler Scorecard</span></a>
+        <a href="tx-pacing.html" class="nav-strip" style="padding:0;margin:0"><span style="display:inline-flex;align-items:center;min-height:34px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--cyan);padding:0 12px;font-size:13px;font-weight:700">TX Pacing</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SUMMARY CARDS                                                 -->
+  <!-- ============================================================= -->
+  <section id="summary">
+    <h2>Executive Summary</h2>
+    <div class="grid6" style="margin-bottom:16px">
+      <div class="card blueLine metric">
+        <small>Buy (Procurement)</small>
+        <strong>$128.9K</strong>
+        <p>73.6% online <span class="tag ok" style="margin-left:4px">K2K</span></p>
+      </div>
+      <div class="card greenLine metric">
+        <small>List (Inventory)</small>
+        <strong>105 cat</strong>
+        <p>21% coverage <span class="tag warn" style="margin-left:4px">low</span></p>
+      </div>
+      <div class="card purpleLine metric">
+        <small>Sell (Online GMV)</small>
+        <strong>$629</strong>
+        <p>1.2% online <span class="tag bad" style="margin-left:4px">critical</span></p>
+      </div>
+      <div class="card danger metric">
+        <small>Fees Billed YTD</small>
+        <strong>$0.16</strong>
+        <p>1 K2K transaction <span class="tag bad" style="margin-left:4px">$0</span></p>
+      </div>
+      <div class="card cyanLine metric">
+        <small>K2K Connections</small>
+        <strong>31</strong>
+        <p>30 Blitz + 1 Handshake</p>
+      </div>
+      <div class="card warnLine metric">
+        <small>Days Live</small>
+        <strong>7</strong>
+        <p>Go-Live Jul 14, 2026</p>
+      </div>
+    </div>
+
+    <div class="band gold">
+      BUY adopcion fuerte (74% digital). Pero SELL es casi cero: $629 en 7 dias, 3 buyers, $0.16 fees. El eShop esta prendido pero no tiene traccion. 105 categorias en cooler con solo 21% de coverage online. Revenue impact para TX = ~$0 hoy.
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- BUY SECTION                                                   -->
+  <!-- ============================================================= -->
+  <section id="buy" style="border-left:5px solid var(--blue)">
+    <div class="section-header">
+      <h2 style="color:var(--blue)">BUY</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $128.9K total procurement | 73.6% online (K2K) | 31 connections | 1,230 items
+      <div class="muted">Strong buy-side adoption for a 7-day-old account. Leakage + Gap = $34K offline.</div>
+    </div>
+
+    <!-- Layer 1: Channel Breakdown -->
+    <details open>
+      <summary>Layer 1: Channel Breakdown</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card blueLine">
+            <small>Procurement (K2K)</small>
+            <strong style="color:var(--blue)">$94,944</strong>
+            <p>973 items | 103 categories | 73.6%</p>
+          </div>
+          <div class="card warnLine">
+            <small>Unknown / Manual</small>
+            <strong style="color:var(--gold)">$22,563</strong>
+            <p>238 items | 49 categories | 17.5%</p>
+          </div>
+          <div class="card">
+            <small>N/A (Hardgoods)</small>
+            <strong>$11,451</strong>
+            <p>19 items | 3 categories | 8.9%</p>
+          </div>
+        </div>
+
+        <!-- Visual bar -->
+        <div style="margin-bottom:12px">
+          <div class="small" style="margin-bottom:4px">Channel Mix</div>
+          <div style="display:flex;height:28px;border-radius:8px;overflow:hidden;background:#252936">
+            <div style="width:73.6%;background:var(--blue);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff">K2K 73.6%</div>
+            <div style="width:17.5%;background:var(--gold);display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:900;color:#fff">17.5%</div>
+            <div style="width:8.9%;background:#555;display:flex;align-items:center;padding-left:4px;font-size:10px;font-weight:900;color:#fff">N/A</div>
+          </div>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> PROCUREMENT_DETAILS x COMPANIES | company_name ILIKE '%price%floral%wholesale%' | shipping_date >= 2026-01-01 | ks_flag=TRUE | 1,230 rows
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 2: Leakage vs Gap -->
+    <details>
+      <summary>Layer 2: Leakage vs Gap ($34.0K offline)</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card danger">
+            <small>LEAKAGE -- vendors WITH K2K, buys offline</small>
+            <strong style="color:#ff6b6b">$12,875</strong>
+            <p>12 vendors | Behavioral problem</p>
+          </div>
+          <div class="card warnLine">
+            <small>GAP -- vendors NOT connected</small>
+            <strong style="color:var(--gold)">$21,139</strong>
+            <p>12 vendors | Infrastructure problem</p>
+          </div>
+        </div>
+
+        <!-- Leakage table -->
+        <h3 style="color:#ff6b6b;margin-top:16px">LEAKAGE: $12,875</h3>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Vendor</th><th style="text-align:right">Offline Cost</th><th>Type</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Rosaprima International, LLC</strong></td><td style="text-align:right"><strong>$4,530</strong></td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Continental Flowers</td><td style="text-align:right">$2,367</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Galleria Farms</td><td style="text-align:right">$1,535</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>A Trilogy Floral - Zamba Flowers</td><td style="text-align:right">$1,302</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Golden Flowers</td><td style="text-align:right">$1,123</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Allure Farms</td><td style="text-align:right">$663</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>U.S. Greens Corp</td><td style="text-align:right">$578</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Pacifica Farms</td><td style="text-align:right">$236</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Fresca Farms</td><td style="text-align:right">$233</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>-Sole Farms</td><td style="text-align:right">$114</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Mayta International / Native Blooms</td><td style="text-align:right">$59</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Miraflor LLC</td><td style="text-align:right">$33</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what">
+          <strong>SO WHAT</strong>
+          <p>Rosaprima is the biggest leak at $4.5K. These vendors ARE connected via K2K but Price's still buys offline. Investigate: habit? K2K activated recently and offline is prior? UI friction?</p>
+          <p style="margin-top:6px"><strong style="color:var(--ink);font-size:13px">Owner:</strong> CS Advisor (once assigned) + Impl</p>
+        </div>
+
+        <!-- Gap table -->
+        <h3 style="color:var(--gold);margin-top:16px">GAP: $21,139</h3>
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Vendor</th><th style="text-align:right">Offline Cost</th><th>Type</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Syndicate Sales</strong></td><td style="text-align:right"><strong>$11,200</strong></td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Esmeralda</td><td style="text-align:right">$3,812</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Rosa Flora LTD</td><td style="text-align:right">$2,534</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td style="color:var(--muted)">Test vendor</td><td style="text-align:right;color:var(--muted)">$1,105</td><td><span class="tag">TEST</span></td></tr>
+              <tr><td>Santana Farms</td><td style="text-align:right">$1,019</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Ornamental Branch & Flower</td><td style="text-align:right">$550</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Universal Greens & Flowers</td><td style="text-align:right">$315</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Rainbow Protea</td><td style="text-align:right">$294</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Smithers-Oasis North America</td><td style="text-align:right">$183</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>National Orchids</td><td style="text-align:right">$162</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td style="color:var(--muted)">Test hardgoods vendor</td><td style="text-align:right;color:var(--muted)">$69</td><td><span class="tag">TEST</span></td></tr>
+              <tr><td>Holex, HSA</td><td style="text-align:right">$0</td><td><span class="tag warn">GAP</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what">
+          <strong>SO WHAT</strong>
+          <p>Syndicate Sales ($11.2K) is hardgoods/vases -- unlikely to ever migrate to K2K. Esmeralda ($3.8K, started Jul 13) and Rosa Flora ($2.5K) are growers NOT in Koronet. Connecting them would move $7.3K from GAP to online. "Test vendor" and "Test hardgoods vendor" ($1.2K) are implementation tests -- exclude from analysis.</p>
+          <p style="margin-top:6px"><strong style="color:var(--ink);font-size:13px">Owner:</strong> Network Team (connect vendors) + Impl</p>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> PROCUREMENT_DETAILS (offline channels) LEFT JOIN K2K_CONNECTIONS (Active, customer_connections=1) | 24 vendors | ks_flag=TRUE
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 3: Top Vendors -->
+    <details>
+      <summary>Layer 3: Top Vendors (Procurement + Offline)</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Vendor</th>
+                <th>Channel</th>
+                <th style="text-align:right">Cost</th>
+                <th style="text-align:right">POs</th>
+                <th>First</th>
+                <th>Last</th>
+                <th style="text-align:right">Categories</th>
+                <th>Flag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Syndicate Sales</td><td><span class="tag warn">N/A</span></td><td style="text-align:right"><strong>$11,200</strong></td><td style="text-align:right">15</td><td>Jul 16</td><td>Jul 16</td><td style="text-align:right">2</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>-Sole Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right"><strong>$10,885</strong></td><td style="text-align:right">124</td><td>May 1</td><td>Jul 20</td><td style="text-align:right">35</td><td></td></tr>
+              <tr><td>Fresca Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right"><strong>$9,982</strong></td><td style="text-align:right">121</td><td>May 1</td><td>Jul 20</td><td style="text-align:right">32</td><td></td></tr>
+              <tr><td>U.S. Greens Corp</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right"><strong>$9,184</strong></td><td style="text-align:right">79</td><td>May 1</td><td>Jul 20</td><td style="text-align:right">22</td><td></td></tr>
+              <tr><td>A Trilogy Floral</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$8,538</td><td style="text-align:right">85</td><td>May 4</td><td>Jul 20</td><td style="text-align:right">27</td><td></td></tr>
+              <tr><td>Choice Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$7,383</td><td style="text-align:right">57</td><td>Apr 28</td><td>Jul 20</td><td style="text-align:right">22</td><td></td></tr>
+              <tr><td>Allure Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$7,337</td><td style="text-align:right">61</td><td>May 1</td><td>Jul 20</td><td style="text-align:right">25</td><td></td></tr>
+              <tr><td>Continental Flowers</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$6,288</td><td style="text-align:right">73</td><td>May 1</td><td>Jul 20</td><td style="text-align:right">27</td><td></td></tr>
+              <tr><td>Stellar Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$4,813</td><td style="text-align:right">44</td><td>May 1</td><td>Jul 20</td><td style="text-align:right">22</td><td></td></tr>
+              <tr style="background:rgba(229,57,53,.06)"><td><strong>Rosaprima</strong></td><td><span class="tag bad">Unknown</span></td><td style="text-align:right"><strong style="color:#ff6b6b">$4,530</strong></td><td style="text-align:right">45</td><td>Jun 19</td><td>Jul 20</td><td style="text-align:right">3</td><td><span class="tag bad">LEAKAGE</span></td></tr>
+              <tr><td>Sunburst Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$4,343</td><td style="text-align:right">41</td><td>Apr 28</td><td>Jul 13</td><td style="text-align:right">18</td><td><span class="tag warn">monitor</span></td></tr>
+              <tr><td>Galleria Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$4,028</td><td style="text-align:right">45</td><td>Apr 28</td><td>Jul 20</td><td style="text-align:right">14</td><td></td></tr>
+              <tr style="background:rgba(212,146,10,.06)"><td><strong>Esmeralda</strong></td><td><span class="tag warn">Unknown</span></td><td style="text-align:right"><strong style="color:var(--gold)">$3,812</strong></td><td style="text-align:right">39</td><td>Jul 13</td><td>Jul 20</td><td style="text-align:right">11</td><td><span class="tag warn">GAP</span></td></tr>
+              <tr><td>Royal Flowers</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$3,095</td><td style="text-align:right">33</td><td>May 4</td><td>Jul 17</td><td style="text-align:right">18</td><td></td></tr>
+              <tr><td>Melody Farms</td><td><span class="tag ok">Procurement</span></td><td style="text-align:right">$2,984</td><td style="text-align:right">27</td><td>Apr 28</td><td>Jun 5</td><td style="text-align:right">13</td><td><span class="tag bad">churned?</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <div class="so-what" style="flex:1;min-width:280px">
+            <strong>Observations</strong>
+            <p>Sole Farms (124 POs), Fresca (121), US Greens (79) are top K2K vendors -- active and consistent buyers since May.</p>
+            <p style="margin-top:4px">Rosaprima buys $4.5K offline despite having active K2K -- biggest single leakage source.</p>
+            <p style="margin-top:4px">Melody Farms last purchase Jun 5 -- potential churn (6 weeks inactive).</p>
+          </div>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> PROCUREMENT_DETAILS x COMPANIES | 50 vendor-channel combinations | ks_flag=TRUE | 2026 YTD
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 4: Categories by Channel -->
+    <details>
+      <summary>Layer 4: Categories by Channel</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="text-align:right">Procurement ($)</th>
+                <th style="text-align:right">Offline ($)</th>
+                <th style="text-align:right">Total ($)</th>
+                <th style="text-align:right">Vendors</th>
+                <th>Online %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rose</strong></td>
+                <td style="text-align:right">$9,908</td>
+                <td style="text-align:right;color:#ff6b6b">$5,889</td>
+                <td style="text-align:right"><strong>$15,797</strong></td>
+                <td style="text-align:right">22</td>
+                <td>
+                  <div class="sq-bar-track" style="width:120px;height:16px"><div class="sq-bar-fill gold" style="width:62.7%">63%</div></div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Hydrangea</strong></td>
+                <td style="text-align:right">$7,912</td>
+                <td style="text-align:right">$978</td>
+                <td style="text-align:right"><strong>$8,891</strong></td>
+                <td style="text-align:right">17</td>
+                <td>
+                  <div class="sq-bar-track" style="width:120px;height:16px"><div class="sq-bar-fill green" style="width:89%">89%</div></div>
+                </td>
+              </tr>
+              <tr>
+                <td>Vases & Containers</td>
+                <td style="text-align:right;color:var(--muted)">--</td>
+                <td style="text-align:right">$7,509</td>
+                <td style="text-align:right"><strong>$7,509</strong></td>
+                <td style="text-align:right">2</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Foliage/Greens</td>
+                <td style="text-align:right">$7,140</td>
+                <td style="text-align:right;color:var(--muted)">--</td>
+                <td style="text-align:right"><strong>$7,140</strong></td>
+                <td style="text-align:right">7</td>
+                <td><span class="tag ok">100%</span></td>
+              </tr>
+              <tr>
+                <td>Ranunculus</td>
+                <td style="text-align:right">$5,833</td>
+                <td style="text-align:right;color:var(--muted)">--</td>
+                <td style="text-align:right"><strong>$5,833</strong></td>
+                <td style="text-align:right">11</td>
+                <td><span class="tag ok">100%</span></td>
+              </tr>
+              <tr>
+                <td>Delphinium</td>
+                <td style="text-align:right">$4,209</td>
+                <td style="text-align:right">$1,085</td>
+                <td style="text-align:right"><strong>$5,294</strong></td>
+                <td style="text-align:right">16</td>
+                <td>
+                  <div class="sq-bar-track" style="width:120px;height:16px"><div class="sq-bar-fill green" style="width:79.5%">80%</div></div>
+                </td>
+              </tr>
+              <tr>
+                <td>Carnation</td>
+                <td style="text-align:right">$3,139</td>
+                <td style="text-align:right">$975</td>
+                <td style="text-align:right"><strong>$4,115</strong></td>
+                <td style="text-align:right">12</td>
+                <td>
+                  <div class="sq-bar-track" style="width:120px;height:16px"><div class="sq-bar-fill green" style="width:76.3%">76%</div></div>
+                </td>
+              </tr>
+              <tr>
+                <td>Foam & Mechanics</td>
+                <td style="text-align:right;color:var(--muted)">--</td>
+                <td style="text-align:right">$3,760</td>
+                <td style="text-align:right"><strong>$3,760</strong></td>
+                <td style="text-align:right">1</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Rose Spray</td>
+                <td style="text-align:right">$3,686</td>
+                <td style="text-align:right">$272</td>
+                <td style="text-align:right"><strong>$3,957</strong></td>
+                <td style="text-align:right">16</td>
+                <td>
+                  <div class="sq-bar-track" style="width:120px;height:16px"><div class="sq-bar-fill green" style="width:93.1%">93%</div></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what" style="margin-top:12px">
+          <strong>KEY INSIGHT</strong>
+          <p>Rose has $5.9K offline procurement that should migrate to K2K. Vases & Containers ($7.5K) and Foam & Mechanics ($3.8K) are hardgoods from Syndicate Sales -- these are structural GAP, unlikely to ever migrate. Hydrangea, Foliage, Ranunculus well-covered via Procurement.</p>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> PROCUREMENT_DETAILS x COMPANIES | 155 category-channel combinations | ks_flag=TRUE | 2026 YTD
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- LIST SECTION                                                  -->
+  <!-- ============================================================= -->
+  <section id="list" style="border-left:5px solid var(--green-bright)">
+    <div class="section-header">
+      <h2 style="color:var(--green-bright)">LIST</h2>
+      <span class="confidence medium">MEDIUM CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      105 categories in inventory | ~350 products | ~15,600 units | 21% online coverage
+      <div class="muted">eShop is LIVE but product is not reaching online buyers. Massive listing gap.</div>
+    </div>
+
+    <!-- Layer 1: Feature Flags -->
+    <details open>
+      <summary>Layer 1: Feature Flags</summary>
+      <div class="layer-content">
+        <div class="flag-grid">
+          <div class="flag-item">
+            <span class="flag-label">Komet Core</span>
+            <span class="flag-value yes">YES</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">Procurement</span>
+            <span class="flag-value yes">YES</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">eShops</span>
+            <span class="flag-value yes">YES</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">K2K</span>
+            <span class="flag-value yes">YES</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">K2K eCommerce</span>
+            <span class="flag-value no">NO</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">eSuite</span>
+            <span class="flag-value no">NO</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">Days in Advance</span>
+            <span class="flag-value" style="color:var(--cyan)">3</span>
+          </div>
+          <div class="flag-item">
+            <span class="flag-label">Max Age</span>
+            <span class="flag-value" style="color:var(--cyan)">7</span>
+          </div>
+        </div>
+
+        <div class="provenance" style="margin-top:12px">
+          <strong>Source:</strong> COMPANIES table (ks_flag=TRUE) + SFDC Account
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 2: Inventory vs Online -->
+    <details>
+      <summary>Layer 2: Inventory vs Sold Online (Listing Gap)</summary>
+      <div class="layer-content">
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card greenLine">
+            <small>Total Categories in Cooler</small>
+            <strong style="color:var(--green-bright)">105</strong>
+            <p>~350 products | ~15,600 units</p>
+          </div>
+          <div class="card danger">
+            <small>Categories with ANY Online Sale</small>
+            <strong style="color:#ff6b6b">~22</strong>
+            <p>21% coverage | 83 categories DARK</p>
+          </div>
+        </div>
+
+        <!-- Visual gap bar -->
+        <div style="margin-bottom:14px">
+          <div class="small" style="margin-bottom:4px">Listing Coverage: 21%</div>
+          <div class="sq-bar-track">
+            <div class="sq-bar-fill red" style="width:21%">21% online</div>
+          </div>
+        </div>
+
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="text-align:right">In Inventory (products)</th>
+                <th style="text-align:right">Sold Online (products)</th>
+                <th style="text-align:right">Online GMV</th>
+                <th>Coverage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rose</strong></td>
+                <td style="text-align:right">31</td>
+                <td style="text-align:right">5</td>
+                <td style="text-align:right">$165</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:16%">16%</div></div></td>
+              </tr>
+              <tr>
+                <td>Gerbera</td>
+                <td style="text-align:right">13</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right">$17</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:8%">8%</div></div></td>
+              </tr>
+              <tr>
+                <td>Plants</td>
+                <td style="text-align:right">12</td>
+                <td style="text-align:right;color:#ff6b6b">0</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Pom</td>
+                <td style="text-align:right">12</td>
+                <td style="text-align:right;color:#ff6b6b">0</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Spray Rose</td>
+                <td style="text-align:right">11</td>
+                <td style="text-align:right">2</td>
+                <td style="text-align:right">$30</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:18%">18%</div></div></td>
+              </tr>
+              <tr>
+                <td>Carnation</td>
+                <td style="text-align:right">9</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right">$15</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:11%">11%</div></div></td>
+              </tr>
+              <tr>
+                <td>Alstroemeria</td>
+                <td style="text-align:right">9</td>
+                <td style="text-align:right">2</td>
+                <td style="text-align:right">$16</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:22%">22%</div></div></td>
+              </tr>
+              <tr>
+                <td>Lisianthus</td>
+                <td style="text-align:right">8</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right">$26</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:13%">13%</div></div></td>
+              </tr>
+              <tr>
+                <td>Mini Carnation</td>
+                <td style="text-align:right">8</td>
+                <td style="text-align:right">2</td>
+                <td style="text-align:right">$12</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:25%">25%</div></div></td>
+              </tr>
+              <tr>
+                <td>GREENS</td>
+                <td style="text-align:right">8</td>
+                <td style="text-align:right;color:#ff6b6b">0</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Hydrangea</td>
+                <td style="text-align:right">7</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right">$10</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:14%">14%</div></div></td>
+              </tr>
+              <tr>
+                <td>Lily</td>
+                <td style="text-align:right">7</td>
+                <td style="text-align:right;color:#ff6b6b">0</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Stock</td>
+                <td style="text-align:right">6</td>
+                <td style="text-align:right">3</td>
+                <td style="text-align:right">$39</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill gold" style="width:50%">50%</div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what" style="margin-top:12px">
+          <strong>CRITICAL GAP</strong>
+          <p>Rose has 31 products in the cooler but only 5 sold online (16% coverage). 74 of 105 categories have inventory but ZERO online sales. The product is there -- it's just not reaching online buyers. Is the eShop showing inventory? Is ecommerce_days_in_advance = 3 sufficient?</p>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> INVENTORY_DETAILS x SALE_DETAILS (eCom/API) | 105 inventory categories | ks_flag=TRUE
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 3: Inventory Detail -->
+    <details>
+      <summary>Layer 3: Inventory On-Hand (Snapshot)</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="text-align:right">Products</th>
+                <th style="text-align:right">Units</th>
+                <th style="text-align:right">Stems</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Rose</strong></td><td style="text-align:right">31</td><td style="text-align:right">5,500</td><td style="text-align:right">5,500</td></tr>
+              <tr><td><strong>Carnation</strong></td><td style="text-align:right">9</td><td style="text-align:right">5,100</td><td style="text-align:right">5,100</td></tr>
+              <tr><td>Plants</td><td style="text-align:right">12</td><td style="text-align:right">79</td><td style="text-align:right">79</td></tr>
+              <tr><td>Gerbera</td><td style="text-align:right">13</td><td style="text-align:right">62</td><td style="text-align:right">620</td></tr>
+              <tr><td>Pom</td><td style="text-align:right">12</td><td style="text-align:right">331</td><td style="text-align:right">1,299</td></tr>
+              <tr><td>Hydrangea</td><td style="text-align:right">7</td><td style="text-align:right">669</td><td style="text-align:right">689</td></tr>
+              <tr><td>Spray Rose</td><td style="text-align:right">11</td><td style="text-align:right">288</td><td style="text-align:right">900</td></tr>
+              <tr><td>Alstroemeria</td><td style="text-align:right">9</td><td style="text-align:right">284</td><td style="text-align:right">2,840</td></tr>
+              <tr><td>Stock</td><td style="text-align:right">6</td><td style="text-align:right">134</td><td style="text-align:right">1,340</td></tr>
+              <tr><td>FL</td><td style="text-align:right">5</td><td style="text-align:right">129</td><td style="text-align:right">1,290</td></tr>
+              <tr style="background:rgba(34,201,219,.06)">
+                <td><strong>TOTAL (105 categories)</strong></td>
+                <td style="text-align:right"><strong>~350</strong></td>
+                <td style="text-align:right"><strong>~15,600</strong></td>
+                <td style="text-align:right">--</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what" style="margin-top:12px">
+          <strong>READING</strong>
+          <p>Cooler is well-stocked: 105 categories, ~350 distinct products. Rose (31 varieties, 5,500 units) and Carnation (9 varieties, 5,100 units) dominate. Sufficient variety for an attractive eShop.</p>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> INVENTORY_DETAILS | inventory_division='Units' | ks_flag=TRUE | Current snapshot | 105 categories
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SELL SECTION                                                  -->
+  <!-- ============================================================= -->
+  <section id="sell" style="border-left:5px solid var(--purple)">
+    <div class="section-header">
+      <h2 style="color:var(--purple)">SELL</h2>
+      <span class="confidence high">HIGH CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      $629 online GMV | 3 buyers (all new, Jul 2026) | $0.16 fees billed | 1.2% online
+      <div class="muted">Sell-side is almost entirely offline. eShop exists but has near-zero traction. Fee revenue = $0.</div>
+    </div>
+
+    <!-- Layer 1: GMV by Channel -->
+    <details open>
+      <summary>Layer 1: GMV by Channel</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card purpleLine metric">
+            <small>Offline GMV</small>
+            <strong style="color:var(--purple)">$53,345</strong>
+            <p>69 customers | 134 categories | 1,622 txns</p>
+          </div>
+          <div class="card danger metric">
+            <small>eCommerce GMV</small>
+            <strong style="color:#ff6b6b">$629</strong>
+            <p>3 customers | 25 categories | 38 txns</p>
+          </div>
+          <div class="card metric">
+            <small>K2K GMV</small>
+            <strong>$0</strong>
+            <p>No K2K sell-side activity</p>
+          </div>
+        </div>
+
+        <!-- Visual bar -->
+        <div style="margin-bottom:12px">
+          <div class="small" style="margin-bottom:4px">Sell Channel Mix: 98.8% offline</div>
+          <div style="display:flex;height:28px;border-radius:8px;overflow:hidden;background:#252936">
+            <div style="width:98.8%;background:var(--purple);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:900;color:#fff">Offline $53.3K (98.8%)</div>
+            <div style="width:1.2%;background:#ff6b6b;min-width:2px"></div>
+          </div>
+        </div>
+
+        <div class="band red" style="margin-top:8px">
+          $53.9K total GMV with only 1.2% online. For a 7-day-old account this is expected -- but 69 offline buyers vs 3 online buyers signals eShop has NOT been communicated to customers.
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> SALE_DETAILS | company_name ILIKE '%price%floral%wholesale%' | shipping_date >= 2026-01-01 | ks_flag=TRUE | sales&lt;100K | dump excluded | 1,660 sale_item_ids
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 2: Top Categories Online vs Offline -->
+    <details>
+      <summary>Layer 2: Top Categories (Online vs Offline)</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="text-align:right">Online GMV</th>
+                <th style="text-align:right">Offline GMV</th>
+                <th style="text-align:right">Total GMV</th>
+                <th>Online %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rose</strong></td>
+                <td style="text-align:right;color:#ff6b6b">$165</td>
+                <td style="text-align:right">$9,070</td>
+                <td style="text-align:right"><strong>$9,235</strong></td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:1.8%"></div></div><span class="small">1.8%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hydrangea</strong></td>
+                <td style="text-align:right;color:#ff6b6b">$10</td>
+                <td style="text-align:right">$3,568</td>
+                <td style="text-align:right"><strong>$3,578</strong></td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:0.3%"></div></div><span class="small">0.3%</span></td>
+              </tr>
+              <tr>
+                <td>Snapdragon</td>
+                <td style="text-align:right">$51</td>
+                <td style="text-align:right">$2,072</td>
+                <td style="text-align:right"><strong>$2,123</strong></td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:2.4%"></div></div><span class="small">2.4%</span></td>
+              </tr>
+              <tr>
+                <td>Eucalyptus</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">$1,889</td>
+                <td style="text-align:right">$1,889</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Delphinium</td>
+                <td style="text-align:right">$34</td>
+                <td style="text-align:right">$1,845</td>
+                <td style="text-align:right">$1,879</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:1.8%"></div></div><span class="small">1.8%</span></td>
+              </tr>
+              <tr>
+                <td>Stock</td>
+                <td style="text-align:right">$39</td>
+                <td style="text-align:right">$1,793</td>
+                <td style="text-align:right">$1,832</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:2.1%"></div></div><span class="small">2.1%</span></td>
+              </tr>
+              <tr>
+                <td>Carnation</td>
+                <td style="text-align:right">$15</td>
+                <td style="text-align:right">$1,787</td>
+                <td style="text-align:right">$1,802</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:0.8%"></div></div><span class="small">0.8%</span></td>
+              </tr>
+              <tr>
+                <td>Lily</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">$1,592</td>
+                <td style="text-align:right">$1,592</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Spray Rose</td>
+                <td style="text-align:right">$30</td>
+                <td style="text-align:right">$1,322</td>
+                <td style="text-align:right">$1,352</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:2.2%"></div></div><span class="small">2.2%</span></td>
+              </tr>
+              <tr>
+                <td>Mini Calla</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">$1,319</td>
+                <td style="text-align:right">$1,319</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Pom</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">$1,289</td>
+                <td style="text-align:right">$1,289</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>FL</td>
+                <td style="text-align:right">$27</td>
+                <td style="text-align:right">$1,235</td>
+                <td style="text-align:right">$1,262</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:2.1%"></div></div><span class="small">2.1%</span></td>
+              </tr>
+              <tr>
+                <td>Sunflower</td>
+                <td style="text-align:right">$18</td>
+                <td style="text-align:right">$1,124</td>
+                <td style="text-align:right">$1,142</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:1.6%"></div></div><span class="small">1.6%</span></td>
+              </tr>
+              <tr>
+                <td>Leather Leaf</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">$1,130</td>
+                <td style="text-align:right">$1,130</td>
+                <td><span class="tag bad">0%</span></td>
+              </tr>
+              <tr>
+                <td>Gerbera</td>
+                <td style="text-align:right">$17</td>
+                <td style="text-align:right">$1,111</td>
+                <td style="text-align:right">$1,128</td>
+                <td><div class="sq-bar-track" style="width:100px;height:14px"><div class="sq-bar-fill red" style="width:1.5%"></div></div><span class="small">1.5%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what" style="margin-top:12px">
+          <strong>READING</strong>
+          <p>Top 15 sell categories are almost 100% offline. Rose ($9.2K total) has only $165 online. Eucalyptus, Lily, Mini Calla, Pom, Leather Leaf have ZERO online sales despite being top offline categories. The online sales that exist ($629 total) are trial purchases from 3 new buyers.</p>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> SALE_DETAILS | 70 categories with GMV > $100 | ks_flag=TRUE | sales&lt;100K
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 3: Buyers -->
+    <details>
+      <summary>Layer 3: Online Buyers</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card purpleLine">
+            <small>Total Online Buyers</small>
+            <strong>3</strong>
+            <p>All "New" (1 month active)</p>
+          </div>
+          <div class="card danger">
+            <small>Repeat Buyers (3+ months)</small>
+            <strong>0</strong>
+            <p>Zero stickiness</p>
+          </div>
+          <div class="card warnLine">
+            <small>Offline Buyers</small>
+            <strong>69</strong>
+            <p>Massive untapped pool</p>
+          </div>
+        </div>
+
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead>
+              <tr>
+                <th>Buyer</th>
+                <th style="text-align:right">Months Active</th>
+                <th style="text-align:right">Total Spend</th>
+                <th>First Purchase</th>
+                <th>Last Purchase</th>
+                <th>Cohort</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ion Florist</strong></td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right"><strong>$449</strong></td>
+                <td>Jul 17</td>
+                <td>Jul 20</td>
+                <td><span class="tag spec">New</span></td>
+              </tr>
+              <tr>
+                <td>Wisps Of Willow</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right">$180</td>
+                <td>Jul 18</td>
+                <td>Jul 18</td>
+                <td><span class="tag spec">New</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--muted)">Valentina Flowers</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td>Jun 1</td>
+                <td>Jun 1</td>
+                <td><span class="tag">Test?</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="so-what">
+          <strong>READING</strong>
+          <p>Ion Florist ($449, Jul 17-20) is the only meaningful buyer -- just started 3 days ago. Wisps Of Willow single purchase. Valentina Flowers has $0 spend -- likely a test. Zero repeat buyers, zero stickiness yet. Typical for a 7-day-old eShop. The 69 offline buyers are the activation pool.</p>
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> SALE_DETAILS | sales_channel IN ('eCommerce','API') | 3 buyers | ks_flag=TRUE | dump excluded
+        </div>
+      </div>
+    </details>
+
+    <!-- Layer 4: Fees -->
+    <details>
+      <summary>Layer 4: Fees <span class="tag bad" style="margin-left:8px">ANOMALY</span></summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card danger metric">
+            <small>Fees Billed YTD</small>
+            <strong style="color:#ff6b6b">$0.16</strong>
+            <p>1 K2K transaction</p>
+          </div>
+          <div class="card metric">
+            <small>Expected Fees (Jul)</small>
+            <strong>$0.00</strong>
+            <p>0 rows in EXPECTED table</p>
+          </div>
+          <div class="card warnLine metric">
+            <small>Expected from eCom GMV</small>
+            <strong style="color:var(--gold)">~$9.44</strong>
+            <p>$629 x 1.5% rate = missing</p>
+          </div>
+        </div>
+
+        <div class="tableWrap" style="margin-bottom:14px">
+          <table>
+            <thead><tr><th>Fee Channel</th><th style="text-align:right">Fees</th><th style="text-align:right">Transactions</th><th>Rate (SFDC)</th></tr></thead>
+            <tbody>
+              <tr><td>K2K</td><td style="text-align:right">$0.16</td><td style="text-align:right">1</td><td>1.5%</td></tr>
+              <tr><td>eCom</td><td style="text-align:right;color:#ff6b6b">$0.00</td><td style="text-align:right;color:#ff6b6b">0</td><td>1.5%</td></tr>
+              <tr><td>API</td><td style="text-align:right;color:var(--muted)">$0.00</td><td style="text-align:right;color:var(--muted)">0</td><td>1.5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="band red">
+          <strong>FEE ANOMALY:</strong> $629 of eCom GMV at 1.5% should generate ~$9.44 in fees, but ZERO eCom fees are billed. Only $0.16 in K2K fees from 1 transaction. Possible billing error or channel classification issue. FLAG FOR CODEX.
+        </div>
+
+        <div class="provenance">
+          <strong>Source:</strong> CONSOLIDATED_TRANSACTION_FEES | status='Billed' | transaction_date >= 2026-01-01 | ks_flag=TRUE | 1 row. EXPECTED_TRANSACTION_FEES | shipping_date >= 2026-07-01 | 0 rows. Fee rates from SFDC: K2K_Fees__c=1.5%, E_Commerce_Fees__c=1.5%, API_Fee_Percentage__c=1.5%
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SUPPLY QUALITY SECTION                                        -->
+  <!-- ============================================================= -->
+  <section id="supply-quality">
+    <div class="section-header">
+      <h2 style="color:var(--cyan)">Supply Quality</h2>
+      <span class="confidence medium">MEDIUM CONFIDENCE</span>
+    </div>
+    <div class="section-summary">
+      MVP: 60% | Competitivo: 47% | Demanda: 40%
+      <div class="muted">Can they buy what they need online? Partially. 6 of top 15 sell categories have no K2K procurement.</div>
+    </div>
+
+    <!-- Score Bars -->
+    <div style="margin-bottom:20px">
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+          <span style="font-weight:800;font-size:14px">MVP: Can they buy what they need online?</span>
+          <span style="font-weight:900;font-size:18px;color:var(--gold)">60% (9/15)</span>
+        </div>
+        <div class="sq-bar-track">
+          <div class="sq-bar-fill gold" style="width:60%">9 of 15 categories</div>
+        </div>
+        <div class="small" style="margin-top:4px">YES: Rose, Hydrangea, Delphinium, Stock, Carnation, Lily, Spray Rose, Sunflower, Eucalyptus</div>
+        <div class="small" style="color:#ff6b6b">NO: Snapdragon, Mini Calla, Pom, FL, Leather Leaf, Gerbera</div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+          <span style="font-weight:800;font-size:14px">Competitivo: 2+ vendors online?</span>
+          <span style="font-weight:900;font-size:18px;color:var(--gold)">47% (7/15)</span>
+        </div>
+        <div class="sq-bar-track">
+          <div class="sq-bar-fill gold" style="width:47%">7 of 15 categories</div>
+        </div>
+        <div class="small" style="margin-top:4px">YES: Rose(16), Hydrangea(14), Delphinium(13), Stock(11), Carnation(11), Lily(8), Sunflower(4)</div>
+        <div class="small" style="color:#ff6b6b">NO: Snapdragon(0), Eucalyptus(2 low $), Spray Rose(2 low $), Mini Calla(0), Pom(3 marginal), FL(0), Leather Leaf(0), Gerbera(0)</div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+          <span style="font-weight:800;font-size:14px">Demanda: Can they buy what their customers need?</span>
+          <span style="font-weight:900;font-size:18px;color:#ff6b6b">40% (6/15)</span>
+        </div>
+        <div class="sq-bar-track">
+          <div class="sq-bar-fill red" style="width:40%">6 of 15 categories</div>
+        </div>
+        <div class="small" style="margin-top:4px">YES: Rose, Hydrangea, Delphinium, Stock, Carnation, Lily</div>
+        <div class="small" style="color:#ff6b6b">NO: Snapdragon, Eucalyptus, Spray Rose, Mini Calla, Pom, FL, Sunflower, Leather Leaf, Gerbera</div>
+      </div>
+    </div>
+
+    <!-- Category Detail Table -->
+    <details>
+      <summary>Category-Level Supply Quality</summary>
+      <div class="layer-content">
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="text-align:right">Sold GMV</th>
+                <th style="text-align:right">Procured K2K</th>
+                <th style="text-align:right">Procured Other</th>
+                <th style="text-align:right">Vendors</th>
+                <th>MVP</th>
+                <th>Comp.</th>
+                <th>Demand</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rose</strong></td>
+                <td style="text-align:right">$9,235</td>
+                <td style="text-align:right;color:var(--green-bright)">$9,908</td>
+                <td style="text-align:right">$5,889</td>
+                <td style="text-align:right">22</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">16</span></td>
+                <td><span class="tag ok">YES</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hydrangea</strong></td>
+                <td style="text-align:right">$3,578</td>
+                <td style="text-align:right;color:var(--green-bright)">$7,912</td>
+                <td style="text-align:right">$978</td>
+                <td style="text-align:right">17</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">14</span></td>
+                <td><span class="tag ok">YES</span></td>
+              </tr>
+              <tr>
+                <td>Snapdragon</td>
+                <td style="text-align:right">$2,123</td>
+                <td style="text-align:right;color:#ff6b6b">$0</td>
+                <td style="text-align:right">$1,001</td>
+                <td style="text-align:right">1</td>
+                <td><span class="tag bad">NO</span></td>
+                <td><span class="tag bad">0</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Eucalyptus</td>
+                <td style="text-align:right">$1,889</td>
+                <td style="text-align:right;color:var(--gold)">$469</td>
+                <td style="text-align:right">$1,118</td>
+                <td style="text-align:right">5</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag bad">low</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Delphinium</td>
+                <td style="text-align:right">$1,879</td>
+                <td style="text-align:right;color:var(--green-bright)">$4,209</td>
+                <td style="text-align:right">$1,085</td>
+                <td style="text-align:right">16</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">13</span></td>
+                <td><span class="tag ok">YES</span></td>
+              </tr>
+              <tr>
+                <td>Stock</td>
+                <td style="text-align:right">$1,832</td>
+                <td style="text-align:right;color:var(--green-bright)">$2,933</td>
+                <td style="text-align:right">$1,124</td>
+                <td style="text-align:right">13</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">11</span></td>
+                <td><span class="tag ok">YES</span></td>
+              </tr>
+              <tr>
+                <td>Carnation</td>
+                <td style="text-align:right">$1,802</td>
+                <td style="text-align:right;color:var(--green-bright)">$3,139</td>
+                <td style="text-align:right">$975</td>
+                <td style="text-align:right">12</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">11</span></td>
+                <td><span class="tag ok">YES</span></td>
+              </tr>
+              <tr>
+                <td>Lily</td>
+                <td style="text-align:right">$1,592</td>
+                <td style="text-align:right;color:var(--green-bright)">$1,783</td>
+                <td style="text-align:right">$550</td>
+                <td style="text-align:right">9</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">8</span></td>
+                <td><span class="tag ok">YES</span></td>
+              </tr>
+              <tr>
+                <td>Spray Rose</td>
+                <td style="text-align:right">$1,352</td>
+                <td style="text-align:right;color:var(--gold)">$469</td>
+                <td style="text-align:right">$272</td>
+                <td style="text-align:right">5</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag bad">low</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Mini Calla</td>
+                <td style="text-align:right">$1,319</td>
+                <td style="text-align:right;color:#ff6b6b">$0</td>
+                <td style="text-align:right">$475</td>
+                <td style="text-align:right">1</td>
+                <td><span class="tag bad">NO</span></td>
+                <td><span class="tag bad">0</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Pom</td>
+                <td style="text-align:right">$1,289</td>
+                <td style="text-align:right;color:var(--gold)">$288</td>
+                <td style="text-align:right">$894</td>
+                <td style="text-align:right">7</td>
+                <td><span class="tag bad">NO</span></td>
+                <td><span class="tag bad">marg.</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>FL</td>
+                <td style="text-align:right">$1,262</td>
+                <td style="text-align:right;color:#ff6b6b">$0</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">--</td>
+                <td><span class="tag bad">NO</span></td>
+                <td><span class="tag bad">0</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Sunflower</td>
+                <td style="text-align:right">$1,142</td>
+                <td style="text-align:right;color:var(--green-bright)">$890</td>
+                <td style="text-align:right">$494</td>
+                <td style="text-align:right">5</td>
+                <td><span class="tag ok">YES</span></td>
+                <td><span class="tag ok">4</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Leather Leaf</td>
+                <td style="text-align:right">$1,130</td>
+                <td style="text-align:right;color:#ff6b6b">$0</td>
+                <td style="text-align:right;color:var(--muted)">$0</td>
+                <td style="text-align:right">--</td>
+                <td><span class="tag bad">NO</span></td>
+                <td><span class="tag bad">0</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+              <tr>
+                <td>Gerbera</td>
+                <td style="text-align:right">$1,128</td>
+                <td style="text-align:right;color:#ff6b6b">$0</td>
+                <td style="text-align:right">$466</td>
+                <td style="text-align:right">1</td>
+                <td><span class="tag bad">NO</span></td>
+                <td><span class="tag bad">0</span></td>
+                <td><span class="tag bad">NO</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="provenance" style="margin-top:12px">
+          <strong>Source:</strong> SALE_DETAILS (top 15 categories) x PROCUREMENT_DETAILS | ks_flag=TRUE | shipping_date >= 2026-01-01
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- DIAGNOSTIC SECTION                                            -->
+  <!-- ============================================================= -->
+  <section id="diagnostic">
+    <h2>Diagnostic: BUY / LIST / SELL Funnel</h2>
+
+    <div class="grid3" style="margin-bottom:16px">
+      <div class="diagnostic-card" style="border-left:5px solid var(--blue)">
+        <div class="status" style="color:var(--green-bright)">BUY: Active (74% digital)</div>
+        <div style="font-size:28px;font-weight:900;margin:8px 0">$128.9K</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:8px">73.6% via Procurement (K2K)</div>
+        <div class="sq-bar-track"><div class="sq-bar-fill green" style="width:73.6%">73.6%</div></div>
+        <div style="margin-top:10px;font-size:13px;color:var(--green-bright);font-weight:700">Strong adoption. Leakage = $12.9K recoverable.</div>
+      </div>
+
+      <div class="diagnostic-card" style="border-left:5px solid var(--gold)">
+        <div class="status" style="color:var(--gold)">LIST: Low Coverage (21%)</div>
+        <div style="font-size:28px;font-weight:900;margin:8px 0">105 cat</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:8px">Only ~22 categories sold online</div>
+        <div class="sq-bar-track"><div class="sq-bar-fill gold" style="width:21%">21%</div></div>
+        <div style="margin-top:10px;font-size:13px;color:var(--gold);font-weight:700">The bottleneck. Product in cooler but not reaching online.</div>
+      </div>
+
+      <div class="diagnostic-card" style="border-left:5px solid var(--red)">
+        <div class="status" style="color:#ff6b6b">SELL: Nearly Zero ($629)</div>
+        <div style="font-size:28px;font-weight:900;margin:8px 0">$629</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:8px">1.2% of $53.9K total GMV</div>
+        <div class="sq-bar-track"><div class="sq-bar-fill red" style="width:1.2%"></div></div>
+        <div style="margin-top:10px;font-size:13px;color:#ff6b6b;font-weight:700">eShop live 7 days, zero traction. 69 offline buyers untouched.</div>
+      </div>
+    </div>
+
+    <!-- Diagnostic Questions -->
+    <h3 style="margin-top:20px">Diagnostic Questions</h3>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="so-what">
+        <strong>BUY WORKS. WHY DON'T THEY LIST?</strong>
+        <p>Feature flags are all ON (Core, Procurement, eShops, K2K). But only 21% coverage. Is inventory auto-syncing to eShop? Is ecommerce_days_in_advance = 3 too short? Are they uploading product manually or relying on auto-publish?</p>
+      </div>
+      <div class="so-what">
+        <strong>eSHOP LIVE BUT $629 IN 7 DAYS. DO OFFLINE CUSTOMERS KNOW IT EXISTS?</strong>
+        <p>69 customers buy offline. Only 3 tried the eShop (all new, not existing customers). This suggests Price's has NOT communicated the eShop to their customer base. Need a deliberate launch push.</p>
+      </div>
+      <div class="so-what">
+        <strong>$629 eCOM GMV BUT $0 eCOM FEES. WHERE ARE THE FEES?</strong>
+        <p>At 1.5% rate, $629 should generate ~$9.44 in eCom fees. Only $0.16 K2K appears. Possible billing lag (account is 7 days old), channel misclassification, or fee configuration error. Codex should verify.</p>
+      </div>
+      <div class="so-what">
+        <strong>GO-LIVE NULL + LIFECYCLE "PAST DUE" + NO CS</strong>
+        <p>The account is operationally live since April (buying) / July (selling) but SFDC shows NULL go-live, "Past Due" lifecycle, and no assigned CS Advisor. This needs immediate SFDC hygiene fix.</p>
+      </div>
+      <div class="so-what">
+        <strong>ROSAPRIMA: $4.5K OFFLINE TO A CONNECTED VENDOR</strong>
+        <p>Biggest single leakage vendor. K2K connection is active but all purchases are via Unknown channel. Habit? Price availability issue on K2K? Need investigation with Impl lead.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- ACTIONS SECTION                                               -->
+  <!-- ============================================================= -->
+  <section id="actions">
+    <h2>Actions</h2>
+
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="action-card" style="border-left-color:#ff6b6b">
+        <h4>1. Fee Anomaly Investigation</h4>
+        <p>Verify why $629 eCom GMV generated $0 eCom fees. Check billing configuration, fee rates in the system (not just SFDC), and transaction_date alignment. $0.16 K2K on 1 transaction also seems anomalously low.</p>
+        <div class="owner">Owner: Codex (verify) | Priority: This week</div>
+      </div>
+
+      <div class="action-card" style="border-left-color:var(--gold)">
+        <h4>2. Assign CS Advisor</h4>
+        <p>"Koronet Customer Support" is not a real CS advisor. This account is through implementation with Milena and needs a proper handoff. Set Go-Live date in SFDC (operationally live since Apr 2026). Update lifecycle from "Past Due".</p>
+        <div class="owner">Owner: CS Leadership | Priority: This week</div>
+      </div>
+
+      <div class="action-card" style="border-left-color:var(--green-bright)">
+        <h4>3. eShop Activation Push</h4>
+        <p>Price's has 69 offline buyers but only 3 tried the eShop. Design a targeted launch: communicate eShop to top 15 offline customers. Training session with Price's team on inventory listing and eShop management. Goal: 50% listing coverage + 10 online buyers in 30 days.</p>
+        <div class="owner">Owner: CS Advisor (once assigned) + Impl | Priority: 2-4 weeks</div>
+      </div>
+    </div>
+
+    <details>
+      <summary>Medium & Long Term Actions</summary>
+      <div class="layer-content">
+        <div class="grid2">
+          <div class="action-card">
+            <h4>4. Rosaprima Leakage Play</h4>
+            <p>$4.5K/month offline to a vendor with active K2K. Investigate root cause (habit, pricing, availability) and design behavioral intervention.</p>
+            <div class="owner">Owner: CS + Network | Timeline: 2-4 weeks</div>
+          </div>
+          <div class="action-card">
+            <h4>5. Listing Coverage Push</h4>
+            <p>Move from 21% to 50%+ coverage. Start with top 15 sell categories. Verify auto-publish settings. Check ecommerce_days_in_advance configuration.</p>
+            <div class="owner">Owner: CS + Impl | Timeline: 2-4 weeks</div>
+          </div>
+          <div class="action-card">
+            <h4>6. Connect GAP Vendors</h4>
+            <p>Esmeralda ($3.8K), Rosa Flora ($2.5K), Santana Farms ($1K) are top growers not in Koronet. Connecting them would move $7.3K from GAP to online procurement.</p>
+            <div class="owner">Owner: Network Team | Timeline: 1-3 months</div>
+          </div>
+          <div class="action-card">
+            <h4>7. Supply Quality Sourcing</h4>
+            <p>Snapdragon, Mini Calla, Gerbera are top sell categories with ZERO K2K procurement. Find vendors in the network that carry these categories.</p>
+            <div class="owner">Owner: Network Team | Timeline: 1-3 months</div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- K2K CONNECTIONS SECTION                                       -->
+  <!-- ============================================================= -->
+  <section id="connections">
+    <details>
+      <summary style="font-size:16px">K2K Connections Detail (32 total)</summary>
+      <div class="layer-content">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="card blueLine">
+            <small>Active Connections</small>
+            <strong>31</strong>
+            <p>29 Blitz + 2 Easy Handshake</p>
+          </div>
+          <div class="card warnLine">
+            <small>Suspended</small>
+            <strong>1</strong>
+            <p>Milena Flowers (Handshake)</p>
+          </div>
+          <div class="card">
+            <small>Connection Period</small>
+            <strong>Apr 27 - May 26</strong>
+            <p>All created during impl</p>
+          </div>
+        </div>
+
+        <div class="so-what">
+          <strong>READING</strong>
+          <p>31 active connections is solid for a new wholesaler. Almost all via Blitz (implementation-driven, not organic). Only 2 Easy Handshake connections -- no organic growth yet. Milena Flowers suspended (likely test). Zero organic growth signals the account hasn't started self-serving connections.</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="small" style="margin-bottom:6px"><strong style="color:var(--ink)">Active Vendors (31):</strong></div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px">
+            <span class="tag">AquaRose</span>
+            <span class="tag">Sole Farms</span>
+            <span class="tag">A Trilogy</span>
+            <span class="tag">Allure</span>
+            <span class="tag">Blossom Bliss</span>
+            <span class="tag">Choice Farms</span>
+            <span class="tag">Continental</span>
+            <span class="tag">DP Flowers</span>
+            <span class="tag">EQR USA</span>
+            <span class="tag">Floral Chain</span>
+            <span class="tag">Fresca</span>
+            <span class="tag">Galleria</span>
+            <span class="tag">Golden Flowers</span>
+            <span class="tag">Greens & Flowers</span>
+            <span class="tag">Jetty USA</span>
+            <span class="tag">Mayta/Native Blooms</span>
+            <span class="tag">Megaflor</span>
+            <span class="tag">Miaflora</span>
+            <span class="tag">Miraflor</span>
+            <span class="tag">Moonlight</span>
+            <span class="tag">Muchflowers</span>
+            <span class="tag">Pacifica</span>
+            <span class="tag">Premium Flowers</span>
+            <span class="tag">Riverdale</span>
+            <span class="tag">Rosaprima</span>
+            <span class="tag">Royal Flowers</span>
+            <span class="tag">SUNRITE</span>
+            <span class="tag">Stellar</span>
+            <span class="tag">Sunburst</span>
+            <span class="tag">The Flower Emporium</span>
+            <span class="tag">US Greens</span>
+          </div>
+        </div>
+
+        <div class="provenance" style="margin-top:12px">
+          <strong>Source:</strong> K2K_CONNECTIONS | customer_connections=1 | customer_name ILIKE '%price%floral%wholesale%' | ks_flag=TRUE | 32 rows
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- IMPLEMENTATION TIMELINE                                       -->
+  <!-- ============================================================= -->
+  <section>
+    <details>
+      <summary style="font-size:16px">Implementation Timeline (Fathom)</summary>
+      <div class="layer-content">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;background:#1a1d26">
+            <div style="min-width:80px;font-weight:900;color:var(--cyan);font-size:13px">Jul 10</div>
+            <div>
+              <div style="font-weight:700;font-size:14px">Standing orders, box dimensions, QuickBooks sync</div>
+              <a href="https://fathom.video/calls/740796752" class="small" style="font-weight:700">View recording</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;background:#1a1d26">
+            <div style="min-width:80px;font-weight:900;color:var(--cyan);font-size:13px">Jul 9</div>
+            <div>
+              <div style="font-weight:700;font-size:14px">QuickBooks sync fixes, pre-book workflow</div>
+              <a href="https://fathom.video/calls/739038292" class="small" style="font-weight:700">View recording</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;background:#1a1d26">
+            <div style="min-width:80px;font-weight:900;color:var(--cyan);font-size:13px">Jul 8</div>
+            <div>
+              <div style="font-weight:700;font-size:14px">Standing orders, inventory, allocations</div>
+              <a href="https://fathom.video/calls/737833487" class="small" style="font-weight:700">View recording</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;background:#1a1d26">
+            <div style="min-width:80px;font-weight:900;color:var(--cyan);font-size:13px">Jul 7</div>
+            <div>
+              <div style="font-weight:700;font-size:14px">End-to-end purchasing and sales workflow test</div>
+              <a href="https://fathom.video/calls/735686551" class="small" style="font-weight:700">View recording</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- PROVENANCE SECTION                                            -->
+  <!-- ============================================================= -->
+  <section id="provenance-section">
+    <h2>Provenance</h2>
+    <p class="small" style="margin-bottom:14px">Every number in this dashboard traces to a specific query, table, period, and filter set. Rules applied: R1 (ks_flag), R2 (transaction_date), R4 (sales&lt;100K), R5 (no CUSTOMERS join), R6 (sell vs buy side), R7 (vendor blank in Units), R8 (semantic views), R9 (provenance), R11 (fee rates reales), R12 (dump excluded).</p>
+
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Query</th>
+            <th>Table</th>
+            <th>Period</th>
+            <th>Filters</th>
+            <th style="text-align:right">Rows</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01 Identity</td>
+            <td>COMPANIES</td>
+            <td>Current</td>
+            <td>ks_flag=TRUE, company_name ILIKE '%price%floral%wholesale%'</td>
+            <td style="text-align:right">1</td>
+          </tr>
+          <tr>
+            <td>02 Buy Channels</td>
+            <td>PROCUREMENT_DETAILS x COMPANIES</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE</td>
+            <td style="text-align:right">1,230 items</td>
+          </tr>
+          <tr>
+            <td>03 Leakage/Gap</td>
+            <td>PROCUREMENT_DETAILS x K2K_CONNECTIONS</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE, offline channels only</td>
+            <td style="text-align:right">24 vendors</td>
+          </tr>
+          <tr>
+            <td>04 Vendors</td>
+            <td>PROCUREMENT_DETAILS x COMPANIES</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE</td>
+            <td style="text-align:right">50 combos</td>
+          </tr>
+          <tr>
+            <td>05 Buy Categories</td>
+            <td>PROCUREMENT_DETAILS x COMPANIES</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE</td>
+            <td style="text-align:right">155 combos</td>
+          </tr>
+          <tr>
+            <td>06 Connections</td>
+            <td>K2K_CONNECTIONS</td>
+            <td>All time</td>
+            <td>ks_flag=TRUE, customer_connections=1</td>
+            <td style="text-align:right">32</td>
+          </tr>
+          <tr>
+            <td>07 Sell GMV</td>
+            <td>SALE_DETAILS</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE, sales&lt;100K, dump excluded</td>
+            <td style="text-align:right">1,660 txns</td>
+          </tr>
+          <tr>
+            <td>08 Sell Categories</td>
+            <td>SALE_DETAILS</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE, sales&lt;100K</td>
+            <td style="text-align:right">70 categories</td>
+          </tr>
+          <tr>
+            <td>09 Fees Billed</td>
+            <td>CONSOLIDATED_TRANSACTION_FEES</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE, status='Billed'</td>
+            <td style="text-align:right">1 txn</td>
+          </tr>
+          <tr>
+            <td>09 Fees Expected</td>
+            <td>EXPECTED_TRANSACTION_FEES</td>
+            <td>Jul 2026</td>
+            <td>ks_flag=TRUE</td>
+            <td style="text-align:right">0</td>
+          </tr>
+          <tr>
+            <td>10 Buyers</td>
+            <td>SALE_DETAILS</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE, eCom/API only, dump excluded</td>
+            <td style="text-align:right">3 buyers</td>
+          </tr>
+          <tr>
+            <td>11 Inventory</td>
+            <td>INVENTORY_DETAILS</td>
+            <td>Current snapshot</td>
+            <td>ks_flag=TRUE, inventory_division='Units'</td>
+            <td style="text-align:right">105 categories</td>
+          </tr>
+          <tr>
+            <td>12 Coverage</td>
+            <td>INVENTORY_DETAILS x SALE_DETAILS</td>
+            <td>Current + 2026 YTD</td>
+            <td>ks_flag=TRUE</td>
+            <td style="text-align:right">105 categories</td>
+          </tr>
+          <tr>
+            <td>13 Supply Quality</td>
+            <td>SALE_DETAILS x PROCUREMENT_DETAILS</td>
+            <td>2026 YTD</td>
+            <td>ks_flag=TRUE, top 15 sell categories</td>
+            <td style="text-align:right">15 categories</td>
+          </tr>
+          <tr>
+            <td>SFDC</td>
+            <td>Account</td>
+            <td>Current</td>
+            <td>Name LIKE '%Price%Floral%'</td>
+            <td style="text-align:right">2 records</td>
+          </tr>
+          <tr>
+            <td>Fathom</td>
+            <td>Meetings</td>
+            <td>Apr 2026+</td>
+            <td>"Price"</td>
+            <td style="text-align:right">4 calls</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;padding:14px 18px;background:#1a1d26;border:1px solid var(--line);border-radius:8px">
+      <div class="small" style="margin-bottom:6px"><strong style="color:var(--ink)">Status & Confidence</strong></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <span class="confidence medium">UNVERIFIED -- needs Codex review</span>
+        <span class="small">Rose | Framework v5 | Built 2026-07-21</span>
+      </div>
+      <div class="small" style="margin-top:8px">Data rules enforced: R1 (ks_flag on every query), R2 (transaction_date not shipping_date for fees), R4 (sales&lt;100K filter), R5 (no CUSTOMERS join), R6 (sell vs buy side separation), R7 (vendor blank in Units), R8 (semantic views), R9 (provenance on every number), R11 (real fee rates from SFDC), R12 (dump excluded from sell-side)</div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
