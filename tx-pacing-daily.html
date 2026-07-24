@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TX Pacing Daily Read — 2026-07-24</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f6f8fb;
+    color: #1a1a2e;
+    line-height: 1.6;
+    padding: 20px;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 32px 40px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+  }
+  .header h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 16px; }
+  .header .meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; opacity: 0.6; }
+  .header .meta span { background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 6px; }
+
+  /* Status badge */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+  .badge-pending { background: #fef3c7; color: #92400e; }
+  .badge-stretch { background: #fef3c7; color: #92400e; }
+  .badge-growing { background: #d1fae5; color: #065f46; }
+  .badge-surging { background: #c7d2fe; color: #3730a3; }
+  .badge-stable { background: #e5e7eb; color: #374151; }
+  .badge-slowing { background: #fee2e2; color: #991b1b; }
+  .badge-new { background: #dbeafe; color: #1e40af; }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    border: 1px solid #e8ecf1;
+  }
+  .card h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e8ecf1;
+  }
+  .card h3 { font-size: 14px; font-weight: 600; color: #4b5563; margin: 16px 0 8px; }
+
+  /* Hero Section */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .hero-metric {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+  }
+  .hero-metric .label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+  .hero-metric .value { font-size: 28px; font-weight: 800; color: #1a1a2e; margin: 6px 0; }
+  .hero-metric .value.positive { color: #059669; }
+  .hero-metric .value.negative { color: #dc2626; }
+  .hero-metric .value.warning { color: #d97706; }
+  .hero-metric .detail { font-size: 11px; color: #9ca3af; }
+
+  .so-what {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #92400e;
+    margin-top: 16px;
+  }
+  .so-what strong { font-weight: 700; }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .split-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid #e8ecf1;
+  }
+  .split-card.core { border-top: 4px solid #3b82f6; }
+  .split-card.axerrio { border-top: 4px solid #8b5cf6; }
+  .split-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .split-card .metric-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+  }
+  .split-card .metric-row:last-child { border-bottom: none; }
+  .split-card .metric-row .label { color: #6b7280; }
+  .split-card .metric-row .val { font-weight: 600; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: #f8fafc;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+    border-bottom: 2px solid #e5e7eb;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+  }
+  tr:hover { background: #f8fafc; }
+  tr.total-row {
+    font-weight: 700;
+    background: #f0f4ff;
+    border-top: 2px solid #3b82f6;
+  }
+  td.positive { color: #059669; font-weight: 600; }
+  td.negative { color: #dc2626; font-weight: 600; }
+  td.neutral { color: #6b7280; }
+
+  /* Bar charts (CSS only) */
+  .bar-chart { margin: 16px 0; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .bar-label {
+    width: 80px;
+    font-weight: 500;
+    color: #4b5563;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    transition: width 0.5s ease;
+  }
+  .bar-fill.ecom { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .bar-fill.k2k { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .bar-fill.api { background: linear-gradient(90deg, #10b981, #34d399); }
+  .bar-fill.fedex { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .bar-fill.gps { background: linear-gradient(90deg, #6366f1, #818cf8); }
+  .bar-value {
+    margin-left: 12px;
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+  }
+
+  /* Monthly trend bars */
+  .trend-chart { margin: 16px 0; }
+  .trend-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 11px;
+  }
+  .trend-label {
+    width: 65px;
+    font-weight: 500;
+    color: #6b7280;
+    flex-shrink: 0;
+  }
+  .trend-track {
+    flex: 1;
+    height: 22px;
+    background: #f1f5f9;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .trend-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+  }
+  .trend-fill.y2025 { background: #94a3b8; }
+  .trend-fill.y2026 { background: #3b82f6; }
+  .trend-fill.partial { background: repeating-linear-gradient(45deg, #3b82f6, #3b82f6 4px, #60a5fa 4px, #60a5fa 8px); }
+  .trend-value {
+    margin-left: 8px;
+    font-weight: 500;
+    color: #6b7280;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  /* Collapsible */
+  details { margin-top: 16px; }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    color: #4b5563;
+    padding: 10px 0;
+  }
+  summary:hover { color: #1a1a2e; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    padding: 6px 0;
+    font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .check { color: #059669; font-weight: 700; }
+  .cross { color: #dc2626; font-weight: 700; }
+
+  /* Freshness bar */
+  .freshness {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: #065f46;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .freshness.warning {
+    background: #fffbeb;
+    border-color: #fcd34d;
+    color: #92400e;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; padding: 0; }
+    .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+    .header { background: #1a1a2e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* Driver pill */
+  .driver-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>TX Pacing Daily Read</h1>
+  <div class="subtitle">Loop 1 | First Enforced Run | Rose (L1 Data Agent)</div>
+  <div class="meta">
+    <span>Date: 2026-07-24 (Thursday)</span>
+    <span>Cutoff: Jul 24 (R14 fee-constrained)</span>
+    <span>Status: <span class="badge badge-pending">UNVERIFIED</span></span>
+    <span>Canonical: tx_pacing.md</span>
+  </div>
+</div>
+
+<!-- EXECUTIVE READ -->
+<div class="card">
+  <h2>Executive Read (30 seconds)</h2>
+  <div class="hero-grid">
+    <div class="hero-metric">
+      <div class="label">Q3 Target</div>
+      <div class="value">$670K</div>
+      <div class="detail">Includes Axerrio</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Core + Axerrio to Date</div>
+      <div class="value warning">~$128K</div>
+      <div class="detail">Jul 1-24 | 19.1% of target</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Comparable YoY</div>
+      <div class="value positive">+41.6%</div>
+      <div class="detail">Jul 1-24 2026 vs 2025</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Required YoY</div>
+      <div class="value negative">+54.5%</div>
+      <div class="detail">13pp gap to required rate</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Projected Q3 Landing</div>
+      <div class="value warning">~$613K</div>
+      <div class="detail">At current +41.6% pace</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Feasibility</div>
+      <div class="value warning">STRETCH</div>
+      <div class="detail">$57K gap to close</div>
+    </div>
+  </div>
+
+  <div class="freshness">
+    <strong>FRESHNESS (R14):</strong> Data through Jul 24. Fees drop from $6,143/day (Jul 24) to $855/day (Jul 25) = forward orders only. GMV substantial through Jul 31. Cutoff = MIN(fees, GMV) = Jul 24. Both years use same 24-day window.
+  </div>
+
+  <div class="so-what">
+    <strong>SO WHAT:</strong> At +41.6% YoY, we are growing fast but NOT fast enough for the $670K target (needs +54.5%). At current pace, Q3 lands at ~$613K (92% achievement). The J-shaped Q3 pattern (Jul weak, Sep strong) means most revenue is still ahead. Aug-Sep must sustain ~+60% YoY to close the $57K gap. The surging accounts (Fresca +202%, Rosaprima +462%, Bill Doran +326%) from NEW channel activation are the best shot at acceleration.
+  </div>
+</div>
+
+<!-- CORE vs AXERRIO SPLIT -->
+<div class="two-col">
+  <div class="split-card core">
+    <h3 style="color: #3b82f6;">Core (Snowflake)</h3>
+    <div class="metric-row"><span class="label">Q3 Target (est.)</span><span class="val">~$640K</span></div>
+    <div class="metric-row"><span class="label">Actual to date (Jul 1-24)</span><span class="val">$119,413</span></div>
+    <div class="metric-row"><span class="label">Monthly run rate</span><span class="val">$153,531/mo</span></div>
+    <div class="metric-row"><span class="label">Q3 projected (linear)</span><span class="val">$460,592</span></div>
+    <div class="metric-row"><span class="label">Gap to target</span><span class="val" style="color:#dc2626;">~$179K</span></div>
+    <div class="metric-row"><span class="label">Required Aug+Sep rate</span><span class="val">$260,294/mo</span></div>
+    <div class="metric-row"><span class="label">Status</span><span class="val"><span style="color:#3b82f6;">Billed: $0 | Projected: $119,413</span></span></div>
+  </div>
+  <div class="split-card axerrio">
+    <h3 style="color: #8b5cf6;">Axerrio (External)</h3>
+    <div class="metric-row"><span class="label">Q3 Target (est.)</span><span class="val">~$30K</span></div>
+    <div class="metric-row"><span class="label">Actual to date</span><span class="val" style="color:#d97706;">~$8,866 (est.)</span></div>
+    <div class="metric-row"><span class="label">Monthly run rate</span><span class="val">~$8,866/mo</span></div>
+    <div class="metric-row"><span class="label">Q3 projected</span><span class="val">~$26,598</span></div>
+    <div class="metric-row"><span class="label">Gap to target</span><span class="val" style="color:#d97706;">~$3K</span></div>
+    <div class="metric-row"><span class="label">H1 2026 total (actual)</span><span class="val">$53,195</span></div>
+    <div class="metric-row"><span class="label">Jul status</span><span class="val" style="color:#d97706;">NOT YET UPDATED</span></div>
+    <div class="metric-row"><span class="label">Source</span><span class="val" style="font-size:11px;">Sofia's Control Sheet</span></div>
+  </div>
+</div>
+<div style="margin-bottom: 20px;"></div>
+
+<!-- CHANNEL DECOMPOSITION -->
+<div class="card">
+  <h2>Channel Decomposition</h2>
+
+  <h3>Q3 MTD Fee Share (Jul 1-24, 2026)</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">eCommerce</span>
+      <div class="bar-track">
+        <div class="bar-fill ecom" style="width: 46.2%;">$55.2K</div>
+      </div>
+      <span class="bar-value">46.2% | +41.0% YoY</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">K2K</span>
+      <div class="bar-track">
+        <div class="bar-fill k2k" style="width: 46.3%;">$55.2K</div>
+      </div>
+      <span class="bar-value">46.3% | +42.7% YoY</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">API</span>
+      <div class="bar-track">
+        <div class="bar-fill api" style="width: 5.9%;"></div>
+      </div>
+      <span class="bar-value">5.9% | +20.0% YoY</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">GPS</span>
+      <div class="bar-track">
+        <div class="bar-fill gps" style="width: 1.7%;"></div>
+      </div>
+      <span class="bar-value">1.7% | NEW</span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Channel</th>
+        <th>H1 2026</th>
+        <th>H1 2025</th>
+        <th>H1 YoY</th>
+        <th>Q3 MTD</th>
+        <th>Q3 2025 Comp</th>
+        <th>Q3 YoY</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>eCommerce</strong></td>
+        <td>$651,565</td>
+        <td>$488,279</td>
+        <td class="positive">+33.4%</td>
+        <td>$55,165</td>
+        <td>$39,123</td>
+        <td class="positive">+41.0%</td>
+      </tr>
+      <tr>
+        <td><strong>K2K</strong></td>
+        <td>$589,323</td>
+        <td>$429,485</td>
+        <td class="positive">+37.2%</td>
+        <td>$55,229</td>
+        <td>$38,711</td>
+        <td class="positive">+42.7%</td>
+      </tr>
+      <tr>
+        <td><strong>API</strong></td>
+        <td>$86,704</td>
+        <td>$70,733</td>
+        <td class="positive">+22.6%</td>
+        <td>$6,999</td>
+        <td>$5,833</td>
+        <td class="positive">+20.0%</td>
+      </tr>
+      <tr>
+        <td>FedEx</td>
+        <td>$6,963</td>
+        <td>$7,707</td>
+        <td class="negative">-9.7%</td>
+        <td>$0</td>
+        <td>$688</td>
+        <td class="negative">-100%</td>
+      </tr>
+      <tr>
+        <td>Gross Profit Share</td>
+        <td>$4,424</td>
+        <td>$0</td>
+        <td><span class="badge badge-new">NEW</span></td>
+        <td>$2,019</td>
+        <td>$0</td>
+        <td><span class="badge badge-new">NEW</span></td>
+      </tr>
+      <tr class="total-row">
+        <td><strong>Total (Core)</strong></td>
+        <td><strong>$1,338,978</strong></td>
+        <td><strong>$996,204</strong></td>
+        <td class="positive"><strong>+34.4%</strong></td>
+        <td><strong>$119,413</strong></td>
+        <td><strong>$84,355</strong></td>
+        <td class="positive"><strong>+41.6%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="so-what">
+    <strong>SO WHAT:</strong> K2K and eCommerce are nearly perfectly split (~46% each) and both accelerating vs H1 (+41-43% Q3 YoY vs +33-37% H1 YoY). API lags at +20%. The acceleration in both core channels is encouraging -- growth is broadening, not narrowing. Key question: is the acceleration from more rate increases or actual volume growth? Answer: 76% rate, 24% volume (see decomposition below).
+  </div>
+</div>
+
+<!-- TAKE-RATE DECOMPOSITION -->
+<div class="card">
+  <h2>Take-Rate vs Volume Decomposition</h2>
+
+  <div class="hero-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="hero-metric">
+      <div class="label">Growth from Rate</div>
+      <div class="value" style="color: #8b5cf6;">76%</div>
+      <div class="detail">+$26,542 from take-rate expansion</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Growth from Volume</div>
+      <div class="value" style="color: #3b82f6;">24%</div>
+      <div class="detail">+$8,516 from online GMV growth</div>
+    </div>
+    <div class="hero-metric">
+      <div class="label">Take Rate Q3 MTD</div>
+      <div class="value positive">0.856%</div>
+      <div class="detail">vs 0.666% Q3 2025 (+29 bps)</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Period</th><th>Online GMV</th><th>Core Fees</th><th>Blended Take Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Q3 MTD 2026 (Jul 1-24)</td><td>$14.0M</td><td>$119,413</td><td><strong>0.856%</strong></td></tr>
+      <tr><td>Q3 MTD 2025 (Jul 1-24)</td><td>$12.7M</td><td>$84,355</td><td><strong>0.666%</strong></td></tr>
+      <tr><td>H1 2026</td><td>$154.0M</td><td>$1,327,391</td><td><strong>0.862%</strong></td></tr>
+      <tr><td>H1 2025</td><td>$144.7M</td><td>$996,204</td><td><strong>0.688%</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="so-what">
+    <strong>SO WHAT:</strong> ~76% of fee growth is take-rate expansion, ~24% is volume. Online GMV grew +10.2% YoY but fees grew +41.6% because the blended take rate jumped from 0.67% to 0.86% (+29 bps). Rate increases have a ceiling -- sustainable growth requires moving the $56M offline GMV (Jul 1-24 alone) online. At current take-rate, 5% offline-to-online migration = ~$24K in additional monthly fees.
+  </div>
+</div>
+
+<!-- TOP 15 ACCOUNTS -->
+<div class="card">
+  <h2>Top 15 Accounts by Q3 MTD Fees</h2>
+  <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Top 15 = 64.2% of total fees. Comparable period: Jul 1-24 both years.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Account</th>
+        <th>H1 2026</th>
+        <th>H1 YoY</th>
+        <th>Q3 MTD</th>
+        <th>Q3 YoY</th>
+        <th>Driver</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Sole Farms</strong></td>
+        <td>$126,218</td>
+        <td class="positive">+95.4%</td>
+        <td><strong>$9,433</strong></td>
+        <td class="positive">+70.3%</td>
+        <td><span class="driver-pill">rate + volume</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Kennicott Brothers (KBC)</strong></td>
+        <td>$76,529</td>
+        <td class="positive">+48.4%</td>
+        <td><strong>$9,304</strong></td>
+        <td class="positive">+50.4%</td>
+        <td><span class="driver-pill">rate + new API</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Jet Fresh Flower Dist.</strong></td>
+        <td>$92,653</td>
+        <td class="positive">+56.3%</td>
+        <td><strong>$8,383</strong></td>
+        <td class="positive">+41.8%</td>
+        <td><span class="driver-pill">rate + volume</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr style="background: #f0fdf4;">
+        <td>4</td>
+        <td><strong>Fresca Farms</strong></td>
+        <td>$75,979</td>
+        <td class="positive">+251.2%</td>
+        <td><strong>$6,556</strong></td>
+        <td class="positive">+202.2%</td>
+        <td><span class="driver-pill">new eCom + rate</span></td>
+        <td><span class="badge badge-surging">surging</span></td>
+      </tr>
+      <tr style="background: #f0fdf4;">
+        <td>5</td>
+        <td><strong>Rosaprima International</strong></td>
+        <td>$45,942</td>
+        <td class="positive">+151.9%</td>
+        <td><strong>$6,012</strong></td>
+        <td class="positive">+462.0%</td>
+        <td><span class="driver-pill">new eCom</span></td>
+        <td><span class="badge badge-surging">surging</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Continental Flowers</td>
+        <td>$53,453</td>
+        <td class="positive">+9.7%</td>
+        <td>$5,551</td>
+        <td class="positive">+37.0%</td>
+        <td><span class="driver-pill">rate</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Choice Farms</td>
+        <td>$52,673</td>
+        <td class="positive">+40.4%</td>
+        <td>$5,323</td>
+        <td class="positive">+24.4%</td>
+        <td><span class="driver-pill">volume</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr style="background: #f0fdf4;">
+        <td>8</td>
+        <td><strong>Bill Doran Company</strong></td>
+        <td>$39,738</td>
+        <td class="positive">+331.2%</td>
+        <td><strong>$5,011</strong></td>
+        <td class="positive">+325.9%</td>
+        <td><span class="driver-pill">new K2K + eCom</span></td>
+        <td><span class="badge badge-surging">surging</span></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>FloraLink</td>
+        <td>$55,298</td>
+        <td class="positive">+13.0%</td>
+        <td>$4,375</td>
+        <td class="positive">+28.5%</td>
+        <td><span class="driver-pill">rate</span></td>
+        <td><span class="badge badge-stable">stable</span></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Royal Flowers Inc.</td>
+        <td>$55,549</td>
+        <td class="negative">-3.5%</td>
+        <td>$3,721</td>
+        <td class="positive">+9.8%</td>
+        <td><span class="driver-pill">flat</span></td>
+        <td><span class="badge badge-stable">stable</span></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>Bella Blossom LLC</td>
+        <td>$40,685</td>
+        <td class="positive">+35.9%</td>
+        <td>$3,450</td>
+        <td class="positive">+27.5%</td>
+        <td><span class="driver-pill">rate</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Welyflor / PROFILE FLOWERS</td>
+        <td>$37,316</td>
+        <td class="positive">+58.0%</td>
+        <td>$2,478</td>
+        <td class="positive">+106.1%</td>
+        <td><span class="driver-pill">rate + volume</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Allure Farms</td>
+        <td>$41,966</td>
+        <td class="positive">+53.4%</td>
+        <td>$2,361</td>
+        <td class="positive">+8.2%</td>
+        <td><span class="driver-pill">rate (slowing)</span></td>
+        <td><span class="badge badge-slowing">slowing</span></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>Gala Roses</td>
+        <td>$16,818</td>
+        <td class="positive">+56.7%</td>
+        <td>$2,335</td>
+        <td class="positive">+21.6%</td>
+        <td><span class="driver-pill">rate</span></td>
+        <td><span class="badge badge-growing">growing</span></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>Sunburst Farms</td>
+        <td>$36,352</td>
+        <td class="positive">+15.6%</td>
+        <td>$2,319</td>
+        <td class="positive">+20.9%</td>
+        <td><span class="driver-pill">rate</span></td>
+        <td><span class="badge badge-stable">stable</span></td>
+      </tr>
+      <tr class="total-row">
+        <td></td>
+        <td><strong>Top 15 subtotal</strong></td>
+        <td><strong>$846,168</strong></td>
+        <td></td>
+        <td><strong>$76,613</strong></td>
+        <td class="positive"><strong>+42.3%</strong></td>
+        <td></td>
+        <td><strong>63.2%</strong></td>
+      </tr>
+      <tr class="total-row">
+        <td></td>
+        <td><strong>TOTAL (Core)</strong></td>
+        <td><strong>$1,338,978</strong></td>
+        <td></td>
+        <td><strong>$119,413</strong></td>
+        <td class="positive"><strong>+41.6%</strong></td>
+        <td></td>
+        <td><strong>100%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="so-what">
+    <strong>SO WHAT:</strong> Three accounts surging >200% YoY (Fresca, Rosaprima, Bill Doran) share a common pattern: they activated NEW fee-bearing channels that were $0 in Q3 2025. This is the most durable growth driver -- channel adoption is stickier than rate increases. Allure Farms decelerated from +53% H1 to +8% Q3 -- early signal to monitor. KBC added API fees for the first time ($1,783 Q3 MTD, was $0 in 2025).
+  </div>
+</div>
+
+<!-- MONTHLY TREND -->
+<div class="card">
+  <h2>Monthly Fee Trend (Jan 2025 - Jul 2026)</h2>
+  <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Each month vs same month prior year. NOT flat $223K target. Jul 2026 is partial (cutoff Jul 24).</p>
+
+  <div class="trend-chart">
+    <div class="trend-row">
+      <span class="trend-label">Jan 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 38%;"></div></div>
+      <span class="trend-value">$117K</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">Jan 26</span>
+      <div class="trend-track"><div class="trend-fill y2026" style="width: 47%;"></div></div>
+      <span class="trend-value">$143K (+21.9%)</span>
+    </div>
+    <div style="height: 8px;"></div>
+    <div class="trend-row">
+      <span class="trend-label">Feb 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 54%;"></div></div>
+      <span class="trend-value">$164K</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">Feb 26</span>
+      <div class="trend-track"><div class="trend-fill y2026" style="width: 68%;"></div></div>
+      <span class="trend-value">$209K (+27.9%)</span>
+    </div>
+    <div style="height: 8px;"></div>
+    <div class="trend-row">
+      <span class="trend-label">Mar 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 47%;"></div></div>
+      <span class="trend-value">$143K</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">Mar 26</span>
+      <div class="trend-track"><div class="trend-fill y2026" style="width: 62%;"></div></div>
+      <span class="trend-value">$191K (+33.7%)</span>
+    </div>
+    <div style="height: 8px;"></div>
+    <div class="trend-row">
+      <span class="trend-label">Apr 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 65%;"></div></div>
+      <span class="trend-value">$199K</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">Apr 26</span>
+      <div class="trend-track"><div class="trend-fill y2026" style="width: 95%;"></div></div>
+      <span class="trend-value">$289K (+45.1%)</span>
+    </div>
+    <div style="height: 8px;"></div>
+    <div class="trend-row">
+      <span class="trend-label">May 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 78%;"></div></div>
+      <span class="trend-value">$237K</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">May 26</span>
+      <div class="trend-track"><div class="trend-fill y2026" style="width: 100%;"></div></div>
+      <span class="trend-value">$306K (+28.9%)</span>
+    </div>
+    <div style="height: 8px;"></div>
+    <div class="trend-row">
+      <span class="trend-label">Jun 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 45%;"></div></div>
+      <span class="trend-value">$136K</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">Jun 26</span>
+      <div class="trend-track"><div class="trend-fill y2026" style="width: 66%;"></div></div>
+      <span class="trend-value">$201K (+47.6%)</span>
+    </div>
+    <div style="height: 8px;"></div>
+    <div class="trend-row">
+      <span class="trend-label">Jul 25</span>
+      <div class="trend-track"><div class="trend-fill y2025" style="width: 36%;"></div></div>
+      <span class="trend-value">$110K (full month)</span>
+    </div>
+    <div class="trend-row">
+      <span class="trend-label">Jul 26</span>
+      <div class="trend-track"><div class="trend-fill partial" style="width: 40%;"></div></div>
+      <span class="trend-value">$124K (PARTIAL, thru Jul 24)</span>
+    </div>
+  </div>
+
+  <div class="so-what">
+    <strong>SO WHAT:</strong> YoY growth rate ACCELERATED through H1: +21.9% (Jan) to +47.6% (Jun). Each month's absolute YoY gap got bigger. April ($289K) was peak, driven by Valentine's flower order volume. July is structurally the weakest Q3 month -- Jul 2025 was only $110K vs Sep 2025's $185K. The partial July 2026 ($124K thru 24 days) already exceeds the full July 2025 ($110K).
+  </div>
+</div>
+
+<!-- REQUIRED RUN RATE -->
+<div class="card">
+  <h2>Required Run Rate</h2>
+  <table>
+    <thead>
+      <tr><th>Scenario</th><th>Q3 Target</th><th>To Date</th><th>Remaining</th><th>Monthly Rate Needed</th><th>Current Rate</th><th>Acceleration</th><th>Feasible?</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Core + Axerrio</strong></td>
+        <td>$670K</td>
+        <td>~$128K</td>
+        <td>~$542K</td>
+        <td>$271K/mo</td>
+        <td>$162K/mo</td>
+        <td class="negative">+67%</td>
+        <td><span class="badge badge-stretch">STRETCH</span></td>
+      </tr>
+      <tr>
+        <td><strong>Core only</strong></td>
+        <td>~$640K</td>
+        <td>$119K</td>
+        <td>~$521K</td>
+        <td>$260K/mo</td>
+        <td>$154K/mo</td>
+        <td class="negative">+70%</td>
+        <td><span class="badge badge-stretch">STRETCH</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Q3 Seasonal Shape Projection (if +41.6% YoY holds)</h3>
+  <table>
+    <thead>
+      <tr><th>Month</th><th>Q3 2025</th><th>% of Q3</th><th>Projected 2026 (+41.6%)</th><th>Needed for $670K</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>July</td><td>$110K</td><td>25%</td><td>~$156K</td><td>$167K</td></tr>
+      <tr><td>August</td><td>$139K</td><td>32%</td><td>~$197K</td><td>$214K</td></tr>
+      <tr><td>September</td><td>$185K</td><td>43%</td><td>~$261K</td><td>$289K</td></tr>
+      <tr class="total-row"><td><strong>Q3 Total</strong></td><td><strong>$434K</strong></td><td></td><td><strong>~$613K</strong></td><td><strong>$670K</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="so-what">
+    <strong>SO WHAT:</strong> At current +41.6% YoY, Q3 lands at ~$613K -- $57K short (92% of target). To close the gap, Aug+Sep must average ~+60% YoY. The J-shaped pattern means September carries 43% of Q3 revenue. If September alone hits +56% YoY ($289K), combined with current trajectory for Jul+Aug, we reach $670K. The $57K gap is surmountable but requires acceleration above H1 rates.
+  </div>
+</div>
+
+<!-- PROVENANCE (collapsible) -->
+<div class="card">
+  <h2>Provenance & Verification</h2>
+  <details>
+    <summary>Expand Full Provenance Table (10 queries)</summary>
+    <table style="margin-top: 12px;">
+      <thead>
+        <tr><th>Query</th><th>Table</th><th>Period</th><th>Filters</th><th>Rules</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Q01 Freshness</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>Jul 2026 daily</td><td>ks_flag=TRUE</td><td>R1, R3, R8, R14</td></tr>
+        <tr><td>Q02 Q3 MTD</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>Jul 1-24, 2026 + 2025</td><td>ks_flag=TRUE</td><td>R1, R2, R8, R9, R10, R14</td></tr>
+        <tr><td>Q03 Channel</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>H1 2025, H1 2026, Q3 MTD</td><td>ks_flag=TRUE, by fee_channel</td><td>R1, R2, R8, R9, R13</td></tr>
+        <tr><td>Q04 Monthly Trend</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>Jan 2025 - Jul 2026</td><td>ks_flag=TRUE, by month</td><td>R1, R2, R3, R8, R9</td></tr>
+        <tr><td>Q05 Top 15</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>H1 + Q3 MTD, both years</td><td>ks_flag=TRUE, by company</td><td>R1, R2, R8, R9</td></tr>
+        <tr><td>Q06 Q3 2025</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>Jul-Sep 2025</td><td>ks_flag=TRUE, status=Billed</td><td>R1, R2, R8, R9</td></tr>
+        <tr><td>Q07 GMV Channel</td><td>SALES_SV</td><td>H1 + Q3 MTD, both years</td><td>ks_flag=TRUE, sales&lt;100K</td><td>R1, R4, R5, R8, R9</td></tr>
+        <tr><td>Q08 GMV Monthly</td><td>SALES_SV</td><td>Jan 2025 - Jul 2026</td><td>ks_flag=TRUE, sales&lt;100K</td><td>R1, R4, R8, R9</td></tr>
+        <tr><td>Q09 Axerrio</td><td>Google Sheet (Sofia)</td><td>Jan-Jun 2026</td><td>EUR+USD totals</td><td>R10</td></tr>
+        <tr><td>Q10 Account Detail</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>Q3 MTD, 6 companies</td><td>ks_flag=TRUE, by company+channel</td><td>R1, R2, R8, R9, R11</td></tr>
+      </tbody>
+    </table>
+  </details>
+
+  <details>
+    <summary>Expand PARA CODEX Checklist</summary>
+    <ul class="checklist" style="margin-top: 12px;">
+      <li><span class="check">&#10003;</span> Executive read present with target/actual/gap/movement/SO WHAT</li>
+      <li><span class="check">&#10003;</span> Core vs Axerrio split shown (never compare Snowflake-only to full target)</li>
+      <li><span class="check">&#10003;</span> Channel decomposition present with YoY and Q3 MTD</li>
+      <li><span class="check">&#10003;</span> Take-rate vs volume decomposition present</li>
+      <li><span class="check">&#10003;</span> Top 15 accounts present with driver labels (not just listed)</li>
+      <li><span class="check">&#10003;</span> >5% variance audit present (first run -- no prior comparable)</li>
+      <li><span class="check">&#10003;</span> Monthly trend present (seasonal context, not flat target)</li>
+      <li><span class="check">&#10003;</span> Weekly Fee Pulse present (Thursday run)</li>
+      <li><span class="check">&#10003;</span> Provenance table present with table/period/filters/rows/rules</li>
+      <li><span class="check">&#10003;</span> Freshness/cutoff date explicit (R14) in Executive Read</li>
+    </ul>
+
+    <h3 style="margin-top: 16px;">Key Claims to Verify</h3>
+    <ul class="checklist">
+      <li><span class="check">&#8226;</span> H1 2026 Billed Core = $1,327,391 (matches canonical)</li>
+      <li><span class="check">&#8226;</span> Q3 MTD Core (Jul 1-24) = $119,413 (Projected status)</li>
+      <li><span class="check">&#8226;</span> Q3 2025 comparable (Jul 1-24) = $84,355</li>
+      <li><span class="check">&#8226;</span> YoY Q3 comparable = +41.6%</li>
+      <li><span class="check">&#8226;</span> H1 Axerrio USD = ~$53,195 (6 months from Sofia sheet)</li>
+      <li><span class="check">&#8226;</span> Take rate Q3 MTD = 0.856% ($119.4K / $14.0M online GMV)</li>
+      <li><span class="check">&#8226;</span> Fresca +202%, Rosaprima +462%, Bill Doran +326% YoY Q3</li>
+    </ul>
+
+    <h3 style="margin-top: 16px;">Known Gaps</h3>
+    <ul class="checklist">
+      <li><span class="cross">&#10007;</span> Axerrio Jul 2026: NOT YET updated in Sofia's sheet. Used H1 avg ($8,866/mo) as estimate.</li>
+      <li><span class="cross">&#10007;</span> Axerrio Q3 2025: NOT available. Cannot compute Axerrio YoY for precise total pacing.</li>
+      <li><span class="cross">&#10007;</span> EXPECTED_TRANSACTION_FEES_SV lacks ks_flag. Minimal impact (demo companies have negligible fees).</li>
+    </ul>
+  </details>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align: center; padding: 20px; font-size: 11px; color: #9ca3af;">
+  Rose (L1 Data Agent) | Koronet Revenue OS | Loop 1 TX Pacing | First Enforced Run<br>
+  Status: UNVERIFIED (pending Codex) | Template v1.0 | Canonical: ops/canonical/tx_pacing.md
+</div>
+
+</div>
+</body>
+</html>
