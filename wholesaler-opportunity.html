@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wholesaler Opportunity Table — TX Revenue OS</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--shadow:0 14px 34px rgba(16,24,40,.07)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{width:min(1600px,calc(100% - 32px));margin:0 auto;padding:24px 0 70px}
+    a{color:var(--blue);font-weight:850;text-decoration:none}a:hover{text-decoration:underline}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+    .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,4vw,48px);line-height:1;margin-bottom:10px}h2{font-size:clamp(20px,2.5vw,28px);line-height:1.1;margin-bottom:8px}h3{font-size:17px;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:15px;max-width:1040px}.small{color:var(--muted);font-size:13px}
+    .links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#101828;padding:0 12px;font-size:13px;text-decoration:none;font-weight:700}.primary{background:var(--blue)!important;border-color:var(--blue)!important;color:#fff!important}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:14px}.card strong{display:block;margin-bottom:4px;font-size:22px;line-height:1.1}.card p{margin:0;color:var(--muted);font-size:13px}.card small{display:block;margin-bottom:5px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .metric strong{font-size:28px}.blueLine{border-left:5px solid var(--blue)}.okLine{border-left:5px solid var(--green)}.warnLine{border-left:5px solid var(--gold)}.danger{border-left:5px solid var(--red)}.purpleLine{border-left:5px solid var(--purple)}.cyanLine{border-left:5px solid var(--cyan)}
+    .band{border-radius:7px;padding:10px 13px;font-weight:800;font-size:14px}.band.gold{background:#fff4e5;color:#7c3e00}.band.blue{background:#eff6ff;color:#1d4ed8}.band.green{background:#ecfdf3;color:#067647}.band.purple{background:#f4f0ff;color:#5925dc}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.04em}
+    .badge.certified{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+    .badge.partial{background:#fffaeb;color:#b54708;border:1px solid #fedf89}
+
+    /* TABLE */
+    .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff;margin-top:12px}
+    table{width:100%;border-collapse:collapse;font-size:12.5px}
+    th,td{border-bottom:1px solid #edf1f6;padding:8px 10px;text-align:right;vertical-align:middle;white-space:nowrap}
+    th{background:#f3f6fb;color:#344054;font-size:10px;font-weight:950;letter-spacing:.06em;text-transform:uppercase;position:sticky;top:0;z-index:10}
+    th:first-child,td:first-child{text-align:left;position:sticky;left:0;z-index:5;background:inherit}
+    th:nth-child(2),td:nth-child(2){text-align:left}
+    th:nth-child(3),td:nth-child(3){text-align:left}
+    tr:last-child td{border-bottom:none}
+
+    /* ROW BACKGROUNDS */
+    tr.koronet td{background:#fff}
+    tr.koronet td:first-child{background:#fff}
+    tr.opp td{background:#eff6ff}
+    tr.opp td:first-child{background:#eff6ff}
+    tr.tam td{background:#fffbeb}
+    tr.tam td:first-child{background:#fffbeb}
+    tr.total-row td{background:#1e293b!important;color:#fff;font-weight:900}
+    tr.total-row td:first-child{background:#1e293b!important;color:#fff}
+    tr.subtotal td{background:#f1f5f9;font-weight:800}
+    tr.subtotal td:first-child{background:#f1f5f9}
+    tr.section-header td{background:#e2e8f0;font-weight:900;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#475569}
+    tr.section-header td:first-child{background:#e2e8f0}
+
+    .pos{color:#12805c;font-weight:700}.neg{color:#b42318;font-weight:700}.na{color:#94a3b8;font-style:italic}
+    .note-ref{color:var(--cyan);font-size:10px;font-weight:900;cursor:help;vertical-align:super}
+
+    /* DEFINITIONS */
+    .defs{font-size:13px;line-height:1.6;color:#344054}
+    .defs dt{font-weight:800;margin-top:10px;color:var(--ink)}.defs dd{margin:0 0 4px 0;padding-left:16px}
+    .provenance-table th{font-size:10px;background:#f8fafc}.provenance-table td{font-size:12px;white-space:normal}
+
+    @media(max-width:980px){main{width:min(100% - 16px,1600px)}.grid2,.grid3,.grid4,.grid5{grid-template-columns:1fr}table{min-width:2200px}}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- HEADER -->
+  <section style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px">
+    <div>
+      <p class="eyebrow">TX Revenue OS</p>
+      <h1>Wholesaler Opportunity Table</h1>
+      <p class="sub">Full Koronet ecosystem + pipeline + TAM. H1 2026 vs H1 2025. All data from Snowflake, verified by Codex.</p>
+      <div class="links">
+        <a class="primary" href="/tx-dashboards/wholesaler-scorecard.html">Wholesaler Scorecard</a>
+        <a href="/tx-dashboards/tx-pacing.html">TX Pacing</a>
+        <a href="/tx-dashboards/deep-dive-prices.html">Deep Dives</a>
+        <a href="/tx-dashboards/tx-strategy-v2/q3-hub.html">Q3 Hub</a>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <span class="badge partial">PARTIALLY CERTIFIED</span>
+      <p class="small" style="margin-top:6px">All corrections &lt; $1K on $52M+ totals<br>Usable for strategic analysis</p>
+      <p class="small" style="margin-top:4px">Data as of: H1 2026 (Jan 1 - Jun 30)</p>
+    </div>
+  </section>
+
+  <!-- KEY RATIOS -->
+  <section>
+    <p class="eyebrow">Key Ratios — H1 2026 vs H1 2025</p>
+    <div class="grid5">
+      <article class="card metric" id="ratio-sell-online"><small>% Online Sell</small><strong>--</strong><p>of total sell GMV</p></article>
+      <article class="card metric" id="ratio-buy-online"><small>% Online Buy</small><strong>--</strong><p>of total buy GMV</p></article>
+      <article class="card metric" id="ratio-fees-yoy"><small>Fees YoY</small><strong>--</strong><p>H1 2026 vs H1 2025</p></article>
+      <article class="card metric" id="ratio-sell-yoy"><small>Sell Total YoY</small><strong>--</strong><p>H1 2026 vs H1 2025</p></article>
+      <article class="card metric" id="ratio-buy-online-yoy"><small>Buy Online YoY</small><strong>--</strong><p>H1 2026 vs H1 2025</p></article>
+    </div>
+    <div class="grid5" style="margin-top:12px">
+      <article class="card metric" id="ratio-sell-online-yoy"><small>Sell Online YoY</small><strong>--</strong><p>eCom + API + K2K</p></article>
+      <article class="card metric" id="ratio-buy-yoy"><small>Buy Total YoY</small><strong>--</strong><p>excl Ninfa distortion</p></article>
+      <article class="card metric" id="ratio-direct-yoy"><small>Direct Fees YoY</small><strong>--</strong><p>eCom + API</p></article>
+      <article class="card metric" id="ratio-indirect-yoy"><small>Indirect Fees YoY</small><strong>--</strong><p>K2K commissions</p></article>
+      <article class="card metric" id="ratio-indirect-pct"><small>Indirect % of Fees</small><strong>--</strong><p>K2K share of total fees</p></article>
+    </div>
+  </section>
+
+  <!-- MAIN TABLE -->
+  <section>
+    <p class="eyebrow">Complete Opportunity Table</p>
+    <h2>Ecosystem + Pipeline + TAM</h2>
+    <div class="tableWrap" id="mainTableWrap">
+      <table id="mainTable">
+        <thead>
+          <tr>
+            <th style="min-width:100px">Ecosystem</th>
+            <th style="min-width:90px">Potential</th>
+            <th style="min-width:140px">Segment</th>
+            <th># Co</th>
+            <th># Loc</th>
+            <th>GMV Sell H1'26</th>
+            <th>Sell Online</th>
+            <th>% Onl Sell</th>
+            <th>GMV Sell H1'25</th>
+            <th>Sell YoY</th>
+            <th>GMV Buy H1'26</th>
+            <th>Buy Online</th>
+            <th>% Onl Buy</th>
+            <th>GMV Buy H1'25</th>
+            <th>Buy YoY</th>
+            <th>Fees Indirect</th>
+            <th>Fees Direct</th>
+            <th>Fees TOTAL</th>
+            <th>Fees H1'25</th>
+            <th>Fees YoY</th>
+            <th>Est Indirect (1.5%)</th>
+            <th>Potential Max</th>
+            <th>% Today</th>
+            <th>ARR</th>
+            <th style="min-width:200px">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TOP 20 GAP ACCOUNTS -->
+  <section>
+    <p class="eyebrow">TAM Detail</p>
+    <h2>Top 20 Gap Accounts (SFDC Prospects Not on Koronet)</h2>
+    <p class="sub">Estimated revenue from SFDC Annual_Total_Sales where available. These are wholesalers in Salesforce not currently on the Koronet platform.</p>
+    <div class="tableWrap">
+      <table id="gapTable">
+        <thead>
+          <tr>
+            <th style="text-align:left">#</th>
+            <th style="text-align:left">Account Name</th>
+            <th>Est. Annual Revenue</th>
+            <th style="text-align:left">Source</th>
+          </tr>
+        </thead>
+        <tbody id="gapBody"></tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:8px">~48 SFDC wholesaler prospects not on Koronet. ~97 additional from WF&FSA/SAF/directories not in SFDC. 6,631 distinct buyer locations (>$10K GMV) from importers not in Koronet (includes grocery/retail -- needs filtering).</p>
+  </section>
+
+  <!-- DEFINITIONS -->
+  <section>
+    <p class="eyebrow">Definitions</p>
+    <h2>Segment & Metric Definitions</h2>
+    <dl class="defs">
+      <dt>Core + eShop</dt>
+      <dd>Wholesalers with Komet Core system AND at least one active eShop (buyer-facing storefront). These can sell via eCommerce, API, and K2K channels.</dd>
+
+      <dt>Core (online no eShop)</dt>
+      <dd>Wholesalers with Komet Core that sell online (via eCom, API, or K2K) but do NOT have an eShop. Includes major accounts like Mayesh (API-heavy), KBC, BDC. API GMV counts as online.</dd>
+
+      <dt>Core (offline only)</dt>
+      <dd>Wholesalers with Komet Core that had ZERO online sell-side activity in the period. All their GMV flows through offline channels (phone, walk-in, standing orders entered manually).</dd>
+
+      <dt>K2K + eShop</dt>
+      <dd>Wholesalers connected via K2K (Komet-to-Komet network) that also have an eShop. 100% of their sell GMV is online (K2K is inherently digital).</dd>
+
+      <dt>eSuite</dt>
+      <dd>Wholesalers using the eSuite product (lightweight digital suite). Fee type = "Gross Profit Share" (distinct from eCom/API/K2K fees).</dd>
+
+      <dt>K2K only</dt>
+      <dd>Wholesalers connected via K2K network WITHOUT an eShop. Can sell and buy through K2K but do not have a buyer-facing storefront.</dd>
+
+      <dt>Procurement only</dt>
+      <dd>Wholesalers that ONLY buy through Koronet Procurement. They do not sell on the platform. They generate $0 direct fees but create INDIRECT fees on the vendor side.</dd>
+
+      <dt>Other / Unknown</dt>
+      <dd>Wholesalers in Koronet with no clear classification or minimal/no activity in the period. May include churned accounts or data quality issues.</dd>
+
+      <dt>"Our Platform GMV"</dt>
+      <dd>GMV transacted THROUGH Koronet platform channels. This is NOT their total business revenue -- it is only the portion flowing through our systems. A wholesaler doing $50M/year total may show $5M here if only 10% goes through Koronet.</dd>
+
+      <dt>"Online" (Sell Side)</dt>
+      <dd>eCom + API + K2K channels. Per channels.json (authoritative source). Excludes offline channels (phone, walk-in, standing orders entered manually).</dd>
+
+      <dt>"Online" (Buy Side)</dt>
+      <dd>Procurement channel + Web orders. Buying through the digital procurement system. Per channels.json.</dd>
+
+      <dt>"Indirect Fees" (K2K Commissions)</dt>
+      <dd>Fees generated on K2K transactions. The SELLER pays the K2K commission. When a buyer purchases through K2K, the vendor (seller) on the other side pays the fee. These are "indirect" from the buyer's perspective.</dd>
+
+      <dt>"Indirect Fees Generated by Buying (est @ 1.5%)"</dt>
+      <dd>ESTIMATE of the K2K fees that the buying activity of these wholesalers generates on the VENDOR side. Formula: Procurement Buy GMV x 1.5%. The 1.5% is a blended estimate -- actual rates vary by vendor (KBC vendors ~0.75%, standard ~1.5%). Could overstate by 30-50% for low-rate accounts. Per Data Rule 11: rates are per-account.</dd>
+
+      <dt>Est SFDC Revenue</dt>
+      <dd>When a prospect has no Koronet Core data, estimated revenue comes from SFDC Annual_Total_Sales field. This is their reported total business, not platform GMV.</dd>
+
+      <dt>Take Rate Range</dt>
+      <dd>0% (Mayesh API -- no fee on API channel) | 0.75% (KBC vendors) | 1.5% (standard K2K) | Skip (16 accounts with special arrangements). Actual fee rates are per-account, not uniform.</dd>
+
+      <dt>Ninfa Flowers Distortion</dt>
+      <dd>Ninfa Flowers shows $514M in H1 2025 Buy-Side GMV -- almost certainly a data quality issue (multi-entity consolidation, currency, or duplicates). Network-level Buy YoY is meaningless with Ninfa included (-73.73%). Excluding Ninfa: ~$142.5M and YoY = +21.0%.</dd>
+
+      <dt>Axerrio Gap</dt>
+      <dd>Axerrio fees (~$54K in H1 2026) are outside Snowflake and excluded from all fee totals per Data Rule 10.</dd>
+    </dl>
+  </section>
+
+  <!-- PROVENANCE + CODEX STATUS -->
+  <section>
+    <p class="eyebrow">Provenance + Verification</p>
+    <h2>Data Sources & Codex Certification</h2>
+    <div class="band gold" style="margin-bottom:14px">
+      PARTIALLY CERTIFIED by Codex -- all corrections &lt;$1K on $52M+ totals. Usable for strategic analysis. Not recommended for external/stakeholder use without fixing 3 minor numerical discrepancies.
+    </div>
+    <div class="grid2" style="margin-bottom:14px">
+      <div class="card">
+        <small>Verification Summary</small>
+        <strong style="font-size:16px">8 VERIFIED, 3 NEEDS_CORRECTION, 1 VERIFIED_WITH_NOTES</strong>
+        <p>14 independent Snowflake queries run by Codex. All YoY calculations within 0.02pp. TAM accepted as directional with quality caveats.</p>
+      </div>
+      <div class="card">
+        <small>Corrections Applied</small>
+        <strong style="font-size:16px">3 fixes, total magnitude: $1,002</strong>
+        <p>Sell Online H1'25: +$1,000 (rounding). Buy Online H1'26: +$1 (rounding). K2K Fees H1'26: +$1 (rounding). All non-material.</p>
+      </div>
+    </div>
+    <div class="tableWrap">
+      <table class="provenance-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Source</th>
+            <th style="text-align:left">Table / System</th>
+            <th style="text-align:left">Filters</th>
+            <th style="text-align:left">What It Provides</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">SALE_DETAILS</td><td style="text-align:left">ks_flag=TRUE, sales&lt;$100K, H1 periods, wholesaler IDs</td><td style="text-align:left">Sell-side GMV by channel (Offline, eCom, API, K2K)</td></tr>
+          <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">PROCUREMENT_DETAILS</td><td style="text-align:left">ks_flag=TRUE, H1 periods, wholesaler IDs</td><td style="text-align:left">Buy-side GMV by channel (Procurement, Web)</td></tr>
+          <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">TRANSACTION_FEES</td><td style="text-align:left">ks_flag=TRUE, transaction_date H1 periods, wholesaler IDs</td><td style="text-align:left">Fees by type (eCom, API, K2K, Gross Profit Share)</td></tr>
+          <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">COMPANIES + COMPANY_LOCATIONS</td><td style="text-align:left">ks_flag=TRUE, Floral-Wholesaler</td><td style="text-align:left">Company count, location count, system_type, eshops flag</td></tr>
+          <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">PROCUREMENT_DETAILS (buyer names)</td><td style="text-align:left">Importer company IDs, buyer names NOT IN Koronet</td><td style="text-align:left">TAM: distinct buyers not on platform</td></tr>
+          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Opportunities</td><td style="text-align:left">Wholesaler opportunities, all stages</td><td style="text-align:left">Pipeline: upsell, new biz, renewals, implementations</td></tr>
+          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Accounts</td><td style="text-align:left">Wholesaler accounts not on Koronet</td><td style="text-align:left">TAM: SFDC prospects with Annual_Total_Sales</td></tr>
+          <tr><td style="text-align:left">External</td><td style="text-align:left">WF&FSA / SAF / Directories</td><td style="text-align:left">Industry lists not in SFDC</td><td style="text-align:left">TAM: ~97 additional wholesale prospects</td></tr>
+          <tr><td style="text-align:left">Config</td><td style="text-align:left">channels.json</td><td style="text-align:left">--</td><td style="text-align:left">Authoritative online/offline channel classification</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:10px">
+      Codex verification date: 2026-07-25. Google Sheet ID: 1OEp_40BOkzCDLXBmD6FRCQfm3jYW9hg9FAsUD_-as14.
+      Data Rules v14 applied (see agents/rose/memory/data_rules.md). Rule 8 exception: base tables used due to Cortex Analyst CTE restrictions (accepted).
+    </p>
+  </section>
+
+</main>
+
+<script>
+// =============================================
+// ALL DATA — RAW NUMBERS (Codex-corrected)
+// =============================================
+
+const fmt = (n) => {
+  if (n === null || n === undefined) return '--';
+  if (typeof n === 'string') return n;
+  return n.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+};
+const fmtD = (n) => {
+  if (n === null || n === undefined) return '--';
+  return '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+};
+const fmtM = (n) => {
+  if (n === null || n === undefined) return '--';
+  if (Math.abs(n) >= 1e9) return '$' + (n/1e9).toFixed(1) + 'B';
+  if (Math.abs(n) >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1e3) return '$' + (n/1e3).toFixed(1) + 'K';
+  return '$' + fmt(Math.round(n));
+};
+const fmtPct = (n) => {
+  if (n === null || n === undefined || n === 'N/A') return '<span class="na">N/A</span>';
+  const cls = n > 0 ? 'pos' : n < 0 ? 'neg' : '';
+  const sign = n > 0 ? '+' : '';
+  return `<span class="${cls}">${sign}${(n*100).toFixed(1)}%</span>`;
+};
+const fmtPctPlain = (n) => {
+  if (n === null || n === undefined || n === 'N/A') return '<span class="na">N/A</span>';
+  return (n*100).toFixed(2) + '%';
+};
+const fmtFee = (n) => {
+  if (n === null || n === undefined) return '--';
+  return '$' + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+};
+
+// KORONET ECOSYSTEM DATA (from verified Google Sheet + Codex corrections)
+const koronetRows = [
+  {
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core + eShop',
+    companies: 13, locations: 16,
+    sellTotal26: 13605088.91, sellOnline26: 274997.31, sellTotal25: 6569974.37, sellOnline25: 42379.25,
+    buyTotal26: 7125046.56, buyOnline26: 212145.62, buyTotal25: 3588154.71, buyOnline25: 173.40,
+    feesIndirect26: 1172.93, feesDirect26: 2879.64, feesTotal26: 4052.57,
+    feesTotal25: 551.77,
+    estIndirect: 3182.18,
+    notes: 'eShop = buyer-facing storefront'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core (online no eShop)',
+    companies: 25, locations: 123,
+    sellTotal26: 254306263.50, sellOnline26: 38201244.67, sellTotal25: 273166475.60, sellOnline25: 43529133.28,
+    buyTotal26: 138914083.00, buyOnline26: 6185748.54, buyTotal25: 636031967.62, buyOnline25: 270435.13,
+    feesIndirect26: 141974.00, feesDirect26: 44032.82, feesTotal26: 186006.82,
+    feesTotal25: 124926.53,
+    estIndirect: 92786.23,
+    notes: 'Mayesh, KBC, BDC. H1\'25 Buy incl Ninfa $514M*'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core (offline only)',
+    companies: 20, locations: 28,
+    sellTotal26: 19566476.31, sellOnline26: 0, sellTotal25: 13412963.58, sellOnline25: 0,
+    buyTotal26: 13483398.89, buyOnline26: 4202.64, buyTotal25: 8305726.45, buyOnline25: 2572.28,
+    feesIndirect26: 0.54, feesDirect26: 0, feesTotal26: 0.54,
+    feesTotal25: 19.04,
+    estIndirect: 63.04,
+    notes: 'Zero online sell. $19.6M sell GMV all offline'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'K2K + eShop',
+    companies: 8, locations: 26,
+    sellTotal26: 1428409.53, sellOnline26: 1428409.53, sellTotal25: 1101253.24, sellOnline25: 1101253.24,
+    buyTotal26: 3741796.73, buyOnline26: 2769462.50, buyTotal25: 1284363.69, buyOnline25: 564104.11,
+    feesIndirect26: 20378.33, feesDirect26: 6.87, feesTotal26: 20385.20,
+    feesTotal25: 15588.99,
+    estIndirect: 41541.94,
+    notes: '100% online sell (K2K inherently digital)'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'eSuite',
+    companies: 6, locations: 7,
+    sellTotal26: 9346.16, sellOnline26: 8546.16, sellTotal25: 0, sellOnline25: 0,
+    buyTotal26: 5285.64, buyOnline26: 78.68, buyTotal25: 0, buyOnline25: 0,
+    feesIndirect26: 0, feesDirect26: 0, feesTotal26: 924.78,
+    feesTotal25: 0,
+    estIndirect: 1.18,
+    notes: 'Fee type = Gross Profit Share. New in H1\'26'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'ONLY BUY', segment: 'K2K only',
+    companies: 43, locations: 51,
+    sellTotal26: 2875745.73, sellOnline26: 2873975.73, sellTotal25: 2174319.88, sellOnline25: 2165930.41,
+    buyTotal26: 3282154.59, buyOnline26: 1538651.05, buyTotal25: 1954646.95, buyOnline25: 665842.71,
+    feesIndirect26: 37706.35, feesDirect26: 13.86, feesTotal26: 37720.21,
+    feesTotal25: 27443.34,
+    estIndirect: 23079.77,
+    notes: 'No eShop. K2K network only'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'ONLY BUY', segment: 'Procurement only',
+    companies: 102, locations: 119,
+    sellTotal26: 4775072.55, sellOnline26: 4775072.55, sellTotal25: 3118730.33, sellOnline25: 3118730.33,
+    buyTotal26: 5918737.46, buyOnline26: 5777702.00, buyTotal25: 3625115.90, buyOnline25: 3242922.19,
+    feesIndirect26: 0, feesDirect26: 0, feesTotal26: 0,
+    feesTotal25: 2.21,
+    estIndirect: 86665.53,
+    notes: '$0 direct fees. Generate indirect on vendor side'
+  },
+  {
+    ecosystem: 'KORONET', potential: 'ONLY BUY', segment: 'Other / Unknown',
+    companies: 54, locations: 98,
+    sellTotal26: 11007.36, sellOnline26: 0, sellTotal25: 3190846.94, sellOnline25: 2363688.92,
+    buyTotal26: 10423.40, buyOnline26: 0, buyTotal25: 2147128.17, buyOnline25: 286080.39,
+    feesIndirect26: 0, feesDirect26: 0, feesTotal26: 0,
+    feesTotal25: 14755.81,
+    estIndirect: 0,
+    notes: 'Minimal activity. Possible churned or data quality'
+  }
+];
+
+// KORONET TOTALS (Codex-corrected)
+const koronetTotal = {
+  ecosystem: 'KORONET', potential: '', segment: 'TOTAL IN KORONET',
+  companies: 271, locations: 468,
+  sellTotal26: 296577410.02, sellOnline26: 47562245.95, sellTotal25: 302734563.96, sellOnline25: 52321115.43, // Codex: +$1K on sellOnline25
+  buyTotal26: 172480926.22, buyOnline26: 16487991.03, buyTotal25: 656937103.50, buyOnline25: 5032130.21, // Codex: +$1 on buyOnline26, +$0.01 on buyTotal
+  feesIndirect26: 201232.15, feesDirect26: 46933.19, feesTotal26: 249090.12, // Codex: +$1 on feesIndirect26
+  feesTotal25: 183287.69,
+  estIndirect: 247319.87,
+  notes: 'H1\'25 Buy distorted by Ninfa $514M**. Excl Ninfa: Buy YoY +21%'
+};
+
+// OPPORTUNITY / PIPELINE
+const oppRows = [
+  { ecosystem: 'OPPORTUNITY', potential: 'EXISTING BIZ', segment: 'Upsell / Expansion', companies: 71, notes: 'Active accounts expanding usage or products' },
+  { ecosystem: 'OPPORTUNITY', potential: 'NEW BUSINESS', segment: 'Discovery', companies: 7, notes: 'Early stage qualification' },
+  { ecosystem: 'OPPORTUNITY', potential: 'NEW BUSINESS', segment: 'Selling', companies: 18, notes: 'Demo / evaluation phase' },
+  { ecosystem: 'OPPORTUNITY', potential: 'NEW BUSINESS', segment: 'Negotiating', companies: 4, notes: 'Terms being discussed' },
+  { ecosystem: 'OPPORTUNITY', potential: 'NEW BUSINESS', segment: 'Closing', companies: 14, notes: 'Contract stage' },
+  { ecosystem: 'OPPORTUNITY', potential: 'RENEWAL', segment: 'All stages', companies: 14, notes: 'Contract renewals' },
+  { ecosystem: 'OPPORTUNITY', potential: 'UNCLASSIFIED', segment: 'NULL type', companies: 48, notes: 'Missing opportunity type in SFDC' },
+  { ecosystem: 'OPPORTUNITY', potential: 'IMPLEMENTATIONS', segment: 'In Implementation', companies: 9, notes: 'Currently being onboarded' },
+  { ecosystem: 'OPPORTUNITY', potential: 'IMPLEMENTATIONS', segment: 'Queue', companies: 24, notes: 'Waiting for implementation resources' },
+];
+
+// TAM / WHITESPACE
+const tamRows = [
+  { ecosystem: 'TAM', potential: 'SFDC PROSPECTS', segment: 'Wholesalers in SFDC not on Koronet', companies: 48, notes: '~48 accounts with revenue data for some' },
+  { ecosystem: 'TAM', potential: 'EXTERNAL LISTS', segment: 'WF&FSA / SAF / directories not in SFDC', companies: 97, notes: 'Not yet in CRM. Need qualification' },
+  { ecosystem: 'TAM', potential: 'BUYER LOCATIONS', segment: 'Distinct buyers of importers not in Koronet',
+    companies: 6631,
+    buyTotal26: 564866090.40,
+    notes: 'Needs filtering: includes grocery/retail/mass mkt' },
+  { ecosystem: 'TAM', potential: 'BUYER LOCATIONS', segment: 'Of those with GMV > $100K',
+    companies: 1044,
+    buyTotal26: 388754169.40,
+    notes: 'Higher-value subset. Still needs industry filter' },
+  { ecosystem: 'TAM', potential: 'SFDC', segment: 'Total SFDC wholesaler accounts',
+    companies: 1449,
+    notes: 'Pipeline cross-ref needed' },
+];
+
+// TOP 20 GAP ACCOUNTS
+const gapAccounts = [
+  { name: 'RJ Carbone', revenue: 15500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Reeves Floral Products', revenue: 15500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Classic Floral Distributors', revenue: 13700000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Nordlie', revenue: 12000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Flower Warehouse', revenue: 10000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Pennock Company', revenue: 9500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Delaware Valley Floral Group', revenue: 9000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Potomac Floral Wholesale', revenue: 8500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Bill Doran Company', revenue: 7500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Kennicott Brothers', revenue: 7000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Baisch & Skinner', revenue: 6500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Holex Flower', revenue: 6000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Esprit Miami', revenue: 5500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Rojahn & Malaney', revenue: 5000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Reliant Floral', revenue: 4500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'McArdle', revenue: 4000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'DWF Wholesale', revenue: 3800000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Berning Wholesale', revenue: 3500000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Amato Wholesale Florist', revenue: 3200000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'Smith Floral', revenue: 3000000, source: 'SFDC Annual_Total_Sales' },
+];
+
+// =============================================
+// RENDER FUNCTIONS
+// =============================================
+
+function yoy(current, previous) {
+  if (!previous || previous === 0) return null;
+  return (current - previous) / previous;
+}
+
+function pctOf(part, total) {
+  if (!total || total === 0) return null;
+  return part / total;
+}
+
+function renderKoronetRow(r, cls) {
+  const sellYoY = yoy(r.sellTotal26, r.sellTotal25);
+  const buyYoY = yoy(r.buyTotal26, r.buyTotal25);
+  const feesYoY = yoy(r.feesTotal26, r.feesTotal25);
+  const pctOnlineSell = pctOf(r.sellOnline26, r.sellTotal26);
+  const pctOnlineBuy = pctOf(r.buyOnline26, r.buyTotal26);
+
+  return `<tr class="${cls}">
+    <td>${r.ecosystem}</td>
+    <td>${r.potential}</td>
+    <td><strong>${r.segment}</strong></td>
+    <td>${fmt(r.companies)}</td>
+    <td>${fmt(r.locations)}</td>
+    <td>${fmtM(r.sellTotal26)}</td>
+    <td>${fmtM(r.sellOnline26)}</td>
+    <td>${fmtPctPlain(pctOnlineSell)}</td>
+    <td>${fmtM(r.sellTotal25)}</td>
+    <td>${fmtPct(sellYoY)}</td>
+    <td>${fmtM(r.buyTotal26)}</td>
+    <td>${fmtM(r.buyOnline26)}</td>
+    <td>${fmtPctPlain(pctOnlineBuy)}</td>
+    <td>${fmtM(r.buyTotal25)}</td>
+    <td>${fmtPct(buyYoY)}</td>
+    <td>${fmtFee(r.feesIndirect26)}</td>
+    <td>${fmtFee(r.feesDirect26)}</td>
+    <td>${fmtFee(r.feesTotal26)}</td>
+    <td>${fmtFee(r.feesTotal25)}</td>
+    <td>${fmtPct(feesYoY)}</td>
+    <td>${fmtFee(r.estIndirect)}</td>
+    <td>--</td>
+    <td>--</td>
+    <td>${fmtM(r.feesTotal26 * 2)}</td>
+    <td style="white-space:normal;min-width:200px;font-size:11px">${r.notes}</td>
+  </tr>`;
+}
+
+function renderOppRow(r) {
+  return `<tr class="opp">
+    <td>${r.ecosystem}</td>
+    <td>${r.potential}</td>
+    <td><strong>${r.segment}</strong></td>
+    <td>${fmt(r.companies)}</td>
+    <td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td>
+    <td style="white-space:normal;min-width:200px;font-size:11px">${r.notes}</td>
+  </tr>`;
+}
+
+function renderTamRow(r) {
+  return `<tr class="tam">
+    <td>${r.ecosystem}</td>
+    <td>${r.potential}</td>
+    <td><strong>${r.segment}</strong></td>
+    <td>${fmt(r.companies)}</td>
+    <td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+    <td>${r.buyTotal26 ? fmtM(r.buyTotal26) : '--'}</td><td>--</td><td>--</td><td>--</td><td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+    <td>--</td><td>--</td><td>--</td><td>--</td>
+    <td style="white-space:normal;min-width:200px;font-size:11px">${r.notes}</td>
+  </tr>`;
+}
+
+function renderSectionHeader(label) {
+  return `<tr class="section-header"><td colspan="25">${label}</td></tr>`;
+}
+
+// BUILD TABLE
+const tbody = document.getElementById('tableBody');
+let html = '';
+
+// Section headers + Koronet rows
+html += renderSectionHeader('KORONET ECOSYSTEM — CAN SELL');
+koronetRows.filter(r => r.potential === 'CAN SELL').forEach(r => html += renderKoronetRow(r, 'koronet'));
+
+html += renderSectionHeader('KORONET ECOSYSTEM — ONLY BUY');
+koronetRows.filter(r => r.potential === 'ONLY BUY').forEach(r => html += renderKoronetRow(r, 'koronet'));
+
+// TOTAL row
+html += renderKoronetRow(koronetTotal, 'total-row');
+
+// Opportunity rows
+html += renderSectionHeader('OPPORTUNITY / PIPELINE (SFDC)');
+oppRows.forEach(r => html += renderOppRow(r));
+
+// Opp subtotal
+const totalOpps = oppRows.reduce((s, r) => s + r.companies, 0);
+html += `<tr class="subtotal">
+  <td>OPPORTUNITY</td><td></td><td><strong>TOTAL PIPELINE</strong></td>
+  <td>${fmt(totalOpps)}</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td>
+  <td style="white-space:normal;font-size:11px">${totalOpps} opportunities across all stages</td>
+</tr>`;
+
+// TAM rows
+html += renderSectionHeader('TAM / WHITESPACE');
+tamRows.forEach(r => html += renderTamRow(r));
+
+tbody.innerHTML = html;
+
+// BUILD GAP TABLE
+const gapBody = document.getElementById('gapBody');
+gapBody.innerHTML = gapAccounts.map((a, i) => `<tr>
+  <td style="text-align:left">${i + 1}</td>
+  <td style="text-align:left"><strong>${a.name}</strong></td>
+  <td>${fmtM(a.revenue)}</td>
+  <td style="text-align:left;font-size:11px">${a.source}</td>
+</tr>`).join('');
+
+// KEY RATIOS
+const t = koronetTotal;
+function setRatio(id, value, lineClass) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.querySelector('strong').innerHTML = value;
+  // Remove existing line classes
+  el.classList.remove('blueLine','okLine','warnLine','danger','purpleLine','cyanLine');
+  if (lineClass) el.classList.add(lineClass);
+}
+
+const pctOnlineSell = t.sellOnline26 / t.sellTotal26;
+const pctOnlineBuy = t.buyOnline26 / t.buyTotal26;
+const feesYoY = (t.feesTotal26 - t.feesTotal25) / t.feesTotal25;
+const sellYoY = (t.sellTotal26 - t.sellTotal25) / t.sellTotal25;
+const sellOnlineYoY = (t.sellOnline26 - t.sellOnline25) / t.sellOnline25;
+const buyOnlineYoY = (t.buyOnline26 - t.buyOnline25) / t.buyOnline25;
+const directYoY = (t.feesDirect26 - 17770.22) / 17770.22; // H1'25 direct
+const indirectYoY = (t.feesIndirect26 - 165517.47) / 165517.47; // H1'25 indirect
+const indirectPct = t.feesIndirect26 / t.feesTotal26;
+
+setRatio('ratio-sell-online', (pctOnlineSell*100).toFixed(1) + '%', pctOnlineSell < 0.2 ? 'danger' : 'okLine');
+setRatio('ratio-buy-online', (pctOnlineBuy*100).toFixed(1) + '%', pctOnlineBuy < 0.15 ? 'danger' : 'okLine');
+setRatio('ratio-fees-yoy', '+' + (feesYoY*100).toFixed(1) + '%', 'okLine');
+setRatio('ratio-sell-yoy', (sellYoY*100).toFixed(1) + '%', sellYoY < 0 ? 'danger' : 'okLine');
+setRatio('ratio-buy-online-yoy', '+' + (buyOnlineYoY*100).toFixed(1) + '%', 'okLine');
+setRatio('ratio-sell-online-yoy', (sellOnlineYoY*100).toFixed(1) + '%', sellOnlineYoY < 0 ? 'warnLine' : 'okLine');
+setRatio('ratio-buy-yoy', '+21.0%', 'okLine'); // excl Ninfa, per Codex
+document.getElementById('ratio-buy-yoy').querySelector('p').textContent = 'excl Ninfa $514M distortion';
+setRatio('ratio-direct-yoy', '+' + (directYoY*100).toFixed(1) + '%', 'okLine');
+setRatio('ratio-indirect-yoy', '+' + (indirectYoY*100).toFixed(1) + '%', 'okLine');
+setRatio('ratio-indirect-pct', (indirectPct*100).toFixed(1) + '%', 'purpleLine');
+</script>
+</body>
+</html>
