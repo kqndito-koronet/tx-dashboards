@@ -93,7 +93,7 @@
     <div style="text-align:right">
       <span class="badge partial">PARTIALLY CERTIFIED</span>
       <p class="small" style="margin-top:6px">All corrections &lt; $1K on $52M+ totals<br>Usable for strategic analysis</p>
-      <p class="small" style="margin-top:4px">Data as of: H1 2026 (Jan 1 - Jun 30)<br>v2 rebuilt: 2026-07-15</p>
+      <p class="small" style="margin-top:4px">Data as of: H1 2026 (Jan 1 - Jun 30)<br>v2 rebuilt: 2026-07-15 | TAM refined: 2026-07-25</p>
     </div>
   </section>
 
@@ -188,31 +188,35 @@
     </div>
   </section>
 
-  <!-- TAM SUMMARY MESSAGE (MECE) -->
+  <!-- TAM SUMMARY MESSAGE (MECE) — REFINED Jul 25 -->
   <section>
-    <p class="eyebrow">TAM Summary</p>
+    <p class="eyebrow">TAM Summary — Refined Validation</p>
     <h2>Wholesaler Addressable Market (MECE)</h2>
     <div class="band blue" style="margin-bottom:14px;font-size:14px;line-height:1.8">
-      <strong>MECE Summary:</strong><br>
-      &bull; <strong>On Platform (Go Live):</strong> 156 SFDC accounts (271 Snowflake companies incl locations/branches)<br>
-      &bull; <strong>In-Flight (Implementation):</strong> 17 accounts<br>
-      &bull; <strong>Pipeline (New Business):</strong> 43 opps (~28-42 unique accounts after overlap)<br>
-      &bull; <strong>Whitespace (active prospects):</strong> ~141 accounts<br>
-      &bull; <strong>Whitespace (dormant):</strong> ~883 accounts<br>
-      &bull; <strong>Ghost (Komet ID, not Go Live):</strong> 145 accounts — needs investigation<br>
-      &bull; <strong>External (not in SFDC):</strong> 97 from directories<br>
-      &bull; <strong>Shells/Dead:</strong> 73 + 10 = 83 — exclude from TAM<br><br>
-      <strong>Total Addressable (realistic):</strong> 156 + 17 + 42 + 141 + 97 = <strong>~453 accounts</strong><br>
-      <strong>Total SFDC (all):</strong> 1,453 accounts
+      <strong>MECE Summary (Refined Jul 25):</strong><br>
+      Of 1,453 SFDC wholesaler accounts: 156 on platform, 17 in implementation, 42 in pipeline.<br>
+      Of the remaining ~1,238:<br>
+      &bull; <strong>557 are verified/likely real wholesalers</strong> (our addressable whitespace)<br>
+      &bull; 278 have dead websites (domain expired/parked/error)<br>
+      &bull; 609 were never contacted (0 contacts ever in SFDC)<br>
+      &bull; 62 are duplicates of existing accounts<br>
+      &bull; 64 are misclassified (growers/importers/retail/tech)<br>
+      &bull; 10 are deactivated/churned<br><br>
+      With 97 from external directories:<br>
+      <strong>REALISTIC TAM = ~869 companies</strong> (156 on platform + 17 impl + 42 pipeline + 304 verified + 253 likely + 97 external)<br>
+      <strong>Total SFDC:</strong> 1,453 accounts
     </div>
-    <p class="small">Whitespace segmented by activity recency and data quality. Ghost accounts have a Komet ID but never reached Go Live — may be churned, deactivated, or data errors. Shells have no phone, no website, no activity — likely dead records. 16 active whitespace accounts have Annual_Total_Sales data (see gap table below).</p>
+    <p class="small">
+      Whitespace refined via web validation, directory cross-reference, and importer buyer matching. 304 verified = website confirmed + directory listed + importer buyer match. 253 likely = partial signals. 1,023 excluded (278 dead websites + 609 ghosts + 62 dupes + 64 misclassified + 10 churned).<br>
+      <strong>Full validated list:</strong> <a href="https://docs.google.com/spreadsheets/d/1e_7RfOJGgT0p58X6e2zNWAOvly9fbFPWXxJ3YMZreRg/edit" target="_blank">Wholesaler TAM — Refined Validation (Rose Jul 25)</a>
+    </p>
   </section>
 
   <!-- TOP 20 GAP ACCOUNTS -->
   <section>
     <p class="eyebrow">TAM Detail</p>
-    <h2>Top 16 Gap Accounts (SFDC Wholesaler Prospects Not on Koronet)</h2>
-    <p class="sub">Estimated revenue from SFDC Annual_Total_Sales where available. Filtered to Industry = 'Floral - Wholesaler' only. Excludes accounts already in New Business pipeline.<br><strong>Note:</strong> These 16 accounts have SFDC Annual_Total_Sales data. They are a subset of the 141 active whitespace accounts.</p>
+    <h2>Top 16 Gap Accounts (Verified Wholesaler Prospects Not on Koronet)</h2>
+    <p class="sub">Estimated revenue from SFDC Annual_Total_Sales where available. Filtered to Industry = 'Floral - Wholesaler' only. Excludes accounts already in New Business pipeline.<br><strong>Note:</strong> These 16 accounts have SFDC Annual_Total_Sales data. They are a subset of the 304 verified whitespace accounts.</p>
     <div class="tableWrap">
       <table id="gapTable">
         <thead>
@@ -226,7 +230,7 @@
         <tbody id="gapBody"></tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:8px">16 SFDC wholesaler prospects (not on Koronet, not in pipeline) have Annual_Total_Sales data, totaling $162.7M. These are a subset of the 141 active whitespace accounts. ~97 additional from WF&FSA/SAF/directories not in SFDC.</p>
+    <p class="small" style="margin-top:8px">16 SFDC wholesaler prospects (not on Koronet, not in pipeline) have Annual_Total_Sales data, totaling $162.7M. These are a subset of the 304 verified whitespace accounts. ~97 additional from WF&FSA/SAF/directories not in SFDC. Full list in <a href="https://docs.google.com/spreadsheets/d/1e_7RfOJGgT0p58X6e2zNWAOvly9fbFPWXxJ3YMZreRg/edit" target="_blank">Google Sheet</a>.</p>
   </section>
 
   <!-- DEFINITIONS -->
@@ -343,7 +347,7 @@
           <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">TRANSACTION_FEES</td><td style="text-align:left">ks_flag=TRUE, transaction_date H1 periods, wholesaler IDs</td><td style="text-align:left">Fees by type (eCom, API, K2K, Gross Profit Share)</td></tr>
           <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">COMPANIES + COMPANY_LOCATIONS</td><td style="text-align:left">ks_flag=TRUE, Floral-Wholesaler</td><td style="text-align:left">Company count, location count, system_type, eshops flag</td></tr>
           <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Opportunity</td><td style="text-align:left">IsClosed=false, Account.Industry='Floral - Wholesaler'</td><td style="text-align:left">Pipeline: 193 wholesaler opps — 85 existing (expansion/renewal), 17 implementation, 43 new business, 48 unclassified</td></tr>
-          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Account</td><td style="text-align:left">Industry='Floral - Wholesaler', KometSales_CompanyId__c=null</td><td style="text-align:left">TAM: 1,107 whitespace (141 active, 883 dormant, 73 shells, 10 deactivated) + 145 ghost + 5 duplicate pairs</td></tr>
+          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Account</td><td style="text-align:left">Industry='Floral - Wholesaler', KometSales_CompanyId__c=null</td><td style="text-align:left">TAM: 1,238 not on platform. Refined: 304 verified + 253 likely wholesalers. Excluded: 278 dead websites, 609 ghosts, 62 dupes, 64 misclassified, 10 churned</td></tr>
           <tr><td style="text-align:left">External</td><td style="text-align:left">WF&FSA / SAF / Directories</td><td style="text-align:left">Industry lists not in SFDC</td><td style="text-align:left">TAM: ~97 additional wholesale prospects</td></tr>
           <tr><td style="text-align:left">Config</td><td style="text-align:left">channels.json</td><td style="text-align:left">--</td><td style="text-align:left">Authoritative online/offline channel classification</td></tr>
         </tbody>
@@ -353,6 +357,8 @@
       Codex verification date: 2026-07-25. Google Sheet ID: 1OEp_40BOkzCDLXBmD6FRCQfm3jYW9hg9FAsUD_-as14.
       Data Rules v14 applied (see agents/rose/memory/data_rules.md). Rule 8 exception: base tables used due to Cortex Analyst CTE restrictions (accepted).
       v2 rebuilt 2026-07-15 with 5 fixes. Pipeline/TAM re-queried from SFDC same day.
+      TAM refined 2026-07-25: web validation + directory cross-ref + importer buyer matching. Realistic TAM = ~869.
+      <a href="https://docs.google.com/spreadsheets/d/1e_7RfOJGgT0p58X6e2zNWAOvly9fbFPWXxJ3YMZreRg/edit" target="_blank">Full validated list (Google Sheet)</a>.
     </p>
   </section>
 
@@ -551,24 +557,20 @@ const oppRows = [
   { ecosystem: 'PIPELINE', potential: 'UNCLASSIFIED', segment: 'NULL type opps', companies: 48, notes: 'Missing opp type. Could be new or existing.' },
 ];
 
-// MECE WHITESPACE + INVESTIGATE — WHOLESALERS ONLY
-// Removed grocery/retail buyer locations. Only SFDC wholesaler accounts + external lists.
-// MECE: Ghost | Active Whitespace | Dormant | Shells | Deactivated | External | Duplicates
+// REFINED WHITESPACE + EXCLUDED — Validated Jul 25, 2025
+// MECE: Verified Wholesaler | Likely Wholesaler | External || Website Down | Ghost | Duplicates | Misclassified | Deactivated
 const tamRows = [
-  // GHOST (have Komet ID but NOT Go Live)
-  { ecosystem: 'INVESTIGATE', potential: 'GHOST', segment: 'Komet ID but NOT Go Live', companies: 145, notes: 'Have KometSales_Company_Id but Account_Status != Go Live. Churned? Deactivated? Data error? Need investigation.' },
+  // ADDRESSABLE WHITESPACE
+  { ecosystem: 'WHITESPACE', potential: 'VERIFIED', segment: 'Verified wholesaler (web + directory + importer)', companies: 304, notes: 'Web confirmed + directory listed + importer buyer match. High-confidence real wholesalers.' },
+  { ecosystem: 'WHITESPACE', potential: 'LIKELY', segment: 'Likely wholesaler (partial signals)', companies: 253, notes: 'Some signals (website OR directory OR contacts) but not fully verified. Worth pursuing.' },
+  { ecosystem: 'WHITESPACE', potential: 'EXTERNAL', segment: 'External directories (not in SFDC)', companies: 97, notes: 'WF&FSA / SAF / industry directories. Not in CRM. Need qualification.' },
 
-  // WHITESPACE (no Komet ID, no open opp, not in implementation)
-  { ecosystem: 'WHITESPACE', potential: 'ACTIVE', segment: 'SFDC activity since Jan 2025', companies: 141, notes: 'Have website/phone and recent SFDC activity. Most likely real prospects.' },
-  { ecosystem: 'WHITESPACE', potential: 'DORMANT', segment: 'No activity since 2025', companies: 883, notes: 'In SFDC but no recent activity. May be valid but cold.' },
-  { ecosystem: 'WHITESPACE', potential: 'SHELLS', segment: 'No phone, no website, no activity', companies: 73, notes: 'Likely dead records or data entry artifacts. Remove from TAM.' },
-  { ecosystem: 'WHITESPACE', potential: 'DEACTIVATED', segment: 'Explicitly churned/deactivated', companies: 10, notes: 'Have Churn_Date or Deactivation_Date set.' },
-
-  // EXTERNAL
-  { ecosystem: 'WHITESPACE', potential: 'EXTERNAL', segment: 'WF&FSA / SAF / directories, not in SFDC', companies: 97, notes: 'Found in industry directories. Not in CRM. Need qualification.' },
-
-  // DUPLICATES
-  { ecosystem: 'INVESTIGATE', potential: 'DUPLICATES', segment: 'Duplicate account names in SFDC', companies: 5, notes: '5 pairs: Florida Wholesale, MacArthur, JFS, Hydrangea Wholesale, FUJI. Manual review needed.' },
+  // EXCLUDED FROM TAM
+  { ecosystem: 'EXCLUDED', potential: 'DEAD WEBSITE', segment: 'Website down / domain expired', companies: 278, notes: 'Domain expired, parked, or returns error. Likely defunct businesses.' },
+  { ecosystem: 'EXCLUDED', potential: 'GHOST', segment: 'Ghost (0 contacts ever in SFDC)', companies: 609, notes: 'Never engaged. Zero contacts, zero activity. Data entry artifacts.' },
+  { ecosystem: 'EXCLUDED', potential: 'DUPLICATES', segment: 'Duplicates of existing Koronet accounts', companies: 62, notes: '62 accounts are duplicates of companies already on platform. SFDC hygiene issue.' },
+  { ecosystem: 'EXCLUDED', potential: 'MISCLASSIFIED', segment: 'Misclassified (not actually wholesalers)', companies: 64, notes: '28 growers, 19 importers, 11 retailers, 6 tech/other. Reclassify in SFDC.' },
+  { ecosystem: 'EXCLUDED', potential: 'CHURNED', segment: 'Deactivated / Churned', companies: 10, notes: 'Explicit churn date or deactivation. Known lost accounts.' },
 ];
 
 // TOP 20 GAP ACCOUNTS (from SFDC, wholesaler prospects)
@@ -694,7 +696,7 @@ function renderOppRow(r) {
 }
 
 function renderTamRow(r) {
-  const cls = r.ecosystem === 'INVESTIGATE' ? 'investigate' : 'whitespace';
+  const cls = r.ecosystem === 'EXCLUDED' ? 'investigate' : 'whitespace';
   return `<tr class="${cls}">
     <td>${r.ecosystem}</td>
     <td>${r.potential}</td>
@@ -765,47 +767,47 @@ html += `<tr class="subtotal">
   <td style="white-space:normal;font-size:11px">${totalImpl} implementation + ${totalNewBiz} new business + ${totalUnclassified} unclassified. Excludes grower/importer/retailer opps.</td>
 </tr>`;
 
-// WHITESPACE — Not on platform, not in pipeline
-html += renderSectionHeader('WHITESPACE — Not on platform, not in pipeline');
+// WHITESPACE — Addressable (verified + likely + external)
+html += renderSectionHeader('WHITESPACE — Addressable wholesalers not on platform');
 tamRows.filter(r => r.ecosystem === 'WHITESPACE').forEach(r => html += renderTamRow(r));
 
 // Whitespace subtotal
 const totalWhitespace = tamRows.filter(r => r.ecosystem === 'WHITESPACE').reduce((s, r) => s + r.companies, 0);
 html += `<tr class="subtotal">
-  <td>WHITESPACE</td><td></td><td><strong>TOTAL WHITESPACE</strong></td>
+  <td>WHITESPACE</td><td></td><td><strong>TOTAL ADDRESSABLE WHITESPACE</strong></td>
   <td>${fmt(totalWhitespace)}</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td>
-  <td style="white-space:normal;font-size:11px">${totalWhitespace} accounts: active + dormant + shells + deactivated + external.</td>
+  <td style="white-space:normal;font-size:11px">${totalWhitespace} accounts: 304 verified + 253 likely + 97 external.</td>
 </tr>`;
 
-// INVESTIGATE — Data quality issues
-html += renderSectionHeader('INVESTIGATE — Data quality issues');
-tamRows.filter(r => r.ecosystem === 'INVESTIGATE').forEach(r => html += renderTamRow(r));
+// EXCLUDED — Not addressable (dead websites, ghosts, dupes, misclassified, churned)
+html += renderSectionHeader('EXCLUDED — Not addressable (cleaned from TAM)');
+tamRows.filter(r => r.ecosystem === 'EXCLUDED').forEach(r => html += renderTamRow(r));
 
-// Investigate subtotal
-const totalInvestigate = tamRows.filter(r => r.ecosystem === 'INVESTIGATE').reduce((s, r) => s + r.companies, 0);
+// Excluded subtotal
+const totalExcluded = tamRows.filter(r => r.ecosystem === 'EXCLUDED').reduce((s, r) => s + r.companies, 0);
 html += `<tr class="subtotal">
-  <td>INVESTIGATE</td><td></td><td><strong>TOTAL INVESTIGATE</strong></td>
-  <td>${fmt(totalInvestigate)}</td><td>--</td>
+  <td>EXCLUDED</td><td></td><td><strong>TOTAL EXCLUDED FROM TAM</strong></td>
+  <td>${fmt(totalExcluded)}</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td>
-  <td style="white-space:normal;font-size:11px">${totalInvestigate} accounts need manual investigation. Ghost accounts + duplicates.</td>
+  <td style="white-space:normal;font-size:11px">${totalExcluded} accounts excluded: 278 dead websites + 609 ghosts + 62 dupes + 64 misclassified + 10 churned.</td>
 </tr>`;
 
 // TAM summary row
 html += `<tr class="tam-summary">
-  <td>TAM</td><td></td><td><strong>ADDRESSABLE MARKET SUMMARY (MECE)</strong></td>
-  <td>~453</td><td>--</td>
+  <td>TAM</td><td></td><td><strong>REALISTIC TAM (MECE)</strong></td>
+  <td>~869</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td>
-  <td style="white-space:normal;font-size:11px">Realistic TAM: 156 on platform + 17 implementation + 42 NB pipeline + 141 active whitespace + 97 external = ~453. Total SFDC: 1,453 accounts.</td>
+  <td style="white-space:normal;font-size:11px">156 on platform + 17 impl + 42 pipeline + 304 verified + 253 likely + 97 external = ~869. Excluded: 1,023 (dead/ghost/dupe/misclass/churned). Total SFDC: 1,453.</td>
 </tr>`;
 
 tbody.innerHTML = html;
