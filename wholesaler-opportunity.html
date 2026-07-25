@@ -39,8 +39,16 @@
     tr.api-note td:first-child{background:#fef3c7}
     tr.opp td{background:#eff6ff}
     tr.opp td:first-child{background:#eff6ff}
+    tr.expansion td{background:#ecfdf3}
+    tr.expansion td:first-child{background:#ecfdf3}
+    tr.pipeline td{background:#eff6ff}
+    tr.pipeline td:first-child{background:#eff6ff}
     tr.tam td{background:#fffbeb}
     tr.tam td:first-child{background:#fffbeb}
+    tr.whitespace td{background:#fffbeb}
+    tr.whitespace td:first-child{background:#fffbeb}
+    tr.investigate td{background:#fef2f2}
+    tr.investigate td:first-child{background:#fef2f2}
     tr.total-row td{background:#1e293b!important;color:#fff;font-weight:900}
     tr.total-row td:first-child{background:#1e293b!important;color:#fff}
     tr.subtotal td{background:#f1f5f9;font-weight:800}
@@ -180,25 +188,31 @@
     </div>
   </section>
 
-  <!-- TAM SUMMARY MESSAGE (FIX 5) -->
+  <!-- TAM SUMMARY MESSAGE (MECE) -->
   <section>
     <p class="eyebrow">TAM Summary</p>
-    <h2>Wholesaler Addressable Market</h2>
-    <div class="band blue" style="margin-bottom:14px;font-size:15px;line-height:1.6">
-      <strong>Today:</strong> 271 companies, 468 locations in Koronet.
-      <strong>Pipeline:</strong> 43 new business opps (42 unique accounts).
-      <strong>Whitespace:</strong> ~1,107 SFDC wholesaler accounts NOT in Koronet or pipeline (23 with revenue data totaling $162.7M).
-      <strong>External:</strong> ~97 from WF&FSA/SAF/directories not in SFDC.
-      <strong>Total SFDC wholesaler accounts:</strong> 1,453.
+    <h2>Wholesaler Addressable Market (MECE)</h2>
+    <div class="band blue" style="margin-bottom:14px;font-size:14px;line-height:1.8">
+      <strong>MECE Summary:</strong><br>
+      &bull; <strong>On Platform (Go Live):</strong> 156 SFDC accounts (271 Snowflake companies incl locations/branches)<br>
+      &bull; <strong>In-Flight (Implementation):</strong> 17 accounts<br>
+      &bull; <strong>Pipeline (New Business):</strong> 43 opps (~28-42 unique accounts after overlap)<br>
+      &bull; <strong>Whitespace (active prospects):</strong> ~141 accounts<br>
+      &bull; <strong>Whitespace (dormant):</strong> ~883 accounts<br>
+      &bull; <strong>Ghost (Komet ID, not Go Live):</strong> 145 accounts — needs investigation<br>
+      &bull; <strong>External (not in SFDC):</strong> 97 from directories<br>
+      &bull; <strong>Shells/Dead:</strong> 73 + 10 = 83 — exclude from TAM<br><br>
+      <strong>Total Addressable (realistic):</strong> 156 + 17 + 42 + 141 + 97 = <strong>~453 accounts</strong><br>
+      <strong>Total SFDC (all):</strong> 1,453 accounts
     </div>
-    <p class="small">Whitespace = SFDC Account.Industry = 'Floral - Wholesaler', KometSales_CompanyId__c = NULL, no open opportunities. Many are unqualified directory entries. 23 accounts have Annual_Total_Sales data. Needs qualification pass.</p>
+    <p class="small">Whitespace segmented by activity recency and data quality. Ghost accounts have a Komet ID but never reached Go Live — may be churned, deactivated, or data errors. Shells have no phone, no website, no activity — likely dead records. 16 active whitespace accounts have Annual_Total_Sales data (see gap table below).</p>
   </section>
 
   <!-- TOP 20 GAP ACCOUNTS -->
   <section>
     <p class="eyebrow">TAM Detail</p>
-    <h2>Top 20 Gap Accounts (SFDC Wholesaler Prospects Not on Koronet)</h2>
-    <p class="sub">Estimated revenue from SFDC Annual_Total_Sales where available. Filtered to Industry = 'Floral - Wholesaler' only. Excludes accounts already in New Business pipeline.</p>
+    <h2>Top 16 Gap Accounts (SFDC Wholesaler Prospects Not on Koronet)</h2>
+    <p class="sub">Estimated revenue from SFDC Annual_Total_Sales where available. Filtered to Industry = 'Floral - Wholesaler' only. Excludes accounts already in New Business pipeline.<br><strong>Note:</strong> These 16 accounts have SFDC Annual_Total_Sales data. They are a subset of the 141 active whitespace accounts.</p>
     <div class="tableWrap">
       <table id="gapTable">
         <thead>
@@ -212,7 +226,7 @@
         <tbody id="gapBody"></tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:8px">23 SFDC wholesaler prospects (not on Koronet, not in pipeline) have Annual_Total_Sales data, totaling $162.7M. ~97 additional from WF&FSA/SAF/directories not in SFDC.</p>
+    <p class="small" style="margin-top:8px">16 SFDC wholesaler prospects (not on Koronet, not in pipeline) have Annual_Total_Sales data, totaling $162.7M. These are a subset of the 141 active whitespace accounts. ~97 additional from WF&FSA/SAF/directories not in SFDC.</p>
   </section>
 
   <!-- DEFINITIONS -->
@@ -328,8 +342,8 @@
           <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">PROCUREMENT_DETAILS</td><td style="text-align:left">ks_flag=TRUE, H1 periods, wholesaler IDs</td><td style="text-align:left">Buy-side GMV by channel (Procurement, Web)</td></tr>
           <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">TRANSACTION_FEES</td><td style="text-align:left">ks_flag=TRUE, transaction_date H1 periods, wholesaler IDs</td><td style="text-align:left">Fees by type (eCom, API, K2K, Gross Profit Share)</td></tr>
           <tr><td style="text-align:left">Snowflake</td><td style="text-align:left">COMPANIES + COMPANY_LOCATIONS</td><td style="text-align:left">ks_flag=TRUE, Floral-Wholesaler</td><td style="text-align:left">Company count, location count, system_type, eshops flag</td></tr>
-          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Opportunity</td><td style="text-align:left">IsClosed=false, Account.Industry='Floral - Wholesaler'</td><td style="text-align:left">Pipeline: 176 wholesaler opps by type and stage (v2 filtered)</td></tr>
-          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Account</td><td style="text-align:left">Industry='Floral - Wholesaler', KometSales_CompanyId__c=null</td><td style="text-align:left">TAM: 1,155 wholesaler accounts not on Koronet; 1,107 with no open opps</td></tr>
+          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Opportunity</td><td style="text-align:left">IsClosed=false, Account.Industry='Floral - Wholesaler'</td><td style="text-align:left">Pipeline: 193 wholesaler opps — 85 existing (expansion/renewal), 17 implementation, 43 new business, 48 unclassified</td></tr>
+          <tr><td style="text-align:left">Salesforce</td><td style="text-align:left">Account</td><td style="text-align:left">Industry='Floral - Wholesaler', KometSales_CompanyId__c=null</td><td style="text-align:left">TAM: 1,107 whitespace (141 active, 883 dormant, 73 shells, 10 deactivated) + 145 ghost + 5 duplicate pairs</td></tr>
           <tr><td style="text-align:left">External</td><td style="text-align:left">WF&FSA / SAF / Directories</td><td style="text-align:left">Industry lists not in SFDC</td><td style="text-align:left">TAM: ~97 additional wholesale prospects</td></tr>
           <tr><td style="text-align:left">Config</td><td style="text-align:left">channels.json</td><td style="text-align:left">--</td><td style="text-align:left">Authoritative online/offline channel classification</td></tr>
         </tbody>
@@ -514,37 +528,47 @@ const koronetTotal = {
   apiGmv: 25110141.80, apiAccounts: 3
 };
 
-// FIX 2: OPPORTUNITY / PIPELINE — WHOLESALERS ONLY (Account.Industry = 'Floral - Wholesaler')
+// MECE PIPELINE — WHOLESALERS ONLY (Account.Industry = 'Floral - Wholesaler')
 // Re-queried from SFDC 2026-07-15. Removed grower/importer/retailer opps.
+// MECE: Existing (not incremental) | Implementation (in-flight) | New Business | Unclassified
 const oppRows = [
-  { ecosystem: 'PIPELINE', potential: 'EXISTING BIZ', segment: 'Upsell / Expansion (all stages)', companies: 71, notes: 'Wholesaler accounts expanding usage or products' },
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Discovery', companies: 7, notes: 'Early stage qualification' },
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Selling', companies: 18, notes: 'Demo / evaluation phase' },
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Negotiating', companies: 4, notes: 'Terms being discussed' },
+  // EXISTING ACCOUNTS (already in Koronet — NOT incremental)
+  { ecosystem: 'EXPANSION', potential: 'EXISTING', segment: 'Upsell / Expansion opps', companies: 71, notes: 'Already Koronet customers. NOT incremental accounts.' },
+  { ecosystem: 'EXPANSION', potential: 'EXISTING', segment: 'Renewal opps', companies: 14, notes: 'Contract renewals. NOT incremental.' },
+
+  // IMPLEMENTATION (in-flight, not yet Go Live)
+  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'Ready for Implementation', companies: 5, notes: 'NW Wholesale, Alpha Fern, Phyto Flowers, Vistaflor, Nexa Flowers' },
+  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'Kickoff Completed', companies: 3, notes: 'Avon Valley, Springfield Florist, Valentina Flower' },
+  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'In Training/Setup/Kickoff', companies: 9, notes: 'Tommy, Floreria La Ocasion, El Paso, Walker, Savannah, Del Tropico, Nashville, Ron, Holland Flower Market' },
+
+  // NEW BUSINESS PIPELINE (net of overlap with whitespace)
+  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Discovery', companies: 7, notes: 'Early stage. Net of overlap with whitespace.' },
+  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Selling', companies: 18, notes: 'Demo / evaluation' },
+  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Negotiating', companies: 4, notes: 'Terms' },
   { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Closing', companies: 14, notes: 'Contract stage' },
-  { ecosystem: 'PIPELINE', potential: 'RENEWAL', segment: 'All stages', companies: 14, notes: 'Contract renewals' },
-  { ecosystem: 'PIPELINE', potential: 'UNCLASSIFIED', segment: 'NULL type', companies: 48, notes: 'Missing opportunity type in SFDC' },
+
+  // UNCLASSIFIED
+  { ecosystem: 'PIPELINE', potential: 'UNCLASSIFIED', segment: 'NULL type opps', companies: 48, notes: 'Missing opp type. Could be new or existing.' },
 ];
 
-// FIX 5: TAM / WHITESPACE — WHOLESALERS ONLY
+// MECE WHITESPACE + INVESTIGATE — WHOLESALERS ONLY
 // Removed grocery/retail buyer locations. Only SFDC wholesaler accounts + external lists.
+// MECE: Ghost | Active Whitespace | Dormant | Shells | Deactivated | External | Duplicates
 const tamRows = [
-  { ecosystem: 'TAM', potential: 'SFDC WHITESPACE', segment: 'Wholesalers not on Koronet, no open opps',
-    companies: 1107,
-    notes: '1,107 SFDC accounts (Industry=Floral-Wholesaler, no KometSales_CompanyId, no open opps). 23 have revenue data.' },
-  { ecosystem: 'TAM', potential: 'SFDC WHITESPACE', segment: 'Of those with Annual_Total_Sales > $0',
-    companies: 23,
-    estRevenue: 162676667,
-    notes: '23 qualified accounts with $162.7M total estimated revenue. Top 20 shown below.' },
-  { ecosystem: 'TAM', potential: 'SFDC IN PIPELINE', segment: 'New Business pipeline (unique accounts)',
-    companies: 42,
-    notes: '42 unique wholesaler accounts with open New Business opps (43 opps)' },
-  { ecosystem: 'TAM', potential: 'EXTERNAL LISTS', segment: 'WF&FSA / SAF / directories not in SFDC',
-    companies: 97,
-    notes: 'Not yet in CRM. Need qualification' },
-  { ecosystem: 'TAM', potential: 'TOTAL SFDC', segment: 'All SFDC wholesaler accounts',
-    companies: 1453,
-    notes: 'Total Account records with Industry = Floral - Wholesaler' },
+  // GHOST (have Komet ID but NOT Go Live)
+  { ecosystem: 'INVESTIGATE', potential: 'GHOST', segment: 'Komet ID but NOT Go Live', companies: 145, notes: 'Have KometSales_Company_Id but Account_Status != Go Live. Churned? Deactivated? Data error? Need investigation.' },
+
+  // WHITESPACE (no Komet ID, no open opp, not in implementation)
+  { ecosystem: 'WHITESPACE', potential: 'ACTIVE', segment: 'SFDC activity since Jan 2025', companies: 141, notes: 'Have website/phone and recent SFDC activity. Most likely real prospects.' },
+  { ecosystem: 'WHITESPACE', potential: 'DORMANT', segment: 'No activity since 2025', companies: 883, notes: 'In SFDC but no recent activity. May be valid but cold.' },
+  { ecosystem: 'WHITESPACE', potential: 'SHELLS', segment: 'No phone, no website, no activity', companies: 73, notes: 'Likely dead records or data entry artifacts. Remove from TAM.' },
+  { ecosystem: 'WHITESPACE', potential: 'DEACTIVATED', segment: 'Explicitly churned/deactivated', companies: 10, notes: 'Have Churn_Date or Deactivation_Date set.' },
+
+  // EXTERNAL
+  { ecosystem: 'WHITESPACE', potential: 'EXTERNAL', segment: 'WF&FSA / SAF / directories, not in SFDC', companies: 97, notes: 'Found in industry directories. Not in CRM. Need qualification.' },
+
+  // DUPLICATES
+  { ecosystem: 'INVESTIGATE', potential: 'DUPLICATES', segment: 'Duplicate account names in SFDC', companies: 5, notes: '5 pairs: Florida Wholesale, MacArthur, JFS, Hydrangea Wholesale, FUJI. Manual review needed.' },
 ];
 
 // TOP 20 GAP ACCOUNTS (from SFDC, wholesaler prospects)
@@ -654,7 +678,8 @@ function renderApiSubRow(r) {
 }
 
 function renderOppRow(r) {
-  return `<tr class="opp">
+  const cls = r.ecosystem === 'EXPANSION' ? 'expansion' : 'pipeline';
+  return `<tr class="${cls}">
     <td>${r.ecosystem}</td>
     <td>${r.potential}</td>
     <td><strong>${r.segment}</strong></td>
@@ -669,7 +694,8 @@ function renderOppRow(r) {
 }
 
 function renderTamRow(r) {
-  return `<tr class="tam">
+  const cls = r.ecosystem === 'INVESTIGATE' ? 'investigate' : 'whitespace';
+  return `<tr class="${cls}">
     <td>${r.ecosystem}</td>
     <td>${r.potential}</td>
     <td><strong>${r.segment}</strong></td>
@@ -704,36 +730,82 @@ koronetRows.filter(r => r.potential === 'ONLY BUY').forEach(r => html += renderK
 // TOTAL row
 html += renderKoronetRow(koronetTotal, 'total-row');
 
-// FIX 2: Pipeline rows — WHOLESALERS ONLY
-html += renderSectionHeader('PIPELINE (SFDC) -- WHOLESALERS ONLY (Account.Industry = Floral - Wholesaler)');
-oppRows.forEach(r => html += renderOppRow(r));
+// EXISTING ACCOUNTS — Expansion & Renewal (already Koronet)
+html += renderSectionHeader('EXISTING ACCOUNTS — Expansion & Renewal (already Koronet)');
+oppRows.filter(r => r.ecosystem === 'EXPANSION').forEach(r => html += renderOppRow(r));
 
-// Opp subtotal
-const totalOpps = oppRows.reduce((s, r) => s + r.companies, 0);
-const totalNewBiz = oppRows.filter(r => r.potential === 'NEW BUSINESS').reduce((s, r) => s + r.companies, 0);
+// Existing subtotal
+const totalExisting = oppRows.filter(r => r.ecosystem === 'EXPANSION').reduce((s, r) => s + r.companies, 0);
 html += `<tr class="subtotal">
-  <td>PIPELINE</td><td></td><td><strong>TOTAL WHOLESALER PIPELINE</strong></td>
-  <td>${fmt(totalOpps)}</td><td>--</td>
+  <td>EXPANSION</td><td></td><td><strong>TOTAL EXISTING ACCOUNT OPPS</strong></td>
+  <td>${fmt(totalExisting)}</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td>
-  <td style="white-space:normal;font-size:11px">${totalOpps} wholesaler opps (${totalNewBiz} new business). Excludes grower/importer/retailer opps.</td>
+  <td style="white-space:normal;font-size:11px">${totalExisting} opps on existing Koronet accounts. NOT incremental accounts.</td>
 </tr>`;
 
-// FIX 5: TAM rows — WHOLESALERS ONLY (no grocery/retail buyer locations)
-html += renderSectionHeader('TAM / WHITESPACE -- WHOLESALERS ONLY');
-tamRows.forEach(r => html += renderTamRow(r));
+// PIPELINE — New accounts in-flight or prospecting
+html += renderSectionHeader('PIPELINE — New accounts in-flight or prospecting');
+oppRows.filter(r => r.ecosystem === 'PIPELINE').forEach(r => html += renderOppRow(r));
+
+// Pipeline subtotal
+const totalPipeline = oppRows.filter(r => r.ecosystem === 'PIPELINE').reduce((s, r) => s + r.companies, 0);
+const totalImpl = oppRows.filter(r => r.potential === 'IMPLEMENTATION').reduce((s, r) => s + r.companies, 0);
+const totalNewBiz = oppRows.filter(r => r.potential === 'NEW BUSINESS').reduce((s, r) => s + r.companies, 0);
+const totalUnclassified = oppRows.filter(r => r.potential === 'UNCLASSIFIED').reduce((s, r) => s + r.companies, 0);
+html += `<tr class="subtotal">
+  <td>PIPELINE</td><td></td><td><strong>TOTAL PIPELINE (incremental)</strong></td>
+  <td>${fmt(totalPipeline)}</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td>
+  <td style="white-space:normal;font-size:11px">${totalImpl} implementation + ${totalNewBiz} new business + ${totalUnclassified} unclassified. Excludes grower/importer/retailer opps.</td>
+</tr>`;
+
+// WHITESPACE — Not on platform, not in pipeline
+html += renderSectionHeader('WHITESPACE — Not on platform, not in pipeline');
+tamRows.filter(r => r.ecosystem === 'WHITESPACE').forEach(r => html += renderTamRow(r));
+
+// Whitespace subtotal
+const totalWhitespace = tamRows.filter(r => r.ecosystem === 'WHITESPACE').reduce((s, r) => s + r.companies, 0);
+html += `<tr class="subtotal">
+  <td>WHITESPACE</td><td></td><td><strong>TOTAL WHITESPACE</strong></td>
+  <td>${fmt(totalWhitespace)}</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td>
+  <td style="white-space:normal;font-size:11px">${totalWhitespace} accounts: active + dormant + shells + deactivated + external.</td>
+</tr>`;
+
+// INVESTIGATE — Data quality issues
+html += renderSectionHeader('INVESTIGATE — Data quality issues');
+tamRows.filter(r => r.ecosystem === 'INVESTIGATE').forEach(r => html += renderTamRow(r));
+
+// Investigate subtotal
+const totalInvestigate = tamRows.filter(r => r.ecosystem === 'INVESTIGATE').reduce((s, r) => s + r.companies, 0);
+html += `<tr class="subtotal">
+  <td>INVESTIGATE</td><td></td><td><strong>TOTAL INVESTIGATE</strong></td>
+  <td>${fmt(totalInvestigate)}</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
+  <td>--</td><td>--</td><td>--</td><td>--</td>
+  <td style="white-space:normal;font-size:11px">${totalInvestigate} accounts need manual investigation. Ghost accounts + duplicates.</td>
+</tr>`;
 
 // TAM summary row
 html += `<tr class="tam-summary">
-  <td>TAM</td><td></td><td><strong>ADDRESSABLE MARKET SUMMARY</strong></td>
-  <td>1,453</td><td>--</td>
+  <td>TAM</td><td></td><td><strong>ADDRESSABLE MARKET SUMMARY (MECE)</strong></td>
+  <td>~453</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
   <td>--</td><td>--</td><td>--</td><td>--</td>
-  <td style="white-space:normal;font-size:11px">271 on Koronet + 42 in NB pipeline + 1,107 whitespace + 97 external = ~1,517 total wholesaler universe</td>
+  <td style="white-space:normal;font-size:11px">Realistic TAM: 156 on platform + 17 implementation + 42 NB pipeline + 141 active whitespace + 97 external = ~453. Total SFDC: 1,453 accounts.</td>
 </tr>`;
 
 tbody.innerHTML = html;
