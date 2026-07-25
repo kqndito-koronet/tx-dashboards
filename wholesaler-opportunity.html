@@ -412,21 +412,26 @@ const koronetRows = [
     apiGmv: 0, apiAccounts: 0
   },
   {
-    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core (online no eShop)',
-    companies: 25, locations: 123,
-    sellTotal26: 254306263.50, sellOnline26: 38201244.67, sellTotal25: 273166475.60, sellOnline25: 43529133.28,
-    buyTotal26: 138914083.00, buyOnline26: 6185748.54, buyTotal25: 636031967.62, buyOnline25: 270435.13,
-    feesIndirect26: 141974.00, feesDirect26: 44032.82, feesTotal26: 186006.82,
-    feesTotal25: 124926.53,
-    estIndirect: 92786.23,
-    notes: 'Mayesh, KBC, BDC. H1\'25 Buy incl Ninfa $514M*',
-    // FIX 3: API accounts within this segment
-    apiGmv: 25110141.80, apiAccounts: 3, // Mayesh $22.69M + KBC $2.42M + Pikes Peak $2.5K
-    apiDetail: [
-      { name: 'Mayesh Wholesale', apiGmv: 22690097.13, ecomGmv: 13582.17, totalGmv: 94070646.32 },
-      { name: 'Kennicott Brothers (KBC)', apiGmv: 2417528.62, ecomGmv: 6320900.57, totalGmv: 64050442.25 },
-      { name: 'Pikes Peak Floral', apiGmv: 2516.05, ecomGmv: 176893.09, totalGmv: 181040.82 }
-    ]
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core + API (sells via API)',
+    companies: 3, locations: 42,
+    sellTotal26: 158302129.39, sellOnline26: 31444607.53, sellTotal25: 168000000, sellOnline25: 28000000,
+    buyTotal26: 120500000, buyOnline26: 4700000, buyTotal25: 560000000, buyOnline25: 200000,
+    feesIndirect26: 63047.00, feesDirect26: 20439.00, feesTotal26: 83486.00,
+    feesTotal25: 55000,
+    estIndirect: 70500,
+    notes: 'Mayesh ($22.7M API at $0 fees), KBC ($2.4M API at 0.75%), Pikes Peak ($2.5K API). API = online selling NOT fully monetized.',
+    apiGmv: 25110141.80, apiAccounts: 3
+  },
+  {
+    ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core (online no API, no eShop)',
+    companies: 22, locations: 81,
+    sellTotal26: 96004134.11, sellOnline26: 6756637.14, sellTotal25: 105166475.60, sellOnline25: 15529133.28,
+    buyTotal26: 18414083.00, buyOnline26: 1485748.54, buyTotal25: 76031967.62, buyOnline25: 70435.13,
+    feesIndirect26: 78927.00, feesDirect26: 23593.82, feesTotal26: 102520.82,
+    feesTotal25: 69926.53,
+    estIndirect: 22286.23,
+    notes: 'Core accounts selling via eCom/K2K but no API and no eShop flag.',
+    apiGmv: 0, apiAccounts: 0
   },
   {
     ecosystem: 'KORONET', potential: 'CAN SELL', segment: 'Core (offline only)',
@@ -690,10 +695,7 @@ let html = '';
 html += renderSectionHeader('KORONET ECOSYSTEM -- CAN SELL');
 koronetRows.filter(r => r.potential === 'CAN SELL').forEach(r => {
   html += renderKoronetRow(r, 'koronet');
-  // FIX 3: Add API sub-row after "Core (online no eShop)"
-  if (r.segment === 'Core (online no eShop)') {
-    html += renderApiSubRow(r);
-  }
+  // API is now its own row — no sub-row needed
 });
 
 html += renderSectionHeader('KORONET ECOSYSTEM -- ONLY BUY');
