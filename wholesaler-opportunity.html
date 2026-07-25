@@ -194,7 +194,7 @@
     <h2>Wholesaler Addressable Market (MECE)</h2>
     <div class="band blue" style="margin-bottom:14px;font-size:14px;line-height:1.8">
       <strong>MECE Summary (Refined Jul 25):</strong><br>
-      Of 1,453 SFDC wholesaler accounts: 156 on platform, 17 in implementation, 42 in pipeline.<br>
+      Of 1,453 SFDC wholesaler accounts: 156 on platform, 17 in implementation, 35 in NB pipeline (7 Go Live misclassified excluded).<br>
       Of the remaining ~1,238:<br>
       &bull; <strong>557 are verified/likely real wholesalers</strong> (our addressable whitespace)<br>
       &bull; 278 have dead websites (domain expired/parked/error)<br>
@@ -203,8 +203,9 @@
       &bull; 64 are misclassified (growers/importers/retail/tech)<br>
       &bull; 10 are deactivated/churned<br><br>
       With 97 from external directories:<br>
-      <strong>REALISTIC TAM = ~869 companies</strong> (156 on platform + 17 impl + 42 pipeline + 304 verified + 253 likely + 97 external)<br>
-      <strong>Total SFDC:</strong> 1,453 accounts
+      <strong>REALISTIC TAM = ~862 companies</strong> (156 on platform + 17 impl + 35 pipeline + 304 verified + 253 likely + 97 external)<br>
+      <strong>Total SFDC:</strong> 1,453 accounts<br><br>
+      <span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:900">FCS OVERLAY:</span> 41 FCS accounts span these buckets — 15 Go Live, 4 Impl, 17 Whitespace ($120.2M), 5 Ghost. FCS is a TAG, not a separate segment.
     </div>
     <p class="small">
       Whitespace refined via web validation, directory cross-reference, and importer buyer matching. 304 verified = website confirmed + directory listed + importer buyer match. 253 likely = partial signals. 1,023 excluded (278 dead websites + 609 ghosts + 62 dupes + 64 misclassified + 10 churned).<br>
@@ -212,11 +213,67 @@
     </p>
   </section>
 
+  <!-- FCS CROSS-CUT — Tag overlay on MECE -->
+  <section>
+    <p class="eyebrow">FCS Smart System — Migration Overlay</p>
+    <h2>41 FCS Accounts Across MECE Buckets <span style="font-size:14px;color:var(--gold);font-weight:700">(TAG, not separate bucket)</span></h2>
+    <div class="band gold" style="margin-bottom:14px;font-size:14px;line-height:1.8">
+      <strong>FCS is sunsetting.</strong> 41 wholesaler accounts use FCS Smart System. They appear in their correct MECE bucket with an FCS tag.<br>
+      &bull; <strong>15 already on Koronet (Go Live)</strong> — $103.1M combined SFDC revenue. Dual-system, migrating off FCS.<br>
+      &bull; <strong>4 in Implementation</strong> — Alpha Fern, Avon Valley, NW Wholesale, Springfield. $23.4M combined.<br>
+      &bull; <strong>17 in Whitespace</strong> — NOT on Koronet. $120.2M combined SFDC revenue. <strong>Highest-priority migration targets.</strong><br>
+      &bull; <strong>5 Ghost/Other</strong> — Have Komet ID but anomalous status. $24.6M combined. Includes Buds (churned), BFS-Miami, Flower Link, Kings, Nashville FM.<br><br>
+      <strong>FCS Sunset Plan:</strong> 4 cohorts. Onboarding capacity: 15 accounts by Jan 2027.<br>
+      <strong>Source:</strong> <a href="https://docs.google.com/spreadsheets/d/1BEHUjqweN7KIXpQOWKeiX91bs8QCuWO7/edit" target="_blank" style="color:#92400e">FCS Sunset Plan (Google Sheet)</a> + SFDC FCS_Smart_System__c = true
+    </div>
+    <div class="grid4">
+      <div class="card okLine">
+        <small>On Koronet (Go Live)</small>
+        <strong>15</strong>
+        <p>$103.1M revenue. Already migrating. Dual-system.</p>
+      </div>
+      <div class="card blueLine">
+        <small>In Implementation</small>
+        <strong>4</strong>
+        <p>$23.4M revenue. Active onboarding.</p>
+      </div>
+      <div class="card warnLine">
+        <small>Whitespace (not on Koronet)</small>
+        <strong>17</strong>
+        <p>$120.2M revenue. B-Fresh ($47.6M), Carbone ($15.5M), Reeves ($15.5M), Can-Mex ($14M), Classic ($13.7M).</p>
+      </div>
+      <div class="card danger">
+        <small>Ghost / Anomalous</small>
+        <strong>5</strong>
+        <p>$24.6M revenue. Have Komet ID but not Go Live. Need investigation.</p>
+      </div>
+    </div>
+    <div class="tableWrap" style="margin-top:12px">
+      <table id="fcsTable">
+        <thead>
+          <tr>
+            <th style="text-align:left">Account Name</th>
+            <th style="text-align:left">MECE Bucket</th>
+            <th style="text-align:left">Status</th>
+            <th style="text-align:left">State</th>
+            <th>SFDC Revenue</th>
+            <th>FCS GMV</th>
+            <th>eCom</th>
+            <th style="text-align:left">Systems in Use</th>
+            <th style="text-align:left">Cohort</th>
+            <th style="text-align:left">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="fcsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- TOP 20 GAP ACCOUNTS -->
   <section>
     <p class="eyebrow">TAM Detail</p>
-    <h2>Top 16 Gap Accounts (Verified Wholesaler Prospects Not on Koronet)</h2>
-    <p class="sub">Estimated revenue from SFDC Annual_Total_Sales where available. Filtered to Industry = 'Floral - Wholesaler' only. Excludes accounts already in New Business pipeline.<br><strong>Note:</strong> These 16 accounts have SFDC Annual_Total_Sales data. They are a subset of the 304 verified whitespace accounts.</p>
+    <h2>Top 20 Gap Accounts (Verified Wholesaler Prospects Not on Koronet)</h2>
+    <p class="sub">Enriched with FCS flag, eCommerce presence, importer buyer status, and pitch history. Filtered to Industry = 'Floral - Wholesaler' only. Excludes accounts already in pipeline.<br><strong>Note:</strong> 7 of the top 20 are FCS accounts migrating from FCS Smart System. These are the highest-priority targets.</p>
     <div class="tableWrap">
       <table id="gapTable">
         <thead>
@@ -224,13 +281,21 @@
             <th style="text-align:left">#</th>
             <th style="text-align:left">Account Name</th>
             <th>Est. Annual Revenue</th>
+            <th>FCS</th>
+            <th>eCom</th>
+            <th>Buys from Us</th>
+            <th>Importer GMV</th>
+            <th>Pitched</th>
+            <th># Lost Opps</th>
+            <th># Contacts</th>
+            <th>Website</th>
             <th style="text-align:left">Source</th>
           </tr>
         </thead>
         <tbody id="gapBody"></tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:8px">16 SFDC wholesaler prospects (not on Koronet, not in pipeline) have Annual_Total_Sales data, totaling $162.7M. These are a subset of the 304 verified whitespace accounts. ~97 additional from WF&FSA/SAF/directories not in SFDC. Full list in <a href="https://docs.google.com/spreadsheets/d/1e_7RfOJGgT0p58X6e2zNWAOvly9fbFPWXxJ3YMZreRg/edit" target="_blank">Google Sheet</a>.</p>
+    <p class="small" style="margin-top:8px">20 top prospects enriched from SFDC + FCS Sunset Plan + web validation + importer buyer data. 7 are FCS accounts with $120.2M combined FCS revenue in whitespace alone. Full list in <a href="https://docs.google.com/spreadsheets/d/1e_7RfOJGgT0p58X6e2zNWAOvly9fbFPWXxJ3YMZreRg/edit" target="_blank">Google Sheet</a>.</p>
   </section>
 
   <!-- DEFINITIONS -->
@@ -543,54 +608,79 @@ const oppRows = [
   { ecosystem: 'EXPANSION', potential: 'EXISTING', segment: 'Renewal opps', companies: 14, notes: 'Contract renewals. NOT incremental.' },
 
   // IMPLEMENTATION (in-flight, not yet Go Live)
-  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'Ready for Implementation', companies: 5, notes: 'NW Wholesale, Alpha Fern, Phyto Flowers, Vistaflor, Nexa Flowers' },
-  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'Kickoff Completed', companies: 3, notes: 'Avon Valley, Springfield Florist, Valentina Flower' },
+  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'Ready for Implementation', companies: 5, notes: 'NW Wholesale [FCS], Alpha Fern [FCS], Phyto Flowers, Vistaflor, Nexa Flowers. 2 of 5 are FCS migrations.' },
+  { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'Kickoff Completed', companies: 3, notes: 'Avon Valley [FCS], Springfield Florist [FCS], Valentina Flower. 2 of 3 are FCS migrations.' },
   { ecosystem: 'PIPELINE', potential: 'IMPLEMENTATION', segment: 'In Training/Setup/Kickoff', companies: 9, notes: 'Tommy, Floreria La Ocasion, El Paso, Walker, Savannah, Del Tropico, Nashville, Ron, Holland Flower Market' },
 
-  // NEW BUSINESS PIPELINE (net of overlap with whitespace)
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Discovery', companies: 7, notes: 'Early stage. Net of overlap with whitespace.' },
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Selling', companies: 18, notes: 'Demo / evaluation' },
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Negotiating', companies: 4, notes: 'Terms' },
-  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'Closing', companies: 14, notes: 'Contract stage' },
-
-  // UNCLASSIFIED
-  { ecosystem: 'PIPELINE', potential: 'UNCLASSIFIED', segment: 'NULL type opps', companies: 48, notes: 'Missing opp type. Could be new or existing.' },
+  // NEW BUSINESS PIPELINE — 35 unique accounts (42 minus 7 Go Live misclassified)
+  // By Account_Status: 12 "New" + 24 "NULL" = 36 opps on 35 unique non-Go-Live accounts
+  { ecosystem: 'PIPELINE', potential: 'NEW BUSINESS', segment: 'New Business (all stages)', companies: 35, notes: '35 unique accounts with open NB opps. 7 Go Live accounts with NB opps excluded (misclassified — already on platform).' },
 ];
 
 // REFINED WHITESPACE + EXCLUDED — Validated Jul 25, 2025
 // MECE: Verified Wholesaler | Likely Wholesaler | External || Website Down | Ghost | Duplicates | Misclassified | Deactivated
+// FCS is a TAG, not a bucket. FCS accounts appear in their correct MECE bucket with fcs:true flag.
 const tamRows = [
   // ADDRESSABLE WHITESPACE
-  { ecosystem: 'WHITESPACE', potential: 'VERIFIED', segment: 'Verified wholesaler (web + directory + importer)', companies: 304, notes: 'Web confirmed + directory listed + importer buyer match. High-confidence real wholesalers.' },
-  { ecosystem: 'WHITESPACE', potential: 'LIKELY', segment: 'Likely wholesaler (partial signals)', companies: 253, notes: 'Some signals (website OR directory OR contacts) but not fully verified. Worth pursuing.' },
-  { ecosystem: 'WHITESPACE', potential: 'EXTERNAL', segment: 'External directories (not in SFDC)', companies: 97, notes: 'WF&FSA / SAF / industry directories. Not in CRM. Need qualification.' },
+  { ecosystem: 'WHITESPACE', potential: 'VERIFIED', segment: 'Verified wholesaler (web + directory + importer)', companies: 304, fcsCount: 12, fcsRevenue: 102360000, notes: 'Web confirmed + directory listed + importer buyer match. 12 are FCS accounts ($102.4M combined revenue) — highest priority migration targets.' },
+  { ecosystem: 'WHITESPACE', potential: 'LIKELY', segment: 'Likely wholesaler (partial signals)', companies: 253, fcsCount: 5, fcsRevenue: 17870000, notes: 'Some signals (website OR directory OR contacts) but not fully verified. 5 are FCS accounts ($17.9M combined).' },
+  { ecosystem: 'WHITESPACE', potential: 'EXTERNAL', segment: 'External directories (not in SFDC)', companies: 97, fcsCount: 0, fcsRevenue: 0, notes: 'WF&FSA / SAF / industry directories. Not in CRM. Need qualification.' },
 
   // EXCLUDED FROM TAM
-  { ecosystem: 'EXCLUDED', potential: 'DEAD WEBSITE', segment: 'Website down / domain expired', companies: 278, notes: 'Domain expired, parked, or returns error. Likely defunct businesses.' },
-  { ecosystem: 'EXCLUDED', potential: 'GHOST', segment: 'Ghost (0 contacts ever in SFDC)', companies: 609, notes: 'Never engaged. Zero contacts, zero activity. Data entry artifacts.' },
-  { ecosystem: 'EXCLUDED', potential: 'DUPLICATES', segment: 'Duplicates of existing Koronet accounts', companies: 62, notes: '62 accounts are duplicates of companies already on platform. SFDC hygiene issue.' },
-  { ecosystem: 'EXCLUDED', potential: 'MISCLASSIFIED', segment: 'Misclassified (not actually wholesalers)', companies: 64, notes: '28 growers, 19 importers, 11 retailers, 6 tech/other. Reclassify in SFDC.' },
-  { ecosystem: 'EXCLUDED', potential: 'CHURNED', segment: 'Deactivated / Churned', companies: 10, notes: 'Explicit churn date or deactivation. Known lost accounts.' },
+  { ecosystem: 'EXCLUDED', potential: 'DEAD WEBSITE', segment: 'Website down / domain expired', companies: 278, fcsCount: 0, notes: 'Domain expired, parked, or returns error. Likely defunct businesses.' },
+  { ecosystem: 'EXCLUDED', potential: 'GHOST', segment: 'Ghost (0 contacts ever in SFDC)', companies: 609, fcsCount: 0, notes: 'Never engaged. Zero contacts, zero activity. Data entry artifacts.' },
+  { ecosystem: 'EXCLUDED', potential: 'DUPLICATES', segment: 'Duplicates of existing Koronet accounts', companies: 62, fcsCount: 0, notes: '62 accounts are duplicates of companies already on platform. SFDC hygiene issue.' },
+  { ecosystem: 'EXCLUDED', potential: 'MISCLASSIFIED', segment: 'Misclassified (not actually wholesalers)', companies: 64, fcsCount: 0, notes: '28 growers, 19 importers, 11 retailers, 6 tech/other. Reclassify in SFDC.' },
+  { ecosystem: 'EXCLUDED', potential: 'CHURNED', segment: 'Deactivated / Churned', companies: 10, fcsCount: 0, notes: 'Explicit churn date or deactivation. Known lost accounts.' },
 ];
 
-// TOP 20 GAP ACCOUNTS (from SFDC, wholesaler prospects)
+// FCS CROSS-CUT: 41 FCS accounts across MECE buckets (FCS_Smart_System__c = true in SFDC)
+// This is a TAG, not a separate segment. Each FCS account sits in exactly one MECE bucket.
+const fcsBreakdown = {
+  goLive: { count: 15, revenue: 103100000, names: 'DKAY, Flora Fresh, Florabundance, Frank Adams, JFS, Las Vegas, L&G, Mikes Finest, Mrs Blooms, Palm Beach, Riverside KY, Rokay, Oklahoma Flower Market, Washington Floral, Zeidler' },
+  implementation: { count: 4, revenue: 23400000, names: 'Alpha Fern (Ready), Avon Valley (Kickoff), NW Wholesale (Ready), Springfield (Kickoff)' },
+  whitespace: { count: 17, revenue: 120230000, names: 'ANIC, B-Fresh ($47.6M), BW Keystone, BW Wholesale, Can-Mex ($14M), Cherry City, Classic Floral ($13.7M), Mobi\'s, Myriad, New England FM, Paseo, Petal Pushers, Price, RJ Carbone ($15.5M), Reeves ($15.5M), Superior Greens, Vogue/FloraMax ($2.9M)' },
+  ghostOther: { count: 5, revenue: 24637000, names: 'BFS-Miami (Komet ID, no status), Buds/Floral Importers (churned), Flower Link (K2K), Kings Wholesale, Nashville FM (in pipeline)' },
+  total: 41,
+  totalRevenue: 271367000,
+  sunsetPlanId: '1BEHUjqweN7KIXpQOWKeiX91bs8QCuWO7',
+  cohorts: '4 cohorts: C1 (closed), C2 (active migration), C3 (outreach), C4 (inbound)',
+  topWhitespace: [
+    { name: 'B-Fresh Floral', state: 'CA', revenue: 47600000, fcsGmv: 48600000, ecom: 'N', cohort: 'Not yet assigned' },
+    { name: 'R J Carbone Floral Distributors', state: 'NH', revenue: 15500000, fcsGmv: 15500000, ecom: 'N', locations: 3, cohort: 'C3' },
+    { name: 'Reeves Floral Products, Inc.', state: 'GA', revenue: 15500000, fcsGmv: 15500000, ecom: 'N', cohort: 'C3' },
+    { name: 'Can-Mex Wholesale Flowers', state: 'ON', revenue: 14000000, fcsGmv: 14000000, ecom: 'N', cohort: 'C3' },
+    { name: 'Classic Floral, Inc', state: 'NY', revenue: 13700000, fcsGmv: 4700000, ecom: 'Y', cohort: 'C1' },
+    { name: 'Myriad Flowers International', state: 'CA', revenue: 3600000, fcsGmv: 3600000, ecom: 'N', cohort: 'Not yet' },
+    { name: 'Vogue Wholesale Floramax', state: 'VA', revenue: 2900000, fcsGmv: 2900000, ecom: 'N', cohort: 'C3' },
+    { name: 'Superior Greens and Floral LLC', state: 'TX', revenue: 2100000, fcsGmv: 2100000, ecom: 'N', cohort: 'Not yet' },
+    { name: 'Paseo Flowers', state: 'CA', revenue: 2000000, fcsGmv: 2000000, ecom: 'N', cohort: 'Not yet' },
+    { name: 'BW Wholesale Florist', state: 'PA', revenue: 1300000, fcsGmv: 1300000, ecom: 'N', cohort: 'C3' },
+  ]
+};
+
+// TOP GAP ACCOUNTS — enriched with FCS flag, eCommerce, importer buyer, pitched before
 const gapAccounts = [
-  { name: 'RJ Carbone', revenue: 15500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Reeves Floral Products', revenue: 15500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Classic Floral Distributors', revenue: 13700000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Nordlie', revenue: 12000000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Flower Warehouse', revenue: 10000000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Pennock Company', revenue: 9500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Delaware Valley Floral Group', revenue: 9000000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Potomac Floral Wholesale', revenue: 8500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Esprit Miami', revenue: 5500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Rojahn & Malaney', revenue: 5000000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Reliant Floral', revenue: 4500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'McArdle', revenue: 4000000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'DWF Wholesale', revenue: 3800000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Berning Wholesale', revenue: 3500000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Amato Wholesale Florist', revenue: 3200000, source: 'SFDC Annual_Total_Sales' },
-  { name: 'Smith Floral', revenue: 3000000, source: 'SFDC Annual_Total_Sales' },
+  { name: 'B-Fresh Floral', revenue: 47600000, source: 'SFDC + FCS Plan', fcs: true, ecom: false, importerBuyer: false, importerGmv: 0, pitched: false, lostOpps: 0, contacts: 6, webStatus: 'Down' },
+  { name: 'RJ Carbone', revenue: 15500000, source: 'SFDC + FCS Plan', fcs: true, ecom: false, importerBuyer: true, importerGmv: 2100000, pitched: true, lostOpps: 3, contacts: 12, webStatus: 'Verified' },
+  { name: 'Reeves Floral Products', revenue: 15500000, source: 'SFDC + FCS Plan', fcs: true, ecom: false, importerBuyer: true, importerGmv: 1800000, pitched: true, lostOpps: 2, contacts: 8, webStatus: 'Verified' },
+  { name: 'Can-Mex Wholesale Flowers', revenue: 14000000, source: 'SFDC + FCS Plan', fcs: true, ecom: false, importerBuyer: false, importerGmv: 0, pitched: false, lostOpps: 0, contacts: 18, webStatus: 'Verified' },
+  { name: 'Classic Floral, Inc', revenue: 13700000, source: 'SFDC + FCS Plan', fcs: true, ecom: true, importerBuyer: true, importerGmv: 950000, pitched: true, lostOpps: 4, contacts: 9, webStatus: 'Verified' },
+  { name: 'Nordlie', revenue: 12000000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: true, importerBuyer: true, importerGmv: 1200000, pitched: true, lostOpps: 2, contacts: 7, webStatus: 'Verified' },
+  { name: 'Flower Warehouse', revenue: 10000000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: true, importerBuyer: true, importerGmv: 1500000, pitched: false, lostOpps: 1, contacts: 6, webStatus: 'Verified' },
+  { name: 'Pennock Company', revenue: 9500000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: true, importerBuyer: true, importerGmv: 800000, pitched: true, lostOpps: 3, contacts: 11, webStatus: 'Verified' },
+  { name: 'Delaware Valley Floral Group', revenue: 9000000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: true, importerBuyer: true, importerGmv: 2400000, pitched: true, lostOpps: 5, contacts: 15, webStatus: 'Verified' },
+  { name: 'Potomac Floral Wholesale', revenue: 8500000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: true, importerBuyer: true, importerGmv: 600000, pitched: true, lostOpps: 2, contacts: 8, webStatus: 'Verified' },
+  { name: 'Esprit Miami', revenue: 5500000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: true, importerGmv: 3200000, pitched: false, lostOpps: 1, contacts: 6, webStatus: 'Verified' },
+  { name: 'Rojahn & Malaney', revenue: 5000000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: true, importerGmv: 400000, pitched: true, lostOpps: 2, contacts: 5, webStatus: 'Verified' },
+  { name: 'Reliant Floral', revenue: 4500000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: false, importerGmv: 0, pitched: true, lostOpps: 1, contacts: 4, webStatus: 'Verified' },
+  { name: 'McArdle', revenue: 4000000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: true, importerBuyer: false, importerGmv: 0, pitched: true, lostOpps: 2, contacts: 6, webStatus: 'Verified' },
+  { name: 'Myriad Flowers International', revenue: 3600000, source: 'SFDC + FCS Plan', fcs: true, ecom: false, importerBuyer: false, importerGmv: 0, pitched: false, lostOpps: 0, contacts: 4, webStatus: 'Verified' },
+  { name: 'DWF Wholesale', revenue: 3800000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: true, importerGmv: 500000, pitched: true, lostOpps: 1, contacts: 5, webStatus: 'Verified' },
+  { name: 'Berning Wholesale', revenue: 3500000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: false, importerGmv: 0, pitched: true, lostOpps: 1, contacts: 4, webStatus: 'Verified' },
+  { name: 'Amato Wholesale Florist', revenue: 3200000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: true, importerGmv: 450000, pitched: true, lostOpps: 2, contacts: 7, webStatus: 'Verified' },
+  { name: 'Vogue Wholesale Floramax', revenue: 2900000, source: 'SFDC + FCS Plan', fcs: true, ecom: false, importerBuyer: false, importerGmv: 0, pitched: false, lostOpps: 0, contacts: 5, webStatus: 'Verified' },
+  { name: 'Smith Floral', revenue: 3000000, source: 'SFDC Annual_Total_Sales', fcs: false, ecom: false, importerBuyer: true, importerGmv: 250000, pitched: false, lostOpps: 0, contacts: 3, webStatus: 'Verified' },
 ];
 
 // =============================================
@@ -697,10 +787,12 @@ function renderOppRow(r) {
 
 function renderTamRow(r) {
   const cls = r.ecosystem === 'EXCLUDED' ? 'investigate' : 'whitespace';
+  const fcsTag = r.fcsCount ? ` <span style="background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:900">FCS:${r.fcsCount}</span>` : '';
+  const fcsRevStr = r.fcsRevenue ? ` (FCS: ${fmtM(r.fcsRevenue)})` : '';
   return `<tr class="${cls}">
     <td>${r.ecosystem}</td>
     <td>${r.potential}</td>
-    <td><strong>${r.segment}</strong></td>
+    <td><strong>${r.segment}</strong>${fcsTag}</td>
     <td>${fmt(r.companies)}</td>
     <td>--</td>
     <td>${r.estRevenue ? fmtM(r.estRevenue) : '--'}</td><td>--</td><td>--</td><td>--</td><td>--</td>
@@ -812,14 +904,101 @@ html += `<tr class="tam-summary">
 
 tbody.innerHTML = html;
 
-// BUILD GAP TABLE
+// BUILD GAP TABLE — enriched with FCS, eCom, importer buyer, pitched
 const gapBody = document.getElementById('gapBody');
-gapBody.innerHTML = gapAccounts.map((a, i) => `<tr>
+gapBody.innerHTML = gapAccounts.map((a, i) => {
+  const fcsTag = a.fcs ? '<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:900">FCS</span>' : '';
+  const ecomTag = a.ecom ? '<span class="pos">Y</span>' : '<span class="na">N</span>';
+  const buyerTag = a.importerBuyer ? `<span class="pos">Y</span>` : '<span class="na">N</span>';
+  const pitchedTag = a.pitched ? `<span class="neg">Y (${a.lostOpps})</span>` : '<span class="na">N</span>';
+  const webCls = a.webStatus === 'Verified' ? 'pos' : a.webStatus === 'Likely' ? 'pct-gold' : 'neg';
+  return `<tr${a.fcs ? ' style="background:#fffbeb"' : ''}>
   <td style="text-align:left">${i + 1}</td>
-  <td style="text-align:left"><strong>${a.name}</strong></td>
+  <td style="text-align:left"><strong>${a.name}</strong> ${fcsTag}</td>
   <td>${fmtM(a.revenue)}</td>
+  <td>${a.fcs ? '<span class="pos">Y</span>' : '<span class="na">N</span>'}</td>
+  <td>${ecomTag}</td>
+  <td>${buyerTag}</td>
+  <td>${a.importerGmv > 0 ? fmtM(a.importerGmv) : '--'}</td>
+  <td>${pitchedTag}</td>
+  <td>${a.lostOpps || '--'}</td>
+  <td>${a.contacts || '--'}</td>
+  <td><span class="${webCls}">${a.webStatus}</span></td>
   <td style="text-align:left;font-size:11px">${a.source}</td>
-</tr>`).join('');
+</tr>`;
+}).join('');
+
+// BUILD FCS TABLE — all 41 FCS accounts with MECE bucket assignment
+const fcsData = [
+  // GO LIVE (15)
+  { name: 'DKAY WHOLESALE INC', bucket: 'KORONET', status: 'Go Live', state: 'FL', revenue: 4700000, fcsGmv: 4700000, ecom: 'N', systems: 'Koronet Procurement, FCS', cohort: 'C2', notes: 'Churned from Komet 2022, came back' },
+  { name: 'Flora Fresh Inc', bucket: 'KORONET', status: 'Go Live', state: 'CA', revenue: 20000000, fcsGmv: 20000000, ecom: 'N', systems: 'Komet Core, Procurement, FCS', cohort: 'C1', notes: '3 divisions: Fresh/Supplies/Plants. Uses Sage Intacct.' },
+  { name: 'Florabundance', bucket: 'KORONET', status: 'Go Live', state: 'CA', revenue: 5700000, fcsGmv: 5700000, ecom: 'Y', systems: 'Koronet Procurement, FCS', cohort: 'C2', notes: '75% sales online. Strong ecommerce.' },
+  { name: 'Frank Adams Wholesale Florist', bucket: 'KORONET', status: 'Go Live', state: 'OR', revenue: 10000000, fcsGmv: 10000000, ecom: 'N', systems: 'K2K, Procurement, FCS', cohort: 'C1', notes: '' },
+  { name: 'JFS Wholesale Floral', bucket: 'KORONET', status: 'Go Live', state: 'UT', revenue: 3400000, fcsGmv: 3400000, ecom: 'N', systems: 'Komet Core, FCS', cohort: 'C3', notes: '' },
+  { name: 'Las Vegas Floral Wholesale', bucket: 'KORONET', status: 'Go Live', state: 'CA', revenue: 5000000, fcsGmv: 5000000, ecom: 'N', systems: 'K2K, Procurement, FCS', cohort: 'C1', notes: '' },
+  { name: 'L&G Wholesale (Lucas & Greer)', bucket: 'KORONET', status: 'Go Live', state: 'TX', revenue: 4600000, fcsGmv: 4600000, ecom: 'N', systems: 'Koronet Procurement, FCS', cohort: 'C1', notes: '' },
+  { name: 'Mikes Finest Wholesale Flowers', bucket: 'KORONET', status: 'Go Live', state: 'GA', revenue: 3000000, fcsGmv: 3000000, ecom: 'N', systems: 'FCS', cohort: '--', notes: '' },
+  { name: 'MRS. BLOOM\'S DIRECT', bucket: 'KORONET', status: 'Go Live', state: 'NY', revenue: 3900000, fcsGmv: 3900000, ecom: 'N', systems: 'Koronet Procurement, FCS', cohort: '--', notes: '' },
+  { name: 'Palm Beach Wholesale Flowers', bucket: 'KORONET', status: 'Go Live', state: 'FL', revenue: 7600000, fcsGmv: 7600000, ecom: 'N', systems: 'Koronet Procurement, FCS', cohort: '--', notes: '' },
+  { name: 'Riverside Wholesale Florists KY', bucket: 'KORONET', status: 'Go Live', state: 'KY', revenue: 3200000, fcsGmv: 3200000, ecom: 'N', systems: 'Komet Core, FCS', cohort: 'C2', notes: 'Implementation onboarding Aug-Oct' },
+  { name: 'Rokay Floral', bucket: 'KORONET', status: 'Go Live', state: 'MI', revenue: 5500000, fcsGmv: 5500000, ecom: 'N', systems: 'K2K, FCS', cohort: 'C3', notes: '' },
+  { name: 'The Oklahoma Flower Market', bucket: 'KORONET', status: 'Go Live', state: 'OK', revenue: 5100000, fcsGmv: 5100000, ecom: 'N', systems: 'K2K, Procurement, FCS', cohort: '--', notes: '' },
+  { name: 'Washington Floral Service', bucket: 'KORONET', status: 'Go Live', state: 'WA', revenue: 18400000, fcsGmv: 18400000, ecom: 'N', systems: 'K2K, FCS', cohort: 'C3', notes: 'Managed by Customer Success' },
+  { name: 'Zeidler Floral', bucket: 'KORONET', status: 'Go Live', state: 'IN', revenue: 3000000, fcsGmv: 3000000, ecom: 'N', systems: 'Komet Core, Procurement, FCS', cohort: 'C2', notes: 'Signed 09/04/2025' },
+  // IMPLEMENTATION (4)
+  { name: 'Alpha Fern Company', bucket: 'IMPLEMENTATION', status: 'Ready for Impl', state: 'FL', revenue: 5000000, fcsGmv: 5000000, ecom: 'N', systems: 'Komet Core, FCS', cohort: 'C3', notes: 'Grower/wholesaler. Closed 09/11/2025.' },
+  { name: 'Avon Valley Floral', bucket: 'IMPLEMENTATION', status: 'Kickoff Completed', state: 'NS', revenue: 4600000, fcsGmv: 5100000, ecom: 'N', systems: 'Komet Core, FCS', cohort: '--', notes: 'Canada (Nova Scotia). Grower.' },
+  { name: 'NW Wholesale Florist', bucket: 'IMPLEMENTATION', status: 'Ready for Impl', state: 'WA', revenue: 10000000, fcsGmv: 10000000, ecom: 'N', systems: 'Komet Core, FCS', cohort: 'C4', notes: 'Inbound after sunset announcement' },
+  { name: 'Springfield Florist Supply', bucket: 'IMPLEMENTATION', status: 'Kickoff Completed', state: 'MA', revenue: 3800000, fcsGmv: 3800000, ecom: 'N', systems: 'Komet Core, Procurement, FCS', cohort: 'C2', notes: '' },
+  // WHITESPACE (17)
+  { name: 'ANIC Trading LLC', bucket: 'WHITESPACE', status: 'No status', state: 'IL', revenue: 220000, fcsGmv: 1000000, ecom: 'N', systems: 'FCS only', cohort: 'C1', notes: 'Had demo. Straightforward migration.' },
+  { name: 'B-Fresh Floral', bucket: 'WHITESPACE', status: 'No status', state: 'CA', revenue: 47600000, fcsGmv: 48600000, ecom: 'N', systems: 'FCS only', cohort: '--', notes: 'LARGEST FCS account. Van Wingerden family. Trader Joes customer. Recipe portal built for them.' },
+  { name: 'BW Keystone Floral Supply', bucket: 'WHITESPACE', status: 'No status', state: 'PA', revenue: null, fcsGmv: 1300000, ecom: 'N', systems: 'FCS only', cohort: 'C3', notes: '100% hard goods (supplies only)' },
+  { name: 'BW Wholesale Florist', bucket: 'WHITESPACE', status: 'No status', state: 'PA', revenue: 1300000, fcsGmv: 1300000, ecom: 'N', systems: 'FCS only', cohort: 'C3', notes: 'Thinking of retiring. Too small.' },
+  { name: 'Can-Mex Wholesale Flowers', bucket: 'WHITESPACE', status: 'No status', state: 'ON', revenue: 14000000, fcsGmv: 14000000, ecom: 'N', systems: 'FCS only', cohort: 'C3', notes: 'Canada. Hates Komet. Maybe eSuite.' },
+  { name: 'Cherry City Floral', bucket: 'WHITESPACE', status: 'No status', state: 'OR', revenue: null, fcsGmv: null, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'Classic Floral, Inc', bucket: 'WHITESPACE', status: 'No status', state: 'NY', revenue: 13700000, fcsGmv: 4700000, ecom: 'Y', systems: 'FCS only', cohort: 'C1', notes: 'Needs ecommerce badly. No hard goods.' },
+  { name: 'Mobi\'s', bucket: 'WHITESPACE', status: 'No status', state: '--', revenue: null, fcsGmv: null, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'Myriad Flowers International', bucket: 'WHITESPACE', status: 'No status', state: 'CA', revenue: 3600000, fcsGmv: 3600000, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'New England Flower Market', bucket: 'WHITESPACE', status: 'No status', state: 'TN', revenue: 1000000, fcsGmv: null, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'Paseo Flowers', bucket: 'WHITESPACE', status: 'No status', state: 'CA', revenue: 2000000, fcsGmv: 2000000, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'Petal Pushers Express', bucket: 'WHITESPACE', status: 'No status', state: 'CO', revenue: 560000, fcsGmv: 560000, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'Price Wholesale Florist', bucket: 'WHITESPACE', status: 'No status', state: 'VA', revenue: 250000, fcsGmv: 250000, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'R J Carbone Floral Distributors', bucket: 'WHITESPACE', status: 'No status', state: 'NH', revenue: 15500000, fcsGmv: 15500000, ecom: 'N', systems: 'FCS only', cohort: 'C3', notes: '3 locations. 80 routes. Very large supplies dept.' },
+  { name: 'Reeves Floral Products', bucket: 'WHITESPACE', status: 'No status', state: 'GA', revenue: 15500000, fcsGmv: 15500000, ecom: 'N', systems: 'FCS only', cohort: 'C3', notes: '' },
+  { name: 'Superior Greens and Floral', bucket: 'WHITESPACE', status: 'No status', state: 'TX', revenue: 2100000, fcsGmv: 2100000, ecom: 'N', systems: 'FCS only', cohort: '--', notes: '' },
+  { name: 'Vogue Wholesale Floramax', bucket: 'WHITESPACE', status: 'No status', state: 'VA', revenue: 2900000, fcsGmv: 2900000, ecom: 'N', systems: 'FCS only', cohort: 'C3', notes: '' },
+  // GHOST/OTHER (5)
+  { name: 'BFS - MIAMI (Berkeley)', bucket: 'GHOST', status: 'No SFDC status', state: 'FL', revenue: 4700000, fcsGmv: 4700000, ecom: 'N', systems: 'FCS only', cohort: 'C2', notes: 'Has Komet ID 665376. Komet too complex per Morey.' },
+  { name: 'Buds / Floral Importers & Dist.', bucket: 'GHOST', status: 'No SFDC status', state: 'NJ', revenue: 11300000, fcsGmv: 11300000, ecom: 'N', systems: 'Procurement Free Trial, FCS', cohort: '--', notes: 'Churned. DO NOT CONTACT per Dave Sack.' },
+  { name: 'Flower Link LLC', bucket: 'GHOST', status: 'No SFDC status', state: 'LA', revenue: 8000000, fcsGmv: 8000000, ecom: 'N', systems: 'K2K, FCS', cohort: '--', notes: 'Has Komet ID 201031. K2K active.' },
+  { name: 'Kings Wholesale', bucket: 'GHOST', status: 'No SFDC status', state: 'FL', revenue: null, fcsGmv: null, ecom: 'N', systems: 'FCS only', cohort: '--', notes: 'Has Komet ID 552759.' },
+  { name: 'Nashville Flower Market', bucket: 'GHOST', status: 'No SFDC status', state: 'TN', revenue: 637000, fcsGmv: 637000, ecom: 'N', systems: 'Procurement Free Trial, FCS', cohort: '--', notes: 'Has Komet ID 704005. In pipeline/implementation.' },
+];
+
+const fcsBody = document.getElementById('fcsBody');
+if (fcsBody) {
+  fcsBody.innerHTML = fcsData.map(a => {
+    let bucketCls = '';
+    if (a.bucket === 'KORONET') bucketCls = 'koronet';
+    else if (a.bucket === 'IMPLEMENTATION') bucketCls = 'pipeline';
+    else if (a.bucket === 'WHITESPACE') bucketCls = 'whitespace';
+    else bucketCls = 'investigate';
+    return `<tr class="${bucketCls}">
+      <td style="text-align:left"><strong>${a.name}</strong></td>
+      <td style="text-align:left"><span style="background:${a.bucket==='KORONET'?'#ecfdf3':a.bucket==='IMPLEMENTATION'?'#eff6ff':a.bucket==='WHITESPACE'?'#fffbeb':'#fef2f2'};padding:2px 6px;border-radius:4px;font-size:10px;font-weight:800">${a.bucket}</span></td>
+      <td style="text-align:left;font-size:11px">${a.status}</td>
+      <td style="text-align:left">${a.state}</td>
+      <td>${a.revenue ? fmtM(a.revenue) : '--'}</td>
+      <td>${a.fcsGmv ? fmtM(a.fcsGmv) : '--'}</td>
+      <td>${a.ecom === 'Y' ? '<span class="pos">Y</span>' : '<span class="na">N</span>'}</td>
+      <td style="text-align:left;font-size:11px;white-space:normal">${a.systems}</td>
+      <td style="text-align:left">${a.cohort}</td>
+      <td style="text-align:left;font-size:11px;white-space:normal;min-width:200px">${a.notes}</td>
+    </tr>`;
+  }).join('');
+}
 
 // KEY RATIOS
 const t = koronetTotal;
