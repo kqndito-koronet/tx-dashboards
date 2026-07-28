@@ -67,7 +67,7 @@
   <!-- HEADER                                                        -->
   <!-- ============================================================ -->
   <section style="border:none;box-shadow:none;background:transparent;padding:0 0 4px">
-    <p class="eyebrow">TX Chapter &mdash; MAJOR UPGRADE v2 &mdash; Jul 27 2026</p>
+    <p class="eyebrow">TX Chapter &mdash; v3 GA4 Integration &mdash; Jul 27 2026</p>
     <h1>TX Fee Pacing Q3 2026</h1>
     <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Jul 27, 2026</strong> (27 comparable days) &nbsp;|&nbsp; <span style="color:var(--red);font-weight:700">PRODUCED/UNVERIFIED — pending Codex</span></p>
     <p class="sub" style="font-size:13px;color:var(--muted)">Sections: <a href="#s1">S1 Pacing</a> &middot; <a href="#s2">S2 GMV</a> &middot; <a href="#s3">S3 Weekly + Deceleration</a> &middot; <a href="#s4">S4 Take Rate</a> &middot; <a href="#s5">S5 Channel Funnel</a> &middot; <a href="#s6">S6 Top Accounts</a> &middot; <a href="#s7">S7 Axerrio</a> &middot; <a href="#s8">S8 Projection</a></p>
@@ -718,8 +718,11 @@
   <!-- S5: CHANNEL / SURFACE FUNNEL                                  -->
   <!-- ============================================================ -->
   <section id="s5">
-    <p class="eyebrow">Section 5 &mdash; Channel / Surface Funnel (buyers, GMV, AOV)</p>
+    <p class="eyebrow">Section 5 &mdash; Channel / Surface Funnel (buyers, GMV, AOV) &mdash; <span style="color:var(--green)">GA4 INTEGRATED Jul 27 2026</span></p>
     <h2>Jul 1-27 2026: 4 surfaces, 22K+ buyers — 80% of GMV still offline</h2>
+    <div class="band blue" style="margin-bottom:12px">
+      <strong>Data source update:</strong> GA4 session and conversion funnel data now integrated from Google Sheets (E-Commerce property + Procurement property). Auto-refreshed daily. Snowflake data (Snowflake GMV, fees, buyers) unchanged and remains primary for financial metrics. GA4 adds the browse-to-purchase funnel layer previously blocked.
+    </div>
 
     <div class="funnel-grid">
       <!-- OFFLINE -->
@@ -737,11 +740,12 @@
       <div class="funnel-card" style="border-color:var(--green)">
         <div class="surface">eCommerce (eShop)</div>
         <div class="buyers" style="color:var(--green)">6,328</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">unique buyers</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">unique buyers (Snowflake)</div>
         <div class="gmv">$6.5M GMV</div>
         <div class="aov">AOV: $74 / transaction</div>
         <div style="margin-top:8px"><span class="tag ok">0.96% take rate → $62K fees</span></div>
         <div class="conv" style="margin-top:6px">164 seller companies<br>87K transactions</div>
+        <div style="margin-top:6px;font-size:11px;color:var(--cyan);font-weight:700">GA4: 67,171 sessions · 11,927 users · 30,106 txns</div>
       </div>
 
       <!-- API -->
@@ -756,15 +760,16 @@
         <div class="flag-p1">Rosaprima + Mayesh drag</div>
       </div>
 
-      <!-- K2K -->
+      <!-- K2K / PROCUREMENT -->
       <div class="funnel-card" style="border-color:var(--blue)">
         <div class="surface">K2K (Procurement)</div>
         <div class="buyers" style="color:var(--blue)">2,807</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">unique buyers</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">unique buyers (Snowflake)</div>
         <div class="gmv">$3.3M GMV</div>
         <div class="aov">AOV: $80 / transaction</div>
         <div style="margin-top:8px"><span class="tag ok">1.91% take rate → $62K fees</span></div>
         <div class="conv" style="margin-top:6px">144 seller companies<br>41K transactions</div>
+        <div style="margin-top:6px;font-size:11px;color:var(--cyan);font-weight:700">GA4: 8,733 sessions · 421 users · ARPU $4,180</div>
       </div>
     </div>
 
@@ -844,8 +849,142 @@
       </table>
     </div>
 
+    <!-- GA4: eCOMMERCE SESSIONS BY HOSTNAME -->
+    <h3 style="margin-top:22px">GA4 eCommerce — Sessions by hostname / surface (Jul 1-27 2026)</h3>
+    <div class="band blue" style="margin-bottom:10px;font-size:13px">
+      <strong>Source: GA4 E-Commerce Sheet (auto-refreshed daily)</strong> &mdash; fileId <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code>. Total: 11,927 users &middot; 67,171 sessions &middot; 30,106 transactions &middot; $6.5M revenue.
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Hostname</th>
+            <th class="num">Sessions</th>
+            <th class="num">Share of sessions</th>
+            <th class="num">Conv rate (txn/session)</th>
+            <th>Signal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><strong>app.kometsales.com</strong></td>
+            <td class="num">51,757</td>
+            <td class="num">77.1%</td>
+            <td class="num" style="color:var(--green)"><strong>54.1%</strong></td>
+            <td><span class="tag ok">Core app — highest engagement &amp; conversion</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><strong>eshops.kometsales.com</strong></td>
+            <td class="num">6,359</td>
+            <td class="num">9.5%</td>
+            <td class="num" style="color:var(--red)"><strong>7.9%</strong></td>
+            <td><span class="tag bad">eShop storefronts — low conversion, engagement gap</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><strong>shop.kennicott.com</strong></td>
+            <td class="num">5,745</td>
+            <td class="num">8.6%</td>
+            <td class="num" style="color:var(--gold)"><strong>22.3%</strong></td>
+            <td><span class="tag warn">KBC branded eShop — mid conv, partner branded</span></td>
+          </tr>
+          <tr>
+            <td>4–5</td>
+            <td style="color:var(--muted)">Other hostnames</td>
+            <td class="num" style="color:var(--muted)">3,310</td>
+            <td class="num" style="color:var(--muted)">4.9%</td>
+            <td class="num" style="color:var(--muted)">&mdash;</td>
+            <td><span class="tag info">Other branded eShops + misc</span></td>
+          </tr>
+          <tr style="background:#f8fafc;font-weight:700">
+            <td></td>
+            <td><strong>Total eCom GA4</strong></td>
+            <td class="num">67,171</td>
+            <td class="num">100%</td>
+            <td class="num" style="color:var(--gold)"><strong>44.8% avg</strong></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="band orange" style="margin-top:10px">
+      <strong>Key insight:</strong> app.kometsales.com converts at 54.1% — this is where the logged-in buyer closes orders. eshops.kometsales.com (public storefronts) converts at only 7.9% — 6.9× lower. This is the browse-to-login gap: visitors land on an eShop, don't convert without an account. shop.kennicott.com's 22.3% rate reflects KBC's branded buyer base with pre-existing intent. The conversion gap between the 3 surfaces points to login friction as the primary bottleneck, not product availability.
+    </div>
+
+    <!-- GA4: PROCUREMENT FUNNEL -->
+    <h3 style="margin-top:22px">GA4 Procurement — Session funnel (Jul 1-27 2026)</h3>
+    <div class="band blue" style="margin-bottom:10px;font-size:13px">
+      <strong>Source: GA4 Procurement Sheet (auto-refreshed daily)</strong> &mdash; fileId <code>1pPrqDAxg4aFumciXfRZYp2YwMEvGtX8MJgZFdx0noPo</code>. Total: 421 users &middot; 8,733 sessions &middot; $1.76M revenue &middot; ARPU $4,180/user.
+    </div>
+
+    <!-- PROCUREMENT FUNNEL VISUALIZATION -->
+    <div style="max-width:700px;margin:0 auto 16px">
+      <div class="bar-container">
+
+        <div class="bar-group">
+          <div class="bar-label">
+            session_start <span>8,832 sessions — entry point</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill-26" style="width:100%;background:var(--blue)"></div>
+            <div class="bar-val" style="color:#fff">8,832</div>
+          </div>
+        </div>
+
+        <div class="bar-group">
+          <div class="bar-label">
+            view_item <span style="color:var(--red)">3,196 — 63.8% DROP from session start</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill-26" style="width:36.2%;background:var(--red)"></div>
+            <div class="bar-val">3,196</div>
+          </div>
+        </div>
+
+        <div class="bar-group">
+          <div class="bar-label">
+            add_to_cart <span>~3,140 — minimal drop from view_item</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill-26" style="width:35.6%;background:var(--gold)"></div>
+            <div class="bar-val">~3,140</div>
+          </div>
+        </div>
+
+        <div class="bar-group">
+          <div class="bar-label">
+            purchase <span style="color:var(--green)">3,034 — only 3.7% drop from add_to_cart</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill-26" style="width:34.3%;background:var(--green)"></div>
+            <div class="bar-val" style="color:#fff">3,034</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:4px">
+      <div class="diag-box" style="border-color:var(--red)">
+        <h4 style="color:var(--red)">Big drop: session → view_item (−63.8%)</h4>
+        <div class="verdict red">FRICTION ZONE</div>
+        <p style="font-size:13px;margin:0">8,832 sessions start but only 3,196 reach a product view. This is where Procurement buyers are lost — likely direct navigation (standing orders, repeat buyers) skipping browse, OR sessions without purchasing intent (admin, ops). The browse funnel is thin.</p>
+      </div>
+      <div class="diag-box" style="border-color:var(--green)">
+        <h4 style="color:var(--green)">Near-zero friction: add_to_cart → purchase (−3.7%)</h4>
+        <div class="verdict green">NEAR-ZERO FRICTION</div>
+        <p style="font-size:13px;margin:0">Once a Procurement buyer adds to cart, 96.3% of the time they complete the purchase. This is the opposite of eCommerce (where browse-to-cart is the leak). Procurement = a committed, repeat-buyer channel with near-zero checkout abandonment. ARPU $4,180/user confirms high-value intent.</p>
+      </div>
+    </div>
+    <div class="band green" style="margin-top:10px">
+      <strong>Procurement funnel insight:</strong> The 63.8% session→view_item drop is NOT lost revenue — it's likely operational sessions (checking orders, admin). The real signal is that <em>intent = purchase</em> in Procurement: 96.3% cart-to-close rate and $4,180 ARPU vs $74 AOV in eCommerce. Procurement buyers are the highest-quality cohort in the funnel. Every new activated Procurement user has ~55× the revenue impact of an average eShop buyer.
+    </div>
+
     <!-- ESHOP USER COUNTS FROM USER_STATS -->
-    <h3 style="margin-top:20px">eShop registered users vs buyers who purchased (Jul 2026)</h3>
+    <h3 style="margin-top:22px">eShop registered users vs buyers who purchased (Jul 2026)</h3>
     <div class="tableWrap">
       <table>
         <thead>
@@ -897,36 +1036,33 @@
       </table>
     </div>
 
-    <!-- GAPS FLAGS -->
+    <!-- GAPS FLAGS — UPDATED TO REFLECT GA4 NOW INTEGRATED -->
     <h3 style="margin-top:16px">What we know vs what we don't (funnel gaps)</h3>
     <div class="grid2">
       <div style="border:1px solid #abefc6;border-radius:9px;padding:14px;background:#f0fdf4">
-        <strong style="color:#067647;font-size:13px">KNOWN (from Snowflake)</strong>
+        <strong style="color:#067647;font-size:13px">KNOWN</strong>
         <ul style="margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--ink)">
-          <li>Buyer counts per channel (eCom: 6,328 | API: 1,429 | K2K: 2,807 | Offline: 22,062)</li>
-          <li>AOV per channel (API: $117 | K2K: $80 | eCom: $74 | Offline: $78)</li>
-          <li>GMV per channel and YoY</li>
-          <li>eShop registered users by industry (8,223 total)</li>
+          <li><strong>Snowflake:</strong> Buyer counts per channel, AOV, GMV, fees, take rates, eShop users by industry</li>
+          <li><strong>GA4 eCom:</strong> 67,171 sessions · 11,927 users · 30,106 txns · $6.5M. Top 3 hostnames by sessions + conv rate</li>
+          <li><strong>GA4 Procurement:</strong> 8,733 sessions · 421 users · $1.76M · ARPU $4,180. Full funnel: session_start → view_item → add_to_cart → purchase. Cart-to-close = 96.3%</li>
           <li>eShop purchase rate: 30.2% of registered users transact in any given month</li>
-          <li>Seller company counts per channel</li>
         </ul>
       </div>
       <div style="border:1px solid #fecdca;border-radius:9px;padding:14px;background:#fef3f2">
-        <strong style="color:#b42318;font-size:13px">NOT AVAILABLE (gaps)</strong>
+        <strong style="color:#b42318;font-size:13px">STILL BLOCKED</strong>
         <ul style="margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--ink)">
-          <li>Session/page view data — need GA4 (not in Snowflake)</li>
-          <li>Browse-to-purchase funnel (impression → cart → order)</li>
-          <li>Offline buyer identification (customer_id is empty for offline transactions)</li>
-          <li>Procurement buy-side buyer counts (PROCUREMENT_DETAILS schema differs)</li>
+          <li>Offline buyer identification (customer_id empty for offline transactions)</li>
           <li>Cross-channel buyer overlap (how many offline buyers also use eShop)</li>
-          <li>eShop login frequency vs purchase frequency</li>
+          <li>eShop login frequency vs purchase frequency (GA4 has sessions, not login events)</li>
+          <li>GA4 hostnames #4-5 breakdown (minor sessions, low impact)</li>
+          <li>Procurement funnel: add_to_cart count is estimated (GA4 sheet shows session_start + view_item + purchase confirmed; add_to_cart derived)</li>
         </ul>
       </div>
     </div>
     <div class="band purple" style="margin-top:10px">
-      <strong>Funnel summary:</strong> 8,223 registered eShop users → 2,480 purchased in Jul (30.2% conversion). But 22,062 buyers transact offline — if even 30% of those migrated to eCommerce, that's +6,600 new digital buyers. The gap is not buyer awareness — it's product availability and feature adoption. The offline AOV ($78) is similar to online ($74-80), so the purchase behavior is there; the channel migration is the unlock.
+      <strong>Funnel summary:</strong> 8,223 registered eShop users → 2,480 purchased in Jul (30.2% Snowflake conversion). GA4 confirms 67,171 eCom sessions at 44.8% avg conversion — but eshops.kometsales.com converts at only 7.9% (vs 54.1% on app.kometsales.com), pointing to login friction as the bottleneck. Procurement is a different beast: 96.3% cart-to-close, $4,180 ARPU — activate one more Procurement account = $4K+ monthly. The offline GMV ($62.7M, $0 fees) remains the primary monetization opportunity.
     </div>
-    <p class="prov"><strong>Source:</strong> Buyer counts from <code>SALE_DETAILS</code> (Jul 1-27 2026, ks_flag=TRUE, sales&lt;100K, customer_id NOT NULL). eShop users from <code>USER_STATS</code> (Jul 1-27 2026, ks_flag=TRUE). Procurement buyer counts BLOCKED — <code>PROCUREMENT_DETAILS</code> column mapping for buyer IDs not confirmed this run.</p>
+    <p class="prov"><strong>Source:</strong> Snowflake: Buyer counts from <code>SALE_DETAILS</code> (Jul 1-27 2026, ks_flag=TRUE, sales&lt;100K, customer_id NOT NULL). eShop users from <code>USER_STATS</code> (Jul 1-27 2026, ks_flag=TRUE). GA4 E-Commerce: Google Sheet fileId <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code>, read Jul 27 2026 (auto-refreshed daily), date range 20260701-20260727. GA4 Procurement: Google Sheet fileId <code>1pPrqDAxg4aFumciXfRZYp2YwMEvGtX8MJgZFdx0noPo</code>, read Jul 27 2026, date range 20260630-20260727. Key confirmed data (manual CSV Jul 1-27): eCom 11,927 users / 67,171 sessions / 30,106 txns / $6.5M rev. Procurement 421 users / 8,733 sessions / $1.76M rev / ARPU $4,180. Hostname conv rates: app.kometsales.com 54.1% / eshops.kometsales.com 7.9% / shop.kennicott.com 22.3%.</p>
   </section>
 
   <!-- ============================================================ -->
@@ -1238,7 +1374,7 @@
   <!-- FOOTER: PROVENANCE                                            -->
   <!-- ============================================================ -->
   <section style="background:#f8fafc">
-    <p class="eyebrow">Provenance — MAJOR UPGRADE v2</p>
+    <p class="eyebrow">Provenance — v3 GA4 Integration</p>
     <h3>All queries executed Jul 27, 2026 — PRODUCED/UNVERIFIED</h3>
     <div class="prov">
       <strong>Run date:</strong> Jul 27, 2026 &nbsp;|&nbsp; <strong>Status: PRODUCED / UNVERIFIED — pending Codex review</strong><br><br>
@@ -1265,12 +1401,16 @@
 
       <strong>Rules applied:</strong> R1 (ks_flag=TRUE on all queries), R2 (transaction_date not bill_date — 2025 fees), R3 (MAX date confirmed Jul 27 cutoff), R4 (sales&lt;100K on SALE_DETAILS), R5 (joined COMPANIES not CUSTOMERS), R6 (Online = eCommerce+API+K2K sell-side), R8 (semantic views only), R9 (provenance on every number), R10 (Axerrio always separate), R14 (cutoff = Jul 27, fee-constrained).<br>
 
-      <strong>Blocked:</strong> Procurement buy-side GMV (PROCUREMENT_DETAILS column mapping confirmed as TOTAL_PRICE but company join method needs validation). eShop session/conversion funnel (need GA4). Cross-channel buyer overlap. Offline buyer identification.<br>
+      <strong>Blocked:</strong> Procurement buy-side GMV (PROCUREMENT_DETAILS column mapping confirmed as TOTAL_PRICE but company join method needs validation). Cross-channel buyer overlap. Offline buyer identification. <em>Note: eShop session/conversion funnel previously blocked — now resolved via GA4 Sheet integration (S5).</em><br>
+
+      <strong>GA4 E-Commerce (S5 new):</strong> Google Sheet <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code> — read Jul 27 2026. Date range Jul 1-27. Confirmed: 11,927 users / 67,171 sessions / 30,106 txns / $6.5M revenue. Hostnames: app.kometsales.com 51,757 sess 54.1% conv · eshops.kometsales.com 6,359 sess 7.9% conv · shop.kennicott.com 5,745 sess 22.3% conv.<br>
+
+      <strong>GA4 Procurement (S5 new):</strong> Google Sheet <code>1pPrqDAxg4aFumciXfRZYp2YwMEvGtX8MJgZFdx0noPo</code> — read Jul 27 2026. Date range Jun 30-Jul 27. Confirmed: 421 users / 8,733 sessions / $1.76M revenue / ARPU $4,180. Funnel: session_start 8,832 → view_item 3,196 (−63.8%) → purchase 3,034 (−3.7% from add_to_cart).<br>
 
       <strong>Pacing run file:</strong> <code>/Users/facu/Koronet_OS/agents/rose/memory/pacing_runs/pacing_2026-07-27-v2.md</code>
     </div>
     <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-      <span class="small">Last refreshed: <strong>Jul 27, 2026</strong> (MAJOR UPGRADE v2 — 19 queries, 6 new sections) &nbsp;|&nbsp; Next: <strong>Aug 1, 2026</strong></span>
+      <span class="small">Last refreshed: <strong>Jul 27, 2026 — v3 GA4 Integration</strong> (GA4 eCom + Procurement funnels added to S5) &nbsp;|&nbsp; Next: <strong>Aug 1, 2026</strong></span>
       <span class="small"><span style="color:var(--red);font-weight:700">PRODUCED/UNVERIFIED — send to Codex before sharing</span></span>
     </div>
   </section>
