@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TX Fee Pacing Q3 2026 — UPGRADED</title>
+  <title>TX Fee Pacing Q3 2026 — v4</title>
   <style>
     :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--orange:#c4620f;--shadow:0 14px 34px rgba(16,24,40,.07)}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
@@ -67,7 +67,7 @@
   <!-- HEADER                                                        -->
   <!-- ============================================================ -->
   <section style="border:none;box-shadow:none;background:transparent;padding:0 0 4px">
-    <p class="eyebrow">TX Chapter &mdash; v3 GA4 Integration &mdash; Jul 27 2026</p>
+    <p class="eyebrow">TX Chapter &mdash; v4 Pacing Fix + Layer Breakdown + Line Graph &mdash; Jul 27 2026</p>
     <h1>TX Fee Pacing Q3 2026</h1>
     <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Jul 27, 2026</strong> (27 comparable days) &nbsp;|&nbsp; <span style="color:var(--red);font-weight:700">PRODUCED/UNVERIFIED — pending Codex</span></p>
     <p class="sub" style="font-size:13px;color:var(--muted)">Sections: <a href="#s1">S1 Pacing</a> &middot; <a href="#s2">S2 GMV</a> &middot; <a href="#s3">S3 Weekly + Deceleration</a> &middot; <a href="#s4">S4 Take Rate</a> &middot; <a href="#s5">S5 Channel Funnel</a> &middot; <a href="#s6">S6 Top Accounts</a> &middot; <a href="#s7">S7 Axerrio</a> &middot; <a href="#s8">S8 Projection</a></p>
@@ -83,22 +83,24 @@
   <!-- ============================================================ -->
   <section id="s1">
     <p class="eyebrow">Section 1 &mdash; Pacing Summary (Core + Axerrio vs $670K)</p>
-    <h2>Where we stand through 27 comparable days</h2>
+    <h2>We're growing at +50.3% total. We need +54.5%. Gap: <span style="color:var(--red)">4.2pp</span></h2>
+
+    <!-- HERO ROW: TOTAL PACING (incl. Axerrio) -->
     <div class="grid4">
-      <article class="card metric okLine">
-        <small>Core MTD (Jul 1-27)</small>
-        <strong>$131,047</strong>
-        <p>+41.7% YoY vs $92,458 in 2025</p>
+      <article class="card metric warnLine">
+        <small>Total YoY Growth (incl. Axerrio)</small>
+        <strong style="color:var(--gold)">+50.3%</strong>
+        <p>$138.9K (Core $131K + Axerrio ~$7.9K) vs $92.5K 2025 base</p>
       </article>
-      <article class="card metric blueLine">
-        <small>Total MTD incl. Axerrio EST</small>
-        <strong>~$138,925</strong>
-        <p>Core $131.0K + Axerrio ~$7.9K (pro-rata)</p>
+      <article class="card metric danger">
+        <small>Required YoY to hit $670K</small>
+        <strong>+54.5%</strong>
+        <p>$670K target / $433.6K Q3 2025 Core base</p>
       </article>
       <article class="card metric warnLine">
-        <small>Pacing vs $670K needed rate</small>
-        <strong>76.5%</strong>
-        <p>Need +54.5% YoY — have +41.7% (Core)</p>
+        <small>Pacing vs Target (total incl. Axerrio)</small>
+        <strong style="color:var(--gold)">92.1%</strong>
+        <p>50.3% / 54.5% — gap: <strong>4.2pp</strong> to close</p>
       </article>
       <article class="card metric warnLine">
         <small>Q3 Projection (J-shape)</small>
@@ -107,9 +109,9 @@
       </article>
     </div>
 
-    <!-- AXERRIO METHODOLOGY NOTE — prominent -->
+    <!-- SECONDARY: Core-only context -->
     <div class="band blue" style="margin-top:12px">
-      <strong>Axerrio methodology:</strong> Axerrio was NOT in Q3 2025 baseline (new in 2026). The $670K target INCLUDES Axerrio 2026. 2025 base = Core-only ($433,627). 2026 tracking = Core (Snowflake EXPECTED) + Axerrio (Google Sheet). Both lines always shown separately below.
+      <strong>Core (ex-Axerrio): +41.7% YoY</strong> &mdash; Americas/Komet Core alone is $131K vs $92.5K in 2025. Axerrio is NEW in 2026 (not in Q3 2025 base), so it's additive to the YoY. Total = Core $131K + Axerrio ~$7.9K = ~$138.9K, giving +50.3% total growth vs the 2025 Core-only base of $92.5K.
     </div>
 
     <div class="tableWrap" style="margin-top:14px">
@@ -126,7 +128,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Core TX Fees</strong></td>
+            <td><strong>Core TX Fees</strong> <span style="font-size:12px;color:var(--muted)">(Americas / Komet Core)</span></td>
             <td class="num">$92,458</td>
             <td class="num">$131,047</td>
             <td class="num" style="color:var(--green)">+41.7%</td>
@@ -134,33 +136,33 @@
             <td><span class="tag ok">LIVE</span></td>
           </tr>
           <tr>
-            <td><strong>Axerrio Fees</strong></td>
+            <td><strong>Axerrio Fees</strong> <span style="font-size:12px;color:var(--muted)">(new 2026 — not in 2025 base)</span></td>
             <td class="num" style="color:var(--muted)">N/A (new 2026)</td>
             <td class="num">~$7,878 EST</td>
-            <td class="num" style="color:var(--muted)">N/A</td>
+            <td class="num" style="color:var(--muted)">N/A — additive</td>
             <td>Google Sheet (Sofia) — pro-rata Jun actual</td>
             <td><span class="tag warn">EST</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total 2026 MTD</strong></td>
+            <td><strong>Total 2026 MTD (incl. Axerrio)</strong></td>
             <td class="num">$92,458 (Core only)</td>
             <td class="num">~$138,925</td>
-            <td class="num" style="color:var(--green)">+50.3% (vs Core 2025)</td>
+            <td class="num" style="color:var(--green)"><strong>+50.3%</strong> vs 2025 Core base</td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td>Required Q3 YoY (Core vs $670K-Axerrio)</td>
+            <td>Required Q3 total YoY to hit $670K</td>
             <td class="num">&mdash;</td>
             <td class="num">&mdash;</td>
             <td class="num"><strong>+54.5%</strong></td>
-            <td>$670K target / $433.6K Q3 2025 Core</td>
-            <td><span class="tag warn">12.8pp gap</span></td>
+            <td>$670K target / $433.6K Q3 2025 Core base</td>
+            <td><span class="tag warn">4.2pp gap</span></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="band gold">Pacing at 76.5% of needed rate. Growth is real (+41.7%) but the $670K target requires +54.5%. The gap is 12.8pp. Axerrio adds ~$7.9K/mo but was not in 2025 baseline — it's additive to the $670K, not a YoY comparison. The J-shape (Sep = 42.5% of Q3) is the key variable.</div>
+    <div class="band gold">We're growing at <strong>+50.3% total</strong> (Core + Axerrio) vs the 2025 Core-only base. We need <strong>+54.5%</strong>. Gap: <strong>4.2pp</strong>. Pacing = 50.3% / 54.5% = <strong>92.1%</strong> of the required rate. The $28K dollar gap stays vs the $670K target. Axerrio is additive — it was not in Q3 2025. The J-shape (Sep = 42.5% of Q3) is the key variable.</div>
   </section>
 
   <!-- ============================================================ -->
@@ -307,6 +309,102 @@
     <p class="prov" style="margin-top:8px">
       <strong>Source:</strong> <code>SALE_DETAILS</code> (shipping_date Jul 1-27, ks_flag=TRUE via COMPANIES join, sales&lt;100K). Online = eCommerce + API + K2K (sell-side, Rule 6). Channel-level fees from <code>EXPECTED_TRANSACTION_FEES</code>. eCom total 2025 sum = $1.23M+$1.54M+$1.12M+$1.58M = $5.47M (slight rounding vs $5.35M — see note). API 2025 = $1.53M+$1.69M+$1.22M+$1.65M = $6.09M. K2K 2025 = $0.51M+$0.64M+$0.47M+$0.64M = $2.26M.
     </p>
+
+    <!-- LAYER BREAKDOWN (NEW — Jul 27 2026) -->
+    <h3 style="margin-top:24px">GMV &amp; Fees by ecosystem layer — Q3 MTD (Jul 1-27 2026 vs 2025)</h3>
+    <div class="band blue" style="margin-bottom:10px;font-size:13px">
+      <strong>Source: Snowflake live query Jul 27 2026.</strong> SALE_DETAILS + COMPANIES by company_industry (ks_flag=TRUE, sales&lt;100K, shipping_date Jul 1-27). Fees from EXPECTED_TRANSACTION_FEES (2026) and TRANSACTION_FEES (2025) joined by company_id. Online = eCommerce + API + K2K. Take rate = fees / online GMV.
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th class="num">GMV 2026</th>
+            <th class="num">GMV 2025</th>
+            <th class="num">GMV YoY</th>
+            <th class="num">Online GMV 2026</th>
+            <th class="num">Online %</th>
+            <th class="num">Fees 2026</th>
+            <th class="num">Fees 2025</th>
+            <th class="num">Fee YoY</th>
+            <th class="num">Take Rate</th>
+            <th class="num">Active Cos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Floral &mdash; Importer</strong></td>
+            <td class="num">$48.4M</td>
+            <td class="num">$43.0M</td>
+            <td class="num" style="color:var(--green)">+12.6%</td>
+            <td class="num">$11.3M</td>
+            <td class="num">23.4%</td>
+            <td class="num" style="color:var(--green)">$99,879</td>
+            <td class="num">$70,806</td>
+            <td class="num" style="color:var(--green)">+41.1%</td>
+            <td class="num" style="color:var(--green)">0.88%</td>
+            <td class="num">96</td>
+          </tr>
+          <tr>
+            <td><strong>Floral &mdash; Wholesaler</strong></td>
+            <td class="num">$26.5M</td>
+            <td class="num">$28.4M</td>
+            <td class="num" style="color:var(--red)">-6.7%</td>
+            <td class="num">$4.0M</td>
+            <td class="num">15.1%</td>
+            <td class="num" style="color:var(--green)">$29,012</td>
+            <td class="num">$18,168</td>
+            <td class="num" style="color:var(--green)">+59.7%</td>
+            <td class="num" style="color:var(--gold)">0.72%</td>
+            <td class="num">58</td>
+          </tr>
+          <tr>
+            <td><strong>Floral &mdash; Grower</strong></td>
+            <td class="num">$3.2M</td>
+            <td class="num">$3.9M</td>
+            <td class="num" style="color:var(--red)">-18.8%</td>
+            <td class="num">$121K</td>
+            <td class="num">3.8%</td>
+            <td class="num">$1,587</td>
+            <td class="num">$1,269</td>
+            <td class="num" style="color:var(--green)">+25.1%</td>
+            <td class="num">1.31%</td>
+            <td class="num">14</td>
+          </tr>
+          <tr>
+            <td><strong>Floral &mdash; Retailer</strong></td>
+            <td class="num">$164K</td>
+            <td class="num">$154K</td>
+            <td class="num" style="color:var(--green)">+6.5%</td>
+            <td class="num">$26K</td>
+            <td class="num">15.9%</td>
+            <td class="num">$2,163</td>
+            <td class="num">$0</td>
+            <td class="num" style="color:var(--muted)">N/A (new)</td>
+            <td class="num" style="color:var(--muted)">8.3%*</td>
+            <td class="num">2</td>
+          </tr>
+          <tr style="background:#f8fafc;font-weight:700">
+            <td><strong>Total (4 layers)</strong></td>
+            <td class="num">$78.2M</td>
+            <td class="num">$75.4M</td>
+            <td class="num" style="color:var(--green)">+3.7%</td>
+            <td class="num">$15.5M</td>
+            <td class="num">19.8%</td>
+            <td class="num">$132,641</td>
+            <td class="num">$90,243</td>
+            <td class="num" style="color:var(--green)">+47.0%</td>
+            <td class="num">0.86%</td>
+            <td class="num">170</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:6px">* Retailer take rate (8.3%) is from 2 accounts with small online GMV — not a meaningful rate. Not a target segment for fees. Note: fee totals may differ slightly from S1 due to unmatched company_ids in join (~$1.9K in &ldquo;unknown&rdquo; industry).</p>
+    <div class="band orange" style="margin-top:10px">
+      <strong>Layer signal:</strong> Importers drive 75% of fees ($99.9K) on 62% of total GMV. Wholesaler GMV is DOWN -6.7% YoY but fee growth is strong +59.7% — pure take-rate expansion (more Wholesalers going online). Grower GMV down -18.8% — worth watching. Importers are the primary fee engine; Wholesalers are the conversion opportunity. Offline % is highest for Growers (96.2%) and Wholesalers (84.9%).
+    </div>
   </section>
 
   <!-- ============================================================ -->
@@ -315,6 +413,122 @@
   <section id="s3">
     <p class="eyebrow">Section 3 &mdash; Weekly Pacing + Deceleration Diagnosis</p>
     <h2>102.2% &rarr; 91.4% &rarr; 77.6% &rarr; 76.5% — here's why</h2>
+
+    <!-- WEEKLY FEE LINE GRAPH (SVG) -->
+    <h3 style="margin-bottom:10px">Weekly fees: 2026 vs 2025</h3>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:9px;padding:20px 24px 16px;margin-bottom:14px">
+      <!-- SVG Line Chart
+           X: 4 weeks — W1(Jul 1-7) W2(Jul 8-14) W3(Jul 15-20) W4(Jul 21-27)
+           2025 values: 21352 25653 19292 26161
+           2026 values: 30615 35395 32156 36356
+           Y range: 16000 to 40000 (padded)
+           Chart area: width=600 height=240, margins left=60 bottom=40 right=20 top=20
+      -->
+      <svg viewBox="0 0 680 280" style="width:100%;max-width:680px;display:block;margin:0 auto" aria-label="Weekly fees 2026 vs 2025 line chart">
+        <!-- defs -->
+        <defs>
+          <marker id="dot26" markerWidth="8" markerHeight="8" refX="4" refY="4">
+            <circle cx="4" cy="4" r="4" fill="#2457c5"/>
+          </marker>
+          <marker id="dot25" markerWidth="8" markerHeight="8" refX="4" refY="4">
+            <circle cx="4" cy="4" r="4" fill="#667085"/>
+          </marker>
+        </defs>
+
+        <!-- Chart area: x starts at 70, ends at 660; y starts at 20, ends at 240 -->
+        <!-- Y scale: min=15000, max=40000, range=25000. Height=220px. px per $1 = 220/25000 -->
+        <!-- Y(val) = 240 - (val - 15000) * (220/25000) -->
+        <!-- W1 x=160, W2 x=290, W3 x=420, W4 x=550 (evenly spaced) -->
+
+        <!-- Grid lines (horizontal) -->
+        <line x1="70" y1="20" x2="660" y2="20" stroke="#edf1f6" stroke-width="1"/>
+        <line x1="70" y1="75" x2="660" y2="75" stroke="#edf1f6" stroke-width="1"/>
+        <line x1="70" y1="130" x2="660" y2="130" stroke="#edf1f6" stroke-width="1"/>
+        <line x1="70" y1="185" x2="660" y2="185" stroke="#edf1f6" stroke-width="1"/>
+        <line x1="70" y1="240" x2="660" y2="240" stroke="#edf1f6" stroke-width="1"/>
+
+        <!-- Y axis labels -->
+        <text x="62" y="24" text-anchor="end" font-size="11" fill="#667085">$40K</text>
+        <text x="62" y="79" text-anchor="end" font-size="11" fill="#667085">$34K</text>
+        <text x="62" y="134" text-anchor="end" font-size="11" fill="#667085">$28K</text>
+        <text x="62" y="189" text-anchor="end" font-size="11" fill="#667085">$22K</text>
+        <text x="62" y="244" text-anchor="end" font-size="11" fill="#667085">$15K</text>
+
+        <!-- X axis baseline -->
+        <line x1="70" y1="240" x2="660" y2="240" stroke="#d9e0ea" stroke-width="1.5"/>
+
+        <!-- X axis labels -->
+        <text x="160" y="260" text-anchor="middle" font-size="12" fill="#344054" font-weight="600">W1 Jul 1–7</text>
+        <text x="290" y="260" text-anchor="middle" font-size="12" fill="#344054" font-weight="600">W2 Jul 8–14</text>
+        <text x="420" y="260" text-anchor="middle" font-size="12" fill="#344054" font-weight="600">W3 Jul 15–20</text>
+        <text x="550" y="260" text-anchor="middle" font-size="12" fill="#344054" font-weight="600">W4 Jul 21–27</text>
+
+        <!-- Y(val) = 240 - (val - 15000) * 220/25000
+             W1-2025: 21352 → 240-(21352-15000)*220/25000 = 240-55.9 = 184.1 ≈ 184
+             W2-2025: 25653 → 240-(25653-15000)*220/25000 = 240-93.7 = 146.3 ≈ 146
+             W3-2025: 19292 → 240-(19292-15000)*220/25000 = 240-37.8 = 202.2 ≈ 202
+             W4-2025: 26161 → 240-(26161-15000)*220/25000 = 240-98.2 = 141.8 ≈ 142
+             W1-2026: 30615 → 240-(30615-15000)*220/25000 = 240-137.4 = 102.6 ≈ 103
+             W2-2026: 35395 → 240-(35395-15000)*220/25000 = 240-179.5 = 60.5 ≈ 61
+             W3-2026: 32156 → 240-(32156-15000)*220/25000 = 240-150.8 = 89.2 ≈ 89
+             W4-2026: 36356 → 240-(36356-15000)*220/25000 = 240-187.9 = 52.1 ≈ 52
+        -->
+
+        <!-- 2025 line (gray dashed) -->
+        <polyline
+          points="160,184 290,146 420,202 550,142"
+          fill="none"
+          stroke="#667085"
+          stroke-width="2"
+          stroke-dasharray="6 4"
+        />
+
+        <!-- 2026 line (blue solid) -->
+        <polyline
+          points="160,103 290,61 420,89 550,52"
+          fill="none"
+          stroke="#2457c5"
+          stroke-width="2.5"
+        />
+
+        <!-- Gap shading between lines -->
+        <polygon
+          points="160,103 290,61 420,89 550,52 550,142 420,202 290,146 160,184"
+          fill="#2457c5"
+          fill-opacity="0.06"
+        />
+
+        <!-- 2025 data points -->
+        <circle cx="160" cy="184" r="5" fill="#667085"/>
+        <circle cx="290" cy="146" r="5" fill="#667085"/>
+        <circle cx="420" cy="202" r="5" fill="#667085"/>
+        <circle cx="550" cy="142" r="5" fill="#667085"/>
+
+        <!-- 2026 data points -->
+        <circle cx="160" cy="103" r="5" fill="#2457c5"/>
+        <circle cx="290" cy="61" r="5" fill="#2457c5"/>
+        <circle cx="420" cy="89" r="5" fill="#2457c5"/>
+        <circle cx="550" cy="52" r="5" fill="#2457c5"/>
+
+        <!-- 2025 value labels -->
+        <text x="160" y="200" text-anchor="middle" font-size="11" fill="#667085">$21.4K</text>
+        <text x="290" y="162" text-anchor="middle" font-size="11" fill="#667085">$25.7K</text>
+        <text x="420" y="218" text-anchor="middle" font-size="11" fill="#667085">$19.3K</text>
+        <text x="550" y="158" text-anchor="middle" font-size="11" fill="#667085">$26.2K</text>
+
+        <!-- 2026 value labels -->
+        <text x="160" y="92" text-anchor="middle" font-size="11" fill="#2457c5" font-weight="700">$30.6K</text>
+        <text x="290" y="50" text-anchor="middle" font-size="11" fill="#2457c5" font-weight="700">$35.4K</text>
+        <text x="420" y="78" text-anchor="middle" font-size="11" fill="#2457c5" font-weight="700">$32.2K</text>
+        <text x="550" y="41" text-anchor="middle" font-size="11" fill="#2457c5" font-weight="700">$36.4K</text>
+
+        <!-- Legend -->
+        <rect x="70" y="8" width="14" height="3" fill="#2457c5" rx="1"/>
+        <text x="90" y="14" font-size="12" fill="#2457c5" font-weight="700">2026</text>
+        <line x1="130" y1="11" x2="144" y2="11" stroke="#667085" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="150" y="14" font-size="12" fill="#667085">2025</text>
+      </svg>
+    </div>
 
     <!-- WEEKLY FEES + GMV + TAKE RATE TABLE -->
     <div class="tableWrap">
@@ -1374,7 +1588,7 @@
   <!-- FOOTER: PROVENANCE                                            -->
   <!-- ============================================================ -->
   <section style="background:#f8fafc">
-    <p class="eyebrow">Provenance — v3 GA4 Integration</p>
+    <p class="eyebrow">Provenance — v4 Pacing Fix + Layer Breakdown + Line Graph</p>
     <h3>All queries executed Jul 27, 2026 — PRODUCED/UNVERIFIED</h3>
     <div class="prov">
       <strong>Run date:</strong> Jul 27, 2026 &nbsp;|&nbsp; <strong>Status: PRODUCED / UNVERIFIED — pending Codex review</strong><br><br>
@@ -1407,10 +1621,16 @@
 
       <strong>GA4 Procurement (S5 new):</strong> Google Sheet <code>1pPrqDAxg4aFumciXfRZYp2YwMEvGtX8MJgZFdx0noPo</code> — read Jul 27 2026. Date range Jun 30-Jul 27. Confirmed: 421 users / 8,733 sessions / $1.76M revenue / ARPU $4,180. Funnel: session_start 8,832 → view_item 3,196 (−63.8%) → purchase 3,034 (−3.7% from add_to_cart).<br>
 
+      <strong>S1 Pacing fix (v4):</strong> Hero now shows total pacing incl. Axerrio: $138.9K / $92.5K 2025 base = +50.3% total YoY. Required +54.5%. Pacing = 92.1% (50.3/54.5). Gap = 4.2pp. Core-only +41.7% shown as secondary. Dollar gap ($28K vs $670K) unchanged.<br>
+
+      <strong>S2 Layer breakdown (v4 NEW):</strong> <code>SALE_DETAILS</code> JOIN <code>COMPANIES</code> (company_industry, ks_flag=TRUE, sales&lt;100K, Jul 1-27 2026 + 2025). <code>EXPECTED_TRANSACTION_FEES</code> + <code>TRANSACTION_FEES</code> (ks_flag=TRUE, Jul 1-27 each year) joined to COMPANIES via TRY_TO_NUMBER(company_id). 2026: Importer $99.9K fees / $11.3M online GMV; Wholesaler $29.0K / $4.0M; Grower $1.6K / $121K. ~$1.9K fees in unknown industry (join miss). Rules applied: R1, R2, R4, R6, R8, R9.<br>
+
+      <strong>S3 SVG line graph (v4 NEW):</strong> Inline SVG using weekly fee data from Q1+Q2 (already in dashboard). 2025 dashed gray: W1=$21,352 W2=$25,653 W3=$19,292 W4=$26,161. 2026 solid blue: W1=$30,615 W2=$35,395 W3=$32,156 W4=$36,356. Y scale $15K–$40K. Gap shading visible.<br>
+
       <strong>Pacing run file:</strong> <code>/Users/facu/Koronet_OS/agents/rose/memory/pacing_runs/pacing_2026-07-27-v2.md</code>
     </div>
     <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-      <span class="small">Last refreshed: <strong>Jul 27, 2026 — v3 GA4 Integration</strong> (GA4 eCom + Procurement funnels added to S5) &nbsp;|&nbsp; Next: <strong>Aug 1, 2026</strong></span>
+      <span class="small">Last refreshed: <strong>Jul 27, 2026 — v4 Pacing Fix + Layer Breakdown + Line Graph</strong> (S1 pacing hero fixed: 50.3%/92.1%; S2 layer breakdown added; S3 SVG line graph added) &nbsp;|&nbsp; Next: <strong>Aug 1, 2026</strong></span>
       <span class="small"><span style="color:var(--red);font-weight:700">PRODUCED/UNVERIFIED — send to Codex before sharing</span></span>
     </div>
   </section>
