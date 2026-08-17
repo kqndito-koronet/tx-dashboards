@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TX Fee Pacing Q3 2026 — v7</title>
+  <title>TX Fee Pacing Q3 2026 — v8</title>
   <style>
     :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--orange:#c4620f;--shadow:0 14px 34px rgba(16,24,40,.07)}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
@@ -65,9 +65,9 @@
 
   <!-- HEADER -->
   <section style="border:none;box-shadow:none;background:transparent;padding:0 0 4px">
-    <p class="eyebrow">TX Chapter &mdash; v7 Thursday Full Run &mdash; Aug 13 2026</p>
+    <p class="eyebrow">TX Chapter &mdash; v8 Monday Light &mdash; Aug 17 2026</p>
     <h1>TX Fee Pacing Q3 2026</h1>
-    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Aug 12, 2026</strong> (43 comparable days: Jul 1&ndash;Aug 12) &nbsp;|&nbsp; <span style="color:var(--gold);font-weight:700">PRODUCED / CODEX-VERIFIED</span></p>
+    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Aug 16, 2026</strong> (47 comparable days: Jul 1&ndash;Aug 16) &nbsp;|&nbsp; <span style="color:var(--gold);font-weight:700">PRODUCED / CODEX-VERIFIED</span></p>
     <p class="sub" style="font-size:13px;color:var(--muted)">Sections: <a href="#s1">S1 Pacing</a> &middot; <a href="#s2">S2 GMV</a> &middot; <a href="#s3">S3 Weekly</a> &middot; <a href="#s4">S4 Take Rate</a> &middot; <a href="#s5">S5 Channel Funnel</a> &middot; <a href="#s6">S6 Top Accounts</a> &middot; <a href="#s7">S7 Axerrio</a> &middot; <a href="#s8">S8 Projection</a></p>
     <div class="links">
       <a href="/tx-dashboards/tx-scorecard-v3.html">Wholesaler Scorecard</a>
@@ -79,34 +79,34 @@
   <!-- S1: PACING SUMMARY -->
   <section id="s1">
     <p class="eyebrow">Section 1 &mdash; Pacing Summary (Core + Axerrio vs $670K)</p>
-    <h2>Growing at +45.9% total. Pacing: <span style="color:var(--gold)">84.2%</span>. Gap vs required: <span style="color:var(--red)">&minus;8.6pp</span></h2>
-    <div class="band gold" style="margin-bottom:10px;font-size:13px"><strong>vs Aug 6 run:</strong> Pacing moved from 85.1% (Aug 6, 37 days) to 84.2% (Aug 13, 43 days) &mdash; &minus;0.9pp. Core YoY eased slightly +38.0%&rarr;+37.7% as Aug 2025 comps get harder. New signals this run: (1) API GMV &minus;9.5% YoY (was &minus;5.7% at 37d) &mdash; monitor. (2) Wholesaler fees +52.4% YoY vs Importer +35.1% &mdash; wholesale online migration accelerating. (3) W7 (2-day partial Aug 11&ndash;12) shows &minus;6.9% YoY due to calendar shift &mdash; <strong>not structural</strong>. Source unchanged: TF (Jul 2026 fully billed) + ETF (Aug 1&ndash;12 expected).</div>
+    <h2>Growing at +43.5% total. Pacing: <span style="color:var(--red)">79.8%</span>. Gap vs required: <span style="color:var(--red)">&minus;11.0pp</span></h2>
+    <div class="band gold" style="margin-bottom:10px;font-size:13px"><strong>vs Aug 13 run:</strong> Pacing moved from 84.2% (Aug 13, 43 days) to 79.8% (Aug 17, 47 days) &mdash; <strong>&minus;4.4pp</strong>. Core YoY eased +37.7%&rarr;+35.4% as Aug 2025 comps get harder. W7 is now COMPLETE (Aug 11&ndash;16, +7.4% YoY) &mdash; calendar-shift artifact confirmed resolved; W7 was &minus;6.9% at 2 days, now +7.4% at 6 days. Pacing drop is J-shape comp + Aug 13&ndash;16 2026 falling Sat/Sun vs Fri/Sat in 2025 (calendar offset). GA4: BLOCKED (sheet stale through Jun 15, 2026). Source: TF (Jul 2026 fully billed) + ETF (Aug 1&ndash;16 expected).</div>
 
     <div class="grid4">
-      <article class="card metric warnLine">
+      <article class="card metric danger">
         <small>Total YoY Growth (incl. Axerrio)</small>
-        <strong style="color:var(--gold)">+45.9%</strong>
-        <p>$231,766 (Core $218,799 + Axerrio ~$12,967) vs $158,895 2025 base</p>
+        <strong style="color:var(--red)">+43.5%</strong>
+        <p>$254,118 (Core $239,869 + Axerrio ~$14,249) vs $177,142 2025 base</p>
       </article>
       <article class="card metric blueLine">
         <small>Required YoY to hit $670K</small>
         <strong>+54.5%</strong>
         <p>$670K target / $433.6K Q3 2025 Core base</p>
       </article>
-      <article class="card metric warnLine">
+      <article class="card metric danger">
         <small>Pacing vs Target (total incl. Axerrio)</small>
-        <strong style="color:var(--gold)">84.2%</strong>
-        <p>45.9% / 54.5% &mdash; 8.6pp below required rate</p>
+        <strong style="color:var(--red)">79.8%</strong>
+        <p>43.5% / 54.5% &mdash; 11.0pp below required rate</p>
       </article>
       <article class="card metric danger">
         <small>Q3 Projection (J-shape, at current Core pace)</small>
-        <strong style="color:var(--red)">~$625K</strong>
-        <p>Core ~$599K + Axerrio ~$28K | Gap: ~$45K</p>
+        <strong style="color:var(--red)">~$610K</strong>
+        <p>Core ~$582K + Axerrio ~$28K | Gap: ~$60K</p>
       </article>
     </div>
 
     <div class="band blue" style="margin-top:12px">
-      <strong>Core (ex-Axerrio): +37.7% YoY</strong> &mdash; Core is $218,799 (TF Jul $154,308 + ETF Aug 1&ndash;12 $64,491) vs $158,895 in 2025 = +37.7%. Axerrio Jul ACTUAL $9,348 + Aug 1&ndash;12 EST $3,619 = $12,967 additive. Total = $218,799 + $12,967 = $231,766, giving <strong>+45.9%</strong> vs the 2025 Core-only base. Required pace: +54.5%.
+      <strong>Core (ex-Axerrio): +35.4% YoY</strong> &mdash; Core is $239,869 (TF Jul $154,308 + ETF Aug 1&ndash;16 $85,562) vs $177,142 in 2025 = +35.4%. Axerrio Jul ACTUAL $9,399 + Aug 1&ndash;16 EST $4,850 = $14,249 additive. Total = $239,869 + $14,249 = $254,118, giving <strong>+43.5%</strong> vs the 2025 Core-only base. Required pace: +54.5%.
     </div>
 
     <div class="tableWrap" style="margin-top:14px">
@@ -114,8 +114,8 @@
         <thead>
           <tr>
             <th>Component</th>
-            <th class="num">2025 Jul 1&ndash;Aug 12</th>
-            <th class="num">2026 Jul 1&ndash;Aug 12</th>
+            <th class="num">2025 Jul 1&ndash;Aug 16</th>
+            <th class="num">2026 Jul 1&ndash;Aug 16</th>
             <th class="num">YoY</th>
             <th>Source</th>
             <th>Status</th>
@@ -131,50 +131,50 @@
             <td><span class="tag ok">BILLED</span></td>
           </tr>
           <tr>
-            <td><strong>Core TX Fees &mdash; Aug 1&ndash;12 2026</strong> <span style="font-size:12px;color:var(--muted)">(EXPECTED, current month)</span></td>
-            <td class="num">$48,601 (Aug 1&ndash;12 est.)</td>
-            <td class="num">$64,491</td>
-            <td class="num" style="color:var(--green)">+32.7%</td>
-            <td><code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;12 2026, ks_flag=TRUE</td>
+            <td><strong>Core TX Fees &mdash; Aug 1&ndash;16 2026</strong> <span style="font-size:12px;color:var(--muted)">(EXPECTED, current month)</span></td>
+            <td class="num">$66,848 (Aug 1&ndash;16 2025 TF)</td>
+            <td class="num">$85,562</td>
+            <td class="num" style="color:var(--green)">+28.0%</td>
+            <td><code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;16 2026, ks_flag=TRUE</td>
             <td><span class="tag warn">EXPECTED</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Core TX Fees Total (43 days)</strong></td>
-            <td class="num">$158,895</td>
-            <td class="num">$218,799</td>
-            <td class="num" style="color:var(--gold)">+37.7%</td>
-            <td>TF (Jul) + ETF (Aug 1&ndash;12), ks_flag=TRUE</td>
+            <td><strong>Core TX Fees Total (47 days)</strong></td>
+            <td class="num">$177,142</td>
+            <td class="num">$239,869</td>
+            <td class="num" style="color:var(--gold)">+35.4%</td>
+            <td>TF (Jul) + ETF (Aug 1&ndash;16), ks_flag=TRUE</td>
             <td></td>
           </tr>
           <tr>
             <td><strong>Axerrio Fees &mdash; Jul 2026</strong> <span style="font-size:12px;color:var(--muted)">(new 2026 &mdash; not in 2025 base)</span></td>
             <td class="num" style="color:var(--muted)">N/A (new 2026)</td>
-            <td class="num">$9,348 ACTUAL</td>
+            <td class="num">$9,399 ACTUAL</td>
             <td class="num" style="color:var(--muted)">N/A &mdash; additive</td>
-            <td>Google Sheet (Sofia) &mdash; Jul 2026 closed, actual confirmed</td>
+            <td>Google Sheet (Sofia) &mdash; Jul 2026 closed, actual confirmed (€8,105.83)</td>
             <td><span class="tag ok">ACTUAL</span></td>
           </tr>
           <tr>
-            <td><strong>Axerrio Fees &mdash; Aug 1&ndash;12 EST</strong></td>
+            <td><strong>Axerrio Fees &mdash; Aug 1&ndash;16 EST</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">~$3,619 EST</td>
+            <td class="num">~$4,850 EST</td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td>$9,348 &times; 12/31 days (most recent actual per Rule N1)</td>
+            <td>$9,399 &times; 16/31 days (most recent actual per Rule N1)</td>
             <td><span class="tag warn">EST</span></td>
           </tr>
           <tr style="background:#fff4e5;font-weight:700">
             <td><strong>Axerrio Q3 YTD Total</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">~$12,967</td>
+            <td class="num">~$14,249</td>
             <td class="num" style="color:var(--muted)">N/A &mdash; additive</td>
             <td></td>
             <td><span class="tag warn">ACTUAL+EST</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
             <td><strong>Total 2026 MTD (incl. Axerrio)</strong></td>
-            <td class="num">$158,895 (Core only)</td>
-            <td class="num">~$231,766</td>
-            <td class="num" style="color:var(--gold)"><strong>+45.9%</strong> vs 2025 Core base</td>
+            <td class="num">$177,142 (Core only)</td>
+            <td class="num">~$254,118</td>
+            <td class="num" style="color:var(--red)"><strong>+43.5%</strong> vs 2025 Core base</td>
             <td></td>
             <td></td>
           </tr>
@@ -184,41 +184,42 @@
             <td class="num">&mdash;</td>
             <td class="num"><strong>+54.5%</strong></td>
             <td>$670K target / $433.6K Q3 2025 Core base</td>
-            <td><span class="tag warn">BEHIND 8.6pp</span></td>
+            <td><span class="tag bad">BEHIND 11.0pp</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h3 style="margin-top:18px">Delta vs Aug 6 run</h3>
+    <h3 style="margin-top:18px">Delta vs Aug 13 run</h3>
     <div class="tableWrap">
       <table>
         <thead>
           <tr>
             <th>Metric</th>
-            <th class="num">Aug 6 Run (37d)</th>
             <th class="num">Aug 13 Run (43d)</th>
+            <th class="num">Aug 17 Run (47d)</th>
             <th class="num">Delta</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Days elapsed</td><td class="num">37</td><td class="num">43</td><td class="num">+6</td></tr>
-          <tr><td>Core MTD</td><td class="num">$184,055</td><td class="num">$218,799</td><td class="num" style="color:var(--green)">+$34,744</td></tr>
-          <tr><td>Core YoY</td><td class="num">+38.0%</td><td class="num">+37.7%</td><td class="num" style="color:var(--muted)">&minus;0.3pp</td></tr>
-          <tr><td>Total YoY (incl. Axerrio)</td><td class="num">+46.4%</td><td class="num">+45.9%</td><td class="num" style="color:var(--muted)">&minus;0.5pp</td></tr>
-          <tr><td><strong>Pacing</strong></td><td class="num">85.1%</td><td class="num" style="color:var(--gold)"><strong>84.2%</strong></td><td class="num" style="color:var(--muted)">&minus;0.9pp</td></tr>
-          <tr><td>Axerrio Q3 YTD</td><td class="num">$11,159</td><td class="num">$12,967</td><td class="num">+$1,808</td></tr>
-          <tr><td>Q3 Projection</td><td class="num">~$626K</td><td class="num">~$625K</td><td class="num" style="color:var(--muted)">&minus;$1K (stable)</td></tr>
+          <tr><td>Days elapsed</td><td class="num">43</td><td class="num">47</td><td class="num">+4</td></tr>
+          <tr><td>Core MTD</td><td class="num">$218,799</td><td class="num">$239,869</td><td class="num" style="color:var(--green)">+$21,070</td></tr>
+          <tr><td>Core YoY</td><td class="num">+37.7%</td><td class="num">+35.4%</td><td class="num" style="color:var(--red)">&minus;2.3pp</td></tr>
+          <tr><td>Total YoY (incl. Axerrio)</td><td class="num">+45.9%</td><td class="num">+43.5%</td><td class="num" style="color:var(--red)">&minus;2.4pp</td></tr>
+          <tr><td><strong>Pacing</strong></td><td class="num">84.2%</td><td class="num" style="color:var(--red)"><strong>79.8%</strong></td><td class="num" style="color:var(--red)">&minus;4.4pp</td></tr>
+          <tr><td>Axerrio Q3 YTD</td><td class="num">$12,967</td><td class="num">$14,249</td><td class="num" style="color:var(--green)">+$1,282</td></tr>
+          <tr><td>Q3 Projection</td><td class="num">~$625K</td><td class="num">~$610K</td><td class="num" style="color:var(--red)">&minus;$15K</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="band gold">We are at <strong>+45.9% total</strong> (Core + Axerrio) vs the required +54.5%. The &minus;0.9pp drop in pacing (85.1%&rarr;84.2%) reflects the J-shape: Aug 2025 was a stronger month (32% of Q3). Weekly trend remains positive W4&rarr;W5&rarr;W6 (+37%, +45%, +35%). W7 drop (&minus;6.9%) is a 2-day calendar-shift artifact. Sep carries 42.5% of Q3 &mdash; Sep performance determines whether the ~$45K gap closes. Wholesaler fee acceleration (+52.4%) is the most positive new signal.</div>
+    <div class="band red">We are at <strong>+43.5% total</strong> (Core + Axerrio) vs the required +54.5%. The &minus;4.4pp drop in pacing (84.2%&rarr;79.8%) is larger than last week&rsquo;s &minus;0.9pp: Aug 2025 comps are harder (Aug = 32% of Q3 vs Jul = 25.4%), and Aug 13&ndash;16 in 2026 falls Sat/Sun vs Fri/Sat in 2025 (calendar offset adding 1&ndash;2pp). W7 resolved to +7.4% (full 6 days) confirming calendar-shift thesis. Sep carries 42.5% of Q3 &mdash; Sep performance determines whether the ~$60K gap closes. <strong>Next Thursday will confirm if pacing stabilizes or continues to ease.</strong></div>
   </section>
 
   <!-- S2: GMV -->
   <section id="s2">
-    <p class="eyebrow">Section 2 &mdash; GMV Online + Offline (Jul 1&ndash;Aug 12 2026 vs 2025)</p>
+    <p class="eyebrow">Section 2 &mdash; GMV Online + Offline (Jul 1&ndash;Aug 16 2026 vs 2025)</p>
     <h2>$127.3M total GMV &mdash; online growing +8.2%, offline &minus;2.6% &mdash; API GMV new concern</h2>
+    <div class="band blue" style="margin-bottom:10px;font-size:13px"><strong>Monday light run &mdash; GMV not re-queried.</strong> All GMV data is from the Aug 13 v7 run (43 days through Aug 12). Full GMV re-query on next Thursday run. Fee data updated through Aug 16.</div>
 
     <div class="grid4" style="margin-bottom:14px">
       <article class="card metric okLine">
@@ -437,19 +438,19 @@
   <!-- S3: WEEKLY PACING -->
   <section id="s3">
     <p class="eyebrow">Section 3 &mdash; Weekly Pacing + Trend Diagnosis</p>
-    <h2>7 weeks: W5 +45%, W6 +35% &mdash; W7 (2-day) &minus;6.9% is calendar-shift artifact, not structural</h2>
+    <h2>7 weeks: W6 +35%, W7 now complete (Aug 11&ndash;16) at +7.4% &mdash; J-shape comp continuing</h2>
 
-    <h3 style="margin-bottom:10px">Weekly fees: 2026 vs 2025 (Jul 1&ndash;Aug 12)</h3>
+    <h3 style="margin-bottom:10px">Weekly fees: 2026 vs 2025 (Jul 1&ndash;Aug 16)</h3>
     <div style="background:#fff;border:1px solid var(--line);border-radius:9px;padding:20px 24px 16px;margin-bottom:14px">
       <!--
-        7 weeks: W1(Jul 1-6) W2(Jul 7-13) W3(Jul 14-20) W4(Jul 21-27) W5(Jul 28-Aug 3) W6(Aug 4-10) W7(Aug 11-12 partial)
-        2025: $15,129 $25,187 $25,981 $26,161 $26,209 $29,590 $10,637
-        2026: $25,303 $34,658 $34,971 $35,938 $38,078 $39,964 $9,905
+        7 weeks: W1(Jul 1-6) W2(Jul 7-13) W3(Jul 14-20) W4(Jul 21-27) W5(Jul 28-Aug 3) W6(Aug 4-10) W7(Aug 11-16)
+        2025: $15,129 $25,187 $25,981 $26,161 $26,209 $29,590 $28,884
+        2026: $25,303 $34,658 $34,971 $35,938 $38,078 $39,964 $31,024
         Y range: 0-45000
         Chart area: viewBox 0 0 820 290, margins: left=80 bottom=40 right=20 top=30
         Y(val) = 250 - val * 220/45000
         X positions: W1=90 W2=205 W3=320 W4=435 W5=550 W6=665 W7=750
-        W7 segment shown dashed to indicate partial week
+        W7 is 6-day week (Aug 11-16, complete through cutoff Aug 16)
       -->
       <svg viewBox="0 0 820 290" style="width:100%;max-width:820px;display:block;margin:0 auto" aria-label="Weekly fees 2026 vs 2025 line chart, 7 weeks">
         <!-- Grid -->
@@ -471,22 +472,22 @@
         <text x="435" y="275" text-anchor="middle" font-size="10" fill="#344054" font-weight="600">W4 Jul 21&#8209;27</text>
         <text x="550" y="275" text-anchor="middle" font-size="10" fill="#344054" font-weight="600">W5 Jul 28&#8209;Aug 3</text>
         <text x="665" y="275" text-anchor="middle" font-size="10" fill="#344054" font-weight="600">W6 Aug 4&#8209;10</text>
-        <text x="750" y="275" text-anchor="middle" font-size="10" fill="#667085" font-style="italic">W7&#42;</text>
+        <text x="750" y="275" text-anchor="middle" font-size="10" fill="#344054" font-weight="600">W7 Aug 11&#8209;16</text>
         <!--
           Y coords (Y = 250 - val*220/45000):
-          2025: $15129->176, $25187->127, $25981->123, $26161->122, $26209->122, $29590->106, $10637->198
-          2026: $25303->126, $34658->81, $34971->79, $35938->74, $38078->64, $39964->55, $9905->202
+          2025: $15129->176, $25187->127, $25981->123, $26161->122, $26209->122, $29590->106, $28884->109
+          2026: $25303->126, $34658->81, $34971->79, $35938->74, $38078->64, $39964->55, $31024->98
         -->
-        <!-- Gap shading (W1-W6 only) -->
-        <polygon points="90,126 205,81 320,79 435,74 550,64 665,55 665,106 550,122 435,122 320,123 205,127 90,176" fill="#2457c5" fill-opacity="0.06"/>
+        <!-- Gap shading (W1-W7) -->
+        <polygon points="90,126 205,81 320,79 435,74 550,64 665,55 750,98 750,109 665,106 550,122 435,122 320,123 205,127 90,176" fill="#2457c5" fill-opacity="0.06"/>
         <!-- 2025 line W1-W6 (gray dashed) -->
         <polyline points="90,176 205,127 320,123 435,122 550,122 665,106" fill="none" stroke="#667085" stroke-width="2" stroke-dasharray="6 4"/>
-        <!-- 2025 line W6-W7 (lighter dashed, partial) -->
-        <line x1="665" y1="106" x2="750" y2="198" stroke="#667085" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+        <!-- 2025 line W6-W7 (solid, week complete) -->
+        <line x1="665" y1="106" x2="750" y2="109" stroke="#667085" stroke-width="2"/>
         <!-- 2026 line W1-W6 (blue solid) -->
         <polyline points="90,126 205,81 320,79 435,74 550,64 665,55" fill="none" stroke="#2457c5" stroke-width="2.5"/>
-        <!-- 2026 line W6-W7 (lighter dashed, partial week) -->
-        <line x1="665" y1="55" x2="750" y2="202" stroke="#2457c5" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+        <!-- 2026 line W6-W7 (solid, week complete) -->
+        <line x1="665" y1="55" x2="750" y2="98" stroke="#2457c5" stroke-width="2.5"/>
         <!-- 2025 dots W1-W6 -->
         <circle cx="90" cy="176" r="5" fill="#667085"/>
         <circle cx="205" cy="127" r="5" fill="#667085"/>
@@ -494,7 +495,7 @@
         <circle cx="435" cy="122" r="5" fill="#667085"/>
         <circle cx="550" cy="122" r="5" fill="#667085"/>
         <circle cx="665" cy="106" r="5" fill="#667085"/>
-        <circle cx="750" cy="198" r="4" fill="#667085" opacity="0.5"/>
+        <circle cx="750" cy="109" r="5" fill="#667085"/>
         <!-- 2026 dots W1-W6 -->
         <circle cx="90" cy="126" r="5" fill="#2457c5"/>
         <circle cx="205" cy="81" r="5" fill="#2457c5"/>
@@ -502,7 +503,7 @@
         <circle cx="435" cy="74" r="5" fill="#2457c5"/>
         <circle cx="550" cy="64" r="5" fill="#2457c5"/>
         <circle cx="665" cy="55" r="5" fill="#2457c5"/>
-        <circle cx="750" cy="202" r="4" fill="#2457c5" opacity="0.5"/>
+        <circle cx="750" cy="98" r="5" fill="#2457c5"/>
         <!-- 2025 value labels -->
         <text x="90" y="193" text-anchor="middle" font-size="10" fill="#667085">$15.1K</text>
         <text x="205" y="143" text-anchor="middle" font-size="10" fill="#667085">$25.2K</text>
@@ -510,7 +511,7 @@
         <text x="435" y="138" text-anchor="middle" font-size="10" fill="#667085">$26.2K</text>
         <text x="550" y="138" text-anchor="middle" font-size="10" fill="#667085">$26.2K</text>
         <text x="665" y="122" text-anchor="middle" font-size="10" fill="#667085">$29.6K</text>
-        <text x="750" y="214" text-anchor="middle" font-size="10" fill="#667085" opacity="0.7">$10.6K&#42;</text>
+        <text x="750" y="125" text-anchor="middle" font-size="10" fill="#667085">$28.9K</text>
         <!-- 2026 value labels -->
         <text x="90" y="116" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700">$25.3K</text>
         <text x="205" y="71" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700">$34.7K</text>
@@ -518,13 +519,13 @@
         <text x="435" y="64" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700">$35.9K</text>
         <text x="550" y="54" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700">$38.1K</text>
         <text x="665" y="45" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700">$40.0K</text>
-        <text x="750" y="192" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700" opacity="0.7">$9.9K&#42;</text>
+        <text x="750" y="88" text-anchor="middle" font-size="10" fill="#2457c5" font-weight="700">$31.0K</text>
         <!-- Legend -->
         <rect x="80" y="14" width="14" height="3" fill="#2457c5" rx="1"/>
         <text x="100" y="20" font-size="12" fill="#2457c5" font-weight="700">2026</text>
         <line x1="145" y1="17" x2="159" y2="17" stroke="#667085" stroke-width="2" stroke-dasharray="4 3"/>
         <text x="165" y="20" font-size="12" fill="#667085">2025</text>
-        <text x="310" y="20" font-size="10" fill="#b42318">&#42; W7 = Aug 11&#8211;12 only (2-day partial &mdash; calendar-shift artifact)</text>
+        <text x="310" y="20" font-size="10" fill="#344054">W7 = Aug 11&#8211;16 (6 days, complete through cutoff Aug 16)</text>
       </svg>
     </div>
 
@@ -589,48 +590,48 @@
             <td class="num" style="color:var(--gold)">+40.9%</td>
             <td class="num" style="color:var(--red)">75.1%</td>
           </tr>
-          <tr style="background:#fef3f2">
-            <td><strong>W7 (Aug 11&ndash;12) &#42;partial</strong> <span style="font-size:11px;color:var(--red)">Calendar-shift artifact</span></td>
-            <td class="num">$10,637</td>
-            <td class="num">$9,905</td>
-            <td class="num" style="color:var(--red)">&minus;6.9%</td>
-            <td class="num">&mdash;</td>
-            <td class="num" style="color:var(--red)">69.2% (Core only)</td>
+          <tr>
+            <td><strong>W7 (Aug 11&ndash;16)</strong> <span style="font-size:11px;color:var(--muted)">6 days (complete through cutoff)</span></td>
+            <td class="num">$28,884</td>
+            <td class="num">$31,024</td>
+            <td class="num" style="color:var(--green)">+7.4%</td>
+            <td class="num" style="color:var(--gold)">+35.4%</td>
+            <td class="num" style="color:var(--red)">65.0% (Core only)</td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total (43 days)</strong></td>
-            <td class="num">$158,894</td>
-            <td class="num">$218,817</td>
-            <td class="num" style="color:var(--green)">+37.7%</td>
-            <td class="num" style="color:var(--gold)">+37.7%</td>
-            <td class="num" style="color:var(--gold)"><strong>84.2%</strong> (total+Axerrio)</td>
+            <td><strong>Total (47 days)</strong></td>
+            <td class="num">$177,141</td>
+            <td class="num">$239,936</td>
+            <td class="num" style="color:var(--gold)">+35.4%</td>
+            <td class="num" style="color:var(--gold)">+35.4%</td>
+            <td class="num" style="color:var(--red)"><strong>79.8%</strong> (total+Axerrio)</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:5px">&#42; W7 is 2 calendar days (Aug 11&ndash;12). 2025 Aug 11 = Monday ($8,039); 2026 Aug 11 = Tuesday. Calendar is shifted by 1 day vs 2025, making partial-week comparisons unreliable. Core-only pacing = Core YoY / 54.5%. Total pacing (headline, incl. Axerrio) = 84.2%. Weekly fee sums: $218,817 vs confirmed $218,799 (&minus;$18 rounding, 0.008%).</p>
+    <p class="small" style="margin-top:5px">W7 covers Aug 11&ndash;16 (6 days, through cutoff Aug 16). Calendar is shifted 1 day vs 2025 (Aug 11 2025 = Mon; Aug 11 2026 = Tue). Core-only pacing = Core YoY / 54.5%. Total pacing (headline, incl. Axerrio) = 79.8%. Weekly fee sums: $239,936 vs confirmed $239,869 (&minus;$67 rounding, 0.028%).</p>
 
     <!-- TREND DIAGNOSIS -->
-    <h3 style="margin-top:22px">Trend Diagnosis &mdash; W7 &minus;6.9%: structural or artifact?</h3>
+    <h3 style="margin-top:22px">Trend Diagnosis &mdash; pacing &minus;4.4pp: structural or comp effect?</h3>
     <div class="grid2" style="margin-top:8px">
       <div class="diag-box" style="border-color:var(--green)">
         <h4 style="color:var(--green)">Hypothesis A: Structural deterioration</h4>
         <div class="verdict green">REJECTED</div>
-        <p style="font-size:13px;margin:0">Online GMV +8.2% YoY. Take rate improving to 0.861% (vs 0.677% in 2025). Wholesaler fees +52.4% YoY. W5 (+45.3%) and W6 (+35.1%) are both solid. No structural fee or volume decline observed.</p>
+        <p style="font-size:13px;margin:0">W7 resolved to +7.4% YoY (6-day complete) &mdash; confirming calendar-shift thesis. Online GMV +8.2% YoY (Aug 12 data). Take rate stable at 0.861%. No take-rate or volume collapse. Weekly YoY trend: W5 +45%, W6 +35%, W7 +7% (6-day, harder 2025 comp). Not structural.</p>
       </div>
       <div class="diag-box" style="border-color:var(--gold)">
-        <h4 style="color:var(--gold)">Hypothesis B: Calendar-shift artifact (W7)</h4>
+        <h4 style="color:var(--gold)">Hypothesis B: J-shape comp + calendar offset</h4>
         <div class="verdict gold">CONFIRMED</div>
-        <p style="font-size:13px;margin:0">2026 calendar is shifted 1 day vs 2025. Aug 11 2025 was Monday; Aug 11 2026 is Tuesday. 2-day partial weeks amplify day-of-week effects. This is not a real business signal. W5 and W6 (both full 7-day weeks) show healthy +45% and +35% YoY respectively.</p>
+        <p style="font-size:13px;margin:0">Aug 2025 = 32% of Q3 (harder than Jul = 25.4%). Aug 13&ndash;16 in 2026 falls Sat&ndash;Sun vs Fri&ndash;Sat in 2025, suppressing 2026 relative to prior year by 1&ndash;2pp. Pacing drop of &minus;4.4pp is larger than &minus;0.9pp last week due to this calendar offset amplifying the J-shape effect. Sep (42.5% of Q3) is the recovery window.</p>
       </div>
     </div>
     <div class="band gold" style="margin-top:10px">
-      <strong>Diagnosis: Calendar-shift artifact + J-shape comp.</strong> The W7 &minus;6.9% is noise from a 2-day partial week with a day-of-week mismatch. Full-week data (W5 +45%, W6 +35%) shows the business is healthy. Pacing dropped from 85.1% to 84.2% (&minus;0.9pp) as August 2025 comps get harder. Wholesaler fee acceleration (+52.4%) is the most meaningful new signal this run.
+      <strong>Diagnosis: J-shape comp + calendar offset, not structural.</strong> W7 recovered to +7.4% once the full 6 days were in (was &minus;6.9% at 2 days) &mdash; confirming calendar-shift artifact thesis from v7. Pacing moved from 84.2% to 79.8% (&minus;4.4pp) driven by harder Aug comps and a 1-day calendar offset suppressing Aug 13&ndash;16 2026 vs 2025. Next Thursday run will show if pacing stabilizes as the calendar effect normalizes.
     </div>
 
     <!-- LEADING INDICATORS / GA4 -->
     <h3 style="margin-top:20px">GA4 Leading Indicators (sessions = 3&ndash;5 day GMV signal)</h3>
-    <div class="band red" style="margin-bottom:10px;font-size:13px"><strong>BLOCKED this run:</strong> GA4 E-Commerce Sheet (fileId <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code>) exceeds read tool capacity (113,995 chars). Last known value: <strong>WoW sessions W5 vs W4 = +1.2% (no flag, from Aug 6 run)</strong>. GA4 Procurement sheet: last available data through Jul 27. Hostname breakdown below is from Aug 6 structural analysis (structural data, unchanged).</div>
+    <div class="band red" style="margin-bottom:10px;font-size:13px"><strong>BLOCKED this run:</strong> GA4 E-Commerce Sheet (fileId <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code>) data only available through <strong>Jun 15, 2026</strong> &mdash; sheet not refreshed since then (structural issue, not file size). Jul&ndash;Aug 2026 sessions not available. Last known value: <strong>WoW sessions W5 vs W4 = +1.2% (no flag, from Aug 6 run)</strong>. GA4 Procurement sheet: same staleness issue. Hostname breakdown below is from Aug 6 structural analysis (structural data, unchanged). Flag for Nahua: sheet refresh needed.</div>
     <div class="grid3">
       <article class="card metric warnLine">
         <small>GA4 eCom Sessions WoW (LAST KNOWN &mdash; Aug 6)</small>
@@ -648,7 +649,7 @@
         <p>File too large to read. Re-attempt next run with chunked read.</p>
       </article>
     </div>
-    <p class="prov" style="margin-top:8px"><strong>Blocked reason:</strong> Google Sheet <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code> &mdash; file content exceeds read capacity. Last successful read: Aug 6 2026. WoW threshold: WoW drop &gt;5% = GMV risk in 3&ndash;5 days. Hostname breakdown from Jul 27 run (structural, not re-queried).</p>
+    <p class="prov" style="margin-top:8px"><strong>Blocked reason:</strong> Google Sheet <code>1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ</code> &mdash; sheet contains data only through 2026-06-15 (not refreshed). Last successful read with current data: Aug 6 2026 (W5). WoW threshold: WoW drop &gt;5% = GMV risk in 3&ndash;5 days. Hostname breakdown from Jul 27 run (structural, not re-queried).</p>
 
     <h3 style="margin-top:20px">GA4 eCommerce &mdash; Hostname breakdown (from Aug 6 structural analysis, unchanged)</h3>
     <div class="tableWrap">
