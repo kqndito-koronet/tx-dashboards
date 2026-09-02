@@ -1,0 +1,210 @@
+{
+  "generated_at": "2026-08-24",
+  "compared": {
+    "old": "2026-08-13",
+    "new": "2026-08-24"
+  },
+  "summary": {
+    "old_client_count": 304,
+    "new_client_count": 304,
+    "old_wholesaler_clients": 124,
+    "new_wholesaler_clients": 125,
+    "classification_changes": 1,
+    "gmv_changes_gt_1M": 0,
+    "fees_ytd_2026_total": 1466317,
+    "fee_generating_companies": 216,
+    "data_gap_fixed": "Fees cube updated from Jul 2025 to Jul 2026 (+12 months)"
+  },
+  "classification_changes": [
+    {
+      "company": "FloraLink",
+      "field": "business_type",
+      "old": "Importer",
+      "new": "Wholesaler"
+    }
+  ],
+  "gmv_changes": [],
+  "fees_new": [],
+  "top_fee_generators": [
+    {
+      "company": "-Sole Farms",
+      "fees_ytd_2026": 137340.57,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "* Jet Fresh Flower Distributors Inc.",
+      "fees_ytd_2026": 103056.31,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Fresca Farms",
+      "fees_ytd_2026": 83875.37,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Kennicott Brothers Company",
+      "fees_ytd_2026": 83786.88,
+      "business_type": "Wholesaler",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "FloraLink",
+      "fees_ytd_2026": 60900.7,
+      "business_type": "Wholesaler",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Continental Flowers",
+      "fees_ytd_2026": 60542.04,
+      "business_type": "Importer",
+      "product_tier": "eSuite"
+    },
+    {
+      "company": "Royal Flowers Inc., Domestic",
+      "fees_ytd_2026": 59592.12,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Choice Farms",
+      "fees_ytd_2026": 58727.14,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Rosaprima International, LLC",
+      "fees_ytd_2026": 53073.77,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Bella Blossom LLC",
+      "fees_ytd_2026": 44832.58,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Allure Farms",
+      "fees_ytd_2026": 44812.33,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Bill Doran Company",
+      "fees_ytd_2026": 43017.81,
+      "business_type": "Wholesaler",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "* Welyflor / PROFILE FLOWERS",
+      "fees_ytd_2026": 40637.37,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Sunburst Farms",
+      "fees_ytd_2026": 38944.21,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "U.S. Greens Corp",
+      "fees_ytd_2026": 28462.43,
+      "business_type": "Importer",
+      "product_tier": "eSuite"
+    },
+    {
+      "company": "?",
+      "fees_ytd_2026": 25179.16,
+      "business_type": "?",
+      "product_tier": "?"
+    },
+    {
+      "company": "SUNRITE FARMS COLLECTIONS CORP",
+      "fees_ytd_2026": 24048.96,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Multiflora Corporation",
+      "fees_ytd_2026": 21750.24,
+      "business_type": "Importer",
+      "product_tier": "eSuite"
+    },
+    {
+      "company": "A Trilogy Floral - Zamba Flowers",
+      "fees_ytd_2026": 21508.09,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Gala Roses",
+      "fees_ytd_2026": 19665.38,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Miaflora Farms",
+      "fees_ytd_2026": 18897.98,
+      "business_type": "Importer",
+      "product_tier": "eSuite"
+    },
+    {
+      "company": "The Queens Flowers Corp",
+      "fees_ytd_2026": 18201.31,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "* Continental Farms",
+      "fees_ytd_2026": 17750.34,
+      "business_type": "Importer",
+      "product_tier": "K2K"
+    },
+    {
+      "company": "Floral Chain Direct",
+      "fees_ytd_2026": 17534.07,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Stellar Farms",
+      "fees_ytd_2026": 14214.93,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "EQR USA",
+      "fees_ytd_2026": 13068.51,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Mayesh Wholesale Florist Inc",
+      "fees_ytd_2026": 12459.17,
+      "business_type": "Wholesaler",
+      "product_tier": "Core+"
+    },
+    {
+      "company": "Equiflor LLC",
+      "fees_ytd_2026": 12338.72,
+      "business_type": "Importer",
+      "product_tier": "eSuite"
+    },
+    {
+      "company": "Premium Flowers",
+      "fees_ytd_2026": 11681.63,
+      "business_type": "Importer",
+      "product_tier": "eSuite"
+    },
+    {
+      "company": "Gardens America Inc.",
+      "fees_ytd_2026": 10994.12,
+      "business_type": "Importer",
+      "product_tier": "Core+"
+    }
+  ]
+}

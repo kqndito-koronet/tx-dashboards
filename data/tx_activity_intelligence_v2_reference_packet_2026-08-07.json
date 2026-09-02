@@ -1,0 +1,1652 @@
+{
+  "packet_type": "tx_activity_intelligence_v2_reference_packet",
+  "packet_version": "2.0.0-read-only",
+  "generated_at": "2026-08-07T21:51:06.751Z",
+  "contract": {
+    "purpose": {
+      "value": "Reference the existing Account Registry / Priorities, account-card DRAFT investigations, source activity and reviewed evidence without creating a parallel canonical work plan.",
+      "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+      "as_of": "2026-08-07",
+      "state": "OBSERVED"
+    },
+    "prohibited_inferences": {
+      "value": [
+        "A registry owner is not meeting owner or attendance.",
+        "A DRAFT card investigation is not selected work, a required agenda, or an assigned task.",
+        "A pipeline owner is not activation/account/call owner.",
+        "A Fathom candidate is not an exact account join or semantic review.",
+        "A later snapshot is an observation, not causal attribution."
+      ],
+      "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+      "as_of": "2026-08-07",
+      "state": "OBSERVED"
+    },
+    "current_selected_account_work": {
+      "value": null,
+      "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+      "as_of": "2026-08-07",
+      "state": "NOT_LOADED",
+      "note": "No retained, human-approved current account-work object exists in the audited sources."
+    }
+  },
+  "source_register": {
+    "registry": {
+      "value": "ops/canonical/accounts_registry.md",
+      "source": "ops/canonical/accounts_registry.md",
+      "as_of": "2026-07-30",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "accounts": {
+      "value": "docs/transactions/data/accounts.json",
+      "source": "docs/transactions/data/accounts.json",
+      "as_of": "2026-07-30",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "crosswalk": {
+      "value": "docs/transactions/data/company_identity_crosswalk.json",
+      "source": "docs/transactions/data/company_identity_crosswalk.json",
+      "as_of": "2026-08-07",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "spine": {
+      "value": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+      "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+      "as_of": "2026-07-30",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "sfdc": {
+      "value": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+      "source": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+      "as_of": "2026-08-04T08:25:12Z",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "fathom": {
+      "value": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+      "source": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+      "as_of": "2026-08-05",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "reviewed": {
+      "value": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+      "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+      "as_of": "2026-08-04",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "comparator": {
+      "value": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+      "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+      "as_of": "2026-08-07",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "calendar": {
+      "value": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+      "source": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+      "as_of": "2026-08-04",
+      "state": "READ_ONLY_SOURCE"
+    },
+    "audit": {
+      "value": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+      "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+      "as_of": "2026-08-07",
+      "state": "READ_ONLY_SOURCE"
+    }
+  },
+  "account_reference_rows": [
+    {
+      "canonical_account": {
+        "canonical_account_id": {
+          "value": "601933",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "display_name": {
+          "value": "Flora Fresh Inc",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "cohort_snapshot": {
+          "value": "TA",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "identity_crosswalk": {
+          "value": {
+            "sfdc_account_ids": [
+              "001G000001TsqcLIAR"
+            ],
+            "match_state": "EXACT_NORMALIZED_NAME_TO_SFDC",
+            "aliases": [
+              "Flora Fresh Inc"
+            ],
+            "unresolved": [
+              "hostname_mapping"
+            ]
+          },
+          "source": "docs/transactions/data/company_identity_crosswalk.json",
+          "as_of": "baseline undated",
+          "state": "EXACT_MATCH"
+        }
+      },
+      "canonical_registry_priority_context": {
+        "registry_rows": {
+          "value": [
+            "| Flora Fresh | — | WATCH | `[TA, WATCH]` | $5.56M | ? | UNKNOWN (0.6% online). Has ALL tools, no usage. Needs deep dive. | CS unassigned |",
+            "| Flora Fresh | — | WATCH | `[TA, WATCH]` | See TA section. |  |"
+          ],
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED",
+          "note": "Rows are preserved verbatim because account/tag rows can be multi-valued. The dated registry owner is portfolio context only."
+        },
+        "registry_as_of": {
+          "value": "2026-07-30",
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED"
+        },
+        "owner_interpretation": {
+          "value": "Registry named owner(s) only; current accountable work owner is NOT_LOADED.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "PARTIAL"
+        }
+      },
+      "tx_draft_opportunity_context": {
+        "account_card_candidates": {
+          "value": null,
+          "source": "docs/transactions/index.html#getOpportunities",
+          "as_of": "2026-07-30",
+          "state": "NOT_LOADED",
+          "note": "The card renderer generates DRAFT investigations on demand; no persisted, accepted per-account opportunity object was retained."
+        },
+        "safe_use": {
+          "value": "Reviewer question only: did reviewed evidence address this candidate or reveal another topic? Never agenda compliance.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "OBSERVED"
+        },
+        "pipeline_context": {
+          "value": [
+            {
+              "opportunity_id": "006VL00000X1829YAB",
+              "account_id": "001G000001TsqcLIAR",
+              "opp_name": "Flora Fresh Inc - Flora Fresh Inc - Koronet Procurement",
+              "stage": "Discovery",
+              "amount": 299,
+              "close_date": "2026-10-31",
+              "owner": "Santiago Bermudez",
+              "last_modified_at": "2026-05-06T19:33:37.000+0000"
+            },
+            {
+              "opportunity_id": "006VL00000ZNuWnYAL",
+              "account_id": "001G000001TsqcLIAR",
+              "opp_name": "Flora Fresh Inc - Renewal 2026-2027",
+              "stage": "Discovery",
+              "amount": null,
+              "close_date": "2026-08-31",
+              "owner": "Catalina Rojas",
+              "last_modified_at": "2026-07-01T20:50:11.000+0000"
+            }
+          ],
+          "source": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+          "as_of": "2026-08-04T08:25:12Z",
+          "state": "OBSERVED_CONTEXT",
+          "note": "Open SFDC pipeline context only; record owner is not activity/work owner."
+        }
+      },
+      "tx_state_metrics": {
+        "koronet_buy_gmv_ytd": {
+          "value": {
+            "value": 2656891.17,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement transactions, ks_flag=TRUE"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_gmv_ytd": {
+          "value": {
+            "value": 7322.81,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement online-channel transactions"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_share_ytd": {
+          "value": {
+            "value": 0.28,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed procurement population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_gmv_ytd": {
+          "value": {
+            "value": 6044472.47,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales transactions, ks_flag=TRUE, quality filters applied"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_gmv_ytd": {
+          "value": {
+            "value": 32749.1,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales in eCommerce/K2K/API channels"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_share_ytd": {
+          "value": {
+            "value": 0.54,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed sales population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "listing_inventory_parity": {
+          "value": {
+            "value": null,
+            "unit": "object",
+            "period_start": null,
+            "period_end": null,
+            "coverage": "active catalogue/inventory coverage unavailable"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "COMPARISON_BLOCKED",
+          "note": "Need online/offline catalogue, availability horizon, bunches and fulfillment data at product grain."
+        }
+      },
+      "source_activity": {
+        "fathom_candidate_events": {
+          "value": [
+            {
+              "recording_id": 167595760,
+              "date": "2026-07-27",
+              "title": "Flora Fresh - Arrival date",
+              "url": "https://fathom.video/calls/760187032",
+              "recorded_by_raw": "Valentina Espinel | gregs@florafreshinc.com, kvang@florafreshinc.com, Sebastian Rodriguez",
+              "recorder_department_candidate": "CS",
+              "tags": [
+                "TA",
+                "WATCH"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 157245359,
+              "date": "2026-06-22",
+              "title": "Flora Fresh |  Support ",
+              "url": "https://fathom.video/calls/718283075",
+              "recorded_by_raw": "Milena Mezamell | gregs@florafreshinc.com, Anthony Brown, Johan Garcia, juanm@koronet.com, pablom@koronet.com, Valentina Espinel, Umberto Negro, Dena Carloss, kvang@florafreshinc.com, Christine Nickelsen",
+              "recorder_department_candidate": "Implementation",
+              "tags": [
+                "TA",
+                "WATCH"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 152043329,
+              "date": "2026-06-03",
+              "title": "Flora Fresh HG discussion placeholder",
+              "url": "https://fathom.video/calls/695346133",
+              "recorded_by_raw": "Milena Mezamell | Karina Hernández, Johan Hidalgo, Magalí Carró, Cristina Casas, Dena Carloss, kvang@florafreshinc.com, ralvarado@florafreshinc.com",
+              "recorder_department_candidate": "Implementation",
+              "tags": [
+                "TA",
+                "WATCH"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 152029178,
+              "date": "2026-06-03",
+              "title": "Flora Fresh <-> Koronet eShops Product Team",
+              "url": "https://fathom.video/calls/695291284",
+              "recorded_by_raw": "Agustin Perez Aquino | Anthony Brown, maria.huaccha@koronet.com, mauricio.mancini@koronet.com, bperez@florafreshinc.com",
+              "recorder_department_candidate": "Other/unknown",
+              "tags": [
+                "TA",
+                "WATCH"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            }
+          ],
+          "source": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+          "as_of": "2026-08-05",
+          "state": "CANDIDATE_METADATA_ONLY",
+          "note": "Title/recorder alias matching only; raw participant lists do not prove invitation, attendance, speaking, or call subject."
+        },
+        "calendar_strategy_visibility": {
+          "value": [],
+          "source": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+          "as_of": "2026-08-04",
+          "state": "NOT_LOADED",
+          "note": "Calendar acceptance establishes visibility on Facu calendar, not attendance, organizer, invite origin or result."
+        },
+        "sfdc_activity_detail": {
+          "value": null,
+          "source": "SFDC Task/Event/Email detailed adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "Aggregate counts exist elsewhere but no per-account/owner/date event feed is retained."
+        },
+        "jira_activity_detail": {
+          "value": null,
+          "source": "Jira adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "No retained Jira activity source."
+        }
+      },
+      "conversation_review": {
+        "direct_reviewed_staged": {
+          "value": [],
+          "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "NOT_REVIEWED",
+          "note": "Only source-listed calls have semantic content. Do not promote staged review to selected play or outcome."
+        },
+        "comparator_evidence": {
+          "value": [],
+          "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "NOT_REVIEWED",
+          "note": "The comparator is qualitative evidence, not a portfolio score."
+        },
+        "priority_addressed_state": {
+          "value": null,
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "NOT_LOADED",
+          "note": "Requires direct review plus an approved current account-work/opportunity reference; absent by design."
+        }
+      },
+      "linked_canonical_play_or_gate": {
+        "value": null,
+        "source": "existing Play Registry / gtm_play_instances",
+        "as_of": "not joined in retained audit",
+        "state": "NOT_LOADED",
+        "note": "This packet neither selects a play nor creates a play instance."
+      }
+    },
+    {
+      "canonical_account": {
+        "canonical_account_id": {
+          "value": "623491",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "display_name": {
+          "value": "Baisch & Skinner",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "cohort_snapshot": {
+          "value": "TA",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "identity_crosswalk": {
+          "value": {
+            "sfdc_account_ids": [
+              "0011600001riCHoAAM"
+            ],
+            "match_state": "EXACT_NORMALIZED_NAME_TO_SFDC",
+            "aliases": [
+              "Baisch & Skinner"
+            ],
+            "unresolved": [
+              "hostname_mapping"
+            ]
+          },
+          "source": "docs/transactions/data/company_identity_crosswalk.json",
+          "as_of": "baseline undated",
+          "state": "EXACT_MATCH"
+        }
+      },
+      "canonical_registry_priority_context": {
+        "registry_rows": {
+          "value": [
+            "| Baisch & Skinner | 623491 | ACTIVE | `[TA]` | TBD | TBD | SELL: feature gaps. PO consolidation fixed (NetSuite). eShop collections. | Christian Medina |"
+          ],
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED",
+          "note": "Rows are preserved verbatim because account/tag rows can be multi-valued. The dated registry owner is portfolio context only."
+        },
+        "registry_as_of": {
+          "value": "2026-07-30",
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED"
+        },
+        "owner_interpretation": {
+          "value": "Registry named owner(s) only; current accountable work owner is NOT_LOADED.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "PARTIAL"
+        }
+      },
+      "tx_draft_opportunity_context": {
+        "account_card_candidates": {
+          "value": null,
+          "source": "docs/transactions/index.html#getOpportunities",
+          "as_of": "2026-07-30",
+          "state": "NOT_LOADED",
+          "note": "The card renderer generates DRAFT investigations on demand; no persisted, accepted per-account opportunity object was retained."
+        },
+        "safe_use": {
+          "value": "Reviewer question only: did reviewed evidence address this candidate or reveal another topic? Never agenda compliance.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "OBSERVED"
+        },
+        "pipeline_context": {
+          "value": [],
+          "source": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+          "as_of": "2026-08-04T08:25:12Z",
+          "state": "NO_EXACT_ROW_IN_SNAPSHOT",
+          "note": "Open SFDC pipeline context only; record owner is not activity/work owner."
+        }
+      },
+      "tx_state_metrics": {
+        "koronet_buy_gmv_ytd": {
+          "value": {
+            "value": 332429.52,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement transactions, ks_flag=TRUE"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_gmv_ytd": {
+          "value": {
+            "value": 331949.35,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement online-channel transactions"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_share_ytd": {
+          "value": {
+            "value": 99.86,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed procurement population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_gmv_ytd": {
+          "value": {
+            "value": 498173.13,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales transactions, ks_flag=TRUE, quality filters applied"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_gmv_ytd": {
+          "value": {
+            "value": 498173.13,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales in eCommerce/K2K/API channels"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_share_ytd": {
+          "value": {
+            "value": 100,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed sales population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "listing_inventory_parity": {
+          "value": {
+            "value": null,
+            "unit": "object",
+            "period_start": null,
+            "period_end": null,
+            "coverage": "active catalogue/inventory coverage unavailable"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "COMPARISON_BLOCKED",
+          "note": "Need online/offline catalogue, availability horizon, bunches and fulfillment data at product grain."
+        }
+      },
+      "source_activity": {
+        "fathom_candidate_events": {
+          "value": [
+            {
+              "recording_id": 168902593,
+              "date": "2026-07-30",
+              "title": "Baisch & Skinner <> Koronet — Follow-up",
+              "url": "https://fathom.video/calls/767185041",
+              "recorded_by_raw": "Facundo Lavino | Chris Beals, jenna@baischandskinner.com",
+              "recorder_department_candidate": "TX",
+              "tags": [
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 166596293,
+              "date": "2026-07-23",
+              "title": "Touchbase session | Baisch & Skinner | Komet Sales",
+              "url": "https://fathom.video/calls/756267557",
+              "recorded_by_raw": "Christian Medina | jenna@baischandskinner.com, Agustin Perez Aquino",
+              "recorder_department_candidate": "CS",
+              "tags": [
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 162272632,
+              "date": "2026-07-09",
+              "title": "Touchbase | Baisch & Skinner | Komet Sales",
+              "url": "https://fathom.video/calls/740011629",
+              "recorded_by_raw": "Christian Medina | jenna@baischandskinner.com",
+              "recorder_department_candidate": "CS",
+              "tags": [
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 154456305,
+              "date": "2026-06-11",
+              "title": "Touchbase | Baisch & Skinner | Komet Sales",
+              "url": "https://fathom.video/calls/706118931",
+              "recorded_by_raw": "Christian Medina | jenna@baischandskinner.com",
+              "recorder_department_candidate": "CS",
+              "tags": [
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 144476702,
+              "date": "2026-05-07",
+              "title": "Komet Sales | Let's Meet | Christian Medina (Jenna Ferleman)",
+              "url": "https://fathom.video/calls/662211090",
+              "recorded_by_raw": "Christian Medina | jenna@baischandskinner.com",
+              "recorder_department_candidate": "CS",
+              "tags": [
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            }
+          ],
+          "source": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+          "as_of": "2026-08-05",
+          "state": "CANDIDATE_METADATA_ONLY",
+          "note": "Title/recorder alias matching only; raw participant lists do not prove invitation, attendance, speaking, or call subject."
+        },
+        "calendar_strategy_visibility": {
+          "value": [
+            {
+              "item_id": "baisch-01",
+              "type": "learning",
+              "primary_type": "learning",
+              "summary": "Baisch follow-up on Jul 30 is accepted and described as catch-up/discovery plus intro to Facu as head of the transactional network. It includes recording and notes attachments.",
+              "source_evidence": "Google Calendar event soagkgjd8bgpg76k4eg4psr1tk",
+              "source_moment": "2026-07-30",
+              "trust_state": "partial",
+              "next_action": "Join to Fathom 168902593, selected play and movement; do not treat acceptance as outcome.",
+              "route": [
+                "calendar-activity",
+                "account:baisch"
+              ],
+              "review_notes": [
+                "Strategy visibility only."
+              ]
+            }
+          ],
+          "source": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+          "as_of": "2026-08-04",
+          "state": "CALENDAR_METADATA_REVIEWED",
+          "note": "Calendar acceptance establishes visibility on Facu calendar, not attendance, organizer, invite origin or result."
+        },
+        "sfdc_activity_detail": {
+          "value": null,
+          "source": "SFDC Task/Event/Email detailed adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "Aggregate counts exist elsewhere but no per-account/owner/date event feed is retained."
+        },
+        "jira_activity_detail": {
+          "value": null,
+          "source": "Jira adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "No retained Jira activity source."
+        }
+      },
+      "conversation_review": {
+        "direct_reviewed_staged": {
+          "value": [
+            {
+              "value": "| 2026-07-30 | Baisch customer follow-up | TX | BUY_DISCOVERY | 168902593 | staged / pending promotion |",
+              "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+              "as_of": "2026-08-04",
+              "state": "DIRECT_REVIEWED_STAGED",
+              "note": "The source labels these rows staged / pending promotion."
+            },
+            {
+              "value": "| 2026-07-23 | Baisch touchbase | CS + Product | BUY_EXECUTION / objection | 166596293 | staged / pending promotion |",
+              "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+              "as_of": "2026-08-04",
+              "state": "DIRECT_REVIEWED_STAGED",
+              "note": "The source labels these rows staged / pending promotion."
+            }
+          ],
+          "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "DIRECT_REVIEWED_STAGED",
+          "note": "Only source-listed calls have semantic content. Do not promote staged review to selected play or outcome."
+        },
+        "comparator_evidence": {
+          "value": [
+            {
+              "value": "| [Baisch & Skinner follow-up](https://fathom.video/calls/767185041), Jul 30 — Facu | The customer says Procurement has not been fully usable because K2K POs previously overrode NetSuite POs; product naming/mapping is inconsistent; connection changes create delivery risk. They also describe a curated, limited buyer offer for special/flash sales. [Procurement issue](https://fathom.video/calls/767185041?timestamp=688) · [curated offer](https://fathom.video/calls/767185041?timestamp=896) | `BUY_DISCOVERY` with a possible `LIST_COMMERCIAL_OFFER` branch. Not eCom surface work. | Root causes to validate: traceability/NetSuite workflow, product normalization, and delivery-confidence risk. The customer proposes a bounded curated offer, not generic catalog breadth. | Strong opening discovery: customer process and commercial friction emerge. Still incomplete until it names category/format, horizon, route/vendor, decision maker, first-PO/listing target and date. | Choose one route: BUY Discovery → Pair Activation/Commercial Supply Brief, or Type 2 L-P1 curated offer. Produce the artifact and capture first PO/listing proof. |",
+              "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+              "as_of": "2026-08-04",
+              "state": "DIRECT_REVIEWED",
+              "note": "Timestamp links and qualitative read are in the source row."
+            }
+          ],
+          "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "DIRECT_REVIEWED",
+          "note": "The comparator is qualitative evidence, not a portfolio score."
+        },
+        "priority_addressed_state": {
+          "value": null,
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "NOT_LOADED",
+          "note": "Requires direct review plus an approved current account-work/opportunity reference; absent by design."
+        }
+      },
+      "linked_canonical_play_or_gate": {
+        "value": null,
+        "source": "existing Play Registry / gtm_play_instances",
+        "as_of": "not joined in retained audit",
+        "state": "NOT_LOADED",
+        "note": "This packet neither selects a play nor creates a play instance."
+      }
+    },
+    {
+      "canonical_account": {
+        "canonical_account_id": {
+          "value": "765491",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "display_name": {
+          "value": "Dreisbach Wholesale",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "cohort_snapshot": {
+          "value": "TA",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "identity_crosswalk": {
+          "value": {
+            "sfdc_account_ids": [
+              "001G000001DW4PBIA1"
+            ],
+            "match_state": "EXACT_NORMALIZED_NAME_TO_SFDC",
+            "aliases": [
+              "Dreisbach Wholesale"
+            ],
+            "unresolved": [
+              "hostname_mapping"
+            ]
+          },
+          "source": "docs/transactions/data/company_identity_crosswalk.json",
+          "as_of": "baseline undated",
+          "state": "EXACT_MATCH"
+        }
+      },
+      "canonical_registry_priority_context": {
+        "registry_rows": {
+          "value": [
+            "| Dreisbach Wholesale | — | PRE_GO_LIVE | `[Implementation, TA]` | Core+Shop | LIST: bunches blocked. FedEx Box Program OVERDUE. $25.6K online. | Facu/Christine |",
+            "| Dreisbach | — | ACTIVE | `[TA, Implementation]` | $25.6K online | $358 | LIST: bunches+supply | Facu |",
+            "| Dreisbach | ✓✓✓ | — | Done |"
+          ],
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED",
+          "note": "Rows are preserved verbatim because account/tag rows can be multi-valued. The dated registry owner is portfolio context only."
+        },
+        "registry_as_of": {
+          "value": "2026-07-30",
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED"
+        },
+        "owner_interpretation": {
+          "value": "Registry named owner(s) only; current accountable work owner is NOT_LOADED.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "PARTIAL"
+        }
+      },
+      "tx_draft_opportunity_context": {
+        "account_card_candidates": {
+          "value": null,
+          "source": "docs/transactions/index.html#getOpportunities",
+          "as_of": "2026-07-30",
+          "state": "NOT_LOADED",
+          "note": "The card renderer generates DRAFT investigations on demand; no persisted, accepted per-account opportunity object was retained."
+        },
+        "safe_use": {
+          "value": "Reviewer question only: did reviewed evidence address this candidate or reveal another topic? Never agenda compliance.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "OBSERVED"
+        },
+        "pipeline_context": {
+          "value": [],
+          "source": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+          "as_of": "2026-08-04T08:25:12Z",
+          "state": "NO_EXACT_ROW_IN_SNAPSHOT",
+          "note": "Open SFDC pipeline context only; record owner is not activity/work owner."
+        }
+      },
+      "tx_state_metrics": {
+        "koronet_buy_gmv_ytd": {
+          "value": {
+            "value": 36714.59,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement transactions, ks_flag=TRUE"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_gmv_ytd": {
+          "value": {
+            "value": 36714.59,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement online-channel transactions"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_share_ytd": {
+          "value": {
+            "value": 100,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed procurement population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_gmv_ytd": {
+          "value": {
+            "value": 27741.89,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales transactions, ks_flag=TRUE, quality filters applied"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_gmv_ytd": {
+          "value": {
+            "value": 27741.89,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales in eCommerce/K2K/API channels"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_share_ytd": {
+          "value": {
+            "value": 100,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed sales population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "listing_inventory_parity": {
+          "value": {
+            "value": null,
+            "unit": "object",
+            "period_start": null,
+            "period_end": null,
+            "coverage": "active catalogue/inventory coverage unavailable"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "COMPARISON_BLOCKED",
+          "note": "Need online/offline catalogue, availability horizon, bunches and fulfillment data at product grain."
+        }
+      },
+      "source_activity": {
+        "fathom_candidate_events": {
+          "value": [
+            {
+              "recording_id": 168826318,
+              "date": "2026-07-30",
+              "title": "Dreisbach Wholesale | Implementation",
+              "url": "https://fathom.video/calls/764782344",
+              "recorded_by_raw": "Milena Mezamell | Camila Peña Ronderos, Angela Stalter, Christine Nickelsen",
+              "recorder_department_candidate": "Implementation",
+              "tags": [
+                "Implementation",
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 164793314,
+              "date": "2026-07-17",
+              "title": "Opportunity Review ",
+              "url": "https://fathom.video/calls/749761897",
+              "recorded_by_raw": "Facundo Lavino | omalley@dreisbachs.com, Angela Stalter, Christian Medina, Diego Chiriboga, Christine Nickelsen",
+              "recorder_department_candidate": "TX",
+              "tags": [
+                "Implementation",
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 161384261,
+              "date": "2026-07-07",
+              "title": "Dreisbach — West Virginia Growth Plan",
+              "url": "https://fathom.video/calls/736565146",
+              "recorded_by_raw": "Christian Medina | Angela Stalter, Christine Nickelsen, Facundo Lavino",
+              "recorder_department_candidate": "TX",
+              "tags": [
+                "Implementation",
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 161370925,
+              "date": "2026-07-07",
+              "title": "Dreisbach — West Virginia Growth Plan",
+              "url": "https://fathom.video/calls/736564283",
+              "recorded_by_raw": "Facundo Lavino | Angela Stalter, Christian Medina, Christine Nickelsen",
+              "recorder_department_candidate": "TX",
+              "tags": [
+                "Implementation",
+                "TA"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            }
+          ],
+          "source": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+          "as_of": "2026-08-05",
+          "state": "CANDIDATE_METADATA_ONLY",
+          "note": "Title/recorder alias matching only; raw participant lists do not prove invitation, attendance, speaking, or call subject."
+        },
+        "calendar_strategy_visibility": {
+          "value": [
+            {
+              "item_id": "dreisbach-02",
+              "type": "learning",
+              "primary_type": "learning",
+              "summary": "Dreisbach West Virginia Growth Plan on Jul 7 is accepted; agenda names Facu as running point and says Chris handed the lead to Facu on Jul 1.",
+              "source_evidence": "Google Calendar event pq86osqj0neinju8qlh8fc4fac",
+              "source_moment": "2026-07-07",
+              "trust_state": "partial",
+              "next_action": "Join to Fathom 161370925, branch baseline, play, owner and proof gate.",
+              "route": [
+                "calendar-activity",
+                "account:dreisbach"
+              ],
+              "review_notes": [
+                "Does not establish who invited Facu or result."
+              ]
+            }
+          ],
+          "source": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+          "as_of": "2026-08-04",
+          "state": "CALENDAR_METADATA_REVIEWED",
+          "note": "Calendar acceptance establishes visibility on Facu calendar, not attendance, organizer, invite origin or result."
+        },
+        "sfdc_activity_detail": {
+          "value": null,
+          "source": "SFDC Task/Event/Email detailed adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "Aggregate counts exist elsewhere but no per-account/owner/date event feed is retained."
+        },
+        "jira_activity_detail": {
+          "value": null,
+          "source": "Jira adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "No retained Jira activity source."
+        }
+      },
+      "conversation_review": {
+        "direct_reviewed_staged": {
+          "value": [
+            {
+              "value": "| 2026-07-30 | Dreisbach | Implementation | CONFIG | 168826318 | staged / pending promotion |",
+              "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+              "as_of": "2026-08-04",
+              "state": "DIRECT_REVIEWED_STAGED",
+              "note": "The source labels these rows staged / pending promotion."
+            },
+            {
+              "value": "| 2026-07-07 | Dreisbach WV growth plan | TX + CS + Implementation | strategy / BUY_DISCOVERY | 161370925 | staged / pending promotion |",
+              "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+              "as_of": "2026-08-04",
+              "state": "DIRECT_REVIEWED_STAGED",
+              "note": "The source labels these rows staged / pending promotion."
+            }
+          ],
+          "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "DIRECT_REVIEWED_STAGED",
+          "note": "Only source-listed calls have semantic content. Do not promote staged review to selected play or outcome."
+        },
+        "comparator_evidence": {
+          "value": [
+            {
+              "value": "| [Dreisbach implementation](https://fathom.video/calls/764782344), Jul 30 — Milena/Camila | The call starts with location creation, users, GPM/QBRI and assignment configuration. The customer later states they are offering Miami distribution only and not calculating freight by weight. [call objective](https://fathom.video/calls/764782344?timestamp=223) · [operating constraint](https://fathom.video/calls/764782344?timestamp=610) | `CONFIG` / implementation enablement. It is not LIST or marketing, and it does not on its own establish BUY activation. | Customer constraint: current supply/fulfillment scope is Miami only; that must constrain any future commercial play. | Proper implementation work, but no evidenced demand diagnosis, Commercial Supply Brief, selected buyer/vendor pair, listed-offer denominator or first/repeat transaction proof in the reviewed transcript. | Verify config gate, then hand off to the appropriate canonical play: Type 1/10 if supply/connection is the issue; Type 2 only after a buyer-visible offer denominator exists. |",
+              "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+              "as_of": "2026-08-04",
+              "state": "DIRECT_REVIEWED",
+              "note": "Timestamp links and qualitative read are in the source row."
+            }
+          ],
+          "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "DIRECT_REVIEWED",
+          "note": "The comparator is qualitative evidence, not a portfolio score."
+        },
+        "priority_addressed_state": {
+          "value": null,
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "NOT_LOADED",
+          "note": "Requires direct review plus an approved current account-work/opportunity reference; absent by design."
+        }
+      },
+      "linked_canonical_play_or_gate": {
+        "value": null,
+        "source": "existing Play Registry / gtm_play_instances",
+        "as_of": "not joined in retained audit",
+        "state": "NOT_LOADED",
+        "note": "This packet neither selects a play nor creates a play instance."
+      }
+    },
+    {
+      "canonical_account": {
+        "canonical_account_id": {
+          "value": "193828",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "display_name": {
+          "value": "Arizona Family Florist",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "cohort_snapshot": {
+          "value": "TA",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "identity_crosswalk": {
+          "value": {
+            "sfdc_account_ids": [
+              "00116000023rB8qAAE"
+            ],
+            "match_state": "EXACT_NORMALIZED_NAME_TO_SFDC",
+            "aliases": [
+              "Arizona Family Florist"
+            ],
+            "unresolved": [
+              "hostname_mapping"
+            ]
+          },
+          "source": "docs/transactions/data/company_identity_crosswalk.json",
+          "as_of": "baseline undated",
+          "state": "EXACT_MATCH"
+        }
+      },
+      "canonical_registry_priority_context": {
+        "registry_rows": {
+          "value": [
+            "| Arizona Family Florist | 193828 | ACTIVE | `[TA, MultiLocation]` | $3.2M sell | $0.54 | BUY: procurement dead ($87) + LIST: hidden | Facu/Dave |",
+            "| **Arizona Family Florist** | Phoenix AZ + 2nd location (unconfirmed, possibly Houston) | 193828 (1 ID, 2 locations) | `[TA, MultiLocation]` | 2nd location city UNCONFIRMED. If Houston = same market as H&T Houston. |"
+          ],
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED",
+          "note": "Rows are preserved verbatim because account/tag rows can be multi-valued. The dated registry owner is portfolio context only."
+        },
+        "registry_as_of": {
+          "value": "2026-07-30",
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED"
+        },
+        "owner_interpretation": {
+          "value": "Registry named owner(s) only; current accountable work owner is NOT_LOADED.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "PARTIAL"
+        }
+      },
+      "tx_draft_opportunity_context": {
+        "account_card_candidates": {
+          "value": null,
+          "source": "docs/transactions/index.html#getOpportunities",
+          "as_of": "2026-07-30",
+          "state": "NOT_LOADED",
+          "note": "The card renderer generates DRAFT investigations on demand; no persisted, accepted per-account opportunity object was retained."
+        },
+        "safe_use": {
+          "value": "Reviewer question only: did reviewed evidence address this candidate or reveal another topic? Never agenda compliance.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "OBSERVED"
+        },
+        "pipeline_context": {
+          "value": [],
+          "source": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+          "as_of": "2026-08-04T08:25:12Z",
+          "state": "NO_EXACT_ROW_IN_SNAPSHOT",
+          "note": "Open SFDC pipeline context only; record owner is not activity/work owner."
+        }
+      },
+      "tx_state_metrics": {
+        "koronet_buy_gmv_ytd": {
+          "value": {
+            "value": 2535249.39,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement transactions, ks_flag=TRUE"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_gmv_ytd": {
+          "value": {
+            "value": 86.8,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement online-channel transactions"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_share_ytd": {
+          "value": {
+            "value": 0,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed procurement population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_gmv_ytd": {
+          "value": {
+            "value": 1917643.48,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales transactions, ks_flag=TRUE, quality filters applied"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_gmv_ytd": {
+          "value": {
+            "value": 0,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales in eCommerce/K2K/API channels"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_share_ytd": {
+          "value": {
+            "value": 0,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed sales population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "listing_inventory_parity": {
+          "value": {
+            "value": null,
+            "unit": "object",
+            "period_start": null,
+            "period_end": null,
+            "coverage": "active catalogue/inventory coverage unavailable"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "COMPARISON_BLOCKED",
+          "note": "Need online/offline catalogue, availability horizon, bunches and fulfillment data at product grain."
+        }
+      },
+      "source_activity": {
+        "fathom_candidate_events": {
+          "value": [],
+          "source": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+          "as_of": "2026-08-05",
+          "state": "NO_CANDIDATE_EVENT",
+          "note": "Title/recorder alias matching only; raw participant lists do not prove invitation, attendance, speaking, or call subject."
+        },
+        "calendar_strategy_visibility": {
+          "value": [
+            {
+              "item_id": "arizona-04",
+              "type": "learning",
+              "primary_type": "learning",
+              "summary": "Arizona Family has accepted Jul 23 visit and Jul 27 revision events; a later Facu focus block references NetSuite discovery framing, but the focus block is not a customer meeting.",
+              "source_evidence": "Google Calendar events 17rmjbjkfectk8251kphai2q0p and 66eq76aq6r0qac7ogepn7cgg2f",
+              "source_moment": "2026-07-23 and 2026-07-27",
+              "trust_state": "partial",
+              "next_action": "Resolve customer-call evidence and join to procurement/listing behavior before a TX result claim.",
+              "route": [
+                "calendar-activity",
+                "account:arizona-family"
+              ],
+              "review_notes": [
+                "Do not count the internal focus block as customer activity."
+              ]
+            }
+          ],
+          "source": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+          "as_of": "2026-08-04",
+          "state": "CALENDAR_METADATA_REVIEWED",
+          "note": "Calendar acceptance establishes visibility on Facu calendar, not attendance, organizer, invite origin or result."
+        },
+        "sfdc_activity_detail": {
+          "value": null,
+          "source": "SFDC Task/Event/Email detailed adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "Aggregate counts exist elsewhere but no per-account/owner/date event feed is retained."
+        },
+        "jira_activity_detail": {
+          "value": null,
+          "source": "Jira adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "No retained Jira activity source."
+        }
+      },
+      "conversation_review": {
+        "direct_reviewed_staged": {
+          "value": [],
+          "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "NOT_REVIEWED",
+          "note": "Only source-listed calls have semantic content. Do not promote staged review to selected play or outcome."
+        },
+        "comparator_evidence": {
+          "value": [],
+          "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "NOT_REVIEWED",
+          "note": "The comparator is qualitative evidence, not a portfolio score."
+        },
+        "priority_addressed_state": {
+          "value": null,
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "NOT_LOADED",
+          "note": "Requires direct review plus an approved current account-work/opportunity reference; absent by design."
+        }
+      },
+      "linked_canonical_play_or_gate": {
+        "value": null,
+        "source": "existing Play Registry / gtm_play_instances",
+        "as_of": "not joined in retained audit",
+        "state": "NOT_LOADED",
+        "note": "This packet neither selects a play nor creates a play instance."
+      }
+    },
+    {
+      "canonical_account": {
+        "canonical_account_id": {
+          "value": "44150",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "display_name": {
+          "value": "Kennicott Brothers Company",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "cohort_snapshot": {
+          "value": "TA",
+          "source": "docs/transactions/data/accounts.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED"
+        },
+        "identity_crosswalk": {
+          "value": {
+            "sfdc_account_ids": [
+              "001G000001H3CrIIAV"
+            ],
+            "match_state": "EXACT_NORMALIZED_NAME_TO_SFDC",
+            "aliases": [
+              "Kennicott Brothers Company"
+            ],
+            "unresolved": [
+              "hostname_mapping"
+            ]
+          },
+          "source": "docs/transactions/data/company_identity_crosswalk.json",
+          "as_of": "baseline undated",
+          "state": "EXACT_MATCH"
+        }
+      },
+      "canonical_registry_priority_context": {
+        "registry_rows": {
+          "value": [
+            "| Kennicott | — | ACTIVE | `[TA, MultiLocation]` | $64.1M | $73K | SELL: scale offline→online. Pittsburgh pilot. | Facu/Cata |",
+            "| **Kennicott Brothers Co.** | 22 branches | Multiple | `[TA, MultiLocation]` | Pittsburgh pilot = branch-level play. 86% offline. |",
+            "| **Kennicott** | ✗ | **P1** | 82% of fees, only basic profile |"
+          ],
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED",
+          "note": "Rows are preserved verbatim because account/tag rows can be multi-valued. The dated registry owner is portfolio context only."
+        },
+        "registry_as_of": {
+          "value": "2026-07-30",
+          "source": "ops/canonical/accounts_registry.md",
+          "as_of": "2026-07-30",
+          "state": "CANONICAL_DATED"
+        },
+        "owner_interpretation": {
+          "value": "Registry named owner(s) only; current accountable work owner is NOT_LOADED.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "PARTIAL"
+        }
+      },
+      "tx_draft_opportunity_context": {
+        "account_card_candidates": {
+          "value": null,
+          "source": "docs/transactions/index.html#getOpportunities",
+          "as_of": "2026-07-30",
+          "state": "NOT_LOADED",
+          "note": "The card renderer generates DRAFT investigations on demand; no persisted, accepted per-account opportunity object was retained."
+        },
+        "safe_use": {
+          "value": "Reviewer question only: did reviewed evidence address this candidate or reveal another topic? Never agenda compliance.",
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "OBSERVED"
+        },
+        "pipeline_context": {
+          "value": [
+            {
+              "opportunity_id": "006VL00000aDsdlYAC",
+              "account_id": "001G000001H3CrIIAV",
+              "opp_name": "Kennicott Brothers Company: eShops",
+              "stage": "Discovery",
+              "amount": null,
+              "close_date": "2026-10-31",
+              "owner": "Catalina Rojas",
+              "last_modified_at": "2026-07-24T16:17:40.000+0000"
+            }
+          ],
+          "source": "docs/transactions/data/sfdc_open_opportunities_v1.json",
+          "as_of": "2026-08-04T08:25:12Z",
+          "state": "OBSERVED_CONTEXT",
+          "note": "Open SFDC pipeline context only; record owner is not activity/work owner."
+        }
+      },
+      "tx_state_metrics": {
+        "koronet_buy_gmv_ytd": {
+          "value": {
+            "value": 35563501.71,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement transactions, ks_flag=TRUE"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_gmv_ytd": {
+          "value": {
+            "value": 8740264.2,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet procurement online-channel transactions"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_buy_online_share_ytd": {
+          "value": {
+            "value": 24.58,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed procurement population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_gmv_ytd": {
+          "value": {
+            "value": 72358990.41,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales transactions, ks_flag=TRUE, quality filters applied"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_gmv_ytd": {
+          "value": {
+            "value": 9972902.64,
+            "unit": "USD",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "Koronet sales in eCommerce/K2K/API channels"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "koronet_sell_online_share_ytd": {
+          "value": {
+            "value": 13.78,
+            "unit": "percent",
+            "period_start": "2026-01-01",
+            "period_end": "2026-07-30",
+            "coverage": "same observed sales population"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "OBSERVED_SNAPSHOT",
+          "note": "One dated snapshot is not causal movement."
+        },
+        "listing_inventory_parity": {
+          "value": {
+            "value": null,
+            "unit": "object",
+            "period_start": null,
+            "period_end": null,
+            "coverage": "active catalogue/inventory coverage unavailable"
+          },
+          "source": "docs/transactions/data/account_spine_2026-07-30_staged.json",
+          "as_of": "2026-07-30",
+          "state": "COMPARISON_BLOCKED",
+          "note": "Need online/offline catalogue, availability horizon, bunches and fulfillment data at product grain."
+        }
+      },
+      "source_activity": {
+        "fathom_candidate_events": {
+          "value": [
+            {
+              "recording_id": 159621893,
+              "date": "2026-06-30",
+              "title": "KBC <> Komet",
+              "url": "https://fathom.video/calls/730389941",
+              "recorded_by_raw": "Facundo Lavino | Gustavo Gilchrist, Doug Gilman, Chris Beals, Mauro Gurdulich",
+              "recorder_department_candidate": "TX",
+              "tags": [
+                "TA",
+                "MultiLocation"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            },
+            {
+              "recording_id": 158735417,
+              "date": "2026-06-26",
+              "title": "Discuss KBC Pittsburgh",
+              "url": "https://fathom.video/calls/725042321",
+              "recorded_by_raw": "Facundo Lavino | Karina Hernández, Chris Beals, Magalí Carró, Agustin Perez Aquino",
+              "recorder_department_candidate": "TX",
+              "tags": [
+                "TA",
+                "MultiLocation"
+              ],
+              "match_confidence": "title_or_recorder_candidate"
+            }
+          ],
+          "source": "ops/review/data/tx_fathom_priority_candidates_2026-08-05.json",
+          "as_of": "2026-08-05",
+          "state": "CANDIDATE_METADATA_ONLY",
+          "note": "Title/recorder alias matching only; raw participant lists do not prove invitation, attendance, speaking, or call subject."
+        },
+        "calendar_strategy_visibility": {
+          "value": [
+            {
+              "item_id": "kennicott-03",
+              "type": "learning",
+              "primary_type": "learning",
+              "summary": "Kennicott has accepted KBC/Komet and Pittsburgh-project events; Pittsburgh framing explicitly identifies Facu as head of Transactions and says the purpose is alignment before bringing in the branch.",
+              "source_evidence": "Google Calendar events 7ssp4bqhho5t1v7rik724pb7qu and snk87rrocccsjovo0n33tshql0",
+              "source_moment": "2026-06-30 and 2026-07-27",
+              "trust_state": "partial",
+              "next_action": "Get direct call/branch-level activity and set the Pittsburgh pilot proof gate; do not infer pilot completion.",
+              "route": [
+                "calendar-activity",
+                "account:kennicott"
+              ],
+              "review_notes": [
+                "Strategy visibility only."
+              ]
+            }
+          ],
+          "source": "ops/review/staging/calendar_priority_strategy_visibility_2026-08-04.json",
+          "as_of": "2026-08-04",
+          "state": "CALENDAR_METADATA_REVIEWED",
+          "note": "Calendar acceptance establishes visibility on Facu calendar, not attendance, organizer, invite origin or result."
+        },
+        "sfdc_activity_detail": {
+          "value": null,
+          "source": "SFDC Task/Event/Email detailed adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "Aggregate counts exist elsewhere but no per-account/owner/date event feed is retained."
+        },
+        "jira_activity_detail": {
+          "value": null,
+          "source": "Jira adapter",
+          "as_of": "not retained",
+          "state": "NOT_LOADED",
+          "note": "No retained Jira activity source."
+        }
+      },
+      "conversation_review": {
+        "direct_reviewed_staged": {
+          "value": [],
+          "source": "ops/review/tx_fathom_ingestion_status_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "NOT_REVIEWED",
+          "note": "Only source-listed calls have semantic content. Do not promote staged review to selected play or outcome."
+        },
+        "comparator_evidence": {
+          "value": [],
+          "source": "ops/review/tx_call_quality_comparator_seed_2026-08-04.md",
+          "as_of": "2026-08-04",
+          "state": "NOT_REVIEWED",
+          "note": "The comparator is qualitative evidence, not a portfolio score."
+        },
+        "priority_addressed_state": {
+          "value": null,
+          "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+          "as_of": "2026-08-07",
+          "state": "NOT_LOADED",
+          "note": "Requires direct review plus an approved current account-work/opportunity reference; absent by design."
+        }
+      },
+      "linked_canonical_play_or_gate": {
+        "value": null,
+        "source": "existing Play Registry / gtm_play_instances",
+        "as_of": "not joined in retained audit",
+        "state": "NOT_LOADED",
+        "note": "This packet neither selects a play nor creates a play instance."
+      }
+    }
+  ],
+  "coverage_summary": {
+    "included_examples": {
+      "value": 5,
+      "source": "this packet",
+      "as_of": "2026-08-07",
+      "state": "OBSERVED"
+    },
+    "required_missing_for_priority_execution_status": {
+      "value": [
+        "Human-approved current account-work record referencing existing account/priority/opportunity/play",
+        "SFDC activity detail by AccountId/owner/date/content state",
+        "Direct account-linked Calendar feed",
+        "Jira adapter",
+        "Direct transcript review + approved opportunity linkage",
+        "Compatible prior/current TX snapshots for movement"
+      ],
+      "source": "ops/review/tx_activity_v2_priority_opportunity_source_audit_2026-08-07.md",
+      "as_of": "2026-08-07",
+      "state": "PARTIAL"
+    }
+  }
+}
