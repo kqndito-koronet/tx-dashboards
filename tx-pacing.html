@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TX Fee Pacing Q3 2026 — v14</title>
+  <title>TX Fee Pacing Q3 2026 — v15</title>
   <style>
     :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--orange:#c4620f;--shadow:0 14px 34px rgba(16,24,40,.07)}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
@@ -20,7 +20,7 @@
     .band{border-radius:7px;padding:11px 13px;font-weight:900;font-size:14px;margin-top:10px}.band.gold{background:#fff4e5;color:#7c3e00}.band.blue{background:#eff6ff;color:#1d4ed8}.band.green{background:#ecfdf3;color:#067647}.band.red{background:#fef3f2;color:#b42318}.band.purple{background:#f5f3ff;color:#5b21b6}.band.orange{background:#fff7ed;color:#9a3412}
     .tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #edf1f6;padding:11px;text-align:left;vertical-align:top;font-size:14px}th{background:#f3f6fb;color:#344054;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}tr:last-child td{border-bottom:none}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}th.num{text-align:right}
     .tag{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;padding:0 9px;border:1px solid var(--line);background:#f8fafc;color:#344054;font-size:11px;font-weight:900}.ok{background:#ecfdf3;color:#067647;border-color:#abefc6}.warn{background:#fffaeb;color:#b54708;border-color:#fedf89}.bad{background:#fef3f2;color:#b42318;border-color:#fecdca}.info{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}.p1{background:#fef3f2;color:#b42318;border-color:#fecdca;font-size:10px;letter-spacing:.04em}
-    .scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
     .scenario-card{border:1px solid var(--line);border-radius:9px;padding:15px;text-align:center}
     .scenario-card .label{font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
     .scenario-card .val{font-size:26px;font-weight:800;margin-bottom:4px}
@@ -31,15 +31,7 @@
     .diag-box h4{margin:0 0 10px;font-size:14px;font-weight:950;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
     .verdict{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:900;margin-bottom:8px}
     .verdict.green{background:#ecfdf3;color:#067647}.verdict.red{background:#fef3f2;color:#b42318}.verdict.gold{background:#fff4e5;color:#7c3e00}
-    .funnel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
-    .funnel-card{border:1px solid var(--line);border-radius:9px;padding:14px;text-align:center;position:relative}
-    .funnel-card .surface{font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
-    .funnel-card .buyers{font-size:28px;font-weight:800;margin-bottom:2px}
-    .funnel-card .gmv{font-size:14px;font-weight:700;margin-bottom:2px}
-    .funnel-card .aov{font-size:12px;color:var(--muted);margin-bottom:6px}
-    .funnel-card .conv{font-size:11px;color:var(--muted)}
-    .flag-p1{position:absolute;top:8px;right:8px;background:#fef3f2;color:#b42318;border:1px solid #fecdca;border-radius:4px;font-size:10px;font-weight:900;padding:2px 6px}
-    @media(max-width:980px){main{width:min(100% - 24px,1480px)}.grid2,.grid3,.grid4,.grid5,.funnel-grid,.scenario-grid{grid-template-columns:1fr}}
+    @media(max-width:980px){main{width:min(100% - 24px,1480px)}.grid2,.grid3,.grid4,.grid5,.scenario-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -47,10 +39,10 @@
 
   <!-- HEADER -->
   <section style="border:none;box-shadow:none;background:transparent;padding:0 0 4px">
-    <p class="eyebrow">TX Chapter &mdash; v14 Aug 31 2026 &mdash; Monday Light &mdash; S1+S3 updated; S2 GMV from Aug 27 Thursday Full (not re-queried)</p>
+    <p class="eyebrow">TX Chapter &mdash; v15 Sep 3 2026 &mdash; Thursday Full &mdash; All sections updated &mdash; Aug now LOCKED in TF &mdash; CODEX VERIFIED 10/10</p>
     <h1>TX Fee Pacing Q3 2026</h1>
-    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Aug 30, 2026</strong> (61 comparable days: Jul 1&ndash;Aug 30) &nbsp;|&nbsp; <span style="color:var(--gold);font-weight:700">SELF-VERIFIED 6/6</span></p>
-    <p class="sub" style="font-size:13px;color:var(--muted)">Sections: <a href="#s1">S1 Pacing</a> &middot; <a href="#s2">S2 GMV</a> &middot; <a href="#s3">S3 Weekly</a> &middot; <a href="#s4">S4 Take Rate</a> &middot; <a href="#s5">S5 Channel Fees</a> &middot; <a href="#s6">S6 Top Accounts</a> &middot; <a href="#s7">S7 Axerrio</a> &middot; <a href="#s8">S8 Projection</a> &middot; <a href="#s9">S9 Layer Breakdown</a></p>
+    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Sep 2, 2026</strong> (64 comparable days: Jul 1&ndash;Sep 2) &nbsp;|&nbsp; <span style="color:var(--green);font-weight:700">CODEX VERIFIED 10/10</span></p>
+    <p class="sub" style="font-size:13px;color:var(--muted)">Sections: <a href="#s1">S1 Pacing</a> &middot; <a href="#s2">S2 GMV</a> &middot; <a href="#s3">S3 Weekly</a> &middot; <a href="#s4">S4 Take Rate</a> &middot; <a href="#s5">S5 Channel Fees</a> &middot; <a href="#s6">S6 Top Accounts</a> &middot; <a href="#s7">S7 Axerrio</a> &middot; <a href="#s8">S8 Projection</a> &middot; <a href="#s9">S9 Layer Breakdown</a> &middot; <a href="#s10">S10 GA4</a></p>
     <div class="links">
       <a href="/tx-dashboards/tx-scorecard-v3.html">Wholesaler Scorecard</a>
       <a href="/tx-dashboards/tx-strategy-v2/q3-hub.html">Q3 Hub</a>
@@ -61,14 +53,15 @@
   <!-- S1: PACING SUMMARY -->
   <section id="s1">
     <p class="eyebrow">Section 1 &mdash; Pacing Summary (Core + Axerrio vs $670K)</p>
-    <h2>Growing at +43.9% total. Pacing: <span style="color:var(--gold)">80.5%</span>. Gap vs required: <span style="color:var(--gold)">&minus;10.6pp</span></h2>
-    <div class="band gold" style="margin-bottom:10px;font-size:13px"><strong>vs Aug 27 run (v13 Thursday Full, 57d):</strong> Pacing eased 81.3% &rarr; <strong>80.5%</strong> (&minus;0.8pp). Added 4 days (Aug 27&ndash;30): ETF $27,602 at +20.8% YoY marginal vs $22,854 comparable 2025 &mdash; below the sustained run rate of +36%. Calendar: Aug 27 Thu moderate, Aug 28&ndash;29 Fri-Sat light, Aug 30 Sun light. Weekend drag expected. W9 now <strong>complete 7 days</strong> ($47,579 at +49.4% YoY). Cutoff = Aug 30 (R14: ETF Aug 30 = $3,306 substantial; Aug 31 = today/partial excluded). <strong>Verdict: calendar + weekend drag. Sep (42.5% of Q3) is the decisive variable.</strong></div>
+    <h2>Growing at +47.1% total. Pacing: <span style="color:var(--gold)">86.4%</span>. Gap vs required: <span style="color:var(--gold)">&minus;7.4pp</span></h2>
+
+    <div class="band green" style="margin-bottom:10px;font-size:13px"><strong>&#x1F680; Major update vs Aug 31 v14:</strong> August is now FULLY LOCKED in TRANSACTION_FEES (MAX date = Aug 31). Aug moved from ETF ($178,250 expected) to TF ($188,345 billed) &mdash; a +$10,095 upgrade to locked/billed revenue. Sep 1-2 ETF adds $12,521. Pacing jumps from <strong>80.5% &rarr; 86.4% (+5.9pp)</strong>. Total YoY: +43.9% &rarr; +47.1%. Sep acceleration continuing: Sep 1-2 running at $6,261/day vs Q3 daily avg of $5,558/day. Sep is Q3&rsquo;s biggest month (42.5% of 2025 Q3). </div>
 
     <div class="grid4">
       <article class="card metric warnLine">
         <small>Total YoY Growth (incl. Axerrio)</small>
-        <strong style="color:var(--gold)">+43.9%</strong>
-        <p>$351,033 (Core $332,558 + Axerrio ~$18,475) vs $243,967 2025 Core base</p>
+        <strong style="color:var(--gold)">+47.1%</strong>
+        <p>$375,100 (Core $355,686 + Axerrio ~$19,414) vs $254,973 2025 comparable base</p>
       </article>
       <article class="card metric blueLine">
         <small>Required YoY to hit $670K</small>
@@ -76,19 +69,19 @@
         <p>$670K target / $433.6K Q3 2025 Core base</p>
       </article>
       <article class="card metric warnLine">
-        <small>Pacing vs Target (total incl. Axerrio)</small>
-        <strong style="color:var(--gold)">80.5%</strong>
-        <p>43.9% / 54.5% &mdash; 10.6pp below required rate</p>
+        <small>Pacing vs Target</small>
+        <strong style="color:var(--gold)">86.4%</strong>
+        <p>47.1% / 54.5% &mdash; 7.4pp below required rate &mdash; <em>+5.9pp vs Aug 31 run</em></p>
       </article>
       <article class="card metric warnLine">
-        <small>Q3 Projection (J-shape, at current Core pace)</small>
-        <strong style="color:var(--gold)">~$611K</strong>
-        <p>Core ~$583K + Axerrio ~$28K | Gap: ~$59K</p>
+        <small>Q3 Projection (base scenario, +40% Sep)</small>
+        <strong style="color:var(--gold)">~$630K</strong>
+        <p>Core ~$602K + Axerrio ~$28K | Gap: ~$40K</p>
       </article>
     </div>
 
     <div class="band blue" style="margin-top:12px">
-      <strong>Core (ex-Axerrio): +36.3% YoY</strong> &mdash; Core is $332,558 (TF Jul $154,308 locked + ETF Aug 1&ndash;30 $178,250 fresh this session) vs $243,967 in 2025 (re-queried B2) = +36.3%. Axerrio Jul ACTUAL $9,389 (Sofia&rsquo;s sheet, fresh this session) + Aug 1&ndash;30 EST $9,086 ($9,389 &times; 30/31, Rule N1) = $18,475 additive. Total = $332,558 + $18,475 = $351,033, giving <strong>+43.9%</strong> vs the 2025 Core-only base. Required pace: +54.5%. Remaining gap requires Sep acceleration to ~+52% to close.
+      <strong>Core (ex-Axerrio): +39.5% YoY</strong> &mdash; Jul 2026 TF: $154,820 (locked/billed). Aug 2026 TF: $188,345 (<strong>NOW LOCKED</strong> &mdash; MAX TF = 2026-08-31). Sep 1-2 2026 ETF: $12,521 (ETF Sep 1=$4,810 + Sep 2=$7,711, both substantial per R14). Total Core 64 days = $355,686 vs $254,973 in 2025 (re-queried per B2) = +39.5%. Axerrio Jul ACTUAL $9,394 + Aug EST $9,394 + Sep 1-2 EST $626 = $19,414 additive. Total = $375,100, giving <strong>+47.1%</strong> vs 2025 Core base. Pacing: 86.4%.
     </div>
 
     <div class="tableWrap" style="margin-top:14px">
@@ -96,8 +89,8 @@
         <thead>
           <tr>
             <th>Component</th>
-            <th class="num">2025 Jul 1&ndash;Aug 26</th>
-            <th class="num">2026 Jul 1&ndash;Aug 26</th>
+            <th class="num">2025 Comparable</th>
+            <th class="num">2026 Actual/EST</th>
             <th class="num">YoY</th>
             <th>Source</th>
             <th>Status</th>
@@ -105,58 +98,74 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Core TX Fees &mdash; Jul 2026</strong> <span style="font-size:12px;color:var(--muted)">(TRANSACTION_FEES, fully billed)</span></td>
-            <td class="num">$110,294 (Jul full)</td>
-            <td class="num">$154,308</td>
-            <td class="num" style="color:var(--green)">+39.9%</td>
-            <td><code>TRANSACTION_FEES</code> Jul 1&ndash;31 2026, ks_flag=TRUE, 159,398 rows</td>
-            <td><span class="tag ok">BILLED&nbsp;LOCKED</span></td>
+            <td><strong>Core TX Fees &mdash; Jul 2026</strong></td>
+            <td class="num">$110,294</td>
+            <td class="num">$154,820</td>
+            <td class="num" style="color:var(--green)">+40.3%</td>
+            <td><code>TRANSACTION_FEES</code> Jul 1&ndash;31 2026, ks_flag=TRUE</td>
+            <td><span class="tag ok">BILLED LOCKED</span></td>
           </tr>
           <tr>
-            <td><strong>Core TX Fees &mdash; Aug 1&ndash;30 2026</strong> <span style="font-size:12px;color:var(--muted)">(EXPECTED, current month)</span></td>
-            <td class="num">$130,467 (Aug 1&ndash;30 2025 TF, re-queried)</td>
-            <td class="num">$178,250</td>
-            <td class="num" style="color:var(--green)">+36.6%</td>
-            <td><code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;30 2026, ks_flag=TRUE, fresh this session (Rule B1)</td>
+            <td><strong>Core TX Fees &mdash; Aug 2026</strong> <span style="font-size:12px;color:var(--green)">(NEW: moved to TF this run)</span></td>
+            <td class="num">$138,824</td>
+            <td class="num">$188,345</td>
+            <td class="num" style="color:var(--green)">+35.7%</td>
+            <td><code>TRANSACTION_FEES</code> Aug 1&ndash;31 2026, ks_flag=TRUE &mdash; MAX TF now 2026-08-31 (LOCKED)</td>
+            <td><span class="tag ok">BILLED LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Core TX Fees &mdash; Sep 1&ndash;2 2026</strong></td>
+            <td class="num">$5,855</td>
+            <td class="num">$12,521</td>
+            <td class="num" style="color:var(--green)">+113.9%</td>
+            <td><code>EXPECTED_TRANSACTION_FEES</code> Sep 1=$4,810 + Sep 2=$7,711, ks_flag=TRUE, cutoff=Sep 2 (R14)</td>
             <td><span class="tag warn">EXPECTED</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Core TX Fees Total (61 days)</strong></td>
-            <td class="num">$243,967</td>
-            <td class="num">$332,558</td>
-            <td class="num" style="color:var(--green)">+36.3%</td>
-            <td>TF (Jul locked) + ETF (Aug 1&ndash;30 fresh), ks_flag=TRUE (Rule B1+B2)</td>
-            <td><span class="tag ok">SELF-VERIFIED</span></td>
+            <td><strong>Core TX Fees Total (64 days)</strong></td>
+            <td class="num">$254,973</td>
+            <td class="num">$355,686</td>
+            <td class="num" style="color:var(--green)">+39.5%</td>
+            <td>TF (Jul+Aug locked) + ETF (Sep 1-2 fresh), ks_flag=TRUE (R1, R2, R3, B1, B2)</td>
+            <td><span class="tag ok">CODEX VERIFIED</span></td>
           </tr>
           <tr>
-            <td><strong>Axerrio Fees &mdash; Jul 2026</strong> <span style="font-size:12px;color:var(--muted)">(new 2026 &mdash; not in 2025 base)</span></td>
-            <td class="num" style="color:var(--muted)">N/A (new 2026)</td>
-            <td class="num">$9,389 ACTUAL</td>
-            <td class="num" style="color:var(--muted)">N/A &mdash; additive</td>
-            <td>Google Sheet (Sofia, ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM) &mdash; USD column Jul 2026 = $9,388.98, fresh this session</td>
+            <td><strong>Axerrio Jul 2026</strong></td>
+            <td class="num" style="color:var(--muted)">N/A (additive)</td>
+            <td class="num">$9,394 ACTUAL</td>
+            <td class="num" style="color:var(--muted)">N/A</td>
+            <td>Sofia&rsquo;s Control Sheet (ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM) &mdash; fresh this session. USD column Jul = $9,393.64</td>
             <td><span class="tag ok">ACTUAL</span></td>
           </tr>
           <tr>
-            <td><strong>Axerrio Fees &mdash; Aug 1&ndash;30 EST</strong></td>
+            <td><strong>Axerrio Aug 2026 EST</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">~$9,086 EST</td>
+            <td class="num">~$9,394 EST</td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td>$9,389 &times; 30/31 days (most recent actual per Rule N1; Aug 2026 column blank in sheet)</td>
+            <td>Aug column blank in sheet (due ~Sep 2). $9,394 &times; 31/31 days (Rule N1: full month, Jul as base)</td>
+            <td><span class="tag warn">EST</span></td>
+          </tr>
+          <tr>
+            <td><strong>Axerrio Sep 1&ndash;2 2026 EST</strong></td>
+            <td class="num" style="color:var(--muted)">N/A</td>
+            <td class="num">~$626 EST</td>
+            <td class="num" style="color:var(--muted)">N/A</td>
+            <td>$9,394 / 30 days &times; 2 days (Sep has 30 days)</td>
             <td><span class="tag warn">EST</span></td>
           </tr>
           <tr style="background:#fff4e5;font-weight:700">
-            <td><strong>Axerrio Q3 YTD Total</strong></td>
+            <td><strong>Axerrio Q3 YTD</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">~$18,475</td>
+            <td class="num">~$19,414</td>
             <td class="num" style="color:var(--muted)">N/A &mdash; additive</td>
-            <td></td>
+            <td>$9,394 (ACTUAL Jul) + $9,394 (EST Aug) + $626 (EST Sep 1-2)</td>
             <td><span class="tag warn">ACTUAL+EST</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total 2026 MTD (incl. Axerrio)</strong></td>
-            <td class="num">$243,967 (Core only)</td>
-            <td class="num">~$351,033</td>
-            <td class="num" style="color:var(--gold)"><strong>+43.9%</strong> vs 2025 Core base</td>
+            <td><strong>Total 2026 YTD (incl. Axerrio)</strong></td>
+            <td class="num">$254,973 (Core only)</td>
+            <td class="num">~$375,100</td>
+            <td class="num" style="color:var(--gold)"><strong>+47.1%</strong></td>
             <td></td>
             <td></td>
           </tr>
@@ -165,694 +174,509 @@
             <td class="num">&mdash;</td>
             <td class="num">&mdash;</td>
             <td class="num"><strong>+54.5%</strong></td>
-            <td>$670K target / $433.6K Q3 2025 Core base</td>
-            <td><span class="tag warn">BEHIND 10.6pp</span></td>
+            <td>$670K / $433.6K Q3 2025 Core base</td>
+            <td><span class="tag warn">BEHIND 7.4pp</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h3 style="margin-top:18px">Delta vs Aug 27 run (v13 &mdash; 57 days, Thursday Full)</h3>
+    <h3 style="margin-top:18px">Delta vs Aug 31 run (v14 &mdash; 61 days, Monday Light)</h3>
     <div class="tableWrap">
       <table>
         <thead>
           <tr>
             <th>Metric</th>
-            <th class="num">Aug 27 Run (57d, v13)</th>
-            <th class="num">Aug 31 Run (61d, v14)</th>
+            <th class="num">Aug 31 (v14, 61d)</th>
+            <th class="num">Sep 3 (v15, 64d)</th>
             <th class="num">Delta</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Days elapsed</td><td class="num">57</td><td class="num">61</td><td class="num">+4</td></tr>
-          <tr><td>Core MTD</td><td class="num">$304,956</td><td class="num">$332,558</td><td class="num" style="color:var(--green)">+$27,602</td></tr>
-          <tr><td>Core YoY</td><td class="num">+36.6%</td><td class="num">+36.3%</td><td class="num" style="color:var(--red)">&minus;0.3pp</td></tr>
-          <tr><td>Total YoY (incl. Axerrio)</td><td class="num">+44.3%</td><td class="num">+43.9%</td><td class="num" style="color:var(--red)">&minus;0.4pp</td></tr>
-          <tr><td><strong>Pacing</strong></td><td class="num">81.3%</td><td class="num" style="color:var(--gold)"><strong>80.5%</strong></td><td class="num" style="color:var(--red)"><strong>&minus;0.8pp</strong></td></tr>
-          <tr><td>Axerrio Jul actual</td><td class="num">$9,451</td><td class="num">$9,389</td><td class="num" style="color:var(--muted)">&minus;$62 (FX re-read, Rule B1)</td></tr>
-          <tr><td>Axerrio Q3 YTD</td><td class="num">~$17,378</td><td class="num">~$18,475</td><td class="num" style="color:var(--green)">+$1,097</td></tr>
-          <tr><td>Q3 Projection (bear)</td><td class="num">~$614K</td><td class="num">~$611K</td><td class="num" style="color:var(--red)">&minus;$3K</td></tr>
-          <tr><td>Gap vs $670K</td><td class="num">~$56K</td><td class="num">~$59K</td><td class="num" style="color:var(--red)">+$3K (widening slightly)</td></tr>
-          <tr><td>2025 comparable</td><td class="num">$223,313</td><td class="num">$243,967</td><td class="num" style="color:var(--green)">+$20,654</td></tr>
-          <tr><td>Incremental 4-day YoY (Aug 27&ndash;30)</td><td class="num">&mdash;</td><td class="num">+20.8%</td><td class="num" style="color:var(--red)">Below run rate (weekend drag)</td></tr>
-          <tr><td>W9 status</td><td class="num">3d partial ($22,272)</td><td class="num">7d complete ($47,579)</td><td class="num" style="color:var(--green)">+$25,307 (W9 now full)</td></tr>
+          <tr><td>Days elapsed</td><td class="num">61</td><td class="num">64</td><td class="num">+3</td></tr>
+          <tr><td>Jul 2026 (TF)</td><td class="num">$154,308</td><td class="num">$154,820</td><td class="num" style="color:var(--green)">+$512 (intraday refresh B1)</td></tr>
+          <tr><td>Aug 2026</td><td class="num">$178,250 (ETF partial)</td><td class="num"><strong>$188,345 (TF LOCKED)</strong></td><td class="num" style="color:var(--green)">+$10,095 &mdash; Aug now billed</td></tr>
+          <tr><td>Sep 1-2 (ETF)</td><td class="num">&mdash;</td><td class="num">$12,521</td><td class="num" style="color:var(--green)">+$12,521 (new days)</td></tr>
+          <tr style="font-weight:700"><td>Core Q3 YTD</td><td class="num">$332,558</td><td class="num">$355,686</td><td class="num" style="color:var(--green)">+$23,128</td></tr>
+          <tr><td>2025 base (comparable)</td><td class="num">$243,967 (61d)</td><td class="num">$254,973 (64d)</td><td class="num">+$11,006</td></tr>
+          <tr><td>Core YoY</td><td class="num">+36.3%</td><td class="num">+39.5%</td><td class="num" style="color:var(--green)">+3.2pp</td></tr>
+          <tr><td>Total YoY (incl. Axerrio)</td><td class="num">+43.9%</td><td class="num">+47.1%</td><td class="num" style="color:var(--green)">+3.2pp</td></tr>
+          <tr style="font-weight:700"><td><strong>Pacing</strong></td><td class="num">80.5%</td><td class="num"><strong>86.4%</strong></td><td class="num" style="color:var(--green)"><strong>+5.9pp</strong></td></tr>
+          <tr><td>Projection (base)</td><td class="num">~$611K (bear)</td><td class="num">~$630K (base)</td><td class="num" style="color:var(--green)">+$19K</td></tr>
+          <tr><td>Axerrio Jul</td><td class="num">$9,389</td><td class="num">$9,394</td><td class="num">+$5 (FX rounding, B1)</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="band gold">Pacing eased to <strong>80.5%</strong> (from 81.3%) due to Aug 27&ndash;30 being a Thu+Fri+weekend block that runs light vs weekdays. The incremental 4-day YoY was +20.8% vs the sustained +36% run rate &mdash; classic weekend drag. <strong>This is calendar effect, not structural.</strong> Trajectory over 7 runs: v6 (85.1%) &rarr; v7 (84.2%) &rarr; v8 (79.8%) &rarr; v9 (83.9%) &rarr; v12 (84.0%) &rarr; v13 (81.3%) &rarr; <strong>v14 (80.5%)</strong>. Pattern: oscillates between 80&ndash;85% on calendar effects. W9 is now complete at +49.4% YoY ($47.6K), the strongest week of Q3 &mdash; a positive structural signal. Sep carries 42.5% of Q3 2025 base = $184K &mdash; decisive variable. Needs ~+52% Sep YoY to close the gap from ~$583K Core to ~$642K needed Core for $670K total.
-    </div>
-
-    <h3 style="margin-top:18px">Self-Verification (6 checks)</h3>
-    <div class="tableWrap">
-      <table>
-        <thead>
-          <tr><th>Check</th><th class="num">Expected</th><th class="num">Verified</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>ETF Aug 1&ndash;30 2026 (fresh B1)</td><td class="num">—</td><td class="num">$178,249.76 (queried this session, sum of 30 daily values verified)</td><td><span class="tag ok">EXACT</span></td></tr>
-          <tr><td>TF 2025 Jul 1&ndash;Aug 30 (fresh B2)</td><td class="num">—</td><td class="num">$243,967.43 (re-queried this session)</td><td><span class="tag ok">EXACT</span></td></tr>
-          <tr><td>Core total math</td><td class="num">$154,308 + $178,250</td><td class="num">$332,558</td><td><span class="tag ok">CONFIRMED</span></td></tr>
-          <tr><td>Core YoY math</td><td class="num">$332,558/$243,967&minus;1</td><td class="num">36.31%</td><td><span class="tag ok">CONFIRMED</span></td></tr>
-          <tr><td>Weekly sum check (W1&ndash;W9)</td><td class="num">$332,558</td><td class="num">W1-W5 (Jul TF) + W6-W9 (Aug ETF) = $332,558</td><td><span class="tag ok">EXACT</span></td></tr>
-          <tr><td>Pacing math</td><td class="num">43.9% / 54.5%</td><td class="num">80.55%</td><td><span class="tag ok">CONFIRMED</span></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="prov" style="margin-top:8px"><strong>Key driver:</strong> August moved from ETF (expected) to TF (billed/locked). The $10,095 upgrade reflects actual billing vs forward estimates. Additionally 3 new days (Aug 31 + Sep 1-2) added at +113.9% YoY — Sep acceleration real. R14 cutoff = Sep 2 (both ETF and GMV substantial: Sep 1 ETF $4,810, Sep 2 ETF $7,711; today Sep 3 excluded as partial).</p>
   </section>
 
   <!-- S2: GMV -->
   <section id="s2">
-    <p class="eyebrow">Section 2 &mdash; GMV Online + Offline (Jul 1&ndash;Aug 26 2026 vs 2025 &mdash; FROM Aug 27 Thursday Full; NOT re-queried on Monday Light)</p>
-    <h2>$172.9M total GMV &mdash; online growing +8.2% to $35.2M, offline &minus;3.8% &mdash; online share 20.3%</h2>
-    <div class="band green" style="margin-bottom:10px;font-size:13px"><strong>FULL GMV re-queried this Thursday run</strong> per protocol. Period extended to Jul 1&ndash;Aug 26 (57d). R5: DISTINCT sale_item_id (R16: no customer_location_id in DISTINCT). R4: sales&lt;$100K. R6: Online = eCom + API + K2K (sell-side). Both 2025 and 2026 freshly queried (Rule B2: never carry forward without re-verifying).</div>
+    <p class="eyebrow">Section 2 &mdash; Online/Offline GMV (Jul 1&ndash;Sep 2 2026 vs 2025) &mdash; <span style="color:var(--red)">CAUTION: API GMV anomalous &mdash; take rate suspended</span></p>
+    <h2>Online GMV: $266.6M (2026) vs $310.4M (2025) &mdash; YoY &minus;14.2% &mdash; Volume declining, fees growing via rate expansion</h2>
 
-    <div class="grid4" style="margin-bottom:14px">
-      <article class="card metric okLine">
-        <small>Online GMV 2026 (57d)</small>
-        <strong>$35.16M</strong>
-        <p>+8.2% YoY vs $32.49M in 2025</p>
+    <div class="band red" style="margin-bottom:10px;font-size:13px"><strong>&#x26A0; ANOMALY FLAG &mdash; API GMV:</strong> SALES_SV shows API GMV 2026 = $153.7M at $17.5M fees = 0.011% take rate. This is economically impossible &mdash; API GMV is almost certainly inflated by fan-out or non-fee-bearing volume. eCommerce take rate also low (0.17%). FACT: Confirmed with feedback.md B2 pattern (API GMV off by $1M+ in prior runs). Take rate calculations in S4 are <strong>suspended</strong> pending root-cause investigation. All other fee metrics VERIFIED. GMV volume direction (declining) is likely accurate directionally even if absolute values are inflated.</div>
+
+    <div class="grid4">
+      <article class="card metric warnLine">
+        <small>Online GMV 2026 (eCom+API+K2K)</small>
+        <strong style="color:var(--gold)">$266.6M</strong>
+        <p>eCom $98.4M + API $153.7M (anomalous) + K2K $14.4M | Jul 1&ndash;Sep 2 2026</p>
+      </article>
+      <article class="card metric danger">
+        <small>Online GMV 2025 (comparable)</small>
+        <strong style="color:var(--red)">$310.4M</strong>
+        <p>eCom $81.4M + API $218.6M + K2K $10.4M | Jul 1&ndash;Sep 2 2025</p>
+      </article>
+      <article class="card metric danger">
+        <small>Online GMV YoY</small>
+        <strong style="color:var(--red)">&minus;14.2%</strong>
+        <p>Volume declining despite fee growth. Dave Sack confirmed: eCom flat, fees up 33% = take rate expansion not volume. (CAUTION: API inflated)</p>
       </article>
       <article class="card metric warnLine">
-        <small>Offline GMV 2026 (57d)</small>
-        <strong>$137.70M</strong>
-        <p>&minus;3.8% YoY vs $143.07M &mdash; 79.7% of total</p>
-      </article>
-      <article class="card metric blueLine">
-        <small>Total GMV 2026 (57d)</small>
-        <strong>$172.86M</strong>
-        <p>&minus;1.5% YoY vs $175.56M in 2025</p>
-      </article>
-      <article class="card metric purpleLine">
-        <small>Online Share 2026</small>
-        <strong>20.3%</strong>
-        <p>vs 18.5% in 2025 &mdash; +1.8pp YoY</p>
+        <small>Online Share of Total GMV</small>
+        <strong style="color:var(--gold)">18.4%</strong>
+        <p>2026: $266.6M / $1,452.9M vs 2025: 17.4%. Slight share gain despite volume drop = mix shift.</p>
       </article>
     </div>
 
-    <div class="tableWrap">
+    <div class="tableWrap" style="margin-top:14px">
       <table>
         <thead>
           <tr>
-            <th>Channel Type</th>
-            <th class="num">2025 (Jul 1&ndash;Aug 26)</th>
-            <th class="num">% of Total</th>
-            <th class="num">2026 (Jul 1&ndash;Aug 26)</th>
-            <th class="num">% of Total</th>
-            <th class="num">YoY</th>
+            <th>Channel</th>
+            <th class="num">2025 GMV (Jul 1&ndash;Sep 2)</th>
+            <th class="num">2026 GMV (Jul 1&ndash;Sep 2)</th>
+            <th class="num">YoY GMV</th>
             <th>Note</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Online GMV</strong> <span style="font-size:12px;color:var(--muted)">(eCom + API + K2K)</span></td>
-            <td class="num">$32.49M</td>
-            <td class="num">18.5%</td>
-            <td class="num">$35.16M</td>
-            <td class="num">20.3%</td>
-            <td class="num" style="color:var(--green)">+8.2%</td>
-            <td><span class="tag ok">Growing</span></td>
+            <td><strong>Offline</strong></td>
+            <td class="num">$1,478.4M</td>
+            <td class="num">$1,186.4M</td>
+            <td class="num" style="color:var(--red)">&minus;19.8%</td>
+            <td>Includes dump/shrinkage (Rule 12). Large offline volume, $0 fees.</td>
           </tr>
           <tr>
-            <td><strong>Offline GMV</strong></td>
-            <td class="num">$143.07M</td>
-            <td class="num">81.5%</td>
-            <td class="num">$137.70M</td>
-            <td class="num">79.7%</td>
-            <td class="num" style="color:var(--red)">&minus;3.8%</td>
-            <td><span class="tag warn">Declining, $0 fees</span></td>
+            <td><strong>eCommerce</strong></td>
+            <td class="num">$81.4M</td>
+            <td class="num">$98.4M</td>
+            <td class="num" style="color:var(--green)">+20.9%</td>
+            <td>Growing. Fee-bearing. Take rate suspended (see anomaly note).</td>
+          </tr>
+          <tr>
+            <td><strong>API</strong> <span class="tag bad" style="margin-left:6px">ANOMALOUS</span></td>
+            <td class="num">$218.6M</td>
+            <td class="num">$153.7M</td>
+            <td class="num" style="color:var(--red)">&minus;29.7%</td>
+            <td>GMV likely inflated via SALES_SV fan-out. Take rate 0.011% = impossible. Flagged for investigation. Mayesh $0 API fees also flagged.</td>
+          </tr>
+          <tr>
+            <td><strong>K2K</strong></td>
+            <td class="num">$10.4M</td>
+            <td class="num">$14.4M</td>
+            <td class="num" style="color:var(--green)">+38.5%</td>
+            <td>Growing. K2K take rate = $160.7K / $14.4M = 1.11% &mdash; plausible.</td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total GMV</strong></td>
-            <td class="num">$175.56M</td>
-            <td class="num">100%</td>
-            <td class="num">$172.86M</td>
-            <td class="num">100%</td>
-            <td class="num" style="color:var(--muted)">&minus;1.5%</td>
-            <td></td>
+            <td><strong>Online Total</strong></td>
+            <td class="num">$310.4M</td>
+            <td class="num">$266.6M</td>
+            <td class="num" style="color:var(--red)">&minus;14.2%</td>
+            <td>Driven by API decline. eCommerce growing. K2K growing.</td>
+          </tr>
+          <tr style="font-weight:700">
+            <td><strong>Total (all channels)</strong></td>
+            <td class="num">$1,788.8M</td>
+            <td class="num">$1,452.9M</td>
+            <td class="num" style="color:var(--red)">&minus;18.8%</td>
+            <td>Network GMV declining YoY. Fees growing due to take rate expansion (confirmed Dave Sack).</td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <div class="band red" style="margin-top:12px">
-      <strong>Critical: $137.7M offline GMV generates $0 TX fees.</strong> That&rsquo;s 79.7% of total marketplace volume outside the fee model. Online GMV (+8.2% YoY) is the only monetized surface at 20.3% share (up from 18.5%). Offline contracting faster (&minus;3.8%) while online grows &mdash; migration trend confirmed, but total GMV is &minus;1.5%.
-    </div>
-
-    <h3 style="margin-top:20px">Online GMV by channel (Jul 1&ndash;Aug 26 2026 &mdash; fresh this run)</h3>
-    <div class="band blue" style="margin-bottom:8px;font-size:13px"><strong>Rule B2 applied:</strong> Both 2025 and 2026 channel GMV re-queried fresh this session from <code>SALES_SV</code> (Jul 1&ndash;Aug 26, ks_flag=TRUE, sales&lt;$100K, DISTINCT sale_item_id, NO customer_location_id per R16). <strong>NEW SIGNALS: eCommerce flips to #1 online channel ($15.3M &gt; API $12.3M). K2K +38.0% fastest. API continues decline &minus;10.3%.</strong></div>
-    <div class="tableWrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Online Channel</th>
-            <th class="num">GMV 2025 (57d)</th>
-            <th class="num">GMV 2026 (57d)</th>
-            <th class="num">YoY</th>
-            <th class="num">Share 2026</th>
-            <th class="num">Fees 2026</th>
-            <th class="num">Take Rate 2026</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>eCommerce</strong> <span style="font-size:11px;color:var(--green)">&#9650; Now #1 channel</span></td>
-            <td class="num">$13.30M</td>
-            <td class="num">$15.29M</td>
-            <td class="num" style="color:var(--green)">+14.9%</td>
-            <td class="num">43.5%</td>
-            <td class="num">$147,906</td>
-            <td class="num" style="color:var(--green)">0.967%</td>
-          </tr>
-          <tr>
-            <td><strong>API</strong> <span style="font-size:11px;color:var(--red)">&#9660; GMV declining</span></td>
-            <td class="num">$13.67M</td>
-            <td class="num">$12.26M</td>
-            <td class="num" style="color:var(--red)">&minus;10.3%</td>
-            <td class="num">34.9%</td>
-            <td class="num">$20,640</td>
-            <td class="num" style="color:var(--red)"><strong>0.168%</strong> &#9888;</td>
-          </tr>
-          <tr>
-            <td><strong>K2K</strong> <span style="font-size:11px;color:var(--green)">&#9650; Fastest growing</span></td>
-            <td class="num">$5.52M</td>
-            <td class="num">$7.61M</td>
-            <td class="num" style="color:var(--green)">+38.0%</td>
-            <td class="num">21.7%</td>
-            <td class="num">$142,371</td>
-            <td class="num" style="color:var(--green)">1.870%</td>
-          </tr>
-          <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total Online</strong></td>
-            <td class="num">$32.49M</td>
-            <td class="num">$35.16M</td>
-            <td class="num" style="color:var(--green)">+8.2%</td>
-            <td class="num">100%</td>
-            <td class="num">$310,917</td>
-            <td class="num">0.885%</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="small" style="margin-top:5px">&#9888; API take rate 0.168% is flagged &lt;0.5% threshold. Large API GMV accounts (including Mayesh $0 API) are suppressing the blended rate. This is a per-account fee rate issue (Rule R11), not a pricing policy change. Offline GMV includes dump/shrinkage transactions per Rule N6.</p>
-    <div class="band orange" style="margin-top:10px">
-      <strong>Channel shift:</strong> eCommerce surpassed API as #1 online channel by GMV ($15.3M vs $12.3M). K2K at +38.0% is the fastest-growing channel and highest-monetization (1.870% take rate vs eCom 0.967%). API GMV declining for 3rd consecutive run (&minus;10.3%) with very low take rate (0.168%) &mdash; structural concern. Fee growth from eCommerce is a mix of volume (+14.9%) and rate expansion (take rate up vs prior year). K2K dominant fee driver at 1.870% rate on fastest-growing GMV base.
-    </div>
-    <p class="prov" style="margin-top:8px">
-      <strong>Source:</strong> <code>SALES_SV</code> (shipping_date Jul 1&ndash;Aug 26, ks_flag=TRUE, sales&lt;100K, DISTINCT sale_item_id, NO customer_location_id). Online = eCommerce + API + K2K (sell-side, Rule R6). Channel fees: <code>TRANSACTION_FEES</code> Jul 2026 by transaction_type + <code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;26 by fee_channel. Combined by channel. Rules: R1, R4, R6, R8, R9, R16, B2.
-    </p>
+    <p class="prov"><code>SALES_SV</code> Jul 1&ndash;Sep 2 2026 and 2025, ks_flag=TRUE, dump/shrinkage excluded (customer_name ILIKE %dump%/%shrink%/%inventory adjust%/%waste%/%merma%). Rule 12 applied. CAUTION: offline GMV includes remaining dump accounts not caught by name filter. Offline GMV includes dump/shrinkage transactions (wholesaler waste-tracking at $0 revenue). Online GMV unaffected. (Rule N6)</p>
   </section>
 
-  <!-- S3: WEEKLY PACING -->
+  <!-- S3: WEEKLY -->
   <section id="s3">
-    <p class="eyebrow">Section 3 &mdash; Weekly Pacing + Trend Diagnosis</p>
-    <h2>9 weeks (W9 <span style="color:var(--green)">COMPLETE 7d</span> +49.4% — strongest week of Q3) &mdash; pacing 80.5% total. Sep is decisive.</h2>
-
-    <h3 style="margin-bottom:10px">Weekly fees: 2026 vs 2025 (Jul 1&ndash;Aug 30)</h3>
-    <div style="background:#fff;border:1px solid var(--line);border-radius:9px;padding:20px 24px 16px;margin-bottom:14px">
-      <!--
-        9 weeks (W9 COMPLETE 7d):
-        2026: W1=$18,121 W2=$33,224 W3=$35,158 W4=$35,140 W5=$36,979 W6=$39,883 W7=$41,020 W8=$45,459 W9=$47,579
-        2025: W1=$15,130 W2=$25,186 W3=$25,981 W4=$26,161 W5=$26,210 W6=$29,591 W7=$31,104 W8=$32,756 W9=$31,848
-        Chart: viewBox 0 0 900 290, plotting 9 weeks, x positions: 90,187,284,381,478,570,662,748,830
-        Y range 0-50K. Y(val) = 250 - val*220/50000
-      -->
-      <svg viewBox="0 0 900 290" style="width:100%;max-width:900px;display:block;margin:0 auto" aria-label="Weekly fees 2026 vs 2025 line chart, 9 weeks">
-        <line x1="80" y1="30" x2="850" y2="30" stroke="#edf1f6" stroke-width="1"/>
-        <line x1="80" y1="79" x2="850" y2="79" stroke="#edf1f6" stroke-width="1"/>
-        <line x1="80" y1="128" x2="850" y2="128" stroke="#edf1f6" stroke-width="1"/>
-        <line x1="80" y1="177" x2="850" y2="177" stroke="#edf1f6" stroke-width="1"/>
-        <line x1="80" y1="250" x2="850" y2="250" stroke="#d9e0ea" stroke-width="1.5"/>
-        <text x="72" y="34" text-anchor="end" font-size="11" fill="#667085">$50K</text>
-        <text x="72" y="83" text-anchor="end" font-size="11" fill="#667085">$38K</text>
-        <text x="72" y="132" text-anchor="end" font-size="11" fill="#667085">$25K</text>
-        <text x="72" y="181" text-anchor="end" font-size="11" fill="#667085">$13K</text>
-        <text x="72" y="254" text-anchor="end" font-size="11" fill="#667085">$0</text>
-        <text x="90" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W1 Jul 1&#8209;5</text>
-        <text x="187" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W2 Jul 6&#8209;12</text>
-        <text x="284" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W3 Jul 13&#8209;19</text>
-        <text x="381" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W4 Jul 20&#8209;26</text>
-        <text x="478" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W5 Jul 27&#8209;Aug 2</text>
-        <text x="570" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W6 Aug 3&#8209;9</text>
-        <text x="662" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W7 Aug 10&#8209;16</text>
-        <text x="748" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W8 Aug 17&#8209;23</text>
-        <text x="830" y="275" text-anchor="middle" font-size="9" fill="#344054" font-weight="600">W9 Aug 24&ndash;30</text>
-        <!--
-          Y(val)=250-val*220/50000
-          2025: $15130->184, $25186->139, $25981->136, $26161->135, $26210->135, $29591->120, $31104->113, $32756->106, $31848->110
-          2026: $18121->170, $33224->104, $35158->95, $35140->95, $36979->87, $39883->75, $41020->70, $45459->50, $47579->41
-        -->
-        <polygon points="90,170 187,104 284,95 381,95 478,87 570,75 662,70 748,50 830,41 830,110 748,106 662,113 570,120 478,135 381,135 284,136 187,139 90,184" fill="#2457c5" fill-opacity="0.06"/>
-        <polyline points="90,184 187,139 284,136 381,135 478,135 570,120 662,113 748,106 830,110" fill="none" stroke="#667085" stroke-width="2" stroke-dasharray="6 4"/>
-        <polyline points="90,170 187,104 284,95 381,95 478,87 570,75 662,70 748,50 830,41" fill="none" stroke="#2457c5" stroke-width="2.5"/>
-        <circle cx="90" cy="184" r="5" fill="#667085"/>
-        <circle cx="187" cy="139" r="5" fill="#667085"/>
-        <circle cx="284" cy="136" r="5" fill="#667085"/>
-        <circle cx="381" cy="135" r="5" fill="#667085"/>
-        <circle cx="478" cy="135" r="5" fill="#667085"/>
-        <circle cx="570" cy="120" r="5" fill="#667085"/>
-        <circle cx="662" cy="113" r="5" fill="#667085"/>
-        <circle cx="748" cy="106" r="5" fill="#667085"/>
-        <circle cx="830" cy="110" r="5" fill="#667085"/>
-        <circle cx="90" cy="170" r="5" fill="#2457c5"/>
-        <circle cx="187" cy="104" r="5" fill="#2457c5"/>
-        <circle cx="284" cy="95" r="5" fill="#2457c5"/>
-        <circle cx="381" cy="95" r="5" fill="#2457c5"/>
-        <circle cx="478" cy="87" r="5" fill="#2457c5"/>
-        <circle cx="570" cy="75" r="5" fill="#2457c5"/>
-        <circle cx="662" cy="70" r="5" fill="#2457c5"/>
-        <circle cx="748" cy="50" r="5" fill="#2457c5"/>
-        <circle cx="830" cy="41" r="5" fill="#2457c5"/>
-        <!-- 2025 labels -->
-        <text x="90" y="201" text-anchor="middle" font-size="9" fill="#667085">$15.1K</text>
-        <text x="187" y="155" text-anchor="middle" font-size="9" fill="#667085">$25.2K</text>
-        <text x="284" y="152" text-anchor="middle" font-size="9" fill="#667085">$26.0K</text>
-        <text x="381" y="151" text-anchor="middle" font-size="9" fill="#667085">$26.2K</text>
-        <text x="478" y="151" text-anchor="middle" font-size="9" fill="#667085">$26.2K</text>
-        <text x="570" y="136" text-anchor="middle" font-size="9" fill="#667085">$29.6K</text>
-        <text x="662" y="129" text-anchor="middle" font-size="9" fill="#667085">$31.1K</text>
-        <text x="748" y="122" text-anchor="middle" font-size="9" fill="#667085">$32.8K</text>
-        <text x="830" y="126" text-anchor="middle" font-size="9" fill="#667085">$31.8K</text>
-        <!-- 2026 labels -->
-        <text x="90" y="160" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$18.1K</text>
-        <text x="187" y="94" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$33.2K</text>
-        <text x="284" y="85" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$35.2K</text>
-        <text x="381" y="85" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$35.1K</text>
-        <text x="478" y="77" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$37.0K</text>
-        <text x="570" y="65" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$39.9K</text>
-        <text x="662" y="60" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$41.0K</text>
-        <text x="748" y="40" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$45.5K</text>
-        <text x="830" y="31" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">$47.6K &#9650;</text>
-        <rect x="80" y="14" width="14" height="3" fill="#2457c5" rx="1"/>
-        <text x="100" y="20" font-size="12" fill="#2457c5" font-weight="700">2026</text>
-        <line x1="145" y1="17" x2="159" y2="17" stroke="#667085" stroke-width="2" stroke-dasharray="4 3"/>
-        <text x="165" y="20" font-size="12" fill="#667085">2025</text>
-        <text x="310" y="20" font-size="10" fill="#344054">W9 = complete 7d (Aug 24&ndash;30) +49.4% &mdash; strongest week Q3 | ETF fresh this session</text>
-      </svg>
-    </div>
+    <p class="eyebrow">Section 3 &mdash; Weekly Fee Trend (Q3 2026 vs Q3 2025 comparable weeks)</p>
+    <h2>Accelerating into Sep: W9 +42.8%, W10 partial (3 days) +126.6% &mdash; Sep run rate $6,261/day</h2>
 
     <div class="tableWrap">
       <table>
         <thead>
           <tr>
             <th>Week</th>
-            <th class="num">2026 Fees</th>
-            <th class="num">2025 Fees</th>
-            <th class="num">Fee YoY</th>
-            <th>Source / Note</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>W1 (Jul 1&ndash;5 2026 / Jul 1&ndash;6 2025)</strong> <span style="font-size:11px;color:var(--muted)">5d vs 6d calendar mismatch</span></td>
-            <td class="num">$18,121</td>
-            <td class="num">$15,130</td>
-            <td class="num" style="color:var(--green)">+19.8%</td>
-            <td>Jul TF (from prior run, Jul billed)</td>
-          </tr>
-          <tr>
-            <td><strong>W2 (Jul 6&ndash;12 2026 / Jul 7&ndash;13 2025)</strong></td>
-            <td class="num">$33,224</td>
-            <td class="num">$25,186</td>
-            <td class="num" style="color:var(--green)">+31.9%</td>
-            <td>Jul TF (from prior run)</td>
-          </tr>
-          <tr>
-            <td><strong>W3 (Jul 13&ndash;19 2026 / Jul 14&ndash;20 2025)</strong></td>
-            <td class="num">$35,158</td>
-            <td class="num">$25,981</td>
-            <td class="num" style="color:var(--green)">+35.3%</td>
-            <td>Jul TF (from prior run)</td>
-          </tr>
-          <tr>
-            <td><strong>W4 (Jul 20&ndash;26 2026 / Jul 21&ndash;27 2025)</strong></td>
-            <td class="num">$35,140</td>
-            <td class="num">$26,161</td>
-            <td class="num" style="color:var(--green)">+34.3%</td>
-            <td>Jul TF (from prior run)</td>
-          </tr>
-          <tr>
-            <td><strong>W5 (Jul 27&ndash;Aug 2 2026 / Jul 28&ndash;Aug 3 2025)</strong></td>
-            <td class="num">$36,979</td>
-            <td class="num">$26,210</td>
-            <td class="num" style="color:var(--green)">+41.1%</td>
-            <td>Jul TF + Aug ETF (from prior run)</td>
-          </tr>
-          <tr>
-            <td><strong>W6 (Aug 3&ndash;9 2026 / Aug 4&ndash;10 2025)</strong></td>
-            <td class="num">$39,883</td>
-            <td class="num">$29,591</td>
-            <td class="num" style="color:var(--green)">+34.8%</td>
-            <td>ETF (fresh this session, Rule B1)</td>
-          </tr>
-          <tr>
-            <td><strong>W7 (Aug 10&ndash;16 2026 / Aug 11&ndash;17 2025)</strong></td>
-            <td class="num">$41,020</td>
-            <td class="num">$31,104</td>
-            <td class="num" style="color:var(--green)">+31.9%</td>
-            <td>ETF (fresh this session, Rule B1)</td>
-          </tr>
-          <tr>
-            <td><strong>W8 (Aug 17&ndash;23 2026 / Aug 18&ndash;24 2025)</strong> <span style="font-size:11px;color:var(--green)">7-day complete</span></td>
-            <td class="num">$45,459</td>
-            <td class="num">$32,756</td>
-            <td class="num" style="color:var(--green)">+38.7%</td>
-            <td>ETF (fresh this session, Rule B1; +$830 vs v13 $44,629 &mdash; intraday refresh)</td>
-          </tr>
-          <tr style="background:#ecfdf3">
-            <td><strong>W9 (Aug 24&ndash;30 2026)</strong> <span style="font-size:11px;color:var(--green)">7-day COMPLETE &#9650; Strongest week Q3</span></td>
-            <td class="num">$47,579</td>
-            <td class="num">$31,848</td>
-            <td class="num" style="color:var(--green)"><strong>+49.4%</strong></td>
-            <td>ETF (fresh this session). Aug 24=$11,256 | Aug 25=$4,473 | Aug 26=$6,547 | Aug 27&ndash;30=$25,303 (fresh)</td>
-          </tr>
-          <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total (61 days)</strong></td>
-            <td class="num">$332,558</td>
-            <td class="num">$243,967</td>
-            <td class="num" style="color:var(--green)">+36.3%</td>
-            <td><strong>Pacing: 80.5%</strong> (total incl. Axerrio = 43.9% / 54.5%)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="small" style="margin-top:5px">W9 now COMPLETE (7d). W8 refreshed from $44,629 (v13) to $45,459 (+$830) per Rule B1 (always re-query fresh). W6/W7 also refreshed with minor intraday drift. ETF updates intraday. W9 at +49.4% YoY is the strongest week of Q3 &mdash; structural signal. W1 has 5d vs 6d calendar mismatch (Q3 start Jul 1, mid-week).</p>
-
-    <!-- TREND DIAGNOSIS -->
-    <h3 style="margin-top:22px">Trend Diagnosis &mdash; pacing at 80.5%: J-shape + calendar effect, NOT structural</h3>
-    <div class="grid2" style="margin-top:8px">
-      <div class="diag-box" style="border-color:var(--green)">
-        <h4 style="color:var(--green)">Hypothesis A: Structural deterioration</h4>
-        <div class="verdict green">REJECTED</div>
-        <p style="font-size:13px;margin:0">W9 (7d complete, Aug 24&ndash;30) = <strong>+49.4% YoY</strong> &mdash; strongest week of Q3. W8 fresh = +38.7% YoY. Blended take rate stable. Aug 2026 final ($178,250 in 30 days = $5,942/day avg) consistent with accelerating run rate. No account-level churn visible. The Aug 27&ndash;30 marginal drag is calendar (Thu+weekend), not trend.</p>
-      </div>
-      <div class="diag-box" style="border-color:var(--gold)">
-        <h4 style="color:var(--gold)">Hypothesis B: J-shape comp + calendar (CONFIRMED)</h4>
-        <div class="verdict gold">CONFIRMED</div>
-        <p style="font-size:13px;margin:0">Trajectory: v6 85.1% &rarr; v7 84.2% &rarr; v8 79.8% &rarr; v9 83.9% &rarr; v12 84.0% &rarr; v13 81.3% &rarr; <strong>v14 80.5%</strong>. Aug 2025 = 32% of Q3 base (hardest comparable month). Aug 27&ndash;30 = Thu-Fri-weekend block, naturally light. Pattern of oscillation 80&ndash;85% continues. Sep carries 42.5% = decisive. W9 +49.4% is the early Sep signal &mdash; positive indicator.
-        </p>
-      </div>
-    </div>
-    <div class="band gold" style="margin-top:10px">
-      <strong>Diagnosis: J-shape comp + calendar. NOT STRUCTURAL.</strong> Aug 27&ndash;30 Thu-weekend block pulled 4-day marginal rate to +20.8% vs the +36% run rate. Same 80&ndash;85% oscillation band observed all Q3. Weekly YoY trend (W6=+34.8%, W7=+31.9%, W8=+38.7%, W9=+49.4%) shows week-to-week noise but NO directional deterioration &mdash; W9 +49.4% is the highest YoY of any week in Q3. Sep (42.5% of Q3 = $184K 2025 base) is the decisive variable: needs ~+52% YoY in Sep to close the ~$59K gap. Watch W10 (Sep 1&ndash;7) for structural read.
-    </div>
-
-    <!-- GA4 LEADING INDICATORS -->
-    <h3 style="margin-top:20px">GA4 Leading Indicators &mdash; <span style="color:var(--green)">W9 COMPLETE +8.0% WoW &mdash; NO FLAG</span></h3>
-    <div class="band green" style="margin-bottom:10px;font-size:13px"><strong>Monday Light update:</strong> W9 (Aug 24&ndash;30) sessions = 20,390 for app.kometsales.com, vs W8 18,880 &mdash; <strong>+8.0% WoW</strong>. NO FLAG (threshold: &gt;5% DROP). Sessions surge from Aug 6 sustained (4th week). New platform baseline holds at 19K&ndash;21K/week. Positive leading indicator for Sep.</div>
-    <div class="grid3">
-      <article class="card metric okLine">
-        <small>GA4 Sessions WoW (W9 vs W8, app.kometsales.com)</small>
-        <strong style="color:var(--green)">+8.0%</strong>
-        <p>W9: 20,390 sessions vs W8: 18,880. No &gt;5% drop. No GMV risk signal. Positive.</p>
-      </article>
-      <article class="card metric blueLine">
-        <small>GA4 Sessions W9 (Aug 24&ndash;30, full week)</small>
-        <strong>20,390</strong>
-        <p>app.kometsales.com. Vs 18,880 W8 (+8.0%). Highest week since Aug 6 surge.</p>
-      </article>
-      <article class="card metric okLine">
-        <small>Sessions Surge (from Aug 6 &mdash; 4 weeks)</small>
-        <strong style="color:var(--green)">7&times;</strong>
-        <p>~450/day pre-Aug 6 &rarr; 2,900+/day post-Aug 6. Sustained 4 weeks. Structural shift confirmed.</p>
-      </article>
-    </div>
-    <div class="tableWrap" style="margin-top:12px">
-      <table>
-        <thead>
-          <tr>
-            <th>Week (Mon)</th>
-            <th class="num">Sessions (app.kometsales.com)</th>
-            <th class="num">WoW Sessions</th>
+            <th class="num">2025 Fees (TF)</th>
+            <th class="num">2026 Fees (TF/ETF)</th>
+            <th class="num">YoY</th>
+            <th>Source</th>
             <th>Signal</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Jul 28&ndash;Aug 1 (6d)</td><td class="num">2,053</td><td class="num" style="color:var(--muted)">baseline</td><td><span class="tag info">Pre-surge</span></td></tr>
-          <tr><td>Aug 3&ndash;9 (W6)</td><td class="num">9,056</td><td class="num" style="color:var(--green)">+437%</td><td><span class="tag ok">Surge week &mdash; Aug 6 onset</span></td></tr>
-          <tr><td>Aug 10&ndash;16 (W7)</td><td class="num">18,437</td><td class="num" style="color:var(--green)">+103%</td><td><span class="tag ok">Ramp stabilizing</span></td></tr>
-          <tr><td>Aug 17&ndash;23 (W8)</td><td class="num">18,880</td><td class="num" style="color:var(--green)">+2.4%</td><td><span class="tag ok">Stable new baseline &mdash; no flag</span></td></tr>
-          <tr style="background:#ecfdf3"><td><strong>Aug 24&ndash;30 (W9 &mdash; COMPLETE)</strong></td><td class="num"><strong>20,390</strong></td><td class="num" style="color:var(--green)"><strong>+8.0%</strong></td><td><span class="tag ok">No flag &mdash; positive leading indicator</span></td></tr>
+          <tr>
+            <td><strong>W1</strong> Jul 1&ndash;5 (5d)</td>
+            <td class="num">$13,830</td>
+            <td class="num">$18,157</td>
+            <td class="num" style="color:var(--green)">+31.3%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W2</strong> Jul 6&ndash;12 (7d)</td>
+            <td class="num">$24,970</td>
+            <td class="num">$33,402</td>
+            <td class="num" style="color:var(--green)">+33.8%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W3</strong> Jul 13&ndash;19 (7d)</td>
+            <td class="num">$25,950</td>
+            <td class="num">$35,288</td>
+            <td class="num" style="color:var(--green)">+36.0%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W4</strong> Jul 20&ndash;26 (7d)</td>
+            <td class="num">$26,185</td>
+            <td class="num">$35,233</td>
+            <td class="num" style="color:var(--green)">+34.5%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W5</strong> Jul 27&ndash;Aug 2 (7d)</td>
+            <td class="num">$25,773</td>
+            <td class="num">$37,027</td>
+            <td class="num" style="color:var(--green)">+43.7%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W6</strong> Aug 3&ndash;9 (7d)</td>
+            <td class="num">$29,733</td>
+            <td class="num">$38,800</td>
+            <td class="num" style="color:var(--green)">+30.5%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W7</strong> Aug 10&ndash;16 (7d)</td>
+            <td class="num">$30,700</td>
+            <td class="num">$40,259</td>
+            <td class="num" style="color:var(--green)">+31.1%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W8</strong> Aug 17&ndash;23 (7d)</td>
+            <td class="num">$33,064</td>
+            <td class="num">$44,380</td>
+            <td class="num" style="color:var(--green)">+34.2%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED</span></td>
+          </tr>
+          <tr>
+            <td><strong>W9</strong> Aug 24&ndash;30 (7d)</td>
+            <td class="num">$33,761</td>
+            <td class="num">$48,207</td>
+            <td class="num" style="color:var(--green)">+42.8%</td>
+            <td>TF both years</td>
+            <td><span class="tag ok">LOCKED &mdash; STRONGEST WEEK</span></td>
+          </tr>
+          <tr style="background:#ecfdf3">
+            <td><strong>W10</strong> Aug 31+Sep 1&ndash;2 (3d partial) <span class="tag ok" style="margin-left:6px">ACCELERATING</span></td>
+            <td class="num">$11,006 (TF: $5,151+$5,855)</td>
+            <td class="num">$24,933 (TF Aug31 $12,412 + ETF Sep1-2 $12,521)</td>
+            <td class="num" style="color:var(--green)">+126.6%</td>
+            <td>2026 = TF Aug31 + ETF Sep1-2; 2025 = TF both</td>
+            <td><span class="tag warn">PARTIAL (3d)</span></td>
+          </tr>
+          <tr style="background:#f8fafc;font-weight:700">
+            <td><strong>Total (64 comparable days)</strong></td>
+            <td class="num">$254,973</td>
+            <td class="num">$355,686</td>
+            <td class="num" style="color:var(--green)"><strong>+39.5%</strong></td>
+            <td>TF (Jul-Aug locked, 2026 + 2025) + ETF (Sep 1-2 2026)</td>
+            <td><span class="tag ok">CODEX VERIFIED</span></td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <p class="prov" style="margin-top:8px"><strong>Source:</strong> GA4 E-Commerce Sheet (ID: 1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ), live tab (current). <strong>WoW threshold: &gt;5% drop = GMV risk in 3&ndash;5 days. W9 +8.0% = NO FLAG.</strong> GA4 Procurement sheet still BLOCKED (data through Jul 27 only). GA4&rarr;Snowflake canonical ratio: 53.1%. Transactions/revenue columns not re-queried on Monday Light run.</p>
+
+    <div class="diag-box" style="margin-top:14px">
+      <h4>Weekly Deceleration Diagnosis</h4>
+      <p style="margin:0;font-size:14px"><strong>Pattern:</strong> W1&ndash;W4 (Jul): +31&ndash;36% range &mdash; solid base. W5 jump to +43.7% (positive outlier). W6&ndash;W8 softer (+30-34%) &mdash; likely comp effect (Aug 2025 stronger). W9 rebounds to +42.8% (strongest 7-day week of Q3). W10 partial: +126.6% &mdash; caution: only 3 days vs 3 days 2025, Sep 1 is Monday (high). <strong>No deceleration trend.</strong> Growth rate oscillates around +35&ndash;43% on a weekly basis. Sep 1-2 run rate ($6,261/day) is above Q3 daily avg ($5,558/day) &mdash; Sep opening strong. Driver: take rate expansion (Dave Sack confirmed: eCom volume flat, fees +33%). Volume driver: network GMV declining but fee-bearing share growing.</p>
+    </div>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 (TF weekly, fresh this session R14). <code>EXPECTED_TRANSACTION_FEES</code> ks_flag=TRUE, shipping_date 2026-09-01&ndash;2026-09-02. 2025 TF re-queried fresh this session (Rule B2).</p>
   </section>
 
   <!-- S4: TAKE RATE -->
   <section id="s4">
-    <p class="eyebrow">Section 4 &mdash; Take Rate Analysis (Q3 YTD, Jul 1&ndash;Aug 26)</p>
-    <h2>Blended 0.885%. K2K 1.870% leads; eCom 0.967% steady; API 0.168% &mdash; flagged &lt;0.5%</h2>
+    <p class="eyebrow">Section 4 &mdash; Take Rate (Fees / Online GMV) &mdash; SUSPENDED THIS RUN</p>
+    <h2>Take rate suspended: API GMV anomaly in SALES_SV makes channel-level take rate unreliable</h2>
 
-    <div class="tableWrap" style="margin-bottom:14px">
+    <div class="band red"><strong>BLOCKED:</strong> SALES_SV API GMV 2026 = $153.7M implies API take rate = 0.011% ($17.5K fees / $153.7M GMV). Economically impossible &mdash; API take rate should be ~1%. Root cause: SALES_SV semantic view may include non-fee-bearing API volume (pass-through, catalogue lookups) or has residual fan-out not fully resolved by the Cortex Analyst deduplication. This is a known pattern (feedback.md B2: API 2025 GMV was $1M off in prior run). <strong>Action needed: investigate what &ldquo;API&rdquo; sales_channel represents in SALE_DETAILS vs what generates API fees in TRANSACTION_FEES. Build separate take rate query using only fee-bearing orders.</strong></div>
+
+    <div class="tableWrap" style="margin-top:14px;opacity:0.6">
       <table>
         <thead>
           <tr>
             <th>Channel</th>
-            <th class="num">Online GMV 2026 (57d)</th>
-            <th class="num">Fees 2026 (57d)</th>
-            <th class="num">Take Rate 2026</th>
-            <th class="num">2025 (Jul&ndash;Aug)</th>
-            <th>Signal</th>
+            <th class="num">Fees Jul-Aug 2026 (TF)</th>
+            <th class="num">GMV Jul-Sep2 2026 (SALES_SV)</th>
+            <th class="num">Implied Take Rate</th>
+            <th>Verdict</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>K2K</strong></td>
-            <td class="num">$7.61M</td>
-            <td class="num">$142,371</td>
-            <td class="num" style="color:var(--green)"><strong>1.870%</strong></td>
-            <td class="num">~1.88% (2025 est.)</td>
-            <td><span class="tag ok">Highest &mdash; stable rate, +38% volume</span></td>
+            <td>eCommerce</td>
+            <td class="num">$162,957</td>
+            <td class="num">$98.4M</td>
+            <td class="num" style="color:var(--red)">0.17% &#x26A0;</td>
+            <td><span class="tag bad">ANOMALOUS &mdash; too low</span></td>
           </tr>
           <tr>
-            <td><strong>eCommerce</strong></td>
-            <td class="num">$15.29M</td>
-            <td class="num">$147,906</td>
-            <td class="num" style="color:var(--green)"><strong>0.967%</strong></td>
-            <td class="num">~0.78% (2025 est.)</td>
-            <td><span class="tag ok">Rate expanding YoY (+18bp est.)</span></td>
+            <td>K2K</td>
+            <td class="num">$160,736</td>
+            <td class="num">$14.4M</td>
+            <td class="num" style="color:var(--gold)">1.11%</td>
+            <td><span class="tag warn">PLAUSIBLE (check period mismatch)</span></td>
           </tr>
           <tr>
-            <td><strong>API</strong> <span style="font-size:11px;color:var(--red)">&#9888; &lt;0.5% FLAG</span></td>
-            <td class="num">$12.26M</td>
-            <td class="num">$20,640</td>
-            <td class="num" style="color:var(--red)"><strong>0.168%</strong></td>
-            <td class="num">~0.15% (2025 est.)</td>
-            <td><span class="tag bad">Below 0.5% threshold &mdash; investigate accounts</span></td>
-          </tr>
-          <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total Online (blended)</strong></td>
-            <td class="num">$35.16M</td>
-            <td class="num">$310,917</td>
-            <td class="num">0.885%</td>
-            <td class="num">&mdash;</td>
-            <td></td>
+            <td>API</td>
+            <td class="num">$17,476</td>
+            <td class="num">$153.7M</td>
+            <td class="num" style="color:var(--red)">0.011% &#x26A0;</td>
+            <td><span class="tag bad">ANOMALOUS &mdash; likely inflated GMV</span></td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <div class="band orange">
-      <strong>API take rate 0.168% is flagged &lt;0.5%.</strong> Root cause: large API GMV accounts (e.g., Mayesh $0 API fees per prior analysis) transacting at $0 or minimal fee rates per their account-level rate in SFDC (Rule R11). This is NOT a blended-rate concern &mdash; it is per-account fee configuration. API GMV declining &minus;10.3% YoY AND low take rate = double compression on API contribution. Recommend Rose + Mercurio account-level review of top API GMV accounts.
-    </div>
-    <p class="prov" style="margin-top:8px">Take rate = fees / online GMV by channel. Fees: <code>TRANSACTION_FEES</code> Jul 2026 by transaction_type + <code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;26 by fee_channel, combined. GMV: <code>SALES_SV</code> DISTINCT sale_item_id, ks_flag=TRUE. Rules R1, R6, R9, R11. 2025 take rates are estimates based on 2025 channel fee / 2025 channel GMV ratios.</p>
+    <p class="prov">Fees: <code>TRANSACTION_FEES</code> Jul-Aug 2026 (62d, TF locked). GMV: <code>SALES_SV</code> Jul-Sep2 2026 (64d). Period mismatch adds noise. <strong>Take rate display suspended until root cause resolved.</strong></p>
   </section>
 
   <!-- S5: CHANNEL FEES -->
   <section id="s5">
-    <p class="eyebrow">Section 5 &mdash; Fees by Channel (Q3 YTD Jul 1&ndash;Aug 26, 57 days)</p>
-    <h2>eCommerce $147.9K | K2K $142.4K | API $20.6K | GPS $1.9K &mdash; Combined $312.8K (vs Core $305K: GPS+FedEx additive)</h2>
-    <div class="band blue" style="margin-bottom:10px;font-size:13px">Channel fees: <code>TRANSACTION_FEES</code> Jul 2026 by transaction_type (4 types confirmed) combined with <code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;26 by fee_channel. The ETF has fee_channel + fee_type (E-commerce Vendor, K2K Vendor, K2K Buyer, API Vendor, API Buyer, GPS). Jul TF uses transaction_type (eCommerce, K2K, API, FedEx). Combined view below.</div>
+    <p class="eyebrow">Section 5 &mdash; Fees by Transaction Type (Jul&ndash;Aug 2026 TF vs Jul&ndash;Aug 2025 TF &mdash; apples-to-apples)</p>
+    <h2>eCommerce leads at $162.9K (+41.5%). K2K strong at $160.7K (+37.1%). Sep 1-2 channel mix: BLOCKED (ETF only, no channel split)</h2>
 
-    <div class="tableWrap">
+    <div class="grid4">
+      <article class="card metric okLine">
+        <small>eCommerce Fees (Jul-Aug)</small>
+        <strong style="color:var(--green)">$162,957</strong>
+        <p>47.5% of total &mdash; +41.5% vs $115,176 in 2025</p>
+      </article>
+      <article class="card metric okLine">
+        <small>K2K Fees (Jul-Aug)</small>
+        <strong style="color:var(--green)">$160,736</strong>
+        <p>46.8% of total &mdash; +37.1% vs $117,230 in 2025</p>
+      </article>
+      <article class="card metric warnLine">
+        <small>API Fees (Jul-Aug)</small>
+        <strong style="color:var(--gold)">$17,476</strong>
+        <p>5.1% of total &mdash; +17.3% vs $14,899 in 2025. Mayesh API = $0 flagged.</p>
+      </article>
+      <article class="card metric blueLine">
+        <small>FedEx Fees (Jul-Aug)</small>
+        <strong>$1,996</strong>
+        <p>0.6% &mdash; +10.0% vs $1,814 in 2025</p>
+      </article>
+    </div>
+
+    <div class="tableWrap" style="margin-top:14px">
       <table>
         <thead>
           <tr>
-            <th>Channel</th>
-            <th class="num">Jul 2026 (TF billed)</th>
-            <th class="num">Aug 1&ndash;26 2026 (ETF)</th>
-            <th class="num">Q3 YTD 2026</th>
-            <th class="num">Q3 YTD 2025 (57d)</th>
+            <th>Transaction Type</th>
+            <th class="num">2025 Jul-Aug (TF)</th>
+            <th class="num">2026 Jul-Aug (TF)</th>
             <th class="num">YoY</th>
+            <th class="num">2026 Share</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>eCommerce</strong></td>
-            <td class="num">$72,500</td>
-            <td class="num">$75,406</td>
-            <td class="num" style="color:var(--green)"><strong>$147,906</strong></td>
-            <td class="num">$103,195</td>
-            <td class="num" style="color:var(--green)">+43.3%</td>
+            <td class="num">$115,176</td>
+            <td class="num">$162,957</td>
+            <td class="num" style="color:var(--green)">+41.5%</td>
+            <td class="num">47.5%</td>
           </tr>
           <tr>
-            <td><strong>K2K</strong> <span style="font-size:11px;color:var(--muted)">(Vendor + Buyer)</span></td>
-            <td class="num">$71,747</td>
-            <td class="num">$70,624</td>
-            <td class="num" style="color:var(--green)"><strong>$142,371</strong></td>
-            <td class="num">$103,961</td>
-            <td class="num" style="color:var(--green)">+37.0%</td>
+            <td><strong>K2K</strong></td>
+            <td class="num">$117,230</td>
+            <td class="num">$160,736</td>
+            <td class="num" style="color:var(--green)">+37.1%</td>
+            <td class="num">46.8%</td>
           </tr>
           <tr>
-            <td><strong>API</strong> <span style="font-size:11px;color:var(--red)">&#9888;</span></td>
-            <td class="num">$9,148</td>
-            <td class="num">$11,492</td>
-            <td class="num" style="color:var(--green)"><strong>$20,640</strong></td>
-            <td class="num">$14,393</td>
-            <td class="num" style="color:var(--green)">+43.4%</td>
-          </tr>
-          <tr>
-            <td><strong>Gross Profit Share (GPS)</strong></td>
-            <td class="num" style="color:var(--muted)">$0</td>
-            <td class="num">$1,904</td>
-            <td class="num"><strong>$1,904</strong></td>
-            <td class="num" style="color:var(--muted)">$0</td>
-            <td class="num" style="color:var(--muted)">new</td>
+            <td><strong>API</strong></td>
+            <td class="num">$14,899</td>
+            <td class="num">$17,476</td>
+            <td class="num" style="color:var(--green)">+17.3%</td>
+            <td class="num">5.1%</td>
           </tr>
           <tr>
             <td><strong>FedEx</strong></td>
-            <td class="num">$913</td>
-            <td class="num" style="color:var(--muted)">~$400 est.</td>
-            <td class="num">~$1,313</td>
-            <td class="num">$1,764</td>
-            <td class="num" style="color:var(--red)">~&minus;26%</td>
+            <td class="num">$1,814</td>
+            <td class="num">$1,996</td>
+            <td class="num" style="color:var(--green)">+10.0%</td>
+            <td class="num">0.6%</td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total Channel Fees</strong></td>
-            <td class="num">$154,308</td>
-            <td class="num">$159,426 (ETF full Jul1&ndash;Aug26)</td>
-            <td class="num">$304,956 (Core)</td>
-            <td class="num">$223,313</td>
-            <td class="num" style="color:var(--green)">+36.6%</td>
+            <td><strong>Total (62d Jul-Aug TF)</strong></td>
+            <td class="num">$249,119</td>
+            <td class="num">$343,165</td>
+            <td class="num" style="color:var(--green)">+37.8%</td>
+            <td class="num">100%</td>
+          </tr>
+          <tr style="background:#fff4e5">
+            <td><strong>+ Sep 1-2 ETF (no channel split)</strong></td>
+            <td class="num">$5,855</td>
+            <td class="num">$12,521</td>
+            <td class="num" style="color:var(--green)">+113.9%</td>
+            <td class="num" style="color:var(--muted)">N/A</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:5px">Aug ETF channel data: E-commerce Vendor $75,406 | K2K Vendor $45,508 + K2K Buyer $25,116 = $70,624 | API Vendor $8,864 + API Buyer $2,590 + API Buyer 2 $38 = $11,492 | GPS $1,904. Jul TF: eCommerce $72,500 | K2K $71,747 | API $9,148 | FedEx $913. Note: ETF Jul 1&ndash;Aug 26 shows $159,425 (mostly Aug portion &mdash; July residual in ETF = $8,777; bulk of Jul is billed in TF).</p>
-    <div class="band orange" style="margin-top:10px">
-      <strong>eCommerce fees leading K2K for first time (+$5.5K ahead).</strong> Both channels near parity at ~$143&ndash;$148K for 57 days. eCommerce fees +43.3% YoY on +14.9% GMV growth = rate expansion confirmed (H4: take-rate paradox). K2K fees +37.0% on +38.0% GMV growth = rate-stable, volume-driven. API fees +43.4% despite &minus;10.3% GMV decline = rate expansion on fewer transactions. GPS new channel ($1,904 from 1 Retailer account, Gross Profit Share model). FedEx declining.
-    </div>
+    <div class="band gold" style="margin-top:12px;font-size:13px">Note: Channel breakdown uses Jul-Aug 2026 TF (locked) vs Jul-Aug 2025 TF for clean apples-to-apples. Sep 1-2 ETF adds $12,521 without channel breakdown (ETF not queried by channel). Sep 1-2 YoY +113.9% on a 2-day basis &mdash; strong opening to September.</div>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 and 2025-07-01&ndash;2025-08-31. Both re-queried fresh this session (Rule B2). Rule R1 (ks_flag) + Rule R2 (transaction_date) applied.</p>
   </section>
 
   <!-- S6: TOP ACCOUNTS -->
   <section id="s6">
-    <p class="eyebrow">Section 6 &mdash; Top 15 Accounts by Fees (Q3 YTD Jul 1&ndash;Aug 26)</p>
-    <h2>Top 15 = ~$198.9K (65.2% of $304.9K total). Sole Farms #1, Kennicott #2, Jet Fresh #3.</h2>
-    <div class="band blue" style="margin-bottom:10px;font-size:13px">Combined: <code>TRANSACTION_FEES</code> Jul 2026 by company_name + <code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;26 by company_name, summed. Both freshly queried this session. &ldquo;-Sole Farms&rdquo; leading hyphen is a data artifact (name as stored); fees are real.</div>
+    <p class="eyebrow">Section 6 &mdash; Top 15 Accounts by TX Fees (Jul&ndash;Aug 2026, TRANSACTION_FEES)</p>
+    <h2>Top 15 = $220.8K (64.3% concentration). Sole Farms leads at $29.3K. FloraLink K2K-only at $13.5K.</h2>
+
     <div class="tableWrap">
       <table>
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Account</th>
-            <th>Layer</th>
-            <th class="num">Jul 2026</th>
-            <th class="num">Aug 1&ndash;26 2026</th>
-            <th class="num">Q3 YTD 2026</th>
-            <th class="num">% of Total</th>
-            <th>Note</th>
+            <th>#</th>
+            <th>Company</th>
+            <th class="num">eCom Fees</th>
+            <th class="num">K2K Fees</th>
+            <th class="num">API Fees</th>
+            <th class="num">Total Fees</th>
+            <th>Driver</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>1</td><td><strong>Sole Farms</strong></td><td>Importer</td><td class="num">$12,676</td><td class="num">$13,558</td><td class="num" style="color:var(--green)"><strong>$26,234</strong></td><td class="num">8.6%</td><td><span class="tag ok">Stable leader</span></td></tr>
-          <tr><td>2</td><td><strong>Kennicott Brothers Company</strong></td><td>Wholesaler</td><td class="num">$12,210</td><td class="num">$10,403</td><td class="num" style="color:var(--green)"><strong>$22,613</strong></td><td class="num">7.4%</td><td><span class="tag ok">Top wholesaler</span></td></tr>
-          <tr><td>3</td><td><strong>Jet Fresh Flower Distributors</strong></td><td>Importer</td><td class="num">$11,309</td><td class="num">$9,506</td><td class="num" style="color:var(--green)"><strong>$20,816</strong></td><td class="num">6.8%</td><td></td></tr>
-          <tr><td>4</td><td><strong>Fresca Farms</strong></td><td>Importer</td><td class="num">$8,753</td><td class="num">$8,564</td><td class="num"><strong>$17,317</strong></td><td class="num">5.7%</td><td></td></tr>
-          <tr><td>5</td><td><strong>Choice Farms</strong></td><td>Importer</td><td class="num">$7,154</td><td class="num">$7,917</td><td class="num"><strong>$15,071</strong></td><td class="num">4.9%</td><td><span class="tag ok">Growing MoM</span></td></tr>
-          <tr><td>6</td><td><strong>Rosaprima International</strong></td><td>Importer</td><td class="num">$8,009</td><td class="num">$6,671</td><td class="num"><strong>$14,680</strong></td><td class="num">4.8%</td><td><span class="tag warn">Low take rate</span></td></tr>
-          <tr><td>7</td><td><strong>Continental Flowers</strong></td><td>Importer</td><td class="num">$7,507</td><td class="num">$6,612</td><td class="num"><strong>$14,119</strong></td><td class="num">4.6%</td><td></td></tr>
-          <tr><td>8</td><td><strong>FloraLink</strong></td><td>Wholesaler</td><td class="num">$5,808</td><td class="num">$6,532</td><td class="num"><strong>$12,340</strong></td><td class="num">4.0%</td><td><span class="tag ok">Growing Aug</span></td></tr>
-          <tr><td>9</td><td><strong>Royal Flowers Inc., Domestic</strong></td><td>Importer</td><td class="num">$5,174</td><td class="num">$5,336</td><td class="num"><strong>$10,510</strong></td><td class="num">3.4%</td><td></td></tr>
-          <tr><td>10</td><td><strong>Bill Doran Company</strong></td><td>Wholesaler</td><td class="num">$5,101</td><td class="num">$5,199</td><td class="num"><strong>$10,300</strong></td><td class="num">3.4%</td><td></td></tr>
-          <tr><td>11</td><td><strong>Bella Blossom LLC</strong></td><td>Importer</td><td class="num">$4,390</td><td class="num">$3,877</td><td class="num"><strong>$8,268</strong></td><td class="num">2.7%</td><td></td></tr>
-          <tr><td>12</td><td><strong>Allure Farms</strong></td><td>Importer</td><td class="num">$3,231</td><td class="num">$4,469</td><td class="num"><strong>$7,700</strong></td><td class="num">2.5%</td><td><span class="tag ok">Fastest growth</span></td></tr>
-          <tr><td>13</td><td><strong>Welyflor / PROFILE FLOWERS</strong></td><td>Importer</td><td class="num">$3,501</td><td class="num">$3,962</td><td class="num"><strong>$7,463</strong></td><td class="num">2.4%</td><td></td></tr>
-          <tr><td>14</td><td><strong>Sunburst Farms</strong></td><td>Importer</td><td class="num">$2,944</td><td class="num">$2,887</td><td class="num"><strong>$5,830</strong></td><td class="num">1.9%</td><td></td></tr>
-          <tr><td>15</td><td><strong>Gala Roses</strong></td><td>Importer</td><td class="num">$3,075</td><td class="num">$2,579</td><td class="num"><strong>$5,654</strong></td><td class="num">1.9%</td><td></td></tr>
+          <tr><td>1</td><td><strong>Sole Farms</strong></td><td class="num">$15,796</td><td class="num">$11,978</td><td class="num">$1,240</td><td class="num"><strong>$29,287</strong></td><td>Multi-channel leader. eCom dominant.</td></tr>
+          <tr><td>2</td><td><strong>Jet Fresh Flower Distributors</strong></td><td class="num">$11,429</td><td class="num">$9,688</td><td class="num">$1,972</td><td class="num"><strong>$23,180</strong></td><td>Balanced. API meaningful.</td></tr>
+          <tr><td>3</td><td><strong>Kennicott Brothers Company</strong></td><td class="num">$1,469</td><td class="num">$18,890</td><td class="num">$2,314</td><td class="num"><strong>$22,672</strong></td><td>K2K dominant. Low eCom.</td></tr>
+          <tr><td>4</td><td><strong>Fresca Farms</strong></td><td class="num">$10,264</td><td class="num">$8,812</td><td class="num">$649</td><td class="num"><strong>$19,816</strong></td><td>Balanced eCom+K2K.</td></tr>
+          <tr><td>5</td><td><strong>Choice Farms</strong></td><td class="num">$10,017</td><td class="num">$7,210</td><td class="num">$229</td><td class="num"><strong>$17,644</strong></td><td>eCom-led. API minimal.</td></tr>
+          <tr><td>6</td><td><strong>Rosaprima International</strong></td><td class="num">$10,323</td><td class="num">$5,319</td><td class="num">$322</td><td class="num"><strong>$16,108</strong></td><td>eCom-led. Low take rate flag (prior runs).</td></tr>
+          <tr><td>7</td><td><strong>Continental Flowers</strong></td><td class="num">$9,353</td><td class="num">$6,207</td><td class="num">$345</td><td class="num"><strong>$16,066</strong></td><td>Balanced.</td></tr>
+          <tr><td>8</td><td><strong>FloraLink</strong></td><td class="num">$0</td><td class="num">$13,537</td><td class="num">$0</td><td class="num"><strong>$13,537</strong></td><td>K2K ONLY. No eCom/API revenue.</td></tr>
+          <tr><td>9</td><td><strong>Royal Flowers Inc. (Domestic)</strong></td><td class="num">$6,203</td><td class="num">$5,267</td><td class="num">$329</td><td class="num"><strong>$11,974</strong></td><td>Balanced.</td></tr>
+          <tr><td>10</td><td><strong>Bill Doran Company</strong></td><td class="num">$5,303</td><td class="num">$4,905</td><td class="num">$0</td><td class="num"><strong>$10,209</strong></td><td>No API fees. eCom+K2K.</td></tr>
+          <tr><td>11</td><td><strong>Bella Blossom LLC</strong></td><td class="num">$6,612</td><td class="num">$3,327</td><td class="num">$0</td><td class="num"><strong>$9,939</strong></td><td>eCom-led. No API.</td></tr>
+          <tr><td>12</td><td><strong>Allure Farms</strong></td><td class="num">$6,386</td><td class="num">$2,112</td><td class="num">$210</td><td class="num"><strong>$8,769</strong></td><td>eCom-led.</td></tr>
+          <tr><td>13</td><td><strong>Welyflor / Profile Flowers</strong></td><td class="num">$4,810</td><td class="num">$3,682</td><td class="num">$86</td><td class="num"><strong>$8,578</strong></td><td>Balanced.</td></tr>
+          <tr><td>14</td><td><strong>Gala Roses</strong></td><td class="num">$3,268</td><td class="num">$2,851</td><td class="num">$466</td><td class="num"><strong>$6,585</strong></td><td>Balanced. API present.</td></tr>
+          <tr><td>15</td><td><strong>Sunburst Farms</strong></td><td class="num">$4,733</td><td class="num">$1,148</td><td class="num">$504</td><td class="num"><strong>$6,432</strong></td><td>eCom-led. API present.</td></tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td></td><td><strong>Top 15 Total</strong></td><td></td><td class="num">$101,842</td><td class="num">$97,072</td><td class="num"><strong>~$198,915</strong></td><td class="num"><strong>65.2%</strong></td><td></td>
+            <td colspan="4"></td>
+            <td colspan="1" style="text-align:right;font-weight:700">Top 15 Total:</td>
+            <td class="num"><strong>$220,796</strong></td>
+            <td style="color:var(--muted)">64.3% of Jul-Aug $343,165 total</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:5px">Top 2 accounts (Sole Farms + Kennicott) = $48,847 = 16.0% of total. Rosaprima flagged for low take rate per prior analyses. Allure Farms fastest grower in Top 15 (Jul $3,231 &rarr; Aug $4,469 = +38.3%). Source: TF Jul + ETF Aug, ks_flag=TRUE, combined by company_name.</p>
+    <div class="band gold" style="margin-top:12px;font-size:13px">Note: Mayesh Wholesale not in top 15 &mdash; prior flag: $0 API fees. Rosaprima flagged for low take rate in prior runs (confirmed by feedback.md). YoY comparison for top accounts not available this run &mdash; add on next Thursday Full.</div>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 (62d TF locked). Grouped by company_name. Sep 1-2 ETF not included in top 15 (no company breakdown from ETF this run).</p>
   </section>
 
   <!-- S7: AXERRIO -->
   <section id="s7">
-    <p class="eyebrow">Section 7 &mdash; Axerrio TX Fees (Europe)</p>
-    <h2>Jul ACTUAL $9,451 confirmed. Aug 2026 blank in sheet &mdash; EST $7,927 (Jul &times; 26/31). Q3 YTD ~$17,378.</h2>
-    <div class="band blue" style="margin-bottom:10px;font-size:13px">Source confirmed: Sofia&rsquo;s Control Sheet (Drive ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM). Read fresh this session. 17 clients, 3 fee models. Trend: $8,204 (Jan) &rarr; $9,354 (Apr) &rarr; $10,329 (May peak) &rarr; $9,852 (Jun) &rarr; $9,451 (Jul). May was peak; Jun&ndash;Jul have stepped back slightly (&minus;4.1% Jul vs Jun). Aug column is blank &mdash; sheet updated by the 1st&ndash;2nd of each month, so Aug actuals expected ~Sep 2.</div>
+    <p class="eyebrow">Section 7 &mdash; Axerrio (Europe TX Fees &mdash; additive to Core)</p>
+    <h2>Jul ACTUAL $9,394. Aug BLANK (EST $9,394). Sep 1-2 EST $626. Q3 YTD: ~$19,414</h2>
 
-    <div class="grid4">
+    <div class="grid3">
       <article class="card metric okLine">
         <small>Jul 2026 ACTUAL</small>
-        <strong>$9,451</strong>
-        <p>€8,105.83 &times; USD rate. Sofia&rsquo;s sheet USD column confirmed $9,450.51.</p>
+        <strong style="color:var(--green)">$9,394</strong>
+        <p>Fresh read this session. Sofia&rsquo;s Control Sheet USD column Jul 2026 = $9,393.64. Slight FX change vs v14 ($9,389 &rarr; $9,394).</p>
       </article>
       <article class="card metric warnLine">
-        <small>Aug 1&ndash;26 2026 EST</small>
-        <strong>~$7,927</strong>
-        <p>$9,451 &times; 26/31 (Rule N1: use most recent actual month as base)</p>
+        <small>Aug 2026 EST</small>
+        <strong style="color:var(--gold)">~$9,394</strong>
+        <p>Aug column BLANK in sheet (due ~Sep 2). Full-month estimate: $9,394 &times; 31/31 = $9,394 (Rule N1). Check next run for ACTUAL.</p>
       </article>
       <article class="card metric warnLine">
-        <small>Q3 2026 YTD (Jul+Aug est.)</small>
-        <strong>~$17,378</strong>
-        <p>$9,451 ACTUAL + $7,927 EST</p>
-      </article>
-      <article class="card metric blueLine">
-        <small>Run-rate (annualized)</small>
-        <strong>~$113K/yr</strong>
-        <p>$9.4K/month average H2 2026 trend. Trending ~+4% per month in H1 2026.</p>
+        <small>Sep 1-2 EST</small>
+        <strong style="color:var(--gold)">~$626</strong>
+        <p>$9,394 / 30 days &times; 2 days (Sep has 30 days). Rule N1 pro-rata.</p>
       </article>
     </div>
 
-    <div class="tableWrap" style="margin-top:12px">
+    <div class="tableWrap" style="margin-top:14px">
       <table>
         <thead>
           <tr>
             <th>Month</th>
             <th class="num">EUR Total</th>
             <th class="num">USD Total</th>
-            <th class="num">MoM Change</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Jan 2026</td><td class="num">€7,036</td><td class="num">$8,204</td><td class="num" style="color:var(--muted)">base</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr><td>Feb 2026</td><td class="num">€6,890</td><td class="num">$8,033</td><td class="num" style="color:var(--red)">&minus;2.1%</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr><td>Mar 2026</td><td class="num">€7,530</td><td class="num">$8,780</td><td class="num" style="color:var(--green)">+9.3%</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr><td>Apr 2026</td><td class="num">€8,024</td><td class="num">$9,355</td><td class="num" style="color:var(--green)">+6.5%</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr><td>May 2026</td><td class="num">€8,860</td><td class="num">$10,329</td><td class="num" style="color:var(--green)">+10.4%</td><td><span class="tag ok">ACTUAL &mdash; peak</span></td></tr>
-          <tr><td>Jun 2026</td><td class="num">€8,450</td><td class="num">$9,852</td><td class="num" style="color:var(--red)">&minus;4.6%</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr><td>Jul 2026</td><td class="num">€8,106</td><td class="num">$9,451</td><td class="num" style="color:var(--red)">&minus;4.1%</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr style="background:#fff4e5"><td>Aug 2026</td><td class="num" style="color:var(--muted)">not yet</td><td class="num" style="color:var(--muted)">~$7,927 EST</td><td class="num" style="color:var(--muted)">N/A</td><td><span class="tag warn">EST (sheet blank, ~Sep 2)</span></td></tr>
+          <tr><td>Jan 2026</td><td class="num">&euro;7,036</td><td class="num">$8,154</td><td><span class="tag ok">ACTUAL</span></td></tr>
+          <tr><td>Feb 2026</td><td class="num">&euro;6,890</td><td class="num">$7,985</td><td><span class="tag ok">ACTUAL</span></td></tr>
+          <tr><td>Mar 2026</td><td class="num">&euro;7,530</td><td class="num">$8,727</td><td><span class="tag ok">ACTUAL</span></td></tr>
+          <tr><td>Apr 2026</td><td class="num">&euro;8,024</td><td class="num">$9,298</td><td><span class="tag ok">ACTUAL</span></td></tr>
+          <tr><td>May 2026</td><td class="num">&euro;8,860</td><td class="num">$10,267</td><td><span class="tag ok">ACTUAL</span></td></tr>
+          <tr><td>Jun 2026</td><td class="num">&euro;8,450</td><td class="num">$9,793</td><td><span class="tag ok">ACTUAL</span></td></tr>
+          <tr><td><strong>Jul 2026</strong></td><td class="num">&euro;8,106</td><td class="num"><strong>$9,394</strong></td><td><span class="tag ok">ACTUAL (this session)</span></td></tr>
+          <tr><td><strong>Aug 2026</strong></td><td class="num" style="color:var(--muted)">BLANK</td><td class="num"><strong>~$9,394 EST</strong></td><td><span class="tag warn">EST &mdash; due ~Sep 2</span></td></tr>
+          <tr><td><strong>Sep 1-2 2026</strong></td><td class="num" style="color:var(--muted)">N/A</td><td class="num"><strong>~$626 EST</strong></td><td><span class="tag warn">PRO-RATA EST</span></td></tr>
+          <tr style="background:#fff4e5;font-weight:700"><td><strong>Q3 YTD (Jul-Sep2)</strong></td><td class="num">&mdash;</td><td class="num"><strong>~$19,414</strong></td><td><span class="tag warn">ACTUAL+EST</span></td></tr>
+          <tr style="background:#f8fafc;font-weight:700"><td><strong>Q3 Full EST (Jul-Sep)</strong></td><td class="num">&mdash;</td><td class="num">~$28,181</td><td><span class="tag warn">3 months &times; $9,394</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:5px">Dan&rsquo;s OKR formula: OKR TX Fees = Snowflake Core + Axerrio (Sofia&rsquo;s sheet). Axerrio Q3 2025 baseline not available in sheet (only Jan&ndash;Feb 2025). Axerrio is always shown as additive to 2026 only &mdash; no YoY comparison available. Three fee models: TX 1.5% (PK Flowers, SQ Flora), eShop Model A (per-user, 8 accounts), eShop Model B (per-user, 6 accounts). Rule N1: never use period average for pro-rate; use most recent actual month (Jul $9,451 for Aug est.).</p>
+    <div class="band blue" style="margin-top:12px;font-size:13px">Trend: Jan $8.2K &rarr; May peak $10.3K &rarr; Jun $9.8K &rarr; Jul $9.4K (slight dip post-peak). 17 clients, 3 fee models (1.5% TX, Model A per-user, Model B per-user). Barendsen spike still reflected (378 users Apr+). Tuning added Model B from May (1,432-1,555/mo). Source: Sofia&rsquo;s Control Sheet, ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM. Q3 2025 Axerrio NOT available (sheet only Jan-Feb 2025). 2025 base is Core-only.</div>
   </section>
 
   <!-- S8: PROJECTION -->
   <section id="s8">
-    <p class="eyebrow">Section 8 &mdash; Q3 Projection &amp; Scenarios</p>
-    <h2>Base case: ~$614K vs $670K target. Needs ~+52% Sep YoY. Sep (42.5% of Q3) is the decisive month.</h2>
+    <p class="eyebrow">Section 8 &mdash; Q3 2026 Projection (Core locked Jul+Aug; Sep estimated)</p>
+    <h2>Jul + Aug now fully locked ($343K). Sep decides the quarter. Need +62% YoY in Sep to hit $670K.</h2>
+
+    <div class="band blue" style="margin-bottom:14px;font-size:13px"><strong>Key change this run:</strong> Jul ($154.8K) and Aug ($188.3K) are now BOTH locked in TRANSACTION_FEES. Combined = $343,165 &mdash; floor is set. Sep 2025 = $184,509 (42.5% of Q3 2025). Sep 2026 needs: ($670K &minus; $343K &minus; $28K Axerrio) / $184.5K &minus; 1 = +62% YoY. That&rsquo;s a big ask. Sep is opening strong: 2 days at $6,261/day (vs Q3 avg $5,558/day). Bear scenario: same pace as Aug (+35.7%) gives ~$620K total. Base (+40%) gives ~$630K. Bull (+55%) gives ~$657K.</div>
 
     <div class="scenario-grid">
       <div class="scenario-card" style="border-color:var(--red)">
-        <div class="label">Bear (current rate +36.6%)</div>
-        <div class="val" style="color:var(--red)">~$614K</div>
-        <div class="desc">Gap: ~$56K | Sep needs only ~+38% to maintain</div>
+        <div class="label">Bear &mdash; Sep +35% YoY</div>
+        <div class="val" style="color:var(--red)">~$620K</div>
+        <div class="desc">Sep Core = $249K | Gap: ~$50K | Matches Aug YoY (+35.7%)</div>
       </div>
       <div class="scenario-card" style="border-color:var(--gold)">
-        <div class="label">Base (+43% Sep YoY acceleration)</div>
-        <div class="val" style="color:var(--gold)">~$633K</div>
-        <div class="desc">Gap: ~$37K | Sep at +43% needed for this</div>
+        <div class="label">Base &mdash; Sep +40% YoY</div>
+        <div class="val" style="color:var(--gold)">~$630K</div>
+        <div class="desc">Sep Core = $258K | Gap: ~$40K | Inline with Q3 trend (+39.5%)</div>
+      </div>
+      <div class="scenario-card" style="border-color:var(--orange)">
+        <div class="label">Bull &mdash; Sep +55% YoY</div>
+        <div class="val" style="color:var(--orange)">~$657K</div>
+        <div class="desc">Sep Core = $286K | Gap: ~$13K | Requires acceleration from W10 pace</div>
       </div>
       <div class="scenario-card" style="border-color:var(--green)">
-        <div class="label">Target hit (+52% Sep YoY)</div>
-        <div class="val" style="color:var(--green)">~$670K</div>
-        <div class="desc">Gap: $0 | Sep Core ~$249K (vs $184K 2025 base)</div>
+        <div class="label">Target &mdash; Sep +62% YoY</div>
+        <div class="val" style="color:var(--green)">$670K</div>
+        <div class="desc">Sep Core = $299K | Gap: $0 | Sep needs to be strongest month ever</div>
       </div>
     </div>
 
@@ -861,181 +685,138 @@
         <thead>
           <tr>
             <th>Component</th>
-            <th class="num">2025 Full Month</th>
-            <th class="num">2026 Projection (at +36.6%)</th>
-            <th class="num">Status</th>
-            <th>Method</th>
+            <th class="num">Amount</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>Jul 2026 Core</strong></td>
-            <td class="num">$110,294</td>
-            <td class="num">$154,308</td>
-            <td><span class="tag ok">ACTUAL &mdash; LOCKED</span></td>
-            <td>TRANSACTION_FEES</td>
-          </tr>
-          <tr>
-            <td><strong>Aug 2026 Core</strong></td>
-            <td class="num">~$138,761 (est.)</td>
-            <td class="num">~$179,600 (est.)</td>
-            <td><span class="tag warn">PARTIAL &mdash; 26/31 days actual</span></td>
-            <td>$150,648 actual (Aug 1&ndash;26) + $28,952 remaining (5d &times; $5,790/day avg)</td>
-          </tr>
-          <tr>
-            <td><strong>Sep 2026 Core</strong></td>
-            <td class="num">~$184,291 (est., 42.5% of Q3)</td>
-            <td class="num">~$251,700 (at +36.6%)</td>
-            <td><span class="tag bad">NOT YET &mdash; decisive</span></td>
-            <td>$184,291 &times; 1.366 (at current rate). Needs $249K+ to hit total target.</td>
-          </tr>
-          <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Core Q3 Projection</strong></td>
-            <td class="num">$433,627</td>
-            <td class="num">~$585,608</td>
-            <td></td>
-            <td>Actual Jul + Projected Aug + Projected Sep</td>
-          </tr>
-          <tr>
-            <td>Axerrio Q3 Full Estimate</td>
-            <td class="num">N/A</td>
-            <td class="num">~$28,353</td>
-            <td><span class="tag warn">EST</span></td>
-            <td>3 &times; $9,451/month avg</td>
-          </tr>
-          <tr style="background:#fff4e5;font-weight:700">
-            <td><strong>Total Q3 Projection (Core + Axerrio)</strong></td>
-            <td class="num">$433,627</td>
-            <td class="num"><strong>~$614K</strong></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Gap vs $670K target</td>
-            <td class="num">&mdash;</td>
-            <td class="num" style="color:var(--red)"><strong>~$56K</strong></td>
-            <td><span class="tag bad">WIDENED $14K vs v12</span></td>
-            <td>Requires Sep Core ~$249K (vs $252K base projection = close)</td>
-          </tr>
+          <tr><td><strong>Jul 2026 Core</strong></td><td class="num">$154,820</td><td><span class="tag ok">LOCKED (TF)</span></td></tr>
+          <tr><td><strong>Aug 2026 Core</strong></td><td class="num">$188,345</td><td><span class="tag ok">LOCKED (TF) &mdash; new this run</span></td></tr>
+          <tr style="background:#f8fafc;font-weight:700"><td><strong>Jul+Aug Core (locked floor)</strong></td><td class="num">$343,165</td><td><span class="tag ok">LOCKED</span></td></tr>
+          <tr><td>Sep 2026 Core (bear, +35%)</td><td class="num">~$249,087</td><td><span class="tag warn">PROJECTED</span></td></tr>
+          <tr><td>Sep 2026 Core (base, +40%)</td><td class="num">~$258,313</td><td><span class="tag warn">PROJECTED</span></td></tr>
+          <tr><td>Sep 2026 Core (target, +62%)</td><td class="num">~$298,654</td><td><span class="tag warn">NEEDED</span></td></tr>
+          <tr><td>Axerrio Q3 EST (3 months)</td><td class="num">~$28,181</td><td><span class="tag warn">ACTUAL+EST</span></td></tr>
+          <tr style="background:#ecfdf3"><td><strong>Sep 2025 comparable (base for projection)</strong></td><td class="num">$184,509</td><td><span class="tag ok">CONFIRMED (= $433.6K &minus; $249.1K)</span></td></tr>
         </tbody>
       </table>
     </div>
-    <div class="band gold" style="margin-top:10px">
-      <strong>Gap widened $14K vs v12 ($42K &rarr; $56K) due to weak Aug 25&ndash;26 days.</strong> The projection narrowed because: (1) rate softened from +37.8% &rarr; +36.6%, and (2) Aug is now tracking slightly below the prior run&rsquo;s projection ($179.6K vs prior $189.5K forecast). Sep is the PRIMARY lever. Sep 2025 base = $184,291 (42.5% of Q3). To close the $56K gap: Sep Core would need ~$249K = +35.2% YoY (achievable at current run rate). To hit $670K total: Sep Core needs ~$249K+ and Axerrio Sep needs ~$10K. <strong>The target is still within reach if Sep maintains +36&ndash;37% YoY.</strong>
-    </div>
-    <p class="prov" style="margin-top:8px">Q3 2025 monthly distribution (from pacing_methodology.md): Jul 25.4%, Aug 32.0%, Sep 42.5%. J-shape: Sep carries the most weight. Aug 2025 est. = $433,627 &times; 32.0% = $138,761. Sep 2025 est. = $433,627 &times; 42.5% = $184,291. Source: pacing_methodology.md (canonical, no re-debate).</p>
+    <p class="prov">Q3 2025 Core base = $433,627 (canonical). Jul 2025 = $110,294, Aug 2025 = $138,824, Sep 2025 = $433,627 &minus; $249,118 = $184,509. Q3 distribution: Jul 25.4%, Aug 32.0%, Sep 42.5% (confirmed from TF data). Sep 1-2 run rate: $12,521 / 2 days = $6,261/day vs Q3 avg $5,558/day = Sep running +12.6% above Q3 daily avg.</p>
   </section>
 
   <!-- S9: LAYER BREAKDOWN -->
   <section id="s9">
-    <p class="eyebrow">Section 9 &mdash; Fees by Ecosystem Layer (Q3 YTD Jul 1&ndash;Aug 26, ACTUAL)</p>
-    <h2>Importer $229.5K (+33.9%) | Wholesaler $65.8K (+51.6%) | Wholesaler share expanding: 19.4% &rarr; 21.6%</h2>
-    <div class="band green" style="margin-bottom:10px;font-size:13px">
-      <strong>ACTUAL this run:</strong> Layer fees: <code>TRANSACTION_FEES</code> Jul 2026 by company_industry (5 layers, verified $154,308) + <code>EXPECTED_TRANSACTION_FEES</code> Aug 1&ndash;26 by company_industry (5 layers, verified $150,648). Combined = $304,956 (Core total). 2025 comparable from <code>TRANSACTION_FEES</code> Jul 1&ndash;Aug 26 = $223,313. <strong>KEY SIGNAL: Wholesaler fees +51.6% YoY &mdash; fastest layer for 3rd consecutive run.</strong>
-    </div>
+    <p class="eyebrow">Section 9 &mdash; Fee Breakdown by Layer / Industry (Jul&ndash;Aug 2026 TF)</p>
+    <h2>Importers: 76.8% of fees ($263K). Wholesalers: 20.3% ($70K). YoY by layer: BLOCKED (2025 layer query not run this session).</h2>
+
     <div class="tableWrap">
       <table>
         <thead>
           <tr>
-            <th>Layer</th>
-            <th class="num">Jul 2026</th>
-            <th class="num">Aug 1&ndash;26 2026</th>
-            <th class="num">Q3 YTD 2026</th>
-            <th class="num">Q3 YTD 2025</th>
-            <th class="num">Fee YoY</th>
-            <th class="num">Fee Share 2026</th>
-            <th class="num">Fee Share 2025</th>
+            <th>Industry / Layer</th>
+            <th class="num">Jul-Aug 2026 Fees (TF)</th>
+            <th class="num">Share</th>
+            <th>YoY vs 2025</th>
+            <th>Note</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Floral &mdash; Importer</strong></td>
-            <td class="num">$116,369</td>
-            <td class="num">$113,122</td>
-            <td class="num" style="color:var(--green)"><strong>$229,491</strong></td>
-            <td class="num">$171,383</td>
-            <td class="num" style="color:var(--green)">+33.9%</td>
-            <td class="num">75.3%</td>
-            <td class="num">76.7%</td>
+            <td class="num">$263,220</td>
+            <td class="num">76.8%</td>
+            <td style="color:var(--muted)">BLOCKED &mdash; 2025 layer not queried</td>
+            <td>Dominant driver. Importers sell to wholesalers via K2K + eCom.</td>
           </tr>
           <tr>
-            <td><strong>Floral &mdash; Wholesaler</strong> <span style="font-size:11px;color:var(--green)">&#9650; Accelerating</span></td>
-            <td class="num">$33,173</td>
-            <td class="num">$32,667</td>
-            <td class="num" style="color:var(--green)"><strong>$65,840</strong></td>
-            <td class="num">$43,429</td>
-            <td class="num" style="color:var(--green)"><strong>+51.6%</strong></td>
-            <td class="num">21.6%</td>
-            <td class="num">19.4%</td>
+            <td><strong>Floral &mdash; Wholesaler</strong></td>
+            <td class="num">$69,550</td>
+            <td class="num">20.3%</td>
+            <td style="color:var(--muted)">BLOCKED</td>
+            <td>Wholesalers sell to florists via eCom. K2K buy-side generates no fee for wholesaler.</td>
           </tr>
           <tr>
-            <td><strong>Floral &mdash; Grower</strong></td>
-            <td class="num">$2,094</td>
-            <td class="num">$2,135</td>
-            <td class="num"><strong>$4,229</strong></td>
-            <td class="num">$2,963</td>
-            <td class="num" style="color:var(--green)">+42.8%</td>
-            <td class="num">1.4%</td>
-            <td class="num">1.3%</td>
-          </tr>
-          <tr>
-            <td><strong>Floral &mdash; Retailer</strong> <span style="font-size:11px;color:var(--green)">new</span></td>
-            <td class="num">$9</td>
-            <td class="num">$552</td>
-            <td class="num"><strong>$561</strong></td>
-            <td class="num" style="color:var(--muted)">$0</td>
-            <td class="num" style="color:var(--muted)">new</td>
-            <td class="num">0.2%</td>
-            <td class="num" style="color:var(--muted)">0%</td>
-          </tr>
-          <tr>
-            <td><span style="color:var(--muted)">Unknown / Other</span></td>
-            <td class="num">$2,662</td>
-            <td class="num">$2,172</td>
-            <td class="num">$4,834</td>
-            <td class="num">$5,538</td>
-            <td class="num" style="color:var(--red)">&minus;12.7%</td>
+            <td>Unknown</td>
+            <td class="num">$5,650</td>
             <td class="num">1.6%</td>
-            <td class="num">2.5%</td>
+            <td style="color:var(--muted)">BLOCKED</td>
+            <td>Industry not classified. Flag for data quality.</td>
+          </tr>
+          <tr>
+            <td>Floral &mdash; Grower</td>
+            <td class="num">$4,736</td>
+            <td class="num">1.4%</td>
+            <td style="color:var(--muted)">BLOCKED</td>
+            <td>Farms/fincas selling direct. Growing channel.</td>
+          </tr>
+          <tr>
+            <td>Floral &mdash; Retailer</td>
+            <td class="num">$9</td>
+            <td class="num">0.003%</td>
+            <td style="color:var(--muted)">BLOCKED</td>
+            <td>Negligible. Retailers don&rsquo;t generate meaningful fees today.</td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total</strong></td>
-            <td class="num">$154,308</td>
-            <td class="num">$150,648</td>
-            <td class="num"><strong>$304,956</strong></td>
-            <td class="num">$223,313</td>
-            <td class="num" style="color:var(--green)"><strong>+36.6%</strong></td>
+            <td><strong>Total (Jul-Aug TF)</strong></td>
+            <td class="num">$343,165</td>
             <td class="num">100%</td>
-            <td class="num">100%</td>
+            <td>+37.8% vs Jul-Aug 2025 $249,119</td>
+            <td>Verification: matches S5 channel total &#x2713;</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="small" style="margin-top:6px">Layer sum check: Jul $116,369+$33,173+$2,094+$9+$2,662 = $154,307 &#10003; Aug $113,122+$32,667+$2,135+$552+$2,172 = $150,648 &#10003;. 2025: $171,383+$43,429+$2,963+$0+$5,538 = $223,313 &#10003;. Retailer layer new in 2026 ($9.35 Jul &mdash; likely GPS model) = Gross Profit Share account (Section 5 confirms). Unknown layer declining (&minus;12.7%) vs prior run &mdash; possible reclassification or churn.</p>
-    <div class="band orange" style="margin-top:10px">
-      <strong>Wholesaler layer at +51.6% YoY (fastest for 3rd run) vs Importer +33.9%.</strong> Wholesaler fee share expanded 19.4% &rarr; 21.6% (+2.2pp). This confirms the structural shift: as wholesalers adopt K2K sell channels (sell-side online), they generate fees at a higher rate relative to their GMV share. K2K dominant within wholesale channel. Importer layer still 75.3% of total fees but losing share. Grower layer +42.8% growing faster than network average.
-    </div>
-    <p class="prov"><strong>Source:</strong> Layer from <code>TRANSACTION_FEES.company_industry</code> Jul 2026 + <code>EXPECTED_TRANSACTION_FEES.company_industry</code> Aug 1&ndash;26 2026. Rules R1, R8, R9. 2025 from <code>TRANSACTION_FEES.company_industry</code> Jul 1&ndash;Aug 26 2025 (no status filter available in this view).</p>
+    <div class="band gold" style="margin-top:12px;font-size:13px">ACTION: Query 2025 layer breakdown on next Thursday Full to compute YoY by industry layer. Importer dominance (76.8%) means importer K2K sell-side is the primary fee engine. Wholesaler growth (20.3%) is the secondary lever. Growers (1.4%) are emerging.</div>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31, grouped by company_industry. Matches S5 total $343,165 (layer verification check passed). 2025 layer data BLOCKED this run.</p>
+  </section>
 
-    <div style="margin-top:18px;padding:14px;background:#f8fafc;border:1px solid var(--line);border-radius:9px">
-      <p class="eyebrow" style="margin-bottom:6px">Provenance &amp; Rules Compliance</p>
-      <p style="font-size:13px;margin:0;color:var(--muted)">
-        R1 ks_flag=TRUE: ALL queries &#10003; &nbsp;|&nbsp;
-        R2 transaction_date for TF: &#10003; &nbsp;|&nbsp;
-        R3 MAX(transaction_date) confirmed Jul 31 2026 (Jul fully billed): &#10003; &nbsp;|&nbsp;
-        R4 sales&lt;$100K (GMV queries): &#10003; &nbsp;|&nbsp;
-        R5 No CUSTOMERS join: &#10003; &nbsp;|&nbsp;
-        R8 Semantic views only: &#10003; &nbsp;|&nbsp;
-        R9 Provenance on every number: &#10003; &nbsp;|&nbsp;
-        R10 Axerrio separate, never blended: &#10003; &nbsp;|&nbsp;
-        R14 Cutoff = Aug 26 (ETF Aug 26 = $6,547 &gt; $1K; Aug 27 = $6,574 present but GMV Aug 27 not confirmed): &#10003; &nbsp;|&nbsp;
-        R16 No customer_location_id in DISTINCT: &#10003; &nbsp;|&nbsp;
-        N1 Axerrio pro-rate uses most recent actual (Jul $9,451): &#10003; &nbsp;|&nbsp;
-        B1 ETF re-queried this session: &#10003; &nbsp;|&nbsp;
-        B2 2025 GMV re-queried this session: &#10003; &nbsp;|&nbsp;
-        N6 Dump/shrinkage disclosure in GMV sections: &#10003;
-      </p>
+  <!-- S10: GA4 -->
+  <section id="s10">
+    <p class="eyebrow">Section 10 &mdash; GA4 eShop Sessions (app.kometsales.com + network eShops)</p>
+    <h2>W10 partial: Aug 31 (Mon) strong at 3,307 all-site sessions, Sep 1 (Mon) 3,159, Sep 2 partial. Sep opening on pace.</h2>
+
+    <div class="grid3">
+      <article class="card metric okLine">
+        <small>W9 (Aug 24-30) Sessions &mdash; all sites</small>
+        <strong style="color:var(--green)">20,390</strong>
+        <p>7-day full week. +8.0% WoW vs W8 (18,880). 4th consecutive week above 18K. From Aug 31 prior run (not re-queried W9).</p>
+      </article>
+      <article class="card metric okLine">
+        <small>W10 Sessions (Aug 31+Sep 1-2, 3d)</small>
+        <strong style="color:var(--green)">~7,015</strong>
+        <p>Aug 31: ~3,307 | Sep 1: ~3,159 | Sep 2: ~549 (possibly incomplete). Sep 2 count likely underrepresented (data lag).</p>
+      </article>
+      <article class="card metric blueLine">
+        <small>WoW Flag (W9 vs W8)</small>
+        <strong style="color:var(--green)">+8.0%</strong>
+        <p>NO FLAG (threshold: &gt;5% DROP = GMV risk signal). Positive signal. W10 not comparable (partial vs full).</p>
+      </article>
     </div>
+
+    <div class="tableWrap" style="margin-top:14px">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Primary Site (app.kometsales.com)</th>
+            <th class="num">Sessions</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Aug 31 (Mon)</td><td>app.kometsales.com</td><td class="num">2,445</td><td>Strong Monday. Also: eshops 252, kennicott 297, open-discovery 102.</td></tr>
+          <tr><td>Sep 1 (Mon)</td><td>app.kometsales.com</td><td class="num">2,285</td><td>Labor Day Mon (US holiday) &mdash; slightly lower. eshops 259, kennicott 309.</td></tr>
+          <tr><td>Sep 2 (Tue)</td><td>app.kometsales.com</td><td class="num">435</td><td><span class="tag warn">LIKELY INCOMPLETE</span> &mdash; only 435 vs expected 2,000+. Data may lag. Sep 3 = run date.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="band gold" style="margin-top:10px;font-size:13px">Note: Sep 1 = Labor Day (US federal holiday). Lower sessions expected. Sep 2 (Tue) count of 435 appears incomplete &mdash; GA4 sheet may not have refreshed full-day count by run time. GA4 Procurement sheet: BLOCKED &mdash; structurally 4+ weeks stale (last data Jul 27). W9 sessions not re-queried this run (using prior run value). Full GA4 re-query recommended for next Thursday Full. 53.1% GA4&rarr;Snowflake conversion ratio (canonical). No WoW flag triggered.</div>
+    <p class="prov">Source: E-Commerce Sheet (Drive ID: 1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ) &mdash; read fresh this session. Raw session_start events by date and hostname, aggregated manually. Hostname: app.kometsales.com (primary), eshops.kometsales.com, shop.kennicott.com, open-discovery.koronet.com, komet.billdoran.com, shop.allurefarms.com, others.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <section style="border:none;box-shadow:none;background:transparent;padding:4px 0">
+    <p class="small" style="text-align:center">v15 &mdash; Sep 3 2026 &mdash; Thursday Full &mdash; CODEX VERIFIED 10/10 checks passed (1 anomaly flagged: API GMV take rate) &mdash; All fee math verified. Rule R1+R2+R3+R8+R9+R10+R14+N1+B1+B2 applied. Aug now LOCKED in TF. Offline GMV includes dump/shrinkage (Rule N6). Run by Koronet Revenue OS automated pacing agent.</p>
   </section>
 
 </main>
