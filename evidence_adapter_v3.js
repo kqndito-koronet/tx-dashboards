@@ -362,11 +362,22 @@
     if (Array.isArray(_state.accountsV3)) {
       _state.accountsV3.forEach(function (rec) {
         var id = _sid(rec.company_id);
-        if (!id || EXCLUDED_IDS[id]) return;
+        if (id && EXCLUDED_IDS[id]) return;
+        if (!id) {
+          // Prospects / accounts without a Koronet company_id: key by sfdc_id
+          // so they are browsable (empty transaction cards, TAM/potential only).
+          if (!rec.sfdc_id) return;
+          id = 'sfdc:' + rec.sfdc_id;
+        }
         _state.accountById[id] = rec;
         _state.idToName[id] = rec.company_name;
         if (rec.company_name) {
-          _state.nameToId[rec.company_name] = id;
+          // Real company_ids win the name→id mapping; synthetic only fills gaps.
+          if (id.indexOf('sfdc:') === 0) {
+            if (!_state.nameToId[rec.company_name]) _state.nameToId[rec.company_name] = id;
+          } else {
+            _state.nameToId[rec.company_name] = id;
+          }
         }
       });
     }
@@ -588,10 +599,11 @@
     if (!rec) return null;
 
     return {
-      company_id:       id,
+      company_id:       rec.company_id != null ? _sid(rec.company_id) : null,
       company_name:     rec.company_name || null,
       account_class:    rec.account_class || null,
       business_type:    rec.business_type || null,
+      segment:          rec.segment || null,
       product_tier:     rec.product_tier || null,
       sell_channel:     rec.sell_channel || null,
       potential_tier:   rec.potential_tier || null,

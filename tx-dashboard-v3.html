@@ -469,6 +469,7 @@
     line-height: 1.4;
   }
   .meta-badge-bt { background: #e0e7ff; color: #3730a3; }
+  .meta-badge-seg { background: #fef3c7; color: #92400e; }
   .meta-badge-pt { background: #fef3c7; color: #92400e; }
   .meta-badge-sc { background: #d1fae5; color: #065f46; }
   .meta-badge-pot { background: #fce7f3; color: #9d174d; }
@@ -1341,6 +1342,15 @@
           <option value="Grower">Grower</option>
           <option value="Retailer">Retailer</option>
         </select>
+        <select class="select-pill" id="segment-filter">
+          <option value="" selected>All Segments</option>
+          <option value="Activo">Activo</option>
+          <option value="Onboarding">Onboarding</option>
+          <option value="Churned">Churned</option>
+          <option value="Otro (Komet)">Otro (Komet)</option>
+          <option value="Customer (sin Komet)">Customer (sin Komet)</option>
+          <option value="Prospect (TAM)">Prospect (TAM)</option>
+        </select>
         <select class="select-pill" id="product-tier-filter">
           <option value="">All Product Tiers</option>
           <option value="Core+">Core+</option>
@@ -1449,6 +1459,8 @@
   <div class="tabs-nav" style="border-bottom:none;padding-bottom:0;gap:0;">
     <button class="tab-btn active" id="bt-tab-wholesaler" onclick="switchBusinessType('Wholesaler')">Wholesalers <span class="tab-count" id="bt-count-wholesaler">—</span></button>
     <button class="tab-btn" id="bt-tab-importer" onclick="switchBusinessType('Importer')">Importers <span class="tab-count" id="bt-count-importer">—</span></button>
+    <button class="tab-btn" id="bt-tab-grower" onclick="switchBusinessType('Grower')">Growers <span class="tab-count" id="bt-count-grower">—</span></button>
+    <button class="tab-btn" id="bt-tab-retailer" onclick="switchBusinessType('Retailer')">Retailers <span class="tab-count" id="bt-count-retailer">—</span></button>
     <button class="tab-btn" id="bt-tab-other" onclick="switchBusinessType('')">All <span class="tab-count" id="bt-count-all">—</span></button>
     <span style="margin-left:auto;"></span>
     <button class="tab-btn" id="tab-definitions" style="background:#eff6ff;border-color:#bfdbfe;" onclick="toggleDefinitions()">Definitions &amp; Matrix</button>
@@ -1917,7 +1929,7 @@ function renderRow(ev, idx) {
       </td>
       <td class="account-cell sticky-col sticky-col-2">
         <div class="account-name">${escHtml(name)}</div>
-        <div>${(function() { var badges = ''; try { if (identity) { if (identity.business_type) badges += '<span class="meta-badge meta-badge-bt">' + escHtml(identity.business_type) + '</span>'; if (identity.product_tier) badges += '<span class="meta-badge meta-badge-pt">' + escHtml(identity.product_tier) + '</span>'; if (identity.sell_channel) badges += '<span class="meta-badge meta-badge-sc">' + escHtml(identity.sell_channel) + '</span>'; if (identity.potential_tier) badges += '<span class="meta-badge meta-badge-pot">' + escHtml(identity.potential_tier) + '</span>'; } } catch(e) {} return badges; })()}</div>
+        <div>${(function() { var badges = ''; try { if (identity) { if (identity.business_type) badges += '<span class="meta-badge meta-badge-bt">' + escHtml(identity.business_type) + '</span>'; if (identity.product_tier) badges += '<span class="meta-badge meta-badge-pt">' + escHtml(identity.product_tier) + '</span>'; if (identity.sell_channel) badges += '<span class="meta-badge meta-badge-sc">' + escHtml(identity.sell_channel) + '</span>'; if (identity.potential_tier) badges += '<span class="meta-badge meta-badge-pot">' + escHtml(identity.potential_tier) + '</span>'; if (identity.segment && identity.segment !== 'Activo') badges += '<span class="meta-badge meta-badge-seg">' + escHtml(identity.segment) + '</span>'; } } catch(e) {} return badges; })()}</div>
         <div class="account-meta">${metaLine}</div>
         <div class="account-diagnosis">${diagnosis}</div>
       </td>
@@ -3728,6 +3740,7 @@ function computeKPIs(evidenceList) {
 function renderFilterChips() {
   var accountClassFilter = document.getElementById('account-class-filter').value;
   var businessTypeFilter = document.getElementById('business-type-filter').value;
+  var segmentFilter = (document.getElementById('segment-filter') || {}).value || '';
   var productTierFilter = document.getElementById('product-tier-filter').value;
   var gmvBandFilter = document.getElementById('gmv-band-filter').value;
   var sellChannelFilter = document.getElementById('sell-channel-filter').value;
@@ -3742,6 +3755,9 @@ function renderFilterChips() {
   }
   if (businessTypeFilter) {
     chips.push('<div class="chip" onclick="clearFilter(\'business-type-filter\')">' + escHtml(businessTypeFilter) + ' <span class="chip-x">&times;</span></div>');
+  }
+  if (segmentFilter) {
+    chips.push('<div class="chip" onclick="clearFilter(\'segment-filter\')">' + escHtml(segmentFilter) + ' <span class="chip-x">&times;</span></div>');
   }
   if (productTierFilter) {
     chips.push('<div class="chip" onclick="clearFilter(\'product-tier-filter\')">' + escHtml(productTierFilter) + ' <span class="chip-x">&times;</span></div>');
@@ -3789,6 +3805,7 @@ function toggleChipFilter(type, value) {
 function clearAllFilters() {
   document.getElementById('account-class-filter').value = '';
   document.getElementById('business-type-filter').value = '';
+  var segEl = document.getElementById('segment-filter'); if (segEl) segEl.value = '';
   document.getElementById('product-tier-filter').value = '';
   document.getElementById('gmv-band-filter').value = '';
   document.getElementById('sell-channel-filter').value = '';
@@ -3855,6 +3872,7 @@ function applyFilters() {
   var tf = _adapterTf();
   var accountClassFilter = document.getElementById('account-class-filter').value;
   var businessTypeFilter = document.getElementById('business-type-filter').value;
+  var segmentFilter = (document.getElementById('segment-filter') || {}).value || '';
   var productTierFilter = document.getElementById('product-tier-filter').value;
   var gmvBandFilter = document.getElementById('gmv-band-filter').value;
   var sellChannelFilter = document.getElementById('sell-channel-filter').value;
@@ -3873,6 +3891,9 @@ function applyFilters() {
     if (businessTypeFilter) {
       var bt = identity.business_type || '';
       if (bt !== businessTypeFilter) return false;
+    }
+    if (segmentFilter) {
+      if ((identity.segment || '') !== segmentFilter) return false;
     }
     if (productTierFilter) {
       var pt = identity.product_tier || '';
@@ -4168,6 +4189,17 @@ Promise.all([EvidenceAdapter.init(), _loadSfdcOpps()]).then(function() {
   document.getElementById('comparison-select').addEventListener('change', applyFilters);
   document.getElementById('account-class-filter').addEventListener('change', applyFilters);
   document.getElementById('business-type-filter').addEventListener('change', applyFilters);
+  document.getElementById('segment-filter').addEventListener('change', function() {
+    // Picking a segment shows that whole segment: clear the class filter (Client +
+    // Prospect = 0) and widen the business-type tab to "All" so the segment isn't
+    // trimmed to the default Wholesaler view. switchBusinessType('') re-applies.
+    if (this.value) {
+      document.getElementById('account-class-filter').value = '';
+      switchBusinessType('');
+    } else {
+      applyFilters();
+    }
+  });
   document.getElementById('product-tier-filter').addEventListener('change', applyFilters);
   document.getElementById('sell-channel-filter').addEventListener('change', applyFilters);
   document.getElementById('potential-tier-filter').addEventListener('change', applyFilters);
@@ -4243,22 +4275,30 @@ function switchBusinessType(bt) {
   // Update tab active state
   document.getElementById('bt-tab-wholesaler').classList.toggle('active', bt === 'Wholesaler');
   document.getElementById('bt-tab-importer').classList.toggle('active', bt === 'Importer');
+  document.getElementById('bt-tab-grower').classList.toggle('active', bt === 'Grower');
+  document.getElementById('bt-tab-retailer').classList.toggle('active', bt === 'Retailer');
   document.getElementById('bt-tab-other').classList.toggle('active', bt === '');
   applyFilters();
 }
 
 function updateBusinessTypeCounts() {
   var clientFilter = document.getElementById('account-class-filter').value;
-  var ws = 0, imp = 0, all = 0;
+  var segFilter = (document.getElementById('segment-filter') || {}).value || '';
+  var ws = 0, imp = 0, grw = 0, ret = 0, all = 0;
   _allEvidence.forEach(function(ev) {
     if (!ev || !ev.identity) return;
     if (clientFilter && ev.identity.account_class !== clientFilter) return;
+    if (segFilter && (ev.identity.segment || '') !== segFilter) return;
     all++;
     if (ev.identity.business_type === 'Wholesaler') ws++;
     else if (ev.identity.business_type === 'Importer') imp++;
+    else if (ev.identity.business_type === 'Grower') grw++;
+    else if (ev.identity.business_type === 'Retailer') ret++;
   });
   document.getElementById('bt-count-wholesaler').textContent = ws;
   document.getElementById('bt-count-importer').textContent = imp;
+  document.getElementById('bt-count-grower').textContent = grw;
+  document.getElementById('bt-count-retailer').textContent = ret;
   document.getElementById('bt-count-all').textContent = all;
 }
 
