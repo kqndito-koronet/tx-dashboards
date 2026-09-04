@@ -66,6 +66,14 @@
     temporalSellAnticipation: {},
     temporalVarietyFreshness: {},
     temporalForwardInventory: {},
+
+    // ── id-keyed maps (preferred join; name maps kept as fallback) ──
+    vendorsById: {},          // company_id → vendor record
+    skusById: {},             // company_id → skus record
+    buyersById: {},           // company_id → buyers record
+    temporalSAById: {},       // company_id → [ sell_anticipation rows ]
+    temporalVFById: {},       // company_id → [ variety_freshness rows ]
+    temporalFIById: {},       // company_id → [ forward_inventory rows ]
   };
 
   /* ─────────────────────────────────────────────────────────────────────────
@@ -409,10 +417,30 @@
       });
     }
 
-    // vendors list → dict by name
+    // vendors list → dict by name (+ by id)
     if (Array.isArray(_state.vendors)) {
       _state.vendors.forEach(function (rec) {
         if (rec.company_name) _state.vendorsByName[rec.company_name] = rec;
+        var vid = _sid(rec.company_id);
+        if (vid) _state.vendorsById[vid] = rec;
+      });
+    }
+
+    // skus_online_offline (name → obj) → also index by id
+    if (_state.skusOnlineOffline && typeof _state.skusOnlineOffline === 'object') {
+      Object.keys(_state.skusOnlineOffline).forEach(function (nm) {
+        var rec = _state.skusOnlineOffline[nm];
+        var sid = rec && _sid(rec.company_id);
+        if (sid) _state.skusById[sid] = rec;
+      });
+    }
+
+    // buyers (name → obj) → also index by id
+    if (_state.buyers && typeof _state.buyers === 'object') {
+      Object.keys(_state.buyers).forEach(function (nm) {
+        var rec = _state.buyers[nm];
+        var bid = rec && _sid(rec.company_id);
+        if (bid) _state.buyersById[bid] = rec;
       });
     }
 
@@ -427,27 +455,45 @@
     var tempSA = (_state.temporal && _state.temporal.sell_anticipation && _state.temporal.sell_anticipation.data) || [];
     tempSA.forEach(function (row) {
       var n = row.company_name;
-      if (!n) return;
-      if (!_state.temporalSellAnticipation[n]) _state.temporalSellAnticipation[n] = [];
-      _state.temporalSellAnticipation[n].push(row);
+      if (n) {
+        if (!_state.temporalSellAnticipation[n]) _state.temporalSellAnticipation[n] = [];
+        _state.temporalSellAnticipation[n].push(row);
+      }
+      var rid = _sid(row.company_id);
+      if (rid) {
+        if (!_state.temporalSAById[rid]) _state.temporalSAById[rid] = [];
+        _state.temporalSAById[rid].push(row);
+      }
     });
 
     // temporal: variety_freshness by company_name
     var tempVF = (_state.temporal && _state.temporal.variety_freshness && _state.temporal.variety_freshness.data) || [];
     tempVF.forEach(function (row) {
       var n = row.company_name;
-      if (!n) return;
-      if (!_state.temporalVarietyFreshness[n]) _state.temporalVarietyFreshness[n] = [];
-      _state.temporalVarietyFreshness[n].push(row);
+      if (n) {
+        if (!_state.temporalVarietyFreshness[n]) _state.temporalVarietyFreshness[n] = [];
+        _state.temporalVarietyFreshness[n].push(row);
+      }
+      var rid = _sid(row.company_id);
+      if (rid) {
+        if (!_state.temporalVFById[rid]) _state.temporalVFById[rid] = [];
+        _state.temporalVFById[rid].push(row);
+      }
     });
 
     // temporal: forward_inventory_depth by company_name
     var tempFI = (_state.temporal && _state.temporal.forward_inventory_depth && _state.temporal.forward_inventory_depth.data) || [];
     tempFI.forEach(function (row) {
       var n = row.company_name;
-      if (!n) return;
-      if (!_state.temporalForwardInventory[n]) _state.temporalForwardInventory[n] = [];
-      _state.temporalForwardInventory[n].push(row);
+      if (n) {
+        if (!_state.temporalForwardInventory[n]) _state.temporalForwardInventory[n] = [];
+        _state.temporalForwardInventory[n].push(row);
+      }
+      var rid = _sid(row.company_id);
+      if (rid) {
+        if (!_state.temporalFIById[rid]) _state.temporalFIById[rid] = [];
+        _state.temporalFIById[rid].push(row);
+      }
     });
 
     // Supplement name→id from V2 evidence files (buyers, vendors) for accounts
@@ -882,9 +928,9 @@
     var id   = _sid(companyId);
     var name = _state.idToName[id];
 
-    var vendRec = name ? (_state.vendorsByName[name] || null) : null;
-    var saRows  = name ? (_state.temporalSellAnticipation[name] || null) : null;
-    var skusRec = name ? (_state.skusOnlineOffline[name] || null) : null;
+    var vendRec = _state.vendorsById[id] || (name ? (_state.vendorsByName[name] || null) : null);
+    var saRows  = _state.temporalSAById[id] || (name ? (_state.temporalSellAnticipation[name] || null) : null);
+    var skusRec = _state.skusById[id] || (name ? (_state.skusOnlineOffline[name] || null) : null);
 
     // ── Monthly sourcing from buy cube
     var buyRows = _state.buyCubeById[id] || [];
@@ -980,8 +1026,8 @@
 
     var invRec = _state.inventory[id] || null;
     var cfgRec = _state.config[id]    || null;
-    var vfRows = name ? (_state.temporalVarietyFreshness[name] || null) : null;
-    var fiRows = name ? (_state.temporalForwardInventory[name] || null) : null;
+    var vfRows = _state.temporalVFById[id] || (name ? (_state.temporalVarietyFreshness[name] || null) : null);
+    var fiRows = _state.temporalFIById[id] || (name ? (_state.temporalForwardInventory[name] || null) : null);
 
     // ── Inventory (current published)
     var inventoryCurrent = null;
@@ -1059,7 +1105,7 @@
     var id   = _sid(companyId);
     var name = _state.idToName[id];
 
-    var buyRec = name ? (_state.buyers[name] || null) : null;
+    var buyRec = _state.buyersById[id] || (name ? (_state.buyers[name] || null) : null);
     var hgRec  = name ? (_state.hardgoodsByName[name] || null) : null;
 
     // ── Monthly sell series from cube
@@ -1192,9 +1238,9 @@
     _check('fees_cube',          !!(_state.feesCubeById[id] && _state.feesCubeById[id].length), null);
     _check('gmv_pacing',         !!_state.pacingById[id],                          null);
     _check('gmv_external',       !!_state.externalById[id],                        null);
-    _check('buyers_evidence',    name ? !!_state.buyers[name] : false,             null);
-    _check('vendors_evidence',   name ? !!_state.vendorsByName[name] : false,      null);
-    _check('temporal',           name ? !!((_state.temporalSellAnticipation[name] && _state.temporalSellAnticipation[name].length)) : false, null);
+    _check('buyers_evidence',    !!(_state.buyersById[id] || (name && _state.buyers[name])),   null);
+    _check('vendors_evidence',   !!(_state.vendorsById[id] || (name && _state.vendorsByName[name])), null);
+    _check('temporal',           !!((_state.temporalSAById[id] && _state.temporalSAById[id].length) || (name && _state.temporalSellAnticipation[name] && _state.temporalSellAnticipation[name].length)), null);
     _check('inventory_current',  !!_state.inventory[id],                           null);
     _check('benchmarks',         !!Object.keys(_state.benchmarks).length,          null);
     _check('config_evidence',    !!_state.config[id],                              null);
