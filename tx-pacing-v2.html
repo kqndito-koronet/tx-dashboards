@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TX Fee Pacing — Q3 2026</title>
+  <style>
+    :root{--bg:#0f1117;--panel:#1a1d27;--panel2:#22252f;--ink:#e5e7eb;--muted:#9ca3af;--line:#2d3140;--blue:#3b82f6;--green:#10b981;--gold:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--cyan:#06b6d4;--teal:#14b8a6;--shadow:0 4px 24px rgba(0,0,0,.4)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;line-height:1.5;font-size:14px}
+    main{max-width:1320px;margin:0 auto;padding:24px 20px 60px}
+
+    /* Header */
+    .header{margin-bottom:24px}
+    .header .eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+    .header h1{font-size:clamp(28px,4vw,42px);font-weight:900;line-height:1.1;color:#fff;margin-bottom:6px}
+    .header .sub{color:var(--muted);font-size:13px}
+    .header .sub strong{color:var(--ink)}
+
+    /* Sections */
+    .layer{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
+    .layer-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none}
+    .layer-header:hover{background:var(--panel2)}
+    .layer-header h2{font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px}
+    .layer-header .badge{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.04em}
+    .layer-header .chevron{color:var(--muted);font-size:20px;transition:transform .2s}
+    .layer-header.open .chevron{transform:rotate(180deg)}
+    .layer-body{padding:0 20px 20px;display:none}
+    .layer-body.show{display:block}
+    .always-show .layer-body{display:block!important}
+
+    /* Cards grid */
+    .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    @media(max-width:900px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
+
+    /* Metric cards */
+    .mc{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+    .mc .label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+    .mc .val{font-size:28px;font-weight:900;line-height:1.1;margin-bottom:4px;font-variant-numeric:tabular-nums}
+    .mc .detail{font-size:12px;color:var(--muted);line-height:1.4}
+    .mc.border-green{border-left:4px solid var(--green)}
+    .mc.border-gold{border-left:4px solid var(--gold)}
+    .mc.border-red{border-left:4px solid var(--red)}
+    .mc.border-blue{border-left:4px solid var(--blue)}
+    .mc.border-purple{border-left:4px solid var(--purple)}
+    .mc.border-cyan{border-left:4px solid var(--cyan)}
+    .mc.border-teal{border-left:4px solid var(--teal)}
+
+    /* Progress bar */
+    .pbar{height:8px;background:#2d3140;border-radius:99px;margin:8px 0;overflow:hidden}
+    .pbar .fill{height:100%;border-radius:99px;transition:width .3s}
+    .pbar .fill.green{background:var(--green)}.pbar .fill.gold{background:var(--gold)}.pbar .fill.red{background:var(--red)}.pbar .fill.blue{background:var(--blue)}
+
+    /* Tables */
+    .tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:12px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--line)}
+    th{background:var(--panel2);color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+    tr:last-child td{border-bottom:none}
+    td.r{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+    th.r{text-align:right}
+
+    /* Tags */
+    .tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:99px;font-size:11px;font-weight:800}
+    .tag.green{background:rgba(16,185,129,.15);color:#34d399}
+    .tag.gold{background:rgba(245,158,11,.15);color:#fbbf24}
+    .tag.red{background:rgba(239,68,68,.15);color:#f87171}
+    .tag.blue{background:rgba(59,130,246,.15);color:#60a5fa}
+
+    /* Trend arrows */
+    .up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--gold)}
+
+    /* Subsection headers */
+    .sub-header{font-size:14px;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+
+    /* Warning/info bands */
+    .band{border-radius:8px;padding:10px 14px;font-size:13px;margin:12px 0;line-height:1.5}
+    .band.warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fbbf24}
+    .band.info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#60a5fa}
+    .band.ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#34d399}
+
+    /* Provenance */
+    .prov{margin-top:16px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;font-size:12px;color:var(--muted);line-height:1.6}
+    .prov code{background:#2d3140;padding:2px 6px;border-radius:4px;font-size:11px;color:var(--cyan)}
+    .prov strong{color:var(--ink)}
+
+    /* Sparkline text */
+    .spark{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+    .spark span{display:inline-block;min-width:38px;text-align:right}
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- ═══════════════════════════════════════════════ HEADER ═══════════════════════════════════════════════ -->
+  <div class="header">
+    <p class="eyebrow">Rose (L1 Data) &mdash; TX Chapter &mdash; Generated Sep 10, 2026</p>
+    <h1>TX Fee Pacing &mdash; Q3 2026</h1>
+    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data through <strong>Sep 10, 2026</strong> &nbsp;|&nbsp; Billed through Aug 31, Sep in-flight via CONSOLIDATED + ETF &nbsp;|&nbsp; Status: <span style="color:#fbbf24;font-weight:700">UNVERIFIED (pending Codex)</span></p>
+    <p class="sub" style="margin-top:4px">Layers: <a href="#L1" style="color:var(--cyan);text-decoration:none;font-weight:700">L1 The Number</a> &middot; <a href="#L2" style="color:var(--cyan);text-decoration:none;font-weight:700">L2 Decomposition</a> &middot; <a href="#L3" style="color:var(--cyan);text-decoration:none;font-weight:700">L3 Leading Indicators</a></p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ LAYER 1: THE NUMBER ═══════════════════════════════════════════════ -->
+  <div class="layer always-show" id="L1">
+    <div class="layer-header">
+      <h2><span style="color:var(--gold)">&#9679;</span> Layer 1 &mdash; The Number <span class="badge" style="background:rgba(245,158,11,.15);color:#fbbf24">$204K GAP</span></h2>
+    </div>
+    <div class="layer-body show">
+      <div class="g4">
+        <div class="mc border-gold">
+          <div class="label">Q3 Total (Core + Axerrio)</div>
+          <div class="val" style="color:var(--gold)">$466K</div>
+          <div class="detail">Core $436,957 + Axerrio $28,837</div>
+          <div class="detail">69.5% of $670K target</div>
+        </div>
+        <div class="mc border-blue">
+          <div class="label">Quarter Elapsed</div>
+          <div class="val">78.3%</div>
+          <div class="detail">72 of 92 days (Jul 1 &ndash; Sep 10)</div>
+          <div class="pbar"><div class="fill blue" style="width:78.3%"></div></div>
+        </div>
+        <div class="mc border-gold">
+          <div class="label">Projected Landing</div>
+          <div class="val" style="color:var(--gold)">~$647K</div>
+          <div class="detail">Core ~$618K + Axerrio ~$29K</div>
+          <div class="detail">~$23K short of $670K target</div>
+        </div>
+        <div class="mc border-green">
+          <div class="label">Core YoY Growth (Jul+Aug)</div>
+          <div class="val" style="color:var(--green)">+37.6%</div>
+          <div class="detail">$352,093 vs $255,918 (2025 Jul+Aug billed)</div>
+          <div class="detail">Accelerating from H1 +33.4%</div>
+        </div>
+      </div>
+
+      <!-- Pacing vs Required -->
+      <div style="margin-top:14px">
+        <div class="g3">
+          <div class="mc border-gold">
+            <div class="label">Pacing to Target</div>
+            <div class="val" style="color:var(--gold)">69.5%</div>
+            <div class="pbar"><div class="fill gold" style="width:69.5%"></div></div>
+            <div class="detail">At 78.3% of quarter elapsed, we should be at ~$524K. We are at $466K.</div>
+            <div class="detail" style="color:var(--gold);font-weight:700;margin-top:4px">Behind pace by ~$58K / 8.8pp</div>
+          </div>
+          <div class="mc border-blue">
+            <div class="label">Required Sep to Hit $670K</div>
+            <div class="val">$233K</div>
+            <div class="detail">$204K core + ~$29K Axerrio remaining</div>
+            <div class="detail">Sep 2025 was $184.5K core &mdash; need +26% YoY in Sep</div>
+            <div class="detail" style="color:var(--green);margin-top:4px">Achievable: Sep is peak month (42.5% of Q3 historically)</div>
+          </div>
+          <div class="mc border-blue">
+            <div class="label">Weekly Pace (current vs required)</div>
+            <div class="val">$39.5K<span style="font-size:16px;color:var(--muted)">/wk</span></div>
+            <div class="detail">Current weekly pace (Q3 2026 avg: $436K / 10.3 weeks)</div>
+            <div class="detail">Required remaining: ~$68K/wk (20 days left)</div>
+            <div class="detail" style="color:var(--gold);margin-top:4px">Sep weekly pace needs to be 1.7x the Q3 average</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core vs Axerrio Split -->
+      <div class="sub-header">Core vs Axerrio Split</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th class="r">Jul 2026</th>
+              <th class="r">Aug 2026</th>
+              <th class="r">Sep MTD</th>
+              <th class="r">Q3 Total</th>
+              <th class="r">Jul+Aug 2025</th>
+              <th class="r">YoY (Jul+Aug)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Core (Snowflake)</strong></td>
+              <td class="r">$154,820</td>
+              <td class="r">$197,273</td>
+              <td class="r">$84,864</td>
+              <td class="r"><strong>$436,957</strong></td>
+              <td class="r">$255,918</td>
+              <td class="r"><span class="up">+37.6% &#8593;</span></td>
+            </tr>
+            <tr>
+              <td><strong>Axerrio</strong></td>
+              <td class="r">$9,424</td>
+              <td class="r">$9,707</td>
+              <td class="r">$9,707 <span class="tag gold" style="font-size:10px">EST</span></td>
+              <td class="r"><strong>$28,837</strong></td>
+              <td class="r">N/A</td>
+              <td class="r"><span class="tag blue">GAP</span></td>
+            </tr>
+            <tr style="background:var(--panel2)">
+              <td><strong>Total</strong></td>
+              <td class="r"><strong>$164,244</strong></td>
+              <td class="r"><strong>$206,980</strong></td>
+              <td class="r"><strong>$94,571</strong></td>
+              <td class="r" style="color:#fff;font-size:16px"><strong>$465,794</strong></td>
+              <td class="r">~$256K</td>
+              <td class="r"><span class="up">+37.6%+ &#8593;</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="band info">
+        <strong>R10 applied:</strong> Axerrio always separated. Sep Axerrio = estimate using Aug actual ($9,707) per rule. Q3 2025 Axerrio not available in sheet (known gap). Core uses CONSOLIDATED_TRANSACTION_FEES (Jul+Aug billed) + CONSOLIDATED Sep partial. TRANSACTION_FEES MAX = Aug 31, 2026.
+      </div>
+
+      <!-- Weekly Pace Chart -->
+      <div class="sub-header">Weekly Pace: Q3 2026 vs Q3 2025</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th class="r">2026 Fees</th>
+              <th class="r">2025 Fees</th>
+              <th class="r">YoY %</th>
+              <th>Trend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>W28 (Jul 6&ndash;12)</td><td class="r">$33,402</td><td class="r">$25,186</td><td class="r"><span class="up">+32.6%</span></td><td><span class="up">&#9650;</span></td></tr>
+            <tr><td>W29 (Jul 13&ndash;19)</td><td class="r">$35,288</td><td class="r">$25,981</td><td class="r"><span class="up">+35.8%</span></td><td><span class="up">&#9650;</span></td></tr>
+            <tr><td>W30 (Jul 20&ndash;26)</td><td class="r">$35,233</td><td class="r">$26,161</td><td class="r"><span class="up">+34.7%</span></td><td><span class="up">&#9650;</span></td></tr>
+            <tr><td>W31 (Jul 27&ndash;Aug 2)</td><td class="r">$37,027</td><td class="r">$26,210</td><td class="r"><span class="up">+41.3%</span></td><td><span class="up">&#9650;&#9650;</span></td></tr>
+            <tr><td>W32 (Aug 3&ndash;9)</td><td class="r">$38,800</td><td class="r">$29,591</td><td class="r"><span class="up">+31.1%</span></td><td><span class="up">&#9650;</span></td></tr>
+            <tr><td>W33 (Aug 10&ndash;16)</td><td class="r">$40,259</td><td class="r">$31,104</td><td class="r"><span class="up">+29.4%</span></td><td><span class="up">&#9650;</span></td></tr>
+            <tr><td>W34 (Aug 17&ndash;23)</td><td class="r">$44,382</td><td class="r">$32,756</td><td class="r"><span class="up">+35.5%</span></td><td><span class="up">&#9650;&#9650;</span></td></tr>
+            <tr><td>W35 (Aug 24&ndash;30)</td><td class="r">$48,290</td><td class="r">$37,000</td><td class="r"><span class="up">+30.5%</span></td><td><span class="up">&#9650;</span></td></tr>
+            <tr style="background:var(--panel2)"><td>W36 (Aug 31&ndash;Sep 6) <span class="tag gold" style="font-size:10px">PARTIAL</span></td><td class="r">$12,412</td><td class="r">$34,184</td><td class="r"><span class="down">&mdash;</span></td><td><span class="tag gold" style="font-size:10px">BILLING LAG</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="band warn">
+        <strong>Note:</strong> W36 2026 shows only $12.4K because TRANSACTION_FEES only reaches Aug 31. Sep data lives in CONSOLIDATED + ETF (not included in weekly billed view). Sep 2025 W36 = $34.2K (full week billed). This is a billing lag artifact, not a real decline. Sep CONSOLIDATED shows $84.9K for the full month partial.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ LAYER 2: DECOMPOSITION ═══════════════════════════════════════════════ -->
+  <div class="layer" id="L2">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <h2><span style="color:var(--purple)">&#9679;</span> Layer 2 &mdash; Rate vs Volume Decomposition <span class="badge" style="background:rgba(139,92,246,.15);color:#a78bfa">WHY fees are growing</span></h2>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="layer-body">
+      <div class="band info">
+        <strong>FEES = Digital GMV x Take Rate.</strong> Fee growth comes from two levers: more digital volume (Volume Effect) or higher take rates (Rate Effect). Understanding which lever drives growth determines what to protect and where the ceiling is.
+      </div>
+
+      <div class="g3">
+        <div class="mc border-purple">
+          <div class="label">Digital GMV (Jul+Aug)</div>
+          <div class="val">$39.3M</div>
+          <div class="detail">2026: $39.28M vs 2025: $35.85M</div>
+          <div class="detail"><span class="up">+9.6% YoY &#8593;</span></div>
+        </div>
+        <div class="mc border-purple">
+          <div class="label">Blended Take Rate (Jul+Aug)</div>
+          <div class="val">0.897%</div>
+          <div class="detail">2026: $352K / $39.28M = 0.897%</div>
+          <div class="detail">2025: $249K / $35.85M = 0.695%</div>
+          <div class="detail"><span class="up">+29.1% YoY &#8593;</span> (0.695% &rarr; 0.897%)</div>
+        </div>
+        <div class="mc border-gold">
+          <div class="label">Growth Attribution</div>
+          <div class="val" style="font-size:22px">76% Rate / 24% Vol</div>
+          <div class="detail">Rate effect: +$70.5K of the +$102.6K YoY gain</div>
+          <div class="detail">Volume effect: +$23.9K of the +$102.6K YoY gain</div>
+          <div class="detail" style="color:var(--gold);margin-top:4px;font-weight:700">&#9888; Rate is >70% of growth &mdash; approaching ceiling</div>
+        </div>
+      </div>
+
+      <!-- Monthly decomposition table -->
+      <div class="sub-header">Monthly Trend Within Q3</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th class="r">Core Fees</th>
+              <th class="r">Digital GMV</th>
+              <th class="r">Take Rate</th>
+              <th class="r">Fee YoY</th>
+              <th class="r">GMV YoY</th>
+              <th class="r">Rate YoY</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jul 2025</td>
+              <td class="r">$110,294</td>
+              <td class="r">$16.50M</td>
+              <td class="r">0.669%</td>
+              <td class="r">&mdash;</td>
+              <td class="r">&mdash;</td>
+              <td class="r">&mdash;</td>
+            </tr>
+            <tr>
+              <td><strong>Jul 2026</strong></td>
+              <td class="r"><strong>$154,820</strong></td>
+              <td class="r"><strong>$18.15M</strong></td>
+              <td class="r"><strong>0.853%</strong></td>
+              <td class="r"><span class="up">+40.4%</span></td>
+              <td class="r"><span class="up">+10.0%</span></td>
+              <td class="r"><span class="up">+27.5%</span></td>
+            </tr>
+            <tr>
+              <td>Aug 2025</td>
+              <td class="r">$138,824</td>
+              <td class="r">$19.35M</td>
+              <td class="r">0.717%</td>
+              <td class="r">&mdash;</td>
+              <td class="r">&mdash;</td>
+              <td class="r">&mdash;</td>
+            </tr>
+            <tr>
+              <td><strong>Aug 2026</strong></td>
+              <td class="r"><strong>$197,273</strong></td>
+              <td class="r"><strong>$21.14M</strong></td>
+              <td class="r"><strong>0.933%</strong></td>
+              <td class="r"><span class="up">+42.1%</span></td>
+              <td class="r"><span class="up">+9.2%</span></td>
+              <td class="r"><span class="up">+30.1%</span></td>
+            </tr>
+            <tr style="background:var(--panel2)">
+              <td>Sep 2025</td>
+              <td class="r">$184,508</td>
+              <td class="r">$25.29M</td>
+              <td class="r">0.729%</td>
+              <td class="r">&mdash;</td>
+              <td class="r">&mdash;</td>
+              <td class="r">&mdash;</td>
+            </tr>
+            <tr style="background:var(--panel2)">
+              <td><strong>Sep 2026 MTD</strong> <span class="tag gold" style="font-size:10px">PARTIAL</span></td>
+              <td class="r"><strong>$84,864</strong></td>
+              <td class="r"><strong>$13.33M</strong></td>
+              <td class="r"><strong>0.636%</strong></td>
+              <td class="r"><span class="tag gold">IN FLIGHT</span></td>
+              <td class="r"><span class="tag gold">IN FLIGHT</span></td>
+              <td class="r"><span class="tag gold">IN FLIGHT</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="band warn">
+        <strong>&#9888; Rate Ceiling Warning:</strong> Take rate expanded from 0.695% (Q3 2025) to 0.897% (Q3 2026 Jul+Aug), a +29% increase. This is responsible for ~76% of fee growth. Volume grew only +9.6%. If rate expansion plateaus, fee growth drops to ~10% (volume only). Dave Sack confirmed Jul 13: "ecommerce volume is ~flat YoY. ecommerce fees are up 33%. Must be all price increases." This is take-rate driven, not volume-driven growth. The strategic question: can we sustain rate expansion, or must we shift to volume growth?
+      </div>
+
+      <!-- Decomposition math -->
+      <div class="sub-header">Decomposition Math</div>
+      <div class="mc" style="margin-top:8px">
+        <div class="detail" style="font-family:monospace;font-size:13px;line-height:2;color:var(--ink)">
+          Q3 2025 Jul+Aug: Fees = $249,118 &nbsp;|&nbsp; Digital GMV = $35.85M &nbsp;|&nbsp; Rate = 0.695%<br>
+          Q3 2026 Jul+Aug: Fees = $352,093 &nbsp;|&nbsp; Digital GMV = $39.28M &nbsp;|&nbsp; Rate = 0.897%<br>
+          <br>
+          Fee change = +$102,975 (+41.3% YoY)<br>
+          <br>
+          <strong>Volume effect</strong> = (GMV_2026 - GMV_2025) x Rate_2025 = ($39.28M - $35.85M) x 0.695% = <span class="up">+$23,834</span> (23.1% of gain)<br>
+          <strong>Rate effect</strong> = (Rate_2026 - Rate_2025) x GMV_2025 = (0.897% - 0.695%) x $35.85M = <span class="up">+$72,416</span> (70.3% of gain)<br>
+          <strong>Interaction</strong> = (GMV delta) x (Rate delta) = $3.43M x 0.202% = <span class="up">+$6,925</span> (6.7% of gain)<br>
+          <strong>Check:</strong> $23,834 + $72,416 + $6,925 = $103,175 &asymp; $102,975 &#10003;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ LAYER 3: LEADING INDICATORS ═══════════════════════════════════════════════ -->
+  <div class="layer" id="L3">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <h2><span style="color:var(--teal)">&#9679;</span> Layer 3 &mdash; Leading Indicators <span class="badge" style="background:rgba(20,184,166,.15);color:#5eead4">BUY / LIST / SELL / MONETIZE</span></h2>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="layer-body">
+      <div class="band info">
+        Where we're going. Each indicator is a leading signal for future fee generation: more buying online (BUY), more listing online (LIST), more selling online (SELL), and more monetizing (MONETIZE).
+      </div>
+
+      <!-- ────── BUY ────── -->
+      <div class="sub-header" style="color:var(--blue)">&#128722; BUY &mdash; Procurement & Buy-Side Activity</div>
+      <div class="g4">
+        <div class="mc border-blue">
+          <div class="label">Procurement GMV (Jul+Aug 2026)</div>
+          <div class="val" style="color:var(--green)">$4.59M</div>
+          <div class="detail">Jul: $2.05M &nbsp;|&nbsp; Aug: $2.55M</div>
+          <div class="detail">2025 Jul+Aug: $2.93M</div>
+          <div class="detail"><span class="up">+57.0% YoY &#8593;</span></div>
+        </div>
+        <div class="mc border-blue">
+          <div class="label">Accounts w/ Procurement (Aug 2026)</div>
+          <div class="val">95</div>
+          <div class="detail">Jul: 92 &nbsp;|&nbsp; Aug: 95</div>
+          <div class="detail">Aug 2025: 90 <span class="up">&nbsp;+5 accounts &#8593;</span></div>
+          <div class="spark">Q3 trend: 92 &#8594; 95 <span class="up">&#9650;</span></div>
+        </div>
+        <div class="mc border-blue">
+          <div class="label">K2K Connections (New Active, Q3)</div>
+          <div class="val">565</div>
+          <div class="detail">Jul: 300 &nbsp;|&nbsp; Aug: 216 &nbsp;|&nbsp; Sep MTD: 49</div>
+          <div class="detail">Q3 2025: 1,418 (Jul: 735, Aug: 512, Sep: 171)</div>
+          <div class="detail"><span class="down">-60% YoY &#8595;</span> (connection creation slowing)</div>
+        </div>
+        <div class="mc border-blue">
+          <div class="label">Fee Debuts (New in 2026)</div>
+          <div class="val">41</div>
+          <div class="detail">Jan: 11 | Feb: 8 | Mar: 4 | Apr: 6</div>
+          <div class="detail">May: 3 | Jun: 4 | Jul: 3 | Aug: 2</div>
+          <div class="spark">Q3: 5 debuts (Jul: 3, Aug: 2) <span class="down">&#9660; slowing</span></div>
+        </div>
+      </div>
+      <div class="band warn" style="margin-top:8px">
+        <strong>BUY signals mixed:</strong> Procurement GMV is strong (+57% YoY), but K2K new connection creation is sharply down (-60% YoY). This could mean: existing connections are transacting more (good), or the connection growth engine has stalled (concerning). Fee debuts are also slowing &mdash; only 5 new fee-generating accounts in Q3 vs 41 YTD. The pipeline of NEW monetizable accounts is thinning.
+      </div>
+
+      <!-- ────── LIST ────── -->
+      <div class="sub-header" style="color:var(--purple)">&#128196; LIST &mdash; Online Selling Accounts</div>
+      <div class="g3">
+        <div class="mc border-purple">
+          <div class="label">Accounts Selling Online (Aug 2026)</div>
+          <div class="val">220</div>
+          <div class="detail">Distinct companies with eCom/K2K/API sales > $0</div>
+          <div class="detail">Aug 2025: 213 <span class="up">&nbsp;+7 accounts &#8593;</span></div>
+          <div class="spark">Q3 2026: Jul 214 &#8594; Aug 220 <span class="up">&#9650;</span></div>
+        </div>
+        <div class="mc border-purple">
+          <div class="label">Online Seller Trend (Monthly)</div>
+          <div class="val" style="font-size:16px">
+            <span class="spark">
+              Jan <span>217</span> | Feb <span>226</span> | Mar <span>215</span> | Apr <span>229</span> | May <span>229</span> | Jun <span>219</span> | Jul <span>214</span> | Aug <span>220</span>
+            </span>
+          </div>
+          <div class="detail" style="margin-top:6px">2025 avg: 213 &nbsp;|&nbsp; 2026 avg: 221 <span class="up">&nbsp;+3.8% &#8593;</span></div>
+          <div class="detail">Seasonal dip Jul (summer), recovering Aug</div>
+        </div>
+        <div class="mc border-purple">
+          <div class="label">YoY Same-Month Comparison</div>
+          <div class="val" style="font-size:16px">
+            <span class="spark">
+              Jul: 214 vs 224 <span class="down">-4.5%</span><br>
+              Aug: 220 vs 213 <span class="up">+3.3%</span>
+            </span>
+          </div>
+          <div class="detail" style="margin-top:6px">Jul dipped below 2025, Aug recovered above. Net: broadly flat.</div>
+        </div>
+      </div>
+
+      <!-- ────── SELL ────── -->
+      <div class="sub-header" style="color:var(--green)">&#128176; SELL &mdash; Online Buyer Activity</div>
+      <div class="g3">
+        <div class="mc border-green">
+          <div class="label">Online Buyers Active (Aug 2026)</div>
+          <div class="val">8,743</div>
+          <div class="detail">Distinct customer_name buying via eCom/K2K/API</div>
+          <div class="detail">Aug 2025: 8,992 <span class="down">&nbsp;-249 buyers &#8595; (-2.8%)</span></div>
+          <div class="spark">Q3: Jul 8,192 &#8594; Aug 8,743 <span class="up">&#9650;</span></div>
+        </div>
+        <div class="mc border-green">
+          <div class="label">Repeat Buyers (2+ months in Q3)</div>
+          <div class="val">7,576</div>
+          <div class="detail">of 10,815 total Q3 buyers = <strong>70.1%</strong> repeat rate</div>
+          <div class="detail" style="color:var(--green);font-weight:700">Strong retention: 7 in 10 buy in multiple months</div>
+        </div>
+        <div class="mc border-green">
+          <div class="label">Buyer Trend (Monthly)</div>
+          <div class="val" style="font-size:16px">
+            <span class="spark">
+              Jan <span>8,284</span> | Feb <span>10,072</span> | Mar <span>9,909</span> | Apr <span>10,110</span><br>
+              May <span>10,227</span> | Jun <span>8,786</span> | Jul <span>8,192</span> | Aug <span>8,743</span>
+            </span>
+          </div>
+          <div class="detail" style="margin-top:6px">Seasonal pattern: summer dip, recovering. YoY broadly flat.</div>
+        </div>
+      </div>
+      <div class="band info" style="margin-top:8px">
+        <strong>SELL insight:</strong> Buyer count is slightly below 2025 (-2.8% Aug YoY) but recovering from Jul's seasonal low. The 70.1% repeat rate is strong &mdash; the existing buyer base is sticky. The gap is in acquiring NEW online buyers, not retaining existing ones.
+      </div>
+
+      <!-- ────── MONETIZE ────── -->
+      <div class="sub-header" style="color:var(--gold)">&#128178; MONETIZE &mdash; Fee Generation Health</div>
+      <div class="g4">
+        <div class="mc border-gold">
+          <div class="label">Take Rate (Aug 2026)</div>
+          <div class="val" style="color:var(--green)">0.933%</div>
+          <div class="detail">Jul: 0.853% &nbsp;|&nbsp; Aug: 0.933%</div>
+          <div class="detail">Aug 2025: 0.717%</div>
+          <div class="detail"><span class="up">+30.1% YoY &#8593;</span></div>
+          <div class="spark">Trend within Q3: 0.853 &#8594; 0.933 <span class="up">&#9650;</span></div>
+        </div>
+        <div class="mc border-gold">
+          <div class="label">Accounts w/ Fees > $0 (Aug)</div>
+          <div class="val">173</div>
+          <div class="detail">Jul: 171 &nbsp;|&nbsp; Aug: 173</div>
+          <div class="detail">Aug 2025: 157 <span class="up">&nbsp;+16 accounts &#8593;</span></div>
+          <div class="detail"><span class="up">+10.2% YoY &#8593;</span></div>
+        </div>
+        <div class="mc border-red">
+          <div class="label">Accounts w/ Declining Fees</div>
+          <div class="val" style="color:var(--red)">39</div>
+          <div class="detail">39 accounts where Q3 2026 < Q3 2025 (Jul+Aug)</div>
+          <div class="detail">Lost: $12,027 in fees ($50.3K &rarr; $38.3K)</div>
+          <div class="detail">Offset by growth in remaining accounts</div>
+        </div>
+        <div class="mc border-gold">
+          <div class="label">Top 15 Concentration</div>
+          <div class="val">59.0%</div>
+          <div class="detail">$202.8K of $343.3K total Jul+Aug fees</div>
+          <div class="detail">Q3 2025 Jul+Aug: ~56% (similar)</div>
+          <div class="detail" style="color:var(--gold)">Moderate concentration &mdash; top 15 growing faster than tail</div>
+        </div>
+      </div>
+
+      <!-- Top 15 Accounts Table -->
+      <div class="sub-header" style="color:var(--gold)">Top 15 Fee Accounts (Jul+Aug 2026 vs 2025)</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Account</th>
+              <th class="r">Q3 2026</th>
+              <th class="r">Q3 2025</th>
+              <th class="r">YoY %</th>
+              <th>Signal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Sole Farms</td><td class="r">$29,287</td><td class="r">$16,788</td><td class="r"><span class="up">+74.5%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>2</td><td>Jet Fresh Flower Distributors</td><td class="r">$23,180</td><td class="r">$16,714</td><td class="r"><span class="up">+38.7%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>3</td><td>Kennicott Brothers Company</td><td class="r">$22,672</td><td class="r">$16,801</td><td class="r"><span class="up">+34.9%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>4</td><td>Fresca Farms</td><td class="r">$19,816</td><td class="r">$6,554</td><td class="r"><span class="up">+202.4%</span></td><td><span class="tag gold">Spike &#9888;</span></td></tr>
+            <tr><td>5</td><td>Choice Farms</td><td class="r">$17,644</td><td class="r">$13,856</td><td class="r"><span class="up">+27.3%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>6</td><td>Rosaprima International</td><td class="r">$16,108</td><td class="r">$3,891</td><td class="r"><span class="up">+314.0%</span></td><td><span class="tag gold">Spike &#9888;</span></td></tr>
+            <tr><td>7</td><td>Continental Flowers</td><td class="r">$16,066</td><td class="r">$12,800</td><td class="r"><span class="up">+25.5%</span></td><td><span class="tag green">Stable</span></td></tr>
+            <tr><td>8</td><td>FloraLink</td><td class="r">$13,537</td><td class="r">$10,064</td><td class="r"><span class="up">+34.5%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>9</td><td>Royal Flowers Inc.</td><td class="r">$11,974</td><td class="r">$10,906</td><td class="r"><span class="up">+9.8%</span></td><td><span class="tag blue">Flat</span></td></tr>
+            <tr><td>10</td><td>Bill Doran Company</td><td class="r">$10,209</td><td class="r">$4,421</td><td class="r"><span class="up">+130.9%</span></td><td><span class="tag gold">Spike &#9888;</span></td></tr>
+            <tr><td>11</td><td>Bella Blossom LLC</td><td class="r">$9,939</td><td class="r">$7,818</td><td class="r"><span class="up">+27.1%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>12</td><td>Allure Farms</td><td class="r">$8,769</td><td class="r">$5,680</td><td class="r"><span class="up">+54.4%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>13</td><td>Welyflor / Profile Flowers</td><td class="r">$8,578</td><td class="r">$3,819</td><td class="r"><span class="up">+124.6%</span></td><td><span class="tag gold">Spike &#9888;</span></td></tr>
+            <tr><td>14</td><td>Gala Roses</td><td class="r">$6,585</td><td class="r">$4,511</td><td class="r"><span class="up">+46.0%</span></td><td><span class="tag green">Growing</span></td></tr>
+            <tr><td>15</td><td>Sunburst Farms</td><td class="r">$6,432</td><td class="r">$5,490</td><td class="r"><span class="up">+17.2%</span></td><td><span class="tag blue">Stable</span></td></tr>
+            <tr style="background:var(--panel2);font-weight:700">
+              <td></td>
+              <td>Top 15 Subtotal</td>
+              <td class="r">$220,796</td>
+              <td class="r">$140,111</td>
+              <td class="r"><span class="up">+57.6%</span></td>
+              <td></td>
+            </tr>
+            <tr style="background:var(--panel2)">
+              <td></td>
+              <td>All Others</td>
+              <td class="r">$122,454</td>
+              <td class="r">$115,808</td>
+              <td class="r"><span class="up">+5.7%</span></td>
+              <td><span class="tag blue">Flat tail</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="band warn" style="margin-top:8px">
+        <strong>Anomaly flags (>100% YoY):</strong> Fresca Farms (+202%), Rosaprima (+314%), Bill Doran (+131%), Welyflor (+125%). These 4 accounts contribute $26K of incremental fees. If these are rate increases rather than volume growth, the spike may not be sustainable. Codex should verify channel mix and rate changes for each.
+      </div>
+
+      <!-- Accounts with Fees Monthly Trend -->
+      <div class="sub-header" style="color:var(--gold)">Fee-Generating Accounts (Monthly Trend)</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th class="r">2026 Accounts</th>
+              <th class="r">2025 Accounts</th>
+              <th class="r">YoY</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Jan</td><td class="r">167</td><td class="r">147</td><td class="r"><span class="up">+13.6%</span></td></tr>
+            <tr><td>Feb</td><td class="r">177</td><td class="r">143</td><td class="r"><span class="up">+23.8%</span></td></tr>
+            <tr><td>Mar</td><td class="r">171</td><td class="r">149</td><td class="r"><span class="up">+14.8%</span></td></tr>
+            <tr><td>Apr</td><td class="r">180</td><td class="r">151</td><td class="r"><span class="up">+19.2%</span></td></tr>
+            <tr><td>May</td><td class="r">179</td><td class="r">156</td><td class="r"><span class="up">+14.7%</span></td></tr>
+            <tr><td>Jun</td><td class="r">177</td><td class="r">160</td><td class="r"><span class="up">+10.6%</span></td></tr>
+            <tr style="background:var(--panel2)"><td><strong>Jul</strong></td><td class="r"><strong>171</strong></td><td class="r"><strong>157</strong></td><td class="r"><span class="up"><strong>+8.9%</strong></span></td></tr>
+            <tr style="background:var(--panel2)"><td><strong>Aug</strong></td><td class="r"><strong>173</strong></td><td class="r"><strong>157</strong></td><td class="r"><span class="up"><strong>+10.2%</strong></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ PROVENANCE ═══════════════════════════════════════════════ -->
+  <div class="layer always-show">
+    <div class="layer-header">
+      <h2><span style="color:var(--muted)">&#9679;</span> Data Provenance &amp; Rules</h2>
+    </div>
+    <div class="layer-body show">
+      <div class="prov">
+        <strong>Data as of:</strong> Sep 10, 2026<br>
+        <strong>Billed fees:</strong> <code>PRODUCTION.ANALYTICS.TRANSACTION_FEES</code> through Aug 31, 2026 (ks_flag=TRUE, transaction_date). Jul: 159,928 rows. Aug: 184,688 rows.<br>
+        <strong>Consolidated fees:</strong> <code>PRODUCTION.ANALYTICS.CONSOLIDATED_TRANSACTION_FEES</code> through Sep 30 (includes Sep partial). Sep: 71,938 rows.<br>
+        <strong>Expected fees:</strong> <code>PRODUCTION.ANALYTICS.EXPECTED_TRANSACTION_FEES</code> Sep 1-10 substantial ($4.8K-$12.3K/day). Sep 11+ drops to residual ($930-$7K/day). R14 cutoff: Sep 10.<br>
+        <strong>Online GMV:</strong> <code>PRODUCTION.ANALYTICS.SALE_DETAILS</code> joined to COMPANIES, ks_flag=TRUE, sales&lt;$100K (R4), sales_channel IN ('eCommerce','K2K','API') (R6).<br>
+        <strong>Procurement:</strong> <code>PRODUCTION.ANALYTICS.PROCUREMENT_DETAILS</code> joined to COMPANIES, ks_flag=TRUE, sales_channel='Procurement'.<br>
+        <strong>K2K Connections:</strong> <code>PRODUCTION.ANALYTICS.K2K_CONNECTIONS</code>, ks_flag=TRUE, status='Active', by audit_creation_date (new connection creation, not total stock).<br>
+        <strong>Axerrio:</strong> Google Sheet ID <code>1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM</code> (Sofia's Control Sheet). Jul: $9,423.59, Aug: $9,706.74 (USD conversion row). Sep: estimated at Aug actual ($9,707).<br>
+        <strong>Target:</strong> $670K Q3 2026 per <code>ops/canonical/goals_tracking.md</code> (Mauro Jul 10, confirmed by Facu Jul 15).<br><br>
+
+        <strong>Rules applied:</strong><br>
+        R1: ks_flag=TRUE on all queries<br>
+        R2: transaction_date for billed fees (not bill_date)<br>
+        R3: MAX(transaction_date) checked &mdash; TRANSACTION_FEES max = Aug 31. Sep data from CONSOLIDATED + ETF.<br>
+        R4: sales &lt; $100K filter on GMV queries<br>
+        R6: Online = eCommerce + K2K + API (sell-side). Procurement = buy-side (separate table).<br>
+        R8: Semantic views used for all queries.<br>
+        R9: Provenance on every number (this section).<br>
+        R10: Axerrio separated at all times. Total = Core + Axerrio.<br>
+        R13: Channel definitions per channels.json.<br>
+        R14: Pacing cutoff = Sep 10 (ETF substantial through Sep 10, drops to residual Sep 11+).<br><br>
+
+        <strong>Known gaps:</strong><br>
+        &bull; Axerrio Q3 2025 actuals not in sheet (cannot compute Axerrio YoY).<br>
+        &bull; Sep 2026 Axerrio estimated (sheet not yet updated for Sep).<br>
+        &bull; K2K connections query shows NEW connections by creation date, not total active stock. Total stock query requires different approach.<br>
+        &bull; Online buyer count (SELL section) may have slight inflation from SALES_SV fan-out (R5/R16). Mitigated by using SALE_DETAILS with customer_name DISTINCT.<br>
+        &bull; Offline GMV includes dump/shrinkage (R12) &mdash; not relevant to this dashboard (online-only metrics).<br><br>
+
+        <strong>Verification:</strong> <span style="color:#fbbf24;font-weight:700">UNVERIFIED &mdash; pending Codex review.</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function toggleLayer(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('show');
+}
+
+// Auto-expand Layer 1 on load
+document.addEventListener('DOMContentLoaded', function() {
+  // Layer 1 is always-show, no toggle needed
+  // Layers 2 and 3 start collapsed
+});
+</script>
+</body>
+</html>
