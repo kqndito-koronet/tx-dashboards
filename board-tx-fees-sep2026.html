@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Board Reporting — TX Fees Sep 2026</title>
+<style>
+:root{
+  --bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;
+  --blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;
+  --purple:#6941c6;--cyan:#067a91;--amber:#d97706;
+  --shadow:0 14px 34px rgba(16,24,40,.07)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+main{width:min(1400px,calc(100% - 32px));margin:0 auto;padding:24px 0 70px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(26px,3vw,40px);line-height:1;margin-bottom:10px}
+h2{font-size:clamp(18px,2vw,24px);line-height:1.1;margin-bottom:8px}
+h3{font-size:16px;margin-bottom:8px}
+.eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+.sub{color:var(--muted);font-size:14px;max-width:900px;margin-bottom:0}
+.small{color:var(--muted);font-size:12px}
+.footnote{color:var(--muted);font-size:11px;margin-top:10px;line-height:1.6}
+a{color:var(--blue);text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+.tab-nav{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--line);background:var(--panel);border-radius:10px 10px 0 0;overflow:hidden;flex-wrap:wrap}
+.tab-btn{padding:14px 22px;font-size:13px;font-weight:800;cursor:pointer;background:transparent;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--muted);transition:all .15s;letter-spacing:.02em}
+.tab-btn:hover{color:var(--ink);background:#f3f6fb}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);background:#fff}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.tab-shell{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.tab-content{padding:22px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px}
+.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:10px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+.card strong{display:block;font-size:26px;line-height:1.1;margin-bottom:4px}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .delta{font-size:13px;font-weight:800;display:inline-block;margin-top:2px}
+.okLine{border-left:5px solid var(--green)}.blueLine{border-left:5px solid var(--blue)}
+.purpleLine{border-left:5px solid var(--purple)}.goldLine{border-left:5px solid var(--gold)}
+.cyanLine{border-left:5px solid var(--cyan)}.redLine{border-left:5px solid var(--red)}
+.pos{color:var(--green);font-weight:800}.neg{color:var(--red);font-weight:800}
+.na{color:#94a3b8;font-style:italic}
+.chart-container{background:#fff;border:1px solid var(--line);border-radius:9px;padding:20px;margin-top:16px;position:relative}
+.chart-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+svg.chart{display:block;width:100%;overflow:visible}
+.tooltip{position:absolute;background:#1e293b;color:#fff;padding:10px 14px;border-radius:8px;font-size:12px;pointer-events:none;opacity:0;transition:opacity .12s;line-height:1.7;white-space:nowrap;z-index:100;min-width:180px}
+.tooltip strong{color:#fbbf24;display:block;font-size:13px;margin-bottom:4px}
+.legend{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:600}
+.legend-dot{width:28px;height:3px;border-radius:2px;flex-shrink:0}
+.legend-dot.dashed{background:repeating-linear-gradient(90deg,var(--green) 0,var(--green) 5px,transparent 5px,transparent 9px);height:2px}
+.tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid #edf1f6;padding:9px 12px;text-align:right;vertical-align:middle;white-space:nowrap}
+th{background:#f3f6fb;color:#344054;font-size:10px;font-weight:950;letter-spacing:.04em;text-transform:uppercase;position:sticky;top:0;z-index:10}
+td:first-child,th:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:#fafbfd}
+tbody tr:nth-child(odd) td{background:#fff}
+tr.subtotal-row td{background:#f1f5f9!important;font-weight:800;color:#344054}
+tr.total-row td{background:#1e293b!important;color:#fff!important;font-weight:900}
+tr.section-hdr td{background:#e2e8f0!important;color:#475569;font-weight:900;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.pct-green{color:var(--green);font-weight:700}.pct-gold{color:var(--gold);font-weight:700}.pct-red{color:var(--red);font-weight:700}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.04em}
+.badge.live{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+.badge.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.badge.self{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+.badge.flag{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+.info-bar{background:#f0f9ff;border:1px solid #bae6fd;border-radius:7px;padding:11px 14px;font-size:12px;color:#0369a1;margin-top:10px;line-height:1.6}
+.warn-bar{background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:11px 14px;font-size:12px;color:#92400e;margin-top:10px;line-height:1.6}
+.month-table-wrap{overflow-x:auto;max-height:440px;overflow-y:auto;border:1px solid var(--line);border-radius:9px;margin-top:16px}
+.month-table-wrap table{font-size:12px}
+.month-table-wrap th{font-size:9px}
+.month-table-wrap td{padding:7px 10px}
+tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
+.toggle-bar{display:flex;align-items:center;gap:12px;margin:16px 0 4px}
+.toggle-btn{padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer;border:1.5px solid var(--line);border-radius:7px;background:#fff;color:var(--muted);transition:all .15s}
+.toggle-btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sub-tab-nav{display:flex;gap:0;margin:0 0 12px;border-bottom:1.5px solid var(--line)}
+.sub-tab-btn{padding:9px 18px;font-size:12px;font-weight:800;cursor:pointer;background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;color:var(--muted);transition:all .12s}
+.sub-tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.sub-pane{display:none}.sub-pane.active{display:block}
+@media(max-width:900px){.grid4,.grid3{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
+@media(max-width:600px){.grid4,.grid3,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+
+<!-- HEADER -->
+<section style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px">
+  <div>
+    <p class="eyebrow">TX Revenue OS &middot; Board Reporting</p>
+    <h1>TX Fees &mdash; Sep 2026 <span style="font-size:18px;color:var(--muted);font-weight:400">for Dave</span></h1>
+    <p class="sub">Purely KPIs and commentary, trended MoM and YoY. Organic Snowflake data + Axerrio reported separately.</p>
+  </div>
+  <div style="text-align:right;flex-shrink:0">
+    <span class="badge warn">UNVERIFIED</span>
+    <p class="small" style="margin-top:6px">Data through Aug 31, 2026<br>Sep partial (Sep 1-4 ETF)<br>Generated 2026-09-10</p>
+  </div>
+</section>
+
+<!-- ======================== SECTION 1: TX FEES vs BUDGET ======================== -->
+<section>
+  <p class="eyebrow">Section 1 &middot; TX Fees Performance</p>
+  <h2>TX Fees vs Target</h2>
+
+  <div class="grid4">
+    <div class="card okLine">
+      <small>Aug 2026 Actual</small>
+      <strong>$197K</strong>
+      <p>Core billed: $197,131</p>
+      <span class="delta pos">+42.0% YoY</span>
+    </div>
+    <div class="card blueLine">
+      <small>YTD Actual (Jan-Aug)</small>
+      <strong>$1.73M</strong>
+      <p>Core $1,681K + Axerrio $53K</p>
+      <span class="delta pos">+35.0% YoY (core)</span>
+    </div>
+    <div class="card purpleLine">
+      <small>Q3 Pacing (incl. Axerrio)</small>
+      <strong>$466K</strong>
+      <p>69.5% of $670K target</p>
+      <span class="delta" style="color:var(--gold)">~$23K short at current pace</span>
+    </div>
+    <div class="card goldLine">
+      <small>Projected FY Landing</small>
+      <strong>~$2.68M</strong>
+      <p>At +37% YoY run rate</p>
+      <span class="delta pos">vs $2.0M FY 2025</span>
+    </div>
+  </div>
+
+  <!-- Monthly Trend: 2025 vs 2026 side-by-side -->
+  <h3 style="margin-top:20px">Monthly Core Fee Trend</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Month</th><th>2025</th><th>2026</th><th>YoY %</th><th>Commentary</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Jan</td><td>$117,035</td><td>$142,662</td><td class="pos">+21.9%</td><td class="small">Baseline ramp</td></tr>
+        <tr><td>Feb</td><td>$163,729</td><td>$209,329</td><td class="pos">+27.9%</td><td class="small">Valentine's peak</td></tr>
+        <tr><td>Mar</td><td>$142,577</td><td>$190,669</td><td class="pos">+33.7%</td><td class="small">Growth accelerating</td></tr>
+        <tr><td>Apr</td><td>$199,362</td><td>$289,293</td><td class="pos">+45.1%</td><td class="small">Strongest YoY month</td></tr>
+        <tr><td>May</td><td>$237,030</td><td>$306,138</td><td class="pos">+29.2%</td><td class="small">Mother's Day peak</td></tr>
+        <tr><td>Jun</td><td>$136,471</td><td>$190,765</td><td class="pos">+39.8%</td><td class="small">Post-peak recovery</td></tr>
+        <tr class="subtotal-row"><td>H1</td><td>$996,204</td><td>$1,328,855</td><td class="pos">+33.4%</td><td></td></tr>
+        <tr><td>Jul</td><td>$110,294</td><td>$154,820</td><td class="pos">+40.4%</td><td class="small">Q3 start, fully billed</td></tr>
+        <tr><td>Aug</td><td>$138,824</td><td>$197,131</td><td class="pos">+42.0%</td><td class="small">Fully billed, acceleration</td></tr>
+        <tr><td>Sep</td><td>$184,508</td><td class="na">~$85K MTD</td><td class="pos">+57% (4-day comp)</td><td class="small">Partial &mdash; Sep 1-4 ETF</td></tr>
+        <tr class="total-row"><td>YTD (Jan-Aug)</td><td>$1,245,322</td><td>$1,680,807</td><td>+35.0%</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Axerrio separate line -->
+  <h3 style="margin-top:20px">Axerrio (Europe &mdash; Reported Separately)</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Period</th><th>Axerrio USD</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>H1 2026</td><td>$53,208</td><td>~$8.9K/month average, trending up</td></tr>
+        <tr><td>Jul 2026</td><td>$9,424</td><td>Actual from control sheet</td></tr>
+        <tr><td>Aug 2026</td><td>$9,707</td><td>Actual from control sheet</td></tr>
+        <tr><td>Sep 2026</td><td class="na">~$9.7K est.</td><td>Not yet in sheet</td></tr>
+        <tr class="total-row"><td>YTD (Jan-Aug)</td><td>$72,339</td><td>17 clients, 3 fee models</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-bar">YoY growth is accelerating: H1 +33.4% &rarr; Q3 Jul+Aug +41.3%. Growth is driven 76% by take-rate increases and 24% by volume expansion. eCommerce overtook K2K as the #1 fee channel in August 2026.</div>
+</section>
+
+<!-- ======================== SECTION 2: WHOLESALERS BUYING ======================== -->
+<section>
+  <p class="eyebrow">Section 2 &middot; Wholesalers Buying Digitally</p>
+  <h2>BUY Side &mdash; Wholesaler Digital Procurement</h2>
+
+  <div class="grid4">
+    <div class="card okLine">
+      <small># WS Buying Digitally</small>
+      <strong>~95</strong>
+      <p>Via Procurement + K2K</p>
+      <span class="delta pos">Same # buying MORE each</span>
+    </div>
+    <div class="card blueLine">
+      <small>Digital Buy GMV (Jul+Aug)</small>
+      <strong>$4.59M</strong>
+      <span class="delta pos">+57% YoY</span>
+      <p>vs $2.93M Jul+Aug 2025</p>
+    </div>
+    <div class="card purpleLine">
+      <small>Digital Buy %</small>
+      <strong>6.1%</strong>
+      <p>of total buy GMV (Jul+Aug)</p>
+      <span class="delta pos">vs 3.4% in 2025 (+2.7pp)</span>
+    </div>
+    <div class="card goldLine">
+      <small>ARPPU</small>
+      <strong>$4,180</strong>
+      <p>Per purchasing company</p>
+      <span class="delta pos">Intensity-led growth</span>
+    </div>
+  </div>
+
+  <!-- Monthly digital buy % trend -->
+  <h3 style="margin-top:20px">Monthly Digital Buy % Trend (Last 6 Months)</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Month</th><th>Digital Buy GMV</th><th>Total Buy GMV</th><th>Digital %</th><th>Trend</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mar 2026</td><td>$2.85M</td><td>est. $53M</td><td>5.4%</td><td></td></tr>
+        <tr><td>Apr 2026</td><td>$3.21M</td><td>est. $55M</td><td>5.8%</td><td class="pos">+0.4pp</td></tr>
+        <tr><td>May 2026</td><td>$3.55M</td><td>est. $56M</td><td>6.3%</td><td class="pos">+0.5pp</td></tr>
+        <tr><td>Jun 2026</td><td>$3.12M</td><td>est. $50M</td><td>6.2%</td><td class="neg">-0.1pp</td></tr>
+        <tr><td>Jul 2026</td><td>$2.10M</td><td>est. $36M</td><td>5.9%</td><td class="neg">-0.3pp</td></tr>
+        <tr><td>Aug 2026</td><td>$2.49M</td><td>est. $40M</td><td>6.2%</td><td class="pos">+0.3pp</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-bar">Digital buy adoption is growing steadily. Same number of companies buying more per company (intensity-led). Buy pattern is spot (85% within 0-3 day horizon) &mdash; not a planning channel yet. Standing orders via K2K grew +56% YoY, signaling stickiness.</div>
+</section>
+
+<!-- ======================== SECTION 3: WHOLESALERS SELLING ======================== -->
+<section>
+  <p class="eyebrow">Section 3 &middot; Wholesalers Selling Digitally</p>
+  <h2>SELL Side &mdash; eShop to Retailers</h2>
+
+  <div class="grid4">
+    <div class="card okLine">
+      <small># WS Selling Digitally</small>
+      <strong>214&ndash;220</strong>
+      <p>Via eShop (eCommerce channel)</p>
+      <span class="delta" style="color:var(--muted)">Flat vs 2025 (213)</span>
+    </div>
+    <div class="card blueLine">
+      <small># Online Buyers</small>
+      <strong>1,909</strong>
+      <span class="delta pos">+33% YoY</span>
+      <p>83% returning, 17% new</p>
+    </div>
+    <div class="card purpleLine">
+      <small>Digital Sell GMV (Jul+Aug)</small>
+      <strong>$6.2M</strong>
+      <p>eCom $4.9M + K2K $1.3M</p>
+      <span class="delta pos">+34% YoY</span>
+    </div>
+    <div class="card goldLine">
+      <small>Digital Sell %</small>
+      <strong>~21%</strong>
+      <p>of WS&rarr;Retailer online GMV</p>
+      <span class="delta pos">vs ~19% in 2025 (+2pp)</span>
+    </div>
+  </div>
+
+  <!-- Monthly digital sell % trend -->
+  <h3 style="margin-top:20px">Monthly Digital Sell % Trend (Last 6 Months)</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Month</th><th>Digital Sell GMV</th><th>Total Sell GMV</th><th>Digital %</th><th>Trend</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mar 2026</td><td>$3.4M</td><td>est. $19M</td><td>17.9%</td><td></td></tr>
+        <tr><td>Apr 2026</td><td>$3.8M</td><td>est. $20M</td><td>19.0%</td><td class="pos">+1.1pp</td></tr>
+        <tr><td>May 2026</td><td>$4.2M</td><td>est. $22M</td><td>19.1%</td><td class="pos">+0.1pp</td></tr>
+        <tr><td>Jun 2026</td><td>$3.0M</td><td>est. $16M</td><td>18.8%</td><td class="neg">-0.3pp</td></tr>
+        <tr><td>Jul 2026</td><td>$2.8M</td><td>est. $14M</td><td>19.8%</td><td class="pos">+1.0pp</td></tr>
+        <tr><td>Aug 2026</td><td>$3.4M</td><td>est. $16M</td><td>21.3%</td><td class="pos">+1.5pp</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-bar">Sell-side digital share is accelerating: Jul 19.8% &rarr; Aug 21.3% (+1.5pp in one month). Buyer growth is retention-led (83% returning). AOV growing +6%. The constraint is seller count &mdash; flat at 214-220. Growth comes from existing sellers generating more transactions per buyer.</div>
+</section>
+
+<!-- FOOTNOTE -->
+<section style="padding:16px 22px">
+  <p class="footnote" style="margin:0">
+    <strong>Source:</strong> Snowflake PRODUCTION.ANALYTICS, Sep 10, 2026. Organic only (Axerrio reported separately). Core fees from CONSOLIDATED_TRANSACTION_FEES_SV (transaction_date). GMV from SALES_SV (sell-side) and PROCUREMENTS_SV (buy-side). All queries: ks_flag=TRUE, sales&lt;100K, DISTINCT dedup applied. Axerrio from Sofia's "Europe TX Fees &mdash; Control Sheet" (Google Drive).<br>
+    <span class="badge warn" style="margin-top:6px">UNVERIFIED</span> &mdash; Rose L1 output, pending Codex L2 verification.
+  </p>
+</section>
+
+</main>
+</body>
+</html>

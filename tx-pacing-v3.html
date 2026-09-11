@@ -1,820 +1,555 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TX Fee Pacing v3 — Decision Flow</title>
-  <style>
-    :root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2129;--ink:#e6edf3;--muted:#8b949e;--line:#30363d;--blue:#58a6ff;--green:#3fb950;--gold:#d29922;--red:#f85149;--purple:#bc8cff;--cyan:#39d2c0;--teal:#2ea88a;--shadow:0 4px 24px rgba(0,0,0,.5)}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--ink);font-family:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;line-height:1.55;font-size:14px}
-    main{max-width:1360px;margin:0 auto;padding:24px 20px 80px}
-
-    /* Header */
-    .header{margin-bottom:28px}
-    .header .eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
-    .header h1{font-size:clamp(26px,4vw,40px);font-weight:900;line-height:1.1;color:#fff;margin-bottom:6px}
-    .header .sub{color:var(--muted);font-size:13px}
-    .header .sub strong{color:var(--ink)}
-    .unverified{display:inline-flex;align-items:center;gap:6px;background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.3);color:var(--red);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:6px;margin-left:10px}
-
-    /* Sections */
-    .layer{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
-    .layer-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;transition:background .15s}
-    .layer-header:hover{background:var(--panel2)}
-    .layer-header h2{font-size:17px;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px}
-    .layer-header .badge{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.04em}
-    .badge.bg-green{background:rgba(63,185,80,.15);color:var(--green)}
-    .badge.bg-gold{background:rgba(210,153,34,.15);color:var(--gold)}
-    .badge.bg-red{background:rgba(248,81,73,.15);color:var(--red)}
-    .badge.bg-blue{background:rgba(88,166,255,.15);color:var(--blue)}
-    .badge.bg-purple{background:rgba(188,140,255,.15);color:var(--purple)}
-    .badge.bg-cyan{background:rgba(57,210,192,.15);color:var(--cyan)}
-    .layer-header .chevron{color:var(--muted);font-size:20px;transition:transform .2s ease}
-    .layer-header.open .chevron{transform:rotate(180deg)}
-    .layer-body{padding:0 20px 20px;display:none}
-    .layer-body.show{display:block}
-    .always-show .layer-body{display:block!important}
-
-    /* Grids */
-    .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-    @media(max-width:900px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
-
-    /* Metric cards */
-    .mc{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-    .mc .label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
-    .mc .val{font-size:26px;font-weight:900;line-height:1.1;margin-bottom:4px;font-variant-numeric:tabular-nums}
-    .mc .detail{font-size:12px;color:var(--muted);line-height:1.4}
-    .mc.border-green{border-left:4px solid var(--green)}
-    .mc.border-gold{border-left:4px solid var(--gold)}
-    .mc.border-red{border-left:4px solid var(--red)}
-    .mc.border-blue{border-left:4px solid var(--blue)}
-    .mc.border-purple{border-left:4px solid var(--purple)}
-    .mc.border-cyan{border-left:4px solid var(--cyan)}
-    .mc.border-teal{border-left:4px solid var(--teal)}
-
-    /* Progress bar */
-    .pbar{height:10px;background:var(--line);border-radius:99px;margin:10px 0;overflow:hidden;position:relative}
-    .pbar .fill{height:100%;border-radius:99px;transition:width .4s ease}
-    .pbar .fill.green{background:var(--green)}.pbar .fill.gold{background:var(--gold)}.pbar .fill.red{background:var(--red)}.pbar .fill.blue{background:var(--blue)}
-    .pbar .marker{position:absolute;top:-4px;width:2px;height:18px;background:var(--ink);border-radius:1px}
-
-    /* Tables */
-    .tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:12px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--line)}
-    th{background:var(--panel2);color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
-    tr:last-child td{border-bottom:none}
-    td.r{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
-    th.r{text-align:right}
-    tr.total-row{background:rgba(88,166,255,.06);font-weight:700}
-    tr.total-row td{border-top:2px solid var(--line);font-weight:800}
-
-    /* Tags */
-    .tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:99px;font-size:11px;font-weight:800}
-    .tag.green{background:rgba(63,185,80,.15);color:var(--green)}
-    .tag.gold{background:rgba(210,153,34,.15);color:var(--gold)}
-    .tag.red{background:rgba(248,81,73,.15);color:var(--red)}
-    .tag.blue{background:rgba(88,166,255,.15);color:var(--blue)}
-
-    /* Sub-headers */
-    .sub-header{font-size:14px;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-    .sub-header-sm{font-size:13px;font-weight:700;color:var(--purple);margin:16px 0 8px}
-
-    /* Warning/info bands */
-    .band{border-radius:8px;padding:10px 14px;font-size:13px;margin:12px 0;line-height:1.5}
-    .band.warn{background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.25);color:var(--gold)}
-    .band.danger{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.25);color:var(--red)}
-    .band.info{background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.25);color:var(--blue)}
-    .band.ok{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);color:var(--green)}
-
-    /* Decision flow tree */
-    .flow{font-family:'SF Mono','Fira Code','Cascadia Code',monospace;font-size:12.5px;line-height:1.7;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:12px 0;overflow-x:auto;white-space:pre;color:var(--muted)}
-    .flow .hl-green{color:var(--green);font-weight:700}
-    .flow .hl-red{color:var(--red);font-weight:700}
-    .flow .hl-gold{color:var(--gold);font-weight:700}
-    .flow .hl-blue{color:var(--blue);font-weight:700}
-    .flow .hl-cyan{color:var(--cyan);font-weight:700}
-
-    /* Two-column split */
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
-    @media(max-width:960px){.split{grid-template-columns:1fr}}
-
-    /* Separator */
-    .sep{border:none;border-top:1px solid var(--line);margin:20px 0}
-
-    /* Sticky headline */
-    .headline-strip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
-    .headline-strip .big-number{font-size:48px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-    .headline-strip .big-label{font-size:13px;color:var(--muted);margin-bottom:8px}
-
-    /* SO WHAT callout */
-    .so-what{border-left:3px solid var(--cyan);padding:10px 14px;margin:12px 0;font-size:13px;color:var(--ink);background:rgba(57,210,192,.04)}
-    .so-what strong{color:var(--cyan);font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px}
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TX Fee Pacing v3 — TX Revenue OS</title>
+<style>
+:root{
+  --bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;
+  --blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;
+  --purple:#6941c6;--cyan:#067a91;--amber:#d97706;
+  --shadow:0 14px 34px rgba(16,24,40,.07)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+main{width:min(1400px,calc(100% - 32px));margin:0 auto;padding:24px 0 70px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(26px,3vw,40px);line-height:1;margin-bottom:10px}
+h2{font-size:clamp(18px,2vw,24px);line-height:1.1;margin-bottom:8px}
+h3{font-size:16px;margin-bottom:8px}
+.eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+.sub{color:var(--muted);font-size:14px;max-width:900px;margin-bottom:0}
+.small{color:var(--muted);font-size:12px}
+.footnote{color:var(--muted);font-size:11px;margin-top:10px;line-height:1.6}
+a{color:var(--blue);text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+.tab-nav{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--line);background:var(--panel);border-radius:10px 10px 0 0;overflow:hidden;flex-wrap:wrap}
+.tab-btn{padding:14px 22px;font-size:13px;font-weight:800;cursor:pointer;background:transparent;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--muted);transition:all .15s;letter-spacing:.02em}
+.tab-btn:hover{color:var(--ink);background:#f3f6fb}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);background:#fff}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.tab-shell{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.tab-content{padding:22px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px}
+.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:10px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+.card strong{display:block;font-size:26px;line-height:1.1;margin-bottom:4px}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .delta{font-size:13px;font-weight:800;display:inline-block;margin-top:2px}
+.okLine{border-left:5px solid var(--green)}.blueLine{border-left:5px solid var(--blue)}
+.purpleLine{border-left:5px solid var(--purple)}.goldLine{border-left:5px solid var(--gold)}
+.cyanLine{border-left:5px solid var(--cyan)}.redLine{border-left:5px solid var(--red)}
+.pos{color:var(--green);font-weight:800}.neg{color:var(--red);font-weight:800}
+.na{color:#94a3b8;font-style:italic}
+.chart-container{background:#fff;border:1px solid var(--line);border-radius:9px;padding:20px;margin-top:16px;position:relative}
+.chart-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+svg.chart{display:block;width:100%;overflow:visible}
+.tooltip{position:absolute;background:#1e293b;color:#fff;padding:10px 14px;border-radius:8px;font-size:12px;pointer-events:none;opacity:0;transition:opacity .12s;line-height:1.7;white-space:nowrap;z-index:100;min-width:180px}
+.tooltip strong{color:#fbbf24;display:block;font-size:13px;margin-bottom:4px}
+.legend{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:600}
+.legend-dot{width:28px;height:3px;border-radius:2px;flex-shrink:0}
+.legend-dot.dashed{background:repeating-linear-gradient(90deg,var(--green) 0,var(--green) 5px,transparent 5px,transparent 9px);height:2px}
+.tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid #edf1f6;padding:9px 12px;text-align:right;vertical-align:middle;white-space:nowrap}
+th{background:#f3f6fb;color:#344054;font-size:10px;font-weight:950;letter-spacing:.04em;text-transform:uppercase;position:sticky;top:0;z-index:10}
+td:first-child,th:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:#fafbfd}
+tbody tr:nth-child(odd) td{background:#fff}
+tr.subtotal-row td{background:#f1f5f9!important;font-weight:800;color:#344054}
+tr.total-row td{background:#1e293b!important;color:#fff!important;font-weight:900}
+tr.section-hdr td{background:#e2e8f0!important;color:#475569;font-weight:900;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.pct-green{color:var(--green);font-weight:700}.pct-gold{color:var(--gold);font-weight:700}.pct-red{color:var(--red);font-weight:700}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.04em}
+.badge.live{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+.badge.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.badge.self{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+.badge.flag{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+.info-bar{background:#f0f9ff;border:1px solid #bae6fd;border-radius:7px;padding:11px 14px;font-size:12px;color:#0369a1;margin-top:10px;line-height:1.6}
+.warn-bar{background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:11px 14px;font-size:12px;color:#92400e;margin-top:10px;line-height:1.6}
+.month-table-wrap{overflow-x:auto;max-height:440px;overflow-y:auto;border:1px solid var(--line);border-radius:9px;margin-top:16px}
+.month-table-wrap table{font-size:12px}
+.month-table-wrap th{font-size:9px}
+.month-table-wrap td{padding:7px 10px}
+tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
+.toggle-bar{display:flex;align-items:center;gap:12px;margin:16px 0 4px}
+.toggle-btn{padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer;border:1.5px solid var(--line);border-radius:7px;background:#fff;color:var(--muted);transition:all .15s}
+.toggle-btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sub-tab-nav{display:flex;gap:0;margin:0 0 12px;border-bottom:1.5px solid var(--line)}
+.sub-tab-btn{padding:9px 18px;font-size:12px;font-weight:800;cursor:pointer;background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;color:var(--muted);transition:all .12s}
+.sub-tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.sub-pane{display:none}.sub-pane.active{display:block}
+@media(max-width:900px){.grid4,.grid3{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
+@media(max-width:600px){.grid4,.grid3,.grid2{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <main>
 
 <!-- HEADER -->
-<div class="header">
-  <div class="eyebrow">Chapter TX &mdash; Revenue Intelligence</div>
-  <h1>TX Fee Pacing v3 &mdash; Decision Flow <span class="unverified">UNVERIFIED</span></h1>
-  <div class="sub">Data: Snowflake Sep 10, 2026 | Axerrio: Google Sheet Aug actuals | <strong>Q3 target: $670K</strong></div>
-</div>
-
-<!-- ============================================================ -->
-<!-- LAYER 1: THE NUMBER (always visible)                          -->
-<!-- ============================================================ -->
-<div class="layer always-show">
-  <div class="layer-header open">
-    <h2>Layer 1: The Number <span class="badge bg-gold">69.5%</span></h2>
+<section style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:0;border-radius:10px 10px 0 0;border-bottom:none">
+  <div>
+    <p class="eyebrow">TX Revenue OS &middot; Fee Pacing Dashboard</p>
+    <h1>TX Fee Pacing <span style="font-size:18px;color:var(--muted);font-weight:400">v3</span></h1>
+    <p class="sub">Q3 2026 pacing against $670K target. Rate vs volume decomposition. Layer mechanics (WS&rarr;Retailer, IMP&rarr;WS). Data gaps documented. Organic Snowflake data only &mdash; Axerrio reported separately.</p>
   </div>
-  <div class="layer-body show">
-
-    <div class="g4" style="margin-bottom:16px">
-      <div class="mc border-gold">
-        <div class="label">Q3 Fees (MTD)</div>
-        <div class="val" style="color:var(--gold)">$466K</div>
-        <div class="detail">Core $437K + Axerrio $29K</div>
-      </div>
-      <div class="mc border-blue">
-        <div class="label">Q3 Target</div>
-        <div class="val" style="color:var(--blue)">$670K</div>
-        <div class="detail">$204K remaining</div>
-      </div>
-      <div class="mc border-green">
-        <div class="label">Jul+Aug YoY</div>
-        <div class="val" style="color:var(--green)">+37.6%</div>
-        <div class="detail">$352K vs $256K (core)</div>
-      </div>
-      <div class="mc border-purple">
-        <div class="label">Projected Landing</div>
-        <div class="val" style="color:var(--purple)">~$647K</div>
-        <div class="detail">~$23K short of target</div>
-      </div>
-    </div>
-
-    <!-- Progress bar -->
-    <div style="position:relative">
-      <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px">
-        <span>$0</span>
-        <span style="color:var(--gold)">69.5% &mdash; $466K of $670K</span>
-        <span>$670K</span>
-      </div>
-      <div class="pbar" style="height:14px">
-        <div class="fill gold" style="width:69.5%"></div>
-        <div class="marker" style="left:72.8%" title="Quarter elapsed: 72.8%"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px">
-        <span>Jul 1</span>
-        <span style="position:absolute;left:72.8%;transform:translateX(-50%);font-weight:700;color:var(--ink)">Today (72.8%)</span>
-        <span>Sep 30</span>
-      </div>
-    </div>
-
-    <div class="g3" style="margin-top:16px">
-      <div class="mc">
-        <div class="label">Current Weekly Pace</div>
-        <div class="val">$46.6K</div>
-        <div class="detail">Based on ~10 weeks of Q3</div>
-      </div>
-      <div class="mc">
-        <div class="label">Required Weekly Pace</div>
-        <div class="val" style="color:var(--gold)">$51.0K</div>
-        <div class="detail">To hit $670K in ~4 remaining weeks</div>
-      </div>
-      <div class="mc">
-        <div class="label">Sep Pace (first 4 days)</div>
-        <div class="val" style="color:var(--green)">$9.2K/day</div>
-        <div class="detail">vs $9.0K/day needed &mdash; ON PACE</div>
-      </div>
-    </div>
-
-    <div class="so-what">
-      <strong>So What</strong>
-      Pacing is slightly behind (69.5% fees vs 72.8% quarter elapsed), but Sep's early trajectory ($9.2K/day vs $9.0K needed) suggests a landing near $647K. The gap to $670K is ~$23K &mdash; achievable with normal Sep seasonality (Sep 2025 was the highest month at $184K).
-    </div>
+  <div style="text-align:right;flex-shrink:0">
+    <span class="badge warn">UNVERIFIED</span>
+    <p class="small" style="margin-top:6px">Data through Sep 4, 2026<br>Cutoff: Sep 4 (R14)<br>Generated 2026-09-10</p>
   </div>
-</div>
+</section>
 
-<!-- ============================================================ -->
-<!-- LAYER 2: RATE vs VOLUME (collapsible)                         -->
-<!-- ============================================================ -->
-<div class="layer">
-  <div class="layer-header" onclick="toggle(this)">
-    <h2>Layer 2: Rate vs Volume <span class="badge bg-gold">76% Rate / 24% Volume</span></h2>
-    <span class="chevron">&#9660;</span>
+<!-- TABS -->
+<div class="tab-shell" style="border-radius:0 0 10px 10px;border-top:none">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('pacing',this)">1 &middot; Pacing</button>
+    <button class="tab-btn" onclick="switchTab('decomposition',this)">2 &middot; Decomposition</button>
+    <button class="tab-btn" onclick="switchTab('ws-retailer',this)">3 &middot; WS &rarr; Retailer</button>
+    <button class="tab-btn" onclick="switchTab('imp-ws',this)">4 &middot; IMP &rarr; WS</button>
+    <button class="tab-btn" onclick="switchTab('gaps',this)">5 &middot; Data Gaps</button>
   </div>
-  <div class="layer-body">
 
-    <div class="band warn">Growth is 76% take-rate expansion, 24% volume growth. Rate is doing most of the work. Volume alone would deliver only ~$24K of the $103K YoY gain.</div>
+  <!-- ======================== TAB 1: PACING ======================== -->
+  <div id="tab-pacing" class="tab-pane active">
+  <div class="tab-content">
+    <p class="eyebrow">Q3 2026 Fee Pacing &middot; Target $670K</p>
 
-    <div class="g3" style="margin-bottom:16px">
-      <div class="mc border-gold">
-        <div class="label">Rate Effect</div>
-        <div class="val">$72.4K</div>
-        <div class="detail">76% of YoY fee growth<br>Take rate: 0.695% &rarr; 0.897%</div>
+    <div class="grid4">
+      <div class="card okLine">
+        <small>Q3 Total (incl. Axerrio)</small>
+        <strong>$466K</strong>
+        <p>Core $437K + Axerrio $29K</p>
+        <span class="delta pos">69.5% of target</span>
       </div>
-      <div class="mc border-blue">
-        <div class="label">Volume Effect</div>
-        <div class="val">$23.8K</div>
-        <div class="detail">24% of YoY fee growth<br>Online GMV grew modestly</div>
+      <div class="card blueLine">
+        <small>% of Target</small>
+        <strong>69.5%</strong>
+        <p>$670K target &middot; Gap $204K</p>
+        <span class="delta" style="color:var(--gold)">Quarter 72% elapsed</span>
       </div>
-      <div class="mc border-purple">
-        <div class="label">Interaction Effect</div>
-        <div class="val">$6.9K</div>
-        <div class="detail">Rate x Volume cross-term</div>
+      <div class="card purpleLine">
+        <small>Core YoY (Jul+Aug)</small>
+        <strong class="pos">+37.8%</strong>
+        <p>$352K vs $249K (2025)</p>
+        <span class="delta pos">Accelerating from H1 +33.4%</span>
+      </div>
+      <div class="card goldLine">
+        <small>Projected Q3 Landing</small>
+        <strong>~$647K</strong>
+        <p>~$23K short of $670K</p>
+        <span class="delta" style="color:var(--gold)">Needs +4% vs current pace</span>
       </div>
     </div>
 
-    <div class="sub-header">Take Rate Trend (Q3)</div>
-    <div class="tw">
+    <!-- Monthly Trend Table -->
+    <h3 style="margin-top:20px">Monthly Core Fee Trend &mdash; 2025 vs 2026</h3>
+    <div class="tableWrap">
       <table>
-        <tr><th>Month</th><th class="r">Online GMV</th><th class="r">Core Fees</th><th class="r">Take Rate</th><th class="r">YoY Change</th></tr>
-        <tr><td>Jul 2026</td><td class="r">$18.15M</td><td class="r">$154,820</td><td class="r">0.853%</td><td class="r"><span class="tag green">+0.16pp</span></td></tr>
-        <tr><td>Aug 2026</td><td class="r">$21.14M</td><td class="r">$197,273</td><td class="r">0.933%</td><td class="r"><span class="tag green">+0.24pp</span></td></tr>
-        <tr><td>Sep 2026 (partial)</td><td class="r">TBD</td><td class="r">$84,864</td><td class="r">~0.88%</td><td class="r"><span class="tag green">+0.19pp</span></td></tr>
+        <thead>
+          <tr><th>Month</th><th>2025 Core</th><th>2026 Core</th><th>YoY %</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>$117,035</td><td>$142,662</td><td class="pos">+21.9%</td></tr>
+          <tr><td>Feb</td><td>$163,729</td><td>$209,329</td><td class="pos">+27.9%</td></tr>
+          <tr><td>Mar</td><td>$142,577</td><td>$190,669</td><td class="pos">+33.7%</td></tr>
+          <tr><td>Apr</td><td>$199,362</td><td>$289,293</td><td class="pos">+45.1%</td></tr>
+          <tr><td>May</td><td>$237,030</td><td>$306,138</td><td class="pos">+29.2%</td></tr>
+          <tr><td>Jun</td><td>$136,471</td><td>$190,765</td><td class="pos">+39.8%</td></tr>
+          <tr><td>Jul</td><td>$110,294</td><td>$154,820</td><td class="pos">+40.4%</td></tr>
+          <tr><td>Aug</td><td>$138,824</td><td>$197,131</td><td class="pos">+42.0%</td></tr>
+          <tr class="subtotal-row"><td>H1 Total</td><td>$996,204</td><td>$1,328,855</td><td class="pos">+33.4%</td></tr>
+          <tr class="subtotal-row"><td>Q3 Jul+Aug</td><td>$249,118</td><td>$351,952</td><td class="pos">+41.3%</td></tr>
+          <tr><td>Sep (partial)</td><td>$184,508</td><td>~$85K MTD</td><td class="pos">+57% (4-day comp)</td></tr>
+          <tr class="total-row"><td>YTD (Jan-Aug)</td><td>$1,245,322</td><td>$1,680,807</td><td>+35.0%</td></tr>
+        </tbody>
       </table>
     </div>
 
-    <div class="band danger">Rate ceiling warning: take rate at ~0.9% is nearing a structural ceiling. Historical max was ~1.0% in peak months. Future fee growth must come increasingly from VOLUME (more GMV online), not rate expansion. Rate-led growth is fragile.</div>
-
-    <div class="so-what">
-      <strong>So What</strong>
-      The rate story is bullish but finite. Rate went from 0.695% to 0.897% (+29%) &mdash; this is real (new accounts entering at higher rates, channel mix shifting to higher-fee channels). But rate can't grow another 29%. The next phase of fee growth MUST be volume-led: more offline GMV moving online, more connections activating, more buyers ordering digitally.
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- LAYER 3A: WHOLESALERS SELLING TO RETAILERS                    -->
-<!-- ============================================================ -->
-<div class="layer">
-  <div class="layer-header" onclick="toggle(this)">
-    <h2>Layer 3A: Wholesalers &rarr; Retailers <span class="badge bg-red">$66M, -7.6% YoY</span></h2>
-    <span class="chevron">&#9660;</span>
-  </div>
-  <div class="layer-body">
-
-    <div class="band danger">Wholesaler sell-side is SHRINKING. Total GMV $71.3M &rarr; $65.9M (-7.6%, -$5.4M). Online growth (+$1.6M) does NOT offset offline+API losses (-$7.0M). Net volume is leaving.</div>
-
-    <!-- GMV by Channel -->
-    <div class="sub-header">GMV by Channel (Jul+Aug, YoY)</div>
-    <div class="tw">
+    <!-- Weekly Q3 Pace Table -->
+    <h3 style="margin-top:20px">Q3 Weekly Pace (Core Only)</h3>
+    <div class="tableWrap">
       <table>
-        <tr><th>Channel</th><th class="r">Jul+Aug 2025</th><th class="r">Jul+Aug 2026</th><th class="r">YoY %</th><th class="r">$ Change</th><th>Signal</th></tr>
-        <tr>
-          <td>eCommerce</td><td class="r">$3.6M</td><td class="r">$4.9M</td>
-          <td class="r"><span class="tag green">+36%</span></td><td class="r" style="color:var(--green)">+$1.3M</td>
-          <td><span class="tag green">Growing</span></td>
-        </tr>
-        <tr>
-          <td>K2K</td><td class="r">$1.0M</td><td class="r">$1.3M</td>
-          <td class="r"><span class="tag green">+30%</span></td><td class="r" style="color:var(--green)">+$0.3M</td>
-          <td><span class="tag green">Growing</span></td>
-        </tr>
-        <tr>
-          <td>API</td><td class="r">$6.3M</td><td class="r">$4.1M</td>
-          <td class="r"><span class="tag red">-35%</span></td><td class="r" style="color:var(--red)">-$2.2M</td>
-          <td><span class="tag red">Collapsing</span></td>
-        </tr>
-        <tr>
-          <td>Offline</td><td class="r">$60.4M</td><td class="r">$55.6M</td>
-          <td class="r"><span class="tag red">-8%</span></td><td class="r" style="color:var(--red)">-$4.8M</td>
-          <td><span class="tag red">Declining</span></td>
-        </tr>
-        <tr class="total-row">
-          <td>Total</td><td class="r">$71.3M</td><td class="r">$65.9M</td>
-          <td class="r"><span class="tag red">-7.6%</span></td><td class="r" style="color:var(--red)">-$5.4M</td>
-          <td></td>
-        </tr>
+        <thead>
+          <tr><th>Week</th><th>Period</th><th>2026 Fees</th><th>2025 Fees</th><th>YoY %</th></tr>
+        </thead>
+        <tbody>
+          <tr class="section-hdr"><td colspan="5">July 2026</td></tr>
+          <tr><td>W1</td><td>Jul 1&ndash;6</td><td>$26,812</td><td>$15,130</td><td class="pos">+77.2%</td></tr>
+          <tr><td>W2</td><td>Jul 7&ndash;13</td><td>$35,841</td><td>$25,186</td><td class="pos">+42.3%</td></tr>
+          <tr><td>W3</td><td>Jul 14&ndash;20</td><td>$35,517</td><td>$25,981</td><td class="pos">+36.7%</td></tr>
+          <tr><td>W4</td><td>Jul 21&ndash;27</td><td>$32,877</td><td>$26,161</td><td class="pos">+25.7%</td></tr>
+          <tr class="subtotal-row"><td colspan="2">Jul Total (billed)</td><td>$154,820</td><td>$110,294</td><td class="pos">+40.4%</td></tr>
+          <tr class="section-hdr"><td colspan="5">August 2026</td></tr>
+          <tr><td>W1&ndash;W4</td><td>Aug 1&ndash;31</td><td>$197,131</td><td>$138,824</td><td class="pos">+42.0%</td></tr>
+          <tr class="section-hdr"><td colspan="5">September 2026 (partial)</td></tr>
+          <tr><td>W1</td><td>Sep 1&ndash;4 (ETF)</td><td>$31,621</td><td>$20,150</td><td class="pos">+57.0%</td></tr>
+        </tbody>
       </table>
+    </div>
+    <div class="info-bar">Weekly Aug breakdown is estimated (monthly billed total / 4.3 weeks). Sep W1 is from EXPECTED_TRANSACTION_FEES (in-flight, not final billed).</div>
+
+    <!-- Axerrio -->
+    <h3 style="margin-top:20px">Axerrio (Separate)</h3>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Month</th><th>EUR</th><th>USD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan 2026</td><td>&euro;7,036</td><td>$8,002</td></tr>
+          <tr><td>Feb 2026</td><td>&euro;6,890</td><td>$7,835</td></tr>
+          <tr><td>Mar 2026</td><td>&euro;7,530</td><td>$8,563</td></tr>
+          <tr><td>Apr 2026</td><td>&euro;8,024</td><td>$9,124</td></tr>
+          <tr><td>May 2026</td><td>&euro;8,860</td><td>$10,075</td></tr>
+          <tr><td>Jun 2026</td><td>&euro;8,450</td><td>$9,609</td></tr>
+          <tr><td>Jul 2026</td><td>&mdash;</td><td>$9,424</td></tr>
+          <tr><td>Aug 2026</td><td>&mdash;</td><td>$9,707</td></tr>
+          <tr><td>Sep 2026</td><td colspan="2" class="na">Not yet in sheet (est. ~$9.7K)</td></tr>
+          <tr class="subtotal-row"><td>H1 Total</td><td>&euro;46,790</td><td>$53,208</td></tr>
+          <tr class="total-row"><td>Q3 MTD (Jul+Aug)</td><td>&mdash;</td><td>$19,131</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn-bar">Q3 2025 Axerrio actuals are NOT available in the control sheet. YoY comparison for Axerrio is blocked.</div>
+
+  </div>
+  </div>
+
+  <!-- ======================== TAB 2: DECOMPOSITION ======================== -->
+  <div id="tab-decomposition" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Rate vs Volume Decomposition &middot; Q3 2026</p>
+
+    <div class="grid3">
+      <div class="card purpleLine">
+        <small>Rate Effect</small>
+        <strong>76%</strong>
+        <p>of YoY growth</p>
+        <span class="delta" style="color:var(--purple)">$72.4K from higher take rates</span>
+      </div>
+      <div class="card blueLine">
+        <small>Volume Effect</small>
+        <strong>24%</strong>
+        <p>of YoY growth</p>
+        <span class="delta pos">$23.8K from more GMV</span>
+      </div>
+      <div class="card goldLine">
+        <small>Interaction Effect</small>
+        <strong>$6.9K</strong>
+        <p>Rate x Volume cross-term</p>
+      </div>
+    </div>
+
+    <!-- Take rate trend -->
+    <h3 style="margin-top:20px">Take Rate Trend</h3>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Period</th><th>Online GMV</th><th>Core Fees</th><th>Take Rate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Q3 2025 (Jul+Aug)</td><td>$35.8M</td><td>$249,118</td><td>0.695%</td></tr>
+          <tr><td>H1 2026 (Jan-Jun)</td><td>$137.6M</td><td>$1,328,855</td><td>0.870%</td></tr>
+          <tr><td>Jul 2026</td><td>$18.15M</td><td>$154,820</td><td>0.853%</td></tr>
+          <tr><td>Aug 2026</td><td>$21.14M</td><td>$197,131</td><td>0.933%</td></tr>
+          <tr class="total-row"><td>Q3 2026 (Jul+Aug)</td><td>$39.3M</td><td>$351,952</td><td>0.897%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn-bar" style="margin-top:16px">
+      <strong>Rate Ceiling Warning:</strong> Rate accounts for &gt;70% of YoY fee growth. Take rate rose from 0.695% to 0.897% (+29 bps). Volume growth alone (+9.6% online GMV YoY) would have produced only ~$24K more fees. If rate normalization occurs, fee growth would decelerate sharply without proportional volume expansion.
+    </div>
+
+    <!-- Channel fee decomposition -->
+    <h3 style="margin-top:20px">Channel Fee Decomposition (Jul+Aug billed)</h3>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Channel</th><th>Q3 2026</th><th>Q3 2025</th><th>YoY %</th><th>Share</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>eCommerce</td><td>$168,106</td><td>$115,176</td><td class="pos">+46.0%</td><td>47.8%</td></tr>
+          <tr><td>K2K</td><td>$160,954</td><td>$117,230</td><td class="pos">+37.3%</td><td>45.7%</td></tr>
+          <tr><td>API</td><td>$20,215</td><td>$14,899</td><td class="pos">+35.7%</td><td>5.7%</td></tr>
+          <tr><td>FedEx</td><td>$1,996</td><td>$1,814</td><td class="pos">+10.1%</td><td>0.6%</td></tr>
+          <tr><td>Gross Profit Share</td><td>$667</td><td>$0</td><td class="na">NEW</td><td>0.2%</td></tr>
+          <tr class="total-row"><td>Total</td><td>$351,952</td><td>$249,118</td><td>+41.3%</td><td>100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-bar">eCommerce overtook K2K as the top fee channel in Aug 2026 ($95.3K vs $89.1K). Both channels are growing strongly but eCommerce is pulling ahead.</div>
+
+  </div>
+  </div>
+
+  <!-- ======================== TAB 3: WS -> RETAILER ======================== -->
+  <div id="tab-ws-retailer" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Layer 2: Wholesaler &rarr; Retailer &middot; Jul+Aug 2026</p>
+
+    <div class="grid2" style="margin-bottom:18px">
+      <div class="card redLine">
+        <small>L2 Total GMV (Jul+Aug)</small>
+        <strong>$66M</strong>
+        <span class="delta neg">-7.6% YoY</span>
+        <p>API -35%, Offline -8%. Only eCom and K2K growing.</p>
+      </div>
+      <div class="card cyanLine">
+        <small>L2 Fee Share</small>
+        <strong>20% of all fees</strong>
+        <p>$70K of $343K Jul+Aug</p>
+        <span class="delta pos">+43% YoY (from tiny base)</span>
+      </div>
+    </div>
+
+    <!-- GMV by channel table -->
+    <h3>GMV by Channel (WS &rarr; Retailer)</h3>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Channel</th><th>Jul+Aug 2026</th><th>Jul+Aug 2025</th><th>YoY %</th><th>$ Change</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>eCommerce</td><td>$4.9M</td><td>$3.6M</td><td class="pos">+36%</td><td class="pos">+$1.3M</td></tr>
+          <tr><td>K2K</td><td>$1.3M</td><td>$1.0M</td><td class="pos">+30%</td><td class="pos">+$0.3M</td></tr>
+          <tr><td>API</td><td>$4.2M</td><td>$6.5M</td><td class="neg">-35%</td><td class="neg">-$2.3M</td></tr>
+          <tr><td>Offline</td><td>$55.6M</td><td>$60.3M</td><td class="neg">-7.9%</td><td class="neg">-$4.7M</td></tr>
+          <tr class="total-row"><td>Total L2</td><td>$66.0M</td><td>$71.4M</td><td>-7.6%</td><td>-$5.4M</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mayesh callout -->
+    <div class="warn-bar" style="margin-top:16px">
+      <strong>Mayesh Impact:</strong> Excluding Mayesh, WS GMV is approximately flat. Mayesh declined -44% (-$12.9M) due to a structural event in April 2026 (investigation pending). Offline buyers fell from 7,280 to 444 (-94%), API buyers from 2,477 to 1,070 (-57%). This appears to be branch closures or system migration, not organic churn.
     </div>
 
     <!-- eShop Mechanics -->
-    <div class="sub-header">eShop Mechanics (the bright spot)</div>
-    <div class="g3" style="margin-bottom:12px">
-      <div class="mc border-green">
-        <div class="label">Buyers</div>
-        <div class="val" style="color:var(--green)">1,909</div>
-        <div class="detail">Up from 1,431 (+33%)<br>83% returning, 17% new</div>
+    <h3 style="margin-top:20px">eShop Mechanics</h3>
+    <div class="grid4">
+      <div class="card okLine">
+        <small>eShop Buyers</small>
+        <strong>1,909</strong>
+        <span class="delta pos">+33% YoY</span>
+        <p>83% returning, 17% new</p>
       </div>
-      <div class="mc border-green">
-        <div class="label">AOV</div>
-        <div class="val" style="color:var(--green)">+6%</div>
-        <div class="detail">Jul $74 &rarr; Aug $77<br>Bigger baskets, not just more buyers</div>
+      <div class="card blueLine">
+        <small>AOV Trend</small>
+        <strong>+6%</strong>
+        <p>$74.35 Jul &rarr; $77.43 Aug</p>
+        <span class="delta pos">Retention-led growth</span>
       </div>
-      <div class="mc border-blue">
-        <div class="label">Online Sellers</div>
-        <div class="val">214&ndash;220</div>
-        <div class="detail">FLAT year-over-year (+3.3%)<br>Growth = same stores, more buyers</div>
+      <div class="card cyanLine">
+        <small>Online Sellers</small>
+        <strong>214&ndash;220</strong>
+        <p>Flat vs 2025 (213)</p>
+        <span class="delta" style="color:var(--muted)">+3.3% Aug YoY</span>
       </div>
-    </div>
-
-    <div class="split">
-      <div>
-        <div class="sub-header-sm">Buying Pattern</div>
-        <div class="band info">Spot buying: 2-4 day anticipation. Not planned, not forward. Buyers come when they need product NOW.</div>
-      </div>
-      <div>
-        <div class="sub-header-sm">Product Mix</div>
-        <div class="band info">Roses + Hydrangeas = 52% of top eShop categories. Concentrated in KBC / BDC / FloraLink.</div>
+      <div class="card purpleLine">
+        <small>Repeat Rate Q3</small>
+        <strong>70.1%</strong>
+        <p>7,576 of 10,815 buyers</p>
+        <span class="delta pos">Strong stickiness</span>
       </div>
     </div>
 
-    <div class="so-what">
-      <strong>So What &mdash; eShop</strong>
-      eShop growth is retention-led (83% returning buyers), not acquisition-led. The 33% buyer increase is real, but sellers are flat at ~220. The bottleneck is NOT demand &mdash; it's supply (which wholesalers list, what they list, and how good their shelf looks).
+    <!-- API Loss note -->
+    <div class="info-bar" style="margin-top:16px">
+      <strong>API Buyer Disappearance:</strong> 67% of 2025 API buyers (1,839 of 2,741) disappeared. Only 6% migrated to eCommerce. 96% of the disappearance is Mayesh-driven (1,732 of 1,798 vanished buyers = Mayesh). Network API health ex-Mayesh is flat.
     </div>
-
-    <!-- API Loss -->
-    <div class="sub-header">API Collapse (the red flag)</div>
-    <div class="g2">
-      <div class="mc border-red">
-        <div class="label">API Buyer Disappearance</div>
-        <div class="val" style="color:var(--red)">67%</div>
-        <div class="detail">1,839 of 2,741 2025 API buyers GONE<br>Not in eCom, not in API &mdash; just disappeared</div>
-      </div>
-      <div class="mc border-gold">
-        <div class="label">eCom Migration</div>
-        <div class="val" style="color:var(--gold)">6%</div>
-        <div class="detail">Only 6% of 2025 API buyers migrated to eCommerce. The rest left the platform entirely.</div>
-      </div>
-    </div>
-    <div class="band danger">ANOMALY: 67% of 2025 API buyers disappeared. This is NOT a migration to eCom (only 6% migrated). Investigation pending &mdash; could be data artifact, contract changes, or genuine churn. This alone explains -$2.2M in API GMV.</div>
-
-    <!-- WS Fees -->
-    <div class="sub-header">Wholesaler Fees</div>
-    <div class="g2">
-      <div class="mc border-green">
-        <div class="label">WS Fees (Jul+Aug)</div>
-        <div class="val" style="color:var(--green)">$70K</div>
-        <div class="detail">+43% YoY<br>Growing faster than importer fees</div>
-      </div>
-      <div class="mc border-gold">
-        <div class="label">% of Total Fees</div>
-        <div class="val" style="color:var(--gold)">23%</div>
-        <div class="detail">Small but accelerating<br>Importer fees still dominate at 77%</div>
-      </div>
-    </div>
-
-    <!-- Decision Flow Visual -->
-    <div class="sub-header">Decision Flow</div>
-    <div class="flow"><span class="hl-red">WS Sell-Side GMV DOWN -7.6% (-$5.4M)</span>
-|
-+-- <span class="hl-green">eShop UP +36% (+$1.3M)</span>
-|   +-- More buyers? <span class="hl-green">YES: 1,431 -> 1,909 (+33%)</span>
-|   |   +-- 83% returning (retention working)
-|   |   +-- 17% new (acquisition modest)
-|   +-- Higher AOV? <span class="hl-green">YES: +6%</span>
-|   +-- More sellers? <span class="hl-gold">NO: ~220, FLAT</span>  <-- BOTTLENECK
-|   +-- Concentrated in KBC/BDC/FloraLink
-|
-+-- <span class="hl-green">K2K UP +30% (+$0.3M)</span>
-|   +-- Small absolute gain
-|
-+-- <span class="hl-red">API DOWN -35% (-$2.2M)</span>
-|   +-- 67% of 2025 API buyers DISAPPEARED
-|   +-- Only 6% migrated to eCom
-|   +-- <span class="hl-red">INVESTIGATION PENDING</span>
-|
-+-- <span class="hl-red">Offline DOWN -8% (-$4.8M)</span>
-|   +-- Broad decline, not concentrated
-|   +-- Market shrinkage? Competitive loss? TBD
-|
-+-- <span class="hl-red">NET: Online gained +$1.6M, lost -$7.0M = NET -$5.4M</span>
-    Online does NOT offset offline+API losses</div>
 
   </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- LAYER 3B: IMPORTERS SELLING TO WHOLESALERS                    -->
-<!-- ============================================================ -->
-<div class="layer">
-  <div class="layer-header" onclick="toggle(this)">
-    <h2>Layer 3B: Importers &rarr; Wholesalers <span class="badge bg-green">$117M, +6.7% YoY</span></h2>
-    <span class="chevron">&#9660;</span>
   </div>
-  <div class="layer-body">
 
-    <div class="band ok">Importer sell-side is GROWING across all channels. Total GMV $109.9M &rarr; $117.3M (+6.7%, +$7.4M). This layer generates 77% of all TX fees and is accelerating.</div>
+  <!-- ======================== TAB 4: IMP -> WS ======================== -->
+  <div id="tab-imp-ws" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Layer 1: Importer &rarr; Wholesaler &middot; Jul+Aug 2026</p>
 
-    <!-- GMV by Channel -->
-    <div class="sub-header">GMV by Channel (Jul+Aug, YoY)</div>
-    <div class="tw">
+    <div class="grid2" style="margin-bottom:18px">
+      <div class="card okLine">
+        <small>L1 Total GMV (Jul+Aug)</small>
+        <strong>$117M</strong>
+        <span class="delta pos">+6.7% YoY</span>
+        <p>All channels positive. K2K +43%, eCom growing.</p>
+      </div>
+      <div class="card purpleLine">
+        <small>L1 Fee Share</small>
+        <strong>77% of all fees</strong>
+        <p>$263K of $343K Jul+Aug</p>
+        <span class="delta pos">The revenue engine</span>
+      </div>
+    </div>
+
+    <!-- GMV by channel table -->
+    <h3>GMV by Channel (IMP &rarr; WS)</h3>
+    <div class="tableWrap">
       <table>
-        <tr><th>Channel</th><th class="r">Jul+Aug 2025</th><th class="r">Jul+Aug 2026</th><th class="r">YoY %</th><th class="r">$ Change</th><th>Signal</th></tr>
-        <tr>
-          <td>K2K</td><td class="r">$5.0M</td><td class="r">$7.1M</td>
-          <td class="r"><span class="tag green">+43%</span></td><td class="r" style="color:var(--green)">+$2.2M</td>
-          <td><span class="tag green">Strong</span></td>
-        </tr>
-        <tr>
-          <td>eCommerce</td><td class="r">$11.0M</td><td class="r">$12.0M</td>
-          <td class="r"><span class="tag green">+9%</span></td><td class="r" style="color:var(--green)">+$1.0M</td>
-          <td><span class="tag green">Growing</span></td>
-        </tr>
-        <tr>
-          <td>API</td><td class="r">$8.6M</td><td class="r">$9.5M</td>
-          <td class="r"><span class="tag green">+10%</span></td><td class="r" style="color:var(--green)">+$0.8M</td>
-          <td><span class="tag green">Steady</span></td>
-        </tr>
-        <tr>
-          <td>Offline</td><td class="r">$85.3M</td><td class="r">$88.8M</td>
-          <td class="r"><span class="tag green">+4%</span></td><td class="r" style="color:var(--green)">+$3.4M</td>
-          <td><span class="tag blue">Stable</span></td>
-        </tr>
-        <tr class="total-row">
-          <td>Total</td><td class="r">$109.9M</td><td class="r">$117.3M</td>
-          <td class="r"><span class="tag green">+6.7%</span></td><td class="r" style="color:var(--green)">+$7.4M</td>
-          <td></td>
-        </tr>
+        <thead>
+          <tr><th>Channel</th><th>Jul+Aug 2026</th><th>Jul+Aug 2025</th><th>YoY %</th><th>$ Change</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>K2K</td><td>$8.6M</td><td>$6.0M</td><td class="pos">+43%</td><td class="pos">+$2.6M</td></tr>
+          <tr><td>eCommerce</td><td>$3.1M</td><td>$2.5M</td><td class="pos">+24%</td><td class="pos">+$0.6M</td></tr>
+          <tr><td>API</td><td>$2.5M</td><td>$2.3M</td><td class="pos">+9%</td><td class="pos">+$0.2M</td></tr>
+          <tr><td>Offline</td><td>$102.8M</td><td>$98.9M</td><td class="pos">+3.9%</td><td class="pos">+$3.9M</td></tr>
+          <tr class="total-row"><td>Total L1</td><td>$117.0M</td><td>$109.7M</td><td>+6.7%</td><td>+$7.3M</td></tr>
+        </tbody>
       </table>
     </div>
 
     <!-- Procurement Mechanics -->
-    <div class="sub-header">Procurement Mechanics (wholesaler buy-side)</div>
-    <div class="g4">
-      <div class="mc border-green">
-        <div class="label">Procurement GMV</div>
-        <div class="val" style="color:var(--green)">$4.59M</div>
-        <div class="detail">Jul+Aug 2026<br>vs $2.93M 2025 (+57%)</div>
+    <h3 style="margin-top:20px">Procurement Mechanics</h3>
+    <div class="grid4">
+      <div class="card okLine">
+        <small>Procurement GMV (Jul+Aug)</small>
+        <strong>$4.59M</strong>
+        <span class="delta pos">+57% YoY</span>
+        <p>vs $2.93M Jul+Aug 2025</p>
       </div>
-      <div class="mc border-blue">
-        <div class="label">Active Companies</div>
-        <div class="val">~95</div>
-        <div class="detail">Flat count<br>Intensity-driven growth</div>
+      <div class="card blueLine">
+        <small>Buying Companies</small>
+        <strong>~95</strong>
+        <p>Same # buying MORE per company</p>
       </div>
-      <div class="mc border-green">
-        <div class="label">ARPPU</div>
-        <div class="val" style="color:var(--green)">$4,180</div>
-        <div class="detail">vs eCom buyer $545<br>7.7x higher per user</div>
+      <div class="card purpleLine">
+        <small>ARPPU</small>
+        <strong>$4,180</strong>
+        <p>Per purchasing company</p>
       </div>
-      <div class="mc border-blue">
-        <div class="label">GA4 Traffic</div>
-        <div class="val">~170 DAU</div>
-        <div class="detail">~420 sessions/day<br>Browsing data only</div>
+      <div class="card goldLine">
+        <small>Buy Pattern</small>
+        <strong>Spot (0&ndash;3 days)</strong>
+        <p>85% within 0-3 day horizon</p>
       </div>
-    </div>
-    <div class="split" style="margin-top:12px">
-      <div class="band info">Buying pattern: almost entirely spot (0-3 days). Procurement is not a planning tool &mdash; it's a daily purchasing habit. Forward buying online is near-zero ($750 in H1 2026).</div>
-      <div class="band ok">Buy-side online share: 5.91% Jul &rarr; 6.22% Aug &rarr; 7.85% Sep. Accelerating +1.6pp MoM. This is the fastest-growing digital metric in the network.</div>
     </div>
 
     <!-- K2K Mechanics -->
-    <div class="sub-header">K2K Connection Mechanics</div>
-    <div class="g4">
-      <div class="mc border-green">
-        <div class="label">GMV / Seller</div>
-        <div class="val" style="color:var(--green)">$55.9K</div>
-        <div class="detail">Up from $37.7K (+48%)<br>Intensity up sharply</div>
+    <h3 style="margin-top:20px">K2K Connection Mechanics</h3>
+    <div class="grid4">
+      <div class="card okLine">
+        <small>GMV/Seller</small>
+        <strong>$55.9K</strong>
+        <span class="delta pos">+48% YoY</span>
+        <p>vs $37.7K in 2025</p>
       </div>
-      <div class="mc border-red">
-        <div class="label">Active Sellers</div>
-        <div class="val" style="color:var(--red)">-6%</div>
-        <div class="detail">Fewer sellers producing more<br>Consolidation pattern</div>
+      <div class="card redLine">
+        <small>Active Sellers</small>
+        <strong>155</strong>
+        <span class="delta neg">-6% YoY</span>
+        <p>Fewer sellers selling more</p>
       </div>
-      <div class="mc border-red">
-        <div class="label">New Connections</div>
-        <div class="val" style="color:var(--red)">-59%</div>
-        <div class="detail">565 vs 1,418 YoY<br>Pipeline drying up</div>
+      <div class="card goldLine">
+        <small>New Connections</small>
+        <strong>-59% YoY</strong>
+        <p>565 vs 1,418 (2025)</p>
+        <span class="delta neg">Connection creation slowing</span>
       </div>
-      <div class="mc border-green">
-        <div class="label">Activation Rate</div>
-        <div class="val" style="color:var(--green)">59%</div>
-        <div class="detail">Of new connections that transact<br>Retention once activated: 93%</div>
-      </div>
-    </div>
-
-    <div class="split" style="margin-top:12px">
-      <div>
-        <div class="sub-header-sm">Zombie Connections</div>
-        <div class="mc border-red">
-          <div class="label">Active but Never Transacted</div>
-          <div class="val" style="color:var(--red)">5,754</div>
-          <div class="detail">66% of 8,678 "Active" connections<br>Never produced a single dollar</div>
-        </div>
-      </div>
-      <div>
-        <div class="sub-header-sm">Suspended</div>
-        <div class="mc border-gold">
-          <div class="label">Suspended Connections</div>
-          <div class="val" style="color:var(--gold)">3,559</div>
-          <div class="detail">29% of total connections<br>Previously active, now dormant</div>
-        </div>
+      <div class="card redLine">
+        <small>Zombie Connections</small>
+        <strong>5,754 (66%)</strong>
+        <p>Active but never transacted</p>
+        <span class="delta neg">L2 concentrated: 4,984</span>
       </div>
     </div>
 
     <!-- Standing Orders -->
-    <div class="sub-header">Standing Orders (Stickiness Signal)</div>
-    <div class="g2">
-      <div class="mc border-green">
-        <div class="label">SO GMV Growth</div>
-        <div class="val" style="color:var(--green)">+56%</div>
-        <div class="detail">Both importer and wholesaler layers<br>$777K importer, $346K wholesaler (Q3)</div>
+    <h3 style="margin-top:20px">Standing Orders &amp; Recurring Demand</h3>
+    <div class="grid3">
+      <div class="card okLine">
+        <small>SO GMV YoY (Both Layers)</small>
+        <strong class="pos">+56%</strong>
+        <p>Importer $777K + Wholesaler $346K</p>
       </div>
-      <div class="mc border-green">
-        <div class="label">Signal</div>
-        <div class="val" style="color:var(--green)">Sticky</div>
-        <div class="detail">Recurring orders = most predictable revenue<br>CV ~3% month-to-month</div>
+      <div class="card blueLine">
+        <small>Prebook GMV Shift</small>
+        <strong>+1.8% total</strong>
+        <p>eCom +29%, K2K +25%, API -7%</p>
       </div>
-    </div>
-
-    <!-- Importer Fees -->
-    <div class="sub-header">Importer Fees</div>
-    <div class="g2">
-      <div class="mc border-green">
-        <div class="label">Importer Fees (Jul+Aug)</div>
-        <div class="val" style="color:var(--green)">$263K</div>
-        <div class="detail">+37% YoY<br>77% of all TX fees</div>
-      </div>
-      <div class="mc border-blue">
-        <div class="label">Fee Engine</div>
-        <div class="val">K2K + eCom</div>
-        <div class="detail">eCom overtook K2K in Aug fees<br>$95.3K eCom > $89.1K K2K</div>
+      <div class="card purpleLine">
+        <small>Stickiness Signal</small>
+        <strong>Strong</strong>
+        <p>SO = most predictable revenue ($23-25M/mo, CV~3%)</p>
       </div>
     </div>
 
-    <!-- Decision Flow Visual -->
-    <div class="sub-header">Decision Flow</div>
-    <div class="flow"><span class="hl-green">IMP Sell-Side GMV UP +6.7% (+$7.4M)</span>
-|
-+-- <span class="hl-green">K2K UP +43% (+$2.2M)</span>  <-- Biggest $ gainer
-|   +-- More active connections? <span class="hl-red">NO: sellers -6%</span>
-|   +-- More per connection? <span class="hl-green">YES: $37.7K -> $55.9K (+48%)</span>
-|   +-- New connections? <span class="hl-red">DOWN -59% (565 vs 1,418)</span>  <-- FUTURE RISK
-|   +-- Zombie connections: <span class="hl-red">5,754 (66% of "Active")</span>
-|   +-- Retention if activated: <span class="hl-green">93%</span>
-|   +-- Standing orders: <span class="hl-green">+56% GMV</span>  <-- Stickiness
-|
-+-- <span class="hl-green">eCom UP +9% (+$1.0M)</span>
-|   +-- Steady growth
-|   +-- eCom fees overtook K2K fees in Aug
-|
-+-- <span class="hl-green">API UP +10% (+$0.8M)</span>
-|   +-- Stable, programmatic flow
-|
-+-- <span class="hl-green">Offline UP +4% (+$3.4M)</span>
-|   +-- Market growing = rising tide
-|
-+-- <span class="hl-gold">SUSTAINABILITY CHECK:</span>
-    +-- K2K intensity can't grow +48%/year forever
-    +-- New connection pipeline down -59% = future growth at risk
-    +-- <span class="hl-green">Standing orders growing = stickiness signal</span>
-    +-- If existing connections plateau + new ones dry up = K2K GMV flattens</div>
-
-    <div class="so-what">
-      <strong>So What</strong>
-      Importer layer is healthy and growing, but K2K growth is INTENSITY-led (same connections, more volume) not EXPANSION-led (new connections). The -59% drop in new connections is a leading indicator: if this trend holds, K2K GMV growth will decelerate in 6-12 months. The standing order growth (+56%) is the bullish counter-signal &mdash; it means existing connections are getting stickier, not just bigger.
-    </div>
   </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- LAYER 4: WHAT CAN'T WE SEE                                   -->
-<!-- ============================================================ -->
-<div class="layer">
-  <div class="layer-header" onclick="toggle(this)">
-    <h2>Layer 4: Data Gaps <span class="badge bg-gold">6 open</span></h2>
-    <span class="chevron">&#9660;</span>
   </div>
-  <div class="layer-body">
 
-    <div class="tw">
+  <!-- ======================== TAB 5: DATA GAPS ======================== -->
+  <div id="tab-gaps" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Known Data Gaps &amp; Limitations</p>
+
+    <div class="tableWrap">
       <table>
-        <tr><th>#</th><th>Gap</th><th>Impact</th><th>Status</th></tr>
-        <tr>
-          <td>1</td>
-          <td>GA4 eCommerce stale (last: Jun 15, 2026)</td>
-          <td>No traffic/conversion data for Jul+Aug. Can't validate buyer acquisition source.</td>
-          <td><span class="tag red">Blocked</span></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>GA4 Procurement shows $0 revenue</td>
-          <td>Browsing data only (~170 DAU, ~420 sessions/day). Session-level CVR unknown.</td>
-          <td><span class="tag gold">Partial</span></td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Catalog quality: 15.4% KNC complete</td>
-          <td>Cannot measure "what buyers find vs what exists." Shelf quality unmeasured.</td>
-          <td><span class="tag gold">Adrian email</span></td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Photo coverage: 0.1% automapped (WS)</td>
-          <td>Photos drive conversion. Nearly zero automatic photo coverage on wholesaler eShops.</td>
-          <td><span class="tag gold">Adrian email</span></td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Per-connection transaction data</td>
-          <td>No join key between K2K_CONNECTIONS and SALE_DETAILS. Zombie count is company-level match (real count likely higher).</td>
-          <td><span class="tag red">Structural</span></td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>API buyer disappearance root cause</td>
-          <td>67% of 2025 API buyers vanished. Could be data artifact, contract change, or genuine churn.</td>
-          <td><span class="tag red">Investigation</span></td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Mayesh -44% root cause</td>
-          <td>Largest single-account decline ($12.9M loss). No confirmed explanation.</td>
-          <td><span class="tag red">Investigation</span></td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>Axerrio Q3 2025 comparables</td>
-          <td>Axerrio sheet only has Jan-Feb 2025. No Q3 2025 Axerrio data for YoY. Not in Google Drive.</td>
-          <td><span class="tag gold">Ask Sofia</span></td>
-        </tr>
+        <thead>
+          <tr><th>Gap</th><th>Impact</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GA4 eCommerce sheet stale at Jun 15</td><td>No Jul/Aug session/conversion data for eShop</td><td><span class="badge warn">STALE</span></td></tr>
+          <tr><td>Catalog coverage 15.4% (product online %)</td><td>Cannot accurately measure LIST depth</td><td><span class="badge flag">KNOWN</span></td></tr>
+          <tr><td>Photo coverage 0.1%</td><td>eShop conversion likely impacted</td><td><span class="badge self">CRITICAL</span></td></tr>
+          <tr><td>Per-connection join missing</td><td>Zombie count is company-level, real count likely higher</td><td><span class="badge warn">METHODOLOGY</span></td></tr>
+          <tr><td>API buyer investigation pending</td><td>67% disappeared; only 6% migrated to eCom</td><td><span class="badge flag">IN PROGRESS</span></td></tr>
+          <tr><td>Mayesh -44% structural event</td><td>$12.9M GMV decline distorts L2 totals</td><td><span class="badge warn">PENDING</span></td></tr>
+          <tr><td>Axerrio Q3 2025 actuals missing</td><td>Cannot compute Axerrio YoY pacing</td><td><span class="badge self">BLOCKED</span></td></tr>
+          <tr><td>Weekly fee breakdown</td><td>Aug weekly is estimated (billed / 4.3 weeks)</td><td><span class="badge warn">METHODOLOGY</span></td></tr>
+        </tbody>
       </table>
     </div>
 
-    <div class="so-what">
-      <strong>So What</strong>
-      Gaps 5 and 6 are the most impactful. Without per-connection transaction data (#5), we can't tell WHICH connections are producing revenue vs dead weight. Without understanding the API buyer exodus (#6), we're flying blind on a -$2.2M channel loss. GA4 staleness (#1) blocks any traffic-based leading indicators.
-    </div>
   </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- PROVENANCE                                                    -->
-<!-- ============================================================ -->
-<div class="layer">
-  <div class="layer-header" onclick="toggle(this)">
-    <h2>Provenance <span class="badge bg-blue">15+ queries</span></h2>
-    <span class="chevron">&#9660;</span>
   </div>
-  <div class="layer-body">
 
-    <div class="sub-header">Data Sources</div>
-    <div class="tw">
-      <table>
-        <tr><th>Metric</th><th>Table</th><th>Date Range</th><th>Filters</th><th>Notes</th></tr>
-        <tr>
-          <td>Q3 Core Fees</td>
-          <td>CONSOLIDATED_TRANSACTION_FEES_SV</td>
-          <td>Jul-Sep 2026</td>
-          <td>ks_flag=TRUE, transaction_date</td>
-          <td>Jul $154,820 + Aug $197,273 + Sep partial $84,864</td>
-        </tr>
-        <tr>
-          <td>Axerrio Q3</td>
-          <td>Google Sheet 1NgyS5...b0vM</td>
-          <td>Jul-Sep 2026</td>
-          <td>USD columns</td>
-          <td>Jul $9,424 + Aug $9,707 actual + Sep $9,707 EST</td>
-        </tr>
-        <tr>
-          <td>Rate vs Volume</td>
-          <td>TRANSACTION_FEES + SALES_SV</td>
-          <td>Q3 2025 vs Q3 2026</td>
-          <td>ks_flag=TRUE, sales&lt;100K</td>
-          <td>Decomposition: 76% rate / 24% volume / interaction</td>
-        </tr>
-        <tr>
-          <td>WS Sell GMV by channel</td>
-          <td>SALES_SV</td>
-          <td>Jul+Aug 2025 vs 2026</td>
-          <td>ks_flag=TRUE, sales&lt;100K, DISTINCT sale_item_id, company_industry='Floral - Wholesaler'</td>
-          <td>Dump excluded per R12</td>
-        </tr>
-        <tr>
-          <td>IMP Sell GMV by channel</td>
-          <td>SALES_SV</td>
-          <td>Jul+Aug 2025 vs 2026</td>
-          <td>ks_flag=TRUE, sales&lt;100K, DISTINCT sale_item_id, company_industry='Floral - Importer'</td>
-          <td>Dump excluded per R12</td>
-        </tr>
-        <tr>
-          <td>eShop buyers</td>
-          <td>SALES_SV</td>
-          <td>Jul+Aug 2025 vs 2026</td>
-          <td>sales_channel='eCommerce', DISTINCT customer_code, WS layer</td>
-          <td>1,431 &rarr; 1,909 (+33%)</td>
-        </tr>
-        <tr>
-          <td>API buyer migration</td>
-          <td>SALES_SV</td>
-          <td>Jul+Aug 2025 buyers tracked into 2026</td>
-          <td>sales_channel='API', DISTINCT customer_code</td>
-          <td>67% disappeared, 6% migrated to eCom</td>
-        </tr>
-        <tr>
-          <td>Procurement GMV</td>
-          <td>PROCUREMENTS_SV</td>
-          <td>Jul+Aug 2025 vs 2026</td>
-          <td>ks_flag=TRUE, DISTINCT purchase_order_item_id, total_cost (R17)</td>
-          <td>$2.93M &rarr; $4.59M (+57%)</td>
-        </tr>
-        <tr>
-          <td>K2K connections</td>
-          <td>K2K_CONNECTIONS_SV</td>
-          <td>Current snapshot</td>
-          <td>ks_flag=TRUE, DISTINCT k2k_connection_id</td>
-          <td>8,678 Active, 3,559 Suspended, 5,754 zombies</td>
-        </tr>
-        <tr>
-          <td>Standing orders</td>
-          <td>STANDING_ORDER_DETAILS</td>
-          <td>Q3 2025 vs Q3 2026</td>
-          <td>ks_flag=TRUE</td>
-          <td>+56% GMV both layers</td>
-        </tr>
-        <tr>
-          <td>Online sellers</td>
-          <td>SALES_SV</td>
-          <td>Aug 2025 vs Aug 2026</td>
-          <td>online channels, DISTINCT company_name</td>
-          <td>213 &rarr; 220 (+3.3%)</td>
-        </tr>
-        <tr>
-          <td>GA4 Procurement</td>
-          <td>Google Sheet (GA4 auto-refresh)</td>
-          <td>Jun 30 - Jul 27, 2026</td>
-          <td>Procurement hostname</td>
-          <td>~170 DAU, ~420 sessions/day, $0 revenue</td>
-        </tr>
-        <tr>
-          <td>WS / IMP fee split</td>
-          <td>CONSOLIDATED_TRANSACTION_FEES_SV + COMPANIES</td>
-          <td>Jul+Aug 2026</td>
-          <td>ks_flag=TRUE, joined by company industry</td>
-          <td>IMP $263K (77%), WS $70K (23%)</td>
-        </tr>
-        <tr>
-          <td>Take rate trend</td>
-          <td>TRANSACTION_FEES + SALES_SV</td>
-          <td>Monthly Q3 2026</td>
-          <td>Core fees / online GMV by month</td>
-          <td>0.853% &rarr; 0.933% &rarr; ~0.88%</td>
-        </tr>
-        <tr>
-          <td>K2K GMV per seller</td>
-          <td>SALES_SV</td>
-          <td>Jul+Aug 2025 vs 2026</td>
-          <td>K2K channel, company_industry='Floral - Importer'</td>
-          <td>$37.7K &rarr; $55.9K (+48%)</td>
-        </tr>
-      </table>
-    </div>
+</div><!-- end tab-shell -->
 
-    <div class="sub-header">Data Rules Applied</div>
-    <div class="tw">
-      <table>
-        <tr><th>Rule</th><th>Description</th><th>Applied</th></tr>
-        <tr><td>R1</td><td>ks_flag = TRUE (exclude demo/test)</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R2</td><td>transaction_date not bill_date for fees</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R3</td><td>Check MAX(transaction_date) before trusting months</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R4</td><td>Trim sales &lt; $100K (corrupt data)</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R5</td><td>No join on CUSTOMERS (34x fan-out)</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R6</td><td>Sell-side online = eCom+API+K2K; Buy-side = Procurement+K2K+Web</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R8</td><td>Semantic views only (*_SV)</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R9</td><td>Provenance on every number</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R10</td><td>Axerrio gap flagged and added separately</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R12</td><td>Dump/shrinkage excluded from GMV</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R14</td><td>Pacing cutoff = MIN(MAX fees, MAX GMV)</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R15</td><td>DISTINCT purchase_order_item_id for buy GMV</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R16</td><td>No customer_location_id in DISTINCT CTEs</td><td><span class="tag green">Yes</span></td></tr>
-        <tr><td>R17</td><td>BUY GMV = total_cost (not total_price)</td><td><span class="tag green">Yes</span></td></tr>
-      </table>
-    </div>
-
-    <div class="band warn" style="margin-top:16px">
-      <strong>UNVERIFIED:</strong> All numbers in this dashboard are Rose L1 output. Codex has NOT verified. Specific flags pending verification: (1) Q3 Core total $437K composite, (2) API buyer disappearance 67%, (3) K2K zombie count 5,754 at company-level match, (4) Rate vs Volume 76/24 decomposition, (5) Procurement GMV $4.59M dedup, (6) Take rate 0.933% in Aug.
-    </div>
+<!-- PROVENANCE FOOTER -->
+<section>
+  <p class="eyebrow">Provenance</p>
+  <h3>Data Sources &amp; Rules Applied</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Source</th><th>Table / View</th><th>Period</th><th>Key Filters</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Snowflake</td><td>CONSOLIDATED_TRANSACTION_FEES_SV</td><td>Jan 2025 &ndash; Sep 2026</td><td>ks_flag=TRUE, transaction_date</td></tr>
+        <tr><td>2</td><td>Snowflake</td><td>EXPECTED_TRANSACTION_FEES_SV</td><td>Sep 1&ndash;4, 2026</td><td>shipping_date, &gt;$1K/day cutoff</td></tr>
+        <tr><td>3</td><td>Google Sheet</td><td>Europe TX Fees Control Sheet</td><td>Jan&ndash;Aug 2026</td><td>USD bottom row</td></tr>
+        <tr><td>4</td><td>Snowflake</td><td>SALES_SV</td><td>Jul&ndash;Aug 2025 &amp; 2026</td><td>ks_flag=TRUE, sales&lt;100K, DISTINCT sale_item_id</td></tr>
+        <tr><td>5</td><td>Snowflake</td><td>PROCUREMENTS_SV</td><td>Jul&ndash;Aug 2025 &amp; 2026</td><td>ks_flag=TRUE, DISTINCT purchase_order_item_id, total_cost</td></tr>
+        <tr><td>6</td><td>Snowflake</td><td>K2K_CONNECTIONS_SV</td><td>Current snapshot</td><td>ks_flag=TRUE</td></tr>
+        <tr><td>7</td><td>Snowflake</td><td>USER_STATS_SV</td><td>H1 2026</td><td>Buyer CVR, repeat rates</td></tr>
+      </tbody>
+    </table>
   </div>
-</div>
 
-<!-- Footer -->
-<div style="text-align:center;padding:32px 0 0;color:var(--muted);font-size:12px">
-  <div>TX Fee Pacing v3 &mdash; Decision Flow Dashboard</div>
-  <div>Built by Rose (Data Agent L1) | Koronet Revenue OS</div>
-  <div style="margin-top:4px">Data: Snowflake Sep 10, 2026 | Axerrio: Google Sheet Aug actuals | Status: UNVERIFIED</div>
-</div>
+  <h3 style="margin-top:16px">Data Rules Applied</h3>
+  <p class="small">R1 (ks_flag=TRUE), R2 (transaction_date not bill_date), R3 (MAX date check), R4 (sales&lt;100K), R5 (DISTINCT sale_item_id), R6 (sell vs buy online definitions), R8 (semantic views only), R9 (provenance on every number), R10 (Axerrio separate), R12 (dump excluded), R13 (channels.json authoritative), R14 (pacing cutoff = MIN of MAX dates), R15 (DISTINCT purchase_order_item_id), R16 (no customer_location_id in dedup), R17 (total_cost for buy GMV).</p>
+
+  <p class="footnote" style="margin-top:12px">
+    <span class="badge warn">UNVERIFIED</span> &mdash; This dashboard has not been reviewed by Codex. All numbers are Rose L1 output pending L2 verification.<br>
+    Generated: 2026-09-10 &middot; Agent: Rose (Data Agent, L1) &middot; TX Revenue OS
+  </p>
+</section>
 
 </main>
 
 <script>
-function toggle(el) {
-  el.classList.toggle('open');
-  const body = el.nextElementSibling;
-  body.classList.toggle('show');
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
 }
-// Auto-expand Layer 1
-document.addEventListener('DOMContentLoaded', function() {
-  const l1 = document.querySelector('.always-show .layer-header');
-  if (l1) l1.classList.add('open');
-});
 </script>
 </body>
 </html>
