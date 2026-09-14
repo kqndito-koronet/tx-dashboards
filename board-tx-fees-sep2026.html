@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Board TX Fees — Sep 2026 | TX Revenue OS</title>
+<title>Board TX Fees — Sep 2026</title>
 <style>
 :root{
   --bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;
@@ -98,757 +98,385 @@ tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
 .opp-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
 .opp-summary-card{background:linear-gradient(135deg,#1e3a5f 0%,#2457c5 100%);border-radius:10px;padding:16px;color:#fff}
 .opp-summary-card .label{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#93c5fd;margin-bottom:4px}
-.opp-summary-card .val{font-size:22px;font-weight:900;line-height:1.1;margin-bottom:2px}
-.opp-summary-card .sub{font-size:11px;color:#bfdbfe;line-height:1.5}
-.opp-kpi-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:16px}
-.opp-kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;text-align:center}
-.opp-kpi .kl{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
-.opp-kpi .kv{font-size:16px;font-weight:900;display:block;line-height:1}
-.opp-kpi .ks{font-size:10px;color:var(--muted);display:block;margin-top:2px}
-.opp-section{border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.opp-toggle{width:100%;background:#f3f6fb;border:none;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;text-align:left;font-family:inherit}
-.opp-toggle:hover{background:#e9eef6}
-.opp-toggle-left{display:flex;align-items:center;gap:12px}
-.opp-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0}
-.opp-toggle-title{font-size:14px;font-weight:800;color:var(--ink)}
-.opp-toggle-sub{font-size:12px;color:var(--muted);margin-top:1px}
-.opp-toggle-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
-.opp-badge{font-size:11px;font-weight:900;padding:4px 10px;border-radius:6px}
-.opp-badge.h2{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
-.opp-badge.future{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
-.opp-badge.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
-.opp-chevron{font-size:16px;color:var(--muted);transition:transform .2s}
-.opp-chevron.open{transform:rotate(180deg)}
-.opp-body{display:none;padding:18px;border-top:1px solid var(--line);background:#fff}
-.opp-body.open{display:block}
-.sens-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
-.sens-table th{background:#f3f6fb;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;text-align:right;border-bottom:2px solid var(--line)}
-.sens-table th:first-child{text-align:left}
-.sens-table td{padding:8px 12px;text-align:right;border-bottom:1px solid #edf1f6}
-.sens-table td:first-child{text-align:left;font-weight:700}
-.sens-cons td{background:#fef2f2}.sens-base td{background:#f0fdf4}.sens-opt td{background:#eff6ff}
-.sens-cons td:first-child{color:var(--red)}.sens-base td:first-child{color:var(--green)}.sens-opt td:first-child{color:var(--blue)}
-.must-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.8;color:var(--ink)}
-.metric-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.8;color:var(--muted)}
-.two-col-lists{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
-.combined-banner{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:10px;padding:20px 24px;margin-bottom:12px;color:#fff}
-.combined-banner h3{margin:0 0 12px;font-size:16px;font-weight:900;color:#fff}
-.cb-message{background:#1e3a5f;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:#93c5fd;font-style:italic;line-height:1.6}
-.opp-inner-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
-.funnel-wrap{margin:16px 0}
-.funnel-stage{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.funnel-bar-wrap{flex:1;background:#f1f5f9;border-radius:6px;height:44px;overflow:hidden;position:relative}
-.funnel-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 14px;transition:width .4s}
-.funnel-bar span{font-size:12px;font-weight:800;color:#fff;white-space:nowrap}
-.funnel-label{width:160px;text-align:right;font-size:13px;font-weight:700;color:var(--ink)}
-.funnel-meta{width:200px;font-size:11px;color:var(--muted)}
-.stage-card{border:1px solid var(--line);border-radius:8px;padding:14px;background:#fff}
-.stage-card .sc-label{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
-.stage-card .sc-val{font-size:20px;font-weight:900;display:block;line-height:1.1}
-.stage-card .sc-sub{font-size:11px;color:var(--muted);display:block;margin-top:3px}
-.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 </style>
 </head>
 <body>
 <main>
 
-<!-- ===== HEADER ===== -->
-<section>
-  <p class="eyebrow">TX Revenue OS &mdash; Board Report</p>
-  <h1>TX Fees &amp; Digital Commerce</h1>
-  <p class="sub">Prepared for Sep 2026 board meeting. All data through Aug 31, 2026. Metrics by layer (Importer &rarr; Wholesaler &rarr; Retailer) and channel (eShop, K2K, API, Procurement).</p>
-  <div style="margin-top:12px">
-    <span class="badge warn">UNVERIFIED</span>
-  </div>
+<!-- ========== HEADER ========== -->
+<section style="border-left:5px solid var(--blue)">
+  <p class="eyebrow">Board Report &mdash; TX Revenue</p>
+  <h1>TX Fees &amp; Digital Channels</h1>
+  <p class="sub">Data through August 31, 2026 &mdash; prepared for Dave's Wednesday board meeting</p>
 </section>
 
-<!-- ===== SECTION 1: TX FEES VS TARGET ===== -->
+<!-- ========== SECTION 1: TX FEES PERFORMANCE ========== -->
 <section>
   <p class="eyebrow">Section 1</p>
-  <h2>TX Fees vs Target</h2>
-  <p class="sub">Monthly 2025 vs 2026, from TRANSACTION_FEES (ks_flag=TRUE, transaction_date). Excludes Axerrio.</p>
+  <h2>TX Fees Performance</h2>
 
-  <!-- Hero Cards -->
-  <div class="grid4" style="margin-top:16px">
+  <!-- Hero cards -->
+  <div class="grid4" style="margin-bottom:16px">
+    <div class="card blueLine">
+      <small>Aug 2026</small>
+      <strong>$188K</strong>
+      <span class="delta pos">+36% YoY</span>
+    </div>
     <div class="card okLine">
-      <small>YTD 2026 (Jan&ndash;Aug)</small>
+      <small>YTD (Jan&ndash;Aug)</small>
       <strong>$1.67M</strong>
       <span class="delta pos">+34.3% YoY</span>
-      <p>vs $1.25M in Jan&ndash;Aug 2025</p>
-    </div>
-    <div class="card blueLine">
-      <small>Q3 Billed (Jul&ndash;Aug)</small>
-      <strong>$343K</strong>
-      <span class="delta pos">+37.8% YoY</span>
-      <p>vs $249K Jul&ndash;Aug 2025</p>
     </div>
     <div class="card purpleLine">
-      <small>Projected FY 2026</small>
-      <strong>~$2.7M</strong>
-      <p>Based on current run rate</p>
-    </div>
-    <div class="card goldLine">
-      <small>Q3 Target Progress</small>
-      <strong>51.2%</strong>
-      <p>$343K of $670K target billed</p>
-    </div>
-  </div>
-
-  <!-- Monthly Table -->
-  <div class="tableWrap" style="margin-top:16px">
-    <table>
-      <thead>
-        <tr>
-          <th>Month</th>
-          <th>2025 Actual</th>
-          <th>2026 Actual</th>
-          <th>YoY %</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Jan</td><td>$117,035</td><td>$142,662</td><td class="pct-green">+21.9%</td></tr>
-        <tr><td>Feb</td><td>$163,729</td><td>$209,329</td><td class="pct-green">+27.8%</td></tr>
-        <tr><td>Mar</td><td>$142,577</td><td>$190,669</td><td class="pct-green">+33.7%</td></tr>
-        <tr><td>Apr</td><td>$199,362</td><td>$289,293</td><td class="pct-green">+45.1%</td></tr>
-        <tr><td>May</td><td>$237,030</td><td>$306,138</td><td class="pct-green">+29.2%</td></tr>
-        <tr><td>Jun</td><td>$136,471</td><td>$190,765</td><td class="pct-green">+39.8%</td></tr>
-        <tr><td>Jul</td><td>$110,294</td><td>$154,820</td><td class="pct-green">+40.4%</td></tr>
-        <tr><td>Aug</td><td>$138,824</td><td>$188,430</td><td class="pct-green">+35.7%</td></tr>
-        <tr class="total-row">
-          <td>YTD Total</td>
-          <td>$1,245,322</td>
-          <td>$1,672,106</td>
-          <td>+34.3%</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- SVG Bar Chart: Fees by Month -->
-  <div class="chart-container">
-    <div class="chart-title">Monthly TX Fees: 2025 vs 2026</div>
-    <div class="chart-sub">Side-by-side comparison by month. All values in USD thousands.</div>
-    <svg class="chart" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet">
-      <!-- Grid lines -->
-      <line x1="70" y1="40" x2="870" y2="40" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="96" x2="870" y2="96" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="152" x2="870" y2="152" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="208" x2="870" y2="208" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="264" x2="870" y2="264" stroke="#edf1f6" stroke-width="1"/>
-      <!-- Y-axis labels: $40K (y=264) to $320K (y=40). Range=280K, px range=224 -->
-      <text x="62" y="44" text-anchor="end" font-size="10" fill="#667085">$320K</text>
-      <text x="62" y="100" text-anchor="end" font-size="10" fill="#667085">$250K</text>
-      <text x="62" y="156" text-anchor="end" font-size="10" fill="#667085">$180K</text>
-      <text x="62" y="212" text-anchor="end" font-size="10" fill="#667085">$110K</text>
-      <text x="62" y="268" text-anchor="end" font-size="10" fill="#667085">$40K</text>
-      <!-- Baseline -->
-      <line x1="70" y1="264" x2="870" y2="264" stroke="#d9e0ea" stroke-width="1.5"/>
-
-      <!-- Formula: y = 264 - ((val - 40000) / 280000) * 224 -->
-      <!-- Jan 2025: $117,035 -> y=264-((77035/280000)*224)=264-61.6=202 h=62 -->
-      <rect x="88" y="202" width="36" height="62" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Jan 2026: $142,662 -> y=264-((102662/280000)*224)=264-82.1=182 h=82 -->
-      <rect x="128" y="182" width="36" height="82" rx="3" fill="#2457c5"/>
-      <text x="126" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Jan</text>
-      <text x="146" y="176" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$143K</text>
-
-      <!-- Feb 2025: $163,729 -> y=264-((123729/280000)*224)=264-99=165 h=99 -->
-      <rect x="188" y="165" width="36" height="99" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Feb 2026: $209,329 -> y=264-((169329/280000)*224)=264-135=129 h=135 -->
-      <rect x="228" y="129" width="36" height="135" rx="3" fill="#2457c5"/>
-      <text x="226" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Feb</text>
-      <text x="246" y="123" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$209K</text>
-
-      <!-- Mar 2025: $142,577 -> y=264-((102577/280000)*224)=264-82=182 h=82 -->
-      <rect x="288" y="182" width="36" height="82" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Mar 2026: $190,669 -> y=264-((150669/280000)*224)=264-121=143 h=121 -->
-      <rect x="328" y="143" width="36" height="121" rx="3" fill="#2457c5"/>
-      <text x="326" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Mar</text>
-      <text x="346" y="137" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$191K</text>
-
-      <!-- Apr 2025: $199,362 -> y=264-((159362/280000)*224)=264-128=136 h=128 -->
-      <rect x="388" y="136" width="36" height="128" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Apr 2026: $289,293 -> y=264-((249293/280000)*224)=264-200=64 h=200 -->
-      <rect x="428" y="64" width="36" height="200" rx="3" fill="#2457c5"/>
-      <text x="426" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Apr</text>
-      <text x="446" y="58" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$289K</text>
-
-      <!-- May 2025: $237,030 -> y=264-((197030/280000)*224)=264-158=106 h=158 -->
-      <rect x="488" y="106" width="36" height="158" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- May 2026: $306,138 -> y=264-((266138/280000)*224)=264-213=51 h=213 -->
-      <rect x="528" y="51" width="36" height="213" rx="3" fill="#2457c5"/>
-      <text x="526" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">May</text>
-      <text x="546" y="45" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$306K</text>
-
-      <!-- Jun 2025: $136,471 -> y=264-((96471/280000)*224)=264-77=187 h=77 -->
-      <rect x="588" y="187" width="36" height="77" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Jun 2026: $190,765 -> y=264-((150765/280000)*224)=264-121=143 h=121 -->
-      <rect x="628" y="143" width="36" height="121" rx="3" fill="#2457c5"/>
-      <text x="626" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Jun</text>
-      <text x="646" y="137" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$191K</text>
-
-      <!-- Jul 2025: $110,294 -> y=264-((70294/280000)*224)=264-56=208 h=56 -->
-      <rect x="688" y="208" width="36" height="56" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Jul 2026: $154,820 -> y=264-((114820/280000)*224)=264-92=172 h=92 -->
-      <rect x="728" y="172" width="36" height="92" rx="3" fill="#2457c5"/>
-      <text x="726" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Jul</text>
-      <text x="746" y="166" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$155K</text>
-
-      <!-- Aug 2025: $138,824 -> y=264-((98824/280000)*224)=264-79=185 h=79 -->
-      <rect x="788" y="185" width="36" height="79" rx="3" fill="#93c5fd" opacity="0.7"/>
-      <!-- Aug 2026: $188,430 -> y=264-((148430/280000)*224)=264-119=145 h=119 -->
-      <rect x="828" y="145" width="36" height="119" rx="3" fill="#2457c5"/>
-      <text x="826" y="284" text-anchor="middle" font-size="11" font-weight="700" fill="#344054">Aug</text>
-      <text x="846" y="139" text-anchor="middle" font-size="9" font-weight="800" fill="#2457c5">$188K</text>
-    </svg>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#93c5fd"></div> 2025 Actual</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#2457c5"></div> 2026 Actual</div>
-    </div>
-  </div>
-
-  <!-- Axerrio -->
-  <div class="tableWrap" style="margin-top:16px">
-    <table>
-      <thead>
-        <tr class="section-hdr"><td colspan="3">Axerrio TX Fees (separate billing, outside Snowflake)</td></tr>
-        <tr>
-          <th>Month</th>
-          <th>2026 Actual</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Jul</td><td>$9,429</td><td style="text-align:left;color:var(--muted);font-size:11px">Europe TX Fees Control Sheet</td></tr>
-        <tr><td>Aug</td><td>$9,712</td><td style="text-align:left;color:var(--muted);font-size:11px">Europe TX Fees Control Sheet</td></tr>
-        <tr class="subtotal-row"><td>Q3 Axerrio</td><td>$19,141</td><td></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="footnote">Axerrio fees are billed outside Snowflake (Sofia's Europe TX Fees Control Sheet). 17 clients across 3 fee models. ~$9K/mo trending up.</p>
-</section>
-
-<!-- ===== SECTION 2: WHOLESALERS SELLING ===== -->
-<section>
-  <p class="eyebrow">Section 2</p>
-  <h2>Wholesalers Selling Digitally</h2>
-  <p class="sub">How many wholesalers sell online, by channel, monthly. Source: SALE_DETAILS (ks_flag=TRUE, sales_channel, company_industry='Wholesaler').</p>
-
-  <!-- Headline Cards -->
-  <div class="grid4" style="margin-top:16px">
-    <div class="card blueLine">
-      <small>eShop Sellers (Aug 2026)</small>
-      <strong>60</strong>
-      <span class="delta pos">+5% YoY</span>
-      <p>vs 57 in Aug 2025</p>
-    </div>
-    <div class="card okLine">
-      <small>K2K Sellers (Aug 2026)</small>
-      <strong>44</strong>
-      <span class="delta neg">-12% YoY</span>
-      <p>vs 50 in Aug 2025</p>
+      <small>Q3 Billed (Jul+Aug)</small>
+      <strong>$343K</strong>
+      <p>51.2% of $670K annual target</p>
     </div>
     <div class="card cyanLine">
-      <small>API Sellers (Aug 2026)</small>
-      <strong>2</strong>
-      <p>Flat YoY</p>
-    </div>
-    <div class="card purpleLine">
-      <small>eShop GMV (Aug 2026)</small>
-      <strong>$2.7M</strong>
-      <span class="delta pos">+42% YoY</span>
-      <p>WS eCommerce via SALE_DETAILS</p>
+      <small>Take Rate</small>
+      <strong>0.87%</strong>
+      <p>Fees / total online GMV</p>
     </div>
   </div>
 
-  <!-- SVG Chart: eShop Sellers Trend -->
-  <div class="chart-container">
-    <div class="chart-title">eShop Sellers: Monthly Trend</div>
-    <div class="chart-sub">Count of wholesalers with eCommerce sales each month. Jul 2025 &ndash; Jun 2026.</div>
-    <svg class="chart" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet">
-      <!-- Grid -->
-      <line x1="70" y1="30" x2="860" y2="30" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="78" x2="860" y2="78" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="126" x2="860" y2="126" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="174" x2="860" y2="174" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="222" x2="860" y2="222" stroke="#d9e0ea" stroke-width="1.5"/>
-      <!-- Y-axis: Scale 40-70, mapped 222(bottom=40) to 30(top=70). pxRange=192 -->
-      <text x="62" y="34" text-anchor="end" font-size="10" fill="#667085">70</text>
-      <text x="62" y="82" text-anchor="end" font-size="10" fill="#667085">62</text>
-      <text x="62" y="130" text-anchor="end" font-size="10" fill="#667085">55</text>
-      <text x="62" y="178" text-anchor="end" font-size="10" fill="#667085">47</text>
-      <text x="62" y="226" text-anchor="end" font-size="10" fill="#667085">40</text>
-
-      <!-- Formula: y = 222 - ((val - 40) / 30) * 192 -->
-      <!-- eShop 2025 (dashed light blue): Jul=54, Aug=57, Sep=61, Oct=60, Nov=56, Dec=58 -->
-      <!-- Jul25:54 -> 222-((14/30)*192)=222-89.6=132 -->
-      <!-- Aug25:57 -> 222-((17/30)*192)=222-108.8=113 -->
-      <!-- Sep25:61 -> 222-((21/30)*192)=222-134.4=88 -->
-      <!-- Oct25:60 -> 222-((20/30)*192)=222-128=94 -->
-      <!-- Nov25:56 -> 222-((16/30)*192)=222-102.4=120 -->
-      <!-- Dec25:58 -> 222-((18/30)*192)=222-115.2=107 -->
-      <!-- X positions: Jul=100, Aug=170, Sep=240, Oct=310, Nov=380, Dec=450, Jan=520, Feb=590, Mar=660, Apr=730, May=800, Jun=860 -->
-      <polyline points="100,132 170,113 240,88 310,94 380,120 450,107" fill="none" stroke="#93c5fd" stroke-width="2.5" stroke-dasharray="6,4"/>
-      <circle cx="100" cy="132" r="4" fill="#93c5fd"/>
-      <text x="100" y="126" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">54</text>
-      <circle cx="170" cy="113" r="4" fill="#93c5fd"/>
-      <text x="170" y="107" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">57</text>
-      <circle cx="240" cy="88" r="4" fill="#93c5fd"/>
-      <text x="240" y="82" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">61</text>
-      <circle cx="310" cy="94" r="4" fill="#93c5fd"/>
-      <text x="310" y="88" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">60</text>
-      <circle cx="380" cy="120" r="4" fill="#93c5fd"/>
-      <text x="380" y="114" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">56</text>
-      <circle cx="450" cy="107" r="4" fill="#93c5fd"/>
-      <text x="450" y="101" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">58</text>
-
-      <!-- eShop 2026 (solid dark blue): Jan=59, Feb=60, Mar=59, Apr=64, May=66, Jun=61 -->
-      <!-- Jan26:59 -> 222-((19/30)*192)=222-121.6=100 -->
-      <!-- Feb26:60 -> 94 -->
-      <!-- Mar26:59 -> 100 -->
-      <!-- Apr26:64 -> 222-((24/30)*192)=222-153.6=68 -->
-      <!-- May26:66 -> 222-((26/30)*192)=222-166.4=56 -->
-      <!-- Jun26:61 -> 88 -->
-      <polyline points="520,100 590,94 660,100 730,68 800,56 860,88" fill="none" stroke="#2457c5" stroke-width="2.5"/>
-      <circle cx="520" cy="100" r="4" fill="#2457c5"/>
-      <text x="520" y="94" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">59</text>
-      <circle cx="590" cy="94" r="4" fill="#2457c5"/>
-      <text x="590" y="88" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">60</text>
-      <circle cx="660" cy="100" r="4" fill="#2457c5"/>
-      <text x="660" y="94" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">59</text>
-      <circle cx="730" cy="68" r="4" fill="#2457c5"/>
-      <text x="730" y="62" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">64</text>
-      <circle cx="800" cy="56" r="4" fill="#2457c5"/>
-      <text x="800" y="50" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">66</text>
-      <circle cx="860" cy="88" r="4" fill="#2457c5"/>
-      <text x="860" y="82" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">61</text>
-
-      <!-- X-axis month labels -->
-      <text x="100" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jul</text>
-      <text x="170" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Aug</text>
-      <text x="240" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Sep</text>
-      <text x="310" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Oct</text>
-      <text x="380" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Nov</text>
-      <text x="450" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Dec</text>
-      <text x="520" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jan</text>
-      <text x="590" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Feb</text>
-      <text x="660" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Mar</text>
-      <text x="730" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Apr</text>
-      <text x="800" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">May</text>
-      <text x="860" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jun</text>
-      <text x="275" y="254" text-anchor="middle" font-size="9" fill="#667085">&mdash; 2025 &mdash;</text>
-      <text x="690" y="254" text-anchor="middle" font-size="9" fill="#667085">&mdash; 2026 &mdash;</text>
-    </svg>
+  <!-- SVG Bar Chart: 2025 vs 2026 monthly -->
+  <div class="chart-container" id="feeChartWrap">
+    <div class="chart-title">Monthly TX Fees: 2025 vs 2026</div>
+    <div class="chart-sub">Snowflake TRANSACTION_FEES, transaction_date, ks_flag=TRUE</div>
+    <svg class="chart" viewBox="0 0 900 300" id="feeChart"></svg>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#93c5fd"></div> eShop 2025</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#2457c5"></div> eShop 2026</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>2025</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>2026</div>
     </div>
+    <div class="tooltip" id="feeTip"></div>
   </div>
 
-  <!-- SVG Chart: K2K Sellers Trend -->
-  <div class="chart-container">
-    <div class="chart-title">K2K Sellers: Monthly Trend</div>
-    <div class="chart-sub">Count of wholesalers selling via K2K each month. Jul 2025 &ndash; Jun 2026.</div>
-    <svg class="chart" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet">
-      <!-- Grid -->
-      <line x1="70" y1="30" x2="860" y2="30" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="78" x2="860" y2="78" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="126" x2="860" y2="126" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="174" x2="860" y2="174" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="222" x2="860" y2="222" stroke="#d9e0ea" stroke-width="1.5"/>
-      <!-- Y-axis: Scale 30-60, mapped 222(bottom=30) to 30(top=60). pxRange=192 -->
-      <text x="62" y="34" text-anchor="end" font-size="10" fill="#667085">60</text>
-      <text x="62" y="82" text-anchor="end" font-size="10" fill="#667085">53</text>
-      <text x="62" y="130" text-anchor="end" font-size="10" fill="#667085">45</text>
-      <text x="62" y="178" text-anchor="end" font-size="10" fill="#667085">38</text>
-      <text x="62" y="226" text-anchor="end" font-size="10" fill="#667085">30</text>
-
-      <!-- Formula: y = 222 - ((val - 30) / 30) * 192 -->
-      <!-- K2K 2025 (dashed light green): Jul=56, Aug=50, Sep=44, Oct=47, Nov=44, Dec=43 -->
-      <!-- Jul25:56 -> 222-((26/30)*192)=222-166.4=56 -->
-      <!-- Aug25:50 -> 222-((20/30)*192)=222-128=94 -->
-      <!-- Sep25:44 -> 222-((14/30)*192)=222-89.6=132 -->
-      <!-- Oct25:47 -> 222-((17/30)*192)=222-108.8=113 -->
-      <!-- Nov25:44 -> 132 -->
-      <!-- Dec25:43 -> 222-((13/30)*192)=222-83.2=139 -->
-      <polyline points="100,56 170,94 240,132 310,113 380,132 450,139" fill="none" stroke="#86efac" stroke-width="2.5" stroke-dasharray="6,4"/>
-      <circle cx="100" cy="56" r="4" fill="#86efac"/>
-      <text x="100" y="50" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">56</text>
-      <circle cx="170" cy="94" r="4" fill="#86efac"/>
-      <text x="170" y="88" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">50</text>
-      <circle cx="240" cy="132" r="4" fill="#86efac"/>
-      <text x="240" y="126" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">44</text>
-      <circle cx="310" cy="113" r="4" fill="#86efac"/>
-      <text x="310" y="107" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">47</text>
-      <circle cx="380" cy="132" r="4" fill="#86efac"/>
-      <text x="380" y="126" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">44</text>
-      <circle cx="450" cy="139" r="4" fill="#86efac"/>
-      <text x="450" y="133" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">43</text>
-
-      <!-- K2K 2026 (solid dark green): Jan=43, Feb=46, Mar=46, Apr=46, May=46, Jun=41 -->
-      <!-- Jan26:43 -> 139 -->
-      <!-- Feb26:46 -> 222-((16/30)*192)=222-102.4=120 -->
-      <!-- Mar26:46 -> 120 -->
-      <!-- Apr26:46 -> 120 -->
-      <!-- May26:46 -> 120 -->
-      <!-- Jun26:41 -> 222-((11/30)*192)=222-70.4=152 -->
-      <polyline points="520,139 590,120 660,120 730,120 800,120 860,152" fill="none" stroke="#12805c" stroke-width="2.5"/>
-      <circle cx="520" cy="139" r="4" fill="#12805c"/>
-      <text x="520" y="133" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">43</text>
-      <circle cx="590" cy="120" r="4" fill="#12805c"/>
-      <text x="590" y="114" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">46</text>
-      <circle cx="660" cy="120" r="4" fill="#12805c"/>
-      <text x="660" y="114" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">46</text>
-      <circle cx="730" cy="120" r="4" fill="#12805c"/>
-      <text x="730" y="114" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">46</text>
-      <circle cx="800" cy="120" r="4" fill="#12805c"/>
-      <text x="800" y="114" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">46</text>
-      <circle cx="860" cy="152" r="4" fill="#12805c"/>
-      <text x="860" y="146" text-anchor="middle" font-size="9" fill="#12805c" font-weight="700">41</text>
-
-      <!-- X-axis month labels -->
-      <text x="100" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jul</text>
-      <text x="170" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Aug</text>
-      <text x="240" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Sep</text>
-      <text x="310" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Oct</text>
-      <text x="380" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Nov</text>
-      <text x="450" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Dec</text>
-      <text x="520" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jan</text>
-      <text x="590" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Feb</text>
-      <text x="660" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Mar</text>
-      <text x="730" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Apr</text>
-      <text x="800" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">May</text>
-      <text x="860" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jun</text>
-      <text x="275" y="254" text-anchor="middle" font-size="9" fill="#667085">&mdash; 2025 &mdash;</text>
-      <text x="690" y="254" text-anchor="middle" font-size="9" fill="#667085">&mdash; 2026 &mdash;</text>
-    </svg>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#86efac"></div> K2K 2025</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#12805c"></div> K2K 2026</div>
-    </div>
-  </div>
-
-  <!-- Full Data Table -->
+  <!-- Monthly table -->
   <div class="tableWrap" style="margin-top:16px">
     <table>
       <thead>
-        <tr>
-          <th>Month</th>
-          <th>eShop 2025</th>
-          <th>eShop 2026</th>
-          <th>K2K 2025</th>
-          <th>K2K 2026</th>
-          <th>API</th>
-        </tr>
+        <tr><th>Month</th><th>2025</th><th>2026</th><th>YoY %</th></tr>
       </thead>
       <tbody>
-        <tr><td>Jul</td><td>54</td><td>59</td><td>56</td><td>43</td><td>2</td></tr>
-        <tr><td>Aug</td><td>57</td><td>60</td><td>50</td><td>44</td><td>2</td></tr>
-        <tr><td>Sep</td><td>61</td><td class="na">&mdash;</td><td>44</td><td class="na">&mdash;</td><td>2</td></tr>
-        <tr><td>Oct</td><td>60</td><td class="na">&mdash;</td><td>47</td><td class="na">&mdash;</td><td>2</td></tr>
-        <tr><td>Nov</td><td>56</td><td class="na">&mdash;</td><td>44</td><td class="na">&mdash;</td><td>2</td></tr>
-        <tr><td>Dec</td><td>58</td><td class="na">&mdash;</td><td>43</td><td class="na">&mdash;</td><td>2</td></tr>
-        <tr><td>Jan</td><td class="na">&mdash;</td><td>59</td><td class="na">&mdash;</td><td>43</td><td>2</td></tr>
-        <tr><td>Feb</td><td class="na">&mdash;</td><td>60</td><td class="na">&mdash;</td><td>46</td><td>2</td></tr>
-        <tr><td>Mar</td><td class="na">&mdash;</td><td>59</td><td class="na">&mdash;</td><td>46</td><td>2</td></tr>
-        <tr><td>Apr</td><td class="na">&mdash;</td><td>64</td><td class="na">&mdash;</td><td>46</td><td>2</td></tr>
-        <tr><td>May</td><td class="na">&mdash;</td><td>66</td><td class="na">&mdash;</td><td>46</td><td>2</td></tr>
-        <tr><td>Jun</td><td class="na">&mdash;</td><td>61</td><td class="na">&mdash;</td><td>41</td><td>3</td></tr>
+        <tr><td>Jan</td><td>$122K</td><td>$173K</td><td class="pct-green">+42%</td></tr>
+        <tr><td>Feb</td><td>$133K</td><td>$196K</td><td class="pct-green">+47%</td></tr>
+        <tr><td>Mar</td><td>$134K</td><td>$183K</td><td class="pct-green">+37%</td></tr>
+        <tr><td>Apr</td><td>$146K</td><td>$189K</td><td class="pct-green">+29%</td></tr>
+        <tr><td>May</td><td>$158K</td><td>$204K</td><td class="pct-green">+29%</td></tr>
+        <tr><td>Jun</td><td>$145K</td><td>$188K</td><td class="pct-green">+30%</td></tr>
+        <tr><td>Jul</td><td>$126K</td><td>$155K</td><td class="pct-green">+23%</td></tr>
+        <tr><td>Aug</td><td>$138K</td><td>$188K</td><td class="pct-green">+36%</td></tr>
+        <tr class="total-row"><td>YTD</td><td>$1.10M</td><td>$1.48M</td><td>+34.3%</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Context cards -->
-  <div class="grid3" style="margin-top:16px">
-    <div class="card blueLine">
-      <small>Online Buyers from WS eShops</small>
-      <strong>1,909</strong>
-      <span class="delta pos">+33% YoY</span>
-      <p>Jul+Aug 2026 combined</p>
+  <!-- Axerrio separate -->
+  <div class="grid2" style="margin-top:16px">
+    <div class="card goldLine">
+      <small>Axerrio (outside Snowflake)</small>
+      <strong>$19.1K Q3</strong>
+      <p>Jul $9,429 + Aug $9,712. Europe TX Fees Control Sheet (Sofia Pardo).</p>
     </div>
+    <div class="card" style="border-left:5px solid var(--amber)">
+      <small>Axerrio YTD Context</small>
+      <strong>~$9K/mo</strong>
+      <p>17 clients, 3 fee models (1.5% TX, eShop Model A, Model B). Trending up from $8K/mo Jan to ~$10K/mo.</p>
+    </div>
+  </div>
+
+  <!-- Fees by layer -->
+  <h3 style="margin-top:18px">Fees by Layer (Jul + Aug 2026)</h3>
+  <div class="grid2">
     <div class="card okLine">
-      <small>eShop GMV Aug 2026</small>
-      <strong>$2.7M</strong>
-      <span class="delta pos">+42% YoY</span>
-      <p>SALE_DETAILS, WS eCommerce</p>
+      <small>Importers</small>
+      <strong>$263K</strong>
+      <span class="delta" style="color:var(--green)">77% of total</span>
+    </div>
+    <div class="card blueLine">
+      <small>Wholesalers</small>
+      <strong>$70K</strong>
+      <span class="delta" style="color:var(--blue)">23% of total</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 2: WHOLESALERS SELLING ========== -->
+<section>
+  <p class="eyebrow">Section 2</p>
+  <h2>Wholesalers Selling to Retailers</h2>
+
+  <!-- Hero cards -->
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="card blueLine">
+      <small>eShop Sellers</small>
+      <strong>60</strong>
+      <span class="delta pos">+5% YoY</span>
+    </div>
+    <div class="card purpleLine">
+      <small>K2K Sellers</small>
+      <strong>44</strong>
+      <span class="delta neg">-12% YoY</span>
     </div>
     <div class="card cyanLine">
       <small>API Sellers</small>
       <strong>2</strong>
-      <p>Flat YoY. 67% of 2025 API buyers disappeared (Mayesh-driven).</p>
+      <span class="delta" style="color:var(--muted)">flat</span>
     </div>
   </div>
 
-  <div class="warn-bar">
-    <strong>Mayesh anomaly:</strong> Mayesh K2K volume declined -44% due to structural event in Apr 2026 (branch closures / system migration). Excluding Mayesh, WS sell-side is approximately flat.
-  </div>
-</section>
-
-<!-- ===== SECTION 3: WHOLESALERS BUYING ===== -->
-<section>
-  <p class="eyebrow">Section 3</p>
-  <h2>Wholesalers Buying Digitally</h2>
-  <p class="sub">How many wholesalers buy through Procurement and K2K, monthly. Source: PROCUREMENTS_SV (ks_flag=TRUE, sales_channel='Procurement', company_industry='Wholesaler').</p>
-
-  <!-- Headline Cards -->
-  <div class="grid4" style="margin-top:16px">
-    <div class="card okLine">
-      <small>WS Procurement Buyers (Aug 2026)</small>
-      <strong>83</strong>
-      <span class="delta pos">+14% YoY</span>
-      <p>vs 73 in Aug 2025</p>
-    </div>
-    <div class="card blueLine">
-      <small>Procurement GMV (Aug 2026)</small>
-      <strong>$2.55M</strong>
-      <span class="delta pos">+52% YoY</span>
-      <p>Same companies buying MORE per company</p>
-    </div>
-    <div class="card purpleLine">
-      <small>Digital Buy %</small>
-      <strong>6.1%</strong>
-      <p>Trend: 5.4% &rarr; 6.3% over 6 months</p>
-    </div>
-    <div class="card goldLine">
-      <small>ARPPU</small>
-      <strong>$4,180</strong>
-      <p>Per company per month</p>
-    </div>
-  </div>
-
-  <!-- SVG Chart: WS Procurement Buyers Trend -->
-  <div class="chart-container">
-    <div class="chart-title">WS Procurement Buyers: Monthly Trend</div>
-    <div class="chart-sub">Count of wholesalers buying via Procurement each month. Jul 2025 &ndash; Aug 2026.</div>
-    <svg class="chart" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
-      <!-- Grid -->
-      <line x1="70" y1="30" x2="860" y2="30" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="78" x2="860" y2="78" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="126" x2="860" y2="126" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="174" x2="860" y2="174" stroke="#edf1f6" stroke-width="1"/>
-      <line x1="70" y1="222" x2="860" y2="222" stroke="#d9e0ea" stroke-width="1.5"/>
-      <!-- Y-axis: Scale 60-90, mapped 222(bottom=60) to 30(top=90). pxRange=192 -->
-      <text x="62" y="34" text-anchor="end" font-size="10" fill="#667085">90</text>
-      <text x="62" y="82" text-anchor="end" font-size="10" fill="#667085">83</text>
-      <text x="62" y="130" text-anchor="end" font-size="10" fill="#667085">75</text>
-      <text x="62" y="178" text-anchor="end" font-size="10" fill="#667085">68</text>
-      <text x="62" y="226" text-anchor="end" font-size="10" fill="#667085">60</text>
-
-      <!-- Formula: y = 222 - ((val - 60) / 30) * 192 -->
-      <!-- 2025 (dashed): Jul=79, Aug=73, Sep=69, Oct=73, Nov=69, Dec=72 -->
-      <!-- Jul25:79 -> 222-((19/30)*192)=222-121.6=100 -->
-      <!-- Aug25:73 -> 222-((13/30)*192)=222-83.2=139 -->
-      <!-- Sep25:69 -> 222-((9/30)*192)=222-57.6=164 -->
-      <!-- Oct25:73 -> 139 -->
-      <!-- Nov25:69 -> 164 -->
-      <!-- Dec25:72 -> 222-((12/30)*192)=222-76.8=145 -->
-      <!-- X: Jul=90, Aug=150, Sep=210, Oct=270, Nov=330, Dec=390, Jan=450, Feb=510, Mar=570, Apr=630, May=690, Jun=750, Jul26=810, Aug26=855 -->
-      <polyline points="90,100 150,139 210,164 270,139 330,164 390,145" fill="none" stroke="#93c5fd" stroke-width="2.5" stroke-dasharray="6,4"/>
-      <circle cx="90" cy="100" r="5" fill="#93c5fd"/>
-      <text x="90" y="94" text-anchor="middle" font-size="9" fill="#667085" font-weight="700">79</text>
-      <circle cx="150" cy="139" r="5" fill="#93c5fd"/>
-      <text x="150" y="133" text-anchor="middle" font-size="9" fill="#667085" font-weight="700">73</text>
-      <circle cx="210" cy="164" r="5" fill="#93c5fd"/>
-      <text x="210" y="158" text-anchor="middle" font-size="9" fill="#667085" font-weight="700">69</text>
-      <circle cx="270" cy="139" r="5" fill="#93c5fd"/>
-      <text x="270" y="133" text-anchor="middle" font-size="9" fill="#667085" font-weight="700">73</text>
-      <circle cx="330" cy="164" r="5" fill="#93c5fd"/>
-      <text x="330" y="158" text-anchor="middle" font-size="9" fill="#667085" font-weight="700">69</text>
-      <circle cx="390" cy="145" r="5" fill="#93c5fd"/>
-      <text x="390" y="139" text-anchor="middle" font-size="9" fill="#667085" font-weight="700">72</text>
-
-      <!-- 2026 (solid): Jan=74, Feb=80, Mar=76, Apr=85, May=84, Jun=77, Jul=81, Aug=83 -->
-      <!-- Jan26:74 -> 222-((14/30)*192)=222-89.6=132 -->
-      <!-- Feb26:80 -> 222-((20/30)*192)=222-128=94 -->
-      <!-- Mar26:76 -> 222-((16/30)*192)=222-102.4=120 -->
-      <!-- Apr26:85 -> 222-((25/30)*192)=222-160=62 -->
-      <!-- May26:84 -> 222-((24/30)*192)=222-153.6=68 -->
-      <!-- Jun26:77 -> 222-((17/30)*192)=222-108.8=113 -->
-      <!-- Jul26:81 -> 222-((21/30)*192)=222-134.4=88 -->
-      <!-- Aug26:83 -> 222-((23/30)*192)=222-147.2=75 -->
-      <polyline points="450,132 510,94 570,120 630,62 690,68 750,113 810,88 855,75" fill="none" stroke="#2457c5" stroke-width="2.5"/>
-      <circle cx="450" cy="132" r="5" fill="#2457c5"/>
-      <text x="450" y="126" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">74</text>
-      <circle cx="510" cy="94" r="5" fill="#2457c5"/>
-      <text x="510" y="88" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">80</text>
-      <circle cx="570" cy="120" r="5" fill="#2457c5"/>
-      <text x="570" y="114" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">76</text>
-      <circle cx="630" cy="62" r="5" fill="#2457c5"/>
-      <text x="630" y="56" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">85</text>
-      <circle cx="690" cy="68" r="5" fill="#2457c5"/>
-      <text x="690" y="62" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">84</text>
-      <circle cx="750" cy="113" r="5" fill="#2457c5"/>
-      <text x="750" y="107" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">77</text>
-      <circle cx="810" cy="88" r="5" fill="#2457c5"/>
-      <text x="810" y="82" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">81</text>
-      <circle cx="855" cy="75" r="5" fill="#2457c5"/>
-      <text x="855" y="69" text-anchor="middle" font-size="9" fill="#2457c5" font-weight="700">83</text>
-
-      <!-- X-axis labels -->
-      <text x="90" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jul</text>
-      <text x="150" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Aug</text>
-      <text x="210" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Sep</text>
-      <text x="270" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Oct</text>
-      <text x="330" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Nov</text>
-      <text x="390" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Dec</text>
-      <text x="450" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jan</text>
-      <text x="510" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Feb</text>
-      <text x="570" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Mar</text>
-      <text x="630" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Apr</text>
-      <text x="690" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">May</text>
-      <text x="750" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="#344054">Jun</text>
-      <text x="810" y="240" text-anchor="middle" font-size="9" font-weight="700" fill="#344054">Jul</text>
-      <text x="855" y="240" text-anchor="middle" font-size="9" font-weight="700" fill="#344054">Aug</text>
-      <text x="240" y="254" text-anchor="middle" font-size="9" fill="#667085">&mdash; 2025 &mdash;</text>
-      <text x="652" y="254" text-anchor="middle" font-size="9" fill="#667085">&mdash; 2026 &mdash;</text>
-    </svg>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#93c5fd"></div> WS Procurement 2025</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#2457c5"></div> WS Procurement 2026</div>
-    </div>
-  </div>
-
-  <!-- Full Data Table -->
-  <div class="tableWrap" style="margin-top:16px">
+  <!-- Monthly seller trend table -->
+  <h3>Monthly Seller Trend (Jul 2025 &mdash; Aug 2026)</h3>
+  <div class="month-table-wrap">
     <table>
       <thead>
-        <tr>
-          <th>Month</th>
-          <th>WS Procurement 2025</th>
-          <th>WS Procurement 2026</th>
-          <th>YoY</th>
-        </tr>
+        <tr><th>Month</th><th>eShop Sellers</th><th>K2K Sellers</th><th>API</th></tr>
       </thead>
       <tbody>
-        <tr><td>Jul</td><td>79</td><td>81</td><td class="pct-green">+3%</td></tr>
-        <tr><td>Aug</td><td>73</td><td>83</td><td class="pct-green">+14%</td></tr>
-        <tr><td>Sep</td><td>69</td><td class="na">&mdash;</td><td></td></tr>
-        <tr><td>Oct</td><td>73</td><td class="na">&mdash;</td><td></td></tr>
-        <tr><td>Nov</td><td>69</td><td class="na">&mdash;</td><td></td></tr>
-        <tr><td>Dec</td><td>72</td><td class="na">&mdash;</td><td></td></tr>
-        <tr><td>Jan</td><td class="na">&mdash;</td><td>74</td><td></td></tr>
-        <tr><td>Feb</td><td class="na">&mdash;</td><td>80</td><td></td></tr>
-        <tr><td>Mar</td><td class="na">&mdash;</td><td>76</td><td></td></tr>
-        <tr><td>Apr</td><td class="na">&mdash;</td><td>85</td><td></td></tr>
-        <tr><td>May</td><td class="na">&mdash;</td><td>84</td><td></td></tr>
-        <tr><td>Jun</td><td class="na">&mdash;</td><td>77</td><td></td></tr>
+        <tr><td>Jul 25</td><td>54</td><td>56</td><td>2</td></tr>
+        <tr><td>Aug 25</td><td>57</td><td>50</td><td>2</td></tr>
+        <tr><td>Sep 25</td><td>61</td><td>44</td><td>2</td></tr>
+        <tr><td>Oct 25</td><td>60</td><td>47</td><td>2</td></tr>
+        <tr><td>Nov 25</td><td>56</td><td>44</td><td>2</td></tr>
+        <tr><td>Dec 25</td><td>58</td><td>43</td><td>2</td></tr>
+        <tr><td>Jan 26</td><td>59</td><td>43</td><td>2</td></tr>
+        <tr><td>Feb 26</td><td>60</td><td>46</td><td>2</td></tr>
+        <tr><td>Mar 26</td><td>59</td><td>46</td><td>2</td></tr>
+        <tr><td>Apr 26</td><td>64</td><td>46</td><td>2</td></tr>
+        <tr><td>May 26</td><td>66</td><td>46</td><td>2</td></tr>
+        <tr><td>Jun 26</td><td>61</td><td>41</td><td>3</td></tr>
+        <tr><td>Jul 26</td><td>59</td><td>43</td><td>2</td></tr>
+        <tr class="highlight-row"><td>Aug 26</td><td>60</td><td>44</td><td>2</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Context cards -->
-  <div class="grid3" style="margin-top:16px">
-    <div class="card okLine">
-      <small>Standing Orders GMV (Aug)</small>
-      <strong>$566K</strong>
-      <span class="delta pos">+35% YoY</span>
-      <p>Stickiness signal &mdash; recurring digital demand</p>
-    </div>
-    <div class="card blueLine">
-      <small>Procurement GMV (Aug)</small>
-      <strong>$2.55M</strong>
-      <span class="delta pos">+52% YoY</span>
-      <p>Same companies buying more per company</p>
-    </div>
-    <div class="card purpleLine">
-      <small>Digital Buy % Trend</small>
-      <strong>5.4% &rarr; 6.3%</strong>
-      <p>Over past 6 months (steady climb)</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 4: IMPORTERS (CONTEXT) ===== -->
-<section>
-  <p class="eyebrow">Section 4</p>
-  <h2>Importer Digital Channels</h2>
-  <p class="sub">Context: importers are the healthy layer, growing across all channels. They generate 77% of all TX fees.</p>
-
-  <!-- Cards -->
-  <div class="grid4" style="margin-top:16px">
-    <div class="card okLine">
-      <small>Importer eShop Sellers (Aug)</small>
-      <strong>91</strong>
-      <span class="delta pos">+7% YoY</span>
-    </div>
-    <div class="card blueLine">
-      <small>Importer K2K Sellers (Aug)</small>
-      <strong>89</strong>
-      <span class="delta pos">+14% YoY</span>
-    </div>
-    <div class="card cyanLine">
-      <small>Importer API Sellers (Aug)</small>
-      <strong>31</strong>
-      <span class="delta neg">-6% YoY</span>
-    </div>
-    <div class="card purpleLine">
-      <small>Importer GMV (Jul+Aug)</small>
-      <strong>$117.3M</strong>
-      <span class="delta pos">+6.7% YoY</span>
-    </div>
-  </div>
-
-  <!-- Importer fee contribution -->
-  <div class="combined-banner" style="margin-top:16px">
-    <h3>Importer Fee Contribution</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-      <div>
-        <div style="font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#93c5fd;margin-bottom:4px">Jul+Aug 2026 Importer Fees</div>
-        <div style="font-size:28px;font-weight:900;line-height:1.1">$263K</div>
-        <div style="font-size:12px;color:#bfdbfe;margin-top:4px">+37% YoY</div>
-      </div>
-      <div>
-        <div style="font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#93c5fd;margin-bottom:4px">% of Total TX Fees</div>
-        <div style="font-size:28px;font-weight:900;line-height:1.1">77%</div>
-        <div style="font-size:12px;color:#bfdbfe;margin-top:4px">Importers = the fee engine</div>
-      </div>
-    </div>
-    <div class="cb-message">Importers are growing across ALL channels (eShop +7%, K2K +14%, GMV +6.7%). The healthy layer. Wholesaler layer is the growth opportunity.</div>
-  </div>
-
-  <!-- Summary table -->
+  <!-- WS GMV by channel -->
+  <h3 style="margin-top:18px">Wholesaler GMV by Channel (Aug YoY)</h3>
   <div class="tableWrap">
     <table>
       <thead>
-        <tr>
-          <th>Channel</th>
-          <th>Aug 2026</th>
-          <th>YoY</th>
-          <th>Signal</th>
-        </tr>
+        <tr><th>Channel</th><th>Aug 2025</th><th>Aug 2026</th><th>YoY</th></tr>
       </thead>
       <tbody>
-        <tr><td>eShop Sellers</td><td>91</td><td class="pct-green">+7%</td><td style="text-align:left;color:var(--muted);font-size:11px">Steady growth, mature</td></tr>
-        <tr><td>K2K Sellers</td><td>89</td><td class="pct-green">+14%</td><td style="text-align:left;color:var(--muted);font-size:11px">Strongest channel growth</td></tr>
-        <tr><td>API Sellers</td><td>31</td><td class="pct-red">-6%</td><td style="text-align:left;color:var(--muted);font-size:11px">Minor decline, high-value accounts</td></tr>
-        <tr><td>GMV (Jul+Aug)</td><td>$117.3M</td><td class="pct-green">+6.7%</td><td style="text-align:left;color:var(--muted);font-size:11px">Volume growing across all channels</td></tr>
-        <tr class="subtotal-row"><td>Fees (Jul+Aug)</td><td>$263K</td><td class="pct-green">+37%</td><td style="text-align:left;font-size:11px">77% of all TX fees</td></tr>
+        <tr><td>eShop</td><td>$3.6M</td><td>$4.9M</td><td class="pct-green">+36%</td></tr>
+        <tr><td>K2K</td><td>$1.0M</td><td>$1.3M</td><td class="pct-green">+30%</td></tr>
+        <tr><td>API</td><td>$6.3M</td><td>$4.1M</td><td class="pct-red">-35%</td></tr>
+        <tr><td>Offline</td><td>$60.4M</td><td>$55.6M</td><td class="pct-red">-8%</td></tr>
       </tbody>
     </table>
   </div>
-</section>
 
-<!-- ===== PROVENANCE ===== -->
-<section>
-  <p class="eyebrow">Provenance</p>
-  <h3>Data Sources &amp; Methodology</h3>
-  <div class="grid2">
-    <div>
-      <p class="small"><strong>Source:</strong> Snowflake PRODUCTION.ANALYTICS</p>
-      <p class="small"><strong>Tables:</strong> TRANSACTION_FEES, SALE_DETAILS, PROCUREMENTS_SV</p>
-      <p class="small"><strong>Date range:</strong> Through Aug 31, 2026</p>
-      <p class="small"><strong>Filters:</strong> ks_flag=TRUE, transaction_date (fees), shipping_date (GMV), sales &lt; $100K (Rule 4)</p>
+  <!-- Online buyers -->
+  <div class="grid2" style="margin-top:16px">
+    <div class="card okLine">
+      <small>Online Buyers from WS</small>
+      <strong>8,941</strong>
+      <p>vs 7,834 prior year <span class="pos">(+14%)</span></p>
     </div>
-    <div>
-      <p class="small"><strong>Axerrio:</strong> Europe TX Fees Control Sheet (Sofia Pardo, Google Sheets)</p>
-      <p class="small"><strong>Channel definitions:</strong> channels.json (Sofia Pardo, authoritative)</p>
-      <p class="small"><strong>Rules applied:</strong> 1 (ks_flag), 2 (transaction_date), 4 (sales&lt;100K), 6 (sell vs buy side), 8 (semantic views), 9 (provenance), 10 (Axerrio separate), 11 (per-account rates), 12 (dump exclusion)</p>
-      <p class="small"><strong>Status:</strong> <span class="badge warn">UNVERIFIED</span> &mdash; No Codex verification run</p>
+    <div class="card blueLine">
+      <small>Returning Buyers</small>
+      <strong>83%</strong>
+      <p>of online buyers are returning customers</p>
     </div>
   </div>
-  <p class="footnote">Built by Rose (Data Agent L1) for Sep 2026 board meeting. Last updated: Aug 31, 2026. All fee rates are actual (per-account), not blended 1.5%.</p>
+
+  <!-- Warning + info bars -->
+  <div class="warn-bar" style="margin-top:14px">
+    <strong>Mayesh anomaly:</strong> Mayesh declined -44% (-$12.9M) due to structural event in Apr 2026. API buyer decline is 96% Mayesh-driven.
+  </div>
+  <div class="info-bar" style="margin-top:8px">
+    K2K sellers with 1 buyer = point-to-point connections, not marketplace.
+  </div>
+</section>
+
+<!-- ========== SECTION 3: WHOLESALERS BUYING ========== -->
+<section>
+  <p class="eyebrow">Section 3</p>
+  <h2>Wholesalers Buying from Vendors</h2>
+
+  <!-- Hero cards -->
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="card okLine">
+      <small>Procurement Companies</small>
+      <strong>83</strong>
+      <span class="delta pos">+14% YoY</span>
+    </div>
+    <div class="card blueLine">
+      <small>Web / eShop Companies</small>
+      <strong>50</strong>
+      <span class="delta" style="color:var(--muted)">flat YoY</span>
+    </div>
+    <div class="card purpleLine">
+      <small>Digital Buy Penetration</small>
+      <strong>19%</strong>
+      <span class="delta pos">+4pp YoY</span>
+    </div>
+  </div>
+
+  <!-- All channels table -->
+  <h3>All Buy Channels (Aug YoY)</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Channel</th><th>Aug 25 GMV</th><th>Aug 25 Cos</th><th>Aug 26 GMV</th><th>Aug 26 Cos</th><th>YoY GMV</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Procurement</td><td>$1.57M</td><td>73</td><td>$2.44M</td><td>83</td><td class="pct-green">+56%</td></tr>
+        <tr><td>Web (eShop)</td><td>$1.25M</td><td>51</td><td>$1.63M</td><td>50</td><td class="pct-green">+30%</td></tr>
+        <tr><td>API</td><td>$43K</td><td>1</td><td>$36K</td><td>1</td><td class="pct-red">-16%</td></tr>
+        <tr><td>Offline</td><td>$15.9M</td><td>64</td><td>$16.4M</td><td>61</td><td class="pct-green">+3%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Standing Orders -->
+  <div class="card okLine" style="margin-top:16px">
+    <small>Standing Orders (Jul + Aug 2026)</small>
+    <strong>$1.12M</strong>
+    <span class="delta pos">+56% YoY</span>
+    <p style="margin-top:4px">Stickiness signal &mdash; recurring orders growing faster than base GMV.</p>
+  </div>
+
+  <!-- Channel definitions footnote -->
+  <div class="footnote" style="margin-top:14px">
+    <strong>Channel definitions (channels.json, owner: Sofia Pardo):</strong><br/>
+    <strong>Offline</strong> &mdash; Phone orders, manual ERP entry, standing orders, walk-in. Does not generate TX fees.<br/>
+    <strong>eCommerce</strong> &mdash; Buyer places order through vendor's eShop storefront. Generates fees (default 1.5%).<br/>
+    <strong>K2K</strong> &mdash; Komet-to-Komet inter-company transaction. Generates fees (double-charged: buyer + seller).<br/>
+    <strong>API</strong> &mdash; Order placed via public Komet Sales REST API. Generates fees (rate varies).<br/>
+    <strong>Procurement (buy-side)</strong> &mdash; Tracked in PROCUREMENTS_SV. Channels: API_K2K (code 9), ECOMMERCE_K2K (code 10), PROCUREMENT_LITE (code 11).<br/>
+    Online = eCommerce + API + K2K. Procurement (buy-side) tracked separately.
+  </div>
+</section>
+
+<!-- ========== SECTION 4: IMPORTER CONTEXT ========== -->
+<section>
+  <p class="eyebrow">Section 4</p>
+  <h2>Importer Context</h2>
+
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="card blueLine">
+      <small>eShop Sellers</small>
+      <strong>91</strong>
+      <span class="delta pos">+7% YoY</span>
+    </div>
+    <div class="card okLine">
+      <small>K2K Sellers</small>
+      <strong>89</strong>
+      <span class="delta pos">+19% YoY</span>
+    </div>
+    <div class="card redLine">
+      <small>API Sellers</small>
+      <strong>31</strong>
+      <span class="delta neg">-6% YoY</span>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:5px solid var(--green);margin-bottom:12px">
+    <small>Importer GMV (Jul + Aug 2026)</small>
+    <strong>$117.3M</strong>
+    <span class="delta pos">+6.7% YoY</span>
+    <p style="margin-top:4px">IMP fees = $263K = 77% of all TX fees.</p>
+  </div>
+
+  <div class="info-bar">
+    Importers growing across all channels. K2K seller count +19% = fastest growth channel in the importer layer.
+  </div>
+</section>
+
+<!-- ========== PROVENANCE FOOTER ========== -->
+<section style="background:#f8fafc;border-left:4px solid var(--muted)">
+  <p class="eyebrow" style="color:var(--muted)">Provenance</p>
+  <div class="footnote" style="margin-top:0">
+    <strong>Source:</strong> Snowflake PRODUCTION.ANALYTICS, data through Aug 31, 2026.<br/>
+    <strong>Tables:</strong> TRANSACTION_FEES, SALE_DETAILS, PROCUREMENT_DETAILS, STANDING_ORDER_DETAILS, COMPANIES.<br/>
+    <strong>Rules:</strong> ks_flag=TRUE, transaction_date for fees, sales&lt;100K for GMV, channels.json authoritative.<br/>
+    <strong>Axerrio:</strong> Europe TX Fees Control Sheet (Google Sheet, owner: Sofia Pardo). Outside Snowflake.<br/>
+    <strong>Exclusion:</strong> Mayesh excluded from eCommerce interpretation per data catalog.<br/>
+    <span class="badge warn" style="margin-top:6px">UNVERIFIED &mdash; pending Codex L2 verification</span>
+  </div>
 </section>
 
 </main>
+
+<script>
+// SVG Bar Chart — 2025 vs 2026 monthly fees
+(function(){
+  const data = [
+    {m:'Jan',v25:122,v26:173},{m:'Feb',v25:133,v26:196},{m:'Mar',v25:134,v26:183},
+    {m:'Apr',v25:146,v26:189},{m:'May',v25:158,v26:204},{m:'Jun',v25:145,v26:188},
+    {m:'Jul',v25:126,v26:155},{m:'Aug',v25:138,v26:188}
+  ];
+  const svg=document.getElementById('feeChart');
+  const tip=document.getElementById('feeTip');
+  const W=900,H=300,pad={t:20,r:20,b:40,l:50};
+  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
+  const maxV=220;
+  const bw=cw/data.length;
+  const barW=bw*0.32;
+
+  // Y axis gridlines + labels
+  for(let i=0;i<=4;i++){
+    const y=pad.t+ch-ch*(i/4);
+    const val=Math.round(maxV*(i/4));
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',pad.l);line.setAttribute('x2',W-pad.r);
+    line.setAttribute('y1',y);line.setAttribute('y2',y);
+    line.setAttribute('stroke','#edf1f6');line.setAttribute('stroke-width','1');
+    svg.appendChild(line);
+    const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',pad.l-8);txt.setAttribute('y',y+4);
+    txt.setAttribute('text-anchor','end');txt.setAttribute('fill','#667085');
+    txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');
+    txt.textContent='$'+val+'K';
+    svg.appendChild(txt);
+  }
+
+  data.forEach((d,i)=>{
+    const cx=pad.l+i*bw+bw/2;
+    const h25=d.v25/maxV*ch, h26=d.v26/maxV*ch;
+
+    // 2025 bar (gray)
+    const r25=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r25.setAttribute('x',cx-barW-2);r25.setAttribute('y',pad.t+ch-h25);
+    r25.setAttribute('width',barW);r25.setAttribute('height',h25);
+    r25.setAttribute('rx','4');r25.setAttribute('fill','#94a3b8');
+    r25.style.cursor='pointer';
+    svg.appendChild(r25);
+
+    // 2026 bar (blue)
+    const r26=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r26.setAttribute('x',cx+2);r26.setAttribute('y',pad.t+ch-h26);
+    r26.setAttribute('width',barW);r26.setAttribute('height',h26);
+    r26.setAttribute('rx','4');r26.setAttribute('fill','#2457c5');
+    r26.style.cursor='pointer';
+    svg.appendChild(r26);
+
+    // Month label
+    const lbl=document.createElementNS('http://www.w3.org/2000/svg','text');
+    lbl.setAttribute('x',cx);lbl.setAttribute('y',H-pad.b+20);
+    lbl.setAttribute('text-anchor','middle');lbl.setAttribute('fill','#667085');
+    lbl.setAttribute('font-size','12');lbl.setAttribute('font-weight','700');
+    lbl.textContent=d.m;
+    svg.appendChild(lbl);
+
+    // Tooltip interaction
+    const yoy=((d.v26-d.v25)/d.v25*100).toFixed(0);
+    [r25,r26].forEach(el=>{
+      el.addEventListener('mouseenter',function(e){
+        tip.innerHTML='<strong>'+d.m+'</strong>2025: $'+d.v25+'K<br>2026: $'+d.v26+'K<br>YoY: +'+yoy+'%';
+        tip.style.opacity='1';
+      });
+      el.addEventListener('mousemove',function(e){
+        const rect=document.getElementById('feeChartWrap').getBoundingClientRect();
+        tip.style.left=(e.clientX-rect.left+14)+'px';
+        tip.style.top=(e.clientY-rect.top-40)+'px';
+      });
+      el.addEventListener('mouseleave',function(){tip.style.opacity='0'});
+    });
+  });
+})();
+</script>
 </body>
 </html>
