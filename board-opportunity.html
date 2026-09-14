@@ -1,0 +1,1675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Board Opportunity Dashboard v5 — TX Revenue OS</title>
+<style>
+:root{
+  --bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;
+  --blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;
+  --purple:#6941c6;--cyan:#067a91;--amber:#d97706;
+  --shadow:0 14px 34px rgba(16,24,40,.07)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+main{width:min(1400px,calc(100% - 32px));margin:0 auto;padding:24px 0 70px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:22px;margin-bottom:14px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(26px,3vw,40px);line-height:1;margin-bottom:10px}
+h2{font-size:clamp(18px,2vw,24px);line-height:1.1;margin-bottom:8px}
+h3{font-size:16px;margin-bottom:8px}
+.eyebrow{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+.sub{color:var(--muted);font-size:14px;max-width:900px;margin-bottom:0}
+.small{color:var(--muted);font-size:12px}
+.footnote{color:var(--muted);font-size:11px;margin-top:10px;line-height:1.6}
+a{color:var(--blue);text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+.tab-nav{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--line);background:var(--panel);border-radius:10px 10px 0 0;overflow:hidden;flex-wrap:wrap}
+.tab-btn{padding:14px 22px;font-size:13px;font-weight:800;cursor:pointer;background:transparent;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--muted);transition:all .15s;letter-spacing:.02em}
+.tab-btn:hover{color:var(--ink);background:#f3f6fb}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);background:#fff}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.tab-shell{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.tab-content{padding:22px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px}
+.card small{display:block;margin-bottom:6px;color:var(--muted);font-size:10px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+.card strong{display:block;font-size:26px;line-height:1.1;margin-bottom:4px}
+.card p{margin:0;color:var(--muted);font-size:12px}
+.card .delta{font-size:13px;font-weight:800;display:inline-block;margin-top:2px}
+.okLine{border-left:5px solid var(--green)}.blueLine{border-left:5px solid var(--blue)}
+.purpleLine{border-left:5px solid var(--purple)}.goldLine{border-left:5px solid var(--gold)}
+.cyanLine{border-left:5px solid var(--cyan)}.redLine{border-left:5px solid var(--red)}
+.pos{color:var(--green);font-weight:800}.neg{color:var(--red);font-weight:800}
+.na{color:#94a3b8;font-style:italic}
+.chart-container{background:#fff;border:1px solid var(--line);border-radius:9px;padding:20px;margin-top:16px;position:relative}
+.chart-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+svg.chart{display:block;width:100%;overflow:visible}
+.tooltip{position:absolute;background:#1e293b;color:#fff;padding:10px 14px;border-radius:8px;font-size:12px;pointer-events:none;opacity:0;transition:opacity .12s;line-height:1.7;white-space:nowrap;z-index:100;min-width:180px}
+.tooltip strong{color:#fbbf24;display:block;font-size:13px;margin-bottom:4px}
+.legend{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:600}
+.legend-dot{width:28px;height:3px;border-radius:2px;flex-shrink:0}
+.legend-dot.dashed{background:repeating-linear-gradient(90deg,var(--green) 0,var(--green) 5px,transparent 5px,transparent 9px);height:2px}
+.tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid #edf1f6;padding:9px 12px;text-align:right;vertical-align:middle;white-space:nowrap}
+th{background:#f3f6fb;color:#344054;font-size:10px;font-weight:950;letter-spacing:.04em;text-transform:uppercase;position:sticky;top:0;z-index:10}
+td:first-child,th:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:#fafbfd}
+tbody tr:nth-child(odd) td{background:#fff}
+tr.subtotal-row td{background:#f1f5f9!important;font-weight:800;color:#344054}
+tr.total-row td{background:#1e293b!important;color:#fff!important;font-weight:900}
+tr.section-hdr td{background:#e2e8f0!important;color:#475569;font-weight:900;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.pct-green{color:var(--green);font-weight:700}.pct-gold{color:var(--gold);font-weight:700}.pct-red{color:var(--red);font-weight:700}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.04em}
+.badge.live{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+.badge.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.badge.self{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+.badge.flag{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+.info-bar{background:#f0f9ff;border:1px solid #bae6fd;border-radius:7px;padding:11px 14px;font-size:12px;color:#0369a1;margin-top:10px;line-height:1.6}
+.warn-bar{background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:11px 14px;font-size:12px;color:#92400e;margin-top:10px;line-height:1.6}
+.month-table-wrap{overflow-x:auto;max-height:440px;overflow-y:auto;border:1px solid var(--line);border-radius:9px;margin-top:16px}
+.month-table-wrap table{font-size:12px}
+.month-table-wrap th{font-size:9px}
+.month-table-wrap td{padding:7px 10px}
+tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
+.toggle-bar{display:flex;align-items:center;gap:12px;margin:16px 0 4px}
+.toggle-btn{padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer;border:1.5px solid var(--line);border-radius:7px;background:#fff;color:var(--muted);transition:all .15s}
+.toggle-btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sub-tab-nav{display:flex;gap:0;margin:0 0 12px;border-bottom:1.5px solid var(--line)}
+.sub-tab-btn{padding:9px 18px;font-size:12px;font-weight:800;cursor:pointer;background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;color:var(--muted);transition:all .12s}
+.sub-tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.sub-pane{display:none}.sub-pane.active{display:block}
+.matrix-cell{text-align:center;padding:8px 6px}
+.matrix-cell .ct{font-size:14px;font-weight:900;display:block}
+.matrix-cell .gv{font-size:10px;color:var(--muted);display:block}
+.matrix-hdr{background:#1e3a5f!important;color:#fff!important;font-weight:900;font-size:11px}
+.matrix-band{background:#f8fafc!important;color:#334155;font-weight:800;font-size:12px;text-align:left!important}
+.matrix-total{background:#1e293b!important;color:#fff!important;font-weight:900}
+.matrix-prospect{background:#eff6ff!important}
+.matrix-churned{background:#fff1f2!important}
+@media(max-width:900px){.grid4,.grid3{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
+@media(max-width:600px){.grid4,.grid3,.grid2{grid-template-columns:1fr}}
+.opp-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.opp-summary-card{background:linear-gradient(135deg,#1e3a5f 0%,#2457c5 100%);border-radius:10px;padding:16px;color:#fff}
+.opp-summary-card .label{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#93c5fd;margin-bottom:4px}
+.opp-summary-card .val{font-size:22px;font-weight:900;line-height:1.1;margin-bottom:2px}
+.opp-summary-card .sub{font-size:11px;color:#bfdbfe;line-height:1.5}
+.opp-kpi-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:16px}
+.opp-kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;text-align:center}
+.opp-kpi .kl{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.opp-kpi .kv{font-size:16px;font-weight:900;display:block;line-height:1}
+.opp-kpi .ks{font-size:10px;color:var(--muted);display:block;margin-top:2px}
+.opp-section{border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
+.opp-toggle{width:100%;background:#f3f6fb;border:none;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;text-align:left;font-family:inherit}
+.opp-toggle:hover{background:#e9eef6}
+.opp-toggle-left{display:flex;align-items:center;gap:12px}
+.opp-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0}
+.opp-toggle-title{font-size:14px;font-weight:800;color:var(--ink)}
+.opp-toggle-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.opp-toggle-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.opp-badge{font-size:11px;font-weight:900;padding:4px 10px;border-radius:6px}
+.opp-badge.h2{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+.opp-badge.future{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
+.opp-badge.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.opp-chevron{font-size:16px;color:var(--muted);transition:transform .2s}
+.opp-chevron.open{transform:rotate(180deg)}
+.opp-body{display:none;padding:18px;border-top:1px solid var(--line);background:#fff}
+.opp-body.open{display:block}
+.sens-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.sens-table th{background:#f3f6fb;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;text-align:right;border-bottom:2px solid var(--line)}
+.sens-table th:first-child{text-align:left}
+.sens-table td{padding:8px 12px;text-align:right;border-bottom:1px solid #edf1f6}
+.sens-table td:first-child{text-align:left;font-weight:700}
+.sens-cons td{background:#fef2f2}.sens-base td{background:#f0fdf4}.sens-opt td{background:#eff6ff}
+.sens-cons td:first-child{color:var(--red)}.sens-base td:first-child{color:var(--green)}.sens-opt td:first-child{color:var(--blue)}
+.must-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.8;color:var(--ink)}
+.metric-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.8;color:var(--muted)}
+.two-col-lists{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+.combined-banner{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:10px;padding:20px 24px;margin-bottom:12px;color:#fff}
+.combined-banner h3{margin:0 0 12px;font-size:16px;font-weight:900;color:#fff}
+.cb-message{background:#1e3a5f;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:#93c5fd;font-style:italic;line-height:1.6}
+.opp-inner-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+/* PIPELINE TAB SPECIFIC */
+.funnel-wrap{margin:16px 0}
+.funnel-stage{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.funnel-bar-wrap{flex:1;background:#f1f5f9;border-radius:6px;height:44px;overflow:hidden;position:relative}
+.funnel-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 14px;transition:width .4s}
+.funnel-bar span{font-size:12px;font-weight:800;color:#fff;white-space:nowrap}
+.funnel-label{width:160px;text-align:right;font-size:13px;font-weight:700;color:var(--ink)}
+.funnel-meta{width:200px;font-size:11px;color:var(--muted)}
+.stage-card{border:1px solid var(--line);border-radius:8px;padding:14px;background:#fff}
+.stage-card .sc-label{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.stage-card .sc-val{font-size:20px;font-weight:900;display:block;line-height:1.1}
+.stage-card .sc-sub{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+.stage-disc{border-left:4px solid #2457c5}
+.stage-sell{border-left:4px solid #d97706}
+.stage-neg{border-left:4px solid #ea580c}
+.stage-close{border-left:4px solid #12805c}
+.upgrade-arrow{text-align:center;font-size:18px;color:var(--muted);margin:4px 0}
+.tier-card{border:1px solid var(--line);border-radius:8px;padding:14px;background:#fff;text-align:center}
+.tier-card .tc-name{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.tier-card .tc-count{font-size:28px;font-weight:900;display:block;line-height:1}
+.tier-card .tc-gmv{font-size:12px;font-weight:700;display:block;margin-top:3px}
+.tier-card .tc-sub{font-size:10px;color:var(--muted);display:block;margin-top:2px}
+.gmv-capture-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.gmv-capture-card{border-radius:9px;padding:16px}
+.codex-bar{background:#f1f5f9;border-radius:6px;height:12px;overflow:hidden;margin:6px 0 3px}
+.codex-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#2457c5,#6941c6)}
+.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+</style>
+</head>
+<body>
+<main>
+
+<!-- HEADER -->
+<section style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:0;border-radius:10px 10px 0 0;border-bottom:none">
+  <div>
+    <p class="eyebrow">TX Revenue OS · Board Opportunity Dashboard</p>
+    <h1>Board Opportunity Dashboard <span style="font-size:18px;color:var(--muted);font-weight:400">v5</span></h1>
+    <p class="sub">L12 macro TX performance · Ecosystem layers · Deep dives · Wholesaler matrix (546 accounts · 56% TAM) · Opportunity sizing · Pipeline view. Organic Snowflake data only — Axerrio reported separately.<br><span style="font-size:12px;color:var(--gold)">Data refresh Sep 14, 2026. L12 = Sep 2025 - Aug 2026.</span></p>
+  </div>
+  <div style="text-align:right;flex-shrink:0">
+    <span class="badge live">LIVE DATA</span>
+    <p class="small" style="margin-top:6px">Data through Aug 2026<br>Spine: accounts_clean.json (566 accounts)<br>Generated 2026-09-14</p>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="tab-shell" style="border-radius:0 0 10px 10px;border-top:none">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('board-close',this)">1 · Board Close</button>
+    <button class="tab-btn" onclick="switchTab('ecosystem',this)">2 · Ecosystem</button>
+    <button class="tab-btn" onclick="switchTab('deep-dives',this)">3 · Deep Dives</button>
+    <button class="tab-btn" onclick="switchTab('matrix',this)">4 · Matrix</button>
+    <button class="tab-btn" onclick="switchTab('opp-sizing',this)" style="color:var(--purple);font-weight:900">5 · Opportunity Sizing ★</button>
+    <button class="tab-btn" onclick="switchTab('pipeline',this)" style="color:var(--green);font-weight:900">6 · Pipeline ★</button>
+  </div>
+
+
+  <!-- TAB 1: BOARD CLOSE -->
+  <div id="tab-board-close" class="tab-pane active">
+  <div class="tab-content">
+    <p class="eyebrow">L12 Current vs Prior · Sep 25 – Aug 26 vs Sep 24 – Aug 25</p>
+    <div class="grid4">
+      <article class="card okLine">
+        <small>Total GMV · L12</small>
+        <strong>$1,611.4M</strong>
+        <p>Prior: $1,531.4M · <span style="font-size:11px">Online share: 17.7%</span></p>
+        <span class="delta pos">▲ +5.2% YoY</span>
+      </article>
+      <article class="card blueLine">
+        <small>Online GMV · L12</small>
+        <strong>$285.6M</strong>
+        <p>Prior: $252.5M · Prior share: 16.5%</p>
+        <span class="delta pos">▲ +13.1% YoY</span>
+      </article>
+      <article class="card purpleLine">
+        <small>TX Fees (organic) · L12</small>
+        <strong>$2,353K</strong>
+        <p>Prior: $1,732K · Axerrio not included<sup>†</sup></p>
+        <span class="delta pos">▲ +35.9% YoY</span>
+      </article>
+      <article class="card goldLine">
+        <small>Take Rate · L12</small>
+        <strong>0.82%</strong>
+        <p>Prior: 0.69% · Fees / Online GMV</p>
+        <span class="delta pos">▲ +0.14 pp YoY</span>
+      </article>
+    </div>
+    <p class="eyebrow" style="margin-top:20px">Period Comparisons · H1 2026 vs H1 2025 &nbsp;|&nbsp; YTD Jan–Aug 2026 vs 2025</p>
+    <div class="grid4">
+      <article class="card cyanLine"><small>Total GMV · H1 2026</small><strong>$859.0M</strong><p>H1 2025: $833.6M</p><span class="delta pos">▲ +3.1% YoY</span></article>
+      <article class="card cyanLine"><small>Online GMV · H1 2026</small><strong>$154.0M</strong><p>H1 2025: $144.7M</p><span class="delta pos">▲ +6.4% YoY</span></article>
+      <article class="card cyanLine"><small>TX Fees · H1 2026</small><strong>$1,329K</strong><p>H1 2025: $996K</p><span class="delta pos">▲ +33.4% YoY</span></article>
+      <article class="card cyanLine"><small>Take Rate · H1 2026</small><strong>0.86%</strong><p>H1 2025: 0.69%</p><span class="delta pos">▲ +0.17 pp YoY</span></article>
+    </div>
+    <div class="grid4" style="margin-top:10px">
+      <article class="card" style="border-left:5px solid #94a3b8"><small>Total GMV · YTD Aug 2026</small><strong>$1,049.9M</strong><p>YTD 2025: $1,025.4M</p><span class="delta pos">▲ +2.4% YoY</span></article>
+      <article class="card" style="border-left:5px solid #94a3b8"><small>Online GMV · YTD Aug 2026</small><strong>$193.3M</strong><p>YTD 2025: $180.6M</p><span class="delta pos">▲ +7.0% YoY</span></article>
+      <article class="card" style="border-left:5px solid #94a3b8"><small>TX Fees · YTD Aug 2026</small><strong>$1,675K</strong><p>YTD 2025: $1,245K</p><span class="delta pos">▲ +34.5% YoY</span></article>
+      <article class="card" style="border-left:5px solid #94a3b8"><small>Take Rate · YTD Aug 2026</small><strong>0.87%</strong><p>YTD 2025: 0.69%</p><span class="delta pos">▲ +0.18 pp YoY</span></article>
+    </div>
+    <div class="info-bar" style="margin-top:12px">
+      <strong>Key narrative:</strong> Fees +35.9% YoY on only +5.2% GMV growth — take-rate expansion, not volume. Online GMV +13.1% growing 2.5× faster than total GMV. 82% of total GMV remains offline at $0 fee rate. Take rate crossed 0.90% in Apr–May and hit 0.90% again in Aug 2026. CONFIRMED: 76% of YoY fee growth is take-rate expansion (0.69% → 0.87%).
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">24-Month Performance Trend</div>
+      <div class="chart-sub">Aug 2024 – Aug 2026 · Total GMV &amp; Online GMV (left axis $M) · Take Rate % (right axis)</div>
+      <div class="tooltip" id="chartTooltip"></div>
+      <svg id="mainChart" class="chart" viewBox="0 0 1200 360" preserveAspectRatio="none" style="height:320px"></svg>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>Total GMV</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Online GMV</div>
+        <div class="legend-item"><div class="legend-dot dashed"></div>Take Rate (right axis)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>TX Fees ×100</div>
+      </div>
+    </div>
+    <details style="margin-top:16px">
+      <summary style="cursor:pointer;font-size:13px;font-weight:700;color:var(--blue);padding:8px 0">▼ Monthly Detail — Aug 2024 → Aug 2026</summary>
+      <div class="month-table-wrap">
+        <table><thead><tr><th>Month</th><th>Total GMV</th><th>Online GMV</th><th>Online %</th><th>TX Fees (organic)</th><th>Take Rate</th></tr></thead>
+        <tbody id="monthlyTableBody"></tbody></table>
+      </div>
+    </details>
+    <p class="footnote">
+      <sup>†</sup> Axerrio fees (~$9–10K/month in 2026) NOT included.<br>
+      Take Rate = TX Fees / Online GMV. Data: SALE_DETAILS + TRANSACTION_FEES · ks_flag=TRUE · sales&lt;100K · transaction_date · Cutoff: Aug 31 2026 · Ninfa excluded.
+    </p>
+  </div>
+  </div>
+
+  <!-- TAB 2: ECOSYSTEM -->
+  <div id="tab-ecosystem" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Ecosystem Layer View · L12 Sep 25 – Aug 26</p>
+    <h2>Layer-by-Layer Performance</h2>
+    <p class="sub">Sell-side GMV and fees by industry layer. Buy-side GMV via Procurement. Channel definitions per channels.json (Sofia Pardo).</p>
+    <div class="grid4" style="margin:14px 0">
+      <div class="card okLine" style="text-align:center"><small>Wholesalers in Spine</small><strong style="font-size:22px">546</strong><p>134 Client · 400 Prospect · 10 Pre-live · 2 Churned</p></div>
+      <div class="card blueLine" style="text-align:center"><small>Importers in Spine</small><strong style="font-size:22px">150</strong><p>Floral importers across layers</p></div>
+      <div class="card goldLine" style="text-align:center"><small>Growers in Spine</small><strong style="font-size:22px">65</strong><p>Farm-side suppliers</p></div>
+      <div class="card purpleLine" style="text-align:center"><small>Total Spine (accounts_clean)</small><strong style="font-size:22px">684</strong><p>WS TAM coverage: 56% (546/977)</p></div>
+    </div>
+    <div class="toggle-bar">
+      <span style="font-size:12px;font-weight:700;color:var(--muted)">FILTER:</span>
+      <button class="toggle-btn on" id="toggleAPI" onclick="toggleAPI()">Exclude API</button>
+      <span id="apiToggleLabel" style="font-size:12px;color:var(--muted)">Showing: Monetizable only (eCom+K2K). Toggle OFF for canonical all-online (eCom+K2K+API per D1).</span>
+    </div>
+    <p class="eyebrow" style="margin-top:12px">Sell-Side Layer Summary · L12 YoY</p>
+    <div class="tableWrap"><table id="layerSummaryTable">
+      <thead><tr><th>Layer</th><th>Sell GMV · L12</th><th>GMV YoY</th><th>Online GMV</th><th>Online %</th><th>TX Fees · L12</th><th>Fees YoY</th><th>Take Rate</th></tr></thead>
+      <tbody id="layerSummaryBody"></tbody>
+    </table></div>
+    <p class="eyebrow" style="margin-top:20px">Channel Breakdown per Layer · L12 Sep 25–Aug 26 vs Prior L12</p>
+    <div class="tableWrap"><table>
+      <thead><tr><th>Layer</th><th>Channel</th><th>L12 GMV (Current)</th><th>L12 GMV (Prior)</th><th>YoY %</th><th>% of Layer</th></tr></thead>
+      <tbody id="channelBreakdownBody"></tbody>
+    </table></div>
+    <p class="eyebrow" style="margin-top:20px">Buy-Side Summary · Procurement Channel · L12</p>
+    <div class="tableWrap"><table>
+      <thead><tr><th>Layer</th><th>Total Buy GMV</th><th>Procurement GMV</th><th>Web GMV</th><th>Proc % of Buy</th></tr></thead>
+      <tbody id="buySideBody"></tbody>
+    </table></div>
+    <p class="footnote">Online sell = eCommerce + K2K + API (per channels.json). Buy GMV = total_cost field. Procurement deduped by DISTINCT purchase_order_item_id. Fees: TRANSACTION_FEES · ks_flag=TRUE · Axerrio excluded. Ninfa excluded from buy-side.</p>
+  </div>
+  </div>
+
+  <!-- TAB 3: DEEP DIVES -->
+  <div id="tab-deep-dives" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Deep Dives · L12 Sep 25 – Aug 26</p>
+    <h2>Wholesaler &amp; Importer Analysis</h2>
+    <div class="sub-tab-nav">
+      <button class="sub-tab-btn active" onclick="switchSubTab('dd-format',this)">3A · WS Selling — Format &amp; Buyers</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('dd-ws-vendors',this)">3B · WS Buying — Top Vendors</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('dd-imp-farms',this)">3C · Importer Buying — Top Farms</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('dd-fees',this)">3D · Fee Analysis</button>
+    </div>
+    <div id="dd-format" class="sub-pane active">
+      <h3>3A · Wholesaler Selling — Format &amp; Channel</h3>
+      <p class="sub" style="margin-bottom:12px">GMV by inventory division × channel. L12 Sep 25–Aug 26. Source: SALES_SV, ks_flag=TRUE, sales&lt;100K, dump excluded, deduped by DISTINCT sale_item_id.</p>
+      <div class="tableWrap"><table><thead><tr><th>Inventory Division</th><th>Channel</th><th>L12 GMV</th><th>% of Channel</th><th>Companies</th></tr></thead><tbody id="formatTableBody"></tbody></table></div>
+      <p class="eyebrow" style="margin-top:20px">Buyer Cohorts · L12 (Heuristic — fuzzy match on customer name)</p>
+      <div class="warn-bar">Buyer type classification is heuristic (keyword fuzzy match on customer_name). ~71% falls under "Other". Use as directional signal only.</div>
+      <div class="tableWrap" style="margin-top:8px"><table><thead><tr><th>Buyer Type</th><th>Channel</th><th>GMV</th><th>Buyer Count</th><th>Wholesalers</th><th>% of Type Total</th></tr></thead><tbody id="cohortTableBody"></tbody></table></div>
+      <p class="footnote">Dump/shrinkage excluded. buyer_count = distinct customer_name values (heuristic). L12: Sep 2025–Aug 2026.</p>
+    </div>
+    <div id="dd-ws-vendors" class="sub-pane">
+      <h3>3B · Wholesaler Buying — Top 50 Vendor Pairs</h3>
+      <p class="sub" style="margin-bottom:8px">Top wholesaler→vendor buy relationships by GMV. Source: PROCUREMENTS_SV, ks_flag=TRUE, total_cost field, DISTINCT purchase_order_item_id. L12: Sep 2025–Aug 2026.</p>
+      <div class="warn-bar">Top 3 pairs are self-supply / internal entities (Ninfa→Shanghai Nifa $26.2M; BDC→BDC Mexico $16.6M; Kennicott→KENNICOTT CENTRAL $11.7M). First true 3rd-party vendor is Kennicott→HOLEX FLOWER at $5.6M.</div>
+      <div class="tableWrap" style="margin-top:8px"><table><thead><tr><th>#</th><th>Wholesaler</th><th>Vendor</th><th>Buy GMV (L12)</th><th>Months Active</th><th>Flag</th></tr></thead><tbody id="wsVendorBody"></tbody></table></div>
+    </div>
+    <div id="dd-imp-farms" class="sub-pane">
+      <h3>3C · Importer Buying — Top 50 Farm Vendors</h3>
+      <p class="sub" style="margin-bottom:8px">Top farms/vendors by GMV sold to importers. Source: PROCUREMENTS_SV, ks_flag=TRUE, Floral-Importer. L12: Sep 2025–Aug 2026.</p>
+      <div class="warn-bar"><strong>Data quality flags:</strong> (1) AGROGANA vs Agrogana = same entity, different casing (~$3.96M combined). (2) CFG-* cluster = Continental Farm Group multi-location (~$64.4M combined). (3) Continental Floral * LLC = self-supply vertical integration (~$66M). Normalization needed before publishing.</div>
+      <div class="tableWrap" style="margin-top:8px"><table><thead><tr><th>#</th><th>Vendor / Farm</th><th>Buy GMV (L12)</th><th>Importer Count</th><th>Flag</th></tr></thead><tbody id="impFarmBody"></tbody></table></div>
+    </div>
+    <div id="dd-fees" class="sub-pane">
+      <h3>3D · Fee Analysis — Top Accounts by L12 Fees</h3>
+      <p class="sub" style="margin-bottom:8px">Top accounts by billed fees. Source: CONSOLIDATED_TRANSACTION_FEES_SV, ks_flag=TRUE, status=Billed, transaction_date Sep 2025–Aug 2026. Axerrio excluded.</p>
+      <div class="info-bar">FedEx delivery fees and Gross Profit Share channels are present in the data but have $0 GMV basis. API channel at very low rates flagged below.</div>
+      <div class="tableWrap" style="margin-top:8px"><table><thead><tr><th>#</th><th>Company</th><th>Industry</th><th>Channel</th><th>Fees L12</th><th>GMV L12</th><th>Implied Rate</th><th>Note</th></tr></thead><tbody id="feeTableBody"></tbody></table></div>
+      <p class="footnote">Implied rate = fee_amount / gmv (informational). Source: CONSOLIDATED_TRANSACTION_FEES_SV · status='Billed' · ks_flag=TRUE. Ninfa excluded.</p>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- TAB 4: MATRIX (updated spine — Codex v2) -->
+  <div id="tab-matrix" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Account Potential Matrix · All Layers · accounts_clean.json (684 accounts) · Codex v2 Sep 2026</p>
+    <h2>Account Potential Matrix</h2>
+    <p class="sub">Product tier × GMV band × account class, by ecosystem layer. Source: accounts_clean.json (684 total accounts, 2026-08-18). TAM coverage: 546 wholesalers of ~977 identified (56%).</p>
+    <div class="grid3" style="margin:12px 0">
+      <div class="card okLine" style="text-align:center">
+        <small>Wholesalers</small>
+        <strong style="font-size:20px">546</strong>
+        <p>134 Client · 400 Prospect · 10 Pre-live · 2 Churned</p>
+        <p style="margin-top:4px;font-size:11px;color:var(--green)">+96 buyer proxy prospects added (importer buyer data)</p>
+      </div>
+      <div class="card blueLine" style="text-align:center">
+        <small>Importers</small>
+        <strong style="font-size:20px">150</strong>
+        <p>Floral importers across layers</p>
+      </div>
+      <div class="card goldLine" style="text-align:center">
+        <small>Growers</small>
+        <strong style="font-size:20px">65</strong>
+        <p>Farm-side suppliers</p>
+      </div>
+    </div>
+    <div class="info-bar" style="margin-bottom:12px">
+      <strong>TAM Coverage:</strong> 546 of ~977 wholesalers identified (56% — was 46%). Whitespace remaining: ~431 accounts. 400 prospects include Codex-enriched batch + 96 new buyer proxy prospects (from Snowflake importer buyer data). Many prospects have gmv_reference=0 (no GMV estimate yet) — shown in "Unestimated" row. 618 profiles in Wholesaler Universe (Google Sheet, shared with Dave/Laura/Sof Sep 4).
+    </div>
+    <div class="sub-tab-nav">
+      <button class="sub-tab-btn active" onclick="switchSubTab('mat-ws',this)">Wholesalers (546 · 134C + 400P + 10PL + 2Ch)</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('mat-imp',this)">Importers (150)</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('mat-grow',this)">Growers (65)</button>
+    </div>
+
+    <!-- WHOLESALER MATRIX -->
+    <div id="mat-ws" class="sub-pane active">
+      <div class="tableWrap" style="margin-top:12px">
+        <table id="matrixTable">
+          <thead>
+            <tr>
+              <th style="text-align:left">Est GMV Band</th>
+              <th style="text-align:center">Core+</th>
+              <th style="text-align:center">eSuite</th>
+              <th style="text-align:center">K2K</th>
+              <th style="text-align:center">Procurement</th>
+              <th style="text-align:center;background:#1e3a5f;color:#fff">TOTAL Active</th>
+              <th style="text-align:center;background:#1d4ed8;color:#fff">Prospect+Pre-live</th>
+              <th style="text-align:center;background:#991b1b;color:#fff">Churned</th>
+            </tr>
+          </thead>
+          <tbody id="matrixBody"></tbody>
+        </table>
+      </div>
+      <div class="info-bar" style="margin-top:10px">
+        <strong>Reading:</strong> Count + Est GMV per cell. Active = Client only. "Unestimated" row = Prospects with gmv_reference=0 (mostly Codex-enriched, no GMV reference yet). Data: 546 wholesalers from accounts_clean.json (684 total). TAM coverage: 546 of ~977 = 56%.
+      </div>
+    </div>
+
+    <!-- IMPORTER MATRIX -->
+    <div id="mat-imp" class="sub-pane">
+      <div class="tableWrap" style="margin-top:12px">
+        <table id="impMatrixTable">
+          <thead>
+            <tr>
+              <th style="text-align:left">Est GMV Band</th>
+              <th style="text-align:center">Core+</th>
+              <th style="text-align:center">eSuite</th>
+              <th style="text-align:center">K2K</th>
+              <th style="text-align:center">Procurement</th>
+              <th style="text-align:center;background:#1e3a5f;color:#fff">TOTAL Active</th>
+              <th style="text-align:center;background:#1d4ed8;color:#fff">Prospect+Pre-live</th>
+            </tr>
+          </thead>
+          <tbody id="impMatrixBody"></tbody>
+        </table>
+      </div>
+      <div class="info-bar" style="margin-top:10px">
+        <strong>Importers:</strong> 132 clients — 87%+ in Core+ tier, most at ≥$10M GMV band. K2K and Procurement adoption nascent. No churned importers in spine.
+      </div>
+    </div>
+
+    <!-- GROWER MATRIX -->
+    <div id="mat-grow" class="sub-pane">
+      <div class="tableWrap" style="margin-top:12px">
+        <table id="growMatrixTable">
+          <thead>
+            <tr>
+              <th style="text-align:left">Est GMV Band</th>
+              <th style="text-align:center">Core+</th>
+              <th style="text-align:center">eSuite</th>
+              <th style="text-align:center">K2K</th>
+              <th style="text-align:center;background:#1e3a5f;color:#fff">TOTAL Active</th>
+              <th style="text-align:center;background:#1d4ed8;color:#fff">Prospect+Pre-live</th>
+            </tr>
+          </thead>
+          <tbody id="growMatrixBody"></tbody>
+        </table>
+      </div>
+      <div class="info-bar" style="margin-top:10px">
+        <strong>Growers:</strong> 39 clients — mostly Core+ with some eSuite and K2K. 29 prospects/pre-live = active pipeline. Growers are sell-side suppliers; digitalization is Opportunity 6 ($601M TAM).
+      </div>
+    </div>
+
+    <div id="matrixFootnote" class="footnote" style="margin-top:10px"></div>
+  </div>
+  </div>
+
+
+  <!-- TAB 5: OPPORTUNITY SIZING v2 (updated numbers) -->
+  <div id="tab-opp-sizing" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Opportunity Sizing v2 · Sep 2026 · Reframed — More WS → More Buying → More Online → More Fees</p>
+    <h2>Opportunity Sizing</h2>
+    <p class="sub" style="margin-bottom:16px">Adding wholesalers is the multiplier. Every other opportunity — buying %, selling %, fee optimization — is a function of how many wholesalers are in the ecosystem.</p>
+
+    <!-- TAM FRAMEWORK TABLE (updated) -->
+    <p class="eyebrow" style="margin-top:4px">The Base — TAM Framework (Updated Sep 2026)</p>
+    <div class="tableWrap" style="margin-bottom:8px">
+      <table>
+        <thead><tr><th style="text-align:left">Layer</th><th>Accounts</th><th>Est Sell GMV</th><th>Est Buy GMV</th><th>What We See</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:800"><span style="color:#12805c">A: Core+</span></td>
+            <td>44</td><td>$561M</td><td>$253M</td>
+            <td style="white-space:normal;max-width:220px;font-size:12px">EVERYTHING (online + offline, buy + sell)</td>
+            <td><span class="badge live">HIGH</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:800"><span style="color:#b26a00">B: Non-Core</span> <span style="font-size:10px;color:var(--muted)">(eSuite/K2K/Proc)</span></td>
+            <td>88</td><td>$703M</td><td>$316M</td>
+            <td style="white-space:normal;max-width:220px;font-size:12px">Only what passes through Koronet</td>
+            <td><span class="badge warn">MEDIUM ⚠️ artifact</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:800"><span style="color:#667085">C: Prospects + Pre-live</span></td>
+            <td>410</td><td>~$810M (est)</td><td>~$365M (est)</td>
+            <td style="white-space:normal;max-width:220px;font-size:12px">NOTHING (many unestimated · +96 buyer proxy added)</td>
+            <td><span class="badge self">LOW</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:800"><span style="color:#667085">D: Whitespace</span></td>
+            <td>~431</td><td>Unknown</td><td>Unknown</td>
+            <td style="white-space:normal;max-width:220px;font-size:12px">NOTHING</td>
+            <td><span class="badge self">LOW</span></td>
+          </tr>
+          <tr class="subtotal-row">
+            <td style="font-weight:900">TOTAL known (A+B+C)</td>
+            <td>546</td><td style="font-weight:900">$2,074M+</td><td style="font-weight:900">$934M+</td><td></td><td></td>
+          </tr>
+          <tr class="total-row">
+            <td style="text-align:left;font-weight:900">TOTAL with whitespace</td>
+            <td style="font-weight:900">977</td><td>—</td><td>—</td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn-bar" style="margin-bottom:8px">
+      <strong>Layer B Artifact (critical):</strong> Layer B accounts show "94–100% buy digital" — artifact. We only see what passes through Koronet. Real buy digital % for Layer B is ~11% (Core+ measured rate). The true opportunity is bigger, not smaller.<br>
+      <strong>Verified stat:</strong> Platform online = 17.6% (NOT 12.3%). Wholesaler eCom+K2K (monetizable) = 7.2% / ~$40M. Procurement: 94% within 7 days (NOT 3 days).<br>
+      <strong>Buy GMV = Est Sell × 0.45</strong> — Christine's measured ratio from Core+ actuals.<br>
+      <strong>Spine update (Sep 2026):</strong> accounts_clean.json now has 546 wholesalers (was 453 in v3). +96 buyer proxy prospects added from Snowflake importer buyer data. Many have no GMV estimate. Prospect+Pre-live est GMV = ~$570M for those with estimates.
+    </div>
+
+    <!-- COMBINED SENSITIVITY -->
+    <p class="eyebrow">Combined Sensitivity — Ecosystem States (not individual opps)</p>
+    <div class="combined-banner" style="margin-bottom:12px">
+      <h3>The Compounding Model — Fee Run Rate by Scenario</h3>
+      <p style="font-size:12px;color:#93c5fd;margin:0 0 14px">These scenarios show overall ecosystem states where multiplier effects are embedded. NOT the sum of individual opportunity impacts.</p>
+      <div class="tableWrap" style="background:transparent;border:none;margin-top:0">
+        <table style="background:transparent">
+          <thead><tr style="background:#1e3a5f">
+            <th style="text-align:left;background:#0f172a;color:#94a3b8">Scenario</th>
+            <th style="background:#0f172a;color:#94a3b8">Active WS</th>
+            <th style="background:#0f172a;color:#94a3b8">Buy Online %</th>
+            <th style="background:#0f172a;color:#94a3b8">Sell Online %</th>
+            <th style="background:#0f172a;color:#94a3b8">Est Online GMV</th>
+            <th style="background:#0f172a;color:#94a3b8">Take Rate</th>
+            <th style="background:#0f172a;color:#fbbf24;font-size:12px">Fee Run Rate</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="font-weight:800;background:#1e293b;color:#fff">Today</td><td style="background:#1e293b;color:#94a3b8">132</td><td style="background:#1e293b;color:#94a3b8">19%</td><td style="background:#1e293b;color:#94a3b8">~21%</td><td style="background:#1e293b;color:#94a3b8">$285.6M</td><td style="background:#1e293b;color:#94a3b8">0.87%</td><td style="background:#1e293b;color:#fbbf24;font-weight:900;font-size:15px">$2.35M/yr</td></tr>
+            <tr><td style="font-weight:800;background:#1e3a5f;color:#fff">Conservative H2 2026</td><td style="background:#1e3a5f;color:#bfdbfe">159 (+27)</td><td style="background:#1e3a5f;color:#bfdbfe">18%</td><td style="background:#1e3a5f;color:#bfdbfe">16.5%</td><td style="background:#1e3a5f;color:#bfdbfe">$310M</td><td style="background:#1e3a5f;color:#bfdbfe">0.82%</td><td style="background:#1e3a5f;color:#86efac;font-weight:900;font-size:15px">$2.5M/yr</td></tr>
+            <tr><td style="font-weight:800;background:#1e3a5f;color:#fff">Base 2027</td><td style="background:#1e3a5f;color:#bfdbfe">234 (+102)</td><td style="background:#1e3a5f;color:#bfdbfe">22%</td><td style="background:#1e3a5f;color:#bfdbfe">18%</td><td style="background:#1e3a5f;color:#bfdbfe">$400M</td><td style="background:#1e3a5f;color:#bfdbfe">0.85%</td><td style="background:#1e3a5f;color:#86efac;font-weight:900;font-size:15px">$3.4M/yr</td></tr>
+            <tr><td style="font-weight:800;background:#1e3a5f;color:#fff">Ambitious 2027</td><td style="background:#1e3a5f;color:#bfdbfe">334 (+202)</td><td style="background:#1e3a5f;color:#bfdbfe">28%</td><td style="background:#1e3a5f;color:#bfdbfe">22%</td><td style="background:#1e3a5f;color:#bfdbfe">$560M</td><td style="background:#1e3a5f;color:#bfdbfe">0.90%</td><td style="background:#1e3a5f;color:#86efac;font-weight:900;font-size:15px">$5.0M/yr</td></tr>
+            <tr><td style="font-weight:800;background:#0f172a;color:#fff">Stretch 2028</td><td style="background:#0f172a;color:#bfdbfe">434 (+302)</td><td style="background:#0f172a;color:#bfdbfe">35%</td><td style="background:#0f172a;color:#bfdbfe">25%</td><td style="background:#0f172a;color:#bfdbfe">$750M</td><td style="background:#0f172a;color:#bfdbfe">0.95%</td><td style="background:#0f172a;color:#fbbf24;font-weight:900;font-size:15px">$7.1M/yr</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cb-message" style="margin-top:12px">
+        <strong>Key assumptions:</strong> $5M avg GMV for new WS (conservative — pipeline accounts are vetted). New accounts start LOW digital (0–5% yr-1); compounding in yr 2+. Take rate improvement from (a) new accounts at standard rates diluting legacy discounts, (b) channel mix shift to higher-fee channels, (c) eventual Mayesh API monetization — NOT rate increases. Updated baseline: 132 active clients (spine v5). Today row: buy 19%, sell ~21%, take rate 0.87%, fee run rate $2.35M/yr.
+      </div>
+    </div>
+
+    <!-- OPP SUMMARY TABLE (updated) -->
+    <p class="eyebrow">6 Opportunities — The Funnel Logic (Updated Counts)</p>
+    <div class="tableWrap" style="margin-bottom:20px">
+      <table>
+        <thead><tr><th style="text-align:left">#</th><th style="text-align:left">Opportunity</th><th>Current State</th><th>2027 Potential Fees</th><th>Owner</th><th>Horizon</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:900;color:#067a91;font-size:15px">1</td>
+            <td style="font-weight:800;max-width:200px;white-space:normal"><span style="color:#067a91">ADD MORE WHOLESALERS</span><br><span style="font-size:10px;color:var(--muted)">THE MULTIPLIER</span></td>
+            <td>132 active · 34% penetration · 977 TAM · 400 prospects identified</td>
+            <td class="pct-green" style="font-weight:800">+$682K per 100 new WS</td>
+            <td><strong>Felipe</strong> (acquire) + <strong>Christine</strong> (onboard)</td>
+            <td style="color:var(--gold);font-weight:700">H2/2027+</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900;color:#12805c;font-size:15px">2</td>
+            <td style="font-weight:800;max-width:200px;white-space:normal"><span style="color:#12805c">MAXIMIZE BUYING %</span><br><span style="font-size:10px;color:var(--muted)">EXISTING WS — TX TEAM</span></td>
+            <td>19% online buy · $249M offline · Proc 22x growth</td>
+            <td class="pct-green" style="font-weight:800">+$253K at 25% buy</td>
+            <td><strong>TX Team</strong> (Facu/Cata/CS)</td>
+            <td style="color:var(--green);font-weight:700">H2 2026</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900;color:#2457c5;font-size:15px">3</td>
+            <td style="font-weight:800;max-width:200px;white-space:normal"><span style="color:#2457c5">WS BUYING FROM IMPORTERS</span><br><span style="font-size:10px;color:var(--muted)">PROVEN ENGINE</span></td>
+            <td>K2K GMV +39% YoY · Proc +57% ($4.59M Q3) · 84 active WS · Pipeline drying (-59% new connections)</td>
+            <td class="pct-green" style="font-weight:800">+$314K at 0.93% rate</td>
+            <td><strong>Cata</strong> (CS activation)</td>
+            <td style="color:var(--green);font-weight:700">H2 2026</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900;color:#b26a00;font-size:15px">4</td>
+            <td style="font-weight:800;max-width:200px;white-space:normal"><span style="color:#b26a00">WHOLESALER SELLING</span><br><span style="font-size:10px;color:var(--muted)">PRODUCT + CS</span></td>
+            <td>Online sell ~21% · 0.49% blended rate</td>
+            <td class="pct-gold" style="font-weight:800">+$497K marginal (new WS at 1.5%)</td>
+            <td><strong>Product + CS</strong></td>
+            <td style="color:var(--gold);font-weight:700">2027+</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900;color:#b42318;font-size:15px">5</td>
+            <td style="font-weight:800;max-width:200px;white-space:normal"><span style="color:#b42318">MONETIZE EXISTING</span><br><span style="font-size:10px;color:var(--muted)">LAST EASY MONEY</span></td>
+            <td>$2.35M fees · 0.87% take rate · $1.05M discount portfolio</td>
+            <td style="color:#94a3b8;font-style:italic">Rate catch-up CONFIRMED exhausting — 76% of YoY fee growth is take-rate (0.69%→0.87%)</td>
+            <td><strong>TX Team</strong> (Facu)</td>
+            <td style="color:var(--red);font-weight:700">Now / fading</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900;color:#6941c6;font-size:15px">6</td>
+            <td style="font-weight:800;max-width:200px;white-space:normal"><span style="color:#6941c6">DIGITALIZE FARM BUYING</span><br><span style="font-size:10px;color:var(--muted)">2027+ HORIZON</span></td>
+            <td>$601M offline · 0.1% digital · No product yet</td>
+            <td style="color:#94a3b8;font-style:italic">$52–516K (1–10% digital)</td>
+            <td><strong>Product + GTM</strong></td>
+            <td style="color:var(--muted)">2027+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn-bar" style="margin-top:10px">
+      <strong>Rate vs Volume alert:</strong> Current growth is 76% rate / 24% volume. Take-rate expansion (0.69% → 0.87%) has been the primary driver of fee growth, but the gap to a sustainable ceiling is narrowing. The transition to base expansion (2027 driver) has NOT started — fee debuts slowing (5 in Q3), online seller count flat.
+    </div>
+
+    <!-- OPP 1: ADD MORE WHOLESALERS (updated) -->
+    <div class="opp-section">
+      <button class="opp-toggle" onclick="toggleOpp(this)">
+        <div class="opp-toggle-left">
+          <div class="opp-num" style="background:#067a91">1</div>
+          <div>
+            <div class="opp-toggle-title">ADD MORE WHOLESALERS — The Multiplier</div>
+            <div class="opp-toggle-sub">977 parent company TAM · 132 active clients (34% penetration) · 400 prospects identified · 39 in SFDC new-biz pipeline · Owner: Felipe + Christine</div>
+          </div>
+        </div>
+        <div class="opp-toggle-right">
+          <span class="opp-badge h2">Every other opp compounds on this</span>
+          <span class="opp-chevron">▼</span>
+        </div>
+      </button>
+      <div class="opp-body">
+        <div class="opp-kpi-grid">
+          <div class="opp-kpi"><span class="kl">TAM</span><span class="kv">977</span><span class="ks">Parent companies, deduplicated</span></div>
+          <div class="opp-kpi"><span class="kl">Active Clients</span><span class="kv">132</span><span class="ks">Commercially active (spine v5)</span></div>
+          <div class="opp-kpi"><span class="kl">Identified (spine)</span><span class="kv">546</span><span class="ks">56% of TAM, 400 prospects</span></div>
+          <div class="opp-kpi"><span class="kl">SFDC New Biz Pipeline</span><span class="kv">39</span><span class="ks">26 New Biz + 13 eShops opps</span></div>
+          <div class="opp-kpi"><span class="kl">Penetration</span><span class="kv">14–56%</span><span class="ks">132/977 active to 546/977 identified</span></div>
+        </div>
+        <div class="info-bar" style="margin-bottom:12px">
+          <strong>Why this is Opp 1:</strong> Each new wholesaler brings buying GMV (avg $2–11M/yr) → importer sell-side fees. Brings selling GMV → WS sell-side fees. Creates connection opportunities. Expands the measurable universe (Layers C/D → A/B). Fee generator across ALL channels (eCommerce, K2K, API, Procurement).
+        </div>
+        <div class="opp-inner-grid">
+          <div>
+            <p style="font-size:12px;font-weight:800;margin-bottom:4px">Compounding Table — Adding Wholesalers</p>
+            <div class="tableWrap" style="margin-top:0"><table>
+              <thead><tr><th>New WS</th><th>Avg Sell GMV</th><th>New GMV</th><th>If 15% Online</th><th>WS Fees (0.49%)</th><th>Buy GMV (×0.45)</th><th>If 15% Buy Online</th><th>Imp Fees (0.93%)</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:700">25</td><td>$5M</td><td>$125M</td><td>$18.8M</td><td>$92K</td><td>$56M</td><td>$8.4M</td><td>$78K</td></tr>
+                <tr><td style="font-weight:700">50</td><td>$5M</td><td>$250M</td><td>$37.5M</td><td>$184K</td><td>$113M</td><td>$16.9M</td><td>$157K</td></tr>
+                <tr class="highlight-row"><td style="font-weight:900">100</td><td>$5M</td><td>$500M</td><td>$75.0M</td><td>$368K</td><td>$225M</td><td>$33.8M</td><td>$314K</td></tr>
+                <tr><td style="font-weight:700">200</td><td>$5M</td><td>$1,000M</td><td>$150.0M</td><td>$735K</td><td>$450M</td><td>$67.5M</td><td>$628K</td></tr>
+                <tr><td style="font-weight:700">300</td><td>$5M</td><td>$1,500M</td><td>$225.0M</td><td>$1,103K</td><td>$675M</td><td>$101.3M</td><td>$942K</td></tr>
+              </tbody>
+            </table></div>
+            <p style="font-size:11px;color:var(--muted);margin-top:6px"><strong>Combined fee per 100 new WS: ~$682K/yr</strong>. At standard 1.5% rates (not blended 0.49%): $1,125K per 100. 15% online is conservative — new accounts start 0–5% yr-1.</p>
+          </div>
+          <div>
+            <p style="font-size:12px;font-weight:800;margin-bottom:4px">WS Sell-Side by Ecosystem Size</p>
+            <table class="sens-table">
+              <thead><tr><th>Active WS</th><th>Est Sell GMV</th><th>If 15% Online</th><th>At 0.49%</th><th>At 1.5% marginal</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:700">132 (today)</td><td>$1,284M</td><td>$193M</td><td>$943K</td><td>—</td></tr>
+                <tr class="sens-cons"><td style="font-weight:700">175 (+43)</td><td>$1,499M</td><td>$225M</td><td>$1,102K</td><td>+$215K marginal</td></tr>
+                <tr class="sens-base"><td style="font-weight:700">234 (+102)</td><td>$1,794M</td><td>$269M</td><td>$1,318K</td><td>+$510K marginal</td></tr>
+                <tr class="sens-opt"><td style="font-weight:700">334 (+202)</td><td>$2,294M</td><td>$344M</td><td>$1,686K</td><td>+$1,515K marginal</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:11px;color:var(--muted);margin-top:6px">New WS avg $5M sell GMV. Marginal = fees at standard 1.5% eCommerce/K2K. Legacy accounts (Mayesh/KBC discounts) unchanged.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HONEST SPLIT -->
+    <div style="margin-top:20px">
+      <p class="eyebrow">The Honest Split — What Drives Fees When</p>
+      <div class="tableWrap">
+        <table>
+          <thead><tr><th style="text-align:left">Period</th><th style="text-align:left">Primary Driver</th><th style="text-align:left">Secondary</th><th style="text-align:left">Tertiary</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:800">H2 2026</td><td>Rate catch-up (Opp 5, exhausting)</td><td>Procurement growth (Opp 3)</td><td>New WS pipeline (Opp 1, ramp)</td></tr>
+            <tr><td style="font-weight:800">2027</td><td>New WS base (Opp 1)</td><td>Buy % activation (Opp 2)</td><td>Sell-side growth (Opp 4)</td></tr>
+            <tr><td style="font-weight:800">2028+</td><td>Sell-side scale (Opp 4)</td><td>Farm digitalization (Opp 6)</td><td>API monetization (Opp 5 tail)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-bar" style="margin-top:10px">
+        <strong>The transition point is clear:</strong> H2 2026 fees still depend on squeezing existing volume (rate catch-up, Procurement scaling). From 2027 forward, growth depends on BASE EXPANSION — more wholesalers multiplying everything else. Without aggressive new WS acquisition, the fee engine stalls after the rate catch-up exhausts.
+      </div>
+      <div class="warn-bar" style="margin-top:10px">
+        <strong>CONFIRMED — H2 2026 is playing out as predicted.</strong> Rate catch-up is 76% of Q3 YoY growth. The transition to base expansion (2027 driver) has NOT started — fee debuts slowing (5 in Q3), online seller count flat.
+      </div>
+    </div>
+    <!-- CODEX ECOMMERCE INTELLIGENCE -->
+    <div style="margin-top:24px">
+      <p class="eyebrow" style="color:var(--purple)">Codex Intelligence — eCommerce Landscape (Sep 2026 · 618 profiles in Wholesaler Universe · Google Sheet live, shared with Dave/Laura/Sof Sep 4)</p>
+      <div class="warn-bar" style="background:#faf5ff;border-color:#c4b5fd;color:#5b21b6;margin-bottom:14px">
+        <strong>Key insight:</strong> 162 of 359 validated wholesalers (45%) already sell online somewhere — on platforms we don't own. Only 39 sell bunches online (11%). Only 38 have future availability (11%). These are the structural barriers to wholesaler online selling, not willingness.
+        <br><strong>Odoo signal:</strong> 17 detected by Codex (was "8 confirmed at board") — threat is bigger than we thought.
+      </div>
+      <div class="grid3" style="margin-bottom:14px">
+        <div class="opp-summary-card">
+          <div class="label">Validated WS Profiles</div>
+          <div class="val">359</div>
+          <div class="sub">of 548 enriched profiles · 189 rejected/incomplete</div>
+        </div>
+        <div class="opp-summary-card">
+          <div class="label">Have eCommerce (any platform)</div>
+          <div class="val">162</div>
+          <div class="sub">45% of 359 validated already sell online somewhere</div>
+        </div>
+        <div class="opp-summary-card" style="background:linear-gradient(135deg,#6941c6 0%,#9333ea 100%)">
+          <div class="label">Key capability gaps</div>
+          <div class="val">39 / 38</div>
+          <div class="sub">Only 39 sell bunches · 38 have future availability (structural barriers)</div>
+        </div>
+      </div>
+
+      <div class="grid2" style="gap:14px;margin-bottom:14px">
+        <!-- eCommerce Platform Distribution -->
+        <div>
+          <p style="font-size:12px;font-weight:800;margin-bottom:8px">eCommerce Platform Distribution (162 WS with eCom)</p>
+          <div class="tableWrap" style="margin-top:0">
+            <table>
+              <thead><tr><th style="text-align:left">Platform</th><th>Count</th><th>% of eCom WS</th><th>Signal</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:700">Authenticated (vendor unknown)</td><td>42</td><td>26%</td><td><span class="badge warn">Unknown</span></td></tr>
+                <tr><td style="font-weight:700">Custom-built</td><td>32</td><td>20%</td><td><span class="badge live">Invested</span></td></tr>
+                <tr><td style="font-weight:700">Komet Sales</td><td>26</td><td>16%</td><td><span class="badge live">On-platform</span></td></tr>
+                <tr><td style="font-weight:700">Shopify</td><td>17</td><td>10%</td><td><span class="badge warn">Off-platform</span></td></tr>
+                <tr><td style="font-weight:700">FlowerWebShop</td><td>11</td><td>7%</td><td><span class="badge warn">Competitor</span></td></tr>
+                <tr><td style="font-weight:700">FCS</td><td>7</td><td>4%</td><td><span class="badge warn">Competitor</span></td></tr>
+                <tr><td style="font-weight:700">Other (Wix, WP, etc.)</td><td>27</td><td>17%</td><td>Mixed</td></tr>
+                <tr class="subtotal-row"><td>Total with eCommerce</td><td>162</td><td>45% of 359</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Capabilities + Competitive -->
+        <div>
+          <p style="font-size:12px;font-weight:800;margin-bottom:8px">Capabilities Detected</p>
+          <div class="tableWrap" style="margin-top:0;margin-bottom:12px">
+            <table>
+              <thead><tr><th style="text-align:left">Capability</th><th>Count</th><th>% of 359 validated</th><th>Implication</th></tr></thead>
+              <tbody>
+                <tr><td>B2B gate (login required)</td><td>100</td><td class="pct-green">28%</td><td>Strong B2B intent</td></tr>
+                <tr><td>Pricing visible</td><td>27</td><td>8%</td><td>Low transparency</td></tr>
+                <tr><td style="font-weight:800;color:var(--red)">Sells bunches online</td><td style="font-weight:800">39</td><td class="pct-red">11%</td><td style="color:var(--red)">Structural barrier</td></tr>
+                <tr><td style="font-weight:800;color:var(--red)">Future availability</td><td style="font-weight:800">38</td><td class="pct-red">11%</td><td style="color:var(--red)">Structural barrier</td></tr>
+                <tr><td>Sells boxes online</td><td>27</td><td>8%</td><td>Box-only model</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p style="font-size:12px;font-weight:800;margin-bottom:8px">Competitive Signals (Codex-detected)</p>
+          <div class="tableWrap" style="margin-top:0">
+            <table>
+              <thead><tr><th style="text-align:left">Competitor</th><th>WS Count</th><th>Vs Prior Signal</th><th>Threat</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:800;color:var(--red)">Odoo</td><td style="font-weight:900;color:var(--red)">17</td><td><span class="badge self">Was 8 at board</span></td><td style="color:var(--red);font-weight:700">HIGH — 2× confirmed</td></tr>
+                <tr><td style="font-weight:800;color:var(--gold)">DVFlora</td><td>26</td><td>Known</td><td style="color:var(--gold);font-weight:700">MEDIUM — roll-up risk</td></tr>
+                <tr><td>NetSuite</td><td>11</td><td>New signal</td><td>Enterprise WS</td></tr>
+                <tr><td>QuickBooks</td><td>6</td><td>Baseline</td><td>SMB segment</td></tr>
+                <tr><td>FreshPortal</td><td>3</td><td>New entrant</td><td>Monitoring</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bar">
+        <strong>What this means for opportunity sizing:</strong>
+        45% of validated WS already sell online (162/359) — the TAM is not "zero digital baseline." The GTM play is platform consolidation, not education.
+        Only 39 WS (11%) can sell bunches online — this is the product gap that limits eCommerce GMV, not lack of willingness.
+        Odoo at 17 (vs 8 board estimate) is an ERP threat vector, not just a sales tool — these WS have invested in a competitor stack.
+        DVFlora at 26 is a roll-up risk: they acquire clients and pull them off-platform.
+      </div>
+    </div>
+
+    <p class="footnote" style="margin-top:16px">
+      Data: opportunity_sizing_v2.md + codex_intelligence_summary.json (2026-09-14). Spine: accounts_clean.json (684 accounts, 546 WS). TAM: slide1_tam_audit.md (977). Fees: Snowflake organic only, Axerrio excluded. Period L12: Sep 2025–Aug 2026. Buy ratio 0.45 (Christine measured). Overall take rate 0.82% ($2,353K / $285.6M). YTD take rate 0.87% ($1,675K / $193.3M). Codex enrichment: 618 profiles in Wholesaler Universe (Google Sheet, shared with Dave/Laura/Sof Sep 4). Spine update Aug 2026: +96 buyer proxy prospects from Snowflake importer buyer data.
+    </p>
+  </div>
+  </div>
+
+
+  <!-- TAB 6: PIPELINE -->
+  <div id="tab-pipeline" class="tab-pane">
+  <div class="tab-content">
+    <p class="eyebrow">Pipeline View · <span style="color:var(--gold)">Pipeline data from Aug 18, needs refresh</span> · SFDC data (125 open opps) + Spine (546 wholesalers · Codex v2)</p>
+    <h2>Wholesaler Pipeline</h2>
+    <p class="sub" style="margin-bottom:16px">Full funnel from whitespace to client. Acquisition (Felipe) + Upgrade pipeline (Cata). Source: sfdc_wholesaler_pipeline.json (125 open opps) + accounts_clean.json. Codex: 618 profiles in Wholesaler Universe (Google Sheet). +96 buyer proxy prospects added from Snowflake importer buyer data.<br><span style="color:var(--gold);font-weight:700">Pipeline data from Aug 18, needs SFDC re-pull.</span></p>
+
+    <!-- SECTION A: ACQUISITION FUNNEL -->
+    <p class="eyebrow">Section A · Acquisition Funnel — Whitespace → Client</p>
+    <div class="funnel-wrap">
+      <!-- Whitespace -->
+      <div class="funnel-stage">
+        <div class="funnel-label">Whitespace</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:100%;background:#94a3b8">
+            <span>~431 accounts not yet identified</span>
+          </div>
+        </div>
+        <div class="funnel-meta">Est GMV: Unknown · ~44% of TAM (977 - 546)</div>
+      </div>
+      <!-- Prospect -->
+      <div class="funnel-stage">
+        <div class="funnel-label" style="color:var(--blue)">Prospect</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:73%;background:#2457c5">
+            <span>400 prospects identified</span>
+          </div>
+        </div>
+        <div class="funnel-meta">Est GMV: ~$810M (with estimates) · includes 96 buyer proxy from importer data</div>
+      </div>
+      <!-- Pipeline / New Business -->
+      <div class="funnel-stage">
+        <div class="funnel-label" style="color:var(--amber)">Pipeline (SFDC NB)</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:11%;background:#d97706">
+            <span>26 new-biz opps · $65.8K ARR</span>
+          </div>
+        </div>
+        <div class="funnel-meta">Discovery 4 · Selling 16 · Negotiating 2 · Closing 4 · In SFDC</div>
+      </div>
+      <!-- Implementation / Pre-live -->
+      <div class="funnel-stage">
+        <div class="funnel-label" style="color:var(--purple)">Implementation</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:3%;background:#6941c6;min-width:80px">
+            <span>10 pre-live</span>
+          </div>
+        </div>
+        <div class="funnel-meta">Pre-live in spine · Christine activating</div>
+      </div>
+      <!-- Client -->
+      <div class="funnel-stage">
+        <div class="funnel-label" style="color:var(--green)">Client</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:36%;background:#12805c">
+            <span>134 active clients · est GMV $1.0B+</span>
+          </div>
+        </div>
+        <div class="funnel-meta">Commercially active · Generating fees</div>
+      </div>
+    </div>
+
+    <!-- FUNNEL STATS CARDS -->
+    <div class="grid4" style="margin-top:16px">
+      <div class="card" style="border-left:5px solid #94a3b8;text-align:center">
+        <small>TAM Coverage</small>
+        <strong style="font-size:20px">56%</strong>
+        <p>546 of 977 identified (was 46%)</p>
+      </div>
+      <div class="card blueLine" style="text-align:center">
+        <small>Prospect → Client Conv.</small>
+        <strong style="font-size:20px">~25%</strong>
+        <p>134 clients / 546 identified</p>
+      </div>
+      <div class="card" style="border-left:5px solid var(--amber);text-align:center">
+        <small>NB Pipeline (SFDC)</small>
+        <strong style="font-size:20px">26 opps</strong>
+        <p>$65.8K ARR · New Business · H2 2026</p>
+      </div>
+      <div class="card okLine" style="text-align:center">
+        <small>Whitespace Remaining</small>
+        <strong style="font-size:20px">~431</strong>
+        <p>977 TAM minus 546 identified</p>
+      </div>
+    </div>
+
+    <!-- SECTION B: UPGRADE PIPELINE (CATA) -->
+    <p class="eyebrow" style="margin-top:24px">Section B · Upgrade Pipeline (Cata) — Existing Business · 75 SFDC Opps · $91K ARR</p>
+    <div class="grid4" style="margin-bottom:14px">
+      <div class="stage-card stage-disc">
+        <span class="sc-label">Discovery</span>
+        <span class="sc-val" style="color:var(--blue)">49</span>
+        <span class="sc-sub">opps · $25.4K ARR</span>
+      </div>
+      <div class="stage-card stage-sell">
+        <span class="sc-label">Selling</span>
+        <span class="sc-val" style="color:var(--amber)">9</span>
+        <span class="sc-sub">opps · $19.6K ARR</span>
+      </div>
+      <div class="stage-card stage-neg">
+        <span class="sc-label">Negotiating</span>
+        <span class="sc-val" style="color:#ea580c">12</span>
+        <span class="sc-sub">opps · $33.5K ARR</span>
+      </div>
+      <div class="stage-card stage-close">
+        <span class="sc-label">Closing</span>
+        <span class="sc-val" style="color:var(--green)">5</span>
+        <span class="sc-sub">opps · $12.5K ARR</span>
+      </div>
+    </div>
+    <div class="info-bar" style="margin-bottom:12px">
+      <strong>Total Upgrade Pipeline:</strong> 75 Existing Business opps · <strong>$91,081 ARR</strong> · avg $1,214/opp. Top opps = Core Multilocation upgrades (Louisiana $11.4K, Washington $8.3K, Mrs. Bloom's $8.0K) and expansion proposals (Bill Doran $7.5K). Note: many opps are small ($349–$600 eSuite/eShop adds). The big value is in the Core upgrade deals.
+    </div>
+
+    <p style="font-size:12px;font-weight:800;margin-bottom:8px">Top 10 Upgrade Opps by ARR (Existing Business)</p>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>#</th><th>Account</th><th>Opportunity</th><th>Stage</th><th>ARR</th><th>Close Date</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Louisiana Wholesale Florist</td><td>Core Multilocation</td><td><span style="color:var(--green);font-weight:700">Closing</span></td><td>$11,369</td><td>2026-09-30</td></tr>
+          <tr><td>2</td><td>Washington Floral Service</td><td>Sunset → Core Multilocation</td><td><span style="color:#ea580c;font-weight:700">Negotiating</span></td><td>$8,298</td><td>2026-09-23</td></tr>
+          <tr><td>3</td><td>MRS. BLOOM'S DIRECT</td><td>Sunset → Core</td><td><span style="color:#ea580c;font-weight:700">Negotiating</span></td><td>$8,023</td><td>2026-09-30</td></tr>
+          <tr><td>4</td><td>Bill Doran Company</td><td>Expansion Proposal</td><td><span style="color:#ea580c;font-weight:700">Negotiating</span></td><td>$7,490</td><td>2026-08-31</td></tr>
+          <tr><td>5</td><td>Full Pot - Ft. Lauderdale</td><td>Multilocation Core</td><td><span style="color:var(--amber);font-weight:700">Selling</span></td><td>$5,598</td><td>2026-09-30</td></tr>
+          <tr><td>6</td><td>Divflo</td><td>Divflo Algarve</td><td><span style="color:var(--blue);font-weight:700">Discovery</span></td><td>$4,950</td><td>2026-07-15</td></tr>
+          <tr><td>7</td><td>Frank Adams Wholesale</td><td>Sunset → Core Single Location</td><td><span style="color:#ea580c;font-weight:700">Negotiating</span></td><td>$4,579</td><td>2026-09-23</td></tr>
+          <tr><td>8</td><td>PETALS WEST, INC.</td><td>Komet Core</td><td><span style="color:var(--amber);font-weight:700">Selling</span></td><td>$4,324</td><td>2026-12-15</td></tr>
+          <tr><td>9</td><td>The Oklahoma Flower Market</td><td>Sunset → Core</td><td><span style="color:var(--amber);font-weight:700">Selling</span></td><td>$3,298</td><td>2026-09-25</td></tr>
+          <tr><td>10</td><td>Exclusive Wholesale</td><td>eSuites Wholesaler</td><td><span style="color:var(--amber);font-weight:700">Selling</span></td><td>$3,298</td><td>2026-09-18</td></tr>
+          <tr class="subtotal-row"><td colspan="4">Top 10 total</td><td>$61,227</td><td>—</td></tr>
+          <tr class="total-row"><td colspan="4">All 75 Existing Business</td><td>$91,081</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION B: UPGRADE PIPELINE (header update handled above) -->
+
+    <!-- SECTION C: PRODUCT TIER DISTRIBUTION -->
+    <p class="eyebrow" style="margin-top:24px">Section C · Product Tier Distribution — 134 Active Clients</p>
+    <div class="grid4" style="margin-bottom:12px">
+      <div class="tier-card" style="border-top:4px solid #067a91">
+        <span class="tc-name">Core+</span>
+        <span class="tc-count" style="color:#067a91">46</span>
+        <span class="tc-gmv" style="color:#067a91">$573M est GMV</span>
+        <span class="tc-sub">Full visibility: online + offline, buy + sell</span>
+      </div>
+      <div class="tier-card" style="border-top:4px solid #2457c5">
+        <span class="tc-name">eSuite</span>
+        <span class="tc-count" style="color:var(--blue)">43</span>
+        <span class="tc-gmv" style="color:var(--blue)">$315M est GMV</span>
+        <span class="tc-sub">Partial visibility — only Koronet activity</span>
+      </div>
+      <div class="tier-card" style="border-top:4px solid #b26a00">
+        <span class="tc-name">K2K</span>
+        <span class="tc-count" style="color:var(--gold)">41</span>
+        <span class="tc-gmv" style="color:var(--gold)">$388M est GMV</span>
+        <span class="tc-sub">K2K connections only — no sell visibility</span>
+      </div>
+      <div class="tier-card" style="border-top:4px solid #6941c6">
+        <span class="tc-name">Procurement</span>
+        <span class="tc-count" style="color:var(--purple)">4</span>
+        <span class="tc-gmv" style="color:var(--purple)">$20M est GMV</span>
+        <span class="tc-sub">Buy-side only — cannot sell on platform</span>
+      </div>
+    </div>
+    <div class="info-bar" style="margin-bottom:14px">
+      <strong>Upgrade path logic:</strong> K2K (41) + Procurement (4) = <strong>45 upgrade candidates</strong> → eSuite or Core (adds sell-side visibility, eShop, full fee capture). eSuite (43) = candidates for Core upgrade (adds offline GMV visibility, full ERP integration). Each tier upgrade = more GMV visible = more fees capturable at standard rates.
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Upgrade Path</th><th>Candidates</th><th>Est GMV at stake</th><th>What unlocks</th><th>Fee impact</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:800">K2K / Proc → eSuite</td><td>45</td><td>$408M est GMV</td><td>eShop, sell-side visibility, standard rates</td><td class="pct-green">+1.5% on online sell (vs 0% K2K no-sell)</td></tr>
+          <tr><td style="font-weight:800">eSuite → Core+</td><td>43</td><td>$315M est GMV</td><td>Full ERP, offline GMV visible, buy tracking</td><td class="pct-green">Full ecosystem monetization unlocked</td></tr>
+          <tr class="subtotal-row"><td><strong>Total upgrade pool</strong></td><td><strong>88</strong></td><td><strong>$723M est GMV</strong></td><td colspan="2">66% of client base below Core — upgrade opportunity</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION D: GMV CAPTURE BY TIER -->
+    <p class="eyebrow" style="margin-top:24px">Section D · GMV Capture by Tier — The Visibility Problem</p>
+    <div class="gmv-capture-grid">
+      <div class="gmv-capture-card" style="background:#ecfdf3;border:1px solid #abefc6">
+        <div style="font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#065f46;margin-bottom:8px">Core+ (44 clients)</div>
+        <div style="font-size:22px;font-weight:900;color:#065f46">$561M</div>
+        <div style="font-size:11px;color:#047857;margin-top:4px">est GMV · Full visibility</div>
+        <div style="margin:10px 0 4px;font-size:11px;color:#047857">Online share: ~11% measured</div>
+        <div style="background:#bbf7d0;border-radius:4px;height:8px;overflow:hidden"><div style="height:100%;width:11%;background:#065f46;border-radius:4px"></div></div>
+        <div style="font-size:10px;color:#047857;margin-top:4px">Sees EVERYTHING: online + offline, buy + sell</div>
+      </div>
+      <div class="gmv-capture-card" style="background:#eff6ff;border:1px solid #bfdbfe">
+        <div style="font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#1e40af;margin-bottom:8px">eSuite + K2K (84 clients)</div>
+        <div style="font-size:22px;font-weight:900;color:#1e40af">$703M</div>
+        <div style="font-size:11px;color:#1d4ed8;margin-top:4px">est GMV · Partial visibility</div>
+        <div style="margin:10px 0 4px;font-size:11px;color:#1d4ed8">Apparent digital: 94–100% (ARTIFACT)</div>
+        <div style="background:#bfdbfe;border-radius:4px;height:8px;overflow:hidden"><div style="height:100%;width:11%;background:#1e40af;border-radius:4px"></div></div>
+        <div style="font-size:10px;color:#1d4ed8;margin-top:4px">Real online ~11% — offline buying invisible</div>
+      </div>
+      <div class="gmv-capture-card" style="background:#f5f3ff;border:1px solid #ddd6fe">
+        <div style="font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#5b21b6;margin-bottom:8px">Procurement (4 clients)</div>
+        <div style="font-size:22px;font-weight:900;color:#5b21b6">$20M</div>
+        <div style="font-size:11px;color:#6d28d9;margin-top:4px">est GMV · Buy-side only</div>
+        <div style="margin:10px 0 4px;font-size:11px;color:#6d28d9">Can buy, cannot sell on platform</div>
+        <div style="background:#ddd6fe;border-radius:4px;height:8px;overflow:hidden"><div style="height:100%;width:100%;background:#5b21b6;border-radius:4px"></div></div>
+        <div style="font-size:10px;color:#6d28d9;margin-top:4px">No sell-side fees possible without upgrade</div>
+      </div>
+    </div>
+    <div class="warn-bar" style="margin-top:12px">
+      <strong>The core insight:</strong> 82% of total ecosystem GMV ($1,330M of $1,614M) flows offline at $0 fee rate. Even among clients, only Core+ (44 accounts, $561M GMV) gives full visibility. The other 88 clients ($723M GMV) are partially blind — their offline GMV is invisible and unmonetized. Every tier upgrade moves GMV from the blind zone to the measurable zone.
+    </div>
+
+    <!-- SECTION E: CODEX ENRICHMENT STATUS -->
+    <p class="eyebrow" style="margin-top:24px">Section E · Codex Enrichment Status — Wholesaler Universe (v3 · Sep 2026)</p>
+    <div class="grid4" style="margin-bottom:14px">
+      <div class="card blueLine" style="text-align:center">
+        <small>Wholesaler Universe</small>
+        <strong style="font-size:20px">618</strong>
+        <p>Google Sheet live, shared with Dave/Laura/Sof Sep 4</p>
+      </div>
+      <div class="card okLine" style="text-align:center">
+        <small>Validated WS Profiles</small>
+        <strong style="font-size:20px">359</strong>
+        <p>Of initial enriched batch (validation ongoing)</p>
+      </div>
+      <div class="card purpleLine" style="text-align:center">
+        <small>With eCommerce Detected</small>
+        <strong style="font-size:20px">162</strong>
+        <p>45% of 359 validated — sell online somewhere</p>
+      </div>
+      <div class="card" style="border-left:5px solid var(--amber);text-align:center">
+        <small>Whitespace Remaining</small>
+        <strong style="font-size:20px">~431</strong>
+        <p>977 TAM minus 546 in spine</p>
+      </div>
+    </div>
+    <div class="info-bar">
+      <strong>Enrichment summary (Sep 2026):</strong> 618 profiles in Wholesaler Universe (Google Sheet live, shared with Dave/Laura/Sof Sep 4). 359 validated in initial batch. 162 have external eCommerce (45% of validated) — Komet Sales 26, Custom-built 32, Shopify 17, FlowerWebShop 11, FCS 7, Authenticated-unknown 42. Key capability gaps: only 39 sell bunches online, only 38 have future availability — these are structural product barriers. Competitive: Odoo 17 (was 8 at board), DVFlora 26, NetSuite 11.
+    </div>
+    <div style="margin-top:14px">
+      <p style="font-size:12px;font-weight:800;margin-bottom:8px">Enrichment Progress (v3 — Sep 2026)</p>
+      <div style="max-width:500px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px"><span>Wholesaler Universe (618)</span><span>of ~977 TAM (63%)</span></div>
+        <div class="codex-bar"><div class="codex-fill" style="width:63%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px;margin-top:8px"><span>Validated (359)</span><span>of 618 profiles (58%)</span></div>
+        <div class="codex-bar"><div class="codex-fill" style="width:58%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px;margin-top:8px"><span>With eCommerce (162)</span><span>of 359 validated (45%)</span></div>
+        <div class="codex-bar"><div class="codex-fill" style="width:45%"></div></div>
+      </div>
+    </div>
+
+    <!-- SFDC PIPELINE DETAIL -->
+    <p class="eyebrow" style="margin-top:24px">Section F · SFDC Pipeline Detail</p>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card blueLine" style="text-align:center">
+        <small>New Business (Felipe)</small>
+        <strong style="font-size:20px">26 opps</strong>
+        <p style="font-weight:800;color:var(--blue)">$65.8K ARR</p>
+        <p style="font-size:11px">Discovery 4 · Selling 16 · Neg 2 · Closing 4</p>
+      </div>
+      <div class="card goldLine" style="text-align:center">
+        <small>Existing Business (Cata)</small>
+        <strong style="font-size:20px">75 opps</strong>
+        <p style="font-weight:800;color:var(--gold)">$91.1K ARR</p>
+        <p style="font-size:11px">Discovery 49 · Selling 9 · Neg 12 · Closing 5</p>
+      </div>
+      <div class="card purpleLine" style="text-align:center">
+        <small>Renewal</small>
+        <strong style="font-size:20px">11 opps</strong>
+        <p style="font-weight:800;color:var(--purple)">$20.9K ARR</p>
+        <p style="font-size:11px">Existing clients · Rate/term renewals</p>
+      </div>
+    </div>
+
+    <!-- SECTION G: COMPETITIVE SIGNALS -->
+    <p class="eyebrow" style="margin-top:24px">Section G · Competitive Signals (Codex-Detected · Sep 2026)</p>
+    <div class="grid3" style="margin-bottom:12px">
+      <div class="card" style="border-left:4px solid var(--red)">
+        <small>Odoo Detected</small>
+        <strong style="color:var(--red)">17 WS</strong>
+        <p style="font-size:11px">Was "8 confirmed at board" — Codex found 17. Threat 2× bigger than disclosed. ERP competitor stack investing WS.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--gold)">
+        <small>DVFlora Detected</small>
+        <strong>26 WS</strong>
+        <p style="font-size:11px">Roll-up risk: Mike's Finest (Jul'26), KD &amp; Co VA/NC (Oct'25). 26 accounts with DVFlora connection signals.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--blue)">
+        <small>Other ERP / Systems</small>
+        <strong>NetSuite 11 · QB 6</strong>
+        <p style="font-size:11px">FreshPortal 3 (new US entrant). These WS have invested in alternative stacks — harder to convert.</p>
+      </div>
+    </div>
+    <div class="warn-bar" style="margin-bottom:14px">
+      <strong>Odoo flag for board:</strong> Presentation cited "8 confirmed Odoo losses." Codex enrichment detected 17 WS with Odoo signals — exposure materially larger than disclosed. Requires account list review and triage before next board update.
+    </div>
+
+    <!-- SECTION H: STAT CORRECTIONS -->
+    <div style="margin-bottom:14px;padding:14px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px">
+      <strong style="color:#991b1b;font-size:13px">Board stat corrections (verified · fix before next presentation):</strong>
+      <ul style="font-size:12px;margin:8px 0;color:#7f1d1d;line-height:1.9">
+        <li><strong>"12.3% online"</strong> → correct number is <strong>17.6%</strong> platform-wide (all channels incl API), or <strong>7.2% / ~$40M</strong> for wholesaler eCom+K2K (the monetizable slice)</li>
+        <li><strong>"Wholesaler monetizable online"</strong> → <strong>7.2%</strong> of WS sell GMV is eCom+K2K (not API). This is the fee-generating portion.</li>
+        <li><strong>"94% within 3 days" (Procurement)</strong> → correct: <strong>94% within 7 days</strong> (74.5% within 3 days — the stat was understated)</li>
+        <li><strong>"Core forward buying"</strong> → <strong>15.5% at 8+ days</strong>. 56.9% within 3 days. (The "40% just-in-time" number is not verifiable in Snowflake.)</li>
+        <li><strong>"Odoo losses: 8"</strong> → Codex detects <strong>17</strong> WS with Odoo signals. Full account list needed before next board.</li>
+      </ul>
+    </div>
+
+    <p class="footnote" style="margin-top:16px">
+      Pipeline sources: sfdc_wholesaler_pipeline.json (125 open opps, pulled 2026-08-18 — NEEDS REFRESH) · accounts_clean.json (684 accounts, 546 WS) · Wholesaler Universe Google Sheet (618 profiles). SFDC: 75 Existing Business / $91.1K + 26 New Business / $65.8K + 11 Renewal / $20.9K + 13 Type=None (eShops). EB pipeline = upgrade/expansion opps for Cata. NB pipeline = new WS acquisition for Felipe. ARR = SFDC Amount field. Codex enrichment: 618 profiles in Wholesaler Universe (Google Sheet, shared with Dave/Laura/Sof Sep 4). +96 buyer proxy prospects added from Snowflake importer buyer data (Aug 2026). Stats source: board_stat_verification.md · Snowflake L12 Sep 2025–Aug 2026.
+    </p>
+  </div>
+  </div>
+
+</div><!-- /tab-shell -->
+</main>
+
+<script>
+// ================================================================
+// DATA — preserved from v3 exactly
+// ================================================================
+const MONTHLY = [
+  {m:"2024-08",tg:90650393,og:13594817,op:14.997,f:88392,tr:0.6502},
+  {m:"2024-09",tg:110856180,og:19030655,op:17.167,f:132521,tr:0.6964},
+  {m:"2024-10",tg:134681833,og:20517486,op:15.234,f:141774,tr:0.6910},
+  {m:"2024-11",tg:152226572,og:16448310,op:10.805,f:106964,tr:0.6503},
+  {m:"2024-12",tg:108235090,og:15944172,op:14.731,f:105351,tr:0.6607},
+  {m:"2025-01",tg:112297225,og:16952262,op:15.096,f:117035,tr:0.6904},
+  {m:"2025-02",tg:165588359,og:23094355,op:13.947,f:163729,tr:0.7090},
+  {m:"2025-03",tg:109059436,og:21085250,op:19.334,f:142577,tr:0.6762},
+  {m:"2025-04",tg:159650046,og:28962909,op:18.141,f:199362,tr:0.6883},
+  {m:"2025-05",tg:177655574,og:33680833,op:18.959,f:237030,tr:0.7038},
+  {m:"2025-06",tg:109341102,og:20958262,op:19.168,f:136471,tr:0.6512},
+  {m:"2025-07",tg:90655592,og:16499694,op:18.200,f:110294,tr:0.6685},
+  {m:"2025-08",tg:101153196,og:19350681,op:19.130,f:138824,tr:0.7174},
+  {m:"2025-09",tg:123027306,og:25293674,op:20.559,f:184508,tr:0.7295},
+  {m:"2025-10",tg:151684466,og:26763712,op:17.644,f:191742,tr:0.7164},
+  {m:"2025-11",tg:164807266,og:20872334,op:12.665,f:156888,tr:0.7517},
+  {m:"2025-12",tg:122048950,og:19348293,op:15.853,f:145395,tr:0.7515},
+  {m:"2026-01",tg:114561467,og:18189705,op:15.878,f:142662,tr:0.7843},
+  {m:"2026-02",tg:182152233,og:25848520,op:14.191,f:209329,tr:0.8098},
+  {m:"2026-03",tg:123800032,og:24137313,op:19.497,f:190669,tr:0.7899},
+  {m:"2026-04",tg:162854563,og:31377304,op:19.267,f:289293,tr:0.9220},
+  {m:"2026-05",tg:167541962,og:32783055,op:19.567,f:306138,tr:0.9339},
+  {m:"2026-06",tg:108118042,og:21676637,op:20.049,f:190765,tr:0.8801},
+  {m:"2026-07",tg:91791608,og:18146151,op:19.769,f:154820,tr:0.8534},
+  {m:"2026-08",tg:99040000,og:21140000,op:21.345,f:191165,tr:0.9043}
+];
+
+const SELL_RAW = [
+  {ind:"Grower",ch:"API",p:"current",gmv:200155},{ind:"Grower",ch:"API",p:"prior",gmv:92240},
+  {ind:"Grower",ch:"K2K",p:"current",gmv:386879},{ind:"Grower",ch:"K2K",p:"prior",gmv:337765},
+  {ind:"Grower",ch:"eCommerce",p:"current",gmv:1126847},{ind:"Grower",ch:"eCommerce",p:"prior",gmv:751107},
+  {ind:"Grower",ch:"Offline",p:"current",gmv:67081636},{ind:"Grower",ch:"Offline",p:"prior",gmv:96670640},
+  {ind:"Importer",ch:"API",p:"current",gmv:35765143},{ind:"Importer",ch:"API",p:"prior",gmv:28128742},
+  {ind:"Importer",ch:"K2K",p:"current",gmv:22085614},{ind:"Importer",ch:"K2K",p:"prior",gmv:19065099},
+  {ind:"Importer",ch:"eCommerce",p:"current",gmv:134030988},{ind:"Importer",ch:"eCommerce",p:"prior",gmv:122145993},
+  {ind:"Importer",ch:"Offline",p:"current",gmv:797818201},{ind:"Importer",ch:"Offline",p:"prior",gmv:709551174},
+  {ind:"Wholesaler",ch:"API",p:"current",gmv:49388297},{ind:"Wholesaler",ch:"API",p:"prior",gmv:35052600},
+  {ind:"Wholesaler",ch:"K2K",p:"current",gmv:8150461},{ind:"Wholesaler",ch:"K2K",p:"prior",gmv:5567940},
+  {ind:"Wholesaler",ch:"eCommerce",p:"current",gmv:31625408},{ind:"Wholesaler",ch:"eCommerce",p:"prior",gmv:29022843},
+  {ind:"Wholesaler",ch:"Offline",p:"current",gmv:463018244},{ind:"Wholesaler",ch:"Offline",p:"prior",gmv:457491386},
+];
+
+const FEES_L12 = {
+  Importer: 88392+108290+110692+82680+83056+91062+121816+110844+149749+189643+109426+84576+106973+143071+147594+121295+114587+111886+157999+152771+227469+238966+146186+116369,
+  Wholesaler: 12373+18299+24313+19158+17370+21392+33496+26329+41582+38321+22168+21356+27239+35695+38464+30840+26084+26358+41126+32254+53563+57399+38390+33182,
+  Grower: 1143+2028+2800+1614+1162+1684+2585+1791+3690+3084+1624+1561+1754+2106+2311+1899+1701+1480+4051+2026+4212+3707+2491+2094,
+};
+
+const FEES_PRIOR = {
+  Importer: 71028+108290+110692+82680+83056+91062+121816+110844+149749+189643+109426+84576,
+  Wholesaler: 12373+18299+24313+19158+17370+21392+33496+26329+41582+38321+22168+21356,
+  Grower: 1143+2028+2800+1614+1162+1684+2585+1791+3690+3084+1624+1561,
+};
+
+// WHOLESALER MATRIX — v5 from codex_intelligence_summary.json (546 WS: 134C, 400P, 10PL, 2Ch)
+// Source: codex_intelligence_summary.json wholesaler_matrix, 2026-08-18 (matrix data NOT updated — pending Laura)
+const MATRIX_DATA = {
+  bands: ["≥$10M","$2–10M","$500K–2M","<$500K","Unestimated"],
+  active: {
+    "≥$10M":    {corePlus:{c:5,g:455675402}, eSuite:{c:11,g:195000000}, k2k:{c:5,g:222900000}, proc:{c:0,g:0}},
+    "$2–10M":   {corePlus:{c:22,g:102481698}, eSuite:{c:24,g:112000000}, k2k:{c:33,g:160500000}, proc:{c:4,g:19500000}},
+    "$500K–2M": {corePlus:{c:9,g:12589301},  eSuite:{c:6,g:8000000},   k2k:{c:3,g:4200000},    proc:{c:0,g:0}},
+    "<$500K":   {corePlus:{c:10,g:2034432},  eSuite:{c:2,g:217423},    k2k:{c:0,g:0},           proc:{c:0,g:0}},
+    "Unestimated":{corePlus:{c:0,g:0},       eSuite:{c:0,g:0},         k2k:{c:0,g:0},           proc:{c:0,g:0}},
+  },
+  prospect: {
+    "≥$10M":    {c:24,g:411700000},
+    "$2–10M":   {c:36,g:154100000},
+    "$500K–2M": {c:4,g:3826840},
+    "<$500K":   {c:5,g:549922},
+    "Unestimated":{c:331,g:0},
+  },
+  churned: {
+    "≥$10M":    {c:0,g:0},
+    "$2–10M":   {c:1,g:8000000},
+    "$500K–2M": {c:0,g:0},
+    "<$500K":   {c:0,g:0},
+    "Unestimated":{c:1,g:0},
+  },
+};
+
+// IMPORTER MATRIX — updated (153 total: 132C, 14P, 7PL)
+const IMP_MATRIX_DATA = {
+  bands: ["≥$10M","$2–10M","$500K–2M","<$500K"],
+  active: {
+    "≥$10M":    {corePlus:{c:24,g:864558863}, eSuite:{c:0,g:0},       k2k:{c:0,g:0},       proc:{c:0,g:0}},
+    "$2–10M":   {corePlus:{c:44,g:206635494}, eSuite:{c:4,g:14451977}, k2k:{c:3,g:12666784}, proc:{c:0,g:0}},
+    "$500K–2M": {corePlus:{c:27,g:26413669},  eSuite:{c:3,g:3343783},  k2k:{c:1,g:1946395},  proc:{c:0,g:0}},
+    "<$500K":   {corePlus:{c:19,g:5300100},   eSuite:{c:4,g:577720},   k2k:{c:0,g:0},        proc:{c:1,g:0}},
+  },
+  prospect: {
+    "≥$10M":    {c:4,g:0},
+    "$2–10M":   {c:9,g:0},
+    "$500K–2M": {c:6,g:0},
+    "<$500K":   {c:2,g:0},
+  },
+};
+
+// GROWER MATRIX — updated (68 total: 39C, 17P, 12PL)
+const GROW_MATRIX_DATA = {
+  bands: ["≥$10M","$2–10M","$500K–2M","<$500K"],
+  active: {
+    "≥$10M":    {corePlus:{c:5,g:0}, eSuite:{c:2,g:0}, k2k:{c:1,g:0}},
+    "$2–10M":   {corePlus:{c:10,g:0}, eSuite:{c:4,g:0}, k2k:{c:4,g:0}},
+    "$500K–2M": {corePlus:{c:7,g:0}, eSuite:{c:2,g:0}, k2k:{c:1,g:0}},
+    "<$500K":   {corePlus:{c:3,g:0}, eSuite:{c:0,g:0}, k2k:{c:0,g:0}},
+  },
+  prospect: {
+    "≥$10M":    {c:3,g:0},
+    "$2–10M":   {c:10,g:0},
+    "$500K–2M": {c:7,g:0},
+    "<$500K":   {c:9,g:0},
+  },
+};
+
+const WHOLESALER_FORMAT = [
+  {m:"2025-08",ch:"API",div:"Boxes",gmv:1783506,cc:1},{m:"2025-08",ch:"API",div:"Units",gmv:1669474,cc:2},
+  {m:"2025-08",ch:"K2K",div:"Boxes",gmv:551633,cc:50},{m:"2025-08",ch:"Offline",div:"Boxes",gmv:10528707,cc:34},
+  {m:"2025-08",ch:"Offline",div:"Hard Goods",gmv:876580,cc:13},{m:"2025-08",ch:"Offline",div:"Units",gmv:19470319,cc:26},
+  {m:"2025-08",ch:"eCommerce",div:"Boxes",gmv:1691034,cc:54},{m:"2025-08",ch:"eCommerce",div:"Hard Goods",gmv:389,cc:1},{m:"2025-08",ch:"eCommerce",div:"Units",gmv:234266,cc:9},
+  {m:"2025-09",ch:"API",div:"Boxes",gmv:2322200,cc:1},{m:"2025-09",ch:"API",div:"Units",gmv:2629135,cc:2},
+  {m:"2025-09",ch:"K2K",div:"Boxes",gmv:828402,cc:44},{m:"2025-09",ch:"Offline",div:"Boxes",gmv:12687157,cc:37},
+  {m:"2025-09",ch:"Offline",div:"Hard Goods",gmv:1171410,cc:16},{m:"2025-09",ch:"Offline",div:"Units",gmv:26277635,cc:27},
+  {m:"2025-09",ch:"eCommerce",div:"Boxes",gmv:2388692,cc:58},{m:"2025-09",ch:"eCommerce",div:"Hard Goods",gmv:1277,cc:1},{m:"2025-09",ch:"eCommerce",div:"Units",gmv:294478,cc:10},
+  {m:"2025-10",ch:"API",div:"Boxes",gmv:3072242,cc:1},{m:"2025-10",ch:"API",div:"Units",gmv:3023173,cc:2},
+  {m:"2025-10",ch:"K2K",div:"Boxes",gmv:871589,cc:47},{m:"2025-10",ch:"Offline",div:"Boxes",gmv:13529030,cc:36},
+  {m:"2025-10",ch:"Offline",div:"Hard Goods",gmv:1191294,cc:14},{m:"2025-10",ch:"Offline",div:"Units",gmv:27870087,cc:27},
+  {m:"2025-10",ch:"eCommerce",div:"Boxes",gmv:2297280,cc:58},{m:"2025-10",ch:"eCommerce",div:"Hard Goods",gmv:1825,cc:2},{m:"2025-10",ch:"eCommerce",div:"Units",gmv:289446,cc:10},
+  {m:"2025-11",ch:"API",div:"Boxes",gmv:2348516,cc:1},{m:"2025-11",ch:"API",div:"Units",gmv:2200509,cc:2},
+  {m:"2025-11",ch:"K2K",div:"Boxes",gmv:614143,cc:44},{m:"2025-11",ch:"Offline",div:"Boxes",gmv:14276964,cc:38},
+  {m:"2025-11",ch:"Offline",div:"Hard Goods",gmv:1051632,cc:15},{m:"2025-11",ch:"Offline",div:"Units",gmv:23405432,cc:28},
+  {m:"2025-11",ch:"eCommerce",div:"Boxes",gmv:1721824,cc:53},{m:"2025-11",ch:"eCommerce",div:"Hard Goods",gmv:919,cc:1},{m:"2025-11",ch:"eCommerce",div:"Units",gmv:229683,cc:8},
+  {m:"2025-12",ch:"API",div:"Boxes",gmv:1586786,cc:1},{m:"2025-12",ch:"API",div:"Units",gmv:1738203,cc:2},
+  {m:"2025-12",ch:"K2K",div:"Boxes",gmv:586734,cc:43},{m:"2025-12",ch:"Offline",div:"Boxes",gmv:11273643,cc:39},
+  {m:"2025-12",ch:"Offline",div:"Hard Goods",gmv:1231557,cc:14},{m:"2025-12",ch:"Offline",div:"Units",gmv:22182375,cc:28},
+  {m:"2025-12",ch:"eCommerce",div:"Boxes",gmv:1735099,cc:55},{m:"2025-12",ch:"eCommerce",div:"Hard Goods",gmv:1339,cc:2},{m:"2025-12",ch:"eCommerce",div:"Units",gmv:227451,cc:10},
+  {m:"2026-01",ch:"API",div:"Boxes",gmv:1484048,cc:1},{m:"2026-01",ch:"API",div:"Units",gmv:1206833,cc:2},
+  {m:"2026-01",ch:"K2K",div:"Boxes",gmv:540574,cc:43},{m:"2026-01",ch:"Offline",div:"Boxes",gmv:11021950,cc:36},
+  {m:"2026-01",ch:"Offline",div:"Hard Goods",gmv:1247155,cc:17},{m:"2026-01",ch:"Offline",div:"Units",gmv:17046585,cc:27},
+  {m:"2026-01",ch:"eCommerce",div:"Boxes",gmv:1458307,cc:55},{m:"2026-01",ch:"eCommerce",div:"Hard Goods",gmv:1425,cc:2},{m:"2026-01",ch:"eCommerce",div:"Units",gmv:212061,cc:11},
+  {m:"2026-02",ch:"API",div:"Boxes",gmv:3115941,cc:1},{m:"2026-02",ch:"API",div:"Units",gmv:2408887,cc:2},
+  {m:"2026-02",ch:"K2K",div:"Boxes",gmv:734352,cc:46},{m:"2026-02",ch:"Offline",div:"Boxes",gmv:21963366,cc:34},
+  {m:"2026-02",ch:"Offline",div:"Hard Goods",gmv:1118344,cc:17},{m:"2026-02",ch:"Offline",div:"Units",gmv:32581515,cc:28},
+  {m:"2026-02",ch:"eCommerce",div:"Boxes",gmv:2870918,cc:58},{m:"2026-02",ch:"eCommerce",div:"Hard Goods",gmv:1201,cc:2},{m:"2026-02",ch:"eCommerce",div:"Units",gmv:324587,cc:11},
+  {m:"2026-03",ch:"API",div:"Boxes",gmv:2519209,cc:1},{m:"2026-03",ch:"API",div:"Units",gmv:2421353,cc:2},
+  {m:"2026-03",ch:"K2K",div:"Boxes",gmv:736142,cc:46},{m:"2026-03",ch:"Offline",div:"Boxes",gmv:14001551,cc:36},
+  {m:"2026-03",ch:"Offline",div:"Hard Goods",gmv:1121561,cc:16},{m:"2026-03",ch:"Offline",div:"Units",gmv:23962077,cc:30},
+  {m:"2026-03",ch:"eCommerce",div:"Boxes",gmv:1921081,cc:55},{m:"2026-03",ch:"eCommerce",div:"Hard Goods",gmv:1502,cc:2},{m:"2026-03",ch:"eCommerce",div:"Units",gmv:312279,cc:10},
+  {m:"2026-04",ch:"API",div:"Boxes",gmv:3530630,cc:1},{m:"2026-04",ch:"API",div:"Units",gmv:1290045,cc:2},
+  {m:"2026-04",ch:"K2K",div:"Boxes",gmv:1218657,cc:46},{m:"2026-04",ch:"Offline",div:"Boxes",gmv:15892141,cc:35},
+  {m:"2026-04",ch:"Offline",div:"Hard Goods",gmv:1588471,cc:17},{m:"2026-04",ch:"Offline",div:"Units",gmv:20995563,cc:29},
+  {m:"2026-04",ch:"eCommerce",div:"Boxes",gmv:2897270,cc:59},{m:"2026-04",ch:"eCommerce",div:"Hard Goods",gmv:2170,cc:2},{m:"2026-04",ch:"eCommerce",div:"Units",gmv:410429,cc:14},
+  {m:"2026-05",ch:"API",div:"Boxes",gmv:3679877,cc:1},{m:"2026-05",ch:"API",div:"Units",gmv:1101398,cc:2},
+  {m:"2026-05",ch:"K2K",div:"Boxes",gmv:1224916,cc:46},{m:"2026-05",ch:"Offline",div:"Boxes",gmv:22193785,cc:35},
+  {m:"2026-05",ch:"Offline",div:"Hard Goods",gmv:1414832,cc:18},{m:"2026-05",ch:"Offline",div:"Units",gmv:29496000,cc:29},
+  {m:"2026-05",ch:"eCommerce",div:"Boxes",gmv:3452926,cc:62},{m:"2026-05",ch:"eCommerce",div:"Hard Goods",gmv:2472,cc:4},{m:"2026-05",ch:"eCommerce",div:"Units",gmv:500285,cc:14},
+  {m:"2026-06",ch:"API",div:"Boxes",gmv:1712709,cc:2},{m:"2026-06",ch:"API",div:"Units",gmv:635799,cc:2},
+  {m:"2026-06",ch:"K2K",div:"Boxes",gmv:735745,cc:41},{m:"2026-06",ch:"Offline",div:"Boxes",gmv:12634517,cc:35},
+  {m:"2026-06",ch:"Offline",div:"Hard Goods",gmv:1009561,cc:17},{m:"2026-06",ch:"Offline",div:"Units",gmv:18612140,cc:29},
+  {m:"2026-06",ch:"eCommerce",div:"Boxes",gmv:2476598,cc:58},{m:"2026-06",ch:"eCommerce",div:"Hard Goods",gmv:1745,cc:3},{m:"2026-06",ch:"eCommerce",div:"Units",gmv:413248,cc:13},
+  {m:"2026-07",ch:"API",div:"Boxes",gmv:1491661,cc:1},{m:"2026-07",ch:"API",div:"Units",gmv:447695,cc:2},
+  {m:"2026-07",ch:"K2K",div:"Boxes",gmv:558947,cc:43},{m:"2026-07",ch:"Offline",div:"Boxes",gmv:10171794,cc:35},
+  {m:"2026-07",ch:"Offline",div:"Hard Goods",gmv:884117,cc:18},{m:"2026-07",ch:"Offline",div:"Units",gmv:15212634,cc:30},
+  {m:"2026-07",ch:"eCommerce",div:"Boxes",gmv:1810775,cc:53},{m:"2026-07",ch:"eCommerce",div:"Hard Goods",gmv:1969,cc:3},{m:"2026-07",ch:"eCommerce",div:"Units",gmv:352988,cc:14},
+];
+
+const BUYER_COHORTS = [
+  {bt:"Event/Studio",ch:"API",gmv:3399928,bc:523,wc:2},{bt:"Event/Studio",ch:"K2K",gmv:247,bc:1,wc:1},
+  {bt:"Event/Studio",ch:"Offline",gmv:12542321,bc:2266,wc:37},{bt:"Event/Studio",ch:"eCommerce",gmv:1766868,bc:205,wc:28},
+  {bt:"Florist",ch:"API",gmv:8459074,bc:1433,wc:2},{bt:"Florist",ch:"K2K",gmv:3153116,bc:24,wc:22},
+  {bt:"Florist",ch:"Offline",gmv:85233715,bc:6445,wc:47},{bt:"Florist",ch:"eCommerce",gmv:7095530,bc:986,wc:60},
+  {bt:"Grocery/Mass",ch:"API",gmv:2833547,bc:44,wc:2},{bt:"Grocery/Mass",ch:"K2K",gmv:535767,bc:1,wc:1},
+  {bt:"Grocery/Mass",ch:"Offline",gmv:28984395,bc:577,wc:27},{bt:"Grocery/Mass",ch:"eCommerce",gmv:336797,bc:60,wc:21},
+  {bt:"Sympathy",ch:"API",gmv:31312,bc:34,wc:2},{bt:"Sympathy",ch:"Offline",gmv:2139433,bc:957,wc:22},{bt:"Sympathy",ch:"eCommerce",gmv:37897,bc:34,wc:6},
+  {bt:"Other",ch:"API",gmv:34695266,bc:4437,wc:3},{bt:"Other",ch:"K2K",gmv:5512704,bc:43,wc:40},
+  {bt:"Other",ch:"Offline",gmv:332208028,bc:35136,wc:57},{bt:"Other",ch:"eCommerce",gmv:21304143,bc:2800,wc:81},
+];
+
+const WS_VENDORS = [
+  {co:"Ninfa Flowers",vn:"Shanghai Nifa International Trading Co Ltd",gmv:26191664,ma:12,self:true},
+  {co:"Bill Doran Company",vn:"BDC Mexico",gmv:16638985,ma:12,self:true},
+  {co:"Kennicott Brothers Company",vn:"KENNICOTT CENTRAL",gmv:11670509,ma:12,self:true},
+  {co:"Promoflor SRL",vn:"Promoflor SRL",gmv:6188183,ma:11,self:true},
+  {co:"Kennicott Brothers Company",vn:"HOLEX FLOWER",gmv:5607704,ma:12,self:false},
+  {co:"Mayesh Wholesale Florist Inc",vn:"EZ Flower",gmv:5371292,ma:12,self:false},
+  {co:"Kennicott Brothers Company",vn:"QUEENS FLOWER",gmv:5163056,ma:12,self:false},
+  {co:"Mayesh Wholesale Florist Inc",vn:"Holex Flower B.V.",gmv:4266121,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Everflora Production",gmv:4072242,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Sunburst Farms - BDC Consolidation",gmv:3120920,ma:12,self:true},
+  {co:"Kennicott Brothers Company",vn:"ROSA PRIMA",gmv:2863000,ma:12,self:false},
+  {co:"Kennicott Brothers Company",vn:"ROSA FLORA LIMITED",gmv:2309974,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Syndicate Sales, Inc.",gmv:2247342,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"The Queen's Flowers",gmv:2072452,ma:12,self:false},
+  {co:"Kennicott Brothers Company",vn:"SOLE FARMS",gmv:1807515,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Elite Exports Inc. - FOB MIA",gmv:1746820,ma:12,self:false},
+  {co:"Mayesh Wholesale Florist Inc",vn:"Agricola El Chaupi - ACHA",gmv:1669569,ma:12,self:false},
+  {co:"Tropical Blooms Inc.",vn:"ESMERALDA FARMS",gmv:1645853,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Holex Flowers BV - FOB AMS",gmv:1639119,ma:12,self:false},
+  {co:"H&T Wholesale Flowers",vn:"Rosaprima International LLC",gmv:1592179,ma:12,self:false},
+  {co:"Kennicott Brothers Company",vn:"GOLDEN FLOWERS",gmv:1531422,ma:12,self:false},
+  {co:"Kennicott Brothers Company",vn:"JET FRESH FLOWER DIST.",gmv:1530898,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Multiflora - FOB MIA",gmv:1421276,ma:12,self:false},
+  {co:"Kennicott Brothers Company",vn:"KBC BR 39 SERV",gmv:1393223,ma:12,self:true},
+  {co:"Bill Doran Company",vn:"EQR Equatoroses C.A. - FOB MIA",gmv:1389791,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Rosa Flora Limited",gmv:1363886,ma:12,self:false},
+  {co:"Mayesh Wholesale Florist Inc",vn:"Queens Flowers Miami",gmv:1329706,ma:12,self:false},
+  {co:"FloraLink",vn:"Sole Farms",gmv:1311821,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"Florexpo",gmv:1261502,ma:12,self:false},
+  {co:"Bill Doran Company",vn:"BDC Plants, LLC dba Chicago Foliage",gmv:1257708,ma:12,self:true},
+];
+
+const IMP_FARMS = [
+  {vn:"Rosaprima",gmv:50277268,bc:3,flag:""},{vn:"EQR EQUATOROSES FARM",gmv:38181237,bc:1,flag:""},
+  {vn:"Continental Floral PNW LLC",gmv:31277431,bc:1,flag:"self-supply"},{vn:"CFG-Shelton",gmv:27412732,bc:1,flag:"CFG cluster"},
+  {vn:"CFG - Shelton",gmv:9314977,bc:1,flag:"CFG cluster / dup name"},{vn:"FLEURO S.A.",gmv:9213716,bc:1,flag:""},
+  {vn:"ECOFLOWERS-AMELIA",gmv:8540917,bc:1,flag:""},{vn:"Continental Floral NC LLC",gmv:8539437,bc:1,flag:"self-supply"},
+  {vn:"Continental Floral CA LLC",gmv:8532996,bc:1,flag:"self-supply"},{vn:"CFG - Premade Watsonville",gmv:7941206,bc:2,flag:"CFG cluster"},
+  {vn:"CFG - Premade Sparta",gmv:7168055,bc:1,flag:"CFG cluster"},{vn:"EXPOFLORA",gmv:6751951,bc:2,flag:""},
+  {vn:"Continental Farm & Forest LLC",gmv:6532924,bc:1,flag:"self-supply"},{vn:"Continental Floral ORG LLC",gmv:6196135,bc:2,flag:"self-supply"},
+  {vn:"JARDINES DE LOS ANDES",gmv:5364281,bc:3,flag:""},{vn:"CFG - Premade PNW",gmv:4758515,bc:1,flag:"CFG cluster"},
+  {vn:"JN-San Nicolas",gmv:4588518,bc:1,flag:""},{vn:"CLB C.I. Flores Colon Ltda Bogota",gmv:4419111,bc:1,flag:""},
+  {vn:"VEGAFLOR SPRING FOB MDE - WR",gmv:4198971,bc:1,flag:""},{vn:"CFG - Premade Miami",gmv:4045383,bc:1,flag:"CFG cluster"},
+  {vn:"Guamito",gmv:4042863,bc:1,flag:""},{vn:"CFG - Forest Grove",gmv:3914898,bc:1,flag:"CFG cluster"},
+  {vn:"Continental Floral FL LLC",gmv:3872091,bc:4,flag:"self-supply"},{vn:"Tavola",gmv:3864136,bc:1,flag:""},
+  {vn:"EXPORTCALAS",gmv:3515176,bc:1,flag:""},{vn:"Fresca Farms Production",gmv:3250643,bc:1,flag:""},
+  {vn:"EQR EURO FARM",gmv:3235672,bc:1,flag:""},{vn:"TESSA P",gmv:3055753,bc:1,flag:""},
+  {vn:"Flores Latitud Cero Cia. Ltda",gmv:3008770,bc:1,flag:""},{vn:"TESSA S",gmv:2819348,bc:1,flag:""},
+];
+
+const FEES_DATA = [
+  {id:"44150",co:"Kennicott Brothers Company",ind:"Floral - Wholesaler",ch:"K2K",fee:102586,gmv:13683179},
+  {id:"25489",co:"-Sole Farms",ind:"Floral - Importer",ch:"eCommerce",fee:101335,gmv:11250120},
+  {id:"153031",co:"FloraLink",ind:"Floral - Wholesaler",ch:"K2K",fee:91216,gmv:6095196},
+  {id:"25489",co:"-Sole Farms",ind:"Floral - Importer",ch:"K2K",fee:87033,gmv:5806273},
+  {id:"18322",co:"* Jet Fresh Flower Distributors Inc.",ind:"Floral - Importer",ch:"eCommerce",fee:81431,gmv:9055685},
+  {id:"146846",co:"Continental Flowers",ind:"Floral - Importer",ch:"eCommerce",fee:63356,gmv:4222722},
+  {id:"341499",co:"Choice Farms",ind:"Floral - Importer",ch:"eCommerce",fee:60673,gmv:4052590},
+  {id:"18322",co:"* Jet Fresh Flower Distributors Inc.",ind:"Floral - Importer",ch:"K2K",fee:58988,gmv:3942310},
+  {id:"22143",co:"Royal Flowers Inc., Domestic",ind:"Floral - Importer",ch:"eCommerce",fee:57482,gmv:3835973},
+  {id:"103112",co:"Fresca Farms",ind:"Floral - Importer",ch:"eCommerce",fee:56794,gmv:6311499},
+  {id:"103112",co:"Fresca Farms",ind:"Floral - Importer",ch:"K2K",fee:52166,gmv:3477918},
+  {id:"73730",co:"Allure Farms",ind:"Floral - Importer",ch:"eCommerce",fee:46722,gmv:3127286},
+  {id:"17789",co:"Bella Blossom LLC",ind:"Floral - Importer",ch:"eCommerce",fee:44620,gmv:3576331},
+  {id:"C-1156",co:"Bloomnet",ind:"Unknown",ch:"API",fee:40542,gmv:2701043},
+  {id:"22218",co:"Sunburst Farms",ind:"Floral - Importer",ch:"eCommerce",fee:39824,gmv:2660072},
+  {id:"341499",co:"Choice Farms",ind:"Floral - Importer",ch:"K2K",fee:38078,gmv:2545889},
+  {id:"12941",co:"Rosaprima International, LLC",ind:"Floral - Importer",ch:"eCommerce",fee:36668,gmv:3331700},
+  {id:"22143",co:"Royal Flowers Inc., Domestic",ind:"Floral - Importer",ch:"K2K",fee:35652,gmv:2379988},
+  {id:"146846",co:"Continental Flowers",ind:"Floral - Importer",ch:"K2K",fee:33916,gmv:2260632},
+  {id:"7030",co:"Bill Doran Company",ind:"Floral - Wholesaler",ch:"K2K",fee:33135,gmv:2212738},
+  {id:"453081",co:"* Welyflor / PROFILE FLOWERS",ind:"Floral - Importer",ch:"eCommerce",fee:32181,gmv:2144652},
+  {id:"7030",co:"Bill Doran Company",ind:"Floral - Wholesaler",ch:"eCommerce",fee:30985,gmv:2080226},
+  {id:"468041",co:"U.S. Greens Corp",ind:"Floral - Importer",ch:"eCommerce",fee:30895,gmv:2058327},
+  {id:"498842",co:"SUNRITE FARMS COLLECTIONS CORP",ind:"Floral - Importer",ch:"eCommerce",fee:29726,gmv:1979676},
+  {id:"12941",co:"Rosaprima International, LLC",ind:"Floral - Importer",ch:"K2K",fee:25682,gmv:1710486},
+  {id:"17789",co:"Bella Blossom LLC",ind:"Floral - Importer",ch:"K2K",fee:24081,gmv:1608353},
+  {id:"44150",co:"Kennicott Brothers Company",ind:"Floral - Wholesaler",ch:"API",fee:23918,gmv:3243241},
+  {id:"453081",co:"* Welyflor / PROFILE FLOWERS",ind:"Floral - Importer",ch:"K2K",fee:23460,gmv:1563684},
+  {id:"7631",co:"* Trilogy Floral",ind:"Floral - Importer",ch:"eCommerce",fee:23105,gmv:1546196},
+  {id:"103078",co:"Mayesh Wholesale Florist Inc",ind:"Floral - Wholesaler",ch:"K2K",fee:20578,gmv:1371758},
+];
+
+
+// ================================================================
+// HELPERS
+// ================================================================
+function fmt$(v,d=0){
+  if(v===null||v===undefined||isNaN(v)) return '—';
+  if(Math.abs(v)>=1e9) return '$'+(v/1e9).toFixed(1)+'B';
+  if(Math.abs(v)>=1e6) return '$'+(v/1e6).toFixed(1)+'M';
+  if(Math.abs(v)>=1e3) return '$'+(v/1e3).toFixed(d===0?0:1)+'K';
+  return '$'+v.toFixed(d);
+}
+function fmtN(v,d=1){return (v===null||v===undefined||isNaN(v))?'—':v.toFixed(d);}
+function pctClass(v){return v>5?'pct-green':v>0?'pct-gold':'pct-red';}
+function yoyStr(cur,prior){
+  if(!prior) return '<span class="na">—</span>';
+  const pct=((cur-prior)/prior)*100;
+  const cls=pctClass(pct);
+  const sign=pct>=0?'▲ +':'▼ ';
+  return `<span class="${cls}">${sign}${Math.abs(pct).toFixed(1)}%</span>`;
+}
+
+// ================================================================
+// TAB SWITCHING
+// ================================================================
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function switchSubTab(id,btn){
+  btn.closest('.tab-content').querySelectorAll('.sub-pane').forEach(p=>p.classList.remove('active'));
+  btn.closest('.sub-tab-nav').querySelectorAll('.sub-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ================================================================
+// TAB 1: BOARD CLOSE CHART
+// ================================================================
+function buildChart(){
+  const data=MONTHLY,W=1200,H=360,PL=80,PR=70,PT=30,PB=50;
+  const cW=W-PL-PR,cH=H-PT-PB,n=data.length;
+  const maxTG=Math.max(...data.map(d=>d.tg));
+  const leftMax=maxTG*1.05;
+  const rightMax=Math.ceil(Math.max(...data.map(d=>d.tr))*10)/10+0.1;
+  function xOf(i){return PL+(i/(n-1))*cW;}
+  function yOfLeft(v){return PT+cH-(v/leftMax)*cH;}
+  function yOfRight(v){return PT+cH-(v/rightMax)*cH;}
+  let svg='';
+  for(let i=0;i<=5;i++){
+    const y=PT+cH*(i/5);
+    svg+=`<line x1="${PL}" y1="${y}" x2="${W-PR}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+    svg+=`<text x="${PL-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#94a3b8">$${(leftMax*(1-i/5)/1e6).toFixed(0)}M</text>`;
+    svg+=`<text x="${W-PR+8}" y="${y+4}" text-anchor="start" font-size="10" fill="#12805c">${(rightMax*(1-i/5)).toFixed(2)}%</text>`;
+  }
+  data.forEach((d,i)=>{if(i%4===0||i===n-1) svg+=`<text x="${xOf(i)}" y="${H-10}" text-anchor="middle" font-size="9" fill="#94a3b8">${d.m}</text>`;});
+  svg+=`<path d="${data.map((d,i)=>`${i===0?'M':'L'}${xOf(i)},${yOfLeft(d.tg)}`).join(' ')}" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.7"/>`;
+  svg+=`<path d="${data.map((d,i)=>`${i===0?'M':'L'}${xOf(i)},${yOfLeft(d.og)}`).join(' ')}" fill="none" stroke="#2457c5" stroke-width="2.5"/>`;
+  svg+=`<path d="${data.map((d,i)=>`${i===0?'M':'L'}${xOf(i)},${yOfRight(d.tr)}`).join(' ')}" fill="none" stroke="#12805c" stroke-width="2" stroke-dasharray="6,4"/>`;
+  data.forEach((d,i)=>{svg+=`<circle cx="${xOf(i)}" cy="${yOfLeft(d.og)}" r="3" fill="#2457c5" opacity="0.7"/>`;});
+  data.forEach((d,i)=>{svg+=`<rect x="${xOf(i)-12}" y="${PT}" width="24" height="${cH}" fill="transparent" onmouseenter="showTooltip(event,${i})" onmouseleave="hideTooltip()"/>`;});
+  svg+=`<line x1="${xOf(13)}" y1="${PT}" x2="${xOf(13)}" y2="${PT+cH}" stroke="#2457c5" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>`;
+  svg+=`<text x="${xOf(13)+4}" y="${PT+14}" font-size="9" fill="#2457c5" opacity="0.8">L12 start</text>`;
+  document.getElementById('mainChart').innerHTML=svg;
+}
+function showTooltip(e,i){
+  const d=MONTHLY[i],tip=document.getElementById('chartTooltip');
+  tip.innerHTML=`<strong>${d.m}</strong>Total GMV: ${fmt$(d.tg)}<br>Online GMV: ${fmt$(d.og)}<br>Online %: ${d.op.toFixed(1)}%<br>TX Fees: ${fmt$(d.f)}<br>Take Rate: ${d.tr.toFixed(3)}%`;
+  tip.style.opacity=1;
+  const svgEl=document.getElementById('mainChart'),svgRect=svgEl.getBoundingClientRect();
+  tip.style.left=(e.clientX-svgRect.left+16)+'px';
+  tip.style.top=(e.clientY-svgRect.top-20)+'px';
+}
+function hideTooltip(){document.getElementById('chartTooltip').style.opacity=0;}
+
+function buildMonthlyTable(){
+  const l12=new Set(['2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08']);
+  document.getElementById('monthlyTableBody').innerHTML=MONTHLY.map(d=>`
+    <tr class="${l12.has(d.m)?'highlight-row':''}">
+      <td>${d.m}</td><td>${fmt$(d.tg)}</td><td>${fmt$(d.og)}</td>
+      <td>${d.op.toFixed(1)}%</td><td>${fmt$(d.f)}</td><td>${d.tr.toFixed(3)}%</td>
+    </tr>`).join('');
+}
+
+// ================================================================
+// TAB 2: ECOSYSTEM
+// ================================================================
+let apiExcluded=true;
+function toggleAPI(){
+  apiExcluded=!apiExcluded;
+  const btn=document.getElementById('toggleAPI'),lbl=document.getElementById('apiToggleLabel');
+  if(apiExcluded){btn.classList.add('on');btn.textContent='Exclude API';lbl.textContent='API excluded from online GMV & take rate';}
+  else{btn.classList.remove('on');btn.textContent='Include API';lbl.textContent='API included in online GMV & take rate';}
+  buildEcosystem();
+}
+function getLayerGMV(layer,period,channels){
+  return SELL_RAW.filter(r=>r.ind===layer&&r.p===period&&channels.includes(r.ch)).reduce((s,r)=>s+r.gmv,0);
+}
+function buildEcosystem(){
+  const onlineCh=apiExcluded?['eCommerce','K2K']:['eCommerce','K2K','API'];
+  const layers=['Grower','Importer','Wholesaler'];
+  let html='',totCurGMV=0,totPriorGMV=0,totCurOnline=0,totFees=0,totPriorFees=0;
+  layers.forEach(layer=>{
+    const curTotal=getLayerGMV(layer,'current',['eCommerce','K2K','API','Offline']);
+    const priorTotal=getLayerGMV(layer,'prior',['eCommerce','K2K','API','Offline']);
+    const curOnline=getLayerGMV(layer,'current',onlineCh);
+    const onlinePct=curTotal>0?(curOnline/curTotal*100):0;
+    const fees=FEES_L12[layer]||0,priorFees=FEES_PRIOR[layer]||0;
+    const takeRate=curOnline>0?(fees/curOnline*100):0;
+    totCurGMV+=curTotal;totPriorGMV+=priorTotal;totCurOnline+=curOnline;totFees+=fees;totPriorFees+=priorFees;
+    const lc={Grower:'#fef3c7',Importer:'#dbeafe',Wholesaler:'#d1fae5'};
+    html+=`<tr><td style="background:${lc[layer]};font-weight:800">${layer}</td><td>${fmt$(curTotal)}</td><td>${yoyStr(curTotal,priorTotal)}</td><td>${fmt$(curOnline)}</td><td>${onlinePct.toFixed(1)}%</td><td>${fmt$(fees)}</td><td>${yoyStr(fees,priorFees)}</td><td>${takeRate.toFixed(3)}%</td></tr>`;
+  });
+  const totTR=totCurOnline>0?(totFees/totCurOnline*100):0;
+  html+=`<tr class="total-row"><td>Total</td><td>${fmt$(totCurGMV)}</td><td>${yoyStr(totCurGMV,totPriorGMV)}</td><td>${fmt$(totCurOnline)}</td><td>${(totCurGMV>0?totCurOnline/totCurGMV*100:0).toFixed(1)}%</td><td>${fmt$(totFees)}</td><td>${yoyStr(totFees,totPriorFees)}</td><td>${totTR.toFixed(3)}%</td></tr>`;
+  document.getElementById('layerSummaryBody').innerHTML=html;
+
+  const allCh=['eCommerce','K2K','API','Offline'];
+  let html2='';
+  layers.forEach(layer=>{
+    const lt=getLayerGMV(layer,'current',allCh);
+    html2+=`<tr class="section-hdr"><td colspan="6">${layer.toUpperCase()}</td></tr>`;
+    allCh.forEach(ch=>{
+      const cur=getLayerGMV(layer,'current',[ch]),prior=getLayerGMV(layer,'prior',[ch]);
+      const pct=lt>0?(cur/lt*100):0;
+      const isOnline=['eCommerce','K2K','API'].includes(ch);
+      html2+=`<tr><td style="padding-left:20px">${layer}</td><td>${isOnline?'<span style="color:var(--blue);font-weight:700">':''}${ch}${isOnline?'</span>':''}</td><td>${fmt$(cur)}</td><td>${fmt$(prior)}</td><td>${yoyStr(cur,prior)}</td><td>${pct.toFixed(1)}%</td></tr>`;
+    });
+  });
+  document.getElementById('channelBreakdownBody').innerHTML=html2;
+  document.getElementById('buySideBody').innerHTML=`
+    <tr><td style="font-weight:800;background:#dbeafe">Importer</td><td>~$753M (L12 est.)</td><td>~$48K (minimal)</td><td>~$630K</td><td>&lt;0.1%</td></tr>
+    <tr><td style="font-weight:800;background:#d1fae5">Wholesaler</td><td>~$280M (L12 est.)</td><td>~$7.8M</td><td>~$22M</td><td>~2.8%</td></tr>`;
+}
+
+// ================================================================
+// TAB 3: DEEP DIVES
+// ================================================================
+function buildFormatTable(){
+  const L12=['2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
+  const agg={};
+  WHOLESALER_FORMAT.forEach(r=>{
+    if(!L12.includes(r.m)) return;
+    const key=r.ch+'|'+r.div;
+    if(!agg[key]) agg[key]={ch:r.ch,div:r.div,gmv:0,cc:0};
+    agg[key].gmv+=r.gmv;agg[key].cc=Math.max(agg[key].cc,r.cc);
+  });
+  const rows=Object.values(agg).sort((a,b)=>b.gmv-a.gmv);
+  const chTotals={};
+  rows.forEach(r=>{chTotals[r.ch]=(chTotals[r.ch]||0)+r.gmv;});
+  let html='';
+  ['API','eCommerce','K2K','Offline'].forEach(ch=>{
+    const chRows=rows.filter(r=>r.ch===ch).sort((a,b)=>b.gmv-a.gmv);
+    const chTotal=chTotals[ch]||0;
+    chRows.forEach(r=>{
+      html+=`<tr><td>${r.div}</td><td>${r.ch}</td><td>${fmt$(r.gmv)}</td><td>${chTotal>0?(r.gmv/chTotal*100).toFixed(1):0}%</td><td>${r.cc}</td></tr>`;
+    });
+    html+=`<tr class="subtotal-row"><td colspan="2">— ${ch} Total</td><td>${fmt$(chTotal)}</td><td>100%</td><td>—</td></tr>`;
+  });
+  document.getElementById('formatTableBody').innerHTML=html;
+}
+function buildCohortTable(){
+  const btTotals={};
+  BUYER_COHORTS.forEach(r=>{btTotals[r.bt]=(btTotals[r.bt]||0)+r.gmv;});
+  let html='';
+  ['Florist','Event/Studio','Grocery/Mass','Sympathy','Other'].forEach(bt=>{
+    const btRows=BUYER_COHORTS.filter(r=>r.bt===bt).sort((a,b)=>b.gmv-a.gmv);
+    const total=btTotals[bt]||0;
+    btRows.forEach(r=>{
+      html+=`<tr><td>${r.bt}</td><td>${r.ch}</td><td>${fmt$(r.gmv)}</td><td>${r.bc.toLocaleString()}</td><td>${r.wc}</td><td>${total>0?(r.gmv/total*100).toFixed(1):0}%</td></tr>`;
+    });
+    html+=`<tr class="subtotal-row"><td colspan="2">— ${bt} Total</td><td>${fmt$(total)}</td><td>—</td><td>—</td><td>100%</td></tr>`;
+  });
+  document.getElementById('cohortTableBody').innerHTML=html;
+}
+function buildWSVendorTable(){
+  document.getElementById('wsVendorBody').innerHTML=WS_VENDORS.map((r,i)=>`
+    <tr><td>${i+1}</td><td style="max-width:200px;white-space:normal">${r.co}</td><td style="max-width:260px;white-space:normal">${r.vn}</td><td>${fmt$(r.gmv)}</td><td>${r.ma}</td><td>${r.self?'<span class="badge self">Self-supply</span>':''}</td></tr>`).join('');
+}
+function buildImpFarmTable(){
+  document.getElementById('impFarmBody').innerHTML=IMP_FARMS.map((r,i)=>{
+    let flag='';
+    if(r.flag==='self-supply') flag='<span class="badge self">Self-supply</span>';
+    else if(r.flag.includes('CFG')) flag='<span class="badge flag">CFG cluster</span>';
+    else if(r.flag.includes('dup')) flag='<span class="badge warn">Dup name</span>';
+    return `<tr><td>${i+1}</td><td style="max-width:280px;white-space:normal">${r.vn}</td><td>${fmt$(r.gmv)}</td><td>${r.bc}</td><td>${flag}</td></tr>`;
+  }).join('');
+}
+function buildFeeTable(){
+  document.getElementById('feeTableBody').innerHTML=FEES_DATA.map((r,i)=>{
+    const rate=r.gmv>0?(r.fee/r.gmv*100):0;
+    let note='';
+    if(r.ch==='API'&&rate<0.5) note='<span class="badge warn">Low rate API</span>';
+    if(r.co.startsWith('*')) note+=' <span class="badge flag">Starred</span>';
+    return `<tr><td>${i+1}</td><td style="max-width:220px;white-space:normal">${r.co}</td><td style="font-size:11px">${r.ind.replace('Floral - ','')}</td><td>${r.ch}</td><td>${fmt$(r.fee)}</td><td>${fmt$(r.gmv)}</td><td>${rate.toFixed(3)}%</td><td>${note}</td></tr>`;
+  }).join('');
+}
+
+// ================================================================
+// TAB 4: MATRIX (updated for 332 WS with Unestimated row)
+// ================================================================
+function buildMatrix(){
+  const tiers=['corePlus','eSuite','k2k','proc'];
+  const bands=MATRIX_DATA.bands;
+  let html='';
+  bands.forEach(band=>{
+    const a=MATRIX_DATA.active[band],p=MATRIX_DATA.prospect[band],ch=MATRIX_DATA.churned[band];
+    let totalActiveCount=0,totalActiveGMV=0;
+    tiers.forEach(t=>{totalActiveCount+=a[t].c;totalActiveGMV+=a[t].g;});
+    let row=`<tr><td class="matrix-band"${band==='Unestimated'?' style="color:#b26a00;background:#fffbeb!important"':''}>${band==='Unestimated'?'Unestimated (no GMV ref)':band}</td>`;
+    tiers.forEach(t=>{
+      row+=`<td class="matrix-cell"${band==='Unestimated'?' style="background:#fffbeb!important"':''}><span class="ct">${a[t].c||'—'}</span><span class="gv">${a[t].g?fmt$(a[t].g):'—'}</span></td>`;
+    });
+    row+=`<td class="matrix-cell matrix-total"><span class="ct">${totalActiveCount||'—'}</span><span class="gv" style="color:#94d1f5">${totalActiveGMV?fmt$(totalActiveGMV):'—'}</span></td>
+      <td class="matrix-cell matrix-prospect"><span class="ct">${p.c}</span><span class="gv">${p.g?fmt$(p.g):'—'}</span></td>
+      <td class="matrix-cell matrix-churned"><span class="ct">${ch.c||'—'}</span><span class="gv">${ch.g?fmt$(ch.g):'—'}</span></td>
+    </tr>`;
+    html+=row;
+  });
+  // Totals
+  let tc={corePlus:{c:0,g:0},eSuite:{c:0,g:0},k2k:{c:0,g:0},proc:{c:0,g:0}};
+  let tp={c:0,g:0},tch={c:0,g:0};
+  bands.forEach(band=>{
+    tiers.forEach(t=>{tc[t].c+=MATRIX_DATA.active[band][t].c;tc[t].g+=MATRIX_DATA.active[band][t].g;});
+    tp.c+=MATRIX_DATA.prospect[band].c;tp.g+=MATRIX_DATA.prospect[band].g;
+    tch.c+=MATRIX_DATA.churned[band].c;tch.g+=MATRIX_DATA.churned[band].g;
+  });
+  let grandC=0,grandG=0;tiers.forEach(t=>{grandC+=tc[t].c;grandG+=tc[t].g;});
+  let totRow=`<tr class="total-row"><td style="text-align:left;font-weight:900">TOTAL</td>`;
+  tiers.forEach(t=>{totRow+=`<td class="matrix-cell" style="background:#1e293b;color:#fff"><span class="ct">${tc[t].c}</span><span class="gv" style="color:#94d1f5">${tc[t].g?fmt$(tc[t].g):'—'}</span></td>`;});
+  totRow+=`<td class="matrix-cell" style="background:#0f172a;color:#fff"><span class="ct">${grandC}</span><span class="gv" style="color:#94d1f5">${fmt$(grandG)}</span></td>
+    <td class="matrix-cell" style="background:#1e40af;color:#fff"><span class="ct">${tp.c}</span><span class="gv" style="color:#bfdbfe">${tp.g?fmt$(tp.g):'—'}</span></td>
+    <td class="matrix-cell" style="background:#7f1d1d;color:#fff"><span class="ct">${tch.c}</span><span class="gv" style="color:#fecaca">—</span></td>
+  </tr>`;
+  html+=totRow;
+  document.getElementById('matrixBody').innerHTML=html;
+  document.getElementById('matrixFootnote').innerHTML=`
+    Source: codex_intelligence_summary.json + accounts_clean.json (684 accounts). Matrix data from 2026-08-18 — NOT updated (pending Laura reconciliation).
+    Wholesaler: 546 total (134 Client, 400 Prospect, 10 Pre-live, 2 Churned). +96 buyer proxy prospects from Snowflake importer buyer data.
+    "Unestimated" = Prospects with gmv_reference=0 — no GMV estimate yet.
+    Importer: 150 total. Grower: 65 total.
+    TAM coverage: 546 WS of ~977 identified (56% — was 46%). Whitespace: ~431 remaining. 618 profiles in Wholesaler Universe (Google Sheet). v5 data refresh: 2026-09-14.`;
+}
+
+function buildImpMatrix(){
+  const tiers=['corePlus','eSuite','k2k','proc'],bands=IMP_MATRIX_DATA.bands;
+  let html='';
+  bands.forEach(band=>{
+    const a=IMP_MATRIX_DATA.active[band],p=IMP_MATRIX_DATA.prospect[band];
+    let totalActiveCount=0,totalActiveGMV=0;
+    tiers.forEach(t=>{totalActiveCount+=a[t].c;totalActiveGMV+=a[t].g;});
+    let row=`<tr><td class="matrix-band">${band}</td>`;
+    tiers.forEach(t=>{row+=`<td class="matrix-cell"><span class="ct">${a[t].c}</span><span class="gv">${a[t].g?fmt$(a[t].g):'—'}</span></td>`;});
+    row+=`<td class="matrix-cell matrix-total" style="background:#1e3a5f;color:#fff"><span class="ct">${totalActiveCount}</span><span class="gv" style="color:#94d1f5">${totalActiveGMV?fmt$(totalActiveGMV):'—'}</span></td>
+      <td class="matrix-cell matrix-prospect"><span class="ct">${p.c}</span><span class="gv">—</span></td></tr>`;
+    html+=row;
+  });
+  let tc={corePlus:{c:0,g:0},eSuite:{c:0,g:0},k2k:{c:0,g:0},proc:{c:0,g:0}},tp={c:0};
+  bands.forEach(band=>{tiers.forEach(t=>{tc[t].c+=IMP_MATRIX_DATA.active[band][t].c;tc[t].g+=IMP_MATRIX_DATA.active[band][t].g;});tp.c+=IMP_MATRIX_DATA.prospect[band].c;});
+  let grandC=0,grandG=0;tiers.forEach(t=>{grandC+=tc[t].c;grandG+=tc[t].g;});
+  let totRow=`<tr class="total-row"><td style="text-align:left;font-weight:900">TOTAL</td>`;
+  tiers.forEach(t=>{totRow+=`<td class="matrix-cell" style="background:#1e293b;color:#fff"><span class="ct">${tc[t].c}</span><span class="gv" style="color:#94d1f5">${tc[t].g?fmt$(tc[t].g):'—'}</span></td>`;});
+  totRow+=`<td class="matrix-cell" style="background:#0f172a;color:#fff"><span class="ct">${grandC}</span><span class="gv" style="color:#94d1f5">${grandG?fmt$(grandG):'—'}</span></td>
+    <td class="matrix-cell" style="background:#1e40af;color:#fff"><span class="ct">${tp.c}</span><span class="gv" style="color:#bfdbfe">—</span></td></tr>`;
+  html+=totRow;
+  document.getElementById('impMatrixBody').innerHTML=html;
+}
+
+function buildGrowMatrix(){
+  const tiers=['corePlus','eSuite','k2k'],bands=GROW_MATRIX_DATA.bands;
+  let html='';
+  bands.forEach(band=>{
+    const a=GROW_MATRIX_DATA.active[band],p=GROW_MATRIX_DATA.prospect[band];
+    let totalActiveCount=0;tiers.forEach(t=>{totalActiveCount+=a[t].c;});
+    let row=`<tr><td class="matrix-band">${band}</td>`;
+    tiers.forEach(t=>{row+=`<td class="matrix-cell"><span class="ct">${a[t].c}</span><span class="gv">—</span></td>`;});
+    row+=`<td class="matrix-cell matrix-total" style="background:#1e3a5f;color:#fff"><span class="ct">${totalActiveCount}</span><span class="gv" style="color:#94d1f5">—</span></td>
+      <td class="matrix-cell matrix-prospect"><span class="ct">${p.c}</span><span class="gv">—</span></td></tr>`;
+    html+=row;
+  });
+  let tc={corePlus:{c:0},eSuite:{c:0},k2k:{c:0}},tp={c:0};
+  bands.forEach(band=>{tiers.forEach(t=>{tc[t].c+=GROW_MATRIX_DATA.active[band][t].c;});tp.c+=GROW_MATRIX_DATA.prospect[band].c;});
+  let grandC=tiers.reduce((s,t)=>s+tc[t].c,0);
+  let totRow=`<tr class="total-row"><td style="text-align:left;font-weight:900">TOTAL</td>`;
+  tiers.forEach(t=>{totRow+=`<td class="matrix-cell" style="background:#1e293b;color:#fff"><span class="ct">${tc[t].c}</span><span class="gv" style="color:#94d1f5">—</span></td>`;});
+  totRow+=`<td class="matrix-cell" style="background:#0f172a;color:#fff"><span class="ct">${grandC}</span><span class="gv" style="color:#94d1f5">—</span></td>
+    <td class="matrix-cell" style="background:#1e40af;color:#fff"><span class="ct">${tp.c}</span><span class="gv" style="color:#bfdbfe">—</span></td></tr>`;
+  html+=totRow;
+  document.getElementById('growMatrixBody').innerHTML=html;
+}
+
+// ================================================================
+// OPP SIZING — COLLAPSIBLE
+// ================================================================
+function toggleOpp(btn){
+  const body=btn.nextElementSibling,chevron=btn.querySelector('.opp-chevron'),isOpen=body.classList.contains('open');
+  document.querySelectorAll('.opp-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.opp-chevron').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){body.classList.add('open');chevron.classList.add('open');}
+}
+
+// ================================================================
+// INIT
+// ================================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  buildChart();
+  buildMonthlyTable();
+  buildEcosystem();
+  buildFormatTable();
+  buildCohortTable();
+  buildWSVendorTable();
+  buildImpFarmTable();
+  buildFeeTable();
+  buildMatrix();
+  buildImpMatrix();
+  buildGrowMatrix();
+});
+</script>
+</body>
+</html>
