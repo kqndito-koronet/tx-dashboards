@@ -119,13 +119,13 @@ tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
   <div class="grid4" style="margin-bottom:16px">
     <div class="card blueLine">
       <small>Aug 2026</small>
-      <strong>$188K</strong>
-      <span class="delta pos">+36% YoY</span>
+      <strong>$191K</strong>
+      <span class="delta pos">+37.7% YoY</span>
     </div>
     <div class="card okLine">
       <small>YTD (Jan&ndash;Aug)</small>
       <strong>$1.67M</strong>
-      <span class="delta pos">+34.3% YoY</span>
+      <span class="delta pos">+34.5% YoY</span>
     </div>
     <div class="card purpleLine">
       <small>Q3 Billed (Jul+Aug)</small>
@@ -158,15 +158,15 @@ tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
         <tr><th>Month</th><th>2025</th><th>2026</th><th>YoY %</th></tr>
       </thead>
       <tbody>
-        <tr><td>Jan</td><td>$122K</td><td>$173K</td><td class="pct-green">+42%</td></tr>
-        <tr><td>Feb</td><td>$133K</td><td>$196K</td><td class="pct-green">+47%</td></tr>
-        <tr><td>Mar</td><td>$134K</td><td>$183K</td><td class="pct-green">+37%</td></tr>
-        <tr><td>Apr</td><td>$146K</td><td>$189K</td><td class="pct-green">+29%</td></tr>
-        <tr><td>May</td><td>$158K</td><td>$204K</td><td class="pct-green">+29%</td></tr>
-        <tr><td>Jun</td><td>$145K</td><td>$188K</td><td class="pct-green">+30%</td></tr>
-        <tr><td>Jul</td><td>$126K</td><td>$155K</td><td class="pct-green">+23%</td></tr>
-        <tr><td>Aug</td><td>$138K</td><td>$188K</td><td class="pct-green">+36%</td></tr>
-        <tr class="total-row"><td>YTD</td><td>$1.10M</td><td>$1.48M</td><td>+34.3%</td></tr>
+        <tr><td>Jan</td><td>$117K</td><td>$143K</td><td class="pct-green">+22%</td></tr>
+        <tr><td>Feb</td><td>$164K</td><td>$209K</td><td class="pct-green">+28%</td></tr>
+        <tr><td>Mar</td><td>$143K</td><td>$191K</td><td class="pct-green">+34%</td></tr>
+        <tr><td>Apr</td><td>$199K</td><td>$289K</td><td class="pct-green">+45%</td></tr>
+        <tr><td>May</td><td>$237K</td><td>$306K</td><td class="pct-green">+29%</td></tr>
+        <tr><td>Jun</td><td>$136K</td><td>$191K</td><td class="pct-green">+40%</td></tr>
+        <tr><td>Jul</td><td>$110K</td><td>$155K</td><td class="pct-green">+40%</td></tr>
+        <tr><td>Aug</td><td>$139K</td><td>$191K</td><td class="pct-green">+38%</td></tr>
+        <tr class="total-row"><td>YTD</td><td>$1.25M</td><td>$1.67M</td><td>+34.5%</td></tr>
       </tbody>
     </table>
   </div>
@@ -404,15 +404,15 @@ tr.highlight-row td{background:#f0fdf4!important;font-weight:700}
 // SVG Bar Chart — 2025 vs 2026 monthly fees
 (function(){
   const data = [
-    {m:'Jan',v25:122,v26:173},{m:'Feb',v25:133,v26:196},{m:'Mar',v25:134,v26:183},
-    {m:'Apr',v25:146,v26:189},{m:'May',v25:158,v26:204},{m:'Jun',v25:145,v26:188},
-    {m:'Jul',v25:126,v26:155},{m:'Aug',v25:138,v26:188}
+    {m:'Jan',v25:117,v26:143},{m:'Feb',v25:164,v26:209},{m:'Mar',v25:143,v26:191},
+    {m:'Apr',v25:199,v26:289},{m:'May',v25:237,v26:306},{m:'Jun',v25:136,v26:191},
+    {m:'Jul',v25:110,v26:155},{m:'Aug',v25:139,v26:191}
   ];
   const svg=document.getElementById('feeChart');
   const tip=document.getElementById('feeTip');
   const W=900,H=300,pad={t:20,r:20,b:40,l:50};
   const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
-  const maxV=220;
+  const maxV=340;
   const bw=cw/data.length;
   const barW=bw*0.32;
 
