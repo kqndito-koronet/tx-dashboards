@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Board Slides — Wholesaler Digital Metrics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#e8e8e8;font-family:Arial,Calibri,"Segoe UI",sans-serif;padding:30px 0}
+.controls{text-align:center;margin-bottom:24px}
+.controls button{background:#1F3864;color:#fff;border:none;border-radius:4px;padding:10px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.controls button:hover{background:#162d52}
+.slide{
+  width:960px;height:540px;margin:0 auto 30px;background:#FFFFFF;
+  border:1px solid #ccc;box-shadow:0 4px 20px rgba(0,0,0,.12);
+  position:relative;padding:28px 36px 20px;overflow:hidden;
+}
+.slide-title{font-size:24px;font-weight:700;color:#333333;margin-bottom:4px;line-height:1.2}
+.slide-commentary{font-size:12px;color:#666666;margin-bottom:12px;line-height:1.4}
+.slide-footer{position:absolute;bottom:10px;left:36px;right:36px;display:flex;justify-content:space-between;align-items:flex-end}
+.slide-source{font-size:9px;color:#999999}
+.slide-conf{font-size:9px;color:#999999;font-style:italic}
+
+/* SVG chart */
+svg.chart{display:block;margin:0 auto}
+
+/* Data table */
+.data-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:11px}
+.data-table th{background:#1F3864;color:#fff;padding:5px 8px;text-align:center;font-weight:700;font-size:10px;border:1px solid #1F3864}
+.data-table th:first-child{text-align:left;min-width:50px}
+.data-table td{padding:4px 8px;text-align:center;border:1px solid #e0e0e0;font-size:11px}
+.data-table tr.row-2025 td{background:#fff}
+.data-table tr.row-2026 td{background:#F2F2F2}
+.data-table tr.row-yoy td{background:#fff;font-weight:700;font-size:10px}
+.data-table td:first-child{text-align:left;font-weight:700;color:#333}
+.yoy-pos{color:#00B050;font-weight:700}
+.yoy-neg{color:#FF0000;font-weight:700}
+
+@media print{
+  body{background:#fff;padding:0}
+  .controls{display:none}
+  .slide{box-shadow:none;border:none;page-break-after:always;margin:0 auto}
+  .slide:last-child{page-break-after:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button onclick="window.print()">Print / Export to PDF</button>
+</div>
+
+<script>
+const SLIDES = [
+  {
+    title: "Clients Selling Online to Wholesalers",
+    commentary: "97 importers selling online in Aug (+9% YoY). Steady growth from K2K connection expansion.",
+    source: "Source: Komet Sales — K2K Connection Data",
+    yLabel: "# Importers",
+    isCurrency: false,
+    data2025: [89,86,90,88,89,90,89,89],
+    data2026: [90,92,91,97,98,99,96,97]
+  },
+  {
+    title: "Wholesalers Buying Online",
+    commentary: "108 wholesalers buying digitally in Aug (+1% YoY). Procurement + eShop browsing + API channels.",
+    source: "Source: Komet Sales — Procurement + eShop + API",
+    yLabel: "# Wholesalers",
+    isCurrency: false,
+    data2025: [90,90,95,101,101,115,110,107],
+    data2026: [102,110,104,111,112,104,104,108]
+  },
+  {
+    title: "BUY GMV — Wholesaler Digital Procurement",
+    commentary: "$4.1M digital buy GMV in Aug (+44% YoY). Growth driven by intensity (same companies buying more), not new companies.",
+    source: "Source: Komet Sales — Procurement GMV",
+    yLabel: "$ Millions",
+    isCurrency: true,
+    data2025: [2.0,2.8,2.3,3.9,4.4,2.5,2.1,2.9],
+    data2026: [2.8,4.1,3.5,6.2,6.5,3.9,3.3,4.1]
+  },
+  {
+    title: "Wholesalers Selling Online",
+    commentary: "100 wholesalers selling online in Aug (-1% YoY). Flat base — growth requires new implementations going live.",
+    source: "Source: Komet Sales — eCom / eShop",
+    yLabel: "# Wholesalers",
+    isCurrency: false,
+    data2025: [91,92,95,100,100,112,105,101],
+    data2026: [99,101,100,105,107,98,98,100]
+  },
+  {
+    title: "Online Buyers from Wholesalers",
+    commentary: "2,393 online buyers in Aug (-23% YoY). Decline is 96% driven by Mayesh operational consolidation (Apr 2026). Excluding Mayesh, buyer count is approximately flat.",
+    source: "Source: Komet Sales — Distinct Buyer IDs",
+    yLabel: "# Buyers",
+    isCurrency: false,
+    data2025: [2485,3688,3237,3879,4365,3366,2826,3120],
+    data2026: [2611,4044,3527,3352,3523,2575,2224,2393]
+  },
+  {
+    title: "SELL GMV — Wholesaler Digital Sales",
+    commentary: "$5.6M digital sell GMV in Aug (-5% YoY). Mayesh collapse accounts for most of the decline. Excluding Mayesh, eCom GMV is growing +36%.",
+    source: "Source: Komet Sales — eCom GMV",
+    yLabel: "$ Millions",
+    isCurrency: true,
+    data2025: [5.0,9.0,7.5,10.7,12.9,7.2,5.0,5.9],
+    data2026: [4.9,9.5,7.9,9.4,10.0,6.0,4.7,5.6]
+  }
+];
+
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
+const COL_2025 = "#D9D9D9";
+const COL_2026 = "#1F3864";
+const COL_POS = "#00B050";
+const COL_NEG = "#FF0000";
+
+function fmtVal(v, isCurrency) {
+  if (isCurrency) return "$" + v.toFixed(1) + "M";
+  return v.toLocaleString();
+}
+
+function fmtYoY(pct) {
+  const sign = pct >= 0 ? "+" : "";
+  return sign + Math.round(pct) + "%";
+}
+
+function buildSlide(s, idx) {
+  const slide = document.createElement("div");
+  slide.className = "slide";
+  slide.id = "slide-" + (idx + 1);
+
+  // Compute YoY
+  const yoy = s.data2025.map((v, i) => {
+    if (v === 0) return 0;
+    return ((s.data2026[i] - v) / v) * 100;
+  });
+
+  // Chart dimensions
+  const chartW = 860, chartH = 200;
+  const padL = 55, padR = 20, padT = 30, padB = 30;
+  const plotW = chartW - padL - padR;
+  const plotH = chartH - padT - padB;
+
+  // Y-axis scale
+  const allVals = [...s.data2025, ...s.data2026];
+  const maxVal = Math.max(...allVals) * 1.15;
+  const minVal = 0;
+
+  // Bar geometry
+  const groupW = plotW / 8;
+  const barW = groupW * 0.32;
+  const gap = groupW * 0.06;
+
+  // Y-axis ticks (5 ticks)
+  const nTicks = 5;
+  const tickStep = maxVal / nTicks;
+
+  let svgContent = "";
+
+  // Grid lines + Y labels
+  for (let i = 0; i <= nTicks; i++) {
+    const val = tickStep * i;
+    const y = padT + plotH - (val / maxVal) * plotH;
+    if (i > 0) {
+      svgContent += `<line x1="${padL}" y1="${y}" x2="${chartW - padR}" y2="${y}" stroke="#E5E5E5" stroke-dasharray="3,3"/>`;
+    }
+    let label;
+    if (s.isCurrency) {
+      label = "$" + val.toFixed(1) + "M";
+    } else {
+      label = Math.round(val).toLocaleString();
+    }
+    svgContent += `<text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#999">${label}</text>`;
+  }
+
+  // Baseline
+  svgContent += `<line x1="${padL}" y1="${padT + plotH}" x2="${chartW - padR}" y2="${padT + plotH}" stroke="#CCCCCC"/>`;
+
+  // Bars
+  for (let i = 0; i < 8; i++) {
+    const groupX = padL + i * groupW;
+    const centerX = groupX + groupW / 2;
+
+    // 2025 bar
+    const h25 = (s.data2025[i] / maxVal) * plotH;
+    const x25 = centerX - barW - gap / 2;
+    const y25 = padT + plotH - h25;
+    svgContent += `<rect x="${x25}" y="${y25}" width="${barW}" height="${h25}" fill="${COL_2025}" rx="2"/>`;
+
+    // 2026 bar
+    const h26 = (s.data2026[i] / maxVal) * plotH;
+    const x26 = centerX + gap / 2;
+    const y26 = padT + plotH - h26;
+    svgContent += `<rect x="${x26}" y="${y26}" width="${barW}" height="${h26}" fill="${COL_2026}" rx="2"/>`;
+
+    // YoY label above 2026 bar
+    const yoyColor = yoy[i] >= 0 ? COL_POS : COL_NEG;
+    svgContent += `<text x="${x26 + barW / 2}" y="${y26 - 5}" text-anchor="middle" font-size="8" font-weight="700" fill="${yoyColor}">${fmtYoY(yoy[i])}</text>`;
+
+    // Month label
+    svgContent += `<text x="${centerX}" y="${padT + plotH + 16}" text-anchor="middle" font-size="10" fill="#666">${MONTHS[i]}</text>`;
+  }
+
+  // Legend (top-right)
+  const legX = chartW - padR - 120;
+  const legY = 10;
+  svgContent += `<rect x="${legX}" y="${legY}" width="12" height="10" fill="${COL_2025}" rx="1"/>`;
+  svgContent += `<text x="${legX + 16}" y="${legY + 9}" font-size="9" fill="#666">2025</text>`;
+  svgContent += `<rect x="${legX + 55}" y="${legY}" width="12" height="10" fill="${COL_2026}" rx="1"/>`;
+  svgContent += `<text x="${legX + 71}" y="${legY + 9}" font-size="9" fill="#666">2026</text>`;
+
+  const svg = `<svg class="chart" width="${chartW}" height="${chartH}" viewBox="0 0 ${chartW} ${chartH}">${svgContent}</svg>`;
+
+  // Data table
+  let table = `<table class="data-table"><thead><tr><th></th>`;
+  MONTHS.forEach(m => { table += `<th>${m}</th>`; });
+  table += `</tr></thead><tbody>`;
+
+  // 2025 row
+  table += `<tr class="row-2025"><td style="color:#999">2025</td>`;
+  s.data2025.forEach(v => {
+    table += `<td>${fmtVal(v, s.isCurrency)}</td>`;
+  });
+  table += `</tr>`;
+
+  // 2026 row
+  table += `<tr class="row-2026"><td style="color:${COL_2026}">2026</td>`;
+  s.data2026.forEach(v => {
+    table += `<td style="font-weight:700">${fmtVal(v, s.isCurrency)}</td>`;
+  });
+  table += `</tr>`;
+
+  // YoY row
+  table += `<tr class="row-yoy"><td>YoY%</td>`;
+  yoy.forEach(v => {
+    const cls = v >= 0 ? "yoy-pos" : "yoy-neg";
+    table += `<td class="${cls}">${fmtYoY(v)}</td>`;
+  });
+  table += `</tr></tbody></table>`;
+
+  slide.innerHTML = `
+    <div class="slide-title">${s.title}</div>
+    <div class="slide-commentary">${s.commentary}</div>
+    ${svg}
+    ${table}
+    <div class="slide-footer">
+      <span class="slide-source">${s.source}</span>
+      <span class="slide-conf">Confidential Information</span>
+    </div>
+  `;
+
+  return slide;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const body = document.body;
+  const controls = document.querySelector(".controls");
+  SLIDES.forEach((s, i) => {
+    body.appendChild(buildSlide(s, i));
+  });
+});
+</script>
+
+</body>
+</html>
