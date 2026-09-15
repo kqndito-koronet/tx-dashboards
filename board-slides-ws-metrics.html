@@ -6,7 +6,7 @@
 <title>Board Slides — Wholesaler Digital Metrics</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#e8e8e8;font-family:Arial,Calibri,"Segoe UI",sans-serif;padding:30px 0}
+body{background:#e8e8e8;font-family:Calibri,Arial,"Segoe UI",sans-serif;padding:30px 0}
 .controls{text-align:center;margin-bottom:24px}
 .controls button{background:#1F3864;color:#fff;border:none;border-radius:4px;padding:10px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
 .controls button:hover{background:#162d52}
@@ -15,26 +15,15 @@ body{background:#e8e8e8;font-family:Arial,Calibri,"Segoe UI",sans-serif;padding:
   border:1px solid #ccc;box-shadow:0 4px 20px rgba(0,0,0,.12);
   position:relative;padding:28px 36px 20px;overflow:hidden;
 }
-.slide-title{font-size:24px;font-weight:700;color:#333333;margin-bottom:4px;line-height:1.2}
-.slide-commentary{font-size:12px;color:#666666;margin-bottom:12px;line-height:1.4}
-.slide-footer{position:absolute;bottom:10px;left:36px;right:36px;display:flex;justify-content:space-between;align-items:flex-end}
-.slide-source{font-size:9px;color:#999999}
-.slide-conf{font-size:9px;color:#999999;font-style:italic}
+.slide-title{font-size:20px;font-weight:700;color:#333333;margin-bottom:3px;line-height:1.2}
+.slide-takeaway{font-size:11px;color:#888888;margin-bottom:10px;line-height:1.4}
+.chart-area{position:relative;width:888px;height:370px;margin:0 auto}
+.slide-note{position:absolute;bottom:28px;left:36px;right:140px;font-size:9px;color:#999999;line-height:1.3}
+.slide-conf{position:absolute;bottom:10px;right:36px;font-size:8px;color:#BBBBBB;font-style:italic}
+.slide-num{position:absolute;bottom:10px;right:36px;font-size:8px;color:#BBBBBB}
+.slide-bottom-right{position:absolute;bottom:10px;right:36px;text-align:right;font-size:8px;color:#BBBBBB;line-height:1.5}
 
-/* SVG chart */
-svg.chart{display:block;margin:0 auto}
-
-/* Data table */
-.data-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:11px}
-.data-table th{background:#1F3864;color:#fff;padding:5px 8px;text-align:center;font-weight:700;font-size:10px;border:1px solid #1F3864}
-.data-table th:first-child{text-align:left;min-width:50px}
-.data-table td{padding:4px 8px;text-align:center;border:1px solid #e0e0e0;font-size:11px}
-.data-table tr.row-2025 td{background:#fff}
-.data-table tr.row-2026 td{background:#F2F2F2}
-.data-table tr.row-yoy td{background:#fff;font-weight:700;font-size:10px}
-.data-table td:first-child{text-align:left;font-weight:700;color:#333}
-.yoy-pos{color:#00B050;font-weight:700}
-.yoy-neg{color:#FF0000;font-weight:700}
+svg.chart{display:block}
 
 @media print{
   body{background:#fff;padding:0}
@@ -53,70 +42,81 @@ svg.chart{display:block;margin:0 auto}
 <script>
 const SLIDES = [
   {
-    title: "Clients Selling Online to Wholesalers",
-    commentary: "97 importers selling online in Aug (+9% YoY). Steady growth from K2K connection expansion.",
-    source: "Source: Komet Sales — K2K Connection Data",
-    yLabel: "# Importers",
+    title: "Wholesaler Buying \u2014 Clients Selling Online",
+    takeaway: "97 importers/growers selling online to wholesalers in August, +9% YoY.",
+    note: "Note: Clients selling online includes importers and growers with eCommerce, K2K, or API sales in the month. ks_flag=TRUE. Excludes Axerrio.",
+    yLabel: "# Clients",
     isCurrency: false,
-    data2025: [89,86,90,88,89,90,89,89],
+    data2025: [89,86,90,88,89,90,89,89,91,92,92,92],
     data2026: [90,92,91,97,98,99,96,97]
   },
   {
-    title: "Wholesalers Buying Online",
-    commentary: "108 wholesalers buying digitally in Aug (+1% YoY). Procurement + eShop browsing + API channels.",
-    source: "Source: Komet Sales — Procurement + eShop + API",
+    title: "Wholesaler Buying \u2014 Wholesalers Buying Online",
+    takeaway: "108 wholesalers buying digitally in August, +1% YoY from 107.",
+    note: "Note: Wholesalers buying online includes companies with Procurement, Web (eShop browsing), or API purchase activity in the month per channels.json. Source: PROCUREMENT_DETAILS. ks_flag=TRUE.",
     yLabel: "# Wholesalers",
     isCurrency: false,
-    data2025: [90,90,95,101,101,115,110,107],
+    data2025: [90,90,95,101,101,115,110,107,101,103,100,99],
     data2026: [102,110,104,111,112,104,104,108]
   },
   {
-    title: "BUY GMV — Wholesaler Digital Procurement",
-    commentary: "$4.1M digital buy GMV in Aug (+44% YoY). Growth driven by intensity (same companies buying more), not new companies.",
-    source: "Source: Komet Sales — Procurement GMV",
+    title: "Wholesaler Buying \u2014 Digital BUY GMV",
+    takeaway: "$4.1M digital procurement GMV in August, +44% YoY. Growth driven by intensity \u2014 same ~100 companies buying more.",
+    note: "Note: Digital BUY GMV = sum of total_cost from Procurement + Web + API channels in PROCUREMENT_DETAILS. Buyer industry = Floral - Wholesaler. ks_flag=TRUE.",
     yLabel: "$ Millions",
     isCurrency: true,
-    data2025: [2.0,2.8,2.3,3.9,4.4,2.5,2.1,2.9],
+    data2025: [2.0,2.8,2.3,3.9,4.4,2.5,2.1,2.9,3.9,4.0,3.0,2.7],
     data2026: [2.8,4.1,3.5,6.2,6.5,3.9,3.3,4.1]
   },
   {
-    title: "Wholesalers Selling Online",
-    commentary: "100 wholesalers selling online in Aug (-1% YoY). Flat base — growth requires new implementations going live.",
-    source: "Source: Komet Sales — eCom / eShop",
+    title: "Wholesaler Selling \u2014 Wholesalers Selling Online",
+    takeaway: "100 wholesalers selling online in August, -1% YoY. Flat base \u2014 growth requires new implementations.",
+    note: "Note: Wholesalers selling online includes companies with eCommerce, K2K, or API sell activity. Source: SALE_DETAILS. Seller industry = Floral - Wholesaler. ks_flag=TRUE.",
     yLabel: "# Wholesalers",
     isCurrency: false,
-    data2025: [91,92,95,100,100,112,105,101],
+    data2025: [91,92,95,100,100,112,105,101,99,101,95,96],
     data2026: [99,101,100,105,107,98,98,100]
   },
   {
-    title: "Online Buyers from Wholesalers",
-    commentary: "2,393 online buyers in Aug (-23% YoY). Decline is 96% driven by Mayesh operational consolidation (Apr 2026). Excluding Mayesh, buyer count is approximately flat.",
-    source: "Source: Komet Sales — Distinct Buyer IDs",
+    title: "Wholesaler Selling \u2014 Online Buyers",
+    takeaway: "2,393 online buyers from wholesalers in August, -23% YoY. Decline is Mayesh-driven (consolidated operations Apr 2026). Ex-Mayesh: +18%.",
+    note: "Note: Online Buyers = distinct customer_id with eCommerce, K2K, or API purchases from Floral - Wholesaler sellers. ks_flag=TRUE. Mayesh operational consolidation Apr 2026 reduced buyer count by ~1,400.",
     yLabel: "# Buyers",
     isCurrency: false,
-    data2025: [2485,3688,3237,3879,4365,3366,2826,3120],
+    data2025: [2485,3688,3237,3879,4365,3366,2826,3120,3680,3860,3343,3000],
     data2026: [2611,4044,3527,3352,3523,2575,2224,2393]
   },
   {
-    title: "SELL GMV — Wholesaler Digital Sales",
-    commentary: "$5.6M digital sell GMV in Aug (-5% YoY). Mayesh collapse accounts for most of the decline. Excluding Mayesh, eCom GMV is growing +36%.",
-    source: "Source: Komet Sales — eCom GMV",
+    title: "Wholesaler Selling \u2014 Digital SELL GMV",
+    takeaway: "$5.6M digital sell GMV in August, -5% YoY. Mayesh -$2.4M. Excluding Mayesh, digital sell GMV +20%.",
+    note: "Note: Digital SELL GMV = sum of sales from eCommerce + K2K + API channels. Seller industry = Floral - Wholesaler. ks_flag=TRUE, sales<$100K. Mayesh -42% due to operational consolidation.",
     yLabel: "$ Millions",
     isCurrency: true,
-    data2025: [5.0,9.0,7.5,10.7,12.9,7.2,5.0,5.9],
+    data2025: [5.0,9.0,7.5,10.7,12.9,7.2,5.0,5.9,8.5,9.6,7.1,5.9],
     data2026: [4.9,9.5,7.9,9.4,10.0,6.0,4.7,5.6]
   }
 ];
 
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
-const COL_2025 = "#D9D9D9";
+const MONTHS_FULL = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS_2026 = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
+
+const COL_2025 = "#B4C7E7";
 const COL_2026 = "#1F3864";
-const COL_POS = "#00B050";
-const COL_NEG = "#FF0000";
+const COL_LINE = "#00B050";
 
 function fmtVal(v, isCurrency) {
+  if (isCurrency) {
+    if (v >= 1) return "$" + v.toFixed(1) + "M";
+    return "$" + v.toFixed(2) + "M";
+  }
+  if (v >= 1000) return (v/1000).toFixed(1) + "K";
+  return Math.round(v).toLocaleString();
+}
+
+function fmtAxisVal(v, isCurrency) {
   if (isCurrency) return "$" + v.toFixed(1) + "M";
-  return v.toLocaleString();
+  if (v >= 1000) return (v/1000).toFixed(1) + "K";
+  return Math.round(v).toLocaleString();
 }
 
 function fmtYoY(pct) {
@@ -127,126 +127,177 @@ function fmtYoY(pct) {
 function buildSlide(s, idx) {
   const slide = document.createElement("div");
   slide.className = "slide";
-  slide.id = "slide-" + (idx + 1);
 
-  // Compute YoY
-  const yoy = s.data2025.map((v, i) => {
-    if (v === 0) return 0;
-    return ((s.data2026[i] - v) / v) * 100;
-  });
+  // All months on X-axis: 12 for 2025 + 8 for 2026 = 20 positions
+  // But the format shows them as one continuous axis: Jan-Dec (2025) | Jan-Aug (2026)
+  // Actually, looking at the spec more carefully:
+  // The bars show 2025 and 2026 SIDE BY SIDE for each month (grouped bar chart)
+  // 2025 has Jan-Dec (12 months), 2026 has Jan-Aug (8 months)
+  // So for months Jan-Aug, there are paired bars. For Sep-Dec, only 2025 bars.
+  // YoY line only for Jan-Aug where both years exist.
+
+  const n2025 = s.data2025.length; // 12
+  const n2026 = s.data2026.length; // 8
+  const nMonths = 12; // Always show 12 month positions
+
+  // Compute YoY for overlapping months (Jan-Aug)
+  const yoy = [];
+  for (let i = 0; i < n2026; i++) {
+    if (s.data2025[i] === 0) yoy.push(0);
+    else yoy.push(((s.data2026[i] - s.data2025[i]) / s.data2025[i]) * 100);
+  }
 
   // Chart dimensions
-  const chartW = 860, chartH = 200;
-  const padL = 55, padR = 20, padT = 30, padB = 30;
+  const chartW = 888, chartH = 370;
+  const padL = 52, padR = 52, padT = 30, padB = 28;
   const plotW = chartW - padL - padR;
   const plotH = chartH - padT - padB;
 
-  // Y-axis scale
+  // Primary Y-axis scale (bars)
   const allVals = [...s.data2025, ...s.data2026];
-  const maxVal = Math.max(...allVals) * 1.15;
-  const minVal = 0;
+  const maxDataVal = Math.max(...allVals);
+  const maxVal = maxDataVal * 1.18;
+
+  // Secondary Y-axis scale (YoY%)
+  const minYoY = Math.min(...yoy);
+  const maxYoY = Math.max(...yoy);
+  const yoyRange = Math.max(Math.abs(minYoY), Math.abs(maxYoY));
+  const yoyMax = Math.ceil((yoyRange + 10) / 10) * 10;
+  const yoyMin = minYoY < 0 ? -yoyMax : -10;
+  const yoyTop = yoyMax;
 
   // Bar geometry
-  const groupW = plotW / 8;
-  const barW = groupW * 0.32;
-  const gap = groupW * 0.06;
+  const groupW = plotW / nMonths;
+  const barW = groupW * 0.34;
+  const gap = groupW * 0.04;
 
-  // Y-axis ticks (5 ticks)
+  // Y-axis ticks (5 ticks for primary)
   const nTicks = 5;
-  const tickStep = maxVal / nTicks;
+  // Nice tick values
+  const rawStep = maxVal / nTicks;
+  let tickStep;
+  if (s.isCurrency) {
+    tickStep = Math.ceil(rawStep * 2) / 2; // round to 0.5
+  } else if (maxDataVal > 1000) {
+    tickStep = Math.ceil(rawStep / 500) * 500;
+  } else {
+    tickStep = Math.ceil(rawStep / 10) * 10;
+  }
+  const adjustedMax = tickStep * nTicks;
 
   let svgContent = "";
 
-  // Grid lines + Y labels
+  // Grid lines + Primary Y labels (left)
   for (let i = 0; i <= nTicks; i++) {
     const val = tickStep * i;
-    const y = padT + plotH - (val / maxVal) * plotH;
+    const y = padT + plotH - (val / adjustedMax) * plotH;
     if (i > 0) {
-      svgContent += `<line x1="${padL}" y1="${y}" x2="${chartW - padR}" y2="${y}" stroke="#E5E5E5" stroke-dasharray="3,3"/>`;
+      svgContent += `<line x1="${padL}" y1="${y}" x2="${chartW - padR}" y2="${y}" stroke="#ECECEC" stroke-width="0.5"/>`;
     }
-    let label;
-    if (s.isCurrency) {
-      label = "$" + val.toFixed(1) + "M";
-    } else {
-      label = Math.round(val).toLocaleString();
-    }
-    svgContent += `<text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#999">${label}</text>`;
+    svgContent += `<text x="${padL - 8}" y="${y + 3}" text-anchor="end" font-size="9" fill="#999" font-family="Calibri,Arial,sans-serif">${fmtAxisVal(val, s.isCurrency)}</text>`;
+  }
+
+  // Secondary Y labels (right) - YoY%
+  const yoyTicks = 5;
+  const yoyTickStep = Math.ceil((yoyTop - yoyMin) / yoyTicks / 10) * 10 || 10;
+  const yoyAxisMin = yoyMin < 0 ? -yoyTickStep * Math.ceil(Math.abs(yoyMin) / yoyTickStep) : 0;
+  const yoyAxisMax = yoyTickStep * Math.ceil(yoyTop / yoyTickStep);
+  const yoyAxisRange = yoyAxisMax - yoyAxisMin;
+
+  for (let v = yoyAxisMin; v <= yoyAxisMax; v += yoyTickStep) {
+    const frac = (v - yoyAxisMin) / yoyAxisRange;
+    const y = padT + plotH - frac * plotH;
+    const label = (v >= 0 ? "+" : "") + v + "%";
+    svgContent += `<text x="${chartW - padR + 8}" y="${y + 3}" text-anchor="start" font-size="9" fill="#999" font-family="Calibri,Arial,sans-serif">${label}</text>`;
   }
 
   // Baseline
-  svgContent += `<line x1="${padL}" y1="${padT + plotH}" x2="${chartW - padR}" y2="${padT + plotH}" stroke="#CCCCCC"/>`;
+  svgContent += `<line x1="${padL}" y1="${padT + plotH}" x2="${chartW - padR}" y2="${padT + plotH}" stroke="#CCCCCC" stroke-width="0.5"/>`;
+  // Left axis line
+  svgContent += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + plotH}" stroke="#CCCCCC" stroke-width="0.5"/>`;
+  // Right axis line
+  svgContent += `<line x1="${chartW - padR}" y1="${padT}" x2="${chartW - padR}" y2="${padT + plotH}" stroke="#CCCCCC" stroke-width="0.5"/>`;
 
-  // Bars
-  for (let i = 0; i < 8; i++) {
+  // Bars for each month
+  for (let i = 0; i < nMonths; i++) {
     const groupX = padL + i * groupW;
     const centerX = groupX + groupW / 2;
 
-    // 2025 bar
-    const h25 = (s.data2025[i] / maxVal) * plotH;
-    const x25 = centerX - barW - gap / 2;
-    const y25 = padT + plotH - h25;
-    svgContent += `<rect x="${x25}" y="${y25}" width="${barW}" height="${h25}" fill="${COL_2025}" rx="2"/>`;
+    const has2025 = i < n2025;
+    const has2026 = i < n2026;
 
-    // 2026 bar
-    const h26 = (s.data2026[i] / maxVal) * plotH;
-    const x26 = centerX + gap / 2;
-    const y26 = padT + plotH - h26;
-    svgContent += `<rect x="${x26}" y="${y26}" width="${barW}" height="${h26}" fill="${COL_2026}" rx="2"/>`;
+    if (has2025 && has2026) {
+      // Both years: paired bars
+      const h25 = (s.data2025[i] / adjustedMax) * plotH;
+      const x25 = centerX - barW - gap / 2;
+      const y25 = padT + plotH - h25;
+      svgContent += `<rect x="${x25}" y="${y25}" width="${barW}" height="${h25}" fill="${COL_2025}" rx="2"/>`;
 
-    // YoY label above 2026 bar
-    const yoyColor = yoy[i] >= 0 ? COL_POS : COL_NEG;
-    svgContent += `<text x="${x26 + barW / 2}" y="${y26 - 5}" text-anchor="middle" font-size="8" font-weight="700" fill="${yoyColor}">${fmtYoY(yoy[i])}</text>`;
+      const h26 = (s.data2026[i] / adjustedMax) * plotH;
+      const x26 = centerX + gap / 2;
+      const y26 = padT + plotH - h26;
+      svgContent += `<rect x="${x26}" y="${y26}" width="${barW}" height="${h26}" fill="${COL_2026}" rx="2"/>`;
+    } else if (has2025) {
+      // Only 2025: single centered bar
+      const h25 = (s.data2025[i] / adjustedMax) * plotH;
+      const x25 = centerX - barW / 2;
+      const y25 = padT + plotH - h25;
+      svgContent += `<rect x="${x25}" y="${y25}" width="${barW}" height="${h25}" fill="${COL_2025}" rx="2"/>`;
+    }
 
     // Month label
-    svgContent += `<text x="${centerX}" y="${padT + plotH + 16}" text-anchor="middle" font-size="10" fill="#666">${MONTHS[i]}</text>`;
+    svgContent += `<text x="${centerX}" y="${padT + plotH + 16}" text-anchor="middle" font-size="9" fill="#888" font-family="Calibri,Arial,sans-serif">${MONTHS_FULL[i]}</text>`;
   }
 
-  // Legend (top-right)
-  const legX = chartW - padR - 120;
-  const legY = 10;
+  // YoY% line (only for months with both years: Jan-Aug)
+  let linePoints = [];
+  for (let i = 0; i < n2026; i++) {
+    const groupX = padL + i * groupW;
+    const centerX = groupX + groupW / 2;
+    const frac = (yoy[i] - yoyAxisMin) / yoyAxisRange;
+    const y = padT + plotH - frac * plotH;
+    linePoints.push({x: centerX, y: y, val: yoy[i]});
+  }
+
+  // Draw line
+  if (linePoints.length > 1) {
+    let pathD = `M ${linePoints[0].x} ${linePoints[0].y}`;
+    for (let i = 1; i < linePoints.length; i++) {
+      pathD += ` L ${linePoints[i].x} ${linePoints[i].y}`;
+    }
+    svgContent += `<path d="${pathD}" fill="none" stroke="${COL_LINE}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+    // Dots and labels on the line
+    for (let i = 0; i < linePoints.length; i++) {
+      const p = linePoints[i];
+      svgContent += `<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="${COL_LINE}" stroke="#fff" stroke-width="1.5"/>`;
+      // Label above or below the dot
+      const labelY = p.y - 10;
+      svgContent += `<text x="${p.x}" y="${labelY}" text-anchor="middle" font-size="8" font-weight="700" fill="${COL_LINE}" font-family="Calibri,Arial,sans-serif">${fmtYoY(p.val)}</text>`;
+    }
+  }
+
+  // Legend (top-right area)
+  const legX = chartW - padR - 200;
+  const legY = 6;
   svgContent += `<rect x="${legX}" y="${legY}" width="12" height="10" fill="${COL_2025}" rx="1"/>`;
-  svgContent += `<text x="${legX + 16}" y="${legY + 9}" font-size="9" fill="#666">2025</text>`;
+  svgContent += `<text x="${legX + 16}" y="${legY + 9}" font-size="9" fill="#888" font-family="Calibri,Arial,sans-serif">2025</text>`;
   svgContent += `<rect x="${legX + 55}" y="${legY}" width="12" height="10" fill="${COL_2026}" rx="1"/>`;
-  svgContent += `<text x="${legX + 71}" y="${legY + 9}" font-size="9" fill="#666">2026</text>`;
+  svgContent += `<text x="${legX + 71}" y="${legY + 9}" font-size="9" fill="#888" font-family="Calibri,Arial,sans-serif">2026</text>`;
+  svgContent += `<line x1="${legX + 112}" y1="${legY + 5}" x2="${legX + 132}" y2="${legY + 5}" stroke="${COL_LINE}" stroke-width="2.5"/>`;
+  svgContent += `<circle cx="${legX + 122}" cy="${legY + 5}" r="3" fill="${COL_LINE}"/>`;
+  svgContent += `<text x="${legX + 138}" y="${legY + 9}" font-size="9" fill="#888" font-family="Calibri,Arial,sans-serif">YoY %</text>`;
 
   const svg = `<svg class="chart" width="${chartW}" height="${chartH}" viewBox="0 0 ${chartW} ${chartH}">${svgContent}</svg>`;
 
-  // Data table
-  let table = `<table class="data-table"><thead><tr><th></th>`;
-  MONTHS.forEach(m => { table += `<th>${m}</th>`; });
-  table += `</tr></thead><tbody>`;
-
-  // 2025 row
-  table += `<tr class="row-2025"><td style="color:#999">2025</td>`;
-  s.data2025.forEach(v => {
-    table += `<td>${fmtVal(v, s.isCurrency)}</td>`;
-  });
-  table += `</tr>`;
-
-  // 2026 row
-  table += `<tr class="row-2026"><td style="color:${COL_2026}">2026</td>`;
-  s.data2026.forEach(v => {
-    table += `<td style="font-weight:700">${fmtVal(v, s.isCurrency)}</td>`;
-  });
-  table += `</tr>`;
-
-  // YoY row
-  table += `<tr class="row-yoy"><td>YoY%</td>`;
-  yoy.forEach(v => {
-    const cls = v >= 0 ? "yoy-pos" : "yoy-neg";
-    table += `<td class="${cls}">${fmtYoY(v)}</td>`;
-  });
-  table += `</tr></tbody></table>`;
+  const slideNum = idx + 1;
 
   slide.innerHTML = `
     <div class="slide-title">${s.title}</div>
-    <div class="slide-commentary">${s.commentary}</div>
-    ${svg}
-    ${table}
-    <div class="slide-footer">
-      <span class="slide-source">${s.source}</span>
-      <span class="slide-conf">Confidential Information</span>
-    </div>
+    <div class="slide-takeaway">${s.takeaway}</div>
+    <div class="chart-area">${svg}</div>
+    <div class="slide-note">${s.note}</div>
+    <div class="slide-bottom-right">Confidential Information<br>${slideNum}</div>
   `;
 
   return slide;
@@ -254,7 +305,6 @@ function buildSlide(s, idx) {
 
 document.addEventListener("DOMContentLoaded", function() {
   const body = document.body;
-  const controls = document.querySelector(".controls");
   SLIDES.forEach((s, i) => {
     body.appendChild(buildSlide(s, i));
   });
