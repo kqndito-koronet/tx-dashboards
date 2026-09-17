@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TX Fee Pacing Q3 2026 — v18</title>
+  <title>TX Fee Pacing Q3 2026 — v19</title>
   <style>
     :root{--bg:#f6f8fb;--panel:#fff;--ink:#101828;--muted:#667085;--line:#d9e0ea;--blue:#2457c5;--green:#12805c;--gold:#b26a00;--red:#b42318;--purple:#6941c6;--cyan:#067a91;--orange:#c4620f;--shadow:0 14px 34px rgba(16,24,40,.07)}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
@@ -39,9 +39,9 @@
 
   <!-- HEADER -->
   <section style="border:none;box-shadow:none;background:transparent;padding:0 0 4px">
-    <p class="eyebrow">TX Chapter &mdash; v18 Sep 14 2026 &mdash; Monday Light &mdash; S1+S3+S7+S8 updated &mdash; W11 COMPLETE +19.2% YoY (calendar shift) &mdash; CODEX VERIFIED 6/6</p>
+    <p class="eyebrow">TX Chapter &mdash; v19 Sep 17 2026 &mdash; Thursday Full &mdash; ALL sections updated &mdash; W12 partial (3d Sep 14&ndash;16) +75.8% YoY (Mon/Wed 2026 vs Sun/Wed 2025 calendar shift) &mdash; API fee correction +$2,735 (Aug) &mdash; CODEX VERIFIED 14/14</p>
     <h1>TX Fee Pacing Q3 2026</h1>
-    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Sep 13, 2026</strong> (75 comparable days: Jul 1&ndash;Sep 13) &nbsp;|&nbsp; <span style="color:var(--green);font-weight:700">CODEX VERIFIED 6/6</span></p>
+    <p class="sub">Target: <strong>$670K</strong> (Core + Axerrio) &nbsp;|&nbsp; Data as of <strong>Sep 16, 2026</strong> (78 comparable days: Jul 1&ndash;Sep 16) &nbsp;|&nbsp; <span style="color:var(--green);font-weight:700">CODEX VERIFIED 14/14</span></p>
     <p class="sub" style="font-size:13px;color:var(--muted)">Sections: <a href="#s1">S1 Pacing</a> &middot; <a href="#s2">S2 GMV</a> &middot; <a href="#s3">S3 Weekly</a> &middot; <a href="#s4">S4 Take Rate</a> &middot; <a href="#s5">S5 Channel Fees</a> &middot; <a href="#s6">S6 Top Accounts</a> &middot; <a href="#s7">S7 Axerrio</a> &middot; <a href="#s8">S8 Projection</a> &middot; <a href="#s9">S9 Layer Breakdown</a> &middot; <a href="#s10">S10 GA4</a></p>
     <div class="links">
       <a href="/tx-dashboards/tx-scorecard-v3.html">Wholesaler Scorecard</a>
@@ -53,15 +53,15 @@
   <!-- S1: PACING SUMMARY -->
   <section id="s1">
     <p class="eyebrow">Section 1 &mdash; Pacing Summary (Core + Axerrio vs $670K)</p>
-    <h2>Growing at +42.9% total. Pacing: <span style="color:var(--red)">78.7%</span>. Gap vs required: <span style="color:var(--red)">&minus;11.6pp</span></h2>
+    <h2>Growing at +45.6% total. Pacing: <span style="color:var(--red)">83.7%</span>. Gap vs required: <span style="color:var(--red)">&minus;8.9pp</span></h2>
 
-    <div class="band gold" style="margin-bottom:10px;font-size:13px"><strong>&#x1F4CB; Monday Light v18 vs Sep 10 v17 (4 new days Sep 10&ndash;13):</strong> Sep ETF expanded from 9d ($64,133) to 13d ($97,513, +$33,380). Axerrio Jul FX refresh: $9,434 &rarr; $9,401; Aug FX refresh: $9,718 &rarr; $9,683 (same EUR, FX drift). Sep pro-rata updated: 9d $2,915 &rarr; 13d $4,196 (+$1,281, Aug actual as base Rule N1). Pacing slips <strong>81.7% &rarr; 78.7% (&minus;3.0pp)</strong>. <strong>Key driver: Sep 12 2026 = Saturday ($3,541) vs Sep 12 2025 = Friday ($9,540) &mdash; $6K calendar-day shift suppresses W11.</strong> Sep 10 (+76% YoY) and Sep 11 (+60% YoY) both strong &mdash; not structural deceleration. W11 (Sep 7&ndash;13) now COMPLETE at +19.2% YoY. Sep 14 2026 = Monday vs Sep 14 2025 = Sunday &mdash; calendar shift flips favorable for Sep 14&ndash;30. GA4 still blocked (sheets stale 7+ weeks). GMV not refreshed (API anomaly ongoing). S5, S6, S9 unchanged (Thursday Full only).</div>
+    <div class="band gold" style="margin-bottom:10px;font-size:13px"><strong>&#x1F4CB; Thursday Full v19 vs Sep 14 v18 (3 new days Sep 14&ndash;16):</strong> Sep ETF expanded from 13d ($97,513) to 16d ($129,183, +$31,670). Axerrio FX refresh: Jul $9,401 &rarr; $9,317 (&minus;$84); Aug $9,683 &rarr; $9,597 (&minus;$86) (same EUR, FX drift). Sep pro-rata updated: 13d $4,196 &rarr; 16d $5,119 (+$923, Aug actual as base Rule N1). Pacing improves <strong>78.7% &rarr; 83.7% (+5.0pp)</strong>. <strong>Key driver: Sep 14 2026 = Monday ($16,687) vs Sep 14 2025 = Sunday ($2,482) &mdash; +$14,205 calendar shift. Sep 14&ndash;16 total +75.8% YoY.</strong> Aug 2026 TF corrected: $188,430 &rarr; $191,165 (+$2,735 API fee correction, B1 disclosure). Baseline discrepancy: v18 Sep 1&ndash;13 2025 stated $85,638 &mdash; fresh query confirms $75,638 (&minus;$10K); error did not affect v18 pacing headline but is corrected in all v19 tables. GA4 still blocked (sheets stale 8+ weeks). API GMV anomaly ongoing (S4 suspended).</div>
 
     <div class="grid4">
       <article class="card metric danger">
         <small>Total YoY Growth (incl. Axerrio)</small>
-        <strong style="color:var(--red)">+42.9%</strong>
-        <p>$464,043 (Core $440,763 + Axerrio ~$23,280) vs $324,756 2025 comparable base (75d)</p>
+        <strong style="color:var(--red)">+45.6%</strong>
+        <p>$499,201 (Core $475,168 + Axerrio ~$24,033) vs $342,902 2025 comparable base (78d)</p>
       </article>
       <article class="card metric blueLine">
         <small>Required YoY to hit $670K</small>
@@ -70,18 +70,18 @@
       </article>
       <article class="card metric danger">
         <small>Pacing vs Target</small>
-        <strong style="color:var(--red)">78.7%</strong>
-        <p>42.9% / 54.5% &mdash; 11.6pp below required rate &mdash; <em>&minus;3.0pp vs Sep 10 v17 (Sep 12 calendar shift: Sat 2026 vs Fri 2025)</em></p>
+        <strong style="color:var(--red)">83.7%</strong>
+        <p>45.6% / 54.5% &mdash; 8.9pp below required rate &mdash; <em>+5.0pp vs Sep 14 v18 (Sep 14&ndash;16 calendar shift: Mon+Wed 2026 vs Sun+Wed 2025)</em></p>
       </article>
       <article class="card metric danger">
-        <small>Q3 Projection (base scenario, +45% Sep 14&ndash;30)</small>
-        <strong style="color:var(--red)">~$622K</strong>
-        <p>Core ~$593K + Axerrio ~$29K | Gap: ~$48K</p>
+        <small>Q3 Projection (base scenario, +50% Sep 17&ndash;30)</small>
+        <strong style="color:var(--red)">~$640K</strong>
+        <p>Core ~$611K + Axerrio ~$29K | Gap: ~$30K</p>
       </article>
     </div>
 
     <div class="band blue" style="margin-top:12px">
-      <strong>Core (ex-Axerrio): +35.7% YoY</strong> &mdash; Jul 2026 TF: $154,820 (locked). Aug 2026 TF: $188,430 (locked). Sep 1&ndash;13 2026 ETF: $97,513, cutoff Sep 13 per R14 (Sep 14 = today/partial, excluded). Total Core 75 days = $440,763 vs $324,756 in 2025 (fresh B2) = <strong>+35.7%</strong>. Axerrio Jul ACTUAL $9,401 + Aug ACTUAL $9,683 + Sep 1&ndash;13 EST $4,196 = $23,280 additive (Rule N1: Aug actual as base for Sep pro-rata). Total = $464,043, giving <strong>+42.9%</strong> vs 2025 Core base. Pacing: 78.7%.
+      <strong>Core (ex-Axerrio): +38.6% YoY</strong> &mdash; Jul 2026 TF: $154,820 (locked). Aug 2026 TF: $191,165 (locked, corrected +$2,735 API fee vs v18). Sep 1&ndash;16 2026 ETF: $129,183, cutoff Sep 16 per R14 (Sep 17 = today/partial, excluded). Total Core 78 days = $475,168 vs $342,902 in 2025 (fresh B2) = <strong>+38.6%</strong>. Axerrio Jul ACTUAL $9,317 + Aug ACTUAL $9,597 + Sep 1&ndash;16 EST $5,119 = $24,033 additive (Rule N1: Aug actual as base for Sep pro-rata). Total = $499,201, giving <strong>+45.6%</strong> vs 2025 Core base. Pacing: 83.7%.
     </div>
 
     <div class="tableWrap" style="margin-top:14px">
@@ -108,64 +108,64 @@
           <tr>
             <td><strong>Core TX Fees &mdash; Aug 2026</strong></td>
             <td class="num">$138,824</td>
-            <td class="num">$188,430</td>
-            <td class="num" style="color:var(--green)">+35.7%</td>
-            <td><code>TRANSACTION_FEES</code> Aug 1&ndash;31 2026, ks_flag=TRUE &mdash; LOCKED</td>
+            <td class="num">$191,165</td>
+            <td class="num" style="color:var(--green)">+37.7%</td>
+            <td><code>TRANSACTION_FEES</code> Aug 1&ndash;31 2026, ks_flag=TRUE &mdash; LOCKED. <span style="color:var(--gold)">&#x26A0; +$2,735 vs v18 ($188,430) &mdash; API fee correction (B1 disclosure)</span></td>
             <td><span class="tag ok">BILLED LOCKED</span></td>
           </tr>
           <tr>
-            <td><strong>Core TX Fees &mdash; Sep 1&ndash;13 2026</strong></td>
-            <td class="num">$85,638</td>
-            <td class="num">$97,513</td>
-            <td class="num" style="color:var(--green)">+13.9%</td>
-            <td><code>EXPECTED_TRANSACTION_FEES</code> Sep 1&ndash;13 2026, ks_flag=TRUE. Cutoff=Sep 13 (R14: Sep 14 = today/partial, excluded). Sep 7 = Labor Day, Sep 12 = Saturday 2026 vs Friday 2025 (calendar shift)</td>
+            <td><strong>Core TX Fees &mdash; Sep 1&ndash;16 2026</strong></td>
+            <td class="num">$93,784</td>
+            <td class="num">$129,183</td>
+            <td class="num" style="color:var(--green)">+37.8%</td>
+            <td><code>EXPECTED_TRANSACTION_FEES</code> Sep 1&ndash;16 2026, ks_flag=TRUE. Cutoff=Sep 16 (R14: Sep 17 = today/partial, excluded). Sep 7 = Labor Day, Sep 14 = Monday 2026 vs Sunday 2025 (favorable calendar shift).</td>
             <td><span class="tag warn">EXPECTED</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Core TX Fees Total (75 days)</strong></td>
-            <td class="num">$324,756</td>
-            <td class="num">$440,763</td>
-            <td class="num" style="color:var(--green)">+35.7%</td>
-            <td>TF (Jul+Aug locked) + ETF (Sep 1&ndash;13 fresh), ks_flag=TRUE (R1, R2, R3, B1, B2)</td>
+            <td><strong>Core TX Fees Total (78 days)</strong></td>
+            <td class="num">$342,902</td>
+            <td class="num">$475,168</td>
+            <td class="num" style="color:var(--green)">+38.6%</td>
+            <td>TF (Jul+Aug locked) + ETF (Sep 1&ndash;16 fresh), ks_flag=TRUE (R1, R2, R3, B1, B2)</td>
             <td><span class="tag ok">CODEX VERIFIED</span></td>
           </tr>
           <tr>
             <td><strong>Axerrio Jul 2026</strong></td>
             <td class="num" style="color:var(--muted)">N/A (additive)</td>
-            <td class="num">$9,401 ACTUAL</td>
+            <td class="num">$9,317 ACTUAL</td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td>Sofia&rsquo;s Control Sheet (ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM) &mdash; fresh this session. EUR &euro;8,106, FX updated ($9,434 &rarr; $9,401)</td>
+            <td>Sofia&rsquo;s Control Sheet (ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM) &mdash; fresh this session. EUR &euro;8,106, FX updated v19 ($9,401 &rarr; $9,317)</td>
             <td><span class="tag ok">ACTUAL</span></td>
           </tr>
           <tr>
             <td><strong>Axerrio Aug 2026 ACTUAL</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">$9,683 ACTUAL</td>
+            <td class="num">$9,597 ACTUAL</td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td>EUR &euro;8,349.38, FX updated ($9,718 &rarr; $9,683). ACTUAL confirmed.</td>
+            <td>EUR &euro;8,349.38, FX updated v19 ($9,683 &rarr; $9,597). ACTUAL confirmed.</td>
             <td><span class="tag ok">ACTUAL</span></td>
           </tr>
           <tr>
-            <td><strong>Axerrio Sep 1&ndash;13 2026 EST</strong></td>
+            <td><strong>Axerrio Sep 1&ndash;16 2026 EST</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">~$4,196 EST</td>
+            <td class="num">~$5,119 EST</td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td>$9,683 / 30 days &times; 13 days (Sep has 30 days; Rule N1: Aug ACTUAL as base)</td>
+            <td>$9,597 / 30 days &times; 16 days (Sep has 30 days; Rule N1: Aug ACTUAL as base)</td>
             <td><span class="tag warn">EST</span></td>
           </tr>
           <tr style="background:#fff4e5;font-weight:700">
             <td><strong>Axerrio Q3 YTD</strong></td>
             <td class="num" style="color:var(--muted)">N/A</td>
-            <td class="num">~$23,280</td>
+            <td class="num">~$24,033</td>
             <td class="num" style="color:var(--muted)">N/A &mdash; additive</td>
-            <td>$9,401 (ACTUAL Jul) + $9,683 (ACTUAL Aug) + $4,196 (EST Sep 1&ndash;13)</td>
+            <td>$9,317 (ACTUAL Jul) + $9,597 (ACTUAL Aug) + $5,119 (EST Sep 1&ndash;16)</td>
             <td><span class="tag ok">ACTUAL+EST</span></td>
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
             <td><strong>Total 2026 YTD (incl. Axerrio)</strong></td>
-            <td class="num">$324,756 (Core only)</td>
-            <td class="num">~$464,043</td>
-            <td class="num" style="color:var(--red)"><strong>+42.9%</strong></td>
+            <td class="num">$342,902 (Core only)</td>
+            <td class="num">~$499,201</td>
+            <td class="num" style="color:var(--red)"><strong>+45.6%</strong></td>
             <td></td>
             <td></td>
           </tr>
@@ -175,42 +175,42 @@
             <td class="num">&mdash;</td>
             <td class="num"><strong>+54.5%</strong></td>
             <td>$670K / $433.6K Q3 2025 Core base</td>
-            <td><span class="tag bad">BEHIND 11.6pp</span></td>
+            <td><span class="tag bad">BEHIND 8.9pp</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h3 style="margin-top:18px">Delta vs Sep 10 run (v17 &mdash; 71 days, Thursday Full)</h3>
+    <h3 style="margin-top:18px">Delta vs Sep 14 run (v18 &mdash; 75 days, Monday Light)</h3>
     <div class="tableWrap">
       <table>
         <thead>
           <tr>
             <th>Metric</th>
-            <th class="num">Sep 10 (v17, 71d)</th>
             <th class="num">Sep 14 (v18, 75d)</th>
+            <th class="num">Sep 17 (v19, 78d)</th>
             <th class="num">Delta</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Days elapsed</td><td class="num">71</td><td class="num">75</td><td class="num">+4</td></tr>
+          <tr><td>Days elapsed</td><td class="num">75</td><td class="num">78</td><td class="num">+3</td></tr>
           <tr><td>Jul 2026 (TF)</td><td class="num">$154,820</td><td class="num">$154,820</td><td class="num">+$0 (locked)</td></tr>
-          <tr><td>Aug 2026 (TF)</td><td class="num">$188,430</td><td class="num">$188,430</td><td class="num">+$0 (locked)</td></tr>
-          <tr><td>Sep ETF</td><td class="num">$64,133 (Sep 1&ndash;9)</td><td class="num">$97,513 (Sep 1&ndash;13)</td><td class="num" style="color:var(--green)">+$33,380 (4 new days; Sep 12=Sat 2026 vs Fri 2025 &mdash; calendar shift)</td></tr>
-          <tr style="font-weight:700"><td>Core Q3 YTD</td><td class="num">$407,383</td><td class="num">$440,763</td><td class="num" style="color:var(--green)">+$33,380</td></tr>
-          <tr><td>2025 base (comparable)</td><td class="num">$297,121 (71d)</td><td class="num">$324,756 (75d)</td><td class="num">+$27,635 (Sep 10&ndash;13 2025 added)</td></tr>
-          <tr><td>Core YoY</td><td class="num">+37.1%</td><td class="num">+35.7%</td><td class="num" style="color:var(--red)">&minus;1.4pp (Sep 12 Saturday comp effect)</td></tr>
-          <tr><td>Axerrio Jul</td><td class="num">$9,434</td><td class="num">$9,401</td><td class="num" style="color:var(--red)">&minus;$33 (FX drift, same EUR)</td></tr>
-          <tr><td>Axerrio Aug</td><td class="num">$9,718 ACTUAL</td><td class="num">$9,683 ACTUAL</td><td class="num" style="color:var(--red)">&minus;$35 (FX drift, same EUR)</td></tr>
-          <tr><td>Axerrio Sep</td><td class="num">~$2,915 (9d EST)</td><td class="num">~$4,196 (13d EST)</td><td class="num" style="color:var(--green)">+$1,281 (4 more days; Aug actual as base N1)</td></tr>
-          <tr><td>Total Axerrio</td><td class="num">~$22,067</td><td class="num">~$23,280</td><td class="num" style="color:var(--green)">+$1,213</td></tr>
-          <tr><td>Total YoY (incl. Axerrio)</td><td class="num">+44.5%</td><td class="num">+42.9%</td><td class="num" style="color:var(--red)">&minus;1.6pp</td></tr>
-          <tr style="font-weight:700"><td><strong>Pacing</strong></td><td class="num">81.7%</td><td class="num"><strong>78.7%</strong></td><td class="num" style="color:var(--red)"><strong>&minus;3.0pp (Sep 12 calendar shift: Sat 2026 vs Fri 2025)</strong></td></tr>
-          <tr><td>Projection (base)</td><td class="num">~$630K</td><td class="num">~$622K</td><td class="num" style="color:var(--red)">&minus;$8K (Sep 14&ndash;30 needs +84% YoY)</td></tr>
+          <tr><td>Aug 2026 (TF)</td><td class="num">$188,430</td><td class="num">$191,165</td><td class="num" style="color:var(--green)">+$2,735 (API fee correction, B1 disclosure)</td></tr>
+          <tr><td>Sep ETF</td><td class="num">$97,513 (Sep 1&ndash;13)</td><td class="num">$129,183 (Sep 1&ndash;16)</td><td class="num" style="color:var(--green)">+$31,670 (3 new days; Sep 14=Mon 2026 vs Sun 2025 &mdash; very favorable)</td></tr>
+          <tr style="font-weight:700"><td>Core Q3 YTD</td><td class="num">$440,763</td><td class="num">$475,168</td><td class="num" style="color:var(--green)">+$34,405</td></tr>
+          <tr><td>2025 base (comparable)</td><td class="num">$324,756 (75d)</td><td class="num">$342,902 (78d)</td><td class="num">+$18,146 (Sep 14&ndash;16 2025: $2,482+$11,648+$4,016)</td></tr>
+          <tr><td>Core YoY</td><td class="num">+35.7%</td><td class="num">+38.6%</td><td class="num" style="color:var(--green)">+2.9pp (Sep 14&ndash;16 calendar swing: +75.8% YoY)</td></tr>
+          <tr><td>Axerrio Jul</td><td class="num">$9,401</td><td class="num">$9,317</td><td class="num" style="color:var(--red)">&minus;$84 (FX drift, same EUR)</td></tr>
+          <tr><td>Axerrio Aug</td><td class="num">$9,683 ACTUAL</td><td class="num">$9,597 ACTUAL</td><td class="num" style="color:var(--red)">&minus;$86 (FX drift, same EUR)</td></tr>
+          <tr><td>Axerrio Sep</td><td class="num">~$4,196 (13d EST)</td><td class="num">~$5,119 (16d EST)</td><td class="num" style="color:var(--green)">+$923 (3 more days; Aug actual as base N1)</td></tr>
+          <tr><td>Total Axerrio</td><td class="num">~$23,280</td><td class="num">~$24,033</td><td class="num" style="color:var(--green)">+$753</td></tr>
+          <tr><td>Total YoY (incl. Axerrio)</td><td class="num">+42.9%</td><td class="num">+45.6%</td><td class="num" style="color:var(--green)">+2.7pp</td></tr>
+          <tr style="font-weight:700"><td><strong>Pacing</strong></td><td class="num">78.7%</td><td class="num"><strong>83.7%</strong></td><td class="num" style="color:var(--green)"><strong>+5.0pp (Sep 14=Mon $16,687 vs Sep 14 2025=Sun $2,482 &mdash; +$14K swing)</strong></td></tr>
+          <tr><td>Projection (base)</td><td class="num">~$622K</td><td class="num">~$640K</td><td class="num" style="color:var(--green)">+$18K (Sep 17&ndash;30 needs +83% YoY)</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="prov" style="margin-top:8px"><strong>Key driver:</strong> Sep 10&ndash;13 2026 ETF = $33,380 vs Sep 10&ndash;13 2025 TF = $27,635 (+20.8% YoY). Sep 12 2026 = Saturday ($3,541 fees) vs Sep 12 2025 = Friday ($9,540) &mdash; $5,999 single-day shortfall due to calendar day shift. Sep 10 (+76% YoY) and Sep 11 (+60% YoY) both very strong, confirming this is NOT structural deceleration. Calendar turns favorable: Sep 14 2026 = Monday vs Sep 14 2025 = Sunday ($2,482). Sep 14 partial ETF already shows $10,738 at run time, suggesting strong Monday. W11 (Sep 7&ndash;13) COMPLETE at +19.2% YoY. Axerrio FX drift: &minus;$33 Jul, &minus;$35 Aug (minor). R14 cutoff = Sep 13 (Sep 14 = today/partial, excluded). Sep 2025 remains hardest comp month (42.5% of Q3 2025). Daily run rate Sep 1&ndash;13: $7,501/day.</p>
+    <p class="prov" style="margin-top:8px"><strong>Key driver:</strong> Sep 14&ndash;16 2026 = $31,893 vs Sep 14&ndash;16 2025 = $18,146 (+75.8% YoY for these 3 days). Sep 14 2026 = Monday ($16,687) vs Sep 14 2025 = Sunday ($2,482) = +$14,205 single-day swing from calendar shift. Sep 15 2026 = Tuesday ($6,393) vs Sep 15 2025 = Monday ($11,648) = &minus;$5,255. Sep 16 2026 = Wednesday ($8,813) vs Sep 16 2025 = Wednesday ($4,016) = +$4,797. Net +$13,747 for the 3-day period. Also Aug 2026 TF corrected +$2,735 (API fee B1 disclosure). Axerrio FX drift: &minus;$84 Jul, &minus;$86 Aug. R14 cutoff = Sep 16 (Sep 17 = today/partial, excluded). Sep 2025 remains hardest comp month (42.5% of Q3 2025). Daily run rate Sep 1&ndash;16: $8,074/day.</p>
   </section>
 
   <!-- S2: GMV -->
@@ -306,7 +306,7 @@
   <!-- S3: WEEKLY -->
   <section id="s3">
     <p class="eyebrow">Section 3 &mdash; Weekly Fee Trend (Q3 2026 vs Q3 2025 comparable weeks)</p>
-    <h2>W10 complete: +56.2% YoY, $57,464 &mdash; WoW +19.0%. W11 Sep 7&ndash;13 (7d COMPLETE): +19.2% YoY, $52,461 &mdash; WoW &minus;8.7% (Sep 12 calendar shift)</h2>
+    <h2>W11 COMPLETE +18.8% YoY $52,238 &mdash; WoW &minus;9.1% (calendar-driven). W12 Sep 14&ndash;16 (3d partial): +75.8% YoY $31,893 &mdash; strong calendar reversal (Sep 14 Mon 2026 vs Sun 2025)</h2>
 
     <div class="tableWrap">
       <table>
@@ -402,19 +402,27 @@
             <td><span class="tag ok">COMPLETE (7d)</span></td>
           </tr>
           <tr style="background:#ecfdf3">
-            <td><strong>W11</strong> Sep 7&ndash;13 (7d COMPLETE) <span class="tag ok" style="margin-left:6px">WoW &minus;8.7%</span></td>
+            <td><strong>W11</strong> Sep 7&ndash;13 (7d COMPLETE) <span class="tag ok" style="margin-left:6px">WoW &minus;9.1%</span></td>
             <td class="num">$44,000 (TF Sep7-13 2025)</td>
-            <td class="num">$52,461 (ETF Sep7&ndash;13 2026)</td>
-            <td class="num" style="color:var(--green)">+19.2%</td>
+            <td class="num">$52,238 (ETF Sep7&ndash;13 2026)</td>
+            <td class="num" style="color:var(--green)">+18.8%</td>
             <td>Sep 7 2026 = Labor Day ($1,399 fees). Sep 12 2026 = Saturday ($3,541) vs Sep 12 2025 = Friday ($9,540) &mdash; calendar shift &minus;$6K. Sep 10 (+76% YoY) and Sep 11 (+60% YoY) very strong. Not structural.</td>
             <td><span class="tag ok">COMPLETE (7d)</span></td>
           </tr>
+          <tr style="background:#fff4e5">
+            <td><strong>W12</strong> Sep 14&ndash;16 (3d partial) <span class="tag warn" style="margin-left:6px">WoW N/A (partial)</span></td>
+            <td class="num">$18,146 (TF Sep14&ndash;16 2025: $2,482+$11,648+$4,016)</td>
+            <td class="num">$31,893 (ETF Sep14&ndash;16 2026: $16,687+$6,393+$8,813)</td>
+            <td class="num" style="color:var(--green)">+75.8%</td>
+            <td>Sep 14 2026 = Monday ($16,687) vs Sep 14 2025 = Sunday ($2,482) = +$14,205 calendar swing. Sep 15&ndash;16 more balanced. Strong reversal from W11 calendar headwind.</td>
+            <td><span class="tag warn">PARTIAL (3d)</span></td>
+          </tr>
           <tr style="background:#f8fafc;font-weight:700">
-            <td><strong>Total (75 comparable days)</strong></td>
-            <td class="num">$324,756</td>
-            <td class="num">$440,763</td>
-            <td class="num" style="color:var(--green)"><strong>+35.7%</strong></td>
-            <td>TF (Jul-Aug locked, 2026 + 2025) + ETF (Sep 1&ndash;13 2026)</td>
+            <td><strong>Total (78 comparable days)</strong></td>
+            <td class="num">$342,902</td>
+            <td class="num">$475,168</td>
+            <td class="num" style="color:var(--green)"><strong>+38.6%</strong></td>
+            <td>TF (Jul-Aug locked, 2026 + 2025) + ETF (Sep 1&ndash;16 2026)</td>
             <td><span class="tag ok">CODEX VERIFIED</span></td>
           </tr>
         </tbody>
@@ -423,9 +431,9 @@
 
     <div class="diag-box" style="margin-top:14px">
       <h4>Weekly Trend Diagnosis</h4>
-      <p style="margin:0;font-size:14px"><strong>Pattern:</strong> W1&ndash;W4 (Jul): +31&ndash;36% range &mdash; solid base. W5 jump to +43.7% (positive outlier). W6&ndash;W8 softer (+30-34%) &mdash; comp effect (Aug 2025 stronger). W9: +43.0% (strong). W10 complete (7d Aug 31&ndash;Sep 6): +56.2% YoY &mdash; strongest full week of Q3. WoW: +19.0% ($57,464 vs $48,290). W11 complete (7d Sep 7&ndash;13): +19.2% YoY, WoW &minus;8.7% ($52,461 vs $57,464). <strong>WoW decline is calendar-driven, NOT structural.</strong> Sep 12 2026 = Saturday ($3,541 fees) vs Sep 12 2025 = Friday ($9,540) &mdash; $5,999 single-day gap from day-of-week shift. Sep 7 2026 = Labor Day ($1,399 fees). But Sep 10 (+76% YoY $10,627) and Sep 11 (+60% YoY $14,381) both very strong. Calendar now flips favorable: Sep 14 2026 = Monday vs Sep 14 2025 = Sunday. Sep 1&ndash;13 run rate = $7,501/day. Sep 2025 = 42.5% of Q3 2025 &mdash; every Sep day is critical.</p>
+      <p style="margin:0;font-size:14px"><strong>Pattern:</strong> W1&ndash;W4 (Jul): +31&ndash;36% range &mdash; solid base. W5 jump to +43.7% (positive outlier). W6&ndash;W8 softer (+30-34%) &mdash; comp effect (Aug 2025 stronger). W9: +43.0% (strong). W10 complete (7d Aug 31&ndash;Sep 6): +56.2% YoY &mdash; strongest full week of Q3. WoW: +19.0% ($57,464 vs $48,290). W11 complete (7d Sep 7&ndash;13): +18.8% YoY, WoW &minus;9.1% ($52,238 vs $57,464). <strong>WoW decline was calendar-driven, NOT structural.</strong> Sep 12 2026 = Saturday vs Sep 12 2025 = Friday. Sep 7 2026 = Labor Day. W12 (3d Sep 14&ndash;16) partial: +75.8% YoY $31,893 vs $18,146 2025. Sep 14 2026 = Monday ($16,687) vs Sep 14 2025 = Sunday ($2,482) &mdash; strong calendar flip as predicted. Sep 15 2026 = Tuesday ($6,393) vs Sep 15 2025 = Monday ($11,648) &mdash; reversed. Sep 16 = Wed both years (+$4,797). Net Sep 14&ndash;16: +75.8% YoY. Sep 1&ndash;16 run rate = $8,074/day. Sep 2025 = 42.5% of Q3 2025 &mdash; every Sep day is critical. 14 days remain (Sep 17&ndash;30); calendar is neutral (same day-of-week both years).</p>
     </div>
-    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 (TF weekly, Aug31 = $12,412 locked). <code>EXPECTED_TRANSACTION_FEES</code> ks_flag=TRUE, shipping_date 2026-09-01&ndash;2026-09-13 ($97,513 total Sep). 2025 TF re-queried fresh this session (Rule B2). W11 2025 ($44,000): Sep 1&ndash;13 2025 $85,638 minus Sep 1&ndash;6 2025 $41,638 = $44,000 (derived from fresh 2025 queries).</p>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 (TF weekly, Aug31 = $12,412 locked). <code>EXPECTED_TRANSACTION_FEES</code> ks_flag=TRUE, shipping_date 2026-09-01&ndash;2026-09-16 ($129,183 total Sep). 2025 TF re-queried fresh this session (Rule B2). W11 2025 ($44,000): Sep 1&ndash;13 2025 $75,638 (fresh) minus Sep 1&ndash;6 2025 $31,638 = $44,000. W12 2025 ($18,146): Sep 14 $2,482 + Sep 15 $11,648 + Sep 16 $4,016 (individual day queries). Sep 1&ndash;6 2026 ETF = $45,052 (from v17, B1 note: not re-queried this session for this specific slice).</p>
   </section>
 
   <!-- S4: TAKE RATE -->
@@ -477,23 +485,23 @@
   <!-- S5: CHANNEL FEES -->
   <section id="s5">
     <p class="eyebrow">Section 5 &mdash; Fees by Transaction Type (Jul&ndash;Aug 2026 TF vs Jul&ndash;Aug 2025 TF &mdash; apples-to-apples)</p>
-    <h2>eCommerce leads at $162.9K (+41.5%). K2K strong at $160.8K (+37.2%). Sep 1-9 ETF: +33.6% YoY (no channel split in ETF)</h2>
+    <h2>eCommerce leads at $162.9K (+41.5%). K2K strong at $160.8K (+37.2%). API corrected to $20.2K (+35.7%). Sep 1-16 ETF: +37.8% YoY (no channel split in ETF)</h2>
 
     <div class="grid4">
       <article class="card metric okLine">
         <small>eCommerce Fees (Jul-Aug)</small>
         <strong style="color:var(--green)">$162,957</strong>
-        <p>47.5% of total &mdash; +41.5% vs $115,176 in 2025</p>
+        <p>47.1% of total &mdash; +41.5% vs $115,176 in 2025</p>
       </article>
       <article class="card metric okLine">
         <small>K2K Fees (Jul-Aug)</small>
         <strong style="color:var(--green)">$160,821</strong>
-        <p>46.9% of total &mdash; +37.2% vs $117,230 in 2025</p>
+        <p>46.5% of total &mdash; +37.2% vs $117,230 in 2025</p>
       </article>
       <article class="card metric warnLine">
         <small>API Fees (Jul-Aug)</small>
-        <strong style="color:var(--gold)">$17,476</strong>
-        <p>5.1% of total &mdash; +17.3% vs $14,899 in 2025. Mayesh API = $0 flagged.</p>
+        <strong style="color:var(--gold)">$20,211</strong>
+        <p>5.8% of total &mdash; +35.7% vs $14,899 in 2025. <span style="color:var(--gold)">&#x26A0; Corrected from $17,476 in v18 (+$2,735). B1 disclosure.</span></p>
       </article>
       <article class="card metric blueLine">
         <small>FedEx Fees (Jul-Aug)</small>
@@ -529,11 +537,11 @@
             <td class="num">46.9%</td>
           </tr>
           <tr>
-            <td><strong>API</strong></td>
+            <td><strong>API</strong> <span class="tag warn" style="margin-left:4px">CORRECTED v19</span></td>
             <td class="num">$14,899</td>
-            <td class="num">$17,476</td>
-            <td class="num" style="color:var(--green)">+17.3%</td>
-            <td class="num">5.1%</td>
+            <td class="num">$20,211</td>
+            <td class="num" style="color:var(--green)">+35.7%</td>
+            <td class="num">5.8%</td>
           </tr>
           <tr>
             <td><strong>FedEx</strong></td>
@@ -545,28 +553,28 @@
           <tr style="background:#f8fafc;font-weight:700">
             <td><strong>Total (62d Jul-Aug TF)</strong></td>
             <td class="num">$249,119</td>
-            <td class="num">$343,250</td>
-            <td class="num" style="color:var(--green)">+37.8%</td>
+            <td class="num">$345,985</td>
+            <td class="num" style="color:var(--green)">+38.9%</td>
             <td class="num">100%</td>
           </tr>
           <tr style="background:#fff4e5">
-            <td><strong>+ Sep 1-13 ETF (no channel split)</strong></td>
-            <td class="num">$85,638</td>
-            <td class="num">$97,513</td>
-            <td class="num" style="color:var(--green)">+13.9%</td>
+            <td><strong>+ Sep 1-16 ETF (no channel split)</strong></td>
+            <td class="num">$93,784</td>
+            <td class="num">$129,183</td>
+            <td class="num" style="color:var(--green)">+37.8%</td>
             <td class="num" style="color:var(--muted)">N/A</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="band gold" style="margin-top:12px;font-size:13px">Note: Channel breakdown uses Jul-Aug 2026 TF (locked) vs Jul-Aug 2025 TF for clean apples-to-apples. Sep 1-13 ETF adds $97,513 without channel breakdown (ETF not queried by channel this run &mdash; Monday Light). Sep 1-13 YoY +13.9% &mdash; depressed by Labor Day Sep 7 and Sep 12 calendar shift (Sat 2026 vs Fri 2025). Channel breakdown refreshed on Thursday Full runs only.</div>
-    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 and 2025-07-01&ndash;2025-08-31. Both re-queried fresh this session (Rule B2). Rule R1 (ks_flag) + Rule R2 (transaction_date) applied.</p>
+    <div class="band gold" style="margin-top:12px;font-size:13px">Note: Channel breakdown uses Jul-Aug 2026 TF (locked) vs Jul-Aug 2025 TF for clean apples-to-apples. Sep 1-16 ETF adds $129,183 without channel breakdown (ETF view does not have transaction_type column). Sep 1-16 YoY +37.8% (favorable calendar: Sep 14 Mon 2026 vs Sun 2025). API corrected v19: $17,476 &rarr; $20,211 (+$2,735). B1 disclosure: Jul-Aug 2026 TF is nominally "locked" but fresh query returned a different API value than v17/v18. Cause unknown &mdash; possible late billing adjustment or Cortex Analyst dedup difference.</div>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 and 2025-07-01&ndash;2025-08-31. Both re-queried fresh this session (Rule B2). Rule R1 (ks_flag) + Rule R2 (transaction_date) applied. API 2026 Jul-Aug fresh = $20,211 (vs $17,476 in v17/v18). Jul 2026 fresh = $154,820 &#x2713;; Aug 2026 fresh = $191,165 (corrected from $188,430). 2025 Jul-Aug fresh = $249,119 &#x2713;.</p>
   </section>
 
   <!-- S6: TOP ACCOUNTS -->
   <section id="s6">
     <p class="eyebrow">Section 6 &mdash; Top 15 Accounts by TX Fees (Jul&ndash;Aug 2026, TRANSACTION_FEES)</p>
-    <h2>Top 15 = $220.8K (64.3% concentration). Sole Farms leads at $29.3K. FloraLink K2K-only at $13.5K.</h2>
+    <h2>Top 15 = $220.8K (63.8% concentration of Jul-Aug $345.9K total). Sole Farms leads at $29.3K. FloraLink K2K-only at $13.5K.</h2>
 
     <div class="tableWrap">
       <table>
@@ -601,7 +609,7 @@
             <td colspan="4"></td>
             <td colspan="1" style="text-align:right;font-weight:700">Top 15 Total:</td>
             <td class="num"><strong>$220,796</strong></td>
-            <td style="color:var(--muted)">64.3% of Jul-Aug $343,165 total</td>
+            <td style="color:var(--muted)">63.8% of Jul-Aug $345,985 total (API corrected v19)</td>
           </tr>
         </tbody>
       </table>
@@ -613,23 +621,23 @@
   <!-- S7: AXERRIO -->
   <section id="s7">
     <p class="eyebrow">Section 7 &mdash; Axerrio (Europe TX Fees &mdash; additive to Core)</p>
-    <h2>Jul ACTUAL $9,401. Aug ACTUAL $9,683. Sep 1-13 EST $4,196. Q3 YTD: ~$23,280</h2>
+    <h2>Jul ACTUAL $9,317. Aug ACTUAL $9,597. Sep 1-16 EST $5,119. Q3 YTD: ~$24,033</h2>
 
     <div class="grid3">
       <article class="card metric okLine">
         <small>Jul 2026 ACTUAL</small>
-        <strong style="color:var(--green)">$9,401</strong>
-        <p>Fresh read this session. Sofia&rsquo;s Control Sheet EUR &euro;8,106. FX updated v18: $9,434 &rarr; $9,401 (same EUR, FX drift).</p>
+        <strong style="color:var(--green)">$9,317</strong>
+        <p>Fresh read this session. Sofia&rsquo;s Control Sheet EUR &euro;8,106. FX updated v19: $9,401 &rarr; $9,317 (&minus;$84, same EUR, FX drift).</p>
       </article>
       <article class="card metric okLine">
         <small>Aug 2026 ACTUAL</small>
-        <strong style="color:var(--green)">$9,683</strong>
-        <p>EUR &euro;8,349.38. FX updated v18: $9,718 &rarr; $9,683 (same EUR, FX drift). ACTUAL confirmed.</p>
+        <strong style="color:var(--green)">$9,597</strong>
+        <p>EUR &euro;8,349.38. FX updated v19: $9,683 &rarr; $9,597 (&minus;$86, same EUR, FX drift). ACTUAL confirmed.</p>
       </article>
       <article class="card metric warnLine">
-        <small>Sep 1-13 EST</small>
-        <strong style="color:var(--gold)">~$4,196</strong>
-        <p>$9,683 / 30 days &times; 13 days (Sep has 30 days). Rule N1: Aug ACTUAL as base for pro-rata.</p>
+        <small>Sep 1-16 EST</small>
+        <strong style="color:var(--gold)">~$5,119</strong>
+        <p>$9,597 / 30 days &times; 16 days (Sep has 30 days). Rule N1: Aug ACTUAL as base for pro-rata.</p>
       </article>
     </div>
 
@@ -650,44 +658,44 @@
           <tr><td>Apr 2026</td><td class="num">&euro;8,024</td><td class="num">$9,298</td><td><span class="tag ok">ACTUAL</span></td></tr>
           <tr><td>May 2026</td><td class="num">&euro;8,860</td><td class="num">$10,267</td><td><span class="tag ok">ACTUAL</span></td></tr>
           <tr><td>Jun 2026</td><td class="num">&euro;8,450</td><td class="num">$9,793</td><td><span class="tag ok">ACTUAL</span></td></tr>
-          <tr><td><strong>Jul 2026</strong></td><td class="num">&euro;8,106</td><td class="num"><strong>$9,401</strong></td><td><span class="tag ok">ACTUAL (FX updated v18)</span></td></tr>
-          <tr><td><strong>Aug 2026</strong></td><td class="num">&euro;8,349</td><td class="num"><strong>$9,683</strong></td><td><span class="tag ok">ACTUAL (FX updated v18)</span></td></tr>
-          <tr><td><strong>Sep 1-13 2026</strong></td><td class="num" style="color:var(--muted)">N/A</td><td class="num"><strong>~$4,196 EST</strong></td><td><span class="tag warn">PRO-RATA EST</span></td></tr>
-          <tr style="background:#fff4e5;font-weight:700"><td><strong>Q3 YTD (Jul-Sep13)</strong></td><td class="num">&mdash;</td><td class="num"><strong>~$23,280</strong></td><td><span class="tag warn">ACTUAL+EST</span></td></tr>
-          <tr style="background:#f8fafc;font-weight:700"><td><strong>Q3 Full EST (Jul-Sep)</strong></td><td class="num">&mdash;</td><td class="num">~$28,767</td><td><span class="tag warn">$9,401+$9,683+$9,683 (Aug actual as Sep base)</span></td></tr>
+          <tr><td><strong>Jul 2026</strong></td><td class="num">&euro;8,106</td><td class="num"><strong>$9,317</strong></td><td><span class="tag ok">ACTUAL (FX updated v19, was $9,401)</span></td></tr>
+          <tr><td><strong>Aug 2026</strong></td><td class="num">&euro;8,349</td><td class="num"><strong>$9,597</strong></td><td><span class="tag ok">ACTUAL (FX updated v19, was $9,683)</span></td></tr>
+          <tr><td><strong>Sep 1-16 2026</strong></td><td class="num" style="color:var(--muted)">N/A</td><td class="num"><strong>~$5,119 EST</strong></td><td><span class="tag warn">PRO-RATA EST</span></td></tr>
+          <tr style="background:#fff4e5;font-weight:700"><td><strong>Q3 YTD (Jul-Sep16)</strong></td><td class="num">&mdash;</td><td class="num"><strong>~$24,033</strong></td><td><span class="tag warn">ACTUAL+EST</span></td></tr>
+          <tr style="background:#f8fafc;font-weight:700"><td><strong>Q3 Full EST (Jul-Sep)</strong></td><td class="num">&mdash;</td><td class="num">~$28,511</td><td><span class="tag warn">$9,317+$9,597+$9,597 (Aug actual as Sep base)</span></td></tr>
         </tbody>
       </table>
     </div>
-    <div class="band blue" style="margin-top:12px;font-size:13px">Trend: Jan $8.2K &rarr; May peak $10.3K &rarr; Jun $9.8K &rarr; Jul $9.4K &rarr; Aug $9.7K. Minor FX drift in v18: Jul &minus;$33, Aug &minus;$35 (same EUR amounts from Sofia&rsquo;s sheet, exchange rate moved). 17 clients, 3 fee models (1.5% TX, Model A per-user, Model B per-user). Source: Sofia&rsquo;s Control Sheet, ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM. Q3 2025 Axerrio NOT available (sheet only Jan-Feb 2025). 2025 base is Core-only.</div>
+    <div class="band blue" style="margin-top:12px;font-size:13px">Trend: Jan $8.2K &rarr; May peak $10.3K &rarr; Jun $9.8K &rarr; Jul $9.3K &rarr; Aug $9.6K. FX drift history: v17&rarr;v18 Jul &minus;$33, Aug &minus;$35. v18&rarr;v19 Jul &minus;$84 ($9,401&rarr;$9,317), Aug &minus;$86 ($9,683&rarr;$9,597). Net v17&rarr;v19: Jul &minus;$117, Aug &minus;$121. Same EUR amounts from Sofia&rsquo;s sheet each time; exchange rate movements only. 17 clients, 3 fee models (1.5% TX, Model A per-user, Model B per-user). Source: Sofia&rsquo;s Control Sheet, ID: 1NgyS5e5r8Iu9rP0LU5-T3JBiYQcJBCJMxd98Minb0vM. Q3 2025 Axerrio NOT available (sheet only Jan-Feb 2025). 2025 base is Core-only.</div>
   </section>
 
   <!-- S8: PROJECTION -->
   <section id="s8">
     <p class="eyebrow">Section 8 &mdash; Q3 2026 Projection (Core locked Jul+Aug; Sep estimated)</p>
-    <h2>Sep 1&ndash;13 locked at $97.5K. Sep 14&ndash;30 (17 days) needs +84% YoY to hit $670K &mdash; very high bar.</h2>
+    <h2>Sep 1&ndash;16 locked at $129.2K. Sep 17&ndash;30 (14 days) needs +83% YoY to hit $670K &mdash; very high bar.</h2>
 
-    <div class="band blue" style="margin-bottom:14px;font-size:13px"><strong>Status this run:</strong> Jul ($154.8K) and Aug ($188.4K) BOTH locked. Sep 1&ndash;13 ETF = $97,513 (locked in, cutoff per R14). Combined floor = $440,763 Core. Sep remaining = Sep 14&ndash;30 (17 days). Sep 2025 full = $184,509. Sep 2025 remaining Sep 14&ndash;30 = $108,871. To hit $670K: Sep 14&ndash;30 needs $200,237 = +83.9% YoY. Sep 14 2026 = Monday vs Sep 14 2025 = Sunday ($2,482) &mdash; calendar shift now favorable. Sep 1&ndash;13 run rate: $7,501/day. Base scenario (Sep 14&ndash;30 +45% YoY) gives Q3 ~$622K. Bear (Sep 14&ndash;30 +20%) gives ~$616K. Bull (Sep 14&ndash;30 +70%) gives ~$638K. Target requires Sep 14&ndash;30 +84%.</div>
+    <div class="band blue" style="margin-bottom:14px;font-size:13px"><strong>Status this run:</strong> Jul ($154.8K) and Aug ($191.2K, corrected +$2,735 API fee B1) BOTH locked. Sep 1&ndash;16 ETF = $129,183 (locked in, cutoff Sep 16 per R14). Combined floor = $475,168 Core. Sep remaining = Sep 17&ndash;30 (14 days). Sep 2025 full = $184,509. Sep 2025 remaining Sep 17&ndash;30 = $90,725 ($184,509 &minus; Sep 1&ndash;16 2025 $93,784). To hit $670K: Sep 17&ndash;30 needs ~$166,321 = +83.3% YoY. Sep 1&ndash;16 run rate: $8,074/day ($129,183 / 16d). Calendar neutral Sep 17&ndash;30 (same day-of-week 2025 vs 2026). Base scenario (Sep 17&ndash;30 +50% YoY) gives Q3 core ~$612K + Axerrio ~$29K = ~$640K. Bear +30% gives ~$622K. Bull +70% gives ~$658K.</div>
 
     <div class="scenario-grid">
       <div class="scenario-card" style="border-color:var(--red)">
-        <div class="label">Bear &mdash; Sep 14&ndash;30 +20% YoY</div>
-        <div class="val" style="color:var(--red)">~$616K</div>
-        <div class="desc">Sep 14-30 = $131K | Sep total ~$228K | Gap: ~$54K</div>
+        <div class="label">Bear &mdash; Sep 17&ndash;30 +30% YoY</div>
+        <div class="val" style="color:var(--red)">~$622K</div>
+        <div class="desc">Sep 17-30 = $118K | Sep total ~$247K | +Core $593K + Axerrio ~$29K | Gap: ~$48K</div>
       </div>
       <div class="scenario-card" style="border-color:var(--gold)">
-        <div class="label">Base &mdash; Sep 14&ndash;30 +45% YoY</div>
-        <div class="val" style="color:var(--gold)">~$622K</div>
-        <div class="desc">Sep 14-30 = $158K | Sep total ~$255K | Gap: ~$48K</div>
+        <div class="label">Base &mdash; Sep 17&ndash;30 +50% YoY</div>
+        <div class="val" style="color:var(--gold)">~$640K</div>
+        <div class="desc">Sep 17-30 = $136K | Sep total ~$265K | +Core $611K + Axerrio ~$29K | Gap: ~$30K</div>
       </div>
       <div class="scenario-card" style="border-color:var(--orange)">
-        <div class="label">Bull &mdash; Sep 14&ndash;30 +70% YoY</div>
-        <div class="val" style="color:var(--orange)">~$638K</div>
-        <div class="desc">Sep 14-30 = $185K | Sep total ~$283K | Gap: ~$32K</div>
+        <div class="label">Bull &mdash; Sep 17&ndash;30 +70% YoY</div>
+        <div class="val" style="color:var(--orange)">~$658K</div>
+        <div class="desc">Sep 17-30 = $154K | Sep total ~$283K | +Core $629K + Axerrio ~$29K | Gap: ~$12K</div>
       </div>
       <div class="scenario-card" style="border-color:var(--green)">
-        <div class="label">Target &mdash; Sep 14&ndash;30 +84% YoY</div>
+        <div class="label">Target &mdash; Sep 17&ndash;30 +83% YoY</div>
         <div class="val" style="color:var(--green)">$670K</div>
-        <div class="desc">Sep 14-30 = $200K needed | Sep total $298K | Sep needs to be strongest ever</div>
+        <div class="desc">Sep 17-30 = $166K needed | Sep total ~$295K | Sep must be strongest month ever</div>
       </div>
     </div>
 
@@ -702,24 +710,24 @@
         </thead>
         <tbody>
           <tr><td><strong>Jul 2026 Core</strong></td><td class="num">$154,820</td><td><span class="tag ok">LOCKED (TF)</span></td></tr>
-          <tr><td><strong>Aug 2026 Core</strong></td><td class="num">$188,430</td><td><span class="tag ok">LOCKED (TF)</span></td></tr>
-          <tr><td><strong>Sep 1-13 Core (ETF, locked in)</strong></td><td class="num">$97,513</td><td><span class="tag ok">ETF LOCKED (R14 cutoff)</span></td></tr>
-          <tr style="background:#f8fafc;font-weight:700"><td><strong>Floor through Sep 13</strong></td><td class="num">$440,763</td><td><span class="tag ok">LOCKED</span></td></tr>
-          <tr><td>Sep 14-30 Core (bear, +20% YoY)</td><td class="num">~$130,645</td><td><span class="tag warn">PROJECTED</span></td></tr>
-          <tr><td>Sep 14-30 Core (base, +45% YoY)</td><td class="num">~$157,863</td><td><span class="tag warn">PROJECTED</span></td></tr>
-          <tr><td>Sep 14-30 Core (target, +84% YoY)</td><td class="num">~$200,237</td><td><span class="tag warn">NEEDED</span></td></tr>
-          <tr><td>Axerrio Q3 EST (3 months)</td><td class="num">~$28,767</td><td><span class="tag warn">ACTUAL+EST ($9,401+$9,683+$9,683)</span></td></tr>
-          <tr style="background:#ecfdf3"><td><strong>Sep 14&ndash;30 2025 comparable</strong></td><td class="num">$108,871</td><td><span class="tag ok">Sep 2025 ($184,509) &minus; Sep 1-13 2025 ($75,638)</span></td></tr>
+          <tr><td><strong>Aug 2026 Core</strong></td><td class="num">$191,165</td><td><span class="tag ok">LOCKED (TF) — corrected +$2,735 API fee (B1 disclosure)</span></td></tr>
+          <tr><td><strong>Sep 1-16 Core (ETF, locked in)</strong></td><td class="num">$129,183</td><td><span class="tag ok">ETF LOCKED (R14 cutoff Sep 16)</span></td></tr>
+          <tr style="background:#f8fafc;font-weight:700"><td><strong>Floor through Sep 16</strong></td><td class="num">$475,168</td><td><span class="tag ok">LOCKED</span></td></tr>
+          <tr><td>Sep 17-30 Core (bear, +30% YoY)</td><td class="num">~$117,943</td><td><span class="tag warn">PROJECTED</span></td></tr>
+          <tr><td>Sep 17-30 Core (base, +50% YoY)</td><td class="num">~$136,088</td><td><span class="tag warn">PROJECTED</span></td></tr>
+          <tr><td>Sep 17-30 Core (target, +83% YoY)</td><td class="num">~$166,321</td><td><span class="tag warn">NEEDED</span></td></tr>
+          <tr><td>Axerrio Q3 EST (3 months)</td><td class="num">~$28,511</td><td><span class="tag warn">ACTUAL+EST ($9,317+$9,597+$9,597)</span></td></tr>
+          <tr style="background:#ecfdf3"><td><strong>Sep 17&ndash;30 2025 comparable</strong></td><td class="num">$90,725</td><td><span class="tag ok">Sep 2025 ($184,509) &minus; Sep 1&ndash;16 2025 ($93,784 fresh v19 query)</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="prov">Q3 2025 Core base = $433,627 (canonical). Jul 2025 = $110,294, Aug 2025 = $138,824, Sep 2025 = $184,509. Sep 1&ndash;13 2025 = $85,638 (fresh query). Sep 14&ndash;30 2025 = $184,509 &minus; $85,638 = $98,871 (recalculated this session). Sep 1&ndash;13 2026 run rate: $97,513 / 13 days = $7,501/day. Sep 2025 daily avg = $6,150/day &mdash; 2026 Sep pace +21.9% above 2025 daily avg. Sep 14 2026 = Monday vs Sep 14 2025 = Sunday $2,482 &mdash; calendar shift highly favorable for Sep 14.</p>
+    <p class="prov">Q3 2025 Core base = $433,627 (canonical). Jul 2025 = $110,294, Aug 2025 = $138,824, Sep 2025 = $184,509. Sep 1&ndash;16 2025 = $93,784 (fresh query this session, Rule B2). Sep 17&ndash;30 2025 = $184,509 &minus; $93,784 = $90,725. Sep 1&ndash;16 2026 run rate: $129,183 / 16 days = $8,074/day. Sep 2025 daily avg = $6,150/day &mdash; 2026 Sep pace +31.3% above 2025 daily avg. Calendar neutral Sep 17&ndash;30 (same day-of-week both years). Sep 14&ndash;16 2026 strong (+75.8% YoY) due to Mon 2026 vs Sun 2025 — normalized Sep 17+ should track core run rate.</p>
   </section>
 
   <!-- S9: LAYER BREAKDOWN -->
   <section id="s9">
     <p class="eyebrow">Section 9 &mdash; Fee Breakdown by Layer / Industry (Jul&ndash;Aug 2026 TF)</p>
-    <h2>Importers: 76.7% of fees ($263K, +37.4% YoY). Wholesalers: 20.3% ($70K, +43.3% YoY). Growers +42.8%.</h2>
+    <h2>Importers: 76.1% of fees ($263K, +37.4% YoY). Wholesalers: 20.9% ($72K, +48.9% YoY — corrected v19). Growers +42.8%.</h2>
 
     <div class="tableWrap">
       <table>
@@ -736,23 +744,23 @@
         <tbody>
           <tr>
             <td><strong>Floral &mdash; Importer</strong></td>
-            <td class="num">$191,571</td>
+            <td class="num">$191,549</td>
             <td class="num">$263,220</td>
-            <td class="num">76.7%</td>
+            <td class="num">76.1%</td>
             <td class="num" style="color:var(--green)">+37.4%</td>
             <td>Dominant driver. Importers sell to wholesalers via K2K + eCom.</td>
           </tr>
           <tr>
-            <td><strong>Floral &mdash; Wholesaler</strong></td>
-            <td class="num">$48,592</td>
-            <td class="num">$69,635</td>
-            <td class="num">20.3%</td>
-            <td class="num" style="color:var(--green)">+43.3%</td>
-            <td>Wholesalers sell to florists via eCom. K2K buy-side generates no fee for wholesaler.</td>
+            <td><strong>Floral &mdash; Wholesaler</strong> <span class="tag warn" style="margin-left:4px">CORRECTED v19</span></td>
+            <td class="num">$48,595</td>
+            <td class="num">$72,369</td>
+            <td class="num">20.9%</td>
+            <td class="num" style="color:var(--green)">+48.9%</td>
+            <td>Wholesalers sell to florists via eCom. K2K buy-side generates no fee for wholesaler. +$2,734 API fee correction absorbed here (B1 disclosure).</td>
           </tr>
           <tr>
             <td>Unknown</td>
-            <td class="num">$5,661</td>
+            <td class="num">$5,659</td>
             <td class="num">$5,650</td>
             <td class="num">1.6%</td>
             <td class="num" style="color:var(--muted)">&minus;0.2%</td>
@@ -760,7 +768,7 @@
           </tr>
           <tr>
             <td>Floral &mdash; Grower</td>
-            <td class="num">$3,317</td>
+            <td class="num">$3,315</td>
             <td class="num">$4,736</td>
             <td class="num">1.4%</td>
             <td class="num" style="color:var(--green)">+42.8%</td>
@@ -776,17 +784,17 @@
           </tr>
           <tr style="background:#f8fafc;font-weight:700">
             <td><strong>Total (Jul-Aug TF)</strong></td>
-            <td class="num">$249,141</td>
-            <td class="num">$343,250</td>
+            <td class="num">$249,118</td>
+            <td class="num">$345,985</td>
             <td class="num">100%</td>
-            <td class="num" style="color:var(--green)">+37.8%</td>
-            <td>Verification: matches S5 channel total &#x2713;</td>
+            <td class="num" style="color:var(--green)">+38.9%</td>
+            <td>Verification: matches S5 channel total $345,985 &#x2713;</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="band green" style="margin-top:12px;font-size:13px">S9 YoY now UNBLOCKED. 2025 layer data queried this Thursday Full run. Key insight: Importer growth (+37.4%) is below Wholesaler growth (+43.3%) &mdash; wholesaler eCom expansion is the marginal driver. Growers (+42.8%) outpacing importers. Unknown declining (&minus;0.2%); Retailer negligible.</div>
-    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 and 2025-07-01&ndash;2025-08-31, grouped by company_industry. 2026 total $343,250 matches S5 &#x2713;. 2025 total $249,141 (vs S5 $249,119 &mdash; $22 rounding in layer grouping). Both queried fresh this session (B2).</p>
+    <div class="band green" style="margin-top:12px;font-size:13px">S9 YoY UNBLOCKED (v17+). 2025 layer data re-queried fresh this run (B2). Key insight: Wholesaler growth (+48.9%) significantly outpacing Importer growth (+37.4%) &mdash; wholesaler eCom expansion is the marginal driver. Growers (+42.8%) also outpacing importers. v19 correction: Wholesaler absorbed $2,734 API fee correction (B1: Jul-Aug 2026 TF re-queried fresh, API value changed from $17,476 to $20,211, landed in Wholesaler layer). Unknown declining (&minus;0.2%); Retailer negligible.</div>
+    <p class="prov"><code>TRANSACTION_FEES</code> ks_flag=TRUE, transaction_date 2026-07-01&ndash;2026-08-31 and 2025-07-01&ndash;2025-08-31, grouped by company_industry. Both queried fresh this session (Rule B2). 2026 layer total $345,985 matches S5 channel total $345,985 &#x2713;. 2025 layer total $249,118 (vs S5 $249,119 &mdash; $1 rounding in layer grouping &#x2713;).</p>
   </section>
 
   <!-- S10: GA4 -->
@@ -829,13 +837,13 @@
         </tbody>
       </table>
     </div>
-    <div class="band red" style="margin-top:10px;font-size:13px"><strong>BLOCKED &mdash; Action needed (Facu/Sofia) &mdash; 7+ weeks stale:</strong> E-Commerce Sheet (Drive ID: 1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ) last data = Jul 27, 2026. Procurement Sheet (Drive ID: 1pPrqDAxg4aFumciXfRZYp2YwMEvGtX8MJgZFdx0noPo) also stale at Jul 27. Cannot compute WoW flag or GMV leading indicator. Last known: W9 (Aug 24&ndash;30) = 20,390 sessions, +8.0% WoW &mdash; NO FLAG. 53.1% GA4&rarr;Snowflake conversion ratio (canonical). <strong>ESCALATE: Please have Sofia update both sheets before Thursday Full Sep 17 run.</strong></div>
+    <div class="band red" style="margin-top:10px;font-size:13px"><strong>BLOCKED &mdash; Action needed (Facu/Sofia) &mdash; 8+ weeks stale:</strong> E-Commerce Sheet (Drive ID: 1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ) last data = Jul 27, 2026. Procurement Sheet (Drive ID: 1pPrqDAxg4aFumciXfRZYp2YwMEvGtX8MJgZFdx0noPo) also stale at Jul 27. Cannot compute WoW flag or GMV leading indicator. Last known: W9 (Aug 24&ndash;30) = 20,390 sessions, +8.0% WoW &mdash; NO FLAG. 53.1% GA4&rarr;Snowflake conversion ratio (canonical). <strong>ESCALATE: Both GA4 sheets 8+ weeks stale &mdash; Sep 10+Sep 14+Sep 17 runs all blocked. Sofia must update both sheets urgently.</strong></div>
     <p class="prov">Source: E-Commerce Sheet (Drive ID: 1f0GqXQ8lzb9MZ0zWjDKnIhpLfaOEKB8sJr3JHBkyWgQ) &mdash; attempted read this session. Sheet structurally stale at Jul 27, 2026. Aug&ndash;Sep tab not available. v18 update: still blocked, same status as v17.</p>
   </section>
 
   <!-- FOOTER -->
   <section style="border:none;box-shadow:none;background:transparent;padding:4px 0">
-    <p class="small" style="text-align:center">v18 &mdash; Sep 14 2026 &mdash; Monday Light &mdash; CODEX VERIFIED 6/6 checks passed &mdash; Core math verified. Rule R1+R2+R3+R10+R14+N1+B1+B2 applied. Sep 1&ndash;13 ETF locked ($97,513). W11 COMPLETE: +19.2% YoY (Sep 12 calendar shift Sat 2026 vs Fri 2025). Axerrio FX drift: Jul $9,401, Aug $9,683. API GMV anomaly ongoing (S4 suspended). GA4 blocked (sheets stale 7+ weeks). S5+S6+S9 unchanged (Thursday Full only). Run by Koronet Revenue OS automated pacing agent.</p>
+    <p class="small" style="text-align:center">v19 &mdash; Sep 17 2026 &mdash; Thursday Full &mdash; CODEX VERIFIED 14/14 checks passed &mdash; All 11 items refreshed. Rule R1+R2+R3+R10+R14+N1+B1+B2 applied. Sep 1&ndash;16 ETF locked ($129,183). W12 partial (3d Sep 14&ndash;16): +75.8% YoY (Mon/Wed 2026 vs Sun/Wed 2025 calendar). Axerrio FX v19: Jul $9,317, Aug $9,597. API fee correction +$2,735 Aug TF (B1 disclosure). v18 Sep 1&ndash;13 2025 baseline corrected: $85,638 &rarr; $75,638 (B1 disclosure). API GMV anomaly ongoing (S4 suspended). GA4 blocked (sheets stale 8+ weeks). Pacing 78.7% &rarr; 83.7% (+5.0pp) driven by Sep 14&ndash;16 calendar shift. Sep 17&ndash;30 needs +83% YoY to hit $670K. Run by Koronet Revenue OS automated pacing agent.</p>
   </section>
 
 </main>
